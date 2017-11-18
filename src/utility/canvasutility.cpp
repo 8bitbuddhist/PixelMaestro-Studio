@@ -94,7 +94,8 @@ void CanvasUtility::copy_frameset(ColorCanvas *canvas, Colors::RGB** target, uin
  */
 void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl* maestro_control) {
 	QImageReader image(filename, filename.right(3).toLocal8Bit());
-	Point image_size = Point(image.size().width(), image.size().height());
+	QSize canvas_size(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+	image.setScaledSize(canvas_size);
 
 	canvas->set_num_frames(image.imageCount());
 	if (maestro_control && maestro_control->cue_controller_) {
@@ -114,8 +115,8 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 	Point cursor(0, 0);
 	for (uint16_t i = 0; i < image.imageCount(); i++) {
 		QImage frame = image.read();
-		for (uint16_t y = 0; y < image_size.y; y++) {
-			for (uint16_t x = 0; x < image_size.x; x++) {
+		for (uint16_t y = 0; y < canvas_size.height(); y++) {
+			for (uint16_t x = 0; x < canvas_size.width(); x++) {
 				cursor.set(x, y);
 				if (canvas->in_bounds(&cursor)) {
 					QColor pix_color = frame.pixelColor(x, y);
