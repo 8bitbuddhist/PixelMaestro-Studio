@@ -15,7 +15,7 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 	Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
 	Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::COLORWHEEL, 12);
-	animation->set_speed(250);
+	animation->set_timing(250);
 	animation->set_orientation(Animation::Orientation::Vertical);
 
 	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));

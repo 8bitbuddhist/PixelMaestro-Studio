@@ -10,8 +10,6 @@ AnimatedCanvasDemo::AnimatedCanvasDemo(QWidget* parent, MaestroController* maest
 
 	Section* section = maestro_controller_->set_sections(1, gif_size);
 	Canvas* canvas = section->set_canvas(CanvasType::ColorCanvas, gif.imageCount());
+	canvas->set_frame_timing(gif.nextImageDelay());
 	CanvasUtility::load_image(QString(":/resources/nyan.gif"), canvas);
-
-	// Lower refresh speed
-	this->timer_.setInterval(125);
 }

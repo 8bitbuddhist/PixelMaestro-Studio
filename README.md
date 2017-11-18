@@ -8,7 +8,7 @@ PixelMaestro Studio is a Qt-based desktop application that lets you run the Pixe
 ## Build Instructions
 1. Install Qt 5 with the QtSerialPort module
 2. Clone the repository to a folder on your computer
-3. Navigate to the newly created repository folder and use `git submodule update` to fetch the PixelMaestro core library.
+3. Navigate to the newly created repository folder and use `git submodule init` and `git submodule update` to fetch the PixelMaestro core library.
 4. Open the `PixelMaestro_Studio.pro` file in Qt Creator, or use Qmake to build the project.
 
 ## Contents

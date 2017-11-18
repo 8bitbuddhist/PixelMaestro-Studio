@@ -690,7 +690,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	animation_handler->set_fade(section_id, overlay_id, animation->get_fade());
 	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
-	animation_handler->set_speed(section_id, overlay_id, animation->get_speed(), animation->get_pause());
+	animation_handler->set_speed(section_id, overlay_id, animation->get_timing()->get_speed(), animation->get_timing()->get_pause());
 	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	switch(animation->get_type()) {
@@ -778,7 +778,7 @@ void MaestroControl::set_active_section(Section* section) {
 	if (animation == nullptr) {
 		PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
 		animation = section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
-		animation->set_speed(1000);
+		animation->set_timing(1000);
 	}
 
 	ui->orientationComboBox->blockSignals(true);
@@ -791,10 +791,10 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
-	ui->cycleSlider->setValue(animation->get_speed());
-	ui->cycleSpinBox->setValue(animation->get_speed());
-	ui->pauseSlider->setValue(animation->get_pause());
-	ui->pauseSpinBox->setValue(animation->get_pause());
+	ui->cycleSlider->setValue(animation->get_timing()->get_speed());
+	ui->cycleSpinBox->setValue(animation->get_timing()->get_speed());
+	ui->pauseSlider->setValue(animation->get_timing()->get_pause());
+	ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
 	ui->orientationComboBox->blockSignals(false);
 	ui->reverse_animationCheckBox->blockSignals(false);
 	ui->fadeCheckBox->blockSignals(false);
@@ -875,8 +875,8 @@ void MaestroControl::set_speed() {
 	uint16_t pause = ui->pauseSpinBox->value();
 	uint16_t speed = ui->cycleSpinBox->value();
 	Animation* animation = active_section_->get_animation();
-	if (speed != animation->get_speed() || pause != animation->get_pause()) {
-		animation->set_speed(speed, pause);
+	if (speed != animation->get_timing()->get_speed() || pause != animation->get_timing()->get_pause()) {
+		animation->set_timing(speed, pause);
 
 		if (cue_controller_ != nullptr) {
 			send_to_device(animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause));

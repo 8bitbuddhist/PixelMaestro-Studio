@@ -69,7 +69,8 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/cuehandler.cpp \
 		src/utility/canvasutility.cpp \
 		src/window/virtualserialdevicedialog.cpp \
-		lib/PixelMaestro/src/cue/showcuehandler.cpp
+		lib/PixelMaestro/src/cue/showcuehandler.cpp \
+    lib/PixelMaestro/src/core/timing.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -131,7 +132,8 @@ HEADERS += \
 		lib/PixelMaestro/src/colorpresets.h \
 		src/utility/canvasutility.h \
 		src/window/virtualserialdevicedialog.h \
-		lib/PixelMaestro/src/cue/showcuehandler.h
+		lib/PixelMaestro/src/cue/showcuehandler.h \
+    lib/PixelMaestro/src/core/timing.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \

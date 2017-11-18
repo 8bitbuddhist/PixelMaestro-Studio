@@ -102,6 +102,15 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 		maestro_control->send_to_device();
 	}
 
+	// For animated images, set the frame rate
+	if (image.imageCount() > 1) {
+		canvas->set_frame_timing(image.nextImageDelay());
+		if (maestro_control && maestro_control->cue_controller_) {
+			maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.nextImageDelay());
+			maestro_control->send_to_device();
+		}
+	}
+
 	Point cursor(0, 0);
 	for (uint16_t i = 0; i < image.imageCount(); i++) {
 		QImage frame = image.read();

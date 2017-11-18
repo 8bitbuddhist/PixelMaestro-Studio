@@ -12,5 +12,5 @@ BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : S
 	Section* section = maestro_controller_->set_sections(1, Point(10, 10));
 
 	Animation* animation = section->set_animation(AnimationType::Blink, ColorPresets::COLORWHEEL, 12);
-	animation->set_speed(1000);
+	animation->set_timing(1000);
 }
