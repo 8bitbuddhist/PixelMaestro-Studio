@@ -98,8 +98,8 @@ void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
 	 * Find the optimal radius of each Pixel.
 	 * First, get the total width and height of the Maestro by summing each Section.
 	 */
-	uint32_t total_width = 0;
-	uint32_t height = 0;
+	uint32_t total_width = 1;
+	uint32_t height = 1;
 	for (uint8_t section = 0; section < maestro_controller_->get_maestro()->get_num_sections(); section++) {
 		total_width += maestro_controller_->get_maestro()->get_section(section)->get_dimensions()->x;
 

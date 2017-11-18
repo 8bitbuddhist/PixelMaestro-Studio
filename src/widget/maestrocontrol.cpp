@@ -710,7 +710,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	animation_handler->set_fade(section_id, overlay_id, animation->get_fade());
 	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
-	animation_handler->set_speed(section_id, overlay_id, animation->get_timing()->get_speed(), animation->get_timing()->get_pause());
+	animation_handler->set_timing(section_id, overlay_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause());
 	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	switch(animation->get_type()) {
@@ -813,8 +813,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
-	ui->cycleSlider->setValue(animation->get_timing()->get_speed());
-	ui->cycleSpinBox->setValue(animation->get_timing()->get_speed());
+	ui->cycleSlider->setValue(animation->get_timing()->get_interval());
+	ui->cycleSpinBox->setValue(animation->get_timing()->get_interval());
 	ui->pauseSlider->setValue(animation->get_timing()->get_pause());
 	ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
 	ui->offsetXSpinBox->setValue(animation->get_center()->x);
@@ -909,12 +909,12 @@ void MaestroControl::set_center() {
 void MaestroControl::set_speed() {
 	uint16_t pause = ui->pauseSpinBox->value();
 	uint16_t speed = ui->cycleSpinBox->value();
-	Animation* animation = active_section_->get_animation();
-	if (speed != animation->get_timing()->get_speed() || pause != animation->get_timing()->get_pause()) {
-		animation->set_timing(speed, pause);
+	AnimationTiming* timing = active_section_->get_animation()->get_timing();
+	if (speed != timing->get_interval() || pause != timing->get_pause()) {
+		timing->set_interval(speed, pause);
 
 		if (cue_controller_ != nullptr) {
-			send_to_device(animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause));
+			send_to_device(animation_handler->set_timing(get_section_index(), get_overlay_index(), speed, pause));
 		}
 	}
 }

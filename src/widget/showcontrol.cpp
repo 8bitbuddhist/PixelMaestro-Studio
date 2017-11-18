@@ -46,7 +46,7 @@ void ShowControl::refresh_event_list() {
  * Displays the Maestro's last run time.
  */
 void ShowControl::refresh_maestro_last_time() {
-	ui->runtimeLineEdit->setText(QString::number(cue_controller_->get_maestro()->get_last_refresh()));
+	ui->runtimeLineEdit->setText(QString::number(cue_controller_->get_maestro()->get_timing()->get_last_time()));
 }
 
 ShowControl::~ShowControl() {

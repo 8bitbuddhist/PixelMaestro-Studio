@@ -28,7 +28,7 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maest
 	 */
 	QSettings settings;
 	int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(40)).toInt();
-	maestro_controller_->get_maestro()->set_refresh_interval(refresh);
+	maestro_controller_->get_maestro()->set_timing(refresh);
 	timer_.start(refresh);
 
 }

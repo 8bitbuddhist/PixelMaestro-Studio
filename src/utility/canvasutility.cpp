@@ -118,7 +118,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 		for (uint16_t y = 0; y < canvas_size.height(); y++) {
 			for (uint16_t x = 0; x < canvas_size.width(); x++) {
 				cursor.set(x, y);
-				if (canvas->in_bounds(&cursor)) {
+				if (canvas->in_bounds(cursor.x, cursor.y)) {
 					QColor pix_color = frame.pixelColor(x, y);
 					Colors::RGB color(pix_color.red(), pix_color.green(), pix_color.blue());
 

@@ -260,7 +260,9 @@ void CanvasControl::on_drawButton_clicked() {
 		}
 	}
 
-	maestro_control_->send_to_device();
+	if (maestro_control_ && maestro_control_->cue_controller_) {
+		maestro_control_->send_to_device();
+	}
 }
 
 void CanvasControl::on_eraseButton_clicked() {

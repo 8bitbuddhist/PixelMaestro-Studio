@@ -156,7 +156,9 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 
 	// Initialize a new 50x50 drawing grid
 	Section* section = controller_->set_sections(1, Point(50, 50));
-	section->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
+	Animation* animation = section->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
+	animation->set_reverse(true);
+	animation->set_timing(250);
 
 	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
 

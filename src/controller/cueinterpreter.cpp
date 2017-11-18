@@ -56,7 +56,7 @@ std::string CueInterpreter::interpret_animation_cue(uint8_t *cue) {
 		case AnimationCueHandler::Action::SetSparkleOptions:
 			result.append("SetSparkleOptions");
 			break;
-		case AnimationCueHandler::Action::SetSpeed:
+		case AnimationCueHandler::Action::SetTiming:
 			result.append("SetSpeed");
 			break;
 		default:
@@ -138,7 +138,7 @@ std::string CueInterpreter::interpret_maestro_cue(uint8_t *cue) {
 	std::string result = "Target: Maestro, Action: ";
 
 	switch((MaestroCueHandler::Action)cue[MaestroCueHandler::Byte::ActionByte]) {
-		case MaestroCueHandler::Action::SetRefreshInterval:
+		case MaestroCueHandler::Action::SetTiming:
 			result.append("SetRefreshInterval");
 			break;
 		default:
