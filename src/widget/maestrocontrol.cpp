@@ -413,6 +413,26 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 	}
 }
 
+void MaestroControl::on_offsetResetButton_clicked() {
+	active_section_->get_animation()->set_center();
+	Point* center = active_section_->get_animation()->get_center();
+	ui->offsetXSpinBox->blockSignals(true);
+	ui->offsetYSpinBox->blockSignals(true);
+	ui->offsetXSpinBox->setValue(center->x);
+	ui->offsetYSpinBox->setValue(center->y);
+	set_center();
+	ui->offsetXSpinBox->blockSignals(false);
+	ui->offsetYSpinBox->blockSignals(false);
+}
+
+void MaestroControl::on_offsetXSpinBox_valueChanged(int arg1) {
+	set_center();
+}
+
+void MaestroControl::on_offsetYSpinBox_valueChanged(int arg1) {
+	set_center();
+}
+
 /**
  * Sets the animation's orientation.
  * @param index New orientation.
@@ -788,6 +808,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(true);
 	ui->pauseSlider->blockSignals(true);
 	ui->pauseSpinBox->blockSignals(true);
+	ui->offsetXSpinBox->blockSignals(true);
+	ui->offsetYSpinBox->blockSignals(true);
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
@@ -795,6 +817,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->setValue(animation->get_timing()->get_speed());
 	ui->pauseSlider->setValue(animation->get_timing()->get_pause());
 	ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
+	ui->offsetXSpinBox->setValue(animation->get_center()->x);
+	ui->offsetYSpinBox->setValue(animation->get_center()->y);
 	ui->orientationComboBox->blockSignals(false);
 	ui->reverse_animationCheckBox->blockSignals(false);
 	ui->fadeCheckBox->blockSignals(false);
@@ -802,6 +826,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(false);
 	ui->pauseSlider->blockSignals(false);
 	ui->pauseSpinBox->blockSignals(false);
+	ui->offsetXSpinBox->blockSignals(false);
+	ui->offsetYSpinBox->blockSignals(false);
 
 	/*
 	 * Select Palette.
@@ -868,6 +894,15 @@ void MaestroControl::set_active_section(Section* section) {
 	}
 	show_canvas_controls();
 	ui->canvasComboBox->blockSignals(false);
+}
+
+void MaestroControl::set_center() {
+	active_section_->get_animation()->set_center(ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value());
+	Point* center = active_section_->get_animation()->get_center();
+
+	if (cue_controller_ != nullptr) {
+		send_to_device(animation_handler->set_center(get_section_index(), get_overlay_index(), center->x, center->y));
+	}
 }
 
 /// Sets the speed and/or pause interval for the active Animation.

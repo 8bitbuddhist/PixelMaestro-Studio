@@ -206,47 +206,7 @@
        </item>
       </layout>
      </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="colorLabel">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Color Palette</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <layout class="QHBoxLayout" name="colorSchemeLayout">
-       <item>
-        <widget class="QComboBox" name="colorComboBox">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="currentText">
-          <string/>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="paletteControlButton">
-         <property name="text">
-          <string>Edit Palettes...</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="11" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
         <size>
@@ -259,8 +219,8 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
-      <layout class="QHBoxLayout" name="speedLayout">
+     <item row="7" column="1">
+      <layout class="QHBoxLayout" name="speedLayout_2">
        <item>
         <widget class="QSlider" name="cycleSlider">
          <property name="minimum">
@@ -307,15 +267,8 @@
        </item>
       </layout>
      </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="pauseLabel">
-       <property name="text">
-        <string>Pause</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <layout class="QHBoxLayout" name="pauseLayout">
+     <item row="8" column="1">
+      <layout class="QHBoxLayout" name="pauseLayout_2">
        <item>
         <widget class="QSlider" name="pauseSlider">
          <property name="maximum">
@@ -347,14 +300,68 @@
        </item>
       </layout>
      </item>
-     <item row="13" column="0">
+     <item row="10" column="0">
+      <widget class="QLabel" name="colorLabel">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Color Palette</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <layout class="QHBoxLayout" name="colorSchemeLayout">
+       <item>
+        <widget class="QComboBox" name="colorComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="currentText">
+          <string/>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="paletteControlButton">
+         <property name="text">
+          <string>Edit Palettes...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Canvas</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <layout class="QHBoxLayout" name="canvasLayout">
+       <item>
+        <widget class="QComboBox" name="canvasComboBox"/>
+       </item>
+      </layout>
+     </item>
+     <item row="14" column="0">
       <widget class="QLabel" name="showLabel">
        <property name="text">
         <string>Show</string>
        </property>
       </widget>
      </item>
-     <item row="13" column="1">
+     <item row="14" column="1">
       <layout class="QHBoxLayout" name="showLayout">
        <item alignment="Qt::AlignRight">
         <widget class="QCheckBox" name="enableShowCheckBox">
@@ -385,19 +392,36 @@
        </item>
       </layout>
      </item>
-     <item row="9" column="1">
-      <layout class="QHBoxLayout" name="canvasLayout">
-       <item>
-        <widget class="QComboBox" name="canvasComboBox"/>
-       </item>
-      </layout>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label">
+     <item row="8" column="0">
+      <widget class="QLabel" name="pauseLabel">
        <property name="text">
-        <string>Canvas</string>
+        <string>Pause</string>
        </property>
       </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Center</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <layout class="QHBoxLayout" name="offsetLayout">
+       <item>
+        <widget class="QSpinBox" name="offsetXSpinBox"/>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="offsetYSpinBox"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="offsetResetButton">
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

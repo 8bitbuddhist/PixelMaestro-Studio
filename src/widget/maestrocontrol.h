@@ -99,6 +99,7 @@ class MaestroControl : public QWidget {
 		void save_maestro_settings(QDataStream* datastream);
 		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void set_active_section(Section* section);
+		void set_center();
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
@@ -126,6 +127,9 @@ class MaestroControl : public QWidget {
 		void on_overlayComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
 		void on_overlaySpinBox_editingFinished();
+		void on_offsetXSpinBox_valueChanged(int arg1);
+		void on_offsetYSpinBox_valueChanged(int arg1);
+		void on_offsetResetButton_clicked();
 };
 
 #endif // MAESTROCONTROL_H
