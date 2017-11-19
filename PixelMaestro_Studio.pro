@@ -70,7 +70,8 @@ SOURCES += src/main.cpp\
 		src/utility/canvasutility.cpp \
 		src/window/virtualserialdevicedialog.cpp \
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
-    lib/PixelMaestro/src/core/timing.cpp
+    lib/PixelMaestro/src/core/timing/timing.cpp \
+    lib/PixelMaestro/src/core/timing/animationtiming.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -133,7 +134,8 @@ HEADERS += \
 		src/utility/canvasutility.h \
 		src/window/virtualserialdevicedialog.h \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
-    lib/PixelMaestro/src/core/timing.h
+    lib/PixelMaestro/src/core/timing/timing.h \
+    lib/PixelMaestro/src/core/timing/animationtiming.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \
