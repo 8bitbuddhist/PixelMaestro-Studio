@@ -39,8 +39,8 @@ VirtualSerialDeviceDialog::VirtualSerialDeviceDialog(QWidget *parent) :
 }
 
 void VirtualSerialDeviceDialog::display_cue(uint8_t* cue) {
-	std::string interpreted_cue = cue_interpreter_->interpret_cue(cue);
-	interpreted->setText(QString("Last action: ") + QString::fromStdString(interpreted_cue));
+	QString interpreted_cue = cue_interpreter_->interpret_cue(cue);
+	interpreted->setText(QString("Last action: ") + interpreted_cue);
 }
 
 Maestro* VirtualSerialDeviceDialog::get_maestro() {

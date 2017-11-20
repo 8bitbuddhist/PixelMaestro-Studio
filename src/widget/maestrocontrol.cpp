@@ -203,14 +203,6 @@ void MaestroControl::initialize() {
 	// Hide Overlay controls
 	set_overlay_controls_visible(false);
 
-	// Disable Edit Show Events box by default.
-	ui->editEventsButton->setEnabled(false);
-
-	// Hide Show controls (for now)
-	ui->showLabel->setVisible(false);
-	ui->editEventsButton->setVisible(false);
-	ui->enableShowCheckBox->setVisible(false);
-
 	set_active_section(section);
 
 	populate_overlay_combobox();
@@ -354,13 +346,10 @@ void MaestroControl::on_cycleSpinBox_editingFinished() {
 	set_speed();
 }
 
-void MaestroControl::on_editEventsButton_clicked() {
-	ShowControl show_control(show_controller_, cue_controller_, this);
-	show_control.exec();
-}
-
 void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
-	ui->editEventsButton->setEnabled(checked);
+	QLayout* show_layout = this->findChild<QLayout*>("showControlLayout");
+	show_layout->removeWidget(show_control_widget_.get());
+	show_control_widget_.reset();
 
 	// Initialize Show and Cue controllers if necessary
 	if (checked) {
@@ -371,6 +360,9 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 		if (show_controller_ == nullptr) {
 			show_controller_ = new ShowController(maestro_controller_);
 		}
+
+		show_control_widget_ = std::unique_ptr<QWidget>(new ShowControl(show_controller_, cue_controller_, this));
+		show_layout->addWidget(show_control_widget_.get());
 	}
 }
 
@@ -921,15 +913,7 @@ void MaestroControl::set_speed() {
  * Sends the last action performed to the configured serial device.
  */
 void MaestroControl::send_to_device() {
-	if (virtual_device_dialog_ != nullptr) {
-		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		// For debugging only
-		//virtual_device_dialog_->display_cue(cue_controller_->get_cue());
-	}
-	else if (serial_port_.isOpen()) {
-		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
-	}
+	send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 }
 
 /**
@@ -946,6 +930,12 @@ void MaestroControl::send_to_device(uint8_t *cue) {
  * @param length Size of the data to send.
  */
 void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
+	// Update the ShowControl's history
+	if (show_control_widget_ != nullptr) {
+		static_cast<ShowControl*>(show_control_widget_.get())->add_cue_to_history(data);
+	}
+
+	// Send to the virtual Maestro
 	if (virtual_device_dialog_ != nullptr) {
 		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data);
 
@@ -980,32 +970,32 @@ void MaestroControl::set_overlay_controls_visible(bool visible) {
  */
 void MaestroControl::show_extra_controls(Animation* animation) {
 	// First, remove any existing extra control widgets
-	if (extra_control_widget_ != nullptr) {
-		this->findChild<QLayout*>("animationExtraOptionsLayout")->removeWidget(extra_control_widget_.get());
-		extra_control_widget_.reset();
+	if (animation_extra_control_widget_ != nullptr) {
+		this->findChild<QLayout*>("animationExtraOptionsLayout")->removeWidget(animation_extra_control_widget_.get());
+		animation_extra_control_widget_.reset();
 	}
 
 	QLayout* layout = this->findChild<QLayout*>("animationExtraOptionsLayout");
 
 	switch(animation->get_type()) {
 		case AnimationType::Lightning:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
+			animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
 			break;
 		case AnimationType::Plasma:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, this, layout->widget()));
+			animation_extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, this, layout->widget()));
 			break;
 		case AnimationType::Radial:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControl((RadialAnimation*)animation, this, layout->widget()));
+			animation_extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControl((RadialAnimation*)animation, this, layout->widget()));
 			break;
 		case AnimationType::Sparkle:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
+			animation_extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
 			break;
 		default:
 			break;
 	}
 
-	if (extra_control_widget_) {
-		layout->addWidget(extra_control_widget_.get());
+	if (animation_extra_control_widget_) {
+		layout->addWidget(animation_extra_control_widget_.get());
 	}
 }
 

@@ -75,11 +75,14 @@ class MaestroControl : public QWidget {
 	private:
 		Ui::MaestroControl *ui;
 
-		/// Stores Canvas controls
+		/// Extra animation controls
+		std::unique_ptr<QWidget> animation_extra_control_widget_;
+
+		/// Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
-		/// Stores extra animation controls
-		std::unique_ptr<QWidget> extra_control_widget_;
+		/// Show controls
+		std::unique_ptr<QWidget> show_control_widget_;
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
@@ -121,7 +124,6 @@ class MaestroControl : public QWidget {
 		void on_rowsSpinBox_editingFinished();
 		void on_cycleSpinBox_editingFinished();
 		void on_enableShowCheckBox_toggled(bool checked);
-		void on_editEventsButton_clicked();
 		void on_pauseSlider_valueChanged(int value);
 		void on_pauseSpinBox_valueChanged(int arg1);
 		void on_overlayComboBox_currentIndexChanged(int index);
