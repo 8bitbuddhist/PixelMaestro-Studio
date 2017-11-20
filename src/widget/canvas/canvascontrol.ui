@@ -6,38 +6,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>433</height>
+    <width>289</width>
+    <height>413</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QFormLayout" name="formLayout">
-     <item row="1" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Canvas Controls</string>
+        <string>Canvas Settings</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="openImageButton">
-       <property name="text">
-        <string>Use Image...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Shapes</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
+     <item row="1" column="0">
       <layout class="QGridLayout" name="shapeGridLayout">
        <item row="0" column="0">
         <widget class="QRadioButton" name="circleRadioButton">
@@ -79,14 +74,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Parameters</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
+     <item row="2" column="0">
       <layout class="QGridLayout" name="parametersLayout">
        <item row="2" column="0">
         <widget class="QLabel" name="targetLabel">
@@ -192,17 +180,17 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="colorLabel">
+       <item row="8" column="0">
+        <widget class="QPushButton" name="openImageButton">
          <property name="text">
-          <string>Color</string>
+          <string>Load Image...</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="0">
         <widget class="QPushButton" name="selectColorButton">
          <property name="text">
-          <string>Select Color</string>
+          <string>Color...</string>
          </property>
         </widget>
        </item>

@@ -46,7 +46,7 @@ class MaestroControl : public QWidget {
 		PaletteController palette_controller_;
 
 		// Cue components
-		CueInterpreter* cue_interpreter_ = nullptr;
+		CueInterpreter cue_interpreter_;
 		CueController* cue_controller_ = nullptr;
 		AnimationCueHandler* animation_handler = nullptr;
 		CanvasCueHandler* canvas_handler = nullptr;

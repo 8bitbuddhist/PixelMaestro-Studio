@@ -188,9 +188,11 @@ void MainWindow::on_actionOpen_Maestro_triggered() {
 		QDir::home().path(),
 		QString("PixelMaestro Cue File (*.pmc)"));
 
-	// Initialize the Animation editor and immediately read in the Cue file.
-	on_action_Open_Animation_Editor_triggered();
-	maestro_control_->read_from_file(filename);
+	if (!filename.isEmpty()) {
+		// Initialize the Animation editor and immediately read in the Cue file.
+		on_action_Open_Animation_Editor_triggered();
+		maestro_control_->read_from_file(filename);
+	}
 }
 
 void MainWindow::on_action_Preferences_triggered() {

@@ -39,8 +39,11 @@ void SimpleDrawingArea::draw_section(QPainter* painter, uint8_t section_index, Q
 			painter->setBrush(tmp_brush_);
 			painter->setPen(Qt::PenStyle::NoPen);
 
-			// Determine which shape to draw
-			switch (settings_.value(SettingsDialog::pixel_shape).toInt()) {
+			/*
+			 * Determine which shape to draw.
+			 * If none is set, default to "Square"
+			 */
+			switch (settings_.value(SettingsDialog::pixel_shape, QString("Square")).toInt()) {
 				case 0:	// Circle
 					painter->drawEllipse(tmp_rect_);
 					break;

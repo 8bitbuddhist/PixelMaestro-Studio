@@ -56,11 +56,9 @@ void CanvasControl::initialize() {
 	// Set color Canvas buttons
 	switch (canvas_->get_type()) {
 		case CanvasType::ColorCanvas:
-			ui->colorLabel->setVisible(true);
 			ui->selectColorButton->setVisible(true);
 			break;
 		default:
-			ui->colorLabel->setVisible(false);
 			ui->selectColorButton->setVisible(false);
 	}
 }
