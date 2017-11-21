@@ -39,6 +39,14 @@ class CanvasControl : public QWidget {
 
 		void on_openImageButton_clicked();
 
+		void on_canvasEditModeCheckBox_toggled(bool checked);
+
+		void on_numFramesSpinBox_editingFinished();
+
+		void on_currentFrameSpinBox_editingFinished();
+
+		void on_frameRateSpinBox_editingFinished();
+
 	private:
 		Canvas* canvas_ = nullptr;
 		Font* font_ = nullptr;

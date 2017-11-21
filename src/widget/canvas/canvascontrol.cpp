@@ -175,8 +175,24 @@ void CanvasControl::set_triangle_controls_visible(bool visible) {
 	ui->fillCheckBox->setVisible(visible);
 }
 
+void CanvasControl::on_canvasEditModeCheckBox_toggled(bool checked) {
+	// Toggles the current frame controls
+	ui->currentFrameSpinBox->setEnabled(checked);
+
+	if (checked) {
+		maestro_control_->execute_cue(maestro_control_->canvas_handler->remove_frame_timing(maestro_control_->get_section_index(), maestro_control_->get_overlay_index()));
+	}
+	else {
+		on_frameRateSpinBox_editingFinished();
+	}
+}
+
 void CanvasControl::on_circleRadioButton_toggled(bool checked) {
 	set_circle_controls_visible(checked);
+}
+
+void CanvasControl::on_currentFrameSpinBox_editingFinished() {
+	maestro_control_->execute_cue(maestro_control_->canvas_handler->set_current_frame_index(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->currentFrameSpinBox->value()));
 }
 
 void CanvasControl::on_drawButton_clicked() {
@@ -239,8 +255,18 @@ void CanvasControl::on_eraseButton_clicked() {
 	confirm_clear();
 }
 
+void CanvasControl::on_frameRateSpinBox_editingFinished() {
+	maestro_control_->execute_cue(maestro_control_->canvas_handler->set_frame_timing(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->frameRateSpinBox->value()));
+}
+
 void CanvasControl::on_lineRadioButton_toggled(bool checked) {
 	set_line_controls_visible(checked);
+}
+
+void CanvasControl::on_numFramesSpinBox_editingFinished() {
+	ui->currentFrameSpinBox->setMaximum(ui->numFramesSpinBox->value());
+
+	maestro_control_->execute_cue(maestro_control_->canvas_handler->set_num_frames(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->numFramesSpinBox->value()));
 }
 
 void CanvasControl::on_openImageButton_clicked() {
