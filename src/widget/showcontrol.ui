@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>489</height>
+    <width>487</width>
+    <height>515</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,10 +25,80 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
+     <item row="1" column="1">
+      <widget class="QListWidget" name="eventHistoryWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>The most recent actions performed in the Animation Editor</string>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Time</string>
+        <string>Event Time</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="listLabel">
+       <property name="text">
+        <string>Event List</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="lockMaestroCheckBox">
+       <property name="toolTip">
+        <string>Prevents actions from changing the Mastro while still listing them in the event history</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="addEventButton">
+       <property name="toolTip">
+        <string>Adds the selected Event(s) to the Show</string>
+       </property>
+       <property name="text">
+        <string>Add Event(s)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Event History</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Enable Show Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QListWidget" name="eventListWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Lists all of the Show's events</string>
        </property>
       </widget>
      </item>
@@ -36,6 +106,9 @@
       <layout class="QHBoxLayout" name="timeLayout">
        <item>
         <widget class="QSpinBox" name="eventTimeSpinBox">
+         <property name="toolTip">
+          <string>The time that the Event will run</string>
+         </property>
          <property name="maximum">
           <number>100000000</number>
          </property>
@@ -53,73 +126,15 @@
        </item>
        <item>
         <widget class="QLineEdit" name="runtimeLineEdit">
+         <property name="toolTip">
+          <string>The program's current runtime</string>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="4" column="1">
-      <widget class="QPushButton" name="addEventButton">
-       <property name="text">
-        <string>Add Event</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Event History</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QListWidget" name="eventHistoryWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::MultiSelection</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QListWidget" name="eventListWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <layout class="QFormLayout" name="actionLayout"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="listLabel">
-       <property name="text">
-        <string>Event List</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Enable Show mode</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="lockMaestroCheckBox">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

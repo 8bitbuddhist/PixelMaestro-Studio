@@ -25,6 +25,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QSpinBox" name="thresholdSpinBox">
+       <property name="toolTip">
+        <string>The chance of any given pixel being activate on each cycle</string>
+       </property>
        <property name="minimum">
         <number>1</number>
        </property>

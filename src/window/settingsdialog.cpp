@@ -30,14 +30,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	on_serialCheckBox_toggled(ui->serialCheckBox->isChecked());
 
 	// Port settings
-	check_port_combobox();
-	QString port_name = settings_.value(serial_port).toString();
-	ui->serialPortComboBox->setCurrentText(port_name);
-
-	set_simulated_device_options_visible(port_name.contains(virtual_device_option));
-}
-
-void SettingsDialog::check_port_combobox() {
 	// Add option to select virtual serial device
 	ui->serialPortComboBox->addItem(SettingsDialog::virtual_device_option);
 
@@ -49,6 +41,12 @@ void SettingsDialog::check_port_combobox() {
 
 	// Only enable port dropdown if checked
 	ui->serialPortComboBox->setEnabled(ui->serialCheckBox->isChecked());
+
+	// Pre-select saved port
+	QString port_name = settings_.value(serial_port).toString();
+	ui->serialPortComboBox->setCurrentText(port_name);
+
+	set_simulated_device_options_visible(ui->serialCheckBox->isChecked() && port_name.contains(virtual_device_option));
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
@@ -71,6 +69,8 @@ void SettingsDialog::on_buttonBox_accepted() {
 
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {
 	ui->serialPortComboBox->setEnabled(checked);
+
+	set_simulated_device_options_visible(checked && ui->serialPortComboBox->currentText().contains(virtual_device_option));
 }
 
 void SettingsDialog::set_simulated_device_options_visible(bool visible) {

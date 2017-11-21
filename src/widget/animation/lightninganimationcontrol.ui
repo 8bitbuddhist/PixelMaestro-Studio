@@ -46,6 +46,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>The likelihood that the bolt will generate off-shoots</string>
+       </property>
        <property name="maximum">
         <number>255</number>
        </property>
@@ -61,6 +64,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>The number of bolts rendered in each cycle</string>
        </property>
        <property name="minimum">
         <number>1</number>
@@ -85,6 +91,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>The chance that the bolt will drift up in horizontal mode or right in vertical mode</string>
+       </property>
        <property name="maximum">
         <number>255</number>
        </property>
@@ -96,7 +105,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Drag (left)</string>
+        <string>Drag (-)</string>
        </property>
       </widget>
      </item>
@@ -107,6 +116,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>The chance that the bolt will drift down in horizontal mode or left in vertical mode</string>
        </property>
        <property name="maximum">
         <number>255</number>
@@ -119,7 +131,7 @@
      <item row="1" column="2">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Drag (right)</string>
+        <string>Drag (+)</string>
        </property>
       </widget>
      </item>

@@ -445,6 +445,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="createPaletteButton">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
         <string>New Palette</string>
        </property>
@@ -452,6 +455,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="removeButton">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
         <string>Delete Palette</string>
        </property>
@@ -469,7 +475,11 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="nameLineEdit"/>
+      <widget class="QLineEdit" name="nameLineEdit">
+       <property name="toolTip">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="numColorsLabel">
@@ -480,6 +490,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QSpinBox" name="numColorsSpinBox">
+       <property name="toolTip">
+        <string>The number of colors in the new palette</string>
+       </property>
        <property name="minimum">
         <number>1</number>
        </property>
@@ -492,7 +505,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="typeComboBox"/>
+      <widget class="QComboBox" name="typeComboBox">
+       <property name="toolTip">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="typeLabel">
@@ -511,12 +528,15 @@
      <item row="3" column="0">
       <widget class="QLabel" name="baseColorLabel">
        <property name="text">
-        <string>Base Color</string>
+        <string>First Color</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
       <widget class="QPushButton" name="baseColorButton">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -524,6 +544,9 @@
      </item>
      <item row="4" column="1">
       <widget class="QPushButton" name="targetColorButton">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -532,12 +555,15 @@
      <item row="4" column="0">
       <widget class="QLabel" name="targetColorLabel">
        <property name="text">
-        <string>Target Color</string>
+        <string>Last Color</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
       <widget class="QCheckBox" name="reverseCheckBox">
+       <property name="toolTip">
+        <string>If true, the second half of the palette will scale back from the last color to the first color</string>
+       </property>
        <property name="text">
         <string>Mirror Palette?</string>
        </property>
