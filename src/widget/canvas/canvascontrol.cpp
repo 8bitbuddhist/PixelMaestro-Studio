@@ -23,10 +23,7 @@ bool CanvasControl::confirm_clear() {
 	QMessageBox::StandardButton confirm;
 	confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 	if (confirm == QMessageBox::Yes) {
-		canvas_->clear();
-		if (maestro_control_ && maestro_control_->cue_controller_) {
-			maestro_control_->send_to_device(maestro_control_->canvas_handler->clear(maestro_control_->get_section_index(), maestro_control_->get_overlay_index()));
-		}
+		maestro_control_->execute_cue(maestro_control_->canvas_handler->clear(maestro_control_->get_section_index(), maestro_control_->get_overlay_index()));
 
 		return true;
 	}
@@ -186,21 +183,14 @@ void CanvasControl::on_drawButton_clicked() {
 	QAbstractButton* checked_button = this->shape_type_group_.checkedButton();
 
 	if (canvas_->get_type() == CanvasType::ColorCanvas) {
-		ColorCanvas* canvas = static_cast<ColorCanvas*>(canvas_);
 		if (checked_button == ui->circleRadioButton) {
-			canvas->draw_circle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_circle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_circle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->lineRadioButton) {
-			canvas->draw_line(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_line(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_line(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 		}
 		else if (checked_button == ui->rectRadioButton) {
-			canvas->draw_rect(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_rect(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_rect(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->textRadioButton) {
 			// Reinitialize the font
@@ -211,31 +201,21 @@ void CanvasControl::on_drawButton_clicked() {
 					font_ = new Font5x8();
 					break;
 			}
-			canvas->draw_text(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_text(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_text(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 		}
 		else {	// Triangle
-			canvas->draw_triangle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_triangle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_triangle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 	}
 	else {
 		if (checked_button == ui->circleRadioButton) {
-			canvas_->draw_circle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_circle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_circle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->lineRadioButton) {
-			canvas_->draw_line(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_line(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_line(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 		}
 		else if (checked_button == ui->rectRadioButton) {
-			canvas_->draw_rect(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_rect(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_rect(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->textRadioButton) {
 			// Reinitialize the font
@@ -247,19 +227,11 @@ void CanvasControl::on_drawButton_clicked() {
 					break;
 			}
 
-			canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_text(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_text(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 		}
 		else {	// Triangle
-			canvas_->draw_triangle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
-			if (maestro_control_ && maestro_control_->cue_controller_)
-				maestro_control_->canvas_handler->draw_triangle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+			maestro_control_->execute_cue(maestro_control_->canvas_handler->draw_triangle(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
-	}
-
-	if (maestro_control_ && maestro_control_->cue_controller_) {
-		maestro_control_->send_to_device();
 	}
 }
 

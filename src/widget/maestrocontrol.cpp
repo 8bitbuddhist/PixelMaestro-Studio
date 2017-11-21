@@ -30,15 +30,9 @@
  * @param maestro_controller The MaestroController being controlled.
  */
 MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl) {
-
-	this->maestro_controller_ = maestro_controller;
-
-	// Initialize UI
 	ui->setupUi(this);
 
-	initialize();
-
-	initialize_cue_controller();
+	this->maestro_controller_ = maestro_controller;
 
 	// Open serial connection to Arduino (if configured)
 	QSettings settings;
@@ -69,9 +63,49 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		}
 	}
 
-	// Create an initial Cue.
-	if (cue_controller_ != nullptr) {
-		send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette("Color Wheel")->colors[0], palette_controller_.get_palette(0)->colors.size()));
+	// Initialize Cue Controller
+	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller();
+	animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
+	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
+	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
+	section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
+	show_handler = static_cast<ShowCueHandler*>(cue_controller_->enable_handler(CueController::Handler::ShowHandler));
+
+	// Finally, initialize the MaestroControl
+	initialize();
+}
+
+/**
+ * Enables Show Edit mode, which disables updates to the Maestro.
+ * @param enable If true, don't update the Maestro.
+ */
+void MaestroControl::enable_show_edit_mode(bool enable) {
+	show_mode_enabled_ = enable;
+}
+
+/**
+ * Forwards the specified Cue to the drawing area and/or serial device.
+ * @param cue Cue to perform.
+ */
+void MaestroControl::execute_cue(uint8_t *cue) {
+	// Only render to outputs if Show Edit mode isn't enabled
+	if (!show_mode_enabled_) {
+		cue_controller_->run(cue);
+
+		// Update the virtual Maestro
+		if (virtual_device_dialog_ != nullptr) {
+			virtual_device_dialog_->get_maestro()->get_cue_controller()->run(cue);
+		}
+
+		// Send to serial device
+		if (serial_port_.isOpen()) {
+			serial_port_.write((const char*)cue, cue_controller_->get_cue_size(cue));
+		}
+	}
+
+	// Update the ShowControl's history
+	if (show_control_widget_ != nullptr) {
+		static_cast<ShowControl*>(show_control_widget_.get())->add_cue_to_history(cue);
 	}
 }
 
@@ -145,6 +179,21 @@ int16_t MaestroControl::get_section_index() {
 }
 
 /**
+ * Gets the number of Overlays belonging to the Section.
+ * @param section Section to scan.
+ * @return Number of Overlays.
+ */
+uint8_t MaestroControl::get_num_overlays(Section *section) {
+	uint8_t count = 0;
+	Section::Overlay* overlay = section->get_overlay();
+	while (overlay != nullptr) {
+		overlay = overlay->section->get_overlay();
+		count++;
+	}
+	return count;
+}
+
+/**
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
@@ -208,16 +257,6 @@ void MaestroControl::initialize() {
 	populate_overlay_combobox();
 }
 
-/// Initializes Cue components.
-void MaestroControl::initialize_cue_controller() {
-	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller();
-	animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
-	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
-	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
-	section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
-	show_handler = static_cast<ShowCueHandler*>(cue_controller_->enable_handler(CueController::Handler::ShowHandler));
-}
-
 /// Reinitializes Palettes from Palette Dialog.
 void MaestroControl::initialize_palettes() {
 	ui->colorComboBox->blockSignals(true);
@@ -238,11 +277,8 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	if (active_section_->get_parent_section() == nullptr) {
 		return;
 	}
-	active_section_->get_parent_section()->get_overlay()->alpha = arg1;
 
-	if (cue_controller_ != nullptr) {
-		send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1));
-	}
+	execute_cue(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1));
 }
 
 /**
@@ -251,23 +287,14 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
-	if (active_section_->get_animation() != nullptr) {
-		// Only change if the animation is different
-		if (active_section_->get_animation()->get_type() == index) {
-			return;
-		}
+	// Only change if the animation is different
+	if (active_section_->get_animation() == nullptr || active_section_->get_animation()->get_type() == index) {
+		return;
 	}
 
 	// Preserve the animation cycle between changes
-	bool preserve_cycle_index = true;
-
-	Animation* animation = active_section_->set_animation((AnimationType::Type)index, nullptr, 0, preserve_cycle_index);
-
-	show_extra_controls(animation);
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, preserve_cycle_index, nullptr, 0));
-	}
+	execute_cue(section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, true, nullptr, 0));
+	show_extra_controls(active_section_->get_animation());
 
 	// Reapply animation settings
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
@@ -282,23 +309,15 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
  * @param index Index of the new Canvas type.
  */
 void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
-	// Remove the existing Canvas.
-	active_section_->remove_canvas();
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(section_handler->remove_canvas(get_section_index(), get_overlay_index()));
-	}
+	// Remove the existing Canvas
+	execute_cue(section_handler->remove_canvas(get_section_index(), get_overlay_index()));
 
 	// Add the new Canvas
 	if (index > 0) {
-		active_section_->set_canvas((CanvasType::Type)(index - 1));
-
-		if (cue_controller_ != nullptr) {
-			send_to_device(section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1)));
-		}
+		execute_cue(section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1)));
 	}
 
-	show_canvas_controls();
+	show_canvas_controls(index > 0);
 }
 
 /**
@@ -307,16 +326,8 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
-	if (index < 0) {
-		return;
-	}
-
 	PaletteController::Palette* palette = palette_controller_.get_palette(index);
-	active_section_->get_animation()->set_colors(&palette->colors[0], palette->colors.size());
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size()));
-	}
+	execute_cue(animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size()));
 }
 
 /**
@@ -351,12 +362,8 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 	show_layout->removeWidget(show_control_widget_.get());
 	show_control_widget_.reset();
 
-	// Initialize Show and Cue controllers if necessary
+	// Initialize Show if necessary
 	if (checked) {
-		if (cue_controller_ == nullptr) {
-			initialize_cue_controller();
-		}
-
 		if (show_controller_ == nullptr) {
 			show_controller_ = new ShowController(maestro_controller_);
 		}
@@ -371,11 +378,7 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	active_section_->get_animation()->set_fade(checked);
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(animation_handler->set_fade(get_section_index(), get_overlay_index(), checked));
-	}
+	execute_cue(animation_handler->set_fade(get_section_index(), get_overlay_index(), checked));
 }
 
 /**
@@ -388,39 +391,39 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 	}
 
 	if ((Colors::MixMode)index != active_section_->get_parent_section()->get_overlay()->mix_mode) {
-		active_section_->get_parent_section()->get_overlay()->mix_mode = (Colors::MixMode)index;
+		execute_cue(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
 
 		// Show/hide spin box for alpha only
-		if (ui->mix_modeComboBox->currentText().contains("Alpha")) {
+		if ((Colors::MixMode)index == Colors::MixMode::Alpha) {
 			ui->alphaSpinBox->setVisible(true);
 		}
 		else {
 			ui->alphaSpinBox->setVisible(false);
 		}
-
-		if (cue_controller_ != nullptr) {
-			send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
-		}
 	}
 }
 
 void MaestroControl::on_offsetResetButton_clicked() {
-	active_section_->get_animation()->set_center();
-	Point* center = active_section_->get_animation()->get_center();
+
+	execute_cue(animation_handler->reset_center(get_section_index(), get_overlay_index()));
+
+	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
+
 	ui->offsetXSpinBox->blockSignals(true);
 	ui->offsetYSpinBox->blockSignals(true);
-	ui->offsetXSpinBox->setValue(center->x);
-	ui->offsetYSpinBox->setValue(center->y);
-	set_center();
+	ui->offsetXSpinBox->setValue(center.x);
+	ui->offsetYSpinBox->setValue(center.y);
 	ui->offsetXSpinBox->blockSignals(false);
 	ui->offsetYSpinBox->blockSignals(false);
-}
 
-void MaestroControl::on_offsetXSpinBox_valueChanged(int arg1) {
 	set_center();
 }
 
-void MaestroControl::on_offsetYSpinBox_valueChanged(int arg1) {
+void MaestroControl::on_offsetXSpinBox_editingFinished() {
+	set_center();
+}
+
+void MaestroControl::on_offsetYSpinBox_editingFinished() {
 	set_center();
 }
 
@@ -430,13 +433,7 @@ void MaestroControl::on_offsetYSpinBox_valueChanged(int arg1) {
  */
 void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 	if ((Animation::Orientation)index != active_section_->get_animation()->get_orientation()) {
-		if (active_section_->get_animation()) {
-			active_section_->get_animation()->set_orientation((Animation::Orientation)index);
-
-			if (cue_controller_ != nullptr) {
-				send_to_device(animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index));
-			}
-		}
+		execute_cue(animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index));
 	}
 }
 
@@ -451,17 +448,20 @@ void MaestroControl::on_overlayComboBox_currentIndexChanged(int index) {
 	}
 
 	// Show Overlay controls
-	set_overlay_controls_visible(ui->overlayComboBox->currentIndex() > 0);
+	set_overlay_controls_visible(index > 0);
 
 	// Set active Section to Overlay Section
 	set_active_section(overlay_section);
 }
 
 void MaestroControl::on_overlaySpinBox_editingFinished() {
-	// Get the current number of Overlays
-	int num_overlays = maestro_controller_->get_maestro()->get_section(get_section_index())->get_num_overlays();
+	Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
+	Section* last_section = base_section;
 
-	Section* last_section = maestro_controller_->get_maestro()->get_section(get_section_index());
+	// Get the current number of Overlays
+	int num_overlays = get_num_overlays(base_section);
+
+	// Get the last Overlay in the Maestro
 	while (last_section->get_overlay() != nullptr) {
 		last_section = last_section->get_overlay()->section;
 	}
@@ -471,15 +471,18 @@ void MaestroControl::on_overlaySpinBox_editingFinished() {
 	// If diff is positive, add more Overlays
 	if (diff > 0) {
 		while (diff > 0) {
-			last_section = last_section->set_overlay(Colors::MixMode::None)->section;
+			execute_cue(section_handler->set_overlay(get_section_index(base_section), get_overlay_index(last_section), Colors::MixMode::None, 0));
 			diff--;
 		}
 	}
 	// If the diff is negative, remove Overlays
 	else if (diff < 0) {
+		// To be safe, jump back to the base Section
+		on_overlayComboBox_currentIndexChanged(0);
+
 		while (diff < 0) {
 			last_section = last_section->get_parent_section();
-			last_section->remove_overlay();
+			execute_cue(section_handler->remove_overlay(get_section_index(base_section), get_overlay_index(last_section)));
 			diff++;
 		}
 	}
@@ -528,11 +531,7 @@ void MaestroControl::on_pauseSpinBox_valueChanged(int arg1) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	active_section_->get_animation()->set_reverse(checked);
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked));
-	}
+	execute_cue(animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked));
 }
 
 /**
@@ -553,7 +552,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
 
 	// Set Overlay count
 	ui->overlaySpinBox->blockSignals(true);
-	ui->overlaySpinBox->setValue(section->get_num_overlays());
+	ui->overlaySpinBox->setValue(get_num_overlays(section));
 	ui->overlaySpinBox->blockSignals(false);
 
 	populate_overlay_combobox();
@@ -582,11 +581,12 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					frames[frame] = new bool[frame_bounds.size()];
 				}
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, true);
+				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				active_section_->set_dimensions(x, y);
+				execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
 
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
+				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
+
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
 				}
@@ -600,11 +600,12 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					frames[frame] = new Colors::RGB[frame_bounds.size()];
 				}
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, true);
+				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				active_section_->set_dimensions(x, y);
+				execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
 
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
+				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
+
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
 				}
@@ -612,12 +613,11 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 			}
 		}
 		else {	// No Canvas set
-			active_section_->set_dimensions(x, y);
+			execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
 		}
 
 		// Reset Animation center
-		Animation* animation = active_section_->get_animation();
-		animation->set_center();
+		execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), x / 2,	y / 2));
 		on_offsetResetButton_clicked();
 	}
 }
@@ -630,7 +630,7 @@ void MaestroControl::populate_overlay_combobox() {
 	ui->overlayComboBox->clear();
 	ui->overlayComboBox->addItem("Base Section");
 
-	for (uint8_t overlay = 1; overlay <= maestro_controller_->get_maestro()->get_section(get_section_index())->get_num_overlays(); overlay++) {
+	for (uint8_t overlay = 1; overlay <= get_num_overlays(maestro_controller_->get_maestro()->get_section(get_section_index())); overlay++) {
 		ui->overlayComboBox->addItem(QString("Overlay ") + QString::number(overlay));
 	}
 
@@ -642,21 +642,22 @@ void MaestroControl::read_from_file(QString filename) {
 
 	if (file.open(QFile::ReadOnly)) {
 		// Reinitialize UI
-		initialize();
+		//initialize();
 
 		QByteArray bytes = file.readAll();
 		for (int i = 0; i < bytes.size(); i++) {
 			uint8_t byte = (uint8_t)bytes.at(i);
-			cue_controller_->read(byte);
-
-			send_to_device(&byte, 1);
+			// Send the Cue on successful read
+			if(cue_controller_->read(byte)) {
+				// Yes, this means executing twice for a DrawingArea, but it's a temporary convenience
+				execute_cue(cue_controller_->get_cue());
+			}
 		}
 		file.close();
 	}
 
 	// Reinitialize UI with base Section
 	on_sectionComboBox_currentIndexChanged(0);
-	//set_active_section(maestro_controller_->get_maestro()->get_section(0));
 }
 
 void MaestroControl::save_to_file(QString filename) {
@@ -677,7 +678,6 @@ void MaestroControl::save_to_file(QString filename) {
 }
 
 void MaestroControl::save_maestro_settings(QDataStream *datastream) {
-
 	// Timing
 	write_cue_to_stream(datastream, maestro_handler->set_timing(maestro_controller_->get_maestro()->get_timing()->get_interval()));
 
@@ -782,19 +782,21 @@ void MaestroControl::set_active_section(Section* section) {
 	// Set dimensions
 	ui->columnsSpinBox->blockSignals(true);
 	ui->rowsSpinBox->blockSignals(true);
-	ui->columnsSpinBox->setValue(section->get_dimensions()->x);
-	ui->rowsSpinBox->setValue(section->get_dimensions()->y);
+	// These are intentionally reversed
+	ui->columnsSpinBox->setValue(section->get_dimensions()->y);
+	ui->rowsSpinBox->setValue(section->get_dimensions()->x);
 	ui->columnsSpinBox->blockSignals(false);
 	ui->rowsSpinBox->blockSignals(false);
 
-	// Apply animation options and speed
-	Animation* animation = section->get_animation();
-
-	if (animation == nullptr) {
+	// Get animation options and speed
+	// If no animation is set, initialize one.
+	if (section->get_animation() == nullptr) {
 		PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
-		animation = section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
-		animation->set_timing(1000);
+		execute_cue(section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, true, &palette->colors[0], palette->colors.size()));
+		execute_cue(animation_handler->set_timing(get_section_index(), get_overlay_index(), 1000));
 	}
+
+	Animation* animation = section->get_animation();
 
 	ui->orientationComboBox->blockSignals(true);
 	ui->reverse_animationCheckBox->blockSignals(true);
@@ -882,17 +884,13 @@ void MaestroControl::set_active_section(Section* section) {
 	else {
 		ui->canvasComboBox->setCurrentIndex(0);
 	}
-	show_canvas_controls();
+
+	show_canvas_controls(section->get_canvas() != nullptr);
 	ui->canvasComboBox->blockSignals(false);
 }
 
 void MaestroControl::set_center() {
-	active_section_->get_animation()->set_center(ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value());
-	Point* center = active_section_->get_animation()->get_center();
-
-	if (cue_controller_ != nullptr) {
-		send_to_device(animation_handler->set_center(get_section_index(), get_overlay_index(), center->x, center->y));
-	}
+	execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
 }
 
 /// Sets the speed and/or pause interval for the active Animation.
@@ -901,49 +899,7 @@ void MaestroControl::set_speed() {
 	uint16_t speed = ui->cycleSpinBox->value();
 	AnimationTiming* timing = active_section_->get_animation()->get_timing();
 	if (speed != timing->get_interval() || pause != timing->get_pause()) {
-		timing->set_interval(speed, pause);
-
-		if (cue_controller_ != nullptr) {
-			send_to_device(animation_handler->set_timing(get_section_index(), get_overlay_index(), speed, pause));
-		}
-	}
-}
-
-/**
- * Sends the last action performed to the configured serial device.
- */
-void MaestroControl::send_to_device() {
-	send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-}
-
-/**
- * Sends the specified Cue to the serial device.
- * @param cue Cue to send.
- */
-void MaestroControl::send_to_device(uint8_t *cue) {
-	send_to_device(cue, cue_controller_->get_cue_size(cue));
-}
-
-/**
- * Sends data to the serial device.
- * @param data Data to send.
- * @param length Size of the data to send.
- */
-void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
-	// Update the ShowControl's history
-	if (show_control_widget_ != nullptr) {
-		static_cast<ShowControl*>(show_control_widget_.get())->add_cue_to_history(data);
-	}
-
-	// Send to the virtual Maestro
-	if (virtual_device_dialog_ != nullptr) {
-		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data);
-
-		// For debugging only
-		//virtual_device_dialog_->display_cue(data);
-	}
-	else if (serial_port_.isOpen()) {
-		serial_port_.write((const char*)data, length);
+		execute_cue(animation_handler->set_timing(get_section_index(), get_overlay_index(), speed, pause));
 	}
 }
 
@@ -999,7 +955,7 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	}
 }
 
-void MaestroControl::show_canvas_controls() {
+void MaestroControl::show_canvas_controls(bool visible) {
 	QLayout* layout = this->findChild<QLayout*>("canvasControlsLayout");
 
 	// Remove the Canvas controls.
@@ -1007,7 +963,7 @@ void MaestroControl::show_canvas_controls() {
 	layout->removeWidget(canvas_control_widget_.get());
 	canvas_control_widget_.reset();
 
-	if (active_section_->get_canvas() != nullptr) {
+	if (visible) {
 		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(this));
 		layout->addWidget(canvas_control_widget_.get());
 	}

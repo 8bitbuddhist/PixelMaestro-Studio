@@ -57,20 +57,16 @@ class MaestroControl : public QWidget {
 		/// Connection to an Arduino or other device.
 		QSerialPort serial_port_;
 
-		/// If true, only generate Cues instead of modifying the Maestro.
-		bool show_mode_ = false;
-
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
+		void enable_show_edit_mode(bool enable);
+		void execute_cue(uint8_t* cue);
 		int16_t get_overlay_index();
 		uint8_t get_overlay_index(Section* section);
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
 		void save_to_file(QString filename);
-		void send_to_device();
-		void send_to_device(uint8_t* cue);
-		void send_to_device(uint8_t* data, uint8_t length);
 
 	private:
 		Ui::MaestroControl *ui;
@@ -81,22 +77,27 @@ class MaestroControl : public QWidget {
 		/// Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
-		/// Show controls
-		std::unique_ptr<QWidget> show_control_widget_;
-
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
+
+		/// Show controls
+		std::unique_ptr<QWidget> show_control_widget_;
 
 		/// Controller for managing Shows.
 		ShowController* show_controller_ = nullptr;
 
+		/**
+		 * Prevents actions from affecting the Maestro.
+		 * Used when customizing Shows.
+		 */
+		bool show_mode_enabled_ = false;
+
 		/// Virtual device for testing Cue commands.
 		std::unique_ptr<VirtualSerialDeviceDialog> virtual_device_dialog_;
 
+		uint8_t get_num_overlays(Section* section);
 		void initialize();
-		void initialize_cue_controller();
 		void initialize_palettes();
-		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
 		void populate_overlay_combobox();
 		void save_maestro_settings(QDataStream* datastream);
@@ -106,7 +107,7 @@ class MaestroControl : public QWidget {
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
-		void show_canvas_controls();
+		void show_canvas_controls(bool visible);
 		void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 
 	private slots:
@@ -129,9 +130,9 @@ class MaestroControl : public QWidget {
 		void on_overlayComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
 		void on_overlaySpinBox_editingFinished();
-		void on_offsetXSpinBox_valueChanged(int arg1);
-		void on_offsetYSpinBox_valueChanged(int arg1);
 		void on_offsetResetButton_clicked();
+		void on_offsetXSpinBox_editingFinished();
+		void on_offsetYSpinBox_editingFinished();
 };
 
 #endif // MAESTROCONTROL_H

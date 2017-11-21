@@ -29,6 +29,7 @@ class CueInterpreter {
 		static const QStringList ShowActions;
 		static const QStringList AnimationTypes;
 		static const QStringList CanvasTypes;
+		static const QStringList ColorMixModes;
 
 		QString interpret_cue(uint8_t* cue);
 

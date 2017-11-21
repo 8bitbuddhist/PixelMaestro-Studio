@@ -29,6 +29,8 @@ class ShowControl : public QWidget {
 		void on_addEventButton_clicked();
 		void refresh_maestro_last_time();
 
+		void on_lockMaestroCheckBox_toggled(bool checked);
+
 	private:
 		CueController* cue_controller_ = nullptr;
 		CueInterpreter cue_interpreter_;

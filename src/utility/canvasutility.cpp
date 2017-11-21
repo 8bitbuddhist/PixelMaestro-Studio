@@ -16,35 +16,24 @@
  * @param target Target frameset.
  * @param target_x Target width.
  * @param target_y Target height.
- * @param copy_from_canvas If true, copy from the Canvas to the target. Otherwise, copy from the target to the Canvas.
- * @param maestro_control If copying to Canvas and serial is enabled, rebuild the Canvas on the serial device.
  */
-void CanvasUtility::copy_frameset(AnimationCanvas *canvas, bool** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas, MaestroControl* maestro_control) {
+void CanvasUtility::copy_from_canvas(AnimationCanvas *canvas, bool** target, uint16_t target_x, uint16_t target_y) {
 	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-		if (copy_from_canvas) {
-			Point target_bounds(target_x, target_y);
-			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
-					if (x <= target_x && y <= target_y) {
-						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
-					}
+		Point target_bounds(target_x, target_y);
+		for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+				if (x <= target_x && y <= target_y) {
+					target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
 				}
 			}
 		}
-		else {
-			canvas->draw_frame(target[frame], target_x, target_y);
-			canvas->next_frame();
+	}
+}
 
-			if (maestro_control && maestro_control->cue_controller_) {
-				uint8_t section = maestro_control->get_section_index();
-				uint8_t overlay = maestro_control->get_overlay_index();
-				maestro_control->canvas_handler->draw_frame(section, overlay, target_x, target_y, target[frame]);
-				maestro_control->send_to_device();
-
-				maestro_control->canvas_handler->next_frame(section, overlay);
-				maestro_control->send_to_device();
-			}
-		}
+void CanvasUtility::copy_to_canvas(AnimationCanvas *canvas, bool **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index(), target_x, target_y, source[frame]));
+		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
 	}
 }
 
@@ -57,32 +46,23 @@ void CanvasUtility::copy_frameset(AnimationCanvas *canvas, bool** target, uint16
  * @param copy_from_canvas If true, copy from the Canvas to the target. Otherwise, copy from the target to the Canvas.
  * @param maestro_control If copying to Canvas and serial is enabled, rebuild the Canvas on the serial device.
  */
-void CanvasUtility::copy_frameset(ColorCanvas *canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas, MaestroControl* maestro_control) {
+void CanvasUtility::copy_from_canvas(ColorCanvas *canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y) {
 	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-		if (copy_from_canvas) {
-			Point target_bounds(target_x, target_y);
-			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
-					if (x <= target_x && y <= target_y) {
-						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
-					}
+		Point target_bounds(target_x, target_y);
+		for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+				if (x <= target_x && y <= target_y) {
+					target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
 				}
 			}
 		}
-		else {
-			canvas->draw_frame(target[frame], target_x, target_y);
-			canvas->next_frame();
+	}
+}
 
-			if (maestro_control && maestro_control->cue_controller_) {
-				uint8_t section = maestro_control->get_section_index();
-				uint8_t overlay = maestro_control->get_overlay_index();
-				maestro_control->canvas_handler->draw_frame(section, overlay, target_x, target_y, target[frame]);
-				maestro_control->send_to_device();
-
-				maestro_control->canvas_handler->next_frame(section, overlay);
-				maestro_control->send_to_device();
-			}
-		}
+void CanvasUtility::copy_to_canvas(ColorCanvas *canvas, Colors::RGB **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index(), target_x, target_y, source[frame]));
+		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
 	}
 }
 
@@ -97,19 +77,11 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 	QSize canvas_size(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
 	image.setScaledSize(canvas_size);
 
-	canvas->set_num_frames(image.imageCount());
-	if (maestro_control && maestro_control->cue_controller_) {
-		maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.imageCount());
-		maestro_control->send_to_device();
-	}
+	maestro_control->execute_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.imageCount()));
 
 	// For animated images, set the frame rate
 	if (image.imageCount() > 1) {
-		canvas->set_frame_timing(image.nextImageDelay());
-		if (maestro_control && maestro_control->cue_controller_) {
-			maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.nextImageDelay());
-			maestro_control->send_to_device();
-		}
+		maestro_control->execute_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.nextImageDelay()));
 	}
 
 	Point cursor(0, 0);
@@ -127,36 +99,20 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 							{
 								// Only draw if the Pixel is not completely black
 								if (color != Colors::RGB {0, 0, 0}) {
-									canvas->draw_point(x, y);
-
-									if (maestro_control && maestro_control->cue_controller_) {
-										maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), x, y);
-									}
+									maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), x, y));
 								}
 							}
 							break;
 						case CanvasType::ColorCanvas:
 							{
-								static_cast<ColorCanvas*>(canvas)->draw_point(color, x, y);
-
-								if (maestro_control && maestro_control->cue_controller_)
-									maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), color, x, y);
+								maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), color, x, y));
 							}
 							break;
-					}
-
-					if (maestro_control && maestro_control->cue_controller_) {
-						maestro_control->send_to_device();
 					}
 				}
 			}
 		}
-		canvas->next_frame();
 		image.jumpToNextImage();
-
-		if (maestro_control && maestro_control->cue_controller_) {
-			maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index());
-			maestro_control->send_to_device();
-		}
+		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
 	}
 }

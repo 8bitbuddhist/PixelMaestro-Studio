@@ -893,7 +893,7 @@
     </property>
     <widget class="QMenu" name="menuOpen_Demo">
      <property name="title">
-      <string>Open &amp;Demo</string>
+      <string>&amp;Demos</string>
      </property>
      <addaction name="action_Animated_Canvas_Demo"/>
      <addaction name="action_Blink_Demo"/>
@@ -963,7 +963,7 @@
   </action>
   <action name="action_Open_Animation_Editor">
    <property name="text">
-    <string>&amp;New Maestro</string>
+    <string>&amp;New</string>
    </property>
   </action>
   <action name="actionDrawing_Demo">
@@ -1001,12 +1001,12 @@
   </action>
   <action name="action_Save_Maestro">
    <property name="text">
-    <string>&amp;Save Maestro...</string>
+    <string>&amp;Save...</string>
    </property>
   </action>
   <action name="actionOpen_Maestro">
    <property name="text">
-    <string>&amp;Open Maestro...</string>
+    <string>&amp;Open...</string>
    </property>
   </action>
   <action name="action_Animated_Canvas_Demo">

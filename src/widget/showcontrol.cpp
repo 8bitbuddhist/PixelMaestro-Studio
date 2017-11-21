@@ -45,6 +45,10 @@ void ShowControl::on_addEventButton_clicked() {
 	}
 }
 
+void ShowControl::on_lockMaestroCheckBox_toggled(bool checked) {
+	maestro_control_->enable_show_edit_mode(checked);
+}
+
 /// Redraws the Event list.
 void ShowControl::refresh_event_list() {
 	ui->eventListWidget->clear();
