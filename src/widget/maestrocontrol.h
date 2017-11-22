@@ -6,8 +6,13 @@
 #define MAESTROCONTROL_H
 
 #include <memory>
+#include <QButtonGroup>
+#include <QColor>
+#include <QLocale>
 #include <QSerialPort>
 #include <QTextStream>
+#include <QTimer>
+#include <QVector>
 #include <QWidget>
 #include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
@@ -20,7 +25,6 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/showcuehandler.h"
-#include "widget/showcontrol.h"
 #include "window/virtualserialdevicedialog.h"
 
 namespace Ui {
@@ -74,17 +78,29 @@ class MaestroControl : public QWidget {
 		/// Extra animation controls
 		std::unique_ptr<QWidget> animation_extra_control_widget_;
 
-		/// Canvas controls
-		std::unique_ptr<QWidget> canvas_control_widget_;
+		/// Temporary storage for the Canvas drawing brush.
+		QColor canvas_color_ = QColor::fromRgb(0, 0, 0);
+
+		/// Conversion from canvas_color_ into PixelMaestro color.
+		Colors::RGB canvas_rgb_color_;
+
+		/// Group for Canvas shape radio buttons
+		QButtonGroup canvas_shape_type_group_;
+
+		/// History of actions performed in the editor.
+		QVector<uint8_t*> event_history_;
+
+		/// Locale for formatting numbers (specifically the program runtime).
+		QLocale locale_ = QLocale::system();
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
 
-		/// Show controls
-		std::unique_ptr<QWidget> show_control_widget_;
-
 		/// Controller for managing Shows.
 		ShowController* show_controller_ = nullptr;
+
+		/// Updates the Maestro time in the Show tab.
+		QTimer show_timer_;
 
 		/**
 		 * Prevents actions from affecting the Maestro.
@@ -96,6 +112,7 @@ class MaestroControl : public QWidget {
 		std::unique_ptr<VirtualSerialDeviceDialog> virtual_device_dialog_;
 
 		uint8_t get_num_overlays(Section* section);
+		void add_cue_to_history(uint8_t* cue);
 		void initialize();
 		void initialize_palettes();
 		void on_section_resize(uint16_t x, uint16_t y);
@@ -103,11 +120,20 @@ class MaestroControl : public QWidget {
 		void save_maestro_settings(QDataStream* datastream);
 		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void set_active_section(Section* section);
+		void set_canvas_controls_enabled(bool enabled, CanvasType::Type type);
 		void set_center();
-		void set_overlay_controls_visible(bool visible);
+
+		// Canvas control handling methods
+		void set_circle_controls_enabled(bool enabled);
+		void set_line_controls_enabled(bool enabled);
+		void set_rect_controls_enabled(bool enabled);
+		void set_text_controls_enabled(bool enabled);
+		void set_triangle_controls_enabled(bool enabled);
+
+		void set_overlay_controls_enabled(bool visible);
+		void set_show_controls_enabled(bool enabled);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
-		void show_canvas_controls(bool visible);
 		void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 
 	private slots:
@@ -133,6 +159,22 @@ class MaestroControl : public QWidget {
 		void on_offsetResetButton_clicked();
 		void on_offsetXSpinBox_editingFinished();
 		void on_offsetYSpinBox_editingFinished();
+		void on_toggleShowModeCheckBox_clicked(bool checked);
+		void update_maestro_last_time();
+		void on_addEventButton_clicked();
+		void on_frameCountSpinBox_editingFinished();
+		void on_toggleCanvasModeCheckBox_toggled(bool checked);
+		void on_currentFrameSpinBox_editingFinished();
+		void on_frameRateSpinBox_editingFinished();
+		void on_circleRadioButton_toggled(bool checked);
+		void on_lineRadioButton_toggled(bool checked);
+		void on_triangleRadioButton_toggled(bool checked);
+		void on_textRadioButton_toggled(bool checked);
+		void on_rectRadioButton_toggled(bool checked);
+		void on_selectColorButton_clicked();
+		void on_loadImageButton_clicked();
+		void on_clearButton_clicked();
+		void on_drawButton_clicked();
 };
 
 #endif // MAESTROCONTROL_H

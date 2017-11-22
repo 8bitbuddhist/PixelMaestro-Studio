@@ -32,13 +32,10 @@ bool CanvasControl::confirm_clear() {
 }
 
 void CanvasControl::initialize() {
-	// Add radio buttons to groups
-	shape_type_group_.addButton(ui->circleRadioButton);
-	shape_type_group_.addButton(ui->lineRadioButton);
-	shape_type_group_.addButton(ui->rectRadioButton);
-	shape_type_group_.addButton(ui->textRadioButton);
-	shape_type_group_.addButton(ui->triangleRadioButton);
 
+
+	// Disable extra controls
+	ui->currentFrameSpinBox->setEnabled(false);
 	set_line_controls_visible(false);
 	set_rect_controls_visible(false);
 	set_text_controls_visible(false);
@@ -276,6 +273,11 @@ void CanvasControl::on_openImageButton_clicked() {
 		QString("Images (*.bmp *.gif *.jpg *.png)"));
 
 	CanvasUtility::load_image(filename, canvas_, maestro_control_);
+
+	// Set the number of frames
+	ui->numFramesSpinBox->blockSignals(true);
+	ui->numFramesSpinBox->setValue(canvas_->get_num_frames());
+	ui->numFramesSpinBox->blockSignals(false);
 }
 
 void CanvasControl::on_rectRadioButton_toggled(bool checked) {

@@ -62,7 +62,6 @@ SOURCES += src/main.cpp\
 		src/controller/palettecontroller.cpp \
 		src/widget/palettecontrol.cpp \
 		src/controller/cueinterpreter.cpp \
-		src/widget/showcontrol.cpp \
 		src/controller/showcontroller.cpp \
 		src/demo/animatedcanvasdemo.cpp \
 		lib/PixelMaestro/src/colorpresets.cpp \
@@ -127,7 +126,6 @@ HEADERS += \
 		src/controller/palettecontroller.h \
 		src/widget/palettecontrol.h \
 		src/controller/cueinterpreter.h \
-		src/widget/showcontrol.h \
 		src/controller/showcontroller.h \
 		src/demo/animatedcanvasdemo.h \
 		lib/PixelMaestro/src/colorpresets.h \
@@ -147,7 +145,6 @@ FORMS	+= \
 		src/window/settingsdialog.ui \
 		src/widget/animation/radialanimationcontrol.ui \
 		src/widget/palettecontrol.ui \
-		src/widget/showcontrol.ui \
 		src/window/virtualserialdevicedialog.ui
 
 INCLUDEPATH += \
