@@ -36,7 +36,7 @@ class SettingsDialog : public QDialog
 		QSettings settings_;
 		Ui::SettingsDialog *ui;
 
-		void set_simulated_device_options_visible(bool visible);
+		void set_simulated_device_options_enabled(bool enabled);
 };
 
 #endif // SETTINGSDIALOG_H

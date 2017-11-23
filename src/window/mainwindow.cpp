@@ -29,7 +29,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_action_About_triggered() {
-	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.8\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
+	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.9\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
 }
 
 void MainWindow::on_action_Exit_triggered() {
@@ -105,7 +105,7 @@ void MainWindow::on_action_Show_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->action_Show_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->addWidget(new QLabel("Demonstrates using a Show to update a Maestro"));
+	statusBar()->addWidget(new QLabel("Demonstrates using a Show to queue actions"));
 }
 
 void MainWindow::on_action_Canvas_Demo_triggered() {
@@ -129,7 +129,7 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 	// Update UI
 	ui->actionCommand_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->addWidget(new QLabel("Demonstrates configuring a Maestro using Cues"));
+	statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
 }
 
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
@@ -166,7 +166,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->actionDrawing_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->addWidget(new QLabel("Demonstrates an interactive Canvas. Left-click = draw, right-click = erase, Delete =  clear"));
+	statusBar()->addWidget(new QLabel("Demonstrates an interactive Canvas. Use left-click to draw, right-click to erase, and Delete to clear"));
 }
 
 void MainWindow::on_action_Color_Canvas_Demo_triggered() {
@@ -178,12 +178,12 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 	// Update UI
 	ui->action_Color_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->addWidget(new QLabel("Demonstrates drawing on a Color Canvas"));
+	statusBar()->addWidget(new QLabel("Demonstrates a Color Canvas"));
 }
 
 void MainWindow::on_actionOpen_Maestro_triggered() {
 	QString filename = QFileDialog::getOpenFileName(this,
-		QString("Open PixelMaestro Cue File"),
+		QString("Open Cue File"),
 		QDir::home().path(),
 		QString("PixelMaestro Cue File (*.pmc)"));
 
@@ -201,9 +201,9 @@ void MainWindow::on_action_Preferences_triggered() {
 
 void MainWindow::on_action_Save_Maestro_triggered() {
 	QString filename = QFileDialog::getSaveFileName(this,
-		QString("Save PixelMaestro Cue"),
+		QString("Save Cue File"),
 		QDir::home().path(),
-		QString("PixelMaestro Cue (*.pmc)"));
+		QString("PixelMaestro Cue File (*.pmc)"));
 
 	maestro_control_->save_to_file(filename);
 }

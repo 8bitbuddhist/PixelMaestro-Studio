@@ -46,7 +46,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	QString port_name = settings_.value(serial_port).toString();
 	ui->serialPortComboBox->setCurrentText(port_name);
 
-	set_simulated_device_options_visible(ui->serialCheckBox->isChecked() && port_name.contains(virtual_device_option));
+	set_simulated_device_options_enabled(ui->serialCheckBox->isChecked() && port_name.contains(virtual_device_option));
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
@@ -70,14 +70,14 @@ void SettingsDialog::on_buttonBox_accepted() {
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {
 	ui->serialPortComboBox->setEnabled(checked);
 
-	set_simulated_device_options_visible(checked && ui->serialPortComboBox->currentText().contains(virtual_device_option));
+	set_simulated_device_options_enabled(checked && ui->serialPortComboBox->currentText().contains(virtual_device_option));
 }
 
-void SettingsDialog::set_simulated_device_options_visible(bool visible) {
-	ui->simulatedDeviceHeightLabel->setVisible(visible);
-	ui->simulatedDeviceWidthLabel->setVisible(visible);
-	ui->simulatedHeightSpinBox->setVisible(visible);
-	ui->simulatedWidthSpinBox->setVisible(visible);
+void SettingsDialog::set_simulated_device_options_enabled(bool enabled) {
+	ui->simulatedDeviceHeightLabel->setEnabled(enabled);
+	ui->simulatedDeviceWidthLabel->setEnabled(enabled);
+	ui->simulatedHeightSpinBox->setEnabled(enabled);
+	ui->simulatedWidthSpinBox->setEnabled(enabled);
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -85,5 +85,5 @@ SettingsDialog::~SettingsDialog() {
 }
 
 void SettingsDialog::on_serialPortComboBox_currentTextChanged(const QString &arg1) {
-	set_simulated_device_options_visible(arg1.contains(virtual_device_option));
+	set_simulated_device_options_enabled(arg1.contains(virtual_device_option));
 }

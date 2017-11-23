@@ -66,7 +66,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	}
 
 	// Initialize Cue Controller
-	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller();
+	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller(UINT16_MAX);
 	animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
 	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
 	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
@@ -745,15 +745,15 @@ void MaestroControl::read_from_file(QString filename) {
 
 	if (file.open(QFile::ReadOnly)) {
 		// Reinitialize UI
-		//initialize();
+		initialize();
 
 		QByteArray bytes = file.readAll();
 		for (int i = 0; i < bytes.size(); i++) {
 			uint8_t byte = (uint8_t)bytes.at(i);
 			// Send the Cue on successful read
 			if(cue_controller_->read(byte)) {
-				// Yes, this means executing twice for a DrawingArea, but it's a temporary convenience
-				execute_cue(cue_controller_->get_cue());
+				// Yes, this means executing twice in some cases, but it's a temporary convenience
+				execute_cue(cue_controller_->get_buffer());
 			}
 		}
 		file.close();
@@ -771,11 +771,12 @@ void MaestroControl::save_to_file(QString filename) {
 	if (file.open(QFile::WriteOnly)) {
 		QDataStream datastream(&file);
 
+		save_maestro_settings(&datastream);
 		for (uint8_t i = 0; i < maestro_controller_->get_maestro()->get_num_sections(); i++) {
 			save_section_settings(&datastream, i, 0);
 		}
 
-		file.flush();
+		//file.flush();
 		file.close();
 	}
 }
@@ -812,54 +813,61 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, overlay_id, animation->get_orientation()));
 	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, overlay_id, animation->get_reverse()));
 	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, overlay_id, animation->get_fade()));
+	write_cue_to_stream(datastream, animation_handler->set_center(section_id, overlay_id, animation->get_center()->x, animation->get_center()->y));
 	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, overlay_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
-
+	// Save Animation-specific settings
 	switch(animation->get_type()) {
 		case AnimationType::Lightning:
 			{
 				LightningAnimation* la = static_cast<LightningAnimation*>(animation);
-				animation_handler->set_lightning_options(section_id, overlay_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance());
+				write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, overlay_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
 			}
 			break;
 		case AnimationType::Plasma:
 			{
 				PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
-				animation_handler->set_plasma_options(section_id, overlay_id, pa->get_size(), pa->get_resolution());
+				write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, overlay_id, pa->get_size(), pa->get_resolution()));
 			}
 			break;
 		case AnimationType::Radial:
 			{
 				RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
-				animation_handler->set_radial_options(section_id, overlay_id, ra->get_resolution());
+				write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, overlay_id, ra->get_resolution()));
 			}
 			break;
 		case AnimationType::Sparkle:
 			{
 				SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
-				animation_handler->set_sparkle_options(section_id, overlay_id, sa->get_threshold());
+				write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, overlay_id, sa->get_threshold()));
 			}
 			break;
 		default:
 			break;
 	}
-	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
-	// Canvas
+	// Save Canvas settings
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
 		write_cue_to_stream(datastream, section_handler->set_canvas(section_id, overlay_id, canvas->get_type(), canvas->get_num_frames()));
+
+		if (canvas->get_frame_timing()) {
+			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, overlay_id, canvas->get_frame_timing()->get_interval()));
+		}
+
+		if (canvas->get_scroll()) {
+			write_cue_to_stream(datastream, canvas_handler->set_scroll(section_id, overlay_id, canvas->get_scroll()->interval_x, canvas->get_scroll()->interval_y, canvas->get_scroll()->repeat));
+		}
 
 		// Draw and save each frame
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 			switch (canvas->get_type()) {
 				case CanvasType::AnimationCanvas:
-					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame));
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
 					break;
 				case CanvasType::ColorCanvas:
-					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame));
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
 					break;
 			}
-			write_cue_to_stream(datastream, cue_controller_->get_cue());
 		}
 	}
 
@@ -890,6 +898,23 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->rowsSpinBox->setValue(section->get_dimensions()->x);
 	ui->columnsSpinBox->blockSignals(false);
 	ui->rowsSpinBox->blockSignals(false);
+
+	// Get Overlay settings
+	if (section->get_overlay()) {
+		ui->overlaySpinBox->blockSignals(true);
+		ui->overlaySpinBox->setValue(get_num_overlays(section));
+		ui->overlaySpinBox->blockSignals(false);
+	}
+
+	// If this is an Overlay, get the MixMode and alpha
+	if (section->get_parent_section() != nullptr) {
+		ui->mix_modeComboBox->blockSignals(true);
+		ui->alphaSpinBox->blockSignals(true);
+		ui->mix_modeComboBox->setCurrentIndex(section->get_parent_section()->get_overlay()->mix_mode);
+		ui->alphaSpinBox->setValue(section->get_parent_section()->get_overlay()->alpha);
+		ui->mix_modeComboBox->blockSignals(false);
+		ui->alphaSpinBox->blockSignals(false);
+	}
 
 	// Get animation options and speed
 	// If no animation is set, initialize one.
@@ -968,21 +993,14 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->animationComboBox->blockSignals(false);
 	show_extra_controls(animation);
 
-	// Get Overlay MixMode and alpha from the Overlay's parent section
-	if (section->get_parent_section() != nullptr) {
-		ui->mix_modeComboBox->blockSignals(true);
-		ui->alphaSpinBox->blockSignals(true);
-		ui->mix_modeComboBox->setCurrentIndex(section->get_parent_section()->get_overlay()->mix_mode);
-		ui->alphaSpinBox->setValue(section->get_parent_section()->get_overlay()->alpha);
-		ui->mix_modeComboBox->blockSignals(false);
-		ui->alphaSpinBox->blockSignals(false);
-	}
-
 	// Get Canvas
 	ui->canvasComboBox->blockSignals(true);
 	ui->frameCountSpinBox->blockSignals(true);
 	ui->currentFrameSpinBox->blockSignals(true);
 	ui->frameRateSpinBox->blockSignals(true);
+	ui->scrollXSpinBox->blockSignals(true);
+	ui->scrollYSpinBox->blockSignals(true);
+
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
 		ui->canvasComboBox->setCurrentIndex((int)canvas->get_type() + 1);
@@ -990,6 +1008,10 @@ void MaestroControl::set_active_section(Section* section) {
 		ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 		if (canvas->get_frame_timing() != nullptr) {
 			ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
+		}
+		if (canvas->get_scroll() != nullptr) {
+			ui->scrollXSpinBox->setValue(canvas->get_scroll()->interval_x);
+			ui->scrollYSpinBox->setValue(canvas->get_scroll()->interval_y);
 		}
 		set_canvas_controls_enabled(true, canvas->get_type());
 	}
@@ -1005,6 +1027,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->currentFrameSpinBox->blockSignals(false);
 	ui->frameRateSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
+	ui->scrollXSpinBox->blockSignals(false);
+	ui->scrollYSpinBox->blockSignals(false);
 }
 
 // Canvas-specific methods
@@ -1256,6 +1280,9 @@ void MaestroControl::update_maestro_last_time() {
  * @param cue Cue to append.
  */
 void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
+	if (cue == nullptr) {
+		return;
+	}
 	stream->writeRawData((const char*)cue, cue_controller_->get_cue_size(cue));
 }
 
