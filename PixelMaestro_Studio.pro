@@ -48,7 +48,6 @@ SOURCES += src/main.cpp\
 		src/demo/colorcanvasdemo.cpp \
 		lib/PixelMaestro/src/canvas/animationcanvas.cpp \
 		lib/PixelMaestro/src/canvas/canvas.cpp \
-		src/widget/canvas/canvascontrol.cpp \
 		src/demo/cuedemo.cpp \
 		lib/PixelMaestro/src/cue/event.cpp \
 		lib/PixelMaestro/src/cue/show.cpp \
@@ -110,7 +109,6 @@ HEADERS += \
 		lib/PixelMaestro/src/canvas/canvastype.h \
 		lib/PixelMaestro/src/canvas/animationcanvas.h \
 		lib/PixelMaestro/src/canvas/canvas.h \
-		src/widget/canvas/canvascontrol.h \
 		src/demo/cuedemo.h \
 		lib/PixelMaestro/src/cue/event.h \
 		lib/PixelMaestro/src/cue/show.h \
@@ -141,7 +139,6 @@ FORMS	+= \
 		src/widget/animation/lightninganimationcontrol.ui \
 		src/widget/animation/plasmaanimationcontrol.ui \
 		src/widget/animation/sparkleanimationcontrol.ui \
-		src/widget/canvas/canvascontrol.ui \
 		src/window/settingsdialog.ui \
 		src/widget/animation/radialanimationcontrol.ui \
 		src/widget/palettecontrol.ui \

@@ -16,7 +16,6 @@
 #include "animation/sparkleanimationcontrol.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
-#include "canvas/canvascontrol.h"
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
@@ -274,6 +273,7 @@ void MaestroControl::initialize() {
 
 	// Initialize Show timer
 	show_timer_.setTimerType(Qt::CoarseTimer);
+	show_timer_.setInterval(250);
 	connect(&show_timer_, SIGNAL(timeout()), this, SLOT(update_maestro_last_time()));
 
 	// Initialize Canvas elements
@@ -284,15 +284,8 @@ void MaestroControl::initialize() {
 	canvas_shape_type_group_.addButton(ui->textRadioButton);
 	canvas_shape_type_group_.addButton(ui->triangleRadioButton);
 
-	// Disable extra controls
+	// Set Canvas defaults
 	ui->currentFrameSpinBox->setEnabled(false);
-	set_line_controls_enabled(false);
-	set_rect_controls_enabled(false);
-	set_text_controls_enabled(false);
-	set_triangle_controls_enabled(false);
-
-	ui->circleRadioButton->setChecked(true);
-	set_circle_controls_enabled(true);
 
 	// Add fonts
 	ui->fontComboBox->addItems({"5x8"});
@@ -372,6 +365,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 		set_canvas_controls_enabled(true, CanvasType::Type(index - 1));
 
 		// Default to circle radio button so that the controls can be refreshed
+		ui->circleRadioButton->setChecked(true);
 		set_circle_controls_enabled(true);
 	}
 	else {
@@ -450,7 +444,7 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 
 void MaestroControl::on_frameCountSpinBox_editingFinished() {
 	int new_max = ui->frameCountSpinBox->value();
-	if (new_max > ui->currentFrameSpinBox->value()) {
+	if (new_max < ui->currentFrameSpinBox->value()) {
 		ui->currentFrameSpinBox->setValue(new_max);
 	}
 	ui->currentFrameSpinBox->setMaximum(new_max);
@@ -458,7 +452,9 @@ void MaestroControl::on_frameCountSpinBox_editingFinished() {
 }
 
 void MaestroControl::on_frameRateSpinBox_editingFinished() {
-	execute_cue(canvas_handler->set_frame_timing(get_section_index(), get_overlay_index(), ui->frameRateSpinBox->value()));
+	if (!ui->toggleCanvasModeCheckBox->isChecked()) {
+		execute_cue(canvas_handler->set_frame_timing(get_section_index(), get_overlay_index(), ui->frameRateSpinBox->value()));
+	}
 }
 
 /**
@@ -483,28 +479,36 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 	}
 }
 
-void MaestroControl::on_offsetResetButton_clicked() {
+void MaestroControl::on_centerResetButton_clicked() {
 
 	execute_cue(animation_handler->reset_center(get_section_index(), get_overlay_index()));
 
 	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
 
-	ui->offsetXSpinBox->blockSignals(true);
-	ui->offsetYSpinBox->blockSignals(true);
-	ui->offsetXSpinBox->setValue(center.x);
-	ui->offsetYSpinBox->setValue(center.y);
-	ui->offsetXSpinBox->blockSignals(false);
-	ui->offsetYSpinBox->blockSignals(false);
+	ui->centerXSpinBox->blockSignals(true);
+	ui->centerYSpinBox->blockSignals(true);
+	ui->centerXSpinBox->setValue(center.x);
+	ui->centerYSpinBox->setValue(center.y);
+	ui->centerXSpinBox->blockSignals(false);
+	ui->centerYSpinBox->blockSignals(false);
 
 	set_center();
 }
 
-void MaestroControl::on_offsetXSpinBox_editingFinished() {
+void MaestroControl::on_centerXSpinBox_editingFinished() {
 	set_center();
 }
 
-void MaestroControl::on_offsetYSpinBox_editingFinished() {
+void MaestroControl::on_centerYSpinBox_editingFinished() {
 	set_center();
+}
+
+void MaestroControl::on_scrollXSpinBox_editingFinished() {
+	set_scroll();
+}
+
+void MaestroControl::on_scrollYSpinBox_editingFinished() {
+	set_scroll();
 }
 
 /**
@@ -698,7 +702,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 		// Reset Animation center
 		execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), x / 2,	y / 2));
-		on_offsetResetButton_clicked();
+		on_centerResetButton_clicked();
 	}
 }
 
@@ -708,6 +712,9 @@ void MaestroControl::on_toggleCanvasModeCheckBox_toggled(bool checked) {
 
 	if (checked) {
 		execute_cue(canvas_handler->remove_frame_timing(get_section_index(), get_overlay_index()));
+		ui->currentFrameSpinBox->blockSignals(true);
+		ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->blockSignals(false);
 	}
 	else {
 		on_frameRateSpinBox_editingFinished();
@@ -901,8 +908,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(true);
 	ui->pauseSlider->blockSignals(true);
 	ui->pauseSpinBox->blockSignals(true);
-	ui->offsetXSpinBox->blockSignals(true);
-	ui->offsetYSpinBox->blockSignals(true);
+	ui->centerXSpinBox->blockSignals(true);
+	ui->centerYSpinBox->blockSignals(true);
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
@@ -910,8 +917,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->setValue(animation->get_timing()->get_interval());
 	ui->pauseSlider->setValue(animation->get_timing()->get_pause());
 	ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
-	ui->offsetXSpinBox->setValue(animation->get_center()->x);
-	ui->offsetYSpinBox->setValue(animation->get_center()->y);
+	ui->centerXSpinBox->setValue(animation->get_center()->x);
+	ui->centerYSpinBox->setValue(animation->get_center()->y);
 	ui->orientationComboBox->blockSignals(false);
 	ui->reverse_animationCheckBox->blockSignals(false);
 	ui->fadeCheckBox->blockSignals(false);
@@ -919,8 +926,8 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(false);
 	ui->pauseSlider->blockSignals(false);
 	ui->pauseSpinBox->blockSignals(false);
-	ui->offsetXSpinBox->blockSignals(false);
-	ui->offsetYSpinBox->blockSignals(false);
+	ui->centerXSpinBox->blockSignals(false);
+	ui->centerYSpinBox->blockSignals(false);
 
 	/*
 	 * Select Palette.
@@ -973,19 +980,30 @@ void MaestroControl::set_active_section(Section* section) {
 
 	// Get Canvas
 	ui->canvasComboBox->blockSignals(true);
+	ui->frameCountSpinBox->blockSignals(true);
+	ui->currentFrameSpinBox->blockSignals(true);
+	ui->frameRateSpinBox->blockSignals(true);
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
 		ui->canvasComboBox->setCurrentIndex((int)canvas->get_type() + 1);
+		ui->frameCountSpinBox->setValue(canvas->get_num_frames());
+		ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
+		if (canvas->get_frame_timing() != nullptr) {
+			ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
+		}
 		set_canvas_controls_enabled(true, canvas->get_type());
 	}
 	else {
 		ui->canvasComboBox->setCurrentIndex(0);
+		ui->frameCountSpinBox->setValue(1);
+		ui->currentFrameSpinBox->setValue(1);
+		ui->frameRateSpinBox->setValue(100);
 		set_canvas_controls_enabled(false, CanvasType::Type::AnimationCanvas);
 	}
 
-	// Default to selcting circle controls. This resets the various controls to a non-funky state.
-	ui->circleRadioButton->setChecked(true);
-	on_circleRadioButton_toggled(true);
+	ui->frameCountSpinBox->blockSignals(false);
+	ui->currentFrameSpinBox->blockSignals(false);
+	ui->frameRateSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
 }
 
@@ -1023,6 +1041,9 @@ void MaestroControl::set_canvas_controls_enabled(bool enabled, CanvasType::Type 
 	ui->loadImageButton->setEnabled(enabled);
 	ui->drawButton->setEnabled(enabled);
 	ui->clearButton->setEnabled(enabled);
+	ui->scrollLabel->setEnabled(enabled);
+	ui->scrollXSpinBox->setEnabled(enabled);
+	ui->scrollYSpinBox->setEnabled(enabled);
 }
 
 void MaestroControl::set_circle_controls_enabled(bool enabled) {
@@ -1052,6 +1073,7 @@ void MaestroControl::set_line_controls_enabled(bool enabled) {
 		set_rect_controls_enabled(false);
 		set_text_controls_enabled(false);
 		set_triangle_controls_enabled(false);
+		ui->fillCheckBox->setEnabled(false);
 	}
 
 	ui->originLabel->setEnabled(enabled);
@@ -1061,8 +1083,6 @@ void MaestroControl::set_line_controls_enabled(bool enabled) {
 	ui->targetLabel->setEnabled(enabled);
 	ui->targetXSpinBox->setEnabled(enabled);
 	ui->targetYSpinBox->setEnabled(enabled);
-
-	ui->fillCheckBox->setEnabled(enabled);
 }
 
 void MaestroControl::set_rect_controls_enabled(bool enabled) {
@@ -1142,7 +1162,12 @@ void MaestroControl::set_triangle_controls_enabled(bool enabled) {
 // End Canvas-specific methods
 
 void MaestroControl::set_center() {
-	execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
+	execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), ui->centerXSpinBox->value(), ui->centerYSpinBox->value()));
+}
+
+void MaestroControl::set_scroll() {
+	// Defaults to repeatingc
+	execute_cue(canvas_handler->set_scroll(get_section_index(), get_overlay_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), true));
 }
 
 void MaestroControl::set_show_controls_enabled(bool enabled) {

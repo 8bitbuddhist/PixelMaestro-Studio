@@ -8,7 +8,6 @@
 #include "demo/cuedemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
-#include "widget/canvas/canvascontrol.h"
 #include "mainwindow.h"
 #include <memory>
 #include <QDesktopServices>

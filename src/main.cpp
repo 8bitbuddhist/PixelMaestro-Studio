@@ -1,6 +1,7 @@
 #include "window/mainwindow.h"
 #include <QApplication>
 #include <QFormLayout>
+#include <QStyleFactory>
 #include <QVBoxLayout>
 
 int main(int argc, char* argv[]) {
@@ -8,10 +9,29 @@ int main(int argc, char* argv[]) {
 	QCoreApplication::setOrganizationName("pixelmaestro");
 	QCoreApplication::setApplicationName("pixelmaestro");
 
-	QApplication a(argc, argv);
+	QApplication app(argc, argv);
 	MainWindow w;
 
-	// Set default window size
+	// Set global color palette (https://gist.github.com/QuantumCD/6245215)
+	qApp->setStyle(QStyleFactory::create("fusion"));
+
+	QPalette palette;
+	palette.setColor(QPalette::Window, QColor(53,53,53));
+	palette.setColor(QPalette::WindowText, Qt::white);
+	palette.setColor(QPalette::Base, QColor(15,15,15));
+	palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+	palette.setColor(QPalette::ToolTipBase, QColor(15,15,15));
+	palette.setColor(QPalette::ToolTipText, Qt::white);
+	palette.setColor(QPalette::Text, Qt::white);
+	palette.setColor(QPalette::Button, QColor(53,53,53));
+	palette.setColor(QPalette::ButtonText, Qt::white);
+	palette.setColor(QPalette::BrightText, Qt::red);
+
+	palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
+	palette.setColor(QPalette::HighlightedText, Qt::black);
+	qApp->setPalette(palette);
+
+	// Set default window size to max
 	w.setWindowState(Qt::WindowState::WindowMaximized);
 
 	// Add drawing area to form
@@ -19,8 +39,8 @@ int main(int argc, char* argv[]) {
 	Q_ASSERT(main_layout);
 
 	// Enable high DPI output
-	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
+	app.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
 
 	w.show();
-	return a.exec();
+	return app.exec();
 }

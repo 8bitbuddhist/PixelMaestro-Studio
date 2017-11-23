@@ -130,6 +130,7 @@ class MaestroControl : public QWidget {
 		void set_text_controls_enabled(bool enabled);
 		void set_triangle_controls_enabled(bool enabled);
 
+		void set_scroll();
 		void set_overlay_controls_enabled(bool visible);
 		void set_show_controls_enabled(bool enabled);
 		void set_speed();
@@ -156,11 +157,10 @@ class MaestroControl : public QWidget {
 		void on_overlayComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
 		void on_overlaySpinBox_editingFinished();
-		void on_offsetResetButton_clicked();
-		void on_offsetXSpinBox_editingFinished();
-		void on_offsetYSpinBox_editingFinished();
+		void on_centerResetButton_clicked();
+		void on_centerXSpinBox_editingFinished();
+		void on_centerYSpinBox_editingFinished();
 		void on_toggleShowModeCheckBox_clicked(bool checked);
-		void update_maestro_last_time();
 		void on_addEventButton_clicked();
 		void on_frameCountSpinBox_editingFinished();
 		void on_toggleCanvasModeCheckBox_toggled(bool checked);
@@ -175,6 +175,10 @@ class MaestroControl : public QWidget {
 		void on_loadImageButton_clicked();
 		void on_clearButton_clicked();
 		void on_drawButton_clicked();
+		void on_scrollXSpinBox_editingFinished();
+		void on_scrollYSpinBox_editingFinished();
+
+		void update_maestro_last_time();
 };
 
 #endif // MAESTROCONTROL_H
