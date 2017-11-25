@@ -37,11 +37,11 @@ const QStringList CueInterpreter::CanvasActions({"Clear",
 const QStringList CueInterpreter::MaestroActions({"Set Timing"});
 
 const QStringList CueInterpreter::SectionActions({"Remove Canvas",
-												  "Remove Overlay",
+												  "Remove Layer",
 												  "Set Animation",
 												  "Set Canvas",
 												  "Set Dimensions",
-												  "Set Overlay"});
+												  "Set Layer"});
 
 const QStringList CueInterpreter::ShowActions({"Set Events",
 											   "Set Looping",
@@ -64,7 +64,7 @@ const QStringList CueInterpreter::CanvasTypes({"Animation",
 
 const QStringList CueInterpreter::ColorMixModes({"Alpha",
 												"Multiply",
-												"Overlay"});
+												"Layer"});
 
 
 CueInterpreter::CueInterpreter() { }
@@ -95,7 +95,7 @@ QString CueInterpreter::interpret_cue(uint8_t* cue) {
 
 void CueInterpreter::interpret_animation_cue(uint8_t* cue, QString* result) {
 	result->append("Section: " + QString::number(cue[AnimationCueHandler::Byte::SectionByte]) + ", ");
-	result->append("Overlay: " + QString::number(cue[AnimationCueHandler::Byte::OverlayByte]) + ", ");
+	result->append("Layer: " + QString::number(cue[AnimationCueHandler::Byte::LayerByte]) + ", ");
 	result->append("Action: " + AnimationActions.at(cue[AnimationCueHandler::Byte::ActionByte]));
 
 	// TODO: Finish Animation parameters
@@ -103,7 +103,7 @@ void CueInterpreter::interpret_animation_cue(uint8_t* cue, QString* result) {
 
 void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
 	result->append("Section: " + QString::number(cue[CanvasCueHandler::Byte::SectionByte]) + ", ");
-	result->append("Overlay: " + QString::number(cue[CanvasCueHandler::Byte::OverlayByte]) + ", ");
+	result->append("Layer: " + QString::number(cue[CanvasCueHandler::Byte::LayerByte]) + ", ");
 	result->append("Canvas Type: " + CanvasTypes.at(cue[CanvasCueHandler::Byte::TypeByte]) + ", ");
 	result->append("Action: " + CanvasActions.at(cue[CanvasCueHandler::Byte::ActionByte]));
 
@@ -122,7 +122,7 @@ void CueInterpreter::interpret_maestro_cue(uint8_t* cue, QString* result) {
 
 void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 	result->append("Section: " + QString::number(cue[SectionCueHandler::Byte::SectionByte]) + ", ");
-	result->append("Overlay: " + QString::number(cue[SectionCueHandler::Byte::OverlayByte]) + ", ");
+	result->append("Layer: " + QString::number(cue[SectionCueHandler::Byte::LayerByte]) + ", ");
 	result->append("Action: " + SectionActions.at(cue[SectionCueHandler::Byte::ActionByte]));
 
 	switch ((SectionCueHandler::Action)cue[SectionCueHandler::Byte::ActionByte]) {
@@ -141,7 +141,7 @@ void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 				result->append(", Height: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 1])));
 			}
 			break;
-		case SectionCueHandler::Action::SetOverlay:
+		case SectionCueHandler::Action::SetLayer:
 			{
 				result->append(", Mix Mode: ") + ColorMixModes.at(cue[SectionCueHandler::Byte::OptionsByte]);
 				result->append(", Alpha: " + QString::number(cue[SectionCueHandler::Byte::OptionsByte + 1]));

@@ -127,10 +127,10 @@ void MaestroControl::execute_cue(uint8_t *cue) {
 }
 
 /**
- * Returns the index of the current Overlay.
- * @return Overlay index.
+ * Returns the index of the current Layer.
+ * @return Layer index.
  */
-int16_t MaestroControl::get_overlay_index() {
+int16_t MaestroControl::get_layer_index() {
 	/*
 	 * Find the depth of the current Section by traversing parent_section_.
 	 * Once parent_section == nullptr, we know we've hit the base Section.
@@ -144,7 +144,7 @@ int16_t MaestroControl::get_overlay_index() {
 	return level;
 }
 
-uint8_t MaestroControl::get_overlay_index(Section* section) {
+uint8_t MaestroControl::get_layer_index(Section* section) {
 	uint8_t level = 0;
 	Section* test_section = section;
 	while (test_section->get_parent_section() != nullptr) {
@@ -179,7 +179,7 @@ uint8_t MaestroControl::get_section_index(Section* section) {
 int16_t MaestroControl::get_section_index() {
 	Section* target_section = active_section_;
 
-	// If this is an Overlay, iterate until we find the parent ID
+	// If this is an Layer, iterate until we find the parent ID
 	while (target_section->get_parent_section() != nullptr) {
 		target_section = target_section->get_parent_section();
 	}
@@ -196,15 +196,15 @@ int16_t MaestroControl::get_section_index() {
 }
 
 /**
- * Gets the number of Overlays belonging to the Section.
+ * Gets the number of Layers belonging to the Section.
  * @param section Section to scan.
- * @return Number of Overlays.
+ * @return Number of Layers.
  */
-uint8_t MaestroControl::get_num_overlays(Section *section) {
+uint8_t MaestroControl::get_num_layers(Section *section) {
 	uint8_t count = 0;
-	Section::Overlay* overlay = section->get_overlay();
-	while (overlay != nullptr) {
-		overlay = overlay->section->get_overlay();
+	Section::Layer* layer = section->get_layer();
+	while (layer != nullptr) {
+		layer = layer->section->get_layer();
 		count++;
 	}
 	return count;
@@ -228,7 +228,7 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->blockSignals(true);
 	ui->orientationComboBox->blockSignals(true);
 	ui->sectionComboBox->blockSignals(true);
-	ui->overlayComboBox->blockSignals(true);
+	ui->layerComboBox->blockSignals(true);
 	ui->mix_modeComboBox->blockSignals(true);
 	ui->alphaSpinBox->blockSignals(true);
 	ui->canvasComboBox->blockSignals(true);
@@ -236,7 +236,7 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->clear();
 	ui->orientationComboBox->clear();
 	ui->sectionComboBox->clear();
-	ui->overlayComboBox->clear();
+	ui->layerComboBox->clear();
 	ui->mix_modeComboBox->clear();
 	ui->alphaSpinBox->clear();
 	ui->canvasComboBox->clear();
@@ -245,14 +245,14 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
-	// Set Section/Overlay
+	// Set Section/Layer
 	for (uint8_t section = 1; section <= maestro_controller_->get_maestro()->get_num_sections(); section++) {
 		ui->sectionComboBox->addItem(QString("Section ") + QString::number(section));
 	}
 	ui->sectionComboBox->setCurrentIndex(0);
 
-	// Initialize Overlay controls
-	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
+	// Initialize Layer controls
+	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Layer"});
 
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
@@ -261,14 +261,14 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->blockSignals(false);
 	ui->orientationComboBox->blockSignals(false);
 	ui->sectionComboBox->blockSignals(false);
-	ui->overlayComboBox->blockSignals(false);
+	ui->layerComboBox->blockSignals(false);
 	ui->mix_modeComboBox->blockSignals(false);
 	ui->alphaSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
 
 	// Disable advanced controls until they're activated manually
 	set_canvas_controls_enabled(false, CanvasType::AnimationCanvas);
-	set_overlay_controls_enabled(false);
+	set_layer_controls_enabled(false);
 	set_show_controls_enabled(false);
 
 	// Initialize Show timer
@@ -292,7 +292,7 @@ void MaestroControl::initialize() {
 
 	// Finally, open up the default Section
 	set_active_section(section);
-	populate_overlay_combobox();
+	populate_layer_combobox();
 }
 
 /// Reinitializes Palettes from Palette Dialog.
@@ -317,7 +317,7 @@ void MaestroControl::on_addEventButton_clicked() {
 }
 
 /**
- * Sets the Overlay's transparency level.
+ * Sets the Layer's transparency level.
  * @param arg1 Transparency level from 0 - 255.
  */
 void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
@@ -325,7 +325,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 		return;
 	}
 
-	execute_cue(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1));
+	execute_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_layer()->mix_mode, arg1));
 }
 
 /**
@@ -340,7 +340,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	}
 
 	// Preserve the animation cycle between changes
-	execute_cue(section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, true, nullptr, 0));
+	execute_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType::Type)index, true, nullptr, 0));
 	show_extra_controls(active_section_->get_animation());
 
 	// Reapply animation settings
@@ -357,11 +357,11 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	// Remove the existing Canvas
-	execute_cue(section_handler->remove_canvas(get_section_index(), get_overlay_index()));
+	execute_cue(section_handler->remove_canvas(get_section_index(), get_layer_index()));
 
 	// Add the new Canvas
 	if (index > 0) {
-		execute_cue(section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1)));
+		execute_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), (CanvasType::Type)(index - 1)));
 		set_canvas_controls_enabled(true, CanvasType::Type(index - 1));
 
 		// Default to circle radio button so that the controls can be refreshed
@@ -380,7 +380,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 	PaletteController::Palette* palette = palette_controller_.get_palette(index);
-	execute_cue(animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size()));
+	execute_cue(animation_handler->set_colors(get_section_index(), get_layer_index(), &palette->colors[0], palette->colors.size()));
 }
 
 /**
@@ -391,7 +391,16 @@ void MaestroControl::on_columnsSpinBox_editingFinished() {
 }
 
 void MaestroControl::on_currentFrameSpinBox_editingFinished() {
-	execute_cue(canvas_handler->set_current_frame_index(get_section_index(), get_overlay_index(), ui->currentFrameSpinBox->value() - 1));
+	int frame = ui->currentFrameSpinBox->value();
+
+	// If the selected frame exceeds the number of frames, set to the number of frames.
+	if (frame >= active_section_->get_canvas()->get_num_frames()) {
+		frame = active_section_->get_canvas()->get_num_frames() - 1;
+		ui->currentFrameSpinBox->setValue(frame);
+	}
+	else {
+		execute_cue(canvas_handler->set_current_frame_index(get_section_index(), get_layer_index(), frame));
+	}
 }
 
 /**
@@ -439,7 +448,7 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	execute_cue(animation_handler->set_fade(get_section_index(), get_overlay_index(), checked));
+	execute_cue(animation_handler->set_fade(get_section_index(), get_layer_index(), checked));
 }
 
 void MaestroControl::on_frameCountSpinBox_editingFinished() {
@@ -448,17 +457,20 @@ void MaestroControl::on_frameCountSpinBox_editingFinished() {
 		ui->currentFrameSpinBox->setValue(new_max);
 	}
 	ui->currentFrameSpinBox->setMaximum(new_max);
-	execute_cue(canvas_handler->set_num_frames(get_section_index(), get_overlay_index(), new_max));
+	execute_cue(canvas_handler->set_num_frames(get_section_index(), get_layer_index(), new_max));
+
+	// Set the new maximum for the current_frame spinbox
+	ui->currentFrameSpinBox->setMaximum(new_max);
 }
 
 void MaestroControl::on_frameRateSpinBox_editingFinished() {
 	if (!ui->toggleCanvasModeCheckBox->isChecked()) {
-		execute_cue(canvas_handler->set_frame_timing(get_section_index(), get_overlay_index(), ui->frameRateSpinBox->value()));
+		execute_cue(canvas_handler->set_frame_timing(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
 	}
 }
 
 /**
- * Changes the Overlay's mix mode.
+ * Changes the Layer's mix mode.
  * @param index
  */
 void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
@@ -466,8 +478,8 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 		return;
 	}
 
-	if ((Colors::MixMode)index != active_section_->get_parent_section()->get_overlay()->mix_mode) {
-		execute_cue(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
+	if ((Colors::MixMode)index != active_section_->get_parent_section()->get_layer()->mix_mode) {
+		execute_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
 
 		// Show/hide spin box for alpha only
 		if ((Colors::MixMode)index == Colors::MixMode::Alpha) {
@@ -481,7 +493,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 
 void MaestroControl::on_centerResetButton_clicked() {
 
-	execute_cue(animation_handler->reset_center(get_section_index(), get_overlay_index()));
+	execute_cue(animation_handler->reset_center(get_section_index(), get_layer_index()));
 
 	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
 
@@ -517,61 +529,61 @@ void MaestroControl::on_scrollYSpinBox_editingFinished() {
  */
 void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 	if ((Animation::Orientation)index != active_section_->get_animation()->get_orientation()) {
-		execute_cue(animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index));
+		execute_cue(animation_handler->set_orientation(get_section_index(), get_layer_index(), (Animation::Orientation)index));
 	}
 }
 
-void MaestroControl::on_overlayComboBox_currentIndexChanged(int index) {
+void MaestroControl::on_layerComboBox_currentIndexChanged(int index) {
 	/*
-	 * If we selected an Overlay, iterate through the Section's nested Overlays until we find it.
+	 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 	 * If we selected 'None', use the base Section as the active Section.
 	 */
-	Section* overlay_section = maestro_controller_->get_maestro()->get_section(get_section_index());
+	Section* layer_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 	for (int i = 0; i < index; i++) {
-		overlay_section = overlay_section->get_overlay()->section;
+		layer_section = layer_section->get_layer()->section;
 	}
 
-	// Show Overlay controls
-	set_overlay_controls_enabled(index > 0);
+	// Show Layer controls
+	set_layer_controls_enabled(index > 0);
 
-	// Set active Section to Overlay Section
-	set_active_section(overlay_section);
+	// Set active Section to Layer Section
+	set_active_section(layer_section);
 }
 
-void MaestroControl::on_overlaySpinBox_editingFinished() {
+void MaestroControl::on_layerSpinBox_editingFinished() {
 	Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 	Section* last_section = base_section;
 
-	// Get the current number of Overlays
-	int num_overlays = get_num_overlays(base_section);
+	// Get the current number of Layers
+	int num_layers = get_num_layers(base_section);
 
-	// Get the last Overlay in the Maestro
-	while (last_section->get_overlay() != nullptr) {
-		last_section = last_section->get_overlay()->section;
+	// Get the last Layer in the Maestro
+	while (last_section->get_layer() != nullptr) {
+		last_section = last_section->get_layer()->section;
 	}
 
-	int diff = ui->overlaySpinBox->value() - num_overlays;
+	int diff = ui->layerSpinBox->value() - num_layers;
 
-	// If diff is positive, add more Overlays
+	// If diff is positive, add more Layers
 	if (diff > 0) {
 		while (diff > 0) {
-			execute_cue(section_handler->set_overlay(get_section_index(base_section), get_overlay_index(last_section), Colors::MixMode::None, 0));
+			execute_cue(section_handler->set_layer(get_section_index(base_section), get_layer_index(last_section), Colors::MixMode::None, 0));
 			diff--;
 		}
 	}
-	// If the diff is negative, remove Overlays
+	// If the diff is negative, remove Layers
 	else if (diff < 0) {
 		// To be safe, jump back to the base Section
-		on_overlayComboBox_currentIndexChanged(0);
+		on_layerComboBox_currentIndexChanged(0);
 
 		while (diff < 0) {
 			last_section = last_section->get_parent_section();
-			execute_cue(section_handler->remove_overlay(get_section_index(base_section), get_overlay_index(last_section)));
+			execute_cue(section_handler->remove_layer(get_section_index(base_section), get_layer_index(last_section)));
 			diff++;
 		}
 	}
 
-	populate_overlay_combobox();
+	populate_layer_combobox();
 }
 
 /**
@@ -615,7 +627,7 @@ void MaestroControl::on_pauseSpinBox_valueChanged(int arg1) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	execute_cue(animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked));
+	execute_cue(animation_handler->set_reverse(get_section_index(), get_layer_index(), checked));
 }
 
 /**
@@ -626,20 +638,20 @@ void MaestroControl::on_rowsSpinBox_editingFinished() {
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
-	// Hide Overlay controls
-	set_overlay_controls_enabled(false);
+	// Hide Layer controls
+	set_layer_controls_enabled(false);
 
 	Section* section = maestro_controller_->get_maestro()->get_section(index);
 
 	// Set active controller
 	set_active_section(section);
 
-	// Set Overlay count
-	ui->overlaySpinBox->blockSignals(true);
-	ui->overlaySpinBox->setValue(get_num_overlays(section));
-	ui->overlaySpinBox->blockSignals(false);
+	// Set Layer count
+	ui->layerSpinBox->blockSignals(true);
+	ui->layerSpinBox->setValue(get_num_layers(section));
+	ui->layerSpinBox->blockSignals(false);
 
-	populate_overlay_combobox();
+	populate_layer_combobox();
 }
 
 /**
@@ -667,7 +679,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				}
 				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
+				execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 
 				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -686,7 +698,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				}
 				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
+				execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 
 				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -697,11 +709,11 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 			}
 		}
 		else {	// No Canvas set
-			execute_cue(section_handler->set_dimensions(get_section_index(), get_overlay_index(), x, y));
+			execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 		}
 
 		// Reset Animation center
-		execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), x / 2,	y / 2));
+		execute_cue(animation_handler->set_center(get_section_index(), get_layer_index(), x / 2,	y / 2));
 		on_centerResetButton_clicked();
 	}
 }
@@ -711,7 +723,7 @@ void MaestroControl::on_toggleCanvasModeCheckBox_toggled(bool checked) {
 	ui->currentFrameSpinBox->setEnabled(checked);
 
 	if (checked) {
-		execute_cue(canvas_handler->remove_frame_timing(get_section_index(), get_overlay_index()));
+		execute_cue(canvas_handler->remove_frame_timing(get_section_index(), get_layer_index()));
 		ui->currentFrameSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
 		ui->currentFrameSpinBox->blockSignals(false);
@@ -726,18 +738,18 @@ void MaestroControl::on_toggleShowModeCheckBox_clicked(bool checked) {
 }
 
 /**
- * Rebuilds the Overlay combobox using the current active Section.
+ * Rebuilds the Layer combobox using the current active Section.
  */
-void MaestroControl::populate_overlay_combobox() {
-	ui->overlayComboBox->blockSignals(true);
-	ui->overlayComboBox->clear();
-	ui->overlayComboBox->addItem("Base Section");
+void MaestroControl::populate_layer_combobox() {
+	ui->layerComboBox->blockSignals(true);
+	ui->layerComboBox->clear();
+	ui->layerComboBox->addItem("Base Section");
 
-	for (uint8_t overlay = 1; overlay <= get_num_overlays(maestro_controller_->get_maestro()->get_section(get_section_index())); overlay++) {
-		ui->overlayComboBox->addItem(QString("Overlay ") + QString::number(overlay));
+	for (uint8_t layer = 1; layer <= get_num_layers(maestro_controller_->get_maestro()->get_section(get_section_index())); layer++) {
+		ui->layerComboBox->addItem(QString("Layer ") + QString::number(layer));
 	}
 
-	ui->overlayComboBox->blockSignals(false);
+	ui->layerComboBox->blockSignals(false);
 }
 
 void MaestroControl::read_from_file(QString filename) {
@@ -794,51 +806,51 @@ void MaestroControl::save_maestro_settings(QDataStream *datastream) {
 	}
 }
 
-void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id) {
+void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
 
 	Section* section = maestro_controller_->get_maestro()->get_section(section_id);
 
-	if (overlay_id > 0) {
-		for (uint8_t i = 0; i < overlay_id; i++) {
-			section = section->get_overlay()->section;
+	if (layer_id > 0) {
+		for (uint8_t i = 0; i < layer_id; i++) {
+			section = section->get_layer()->section;
 		}
 	}
 
 	// Dimensions
-	write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y));
+	write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
 
 	// Animation & Colors
 	Animation* animation = section->get_animation();
-	write_cue_to_stream(datastream,section_handler->set_animation(section_id, overlay_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false));
-	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, overlay_id, animation->get_orientation()));
-	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, overlay_id, animation->get_reverse()));
-	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, overlay_id, animation->get_fade()));
-	write_cue_to_stream(datastream, animation_handler->set_center(section_id, overlay_id, animation->get_center()->x, animation->get_center()->y));
-	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, overlay_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
+	write_cue_to_stream(datastream,section_handler->set_animation(section_id, layer_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false));
+	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
+	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
+	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
+	write_cue_to_stream(datastream, animation_handler->set_center(section_id, layer_id, animation->get_center()->x, animation->get_center()->y));
+	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
 	// Save Animation-specific settings
 	switch(animation->get_type()) {
 		case AnimationType::Lightning:
 			{
 				LightningAnimation* la = static_cast<LightningAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, overlay_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
+				write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
 			}
 			break;
 		case AnimationType::Plasma:
 			{
 				PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, overlay_id, pa->get_size(), pa->get_resolution()));
+				write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
 			}
 			break;
 		case AnimationType::Radial:
 			{
 				RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, overlay_id, ra->get_resolution()));
+				write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
 			}
 			break;
 		case AnimationType::Sparkle:
 			{
 				SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, overlay_id, sa->get_threshold()));
+				write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
 			}
 			break;
 		default:
@@ -848,34 +860,38 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	// Save Canvas settings
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
-		write_cue_to_stream(datastream, section_handler->set_canvas(section_id, overlay_id, canvas->get_type(), canvas->get_num_frames()));
+		write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_type(), canvas->get_num_frames()));
 
 		if (canvas->get_frame_timing()) {
-			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, overlay_id, canvas->get_frame_timing()->get_interval()));
+			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
 		}
 
 		if (canvas->get_scroll()) {
-			write_cue_to_stream(datastream, canvas_handler->set_scroll(section_id, overlay_id, canvas->get_scroll()->interval_x, canvas->get_scroll()->interval_y, canvas->get_scroll()->repeat));
+			write_cue_to_stream(datastream, canvas_handler->set_scroll(section_id, layer_id, canvas->get_scroll()->interval_x, canvas->get_scroll()->interval_y, canvas->get_scroll()->repeat));
 		}
 
 		// Draw and save each frame
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 			switch (canvas->get_type()) {
 				case CanvasType::AnimationCanvas:
-					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
 					break;
 				case CanvasType::ColorCanvas:
-					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
 					break;
 			}
+			if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
+				write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
+			}
 		}
+		write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(get_section_index(), get_layer_index(), 0));
 	}
 
-	// Overlays
-	Section::Overlay* overlay = section->get_overlay();
-	if (overlay != nullptr) {
-		write_cue_to_stream(datastream, section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha));
-		save_section_settings(datastream, section_id, overlay_id + 1);
+	// Layers
+	Section::Layer* layer = section->get_layer();
+	if (layer != nullptr) {
+		write_cue_to_stream(datastream, section_handler->set_layer(section_id, layer_id, layer->mix_mode, layer->alpha));
+		save_section_settings(datastream, section_id, layer_id + 1);
 	}
 }
 
@@ -899,19 +915,19 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->columnsSpinBox->blockSignals(false);
 	ui->rowsSpinBox->blockSignals(false);
 
-	// Get Overlay settings
-	if (section->get_overlay()) {
-		ui->overlaySpinBox->blockSignals(true);
-		ui->overlaySpinBox->setValue(get_num_overlays(section));
-		ui->overlaySpinBox->blockSignals(false);
+	// Get Layer settings
+	if (section->get_layer()) {
+		ui->layerSpinBox->blockSignals(true);
+		ui->layerSpinBox->setValue(get_num_layers(section));
+		ui->layerSpinBox->blockSignals(false);
 	}
 
-	// If this is an Overlay, get the MixMode and alpha
+	// If this is an Layer, get the MixMode and alpha
 	if (section->get_parent_section() != nullptr) {
 		ui->mix_modeComboBox->blockSignals(true);
 		ui->alphaSpinBox->blockSignals(true);
-		ui->mix_modeComboBox->setCurrentIndex(section->get_parent_section()->get_overlay()->mix_mode);
-		ui->alphaSpinBox->setValue(section->get_parent_section()->get_overlay()->alpha);
+		ui->mix_modeComboBox->setCurrentIndex(section->get_parent_section()->get_layer()->mix_mode);
+		ui->alphaSpinBox->setValue(section->get_parent_section()->get_layer()->alpha);
 		ui->mix_modeComboBox->blockSignals(false);
 		ui->alphaSpinBox->blockSignals(false);
 	}
@@ -920,8 +936,8 @@ void MaestroControl::set_active_section(Section* section) {
 	// If no animation is set, initialize one.
 	if (section->get_animation() == nullptr) {
 		PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
-		execute_cue(section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, true, &palette->colors[0], palette->colors.size()));
-		execute_cue(animation_handler->set_timing(get_section_index(), get_overlay_index(), 1000));
+		execute_cue(section_handler->set_animation(get_section_index(), get_layer_index(), AnimationType::Solid, true, &palette->colors[0], palette->colors.size()));
+		execute_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), 1000));
 	}
 
 	Animation* animation = section->get_animation();
@@ -978,7 +994,7 @@ void MaestroControl::set_active_section(Section* section) {
 			name += "Section " + QString::number(get_section_index());
 		}
 		else {
-			name += "Overlay " + QString::number(get_overlay_index());
+			name += "Layer " + QString::number(get_layer_index());
 		}
 		palette_controller_.add_palette(name, animation->get_colors(), animation->get_num_colors());
 		ui->colorComboBox->blockSignals(true);
@@ -1186,12 +1202,12 @@ void MaestroControl::set_triangle_controls_enabled(bool enabled) {
 // End Canvas-specific methods
 
 void MaestroControl::set_center() {
-	execute_cue(animation_handler->set_center(get_section_index(), get_overlay_index(), ui->centerXSpinBox->value(), ui->centerYSpinBox->value()));
+	execute_cue(animation_handler->set_center(get_section_index(), get_layer_index(), ui->centerXSpinBox->value(), ui->centerYSpinBox->value()));
 }
 
 void MaestroControl::set_scroll() {
 	// Defaults to repeatingc
-	execute_cue(canvas_handler->set_scroll(get_section_index(), get_overlay_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), true));
+	execute_cue(canvas_handler->set_scroll(get_section_index(), get_layer_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), true));
 }
 
 void MaestroControl::set_show_controls_enabled(bool enabled) {
@@ -1214,16 +1230,16 @@ void MaestroControl::set_speed() {
 	uint16_t speed = ui->cycleSpinBox->value();
 	AnimationTiming* timing = active_section_->get_animation()->get_timing();
 	if (speed != timing->get_interval() || pause != timing->get_pause()) {
-		execute_cue(animation_handler->set_timing(get_section_index(), get_overlay_index(), speed, pause));
+		execute_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), speed, pause));
 	}
 }
 
 /**
- * Sets Overlay-related controls enabled.
+ * Sets Layer-related controls enabled.
  * @param visible True if you want to enable the controls.
  */
-void MaestroControl::set_overlay_controls_enabled(bool visible) {
-	// If visible, enable Overlay controls
+void MaestroControl::set_layer_controls_enabled(bool visible) {
+	// If visible, enable Layer controls
 	ui->mixModeLabel->setEnabled(visible);
 	ui->mix_modeComboBox->setEnabled(visible);
 	ui->alphaSpinBox->setEnabled(visible);
@@ -1349,7 +1365,7 @@ void MaestroControl::on_clearButton_clicked() {
 	QMessageBox::StandardButton confirm;
 	confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 	if (confirm == QMessageBox::Yes) {
-		execute_cue(canvas_handler->clear(get_section_index(), get_overlay_index()));
+		execute_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
 	}
 }
 
@@ -1358,36 +1374,36 @@ void MaestroControl::on_drawButton_clicked() {
 
 	if ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1) == CanvasType::ColorCanvas) {
 		if (checked_button == ui->circleRadioButton) {
-			execute_cue(canvas_handler->draw_circle(get_section_index(), get_overlay_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->lineRadioButton) {
-			execute_cue(canvas_handler->draw_line(get_section_index(), get_overlay_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 		}
 		else if (checked_button == ui->rectRadioButton) {
-			execute_cue(canvas_handler->draw_rect(get_section_index(), get_overlay_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->textRadioButton) {
-			execute_cue(canvas_handler->draw_text(get_section_index(), get_overlay_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 		}
 		else {	// Triangle
-			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_overlay_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 	}
 	else {
 		if (checked_button == ui->circleRadioButton) {
-			execute_cue(canvas_handler->draw_circle(get_section_index(), get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->lineRadioButton) {
-			execute_cue(canvas_handler->draw_line(get_section_index(), get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 		}
 		else if (checked_button == ui->rectRadioButton) {
-			execute_cue(canvas_handler->draw_rect(get_section_index(), get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 		else if (checked_button == ui->textRadioButton) {
-			execute_cue(canvas_handler->draw_text(get_section_index(), get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 		}
 		else {	// Triangle
-			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_overlay_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 	}
 }

@@ -73,7 +73,7 @@
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Overlay Count</string>
+          <string>Layers</string>
          </property>
         </widget>
        </item>
@@ -94,7 +94,7 @@
        <item row="2" column="2">
         <widget class="QSpinBox" name="alphaSpinBox">
          <property name="toolTip">
-          <string>The Overlay's transparency</string>
+          <string>The Layer's transparency</string>
          </property>
          <property name="maximum">
           <number>255</number>
@@ -107,7 +107,7 @@
        <item row="2" column="1">
         <widget class="QComboBox" name="mix_modeComboBox">
          <property name="toolTip">
-          <string>The method used to mix this Overlay with its base Section</string>
+          <string>The method used to mix this Layer with its base Section</string>
          </property>
         </widget>
        </item>
@@ -141,9 +141,9 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QComboBox" name="overlayComboBox">
+        <widget class="QComboBox" name="layerComboBox">
          <property name="toolTip">
-          <string>The currently selected Overlay</string>
+          <string>The currently selected Layer</string>
          </property>
         </widget>
        </item>
@@ -155,9 +155,9 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="overlaySpinBox">
+        <widget class="QSpinBox" name="layerSpinBox">
          <property name="toolTip">
-          <string>The number of Overlays belonging to this Section</string>
+          <string>The number of Layers belonging to this Section</string>
          </property>
          <property name="maximum">
           <number>255</number>
@@ -452,7 +452,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>590</width>
+            <width>588</width>
             <height>414</height>
            </rect>
           </property>
@@ -617,14 +617,14 @@
            <item row="1" column="0">
             <widget class="QLabel" name="toggleCanvasModeLabel">
              <property name="text">
-              <string>Enable Edit Mode</string>
+              <string>Frame Edit Mode</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
             <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
              <property name="toolTip">
-              <string>Disables automatic frame switching, allowing you to manually switch between frames</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="text">
               <string/>
@@ -813,7 +813,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>619</width>
+            <width>612</width>
             <height>414</height>
            </rect>
           </property>
@@ -829,7 +829,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="toggleShowModeLabel">
                <property name="text">
-                <string>Enable Edit Mode</string>
+                <string>Event Edit Mode</string>
                </property>
               </widget>
              </item>
@@ -903,7 +903,7 @@
              <item row="1" column="1">
               <widget class="QCheckBox" name="toggleShowModeCheckBox">
                <property name="toolTip">
-                <string>Prevents actions from changing the Mastro while still listing them in the event history</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="text">
                 <string/>
@@ -1006,6 +1006,63 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>sectionComboBox</tabstop>
+  <tabstop>layerComboBox</tabstop>
+  <tabstop>layerSpinBox</tabstop>
+  <tabstop>mix_modeComboBox</tabstop>
+  <tabstop>alphaSpinBox</tabstop>
+  <tabstop>rowsSpinBox</tabstop>
+  <tabstop>columnsSpinBox</tabstop>
+  <tabstop>colorComboBox</tabstop>
+  <tabstop>paletteControlButton</tabstop>
+  <tabstop>animationComboBox</tabstop>
+  <tabstop>orientationComboBox</tabstop>
+  <tabstop>reverse_animationCheckBox</tabstop>
+  <tabstop>fadeCheckBox</tabstop>
+  <tabstop>centerXSpinBox</tabstop>
+  <tabstop>centerYSpinBox</tabstop>
+  <tabstop>centerResetButton</tabstop>
+  <tabstop>cycleSlider</tabstop>
+  <tabstop>cycleSpinBox</tabstop>
+  <tabstop>pauseSlider</tabstop>
+  <tabstop>pauseSpinBox</tabstop>
+  <tabstop>canvasScrollArea</tabstop>
+  <tabstop>canvasComboBox</tabstop>
+  <tabstop>toggleCanvasModeCheckBox</tabstop>
+  <tabstop>frameCountSpinBox</tabstop>
+  <tabstop>currentFrameSpinBox</tabstop>
+  <tabstop>frameRateSpinBox</tabstop>
+  <tabstop>scrollXSpinBox</tabstop>
+  <tabstop>scrollYSpinBox</tabstop>
+  <tabstop>circleRadioButton</tabstop>
+  <tabstop>lineRadioButton</tabstop>
+  <tabstop>triangleRadioButton</tabstop>
+  <tabstop>textRadioButton</tabstop>
+  <tabstop>rectRadioButton</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>originXSpinBox</tabstop>
+  <tabstop>originYSpinBox</tabstop>
+  <tabstop>targetXSpinBox</tabstop>
+  <tabstop>targetYSpinBox</tabstop>
+  <tabstop>target2XSpinBox</tabstop>
+  <tabstop>target2YSpinBox</tabstop>
+  <tabstop>textLineEdit</tabstop>
+  <tabstop>selectColorButton</tabstop>
+  <tabstop>fillCheckBox</tabstop>
+  <tabstop>loadImageButton</tabstop>
+  <tabstop>drawButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>showScrollArea</tabstop>
+  <tabstop>enableShowCheckBox</tabstop>
+  <tabstop>toggleShowModeCheckBox</tabstop>
+  <tabstop>eventTimeSpinBox</tabstop>
+  <tabstop>addEventButton</tabstop>
+  <tabstop>eventHistoryWidget</tabstop>
+  <tabstop>eventListWidget</tabstop>
+  <tabstop>currentTimeLineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

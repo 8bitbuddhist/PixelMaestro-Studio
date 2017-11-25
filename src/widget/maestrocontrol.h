@@ -65,8 +65,8 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 		void enable_show_edit_mode(bool enable);
 		void execute_cue(uint8_t* cue);
-		int16_t get_overlay_index();
-		uint8_t get_overlay_index(Section* section);
+		int16_t get_layer_index();
+		uint8_t get_layer_index(Section* section);
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
@@ -111,14 +111,14 @@ class MaestroControl : public QWidget {
 		/// Virtual device for testing Cue commands.
 		std::unique_ptr<VirtualSerialDeviceDialog> virtual_device_dialog_;
 
-		uint8_t get_num_overlays(Section* section);
+		uint8_t get_num_layers(Section* section);
 		void add_cue_to_history(uint8_t* cue);
 		void initialize();
 		void initialize_palettes();
 		void on_section_resize(uint16_t x, uint16_t y);
-		void populate_overlay_combobox();
+		void populate_layer_combobox();
 		void save_maestro_settings(QDataStream* datastream);
-		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
+		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
 		void set_active_section(Section* section);
 		void set_canvas_controls_enabled(bool enabled, CanvasType::Type type);
 		void set_center();
@@ -131,7 +131,7 @@ class MaestroControl : public QWidget {
 		void set_triangle_controls_enabled(bool enabled);
 
 		void set_scroll();
-		void set_overlay_controls_enabled(bool visible);
+		void set_layer_controls_enabled(bool visible);
 		void set_show_controls_enabled(bool enabled);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
@@ -154,9 +154,9 @@ class MaestroControl : public QWidget {
 		void on_enableShowCheckBox_toggled(bool checked);
 		void on_pauseSlider_valueChanged(int value);
 		void on_pauseSpinBox_valueChanged(int arg1);
-		void on_overlayComboBox_currentIndexChanged(int index);
+		void on_layerComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
-		void on_overlaySpinBox_editingFinished();
+		void on_layerSpinBox_editingFinished();
 		void on_centerResetButton_clicked();
 		void on_centerXSpinBox_editingFinished();
 		void on_centerYSpinBox_editingFinished();

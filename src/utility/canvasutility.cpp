@@ -32,8 +32,8 @@ void CanvasUtility::copy_from_canvas(AnimationCanvas *canvas, bool** target, uin
 
 void CanvasUtility::copy_to_canvas(AnimationCanvas *canvas, bool **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index(), target_x, target_y, source[frame]));
-		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
+		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
+		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 	}
 }
 
@@ -61,8 +61,8 @@ void CanvasUtility::copy_from_canvas(ColorCanvas *canvas, Colors::RGB** target, 
 
 void CanvasUtility::copy_to_canvas(ColorCanvas *canvas, Colors::RGB **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index(), target_x, target_y, source[frame]));
-		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
+		maestro_control->execute_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
+		maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 	}
 }
 
@@ -78,7 +78,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 	image.setScaledSize(canvas_size);
 
 	if (maestro_control) {
-		maestro_control->execute_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.imageCount()));
+		maestro_control->execute_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.imageCount()));
 	}
 	else {
 		canvas->set_num_frames(image.imageCount());
@@ -87,7 +87,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 	// For animated images, set the frame rate
 	if (image.imageCount() > 1) {
 		if (maestro_control) {
-			maestro_control->execute_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_overlay_index(), image.nextImageDelay()));
+			maestro_control->execute_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
 		}
 		else {
 			canvas->set_frame_timing(image.nextImageDelay());
@@ -110,7 +110,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 								// Only draw if the Pixel is not completely black
 								if (color != Colors::RGB {0, 0, 0}) {
 									if (maestro_control) {
-										maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), x, y));
+										maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), x, y));
 									}
 									else {
 										canvas->draw_point(x, y);
@@ -121,7 +121,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 						case CanvasType::ColorCanvas:
 							{
 								if (maestro_control) {
-									maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_overlay_index(), color, x, y));
+									maestro_control->execute_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color, x, y));
 								}
 								else {
 									static_cast<ColorCanvas*>(canvas)->draw_point(color, x, y);
@@ -134,7 +134,7 @@ void CanvasUtility::load_image(QString filename, Canvas *canvas, MaestroControl*
 		}
 		image.jumpToNextImage();
 		if (maestro_control) {
-			maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_overlay_index()));
+			maestro_control->execute_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 		}
 		else {
 			canvas->next_frame();
