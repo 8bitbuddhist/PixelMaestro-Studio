@@ -109,6 +109,26 @@
          <property name="toolTip">
           <string>The method used to mix this Layer with its base Section</string>
          </property>
+         <item>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Alpha</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Multiply</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Overlay</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="0" column="0">
@@ -267,6 +287,16 @@
          <property name="toolTip">
           <string>The animation's orientation</string>
          </property>
+         <item>
+          <property name="text">
+           <string>Horizontal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Vertical</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="0" column="2">
@@ -284,6 +314,61 @@
            <height>0</height>
           </size>
          </property>
+         <item>
+          <property name="text">
+           <string>Blink</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cycle</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Lightning</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mandelbrot</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Merge</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Plasma</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Radial</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Random</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Solid</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Sparkle</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Wave</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="4" column="0">
@@ -452,7 +537,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>588</width>
+            <width>603</width>
             <height>414</height>
            </rect>
           </property>
@@ -598,6 +683,21 @@
              <property name="toolTip">
               <string>Adds a drawing surface to the pixel grid</string>
              </property>
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Animation</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Color</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="6" column="1">

@@ -133,6 +133,16 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 }
 
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
+
+	// If Animation Editor is currently open, verify user wants to close
+	if (maestro_control_ != nullptr) {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "New Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		if (confirm != QMessageBox::Yes) {
+			return;
+		}
+	}
+
 	reset_drawing_area();
 
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
@@ -141,7 +151,6 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	main_layout_->addWidget(maestro_control_);
 
-	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	ui->action_Save_Maestro->setEnabled(true);
 }

@@ -73,6 +73,12 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
 	show_handler = static_cast<ShowCueHandler*>(cue_controller_->enable_handler(CueController::Handler::ShowHandler));
 
+	// Clear out and re-add the Maestro's Sections
+	active_section_ = nullptr;
+	maestro_controller_->reset_sections();
+
+	maestro_controller_->set_sections(settings.value(SettingsDialog::num_sections, 1).toInt());
+
 	// Finally, initialize the MaestroControl
 	initialize();
 }
@@ -214,36 +220,19 @@ uint8_t MaestroControl::get_num_layers(Section *section) {
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
-	// Clear out and re-add the Maestro's Sections
-	active_section_ = nullptr;
-	maestro_controller_->reset_sections();
-
-	QSettings settings;
-	maestro_controller_->set_sections(settings.value(SettingsDialog::num_sections, 1).toInt());
+	// Get the base Section
 	Section* section = maestro_controller_->get_maestro()->get_section(0);
 
 	initialize_palettes();
 
 	// There must be a better way to bulk block signals.
-	ui->animationComboBox->blockSignals(true);
-	ui->orientationComboBox->blockSignals(true);
 	ui->sectionComboBox->blockSignals(true);
 	ui->layerComboBox->blockSignals(true);
-	ui->mix_modeComboBox->blockSignals(true);
 	ui->alphaSpinBox->blockSignals(true);
-	ui->canvasComboBox->blockSignals(true);
 
-	ui->animationComboBox->clear();
-	ui->orientationComboBox->clear();
 	ui->sectionComboBox->clear();
 	ui->layerComboBox->clear();
-	ui->mix_modeComboBox->clear();
 	ui->alphaSpinBox->clear();
-	ui->canvasComboBox->clear();
-
-	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
-	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Set Section/Layer
 	for (uint8_t section = 1; section <= maestro_controller_->get_maestro()->get_num_sections(); section++) {
@@ -251,20 +240,10 @@ void MaestroControl::initialize() {
 	}
 	ui->sectionComboBox->setCurrentIndex(0);
 
-	// Initialize Layer controls
-	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Layer"});
-
-	// Initialize Canvas controls
-	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
-
 	// Unblock signals (*grumble grumble*)
-	ui->animationComboBox->blockSignals(false);
-	ui->orientationComboBox->blockSignals(false);
 	ui->sectionComboBox->blockSignals(false);
 	ui->layerComboBox->blockSignals(false);
-	ui->mix_modeComboBox->blockSignals(false);
 	ui->alphaSpinBox->blockSignals(false);
-	ui->canvasComboBox->blockSignals(false);
 
 	// Disable advanced controls until they're activated manually
 	set_canvas_controls_enabled(false, CanvasType::AnimationCanvas);
@@ -275,6 +254,21 @@ void MaestroControl::initialize() {
 	show_timer_.setTimerType(Qt::CoarseTimer);
 	show_timer_.setInterval(250);
 	connect(&show_timer_, SIGNAL(timeout()), this, SLOT(update_maestro_last_time()));
+
+	// Set Show controls
+	Show* show = maestro_controller_->get_maestro()->get_show();
+	if (show != nullptr) {
+		on_enableShowCheckBox_toggled(true);
+		ui->enableShowCheckBox->setChecked(true);
+
+		for (uint16_t i = 0; i < show->get_num_events(); i++) {
+			Event* event = &show->get_events()[i];
+			show_controller_->add_event(event->get_time(), event->get_cue());
+			ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
+		}
+
+		show_controller_->initialize_events();
+	}
 
 	// Initialize Canvas elements
 	// Add radio buttons to groups
@@ -314,6 +308,7 @@ void MaestroControl::on_addEventButton_clicked() {
 		Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), event_history_.at(index.row()));
 		ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
 	}
+	show_controller_->initialize_events();
 }
 
 /**
@@ -370,6 +365,11 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	}
 	else {
 		set_canvas_controls_enabled(false, CanvasType::Type(index - 1));
+
+		// Check if Edit Frame mode is enabled, and disable it
+		if (ui->toggleCanvasModeCheckBox->isChecked()) {
+			on_toggleCanvasModeCheckBox_toggled(false);
+		}
 	}
 }
 
@@ -433,6 +433,12 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 			// TODO: Use execute_cue() to send Show commands to other devices
 		}
 	}
+	else {
+		// Disable show edit mode if enabled
+		if (show_mode_enabled_) {
+			on_toggleShowModeCheckBox_clicked(false);
+		}
+	}
 
 	// Initialize Show timer
 	if (checked) {
@@ -481,18 +487,17 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 	if ((Colors::MixMode)index != active_section_->get_parent_section()->get_layer()->mix_mode) {
 		execute_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
 
-		// Show/hide spin box for alpha only
+		// Enable spin box for alpha only
 		if ((Colors::MixMode)index == Colors::MixMode::Alpha) {
-			ui->alphaSpinBox->setVisible(true);
+			ui->alphaSpinBox->setEnabled(true);
 		}
 		else {
-			ui->alphaSpinBox->setVisible(false);
+			ui->alphaSpinBox->setEnabled(false);
 		}
 	}
 }
 
 void MaestroControl::on_centerResetButton_clicked() {
-
 	execute_cue(animation_handler->reset_center(get_section_index(), get_layer_index()));
 
 	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
@@ -756,9 +761,6 @@ void MaestroControl::read_from_file(QString filename) {
 	QFile file(filename);
 
 	if (file.open(QFile::ReadOnly)) {
-		// Reinitialize UI
-		initialize();
-
 		QByteArray bytes = file.readAll();
 		for (int i = 0; i < bytes.size(); i++) {
 			uint8_t byte = (uint8_t)bytes.at(i);
@@ -771,7 +773,10 @@ void MaestroControl::read_from_file(QString filename) {
 		file.close();
 	}
 
-	// Reinitialize UI with base Section
+	// Reinitialize UI
+	initialize();
+
+	// Set starting Section to 0 (to be safe)
 	on_sectionComboBox_currentIndexChanged(0);
 }
 
@@ -800,7 +805,8 @@ void MaestroControl::save_maestro_settings(QDataStream *datastream) {
 	// Save Show settings
 	Show* show = maestro_controller_->get_maestro()->get_show();
 	if (show != nullptr) {
-		write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events()));
+		write_cue_to_stream(datastream, maestro_handler->set_show());
+		write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), true));
 		write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
 		write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
 	}

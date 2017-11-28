@@ -34,7 +34,8 @@ const QStringList CueInterpreter::CanvasActions({"Clear",
 												 "Set Offset",
 												 "Set Scroll"});
 
-const QStringList CueInterpreter::MaestroActions({"Set Timing"});
+const QStringList CueInterpreter::MaestroActions({"Set Show",
+												  "Set Timing"});
 
 const QStringList CueInterpreter::SectionActions({"Remove Canvas",
 												  "Remove Layer",
@@ -64,7 +65,7 @@ const QStringList CueInterpreter::CanvasTypes({"Animation",
 
 const QStringList CueInterpreter::ColorMixModes({"Alpha",
 												"Multiply",
-												"Layer"});
+												"Overlay"});
 
 
 CueInterpreter::CueInterpreter() { }

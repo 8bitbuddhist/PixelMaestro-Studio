@@ -13,7 +13,7 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	CueController* controller = maestro->set_cue_controller();
 
 	SectionCueHandler *section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-	section_handler->set_layer(0, 0, Colors::MixMode::Layer, 0);
+	section_handler->set_layer(0, 0, Colors::MixMode::Overlay, 0);
 	controller->run();
 
 	section_handler->set_dimensions(0, 0, 62, 9);

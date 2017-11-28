@@ -24,6 +24,7 @@ VirtualSerialDeviceDialog::VirtualSerialDeviceDialog(QWidget *parent) :
 	controller->enable_handler(CueController::Handler::CanvasHandler);
 	controller->enable_handler(CueController::Handler::MaestroHandler);
 	controller->enable_handler(CueController::Handler::SectionHandler);
+	controller->enable_handler(CueController::Handler::ShowHandler);
 
 	// Add Maestro to window
 	QLayout* layout = this->findChild<QLayout*>("maestroLayout");

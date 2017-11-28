@@ -10,5 +10,5 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added Show Edit mode, which lets you generate Events without changing the Maestro itself.
 
 ### Changed
-- Revamped all Animation Editor controls. Controls are now grouped in tabs for each component: Section, Animation, Canvas, and Show.
+- Redesigned Animation Editor UI. Controls are now grouped into tabs for each component: Section, Animation, Canvas, and Show.
 - Show controls are now fully functional.

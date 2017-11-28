@@ -17,12 +17,9 @@ ShowController::ShowController(MaestroController* maestro_controller) {
 Event* ShowController::add_event(uint32_t time, uint8_t *cue) {
 	if (cue != nullptr) {
 		events_.push_back(Event(time, cue));
-		initialize_events();
-
-		return &events_[events_.size() - 1];
 	}
 
-	return nullptr;
+	return &events_[events_.size() - 1];
 }
 
 Event* ShowController::get_event(uint16_t index) {
