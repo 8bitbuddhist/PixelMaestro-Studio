@@ -60,3 +60,5 @@ TODO
 
 ### Saving and Loading Configurations
 You can save the current Maestro configuration to a file by clicking *File* > *Save Maestro...*. Likewise, you can open a Maestro configuration using *File* > *Open Maestro...*. This file works on any device running PixelMaestro.
+
+[![Support this project on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=8547028)
