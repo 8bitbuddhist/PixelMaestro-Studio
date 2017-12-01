@@ -54,7 +54,7 @@
        <item row="3" column="2">
         <widget class="QSpinBox" name="columnsSpinBox">
          <property name="toolTip">
-          <string>The height of the Pixel grid</string>
+          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
@@ -141,7 +141,7 @@
        <item row="3" column="1">
         <widget class="QSpinBox" name="rowsSpinBox">
          <property name="toolTip">
-          <string>The width of the pixel grid</string>
+          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
          </property>
          <property name="frame">
           <bool>true</bool>
@@ -535,9 +535,9 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>-107</x>
             <y>0</y>
-            <width>603</width>
+            <width>675</width>
             <height>414</height>
            </rect>
           </property>
@@ -867,18 +867,12 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="6">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item row="4" column="6">
+            <widget class="QCheckBox" name="scrollRepeatCheckBox">
+             <property name="text">
+              <string>Repeat</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>80</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -913,7 +907,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>612</width>
+            <width>675</width>
             <height>414</height>
            </rect>
           </property>
@@ -933,70 +927,10 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <layout class="QHBoxLayout" name="timeLayout">
-               <item>
-                <widget class="QSpinBox" name="eventTimeSpinBox">
-                 <property name="toolTip">
-                  <string>The time that the Event will run</string>
-                 </property>
-                 <property name="maximum">
-                  <number>100000000</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>10</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="addEventButton">
-                 <property name="toolTip">
-                  <string>Adds the selected Event(s) to the Show</string>
-                 </property>
-                 <property name="text">
-                  <string>Add Event(s)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="currentTimeLabel">
-                 <property name="text">
-                  <string>Current Time</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="currentTimeLineEdit">
-                 <property name="toolTip">
-                  <string>The program's current runtime</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <widget class="QCheckBox" name="enableShowCheckBox">
-               <property name="toolTip">
-                <string>Enables support for queuing actions</string>
-               </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="enableShowLabel">
                <property name="text">
-                <string/>
+                <string>Enable Show</string>
                </property>
               </widget>
              </item>
@@ -1010,63 +944,78 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="eventTimeLabel">
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="enableShowCheckBox">
+               <property name="toolTip">
+                <string>Enables support for queuing actions</string>
+               </property>
                <property name="text">
-                <string>Event Time</string>
+                <string/>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="enableShowLabel">
-               <property name="text">
-                <string>Enable Show</string>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="timingMethodLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Timing Method</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="timingMethodComboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Sets the timing method. Absolute tracks from the current time, while Relative tracks from the last Event time</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Absolute</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Relative</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
            </item>
            <item row="1" column="0">
-            <layout class="QHBoxLayout" name="eventManagementLayout">
-             <item>
-              <layout class="QVBoxLayout" name="eventHistoryLayout">
-               <item>
-                <widget class="QLabel" name="eventHistoryLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Event History</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QListWidget" name="eventHistoryWidget">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string>The most recent actions performed in the Animation Editor</string>
-                 </property>
-                 <property name="selectionMode">
-                  <enum>QAbstractItemView::MultiSelection</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
+            <layout class="QGridLayout" name="eventManagementLayout">
+             <item row="0" column="2">
               <layout class="QVBoxLayout" name="eventListLayout">
                <item>
                 <widget class="QLabel" name="eventListLabel">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -1079,7 +1028,7 @@
                <item>
                 <widget class="QListWidget" name="eventListWidget">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -1090,7 +1039,178 @@
                  <property name="sizeAdjustPolicy">
                   <enum>QAbstractScrollArea::AdjustIgnored</enum>
                  </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::ExtendedSelection</enum>
+                 </property>
                 </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <layout class="QVBoxLayout" name="eventHistoryLayout">
+               <item>
+                <widget class="QLabel" name="eventHistoryLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Event History</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListWidget" name="eventHistoryWidget">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>The most recent actions performed in the Animation Editor</string>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::ExtendedSelection</enum>
+                 </property>
+                 <property name="selectionRectVisible">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="1">
+              <layout class="QVBoxLayout" name="eventAddRemoveLayout">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetMinimumSize</enum>
+               </property>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="currentTimeLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Current Time</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="currentTimeLineEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>The program's current runtime</string>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="eventTimeLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Event Time</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="eventTimeSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>The time that the Event will run</string>
+                 </property>
+                 <property name="maximum">
+                  <number>100000000</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="addEventButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>Adds the selected Event(s) to the Event List</string>
+                 </property>
+                 <property name="text">
+                  <string>Add &gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="removeEventButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>Removes the selected Event(s) from the Event List</string>
+                 </property>
+                 <property name="text">
+                  <string>Remove &lt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -1157,11 +1277,8 @@
   <tabstop>showScrollArea</tabstop>
   <tabstop>enableShowCheckBox</tabstop>
   <tabstop>toggleShowModeCheckBox</tabstop>
-  <tabstop>eventTimeSpinBox</tabstop>
-  <tabstop>addEventButton</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
   <tabstop>eventListWidget</tabstop>
-  <tabstop>currentTimeLineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

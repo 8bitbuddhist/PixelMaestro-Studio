@@ -89,7 +89,15 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
  */
 void MaestroControl::add_cue_to_history(uint8_t *cue) {
 	ui->eventHistoryWidget->addItem(cue_interpreter_.interpret_cue(cue));
-	event_history_.push_back(cue);
+
+	// Convert the Cue into an actual byte array, which we'll store in the Event History
+	uint16_t cue_size = cue_controller_->get_cue_size(cue);
+	QVector<uint8_t> cue_vector(cue_size);
+	for (uint16_t byte = 0; byte < cue_size; byte++) {
+		cue_vector[byte] = cue[byte];
+	}
+
+	event_history_.push_back(cue_vector);
 
 	// Start removing older items
 	if (event_history_.size() >= 10) {
@@ -150,6 +158,11 @@ int16_t MaestroControl::get_layer_index() {
 	return level;
 }
 
+/**
+ * Returns the index of the specified Layer.
+ * @param section Section belonging to the Layer.
+ * @return Layer index.
+ */
 uint8_t MaestroControl::get_layer_index(Section* section) {
 	uint8_t level = 0;
 	Section* test_section = section;
@@ -160,6 +173,11 @@ uint8_t MaestroControl::get_layer_index(Section* section) {
 	return level;
 }
 
+/**
+ * Returns the index of the specified Section.
+ * @param section Section to ID.
+ * @return Section index.
+ */
 uint8_t MaestroControl::get_section_index(Section* section) {
 
 	uint8_t index = 0;
@@ -217,7 +235,7 @@ uint8_t MaestroControl::get_num_layers(Section *section) {
 }
 
 /**
- * Build the initial UI.
+ * Build the MaestroControl UI.
  */
 void MaestroControl::initialize() {
 	// Get the base Section
@@ -268,6 +286,10 @@ void MaestroControl::initialize() {
 		}
 
 		show_controller_->initialize_events();
+
+		ui->timingMethodComboBox->setEnabled(false);
+		ui->timingMethodComboBox->setCurrentIndex(show->get_timing());
+		ui->timingMethodComboBox->setEnabled(true);
 	}
 
 	// Initialize Canvas elements
@@ -301,11 +323,13 @@ void MaestroControl::initialize_palettes() {
 	ui->colorComboBox->blockSignals(false);
 }
 
+/**
+ * Adds the selected Event(s) to the Show's Event list.
+ */
 void MaestroControl::on_addEventButton_clicked() {
 	// Add selected Cues to the Show
 	for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
-		// TODO: Verify that the Cue isn't already in the Event list
-		Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), event_history_.at(index.row()));
+		Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
 		ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
 	}
 	show_controller_->initialize_events();
@@ -374,8 +398,58 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 }
 
 /**
+ * Resets the Animation's center to the middle of the grid.
+ */
+void MaestroControl::on_centerResetButton_clicked() {
+	execute_cue(animation_handler->reset_center(get_section_index(), get_layer_index()));
+
+	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
+
+	ui->centerXSpinBox->blockSignals(true);
+	ui->centerYSpinBox->blockSignals(true);
+	ui->centerXSpinBox->setValue(center.x);
+	ui->centerYSpinBox->setValue(center.y);
+	ui->centerXSpinBox->blockSignals(false);
+	ui->centerYSpinBox->blockSignals(false);
+
+	set_center();
+}
+
+/**
+ * Sets the Animation center's x value.
+ */
+void MaestroControl::on_centerXSpinBox_editingFinished() {
+	set_center();
+}
+
+/**
+ * Sets the Animation center's y value.
+ */
+void MaestroControl::on_centerYSpinBox_editingFinished() {
+	set_center();
+}
+
+/**
+ * Selects a circle for drawing.
+ * @param checked If true, next shape will be a circle.
+ */
+void MaestroControl::on_circleRadioButton_toggled(bool checked) {
+	set_circle_controls_enabled(checked);
+}
+
+/**
+ * Clears the current Canvas frame.
+ */
+void MaestroControl::on_clearButton_clicked() {
+	QMessageBox::StandardButton confirm;
+	confirm = QMessageBox::question(this, "Clear Canvas Frame", "This action will clear the current Canvas frame. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+	if (confirm == QMessageBox::Yes) {
+		execute_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
+	}
+}
+
+/**
  * Changes the color scheme.
- * If 'Custom' is selected, this also displays controls for adjusting the custom color scheme.
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
@@ -390,6 +464,9 @@ void MaestroControl::on_columnsSpinBox_editingFinished() {
 	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
 
+/**
+ * Switches to the Canvas Frame index specified in currentFrameSpinBox.
+ */
 void MaestroControl::on_currentFrameSpinBox_editingFinished() {
 	int frame = ui->currentFrameSpinBox->value();
 
@@ -415,6 +492,9 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 	set_speed();
 }
 
+/**
+ * Changes the cycle speed.
+ */
 void MaestroControl::on_cycleSpinBox_editingFinished() {
 	ui->cycleSlider->blockSignals(true);
 	ui->cycleSlider->setValue(ui->cycleSpinBox->value());
@@ -423,6 +503,52 @@ void MaestroControl::on_cycleSpinBox_editingFinished() {
 	set_speed();
 }
 
+/**
+ * Handles drawing onto the current Canvas frame.
+ */
+void MaestroControl::on_drawButton_clicked() {
+	QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
+
+	if ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1) == CanvasType::ColorCanvas) {
+		if (checked_button == ui->circleRadioButton) {
+			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->lineRadioButton) {
+			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+		}
+		else if (checked_button == ui->rectRadioButton) {
+			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->textRadioButton) {
+			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+		}
+		else {	// Triangle
+			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+	}
+	else {
+		if (checked_button == ui->circleRadioButton) {
+			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->lineRadioButton) {
+			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+		}
+		else if (checked_button == ui->rectRadioButton) {
+			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->textRadioButton) {
+			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+		}
+		else {	// Triangle
+			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+	}
+}
+
+/**
+ * Initializes the Maestro's Show.
+ * @param checked If true, creates a new Show.
+ */
 void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 	set_show_controls_enabled(checked);
 
@@ -430,21 +556,14 @@ void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 	if (checked) {
 		if (show_controller_ == nullptr) {
 			show_controller_ = new ShowController(maestro_controller_);
-			// TODO: Use execute_cue() to send Show commands to other devices
 		}
+		show_timer_.start();
 	}
 	else {
 		// Disable show edit mode if enabled
 		if (show_mode_enabled_) {
 			on_toggleShowModeCheckBox_clicked(false);
 		}
-	}
-
-	// Initialize Show timer
-	if (checked) {
-		show_timer_.start();
-	}
-	else {
 		show_timer_.stop();
 	}
 }
@@ -457,6 +576,9 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	execute_cue(animation_handler->set_fade(get_section_index(), get_layer_index(), checked));
 }
 
+/**
+ * Sets the number of Canvas frames.
+ */
 void MaestroControl::on_frameCountSpinBox_editingFinished() {
 	int new_max = ui->frameCountSpinBox->value();
 	if (new_max < ui->currentFrameSpinBox->value()) {
@@ -469,6 +591,9 @@ void MaestroControl::on_frameCountSpinBox_editingFinished() {
 	ui->currentFrameSpinBox->setMaximum(new_max);
 }
 
+/**
+ * Changes the Canvas' frame rate.
+ */
 void MaestroControl::on_frameRateSpinBox_editingFinished() {
 	if (!ui->toggleCanvasModeCheckBox->isChecked()) {
 		execute_cue(canvas_handler->set_frame_timing(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
@@ -497,33 +622,32 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 	}
 }
 
-void MaestroControl::on_centerResetButton_clicked() {
-	execute_cue(animation_handler->reset_center(get_section_index(), get_layer_index()));
-
-	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
-
-	ui->centerXSpinBox->blockSignals(true);
-	ui->centerYSpinBox->blockSignals(true);
-	ui->centerXSpinBox->setValue(center.x);
-	ui->centerYSpinBox->setValue(center.y);
-	ui->centerXSpinBox->blockSignals(false);
-	ui->centerYSpinBox->blockSignals(false);
-
-	set_center();
+/**
+ * Selects a rectangle for the next shape.
+ * @param checked If true, the next shape will be a rectangle.
+ */
+void MaestroControl::on_rectRadioButton_toggled(bool checked) {
+	set_rect_controls_enabled(checked);
 }
 
-void MaestroControl::on_centerXSpinBox_editingFinished() {
-	set_center();
+/**
+ * Toggles Canvas Scroll repeating.
+ * @param checked If true, the Canvas will repeat on scroll.
+ */
+void MaestroControl::on_scrollRepeatCheckBox_toggled(bool checked) {
+	set_scroll();
 }
 
-void MaestroControl::on_centerYSpinBox_editingFinished() {
-	set_center();
-}
-
+/**
+ * Sets the Canvas scroll rate along the x axis.
+ */
 void MaestroControl::on_scrollXSpinBox_editingFinished() {
 	set_scroll();
 }
 
+/**
+ * Sets the Canvas scroll rate along the y axis.
+ */
 void MaestroControl::on_scrollYSpinBox_editingFinished() {
 	set_scroll();
 }
@@ -538,6 +662,10 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 	}
 }
 
+/**
+ * Changes the current Layer.
+ * @param index Index of the desired Layer.
+ */
 void MaestroControl::on_layerComboBox_currentIndexChanged(int index) {
 	/*
 	 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
@@ -555,6 +683,9 @@ void MaestroControl::on_layerComboBox_currentIndexChanged(int index) {
 	set_active_section(layer_section);
 }
 
+/**
+ * Sets the number of Layers for the Section.
+ */
 void MaestroControl::on_layerSpinBox_editingFinished() {
 	Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 	Section* last_section = base_section;
@@ -589,6 +720,32 @@ void MaestroControl::on_layerSpinBox_editingFinished() {
 	}
 
 	populate_layer_combobox();
+}
+
+/**
+ * Selects a line for the next shape.
+ * @param checked If true, the next shape will be a line.
+ */
+void MaestroControl::on_lineRadioButton_toggled(bool checked) {
+	set_line_controls_enabled(checked);
+}
+
+/**
+ * Loads an image into the Canvas.
+ * This overwrites all Canvas frames.
+ */
+void MaestroControl::on_loadImageButton_clicked() {
+	QString filename = QFileDialog::getOpenFileName(this,
+		QString("Open Image"),
+		QDir::home().path(),
+		QString("Images (*.bmp *.gif *.jpg *.png)"));
+
+	CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
+
+	// Set the number of frames
+	ui->frameCountSpinBox->blockSignals(true);
+	ui->frameCountSpinBox->setValue(active_section_->get_canvas()->get_num_frames());
+	ui->frameCountSpinBox->blockSignals(false);
 }
 
 /**
@@ -628,6 +785,17 @@ void MaestroControl::on_pauseSpinBox_valueChanged(int arg1) {
 }
 
 /**
+ * Removes the selected Event(s) from the Show.
+ */
+void MaestroControl::on_removeEventButton_clicked() {
+	for (QModelIndex index : ui->eventListWidget->selectionModel()->selectedIndexes()) {
+		show_controller_->remove_event(index.row());
+		ui->eventListWidget->takeItem(index.row());
+	}
+	show_controller_->initialize_events();
+}
+
+/**
  * Toggles whether the color animation is shown in reverse.
  * @param checked If true, reverse the animation.
  */
@@ -642,6 +810,10 @@ void MaestroControl::on_rowsSpinBox_editingFinished() {
 	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
 
+/**
+ * Changes the current Section.
+ * @param index Index of the desired Section.
+ */
 void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
 	// Hide Layer controls
 	set_layer_controls_enabled(false);
@@ -723,6 +895,43 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	}
 }
 
+/**
+ * Sets the ColorCanvas drawing color.
+ */
+void MaestroControl::on_selectColorButton_clicked() {
+	QColor new_color = QColorDialog::getColor(canvas_color_, this);
+
+	if (new_color != canvas_color_) {
+		canvas_color_ = new_color;
+	}
+
+	ui->selectColorButton->setStyleSheet("background-color: " + canvas_color_.name());
+
+	canvas_rgb_color_.r = canvas_color_.red();
+	canvas_rgb_color_.g = canvas_color_.green();
+	canvas_rgb_color_.b = canvas_color_.blue();
+}
+
+/**
+ * Selects text for the next Canvas shape.
+ * @param checked If true, the next shape will be text.
+ */
+void MaestroControl::on_textRadioButton_toggled(bool checked) {
+	set_text_controls_enabled(checked);
+}
+
+/**
+ * Changes the Show's timing method.
+ * @param index Index of the timing method in timingMethodComboBox.
+ */
+void MaestroControl::on_timingMethodComboBox_currentIndexChanged(int index) {
+	maestro_controller_->get_maestro()->get_show()->set_timing((Show::TimingMode)index);
+}
+
+/**
+ * Toggles Canvas Edit mode, which prevents the Canvas from automatically switching frames.
+ * @param checked If true, Canvas Edit mode is enabled.
+ */
 void MaestroControl::on_toggleCanvasModeCheckBox_toggled(bool checked) {
 	// Enables/disable the 'current frame' control
 	ui->currentFrameSpinBox->setEnabled(checked);
@@ -738,8 +947,20 @@ void MaestroControl::on_toggleCanvasModeCheckBox_toggled(bool checked) {
 	}
 }
 
+/**
+ * Toggles Show Edit mode. Show Edit mode lets the user populate the Event History without affecting the output.
+ * @param checked If true, Show Edit mode is enabled.
+ */
 void MaestroControl::on_toggleShowModeCheckBox_clicked(bool checked) {
 	enable_show_edit_mode(checked);
+}
+
+/**
+ * Sets the next shape to triangle.
+ * @param checked If true, the next Canvas shape drawn will be a triangle.
+ */
+void MaestroControl::on_triangleRadioButton_toggled(bool checked) {
+	set_triangle_controls_enabled(checked);
 }
 
 /**
@@ -757,6 +978,10 @@ void MaestroControl::populate_layer_combobox() {
 	ui->layerComboBox->blockSignals(false);
 }
 
+/**
+ * Reads a Cuefile.
+ * @param filename The name and path of the Cuefile.
+ */
 void MaestroControl::read_from_file(QString filename) {
 	QFile file(filename);
 
@@ -780,6 +1005,10 @@ void MaestroControl::read_from_file(QString filename) {
 	on_sectionComboBox_currentIndexChanged(0);
 }
 
+/**
+ * Saves the Maestro to a Cuefile.
+ * @param filename Target filename.
+ */
 void MaestroControl::save_to_file(QString filename) {
 	if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
 		filename.append(".pmc");
@@ -793,11 +1022,14 @@ void MaestroControl::save_to_file(QString filename) {
 			save_section_settings(&datastream, i, 0);
 		}
 
-		//file.flush();
 		file.close();
 	}
 }
 
+/**
+ * Saves Maestro-specific settings as Cues.
+ * @param datastream Stream to save the Cues to.
+ */
 void MaestroControl::save_maestro_settings(QDataStream *datastream) {
 	// Timing
 	write_cue_to_stream(datastream, maestro_handler->set_timing(maestro_controller_->get_maestro()->get_timing()->get_interval()));
@@ -812,6 +1044,12 @@ void MaestroControl::save_maestro_settings(QDataStream *datastream) {
 	}
 }
 
+/**
+ * Saves Section-specific settings as Cues.
+ * @param datastream Stream to save the Cues to.
+ * @param section_id The index of the Section to save.
+ * @param layer_id The index of the Layer to save.
+ */
 void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
 
 	Section* section = maestro_controller_->get_maestro()->get_section(section_id);
@@ -1022,6 +1260,7 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->frameRateSpinBox->blockSignals(true);
 	ui->scrollXSpinBox->blockSignals(true);
 	ui->scrollYSpinBox->blockSignals(true);
+	ui->scrollRepeatCheckBox->blockSignals(true);
 
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
@@ -1034,6 +1273,7 @@ void MaestroControl::set_active_section(Section* section) {
 		if (canvas->get_scroll() != nullptr) {
 			ui->scrollXSpinBox->setValue(canvas->get_scroll()->interval_x);
 			ui->scrollYSpinBox->setValue(canvas->get_scroll()->interval_y);
+			ui->scrollRepeatCheckBox->setChecked(canvas->get_scroll()->repeat);
 		}
 		set_canvas_controls_enabled(true, canvas->get_type());
 	}
@@ -1051,9 +1291,14 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->canvasComboBox->blockSignals(false);
 	ui->scrollXSpinBox->blockSignals(false);
 	ui->scrollYSpinBox->blockSignals(false);
+	ui->scrollRepeatCheckBox->blockSignals(false);
 }
 
-// Canvas-specific methods
+/**
+ * Enables Canvas controls.
+ * @param enabled If true, controls are enabled.
+ * @param type The type of Canvas.
+ */
 void MaestroControl::set_canvas_controls_enabled(bool enabled, CanvasType::Type type) {
 	ui->toggleCanvasModeLabel->setEnabled(enabled);
 	ui->toggleCanvasModeCheckBox->setEnabled(enabled);
@@ -1090,8 +1335,13 @@ void MaestroControl::set_canvas_controls_enabled(bool enabled, CanvasType::Type 
 	ui->scrollLabel->setEnabled(enabled);
 	ui->scrollXSpinBox->setEnabled(enabled);
 	ui->scrollYSpinBox->setEnabled(enabled);
+	ui->scrollRepeatCheckBox->setEnabled(enabled);
 }
 
+/**
+ * Enables Canvas circle controls.
+ * @param enabled If true, circle controls are enabled.
+ */
 void MaestroControl::set_circle_controls_enabled(bool enabled) {
 	if (enabled) {
 		set_line_controls_enabled(false);
@@ -1113,6 +1363,10 @@ void MaestroControl::set_circle_controls_enabled(bool enabled) {
 	ui->fillCheckBox->setEnabled(enabled);
 }
 
+/**
+ * Enables Canvas line controls.
+ * @param enabled If true, line controls are enabled.
+ */
 void MaestroControl::set_line_controls_enabled(bool enabled) {
 	if (enabled) {
 		set_circle_controls_enabled(false);
@@ -1131,6 +1385,10 @@ void MaestroControl::set_line_controls_enabled(bool enabled) {
 	ui->targetYSpinBox->setEnabled(enabled);
 }
 
+/**
+ * Enables Canvas rectangle controls.
+ * @param enabled If true, rectangle controls are enabled.
+ */
 void MaestroControl::set_rect_controls_enabled(bool enabled) {
 	if (enabled) {
 		set_circle_controls_enabled(false);
@@ -1154,6 +1412,10 @@ void MaestroControl::set_rect_controls_enabled(bool enabled) {
 	ui->fillCheckBox->setEnabled(enabled);
 }
 
+/**
+ * Enables Canvas text controls.
+ * @param enabled If true, text controls are enabled.
+ */
 void MaestroControl::set_text_controls_enabled(bool enabled) {
 	if (enabled) {
 		set_circle_controls_enabled(false);
@@ -1174,6 +1436,10 @@ void MaestroControl::set_text_controls_enabled(bool enabled) {
 	ui->textLineEdit->setEnabled(enabled);
 }
 
+/**
+ * Enables Canvas triangle controls.
+ * @param enabled If true, triangle controls are enabled.
+ */
 void MaestroControl::set_triangle_controls_enabled(bool enabled) {
 	if (enabled) {
 		set_circle_controls_enabled(false);
@@ -1207,20 +1473,31 @@ void MaestroControl::set_triangle_controls_enabled(bool enabled) {
 }
 // End Canvas-specific methods
 
+/**
+ * Sets the Animation's center to the specified coordinates.
+ */
 void MaestroControl::set_center() {
 	execute_cue(animation_handler->set_center(get_section_index(), get_layer_index(), ui->centerXSpinBox->value(), ui->centerYSpinBox->value()));
 }
 
+/**
+ * Sets the Canvas' scrolling behavior.
+ */
 void MaestroControl::set_scroll() {
-	// Defaults to repeatingc
-	execute_cue(canvas_handler->set_scroll(get_section_index(), get_layer_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), true));
+	execute_cue(canvas_handler->set_scroll(get_section_index(), get_layer_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), ui->scrollRepeatCheckBox->isChecked()));
 }
 
+/**
+ * Enables Show controls.
+ * @param enabled If true, Show controls are enabled.
+ */
 void MaestroControl::set_show_controls_enabled(bool enabled) {
 	ui->currentTimeLabel->setEnabled(enabled);
 	ui->currentTimeLineEdit->setEnabled(enabled);
 	ui->toggleShowModeCheckBox->setEnabled(enabled);
 	ui->toggleShowModeLabel->setEnabled(enabled);
+	ui->timingMethodLabel->setEnabled(enabled);
+	ui->timingMethodComboBox->setEnabled(enabled);
 	ui->eventHistoryLabel->setEnabled(enabled);
 	ui->eventHistoryWidget->setEnabled(enabled);
 	ui->eventListLabel->setEnabled(enabled);
@@ -1228,6 +1505,7 @@ void MaestroControl::set_show_controls_enabled(bool enabled) {
 	ui->eventTimeLabel->setEnabled(enabled);
 	ui->eventTimeSpinBox->setEnabled(enabled);
 	ui->addEventButton->setEnabled(enabled);
+	ui->removeEventButton->setEnabled(enabled);
 }
 
 /// Sets the speed and/or pause interval for the active Animation.
@@ -1292,8 +1570,22 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	}
 }
 
+/**
+ * Renders the Maestro's last update time in currentTimeLineEdit.
+ */
 void MaestroControl::update_maestro_last_time() {
 	ui->currentTimeLineEdit->setText(locale_.toString(maestro_controller_->get_maestro()->get_timing()->get_last_time()));
+
+	// Visually disable events that have recently ran.
+	int current_index = maestro_controller_->get_show()->get_current_index();
+	for (int index = 0; index < ui->eventListWidget->count(); index++) {
+		if (current_index > 0 && index < current_index) {
+			ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::darkGray);
+		}
+		else {
+			ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::white);
+		}
+	}
 }
 
 /**
@@ -1317,99 +1609,4 @@ MaestroControl::~MaestroControl() {
 	}
 	delete show_controller_;
 	delete ui;
-}
-
-void MaestroControl::on_circleRadioButton_toggled(bool checked) {
-	set_circle_controls_enabled(checked);
-}
-
-void MaestroControl::on_lineRadioButton_toggled(bool checked) {
-	set_line_controls_enabled(checked);
-}
-
-void MaestroControl::on_triangleRadioButton_toggled(bool checked) {
-	set_triangle_controls_enabled(checked);
-}
-
-void MaestroControl::on_textRadioButton_toggled(bool checked) {
-	set_text_controls_enabled(checked);
-}
-
-void MaestroControl::on_rectRadioButton_toggled(bool checked) {
-	set_rect_controls_enabled(checked);
-}
-
-void MaestroControl::on_selectColorButton_clicked() {
-	QColor new_color = QColorDialog::getColor(canvas_color_, this);
-
-	if (new_color != canvas_color_) {
-		canvas_color_ = new_color;
-	}
-
-	ui->selectColorButton->setStyleSheet("background-color: " + canvas_color_.name());
-
-	canvas_rgb_color_.r = canvas_color_.red();
-	canvas_rgb_color_.g = canvas_color_.green();
-	canvas_rgb_color_.b = canvas_color_.blue();
-}
-
-void MaestroControl::on_loadImageButton_clicked() {
-	QString filename = QFileDialog::getOpenFileName(this,
-		QString("Open Image"),
-		QDir::home().path(),
-		QString("Images (*.bmp *.gif *.jpg *.png)"));
-
-	CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
-
-	// Set the number of frames
-	ui->frameCountSpinBox->blockSignals(true);
-	ui->frameCountSpinBox->setValue(active_section_->get_canvas()->get_num_frames());
-	ui->frameCountSpinBox->blockSignals(false);
-}
-
-void MaestroControl::on_clearButton_clicked() {
-	QMessageBox::StandardButton confirm;
-	confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
-	if (confirm == QMessageBox::Yes) {
-		execute_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
-	}
-}
-
-void MaestroControl::on_drawButton_clicked() {
-	QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
-
-	if ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1) == CanvasType::ColorCanvas) {
-		if (checked_button == ui->circleRadioButton) {
-			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-		else if (checked_button == ui->lineRadioButton) {
-			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-		}
-		else if (checked_button == ui->rectRadioButton) {
-			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-		else if (checked_button == ui->textRadioButton) {
-			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-		}
-		else {	// Triangle
-			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-	}
-	else {
-		if (checked_button == ui->circleRadioButton) {
-			execute_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-		else if (checked_button == ui->lineRadioButton) {
-			execute_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-		}
-		else if (checked_button == ui->rectRadioButton) {
-			execute_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-		else if (checked_button == ui->textRadioButton) {
-			execute_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-		}
-		else {	// Triangle
-			execute_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-		}
-	}
 }

@@ -37,6 +37,8 @@ class MainWindow : public QMainWindow {
 
 		void on_action_Animated_Canvas_Demo_triggered();
 
+		void on_action_Donate_triggered();
+
 	private:
 		MaestroController* controller_ = nullptr;
 		QWidget* drawing_area_ = nullptr;

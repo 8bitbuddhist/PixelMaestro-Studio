@@ -29,7 +29,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_action_About_triggered() {
-	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.9\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
+	QMessageBox::about(this, QString("PixelMaestro Studio"), QString("PixelMaestro v0.10\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
 }
 
 void MainWindow::on_action_Exit_triggered() {
@@ -86,6 +86,10 @@ void MainWindow::on_action_Animated_Canvas_Demo_triggered() {
 	ui->action_Animated_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->addWidget(new QLabel("Demonstrates using animated images in Canvases"));
+}
+
+void MainWindow::on_action_Donate_triggered() {
+	QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=8547028", QUrl::TolerantMode));
 }
 
 void MainWindow::on_action_Blink_Demo_triggered() {

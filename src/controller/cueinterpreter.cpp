@@ -115,6 +115,8 @@ void CueInterpreter::interpret_maestro_cue(uint8_t* cue, QString* result) {
 	result->append("Action: " + MaestroActions.at(cue[MaestroCueHandler::Byte::ActionByte]));
 
 	switch((MaestroCueHandler::Action)cue[MaestroCueHandler::Byte::ActionByte]) {
+		case MaestroCueHandler::Action::SetShow:
+			break;
 		case MaestroCueHandler::Action::SetTiming:
 			result->append(", Interval: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
 			break;
@@ -127,6 +129,10 @@ void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 	result->append("Action: " + SectionActions.at(cue[SectionCueHandler::Byte::ActionByte]));
 
 	switch ((SectionCueHandler::Action)cue[SectionCueHandler::Byte::ActionByte]) {
+		case SectionCueHandler::Action::RemoveCanvas:
+			break;
+		case SectionCueHandler::Action::RemoveLayer:
+			break;
 		case SectionCueHandler::Action::SetAnimation:
 			result->append(", Type: " + AnimationTypes.at(cue[SectionCueHandler::Byte::OptionsByte]));
 			break;

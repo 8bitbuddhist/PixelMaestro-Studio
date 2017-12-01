@@ -87,8 +87,8 @@ class MaestroControl : public QWidget {
 		/// Group for Canvas shape radio buttons
 		QButtonGroup canvas_shape_type_group_;
 
-		/// History of actions performed in the editor.
-		QVector<uint8_t*> event_history_;
+		/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
+		QVector<QVector<uint8_t>> event_history_;
 
 		/// Locale for formatting numbers (specifically the program runtime).
 		QLocale locale_ = QLocale::system();
@@ -179,6 +179,9 @@ class MaestroControl : public QWidget {
 		void on_scrollYSpinBox_editingFinished();
 
 		void update_maestro_last_time();
+		void on_removeEventButton_clicked();
+		void on_timingMethodComboBox_currentIndexChanged(int index);
+		void on_scrollRepeatCheckBox_toggled(bool checked);
 };
 
 #endif // MAESTROCONTROL_H

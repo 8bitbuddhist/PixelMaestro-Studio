@@ -40,5 +40,4 @@ void ShowController::initialize_events() {
 
 void ShowController::remove_event(uint16_t index) {
 	events_.erase(events_.begin() + index);
-	initialize_events();
 }

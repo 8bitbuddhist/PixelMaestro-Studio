@@ -3,7 +3,19 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.9] - In Progress
+## [v0.10] - In Progress
+### Added
+- Added donate link to Help menu
+- Added checkbox to enable repeated Canvas scrolling.
+
+### Changed
+- Modified Show Event management UI
+	- Added ability to remove Events from Show Event list.
+	- Added timing method combo box.
+	- Simplified Event History selection.
+	- Events that have already run will now appear grayed out.
+
+## [v0.9] - 2017-11-28
 ### Added
 - Added frame controls to Canvas editing tools.
 - Added Canvas Edit mode, which stops the Canvas from animating so you can draw on individual frames.
