@@ -118,7 +118,7 @@ class MaestroControl : public QWidget {
 		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
 		void set_active_section(Section* section);
 		void set_canvas_controls_enabled(bool enabled, CanvasType::Type type);
-		void set_center();
+		void set_offset();
 
 		// Canvas control handling methods
 		void set_circle_controls_enabled(bool enabled);
@@ -154,9 +154,8 @@ class MaestroControl : public QWidget {
 		void on_layerComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
 		void on_layerSpinBox_editingFinished();
-		void on_centerResetButton_clicked();
-		void on_centerXSpinBox_editingFinished();
-		void on_centerYSpinBox_editingFinished();
+		void on_offsetXSpinBox_editingFinished();
+		void on_offsetYSpinBox_editingFinished();
 		void on_toggleShowModeCheckBox_clicked(bool checked);
 		void on_addEventButton_clicked();
 		void on_frameCountSpinBox_editingFinished();
@@ -176,7 +175,6 @@ class MaestroControl : public QWidget {
 		void on_scrollYSpinBox_editingFinished();
 		void on_removeEventButton_clicked();
 		void on_timingMethodComboBox_currentIndexChanged(int index);
-		void on_scrollRepeatCheckBox_toggled(bool checked);
 		void on_loopCheckBox_toggled(bool checked);
 
 		void update_maestro_last_time();

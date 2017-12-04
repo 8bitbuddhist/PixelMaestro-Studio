@@ -6,9 +6,7 @@ const QStringList CueInterpreter::Handlers({"Animation Handler",
 											"Section Handler",
 											"Show Handler"});
 
-const QStringList CueInterpreter::AnimationActions({"Reset Center",
-													"Set Center",
-													"Set Colors",
+const QStringList CueInterpreter::AnimationActions({"Set Colors",
 													"Set Cycle Index",
 													"Set Fade",
 													"Set Lightning Options",
@@ -30,9 +28,7 @@ const QStringList CueInterpreter::CanvasActions({"Clear",
 												 "Next Frame",
 												 "Set Current Frame Index",
 												 "Set Frame Timing",
-												 "Set Num Frames",
-												 "Set Offset",
-												 "Set Scroll"});
+												 "Set Num Frames"});
 
 const QStringList CueInterpreter::MaestroActions({"Set Show",
 												  "Set Timing"});
@@ -42,7 +38,9 @@ const QStringList CueInterpreter::SectionActions({"Remove Canvas",
 												  "Set Animation",
 												  "Set Canvas",
 												  "Set Dimensions",
-												  "Set Layer"});
+												  "Set Layer",
+												  "Set Offset",
+												  "Set Scroll"});
 
 const QStringList CueInterpreter::ShowActions({"Set Events",
 											   "Set Looping",
@@ -150,8 +148,20 @@ void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 			break;
 		case SectionCueHandler::Action::SetLayer:
 			{
-				result->append(", Mix Mode: ") + ColorMixModes.at(cue[SectionCueHandler::Byte::OptionsByte]);
+				result->append(", Mix Mode: " + ColorMixModes.at(cue[SectionCueHandler::Byte::OptionsByte]));
 				result->append(", Alpha: " + QString::number(cue[SectionCueHandler::Byte::OptionsByte + 1]));
+			}
+			break;
+		case SectionCueHandler::Action::SetOffset:
+			{
+				result->append(", X offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
+				result->append(", Y offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
+			}
+			break;
+		case SectionCueHandler::Action::SetScroll:
+			{
+				result->append(", X rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
+				result->append(", Y rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
 			}
 			break;
 	}

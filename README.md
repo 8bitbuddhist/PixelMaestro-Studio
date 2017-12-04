@@ -25,7 +25,7 @@ PixelMaestro Studio is a Qt-based desktop application that lets you run the Pixe
 When first started, the application shows a blank window. Use the *File* menu to access different areas of the program such as the *Animation Editor* or various demos. Use the *Edit* menu to access the program's Settings. Use the *Help* menu to access documentation.
 
 ### Navigating Workspaces
-Opening a link in the *File* menu creates a new *Workspace*. A Workspace is any screen that shows a running Maestro, such as a demo. After opening a Workspace, you can see details about the Workspace in the status bar at the bottom of the window. To close the current workspace, click *Close Workspace* in the File menu, or select another Workspace.
+Opening a link in the *File* menu creates a new *Workspace*. A Workspace is any screen that shows a running Maestro, such as a demo. After opening a Workspace, you can see details about the Workspace in the status bar at the bottom of the window. To close the current workspace, click *Close* in the File menu, or select another Workspace.
 
 ### Changing Settings
 You can change the program's settings by clicking *Edit* > *Settings*.
@@ -40,19 +40,19 @@ You can change the program's settings by clicking *Edit* > *Settings*.
 
 The *Output devices* list is where you select the output devices that are controlled by the Animation Editor. Two options are available by default:
 
-* *Application window* displays a Maestro above the Animation Editor controls
-* *Separate window* displays a Maestro in a new window separate from the Animation Editor
+* *Main window* displays the Maestro above the Animation Editor controls.
+* *Detached window* displays the Maestro in a new window separate from the Animation Editor.
 
-This list also displays devices connected via USB. You can select any USB device, but that device must be configured to listen for PixelMaestro Cues.
+This list also displays devices connected via USB. You can select any USB device currently attached to your PC. Note that the device must be actively listening for PixelMaestro Cues.
 
 You may need to reopen any open Workspaces before setting changes will take effect.
 
 ## Using the Animation Editor
-The Animation Editor is an interactive tool for modifying a Maestro in real-time. When you open the Animation Editor, it displays each of the Maestro's sections and a set of controls for modifying each Section. You can perform actions such as adjusting the Section's size, configuring Animations, and adding Canvases.
+The Animation Editor is an interactive tool for modifying a Maestro in real-time. When you open the Animation Editor, it displays a set of controls for modifying Sections. You can perform actions such as adjusting the Section's size, configuring Animations, and adding Canvases.
 
-To modify a Section, you must first set it as the *Active Section*. Despite its name, the Active Section is determined by both the *Section* and *Overlay* drop-down boxes. That is, if Section 1 and Overlay 3 are selected, then the active Section is Section 1's third Overlay. If the Overlay box is set to "Not Selected", then the base Section is modified.
+To modify a Section, you must first set it as the *Active Section*. Despite its name, the Active Section is determined by both the *Section* and *Layout* drop-down boxes. That is, if Section 1 and Layout 3 are selected, then the active Section is Section 1's third Layout. If the Layout box is set to "Base Section", then Section 1 becomes the active Section.
 
-If *Send serial commands* is configured in the Settings dialog, any actions performed in the Animation Editor will get sent to the specified serial device. PixelMaestro Studio automatically detects and lists USB devices connected to your PC. You can also run a simulated USB device for testing Cues by selecting *Simulated Device* in the drop-down.
+The output of the Animation Editor depends on your configuration in the Settings dialog. The Animation Editor will update any devices checked in the *Output devices* list, including connected USB devices. Checking *Main window* or *Detached window* opens a visual representation of the Maestro on your PC. If no devices are selected, you won't be able to see any changes to your Maestro.
 
 ### Additional Animation Parameters
 TODO
@@ -64,6 +64,6 @@ TODO
 TODO
 
 ### Saving and Loading Configurations
-You can save the current Maestro configuration to a file by clicking *File* > *Save Maestro...*. Likewise, you can open a Maestro configuration using *File* > *Open Maestro...*. This file works on any device running PixelMaestro.
+You can save the current Maestro configuration to a file by clicking *File* > *Save...*. Likewise, you can open a Maestro configuration using *File* > *Open...*. This file works on any device running PixelMaestro.
 
 [![Support this project on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=8547028)

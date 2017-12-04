@@ -378,35 +378,17 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 }
 
 /**
- * Resets the Animation's center to the middle of the grid.
+ * Sets the offset x value.
  */
-void MaestroControl::on_centerResetButton_clicked() {
-	run_cue(animation_handler->reset_center(get_section_index(), get_layer_index()));
-
-	Point center = Point(active_section_->get_dimensions()->x / 2, active_section_->get_dimensions()->y / 2);
-
-	ui->centerXSpinBox->blockSignals(true);
-	ui->centerYSpinBox->blockSignals(true);
-	ui->centerXSpinBox->setValue(center.x);
-	ui->centerYSpinBox->setValue(center.y);
-	ui->centerXSpinBox->blockSignals(false);
-	ui->centerYSpinBox->blockSignals(false);
-
-	set_center();
+void MaestroControl::on_offsetXSpinBox_editingFinished() {
+	set_offset();
 }
 
 /**
- * Sets the Animation center's x value.
+ * Sets the offset y value.
  */
-void MaestroControl::on_centerXSpinBox_editingFinished() {
-	set_center();
-}
-
-/**
- * Sets the Animation center's y value.
- */
-void MaestroControl::on_centerYSpinBox_editingFinished() {
-	set_center();
+void MaestroControl::on_offsetYSpinBox_editingFinished() {
+	set_offset();
 }
 
 /**
@@ -608,14 +590,6 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_rectRadioButton_toggled(bool checked) {
 	set_rect_controls_enabled(checked);
-}
-
-/**
- * Toggles Canvas Scroll repeating.
- * @param checked If true, the Canvas will repeat on scroll.
- */
-void MaestroControl::on_scrollRepeatCheckBox_toggled(bool checked) {
-	set_scroll();
 }
 
 /**
@@ -876,10 +850,6 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 		else {	// No Canvas set
 			run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 		}
-
-		// Reset Animation center
-		run_cue(animation_handler->set_center(get_section_index(), get_layer_index(), x / 2,	y / 2));
-		on_centerResetButton_clicked();
 	}
 }
 
@@ -1096,7 +1066,6 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
-	write_cue_to_stream(datastream, animation_handler->set_center(section_id, layer_id, animation->get_center()->x, animation->get_center()->y));
 	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
 	// Save Animation-specific settings
 	switch(animation->get_type()) {
@@ -1128,6 +1097,12 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 			break;
 	}
 
+	// Scrolling and offset
+	write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
+	if (section->get_scroll()) {
+		write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y));
+	}
+
 	// Save Canvas settings
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
@@ -1135,10 +1110,6 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 
 		if (canvas->get_frame_timing()) {
 			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
-		}
-
-		if (canvas->get_scroll()) {
-			write_cue_to_stream(datastream, canvas_handler->set_scroll(section_id, layer_id, canvas->get_scroll()->interval_x, canvas->get_scroll()->interval_y, canvas->get_scroll()->repeat));
 		}
 
 		// Draw and save each frame
@@ -1186,6 +1157,16 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->columnsSpinBox->blockSignals(false);
 	ui->rowsSpinBox->blockSignals(false);
 
+	// Get scroll settings
+	ui->scrollXSpinBox->blockSignals(true);
+	ui->scrollYSpinBox->blockSignals(true);
+	if (section->get_scroll() != nullptr) {
+		ui->scrollXSpinBox->setValue(section->get_scroll()->interval_x);
+		ui->scrollYSpinBox->setValue(section->get_scroll()->interval_y);
+	}
+	ui->scrollXSpinBox->blockSignals(false);
+	ui->scrollYSpinBox->blockSignals(false);
+
 	// Get Layer settings
 	if (section->get_layer()) {
 		ui->layerSpinBox->blockSignals(true);
@@ -1211,8 +1192,8 @@ void MaestroControl::set_active_section(Section* section) {
 		run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), 1000));
 	}
 
+	// Animation settings
 	Animation* animation = section->get_animation();
-
 	ui->orientationComboBox->blockSignals(true);
 	ui->reverse_animationCheckBox->blockSignals(true);
 	ui->fadeCheckBox->blockSignals(true);
@@ -1220,8 +1201,6 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(true);
 	ui->pauseSlider->blockSignals(true);
 	ui->pauseSpinBox->blockSignals(true);
-	ui->centerXSpinBox->blockSignals(true);
-	ui->centerYSpinBox->blockSignals(true);
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
@@ -1229,8 +1208,6 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->setValue(animation->get_timing()->get_interval());
 	ui->pauseSlider->setValue(animation->get_timing()->get_pause());
 	ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
-	ui->centerXSpinBox->setValue(animation->get_center()->x);
-	ui->centerYSpinBox->setValue(animation->get_center()->y);
 	ui->orientationComboBox->blockSignals(false);
 	ui->reverse_animationCheckBox->blockSignals(false);
 	ui->fadeCheckBox->blockSignals(false);
@@ -1238,8 +1215,6 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->cycleSpinBox->blockSignals(false);
 	ui->pauseSlider->blockSignals(false);
 	ui->pauseSpinBox->blockSignals(false);
-	ui->centerXSpinBox->blockSignals(false);
-	ui->centerYSpinBox->blockSignals(false);
 
 	/*
 	 * Select Palette.
@@ -1285,9 +1260,6 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->frameCountSpinBox->blockSignals(true);
 	ui->currentFrameSpinBox->blockSignals(true);
 	ui->frameRateSpinBox->blockSignals(true);
-	ui->scrollXSpinBox->blockSignals(true);
-	ui->scrollYSpinBox->blockSignals(true);
-	ui->scrollRepeatCheckBox->blockSignals(true);
 
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
@@ -1296,11 +1268,6 @@ void MaestroControl::set_active_section(Section* section) {
 		ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 		if (canvas->get_frame_timing() != nullptr) {
 			ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
-		}
-		if (canvas->get_scroll() != nullptr) {
-			ui->scrollXSpinBox->setValue(canvas->get_scroll()->interval_x);
-			ui->scrollYSpinBox->setValue(canvas->get_scroll()->interval_y);
-			ui->scrollRepeatCheckBox->setChecked(canvas->get_scroll()->repeat);
 		}
 		set_canvas_controls_enabled(true, canvas->get_type());
 	}
@@ -1316,9 +1283,6 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->currentFrameSpinBox->blockSignals(false);
 	ui->frameRateSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
-	ui->scrollXSpinBox->blockSignals(false);
-	ui->scrollYSpinBox->blockSignals(false);
-	ui->scrollRepeatCheckBox->blockSignals(false);
 }
 
 /**
@@ -1359,10 +1323,6 @@ void MaestroControl::set_canvas_controls_enabled(bool enabled, CanvasType::Type 
 	ui->loadImageButton->setEnabled(enabled);
 	ui->drawButton->setEnabled(enabled);
 	ui->clearButton->setEnabled(enabled);
-	ui->scrollLabel->setEnabled(enabled);
-	ui->scrollXSpinBox->setEnabled(enabled);
-	ui->scrollYSpinBox->setEnabled(enabled);
-	ui->scrollRepeatCheckBox->setEnabled(enabled);
 }
 
 /**
@@ -1503,15 +1463,46 @@ void MaestroControl::set_triangle_controls_enabled(bool enabled) {
 /**
  * Sets the Animation's center to the specified coordinates.
  */
-void MaestroControl::set_center() {
-	run_cue(animation_handler->set_center(get_section_index(), get_layer_index(), ui->centerXSpinBox->value(), ui->centerYSpinBox->value()));
+void MaestroControl::set_offset() {
+	// Don't allow changes if scrolling is enabled
+	if (ui->scrollXSpinBox->value() == 0 && ui->scrollYSpinBox->value() == 0) {
+		run_cue(section_handler->set_offset(get_section_index(), get_layer_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
+	}
 }
 
 /**
  * Sets the Canvas' scrolling behavior.
  */
 void MaestroControl::set_scroll() {
-	run_cue(canvas_handler->set_scroll(get_section_index(), get_layer_index(), ui->scrollXSpinBox->value(), ui->scrollYSpinBox->value(), ui->scrollRepeatCheckBox->isChecked()));
+	// Only update if the scroll doesn't exist, or the scroll does exist and its values don't match the new values
+	int new_x = ui->scrollXSpinBox->value();
+	int new_y = ui->scrollYSpinBox->value();
+	Section::Scroll* scroll = active_section_->get_scroll();
+	if (scroll == nullptr ||
+		(scroll != nullptr &&
+		 (scroll->interval_x != new_x ||
+		 scroll->interval_y != new_y))) {
+		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), new_x, new_y));
+	}
+
+	// Enable/disable offset controls
+	if (new_x != 0 || new_y != 0) {
+		ui->offsetLabel->setEnabled(false);
+		ui->offsetXSpinBox->setEnabled(false);
+		ui->offsetYSpinBox->setEnabled(false);
+	}
+	else {
+		ui->offsetLabel->setEnabled(true);
+		ui->offsetXSpinBox->setEnabled(true);
+		ui->offsetYSpinBox->setEnabled(true);
+
+		ui->offsetXSpinBox->blockSignals(true);
+		ui->offsetYSpinBox->blockSignals(true);
+		ui->offsetXSpinBox->setValue(active_section_->get_offset()->x);
+		ui->offsetYSpinBox->setValue(active_section_->get_offset()->y);
+		ui->offsetXSpinBox->blockSignals(false);
+		ui->offsetYSpinBox->blockSignals(false);
+	}
 }
 
 /**

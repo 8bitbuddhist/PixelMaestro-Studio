@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -50,92 +50,21 @@
       <attribute name="title">
        <string>Section</string>
       </attribute>
-      <layout class="QGridLayout" name="sectionLayout">
-       <item row="0" column="1">
-        <widget class="QComboBox" name="sectionComboBox">
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="scrollXSpinBox">
          <property name="toolTip">
-          <string>The currently selected Section</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="sectionSelectLabel">
-         <property name="text">
-          <string>Active Section</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Layers</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="layerComboBox">
-         <property name="toolTip">
-          <string>The currently selected Layer</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="mixModeLabel">
-         <property name="text">
-          <string>Mix Mode / Alpha</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QSpinBox" name="columnsSpinBox">
-         <property name="toolTip">
-          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
+          <string>Sets the scroll rate/direction along the x-axis</string>
          </property>
          <property name="minimum">
-          <number>1</number>
+          <number>-1000</number>
          </property>
          <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>10</number>
+          <number>1000</number>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QSpinBox" name="alphaSpinBox">
-         <property name="toolTip">
-          <string>The Layer's transparency</string>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-         <property name="singleStep">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="gridSizeLabel">
-         <property name="text">
-          <string>Grid Size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="layerSpinBox">
-         <property name="toolTip">
-          <string>The number of Layers belonging to this Section</string>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
+       <item row="5" column="6">
         <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -148,7 +77,14 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="1">
+       <item row="6" column="0">
+        <widget class="QLabel" name="gridSizeLabel">
+         <property name="text">
+          <string>Grid Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
         <widget class="QSpinBox" name="rowsSpinBox">
          <property name="toolTip">
           <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
@@ -170,7 +106,44 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="sectionComboBox">
+         <property name="toolTip">
+          <string>The currently selected Section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QComboBox" name="layerComboBox">
+         <property name="toolTip">
+          <string>The currently selected Layer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="scrollYSpinBox">
+         <property name="toolTip">
+          <string>Sets the scroll rate/direction along the y-axis</string>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
+        <widget class="QSpinBox" name="layerSpinBox">
+         <property name="toolTip">
+          <string>Sets the number of Layers belonging to this Section</string>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
         <widget class="QComboBox" name="mix_modeComboBox">
          <property name="toolTip">
           <string>The method used to mix this Layer with its base Section</string>
@@ -197,6 +170,87 @@
          </item>
         </widget>
        </item>
+       <item row="5" column="2">
+        <widget class="QSpinBox" name="alphaSpinBox">
+         <property name="toolTip">
+          <string>The Layer's transparency</string>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="sectionSelectLabel">
+         <property name="text">
+          <string>Active Section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Layers</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="scrollLabel">
+         <property name="text">
+          <string>Scroll</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="mixModeLabel">
+         <property name="text">
+          <string>Mix Mode / Alpha</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="columnsSpinBox">
+         <property name="toolTip">
+          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>65535</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="offsetLabel">
+         <property name="text">
+          <string>Offset</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="offsetXSpinBox">
+         <property name="toolTip">
+          <string>Sets the offset along the x axis</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QSpinBox" name="offsetYSpinBox">
+         <property name="toolTip">
+          <string>Sets the offset along the y axis</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="animationTab">
@@ -210,16 +264,6 @@
        <string>Animation</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="4" column="2">
-        <widget class="QPushButton" name="centerResetButton">
-         <property name="toolTip">
-          <string>Resets the center to the actual center of the pixel grid</string>
-         </property>
-         <property name="text">
-          <string>Reset</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="animationLabel">
          <property name="minimumSize">
@@ -233,78 +277,18 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="reverse_animationCheckBox">
-         <property name="toolTip">
-          <string>Reverses the steps in the animation</string>
-         </property>
-         <property name="text">
-          <string>Reverse</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="cycleLabel">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Speed</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="6">
-        <widget class="QSpinBox" name="cycleSpinBox">
+        <widget class="QSpinBox" name="pauseSpinBox">
          <property name="maximum">
           <number>3000</number>
          </property>
          <property name="singleStep">
           <number>10</number>
          </property>
-         <property name="value">
-          <number>1000</number>
-         </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="colorLabel">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Color Palette</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QComboBox" name="orientationComboBox">
-         <property name="toolTip">
-          <string>The animation's orientation</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>Horizontal</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Vertical</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="paletteControlButton">
-         <property name="text">
-          <string>Edit Palettes...</string>
-         </property>
-        </widget>
+       <item row="0" column="3" rowspan="2" colspan="2">
+        <layout class="QGridLayout" name="animationExtraOptionsLayout" columnstretch="0"/>
        </item>
        <item row="1" column="1">
         <widget class="QComboBox" name="animationComboBox">
@@ -371,10 +355,53 @@
          </item>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="4" column="6">
+        <widget class="QSpinBox" name="cycleSpinBox">
+         <property name="maximum">
+          <number>3000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="paletteControlButton">
          <property name="text">
-          <string>Center</string>
+          <string>Edit Palettes...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="orientationComboBox">
+         <property name="toolTip">
+          <string>The animation's orientation</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Horizontal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Vertical</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="colorLabel">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Color Palette</string>
          </property>
         </widget>
        </item>
@@ -391,74 +418,59 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <layout class="QHBoxLayout" name="centerLayout">
-         <item>
-          <widget class="QSpinBox" name="centerXSpinBox">
-           <property name="toolTip">
-            <string>The x-coordinate of the animation's new center</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="centerYSpinBox">
-           <property name="toolTip">
-            <string>The y-coordinate of the new animation center</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="colorComboBox">
+       <item row="4" column="0">
+        <widget class="QLabel" name="cycleLabel">
          <property name="minimumSize">
           <size>
-           <width>150</width>
+           <width>100</width>
            <height>0</height>
           </size>
          </property>
-         <property name="currentText">
-          <string/>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="pauseLabel">
          <property name="text">
-          <string>Pause</string>
+          <string>Speed</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="6">
-        <widget class="QSpinBox" name="pauseSpinBox">
+       <item row="5" column="1" colspan="5">
+        <widget class="QSlider" name="pauseSlider">
+         <property name="toolTip">
+          <string>The amount of time to wait before starting the next cycle</string>
+         </property>
          <property name="maximum">
           <number>3000</number>
          </property>
          <property name="singleStep">
           <number>10</number>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="3" rowspan="2" colspan="2">
-        <layout class="QGridLayout" name="animationExtraOptionsLayout" columnstretch="0"/>
-       </item>
-       <item row="4" column="5">
-        <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
          </property>
-        </spacer>
+         <property name="tickInterval">
+          <number>200</number>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="1" colspan="5">
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="reverse_animationCheckBox">
+         <property name="toolTip">
+          <string>Reverses the steps in the animation</string>
+         </property>
+         <property name="text">
+          <string>Reverse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="pauseLabel">
+         <property name="text">
+          <string>Pause</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="5">
         <widget class="QSlider" name="cycleSlider">
          <property name="toolTip">
           <string>The amount of time each cycle takes to complete</string>
@@ -492,27 +504,34 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1" colspan="5">
-        <widget class="QSlider" name="pauseSlider">
-         <property name="toolTip">
-          <string>The amount of time to wait before starting the next cycle</string>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="colorComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
          </property>
-         <property name="maximum">
-          <number>3000</number>
+         <property name="currentText">
+          <string/>
          </property>
-         <property name="singleStep">
-          <number>10</number>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
          </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksBelow</enum>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
          </property>
-         <property name="tickInterval">
-          <number>200</number>
-         </property>
-        </widget>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -537,7 +556,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>675</width>
+            <width>597</width>
             <height>414</height>
            </rect>
           </property>
@@ -545,136 +564,44 @@
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
-           <item row="9" column="1">
-            <widget class="QComboBox" name="fontComboBox">
-             <property name="toolTip">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="4">
-            <widget class="QSpinBox" name="scrollXSpinBox">
-             <property name="minimum">
-              <number>-1000</number>
-             </property>
-             <property name="maximum">
-              <number>1000</number>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QPushButton" name="selectColorButton">
-             <property name="toolTip">
-              <string>Sets the color used to draw shapes</string>
-             </property>
-             <property name="text">
-              <string>Color...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QRadioButton" name="circleRadioButton">
-             <property name="text">
-              <string>Circle</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="drawingToolsLabel">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drawing Tools&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
            <item row="10" column="1">
-            <widget class="QCheckBox" name="fillCheckBox">
-             <property name="toolTip">
-              <string>Fills in shapes, otherwise draws only the shape's outline</string>
-             </property>
-             <property name="text">
-              <string>Fill</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
             <widget class="QPushButton" name="drawButton">
              <property name="text">
               <string>Draw</string>
              </property>
             </widget>
            </item>
-           <item row="11" column="2">
-            <widget class="QPushButton" name="clearButton">
+           <item row="7" column="3">
+            <widget class="QLabel" name="target2Label">
              <property name="text">
-              <string>Clear...</string>
+              <string>Point 3</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="4">
-            <widget class="QSpinBox" name="target2XSpinBox">
-             <property name="maximum">
-              <number>65535</number>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="4" colspan="2">
-            <widget class="QLineEdit" name="textLineEdit">
-             <property name="toolTip">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="4">
-            <widget class="QSpinBox" name="originXSpinBox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="maximum">
-              <number>65535</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="frameCountLabel">
+           <item row="0" column="0">
+            <widget class="QLabel" name="canvasTypeLabel">
              <property name="text">
-              <string>Frame Count</string>
+              <string>Canvas Type</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="4">
-            <widget class="QSpinBox" name="targetXSpinBox">
+           <item row="1" column="4">
+            <widget class="QSpinBox" name="currentFrameSpinBox">
              <property name="toolTip">
-              <string/>
+              <string>The current drawing surface</string>
+             </property>
+             <property name="minimum">
+              <number>1</number>
              </property>
              <property name="maximum">
-              <number>65535</number>
+              <number>255</number>
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
+           <item row="6" column="1">
             <widget class="QRadioButton" name="textRadioButton">
              <property name="text">
               <string>Text</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="5">
-            <widget class="QSpinBox" name="targetYSpinBox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="maximum">
-              <number>65535</number>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QRadioButton" name="rectRadioButton">
-             <property name="text">
-              <string>Rectangle</string>
              </property>
             </widget>
            </item>
@@ -700,34 +627,99 @@
              </item>
             </widget>
            </item>
-           <item row="6" column="1">
-            <widget class="QRadioButton" name="lineRadioButton">
-             <property name="text">
-              <string>Line</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QRadioButton" name="triangleRadioButton">
-             <property name="text">
-              <string>Triangle</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="toggleCanvasModeLabel">
-             <property name="text">
-              <string>Frame Edit Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
+           <item row="8" column="4" colspan="2">
+            <widget class="QLineEdit" name="textLineEdit">
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLabel" name="originLabel">
+             <property name="text">
+              <string>Origin</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="4">
+            <widget class="QSpinBox" name="targetXSpinBox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4">
+            <widget class="QSpinBox" name="originXSpinBox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="frameCountLabel">
+             <property name="text">
+              <string>Frame Count</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QPushButton" name="selectColorButton">
+             <property name="toolTip">
+              <string>Sets the color used to draw shapes</string>
              </property>
              <property name="text">
+              <string>Color...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QPushButton" name="loadImageButton">
+             <property name="text">
+              <string>Load Image...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QCheckBox" name="fillCheckBox">
+             <property name="toolTip">
+              <string>Fills in shapes, otherwise draws only the shape's outline</string>
+             </property>
+             <property name="text">
+              <string>Fill</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="5">
+            <widget class="QSpinBox" name="target2YSpinBox">
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="4">
+            <widget class="QSpinBox" name="target2XSpinBox">
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QComboBox" name="fontComboBox">
+             <property name="toolTip">
               <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QLabel" name="targetLabel">
+             <property name="text">
+              <string>Target</string>
              </property>
             </widget>
            </item>
@@ -738,55 +730,42 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="5">
-            <widget class="QSpinBox" name="target2YSpinBox">
+           <item row="5" column="0">
+            <widget class="QRadioButton" name="circleRadioButton">
+             <property name="text">
+              <string>Circle</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="2">
+            <widget class="QPushButton" name="clearButton">
+             <property name="text">
+              <string>Clear...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="5">
+            <widget class="QSpinBox" name="originYSpinBox">
+             <property name="toolTip">
+              <string/>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="QPushButton" name="loadImageButton">
+           <item row="8" column="3">
+            <widget class="QLabel" name="textLabel">
              <property name="text">
-              <string>Load Image...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QSpinBox" name="frameRateSpinBox">
-             <property name="toolTip">
-              <string>Sets the amount of time between frames</string>
-             </property>
-             <property name="maximum">
-              <number>1000000</number>
-             </property>
-             <property name="value">
-              <number>100</number>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="fontLabel">
-             <property name="text">
-              <string>Font</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QSpinBox" name="currentFrameSpinBox">
-             <property name="toolTip">
-              <string>The current drawing surface</string>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>255</number>
+              <string>Text</string>
              </property>
             </widget>
            </item>
            <item row="6" column="5">
-            <widget class="QSpinBox" name="originYSpinBox">
+            <widget class="QSpinBox" name="targetYSpinBox">
              <property name="toolTip">
               <string/>
              </property>
@@ -808,48 +787,55 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="canvasTypeLabel">
+           <item row="8" column="0">
+            <widget class="QLabel" name="fontLabel">
              <property name="text">
-              <string>Canvas Type</string>
+              <string>Font</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="5">
-            <widget class="QSpinBox" name="scrollYSpinBox">
-             <property name="minimum">
-              <number>-1000</number>
-             </property>
-             <property name="maximum">
-              <number>1000</number>
+           <item row="1" column="0">
+            <widget class="QLabel" name="toggleCanvasModeLabel">
+             <property name="text">
+              <string>Frame Edit Mode</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="3">
-            <widget class="QLabel" name="scrollLabel">
+           <item row="5" column="1">
+            <widget class="QRadioButton" name="lineRadioButton">
              <property name="text">
-              <string>Scroll</string>
+              <string>Line</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="3">
-            <widget class="QLabel" name="targetLabel">
+           <item row="4" column="0">
+            <widget class="QLabel" name="drawingToolsLabel">
              <property name="text">
-              <string>Target</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drawing Tools&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="3">
-            <widget class="QLabel" name="textLabel">
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
-              <string>Text</string>
+              <string/>
              </property>
             </widget>
            </item>
-           <item row="6" column="3">
-            <widget class="QLabel" name="originLabel">
+           <item row="6" column="0">
+            <widget class="QRadioButton" name="triangleRadioButton">
              <property name="text">
-              <string>Origin</string>
+              <string>Triangle</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QRadioButton" name="rectRadioButton">
+             <property name="text">
+              <string>Rectangle</string>
              </property>
             </widget>
            </item>
@@ -860,17 +846,16 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="3">
-            <widget class="QLabel" name="target2Label">
-             <property name="text">
-              <string>Point 3</string>
+           <item row="2" column="4">
+            <widget class="QSpinBox" name="frameRateSpinBox">
+             <property name="toolTip">
+              <string>Sets the amount of time between frames</string>
              </property>
-            </widget>
-           </item>
-           <item row="4" column="6">
-            <widget class="QCheckBox" name="scrollRepeatCheckBox">
-             <property name="text">
-              <string>Repeat</string>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+             <property name="value">
+              <number>100</number>
              </property>
             </widget>
            </item>
@@ -1258,9 +1243,6 @@
   <tabstop>orientationComboBox</tabstop>
   <tabstop>reverse_animationCheckBox</tabstop>
   <tabstop>fadeCheckBox</tabstop>
-  <tabstop>centerXSpinBox</tabstop>
-  <tabstop>centerYSpinBox</tabstop>
-  <tabstop>centerResetButton</tabstop>
   <tabstop>cycleSlider</tabstop>
   <tabstop>cycleSpinBox</tabstop>
   <tabstop>pauseSlider</tabstop>
@@ -1271,8 +1253,6 @@
   <tabstop>frameCountSpinBox</tabstop>
   <tabstop>currentFrameSpinBox</tabstop>
   <tabstop>frameRateSpinBox</tabstop>
-  <tabstop>scrollXSpinBox</tabstop>
-  <tabstop>scrollYSpinBox</tabstop>
   <tabstop>circleRadioButton</tabstop>
   <tabstop>lineRadioButton</tabstop>
   <tabstop>triangleRadioButton</tabstop>
