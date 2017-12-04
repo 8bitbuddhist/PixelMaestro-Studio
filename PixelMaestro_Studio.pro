@@ -66,10 +66,10 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/colorpresets.cpp \
 		lib/PixelMaestro/src/cue/cuehandler.cpp \
 		src/utility/canvasutility.cpp \
-		src/window/virtualserialdevicedialog.cpp \
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
     lib/PixelMaestro/src/core/timing/timing.cpp \
-    lib/PixelMaestro/src/core/timing/animationtiming.cpp
+    lib/PixelMaestro/src/core/timing/animationtiming.cpp \
+    src/window/simpledrawingareadialog.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -128,10 +128,10 @@ HEADERS += \
 		src/demo/animatedcanvasdemo.h \
 		lib/PixelMaestro/src/colorpresets.h \
 		src/utility/canvasutility.h \
-		src/window/virtualserialdevicedialog.h \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
     lib/PixelMaestro/src/core/timing/timing.h \
-    lib/PixelMaestro/src/core/timing/animationtiming.h
+    lib/PixelMaestro/src/core/timing/animationtiming.h \
+    src/window/simpledrawingareadialog.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \
@@ -142,7 +142,7 @@ FORMS	+= \
 		src/window/settingsdialog.ui \
 		src/widget/animation/radialanimationcontrol.ui \
 		src/widget/palettecontrol.ui \
-		src/window/virtualserialdevicedialog.ui
+    src/window/simpledrawingareadialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

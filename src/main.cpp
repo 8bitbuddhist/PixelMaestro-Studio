@@ -31,14 +31,14 @@ int main(int argc, char* argv[]) {
 	palette.setColor(QPalette::HighlightedText, Qt::black);
 	qApp->setPalette(palette);
 
-	// Set default window size to max
+	// Maximize main window
 	w.setWindowState(Qt::WindowState::WindowMaximized);
 
-	// Add drawing area to form
+	// Verify main layout is present
 	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");
 	Q_ASSERT(main_layout);
 
-	// Enable high DPI output
+	// Enable high DPI support
 	app.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
 
 	w.show();

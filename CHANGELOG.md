@@ -5,9 +5,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.10] - In Progress
 ### Added
-- Added donate link to Help menu
-- Added checkbox to enable repeated Canvas scrolling.
-- Added ability to configure multiple output devices.
+- Added donate link to Help menu.
+- Added ability to configure multiple output devices in settings.
+- Animation Editor
+	- Added checkbox to enable repeated Canvas scrolling.
+	- Added checkbox for looping Show Events.
+	- Added empty space between Sections.
 
 ### Changed
 - Modified Show Event management UI
@@ -17,7 +20,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Events that have already run will now appear grayed out.
 	
 ### Removed
-- Removed ability to dynamically change Simulated Device width and height.
+- Removed device simulator.
 
 ## [v0.9] - 2017-11-28
 ### Added

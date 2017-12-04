@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VirtualSerialDeviceDialog</class>
- <widget class="QDialog" name="VirtualSerialDeviceDialog">
+ <class>SimpleDrawingAreaDialog</class>
+ <widget class="QDialog" name="SimpleDrawingAreaDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -426,7 +426,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Simulated Device</string>
+   <string>PixelMaestro Studio - Detached Window</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">

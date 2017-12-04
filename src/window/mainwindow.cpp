@@ -157,7 +157,7 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
 	for (int device = 0; device < serial_count; device++) {
 		settings.setArrayIndex(device);
-		if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::screen_option, Qt::CaseInsensitive) == 0 &&
+		if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
 			settings.value(SettingsDialog::output_enabled).toInt() > 0) {
 			drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
 			main_layout_->addWidget(drawing_area_);

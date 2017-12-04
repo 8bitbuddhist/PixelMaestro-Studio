@@ -38,7 +38,12 @@ You can change the program's settings by clicking *Edit* > *Settings*.
 #### Animation Editor Options
 *Animation Editor Options* control options specific to the Animation Editor. The *Number of Sections* option sets the number of Sections assigned to the Maestro when opening the Animation Editor.
 
-The *Send serial commands* option lets you control a Maestro running on a device connected via USB. You can select any device connected via USB. Note that the device must be actively listening for PixelMaestro Cues. Alternatively, select *Simulated Device* to open a "virtual Maestro" in a new window. This Maestro receives and executes Cues just like a regular device and is designed for debugging and previewing actions.
+The *Output devices* list is where you select the output devices that are controlled by the Animation Editor. Two options are available by default:
+
+* *Application window* displays a Maestro above the Animation Editor controls
+* *Separate window* displays a Maestro in a new window separate from the Animation Editor
+
+This list also displays devices connected via USB. You can select any USB device, but that device must be configured to listen for PixelMaestro Cues.
 
 You may need to reopen any open Workspaces before setting changes will take effect.
 

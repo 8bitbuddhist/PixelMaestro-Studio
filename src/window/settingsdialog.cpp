@@ -4,6 +4,8 @@
 #include "ui_settingsdialog.h"
 
 // Initialize strings
+QString SettingsDialog::detached_window_option = QStringLiteral("Detached window");
+QString SettingsDialog::main_window_option = QStringLiteral("Main window");
 QString SettingsDialog::num_sections = QStringLiteral("maestro/num_sections");
 QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
 QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
@@ -11,12 +13,8 @@ QString SettingsDialog::output_devices = QStringLiteral("serial/outputs");
 QString SettingsDialog::output_enabled = QStringLiteral("enabled");
 QString SettingsDialog::output_name = QStringLiteral("port");
 QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
-QString SettingsDialog::screen_option = QStringLiteral("screen");
 QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
 QString SettingsDialog::serial_port = QStringLiteral("serial/port");
-QString SettingsDialog::virtual_device_option = QStringLiteral("Simulated Device");
-QString SettingsDialog::virtual_device_width = QStringLiteral("serial/simulated_device/width");
-QString SettingsDialog::virtual_device_height = QStringLiteral("serial/simulated_device/height");
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
@@ -47,11 +45,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 			if (settings_.contains(output_name) && settings_.value(output_name).toString().compare(item->text(), Qt::CaseInsensitive) == 0) {
 				item->setCheckState((Qt::CheckState)settings_.value(output_enabled).toInt());
 			}
-
-			// If this is the Simulated Device, toggle the simulated device controls
-			if (item->text().compare(virtual_device_option, Qt::CaseInsensitive) == 0) {
-				set_simulated_device_options_enabled(item->checkState() == Qt::Checked);
-			}
 		}
 	}
 	settings_.endArray();
@@ -75,24 +68,6 @@ void SettingsDialog::on_buttonBox_accepted() {
 	// Save interface settings
 	settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());
 	settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
-
-	// Save virtual device size
-	settings_.setValue(virtual_device_width, ui->simulatedWidthSpinBox->value());
-	settings_.setValue(virtual_device_height, ui->simulatedHeightSpinBox->value());
-}
-
-void SettingsDialog::on_outputListWidget_itemChanged(QListWidgetItem *item) {
-	// For Simulated Devices, set the serial device size options enabled/disabled.
-	if (item->text().compare(virtual_device_option, Qt::CaseInsensitive) == 0) {
-		set_simulated_device_options_enabled(item->checkState() == Qt::Checked);
-	}
-}
-
-void SettingsDialog::set_simulated_device_options_enabled(bool enabled) {
-	ui->simulatedDeviceWidthLabel->setEnabled(enabled);
-	ui->simulatedDeviceHeightLabel->setEnabled(enabled);
-	ui->simulatedWidthSpinBox->setEnabled(enabled);
-	ui->simulatedHeightSpinBox->setEnabled(enabled);
 }
 
 SettingsDialog::~SettingsDialog() {

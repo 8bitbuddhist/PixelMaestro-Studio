@@ -11,7 +11,6 @@
 #include <QLocale>
 #include <QSerialPort>
 #include <QSharedPointer>
-#include <QTextStream>
 #include <QTimer>
 #include <QVector>
 #include <QWidget>
@@ -26,19 +25,13 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/showcuehandler.h"
-#include "window/virtualserialdevicedialog.h"
+#include "window/simpledrawingareadialog.h"
 
 namespace Ui {
 	class MaestroControl;
 }
 
 using namespace PixelMaestro;
-
-class MaestroController;
-
-class ShowControl;
-
-class ShowController;
 
 class MaestroControl : public QWidget {
 	Q_OBJECT
@@ -62,12 +55,12 @@ class MaestroControl : public QWidget {
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
 		void enable_show_edit_mode(bool enable);
-		void execute_cue(uint8_t* cue);
 		int16_t get_layer_index();
 		uint8_t get_layer_index(Section* section);
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
+		void run_cue(uint8_t* cue);
 		void save_to_file(QString filename);
 
 	private:
@@ -84,6 +77,9 @@ class MaestroControl : public QWidget {
 
 		/// Group for Canvas shape radio buttons
 		QButtonGroup canvas_shape_type_group_;
+
+		/// Separate Maestro DrawingArea
+		std::unique_ptr<SimpleDrawingAreaDialog> drawing_area_dialog_;
 
 		/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 		QVector<QVector<uint8_t>> event_history_;
@@ -112,9 +108,6 @@ class MaestroControl : public QWidget {
 		 */
 		bool show_mode_enabled_ = false;
 
-		/// Virtual device for testing Cue commands.
-		std::unique_ptr<VirtualSerialDeviceDialog> virtual_device_dialog_;
-
 		uint8_t get_num_layers(Section* section);
 		void add_cue_to_history(uint8_t* cue);
 		void initialize();
@@ -135,7 +128,7 @@ class MaestroControl : public QWidget {
 		void set_triangle_controls_enabled(bool enabled);
 
 		void set_scroll();
-		void set_layer_controls_enabled(bool visible);
+		void set_layer_controls_enabled(bool enabled);
 		void set_show_controls_enabled(bool enabled);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
@@ -181,11 +174,13 @@ class MaestroControl : public QWidget {
 		void on_drawButton_clicked();
 		void on_scrollXSpinBox_editingFinished();
 		void on_scrollYSpinBox_editingFinished();
-
-		void update_maestro_last_time();
 		void on_removeEventButton_clicked();
 		void on_timingMethodComboBox_currentIndexChanged(int index);
 		void on_scrollRepeatCheckBox_toggled(bool checked);
+		void on_loopCheckBox_toggled(bool checked);
+
+		void update_maestro_last_time();
+
 };
 
 #endif // MAESTROCONTROL_H

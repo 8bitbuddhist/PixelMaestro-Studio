@@ -15,24 +15,21 @@
 using namespace PixelMaestro;
 
 namespace Ui {
-	class VirtualSerialDeviceDialog;
+	class SimpleDrawingaAreaDialog;
 }
 
-class VirtualSerialDeviceDialog : public QDialog {
+class SimpleDrawingAreaDialog : public QDialog {
 		Q_OBJECT
 
 	public:
 		QLabel* interpreted = nullptr;
 
-		explicit VirtualSerialDeviceDialog(QWidget *parent = 0);
-		~VirtualSerialDeviceDialog();
-		void display_cue(uint8_t* cue);
-		Maestro* get_maestro();
+		explicit SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
+		~SimpleDrawingAreaDialog();
 
 	private:
-		Ui::VirtualSerialDeviceDialog *ui;
-		std::unique_ptr<CueInterpreter> cue_interpreter_;
-		std::unique_ptr<MaestroController> maestro_controller_;
+		Ui::SimpleDrawingaAreaDialog *ui;
+		MaestroController* maestro_controller_;
 		std::unique_ptr<SimpleDrawingArea> drawing_area_;
 };
 

@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -51,6 +51,41 @@
        <string>Section</string>
       </attribute>
       <layout class="QGridLayout" name="sectionLayout">
+       <item row="0" column="1">
+        <widget class="QComboBox" name="sectionComboBox">
+         <property name="toolTip">
+          <string>The currently selected Section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="sectionSelectLabel">
+         <property name="text">
+          <string>Active Section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Layers</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QComboBox" name="layerComboBox">
+         <property name="toolTip">
+          <string>The currently selected Layer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="mixModeLabel">
+         <property name="text">
+          <string>Mix Mode / Alpha</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="2">
         <widget class="QSpinBox" name="columnsSpinBox">
          <property name="toolTip">
@@ -70,27 +105,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Layers</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="gridSizeLabel">
-         <property name="text">
-          <string>Grid Size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="sectionComboBox">
-         <property name="toolTip">
-          <string>The currently selected Section</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="2">
         <widget class="QSpinBox" name="alphaSpinBox">
          <property name="toolTip">
@@ -101,6 +115,58 @@
          </property>
          <property name="singleStep">
           <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="gridSizeLabel">
+         <property name="text">
+          <string>Grid Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="layerSpinBox">
+         <property name="toolTip">
+          <string>The number of Layers belonging to this Section</string>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="rowsSpinBox">
+         <property name="toolTip">
+          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>65535</number>
+         </property>
+         <property name="value">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -130,72 +196,6 @@
           </property>
          </item>
         </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="sectionSelectLabel">
-         <property name="text">
-          <string>Active Section</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="rowsSpinBox">
-         <property name="toolTip">
-          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
-         </property>
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="layerComboBox">
-         <property name="toolTip">
-          <string>The currently selected Layer</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="mixModeLabel">
-         <property name="text">
-          <string>Mix Mode / Alpha</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="layerSpinBox">
-         <property name="toolTip">
-          <string>The number of Layers belonging to this Section</string>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -535,7 +535,7 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>-107</x>
+            <x>0</x>
             <y>0</y>
             <width>675</width>
             <height>414</height>
@@ -920,40 +920,6 @@
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
             <layout class="QGridLayout" name="showControlLayout">
-             <item row="1" column="0">
-              <widget class="QLabel" name="toggleShowModeLabel">
-               <property name="text">
-                <string>Event Edit Mode</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="enableShowLabel">
-               <property name="text">
-                <string>Enable Show</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="toggleShowModeCheckBox">
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QCheckBox" name="enableShowCheckBox">
-               <property name="toolTip">
-                <string>Enables support for queuing actions</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="2">
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
@@ -983,6 +949,40 @@
                </property>
               </widget>
              </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="toggleShowModeCheckBox">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="enableShowCheckBox">
+               <property name="toolTip">
+                <string>Enables support for queuing actions</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="toggleShowModeLabel">
+               <property name="text">
+                <string>Event Edit Mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="enableShowLabel">
+               <property name="text">
+                <string>Enable Show</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="1">
               <widget class="QComboBox" name="timingMethodComboBox">
                <property name="sizePolicy">
@@ -1004,6 +1004,23 @@
                  <string>Relative</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="loopLabel">
+               <property name="text">
+                <string>Loop Events</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="loopCheckBox">
+               <property name="toolTip">
+                <string>Repeats the Show after the last Event (Relative timing only)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
               </widget>
              </item>
             </layout>

@@ -66,9 +66,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 	/*
 	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
-	 * Note: This assumes we only have one section in the Maestro.
-	 * If there's more than one, the last Section will overwrite the first.
-	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
+	 * Multiple Sections are drawn left to right starting with index 0.
 	 */
 	if (last_pixel_count_.size() != maestro_controller_->get_maestro()->get_num_sections()) {
 		last_pixel_count_.resize(maestro_controller_->get_maestro()->get_num_sections());
@@ -85,7 +83,9 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 		}
 
 		draw_section(&painter, i, cursor);
-		cursor.setX(cursor.x() + section->get_dimensions()->x);
+
+		// Offset cursor by the Section width, plus a little buffer
+		cursor.setX(cursor.x() + section->get_dimensions()->x + 1);
 	}
 
 }
