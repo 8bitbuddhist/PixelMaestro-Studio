@@ -13,6 +13,7 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 #include <QUrl>
 #include "settingsdialog.h"
 #include "ui_mainwindow.h"
@@ -150,9 +151,19 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	reset_drawing_area();
 
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
-	drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
 
-	main_layout_->addWidget(drawing_area_);
+	// Check to see if the Screen is enabled as	an output device
+	QSettings settings;
+	int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
+	for (int device = 0; device < serial_count; device++) {
+		settings.setArrayIndex(device);
+		if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::screen_option, Qt::CaseInsensitive) == 0 &&
+			settings.value(SettingsDialog::output_enabled).toInt() > 0) {
+			drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
+			main_layout_->addWidget(drawing_area_);
+		}
+	}
+
 	main_layout_->addWidget(maestro_control_);
 
 	ui->action_Close_Workspace->setEnabled(true);

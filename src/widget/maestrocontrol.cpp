@@ -36,34 +36,40 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	this->maestro_controller_ = maestro_controller;
 
-	// Open serial connection to Arduino (if configured)
+	// Open serial connections to output devices
 	QSettings settings;
-	if (settings.value(SettingsDialog::serial_enabled).toBool()) {
+	int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
+	for (int device = 0; device < serial_count; device++) {
+		settings.setArrayIndex(device);
+		if (settings.value(SettingsDialog::output_enabled).toInt() > 0) {
+			// Detect and skip over the screen
+			if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::screen_option, Qt::CaseInsensitive) == 0) { }
+			// Detect and initialize the simulated serial device
+			else if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::virtual_device_option, Qt::CaseInsensitive) == 0) {
+				virtual_device_dialog_ = std::unique_ptr<VirtualSerialDeviceDialog>(new VirtualSerialDeviceDialog(this));
+				virtual_device_dialog_.get()->show();
+			}
+			// Detect all other devices (serial/USB)
+			else {
+				// Initialize the serial device
+				QSharedPointer<QSerialPort> serial_device(new QSerialPort());
+				serial_device->setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
+				serial_device->setBaudRate(9600);
 
-		/*
-		 * If the virtual device is selected, connect to a new VirtualSerialDeviceDialog.
-		 * Cues are sent to the device in send_to_device().
-		 * Otherwise initialize the serial port like normal.
-		 */
-		if (settings.value(SettingsDialog::serial_port).toString().contains(SettingsDialog::virtual_device_option)) {
-			virtual_device_dialog_ = std::unique_ptr<VirtualSerialDeviceDialog>(new VirtualSerialDeviceDialog(this));
-			virtual_device_dialog_.get()->show();
-		}
-		else {
-			serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
-			serial_port_.setBaudRate(9600);
+				// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
+				serial_device->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+				serial_device->setParity(QSerialPort::Parity::NoParity);
+				serial_device->setDataBits(QSerialPort::DataBits::Data8);
+				serial_device->setStopBits(QSerialPort::StopBits::OneStop);
 
-			// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-			serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-			serial_port_.setParity(QSerialPort::Parity::NoParity);
-			serial_port_.setDataBits(QSerialPort::DataBits::Data8);
-			serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
-
-			if (!serial_port_.open(QIODevice::WriteOnly)) {
-				QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_port_.errorString()));
+				if (!serial_device->open(QIODevice::WriteOnly)) {
+					QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_device->errorString()));
+				}
+				serial_devices_.push_back(serial_device);
 			}
 		}
 	}
+	settings.endArray();
 
 	// Initialize Cue Controller
 	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller(UINT16_MAX);
@@ -128,9 +134,11 @@ void MaestroControl::execute_cue(uint8_t *cue) {
 			virtual_device_dialog_->get_maestro()->get_cue_controller()->run(cue);
 		}
 
-		// Send to serial device
-		if (serial_port_.isOpen()) {
-			serial_port_.write((const char*)cue, cue_controller_->get_cue_size(cue));
+		// Send to serial devices
+		for (int i = 0; i < serial_devices_.size(); i++) {
+			if (serial_devices_[i]->isOpen()) {
+				serial_devices_[i]->write((const char*)cue, cue_controller_->get_cue_size(cue));
+			}
 		}
 	}
 
@@ -837,7 +845,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
  * @param y Number of columns.
  */
 void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
-	// Note: Resizing serial devices is intentionally unavailable.
+	// NOTE: This only affects the DrawingArea Maestro.
 	if ((x != active_section_->get_dimensions()->x) || (y != active_section_->get_dimensions()->y)) {
 
 		/*
@@ -856,7 +864,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				}
 				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+				cue_controller_->run(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 
 				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -875,7 +883,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 				}
 				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+				cue_controller_->run(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 
 				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -886,11 +894,11 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 			}
 		}
 		else {	// No Canvas set
-			execute_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+			cue_controller_->run(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 		}
 
 		// Reset Animation center
-		execute_cue(animation_handler->set_center(get_section_index(), get_layer_index(), x / 2,	y / 2));
+		cue_controller_->run(animation_handler->set_center(get_section_index(), get_layer_index(), x / 2,	y / 2));
 		on_centerResetButton_clicked();
 	}
 }
@@ -1604,9 +1612,13 @@ void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
-	if (serial_port_.isOpen()) {
-		serial_port_.close();
+	// Close all open serial devices
+	for (int i = 0;	i < serial_devices_.size(); i++) {
+		if (serial_devices_[i]->isOpen()) {
+			serial_devices_[i]->close();
+		}
 	}
+
 	delete show_controller_;
 	delete ui;
 }

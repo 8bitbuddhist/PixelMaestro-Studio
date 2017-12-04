@@ -10,6 +10,7 @@
 #include <QColor>
 #include <QLocale>
 #include <QSerialPort>
+#include <QSharedPointer>
 #include <QTextStream>
 #include <QTimer>
 #include <QVector>
@@ -58,9 +59,6 @@ class MaestroControl : public QWidget {
 		SectionCueHandler* section_handler = nullptr;
 		ShowCueHandler* show_handler = nullptr;
 
-		/// Connection to an Arduino or other device.
-		QSerialPort serial_port_;
-
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
 		void enable_show_edit_mode(bool enable);
@@ -95,6 +93,12 @@ class MaestroControl : public QWidget {
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
+
+		/// List of enabled output devices.
+		QVector<QString> output_devices_;
+
+		/// List of enabled USB devices.
+		QVector<QSharedPointer<QSerialPort>> serial_devices_;
 
 		/// Controller for managing Shows.
 		ShowController* show_controller_ = nullptr;

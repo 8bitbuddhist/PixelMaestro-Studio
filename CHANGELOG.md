@@ -7,6 +7,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 - Added donate link to Help menu
 - Added checkbox to enable repeated Canvas scrolling.
+- Added ability to configure multiple output devices.
 
 ### Changed
 - Modified Show Event management UI
@@ -14,6 +15,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added timing method combo box.
 	- Simplified Event History selection.
 	- Events that have already run will now appear grayed out.
+	
+### Removed
+- Removed ability to dynamically change Simulated Device width and height.
 
 ## [v0.9] - 2017-11-28
 ### Added

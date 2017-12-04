@@ -906,9 +906,9 @@
     <addaction name="action_Open_Animation_Editor"/>
     <addaction name="actionOpen_Maestro"/>
     <addaction name="action_Save_Maestro"/>
-    <addaction name="menuOpen_Demo"/>
-    <addaction name="separator"/>
     <addaction name="action_Close_Workspace"/>
+    <addaction name="separator"/>
+    <addaction name="menuOpen_Demo"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
     <addaction name="separator"/>
@@ -974,7 +974,7 @@
   </action>
   <action name="action_Close_Workspace">
    <property name="text">
-    <string>&amp;Close Workspace</string>
+    <string>&amp;Close</string>
    </property>
   </action>
   <action name="action_Color_Canvas_Demo">

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>386</height>
+    <height>462</height>
    </rect>
   </property>
   <property name="palette">
@@ -550,6 +550,13 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout_4">
+        <item row="3" column="0">
+         <widget class="QLabel" name="simulatedDeviceHeightLabel">
+          <property name="text">
+           <string>Simulated device height</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_4">
           <property name="text">
@@ -570,28 +577,46 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="serialCheckBox">
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="simulatedHeightSpinBox">
           <property name="toolTip">
-           <string>Forwards actions performed in the Animation Editor to another device</string>
+           <string>Sets the height of the simulated device's pixel grid</string>
           </property>
-          <property name="text">
-           <string>Send commands to</string>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>1000</number>
+          </property>
+          <property name="value">
+           <number>10</number>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QComboBox" name="serialPortComboBox">
-          <property name="toolTip">
-           <string>Sets the device that will receive commands on each action</string>
+         <widget class="QListWidget" name="outputListWidget">
+          <property name="showDropIndicator" stdset="0">
+           <bool>false</bool>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="simulatedDeviceWidthLabel">
-          <property name="text">
-           <string>Simulated device width</string>
-          </property>
+          <item>
+           <property name="text">
+            <string>Screen</string>
+           </property>
+           <property name="checkState">
+            <enum>Checked</enum>
+           </property>
+           <property name="flags">
+            <set>ItemIsUserCheckable|ItemIsEnabled</set>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Simulated Device</string>
+           </property>
+           <property name="checkState">
+            <enum>Unchecked</enum>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="2" column="1">
@@ -610,26 +635,17 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="simulatedDeviceHeightLabel">
+        <item row="2" column="0">
+         <widget class="QLabel" name="simulatedDeviceWidthLabel">
           <property name="text">
-           <string>Simulated device height</string>
+           <string>Simulated device width</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="simulatedHeightSpinBox">
-          <property name="toolTip">
-           <string>Sets the height of the simulated device's pixel grid</string>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="value">
-           <number>10</number>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Output device(s)</string>
           </property>
          </widget>
         </item>

@@ -2,6 +2,7 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 #include <QSettings>
 
 namespace Ui {
@@ -16,7 +17,11 @@ class SettingsDialog : public QDialog
 		static QString num_sections;
 		static QString pixel_padding;
 		static QString pixel_shape;
+		static QString output_devices;
+		static QString output_enabled;
+		static QString output_name;
 		static QString refresh_rate;
+		static QString screen_option;
 		static QString serial_enabled;
 		static QString serial_port;
 		static QString virtual_device_option;
@@ -28,15 +33,13 @@ class SettingsDialog : public QDialog
 
 	private slots:
 		void on_buttonBox_accepted();
-		void on_serialCheckBox_toggled(bool checked);
-
-		void on_serialPortComboBox_currentTextChanged(const QString &arg1);
+		void on_outputListWidget_itemChanged(QListWidgetItem *item);
 
 	private:
 		QSettings settings_;
 		Ui::SettingsDialog *ui;
 
-		void set_simulated_device_options_enabled(bool enabled);
+		void set_simulated_device_options_enabled(bool output_enabled);
 };
 
 #endif // SETTINGSDIALOG_H
