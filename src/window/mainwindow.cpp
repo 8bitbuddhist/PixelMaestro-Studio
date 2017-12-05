@@ -1,7 +1,6 @@
 #include "animation/waveanimation.h"
 #include "canvas/animationcanvas.h"
 #include "colorpresets.h"
-#include "demo/animatedcanvasdemo.h"
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
 #include "demo/colorcanvasdemo.h"
@@ -38,7 +37,7 @@ void MainWindow::on_action_Exit_triggered() {
 }
 
 void MainWindow::on_action_Online_Help_triggered() {
-	QDesktopServices::openUrl(QUrl("https://github.com/Anewman2/PixelMaestro/tree/master/docs", QUrl::TolerantMode));
+	QDesktopServices::openUrl(QUrl("https://github.com/Anewman2/PixelMaestro/wiki", QUrl::TolerantMode));
 }
 
 void MainWindow::reset_drawing_area() {
@@ -53,7 +52,6 @@ void MainWindow::reset_drawing_area() {
 
 	ui->action_Save_Maestro->setEnabled(false);
 
-	ui->action_Animated_Canvas_Demo->setEnabled(true);
 	ui->action_Blink_Demo->setEnabled(true);
 	ui->action_Canvas_Demo->setEnabled(true);
 	ui->action_Color_Canvas_Demo->setEnabled(true);
@@ -77,16 +75,6 @@ void MainWindow::reset_drawing_area() {
 	}
 
 	controller_ = new MaestroController();
-}
-
-void MainWindow::on_action_Animated_Canvas_Demo_triggered() {
-	reset_drawing_area();
-
-	drawing_area_ = new AnimatedCanvasDemo(main_layout_->widget(), controller_);
-	main_layout_->addWidget(drawing_area_);
-	ui->action_Animated_Canvas_Demo->setEnabled(false);
-	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->addWidget(new QLabel("Demonstrates using animated images in Canvases"));
 }
 
 void MainWindow::on_action_Donate_triggered() {

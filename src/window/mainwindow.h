@@ -35,8 +35,6 @@ class MainWindow : public QMainWindow {
 
 		void on_actionOpen_Maestro_triggered();
 
-		void on_action_Animated_Canvas_Demo_triggered();
-
 		void on_action_Donate_triggered();
 
 	private:

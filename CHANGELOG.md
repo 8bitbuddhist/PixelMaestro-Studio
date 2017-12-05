@@ -21,6 +21,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	
 ### Removed
 - Removed device simulator.
+- Removed Animated Canvas demo.
 
 ## [v0.9] - 2017-11-28
 ### Added

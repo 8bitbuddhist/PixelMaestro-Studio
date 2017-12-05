@@ -435,11 +435,12 @@ void MaestroControl::on_currentFrameSpinBox_editingFinished() {
 	// If the selected frame exceeds the number of frames, set to the number of frames.
 	if (frame >= active_section_->get_canvas()->get_num_frames()) {
 		frame = active_section_->get_canvas()->get_num_frames() - 1;
+		ui->currentFrameSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->setValue(frame);
+		ui->currentFrameSpinBox->blockSignals(false);
 	}
-	else {
-		run_cue(canvas_handler->set_current_frame_index(get_section_index(), get_layer_index(), frame));
-	}
+
+	run_cue(canvas_handler->set_current_frame_index(get_section_index(), get_layer_index(), frame));
 }
 
 /**
@@ -694,12 +695,30 @@ void MaestroControl::on_loadImageButton_clicked() {
 		QDir::home().path(),
 		QString("Images (*.bmp *.gif *.jpg *.png)"));
 
-	CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
+	if (!filename.isEmpty()) {
+		CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
 
-	// Set the number of frames
-	ui->frameCountSpinBox->blockSignals(true);
-	ui->frameCountSpinBox->setValue(active_section_->get_canvas()->get_num_frames());
-	ui->frameCountSpinBox->blockSignals(false);
+		Canvas* canvas = active_section_->get_canvas();
+
+		// Set frame options
+		ui->frameCountSpinBox->blockSignals(true);
+		ui->frameCountSpinBox->setValue(canvas->get_num_frames());
+		ui->frameCountSpinBox->blockSignals(false);
+
+		if (canvas->get_frame_timing() != nullptr) {
+			ui->frameRateSpinBox->blockSignals(true);
+			ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
+			ui->frameRateSpinBox->blockSignals(false);
+		}
+
+		// Disable frame count spin box if necessary
+		if (!ui->toggleCanvasModeCheckBox->isChecked()) {
+			ui->currentFrameSpinBox->setEnabled(false);
+		}
+		else {
+			ui->currentFrameSpinBox->setEnabled(true);
+		}
+	}
 }
 
 /**

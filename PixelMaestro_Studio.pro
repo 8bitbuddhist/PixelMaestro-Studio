@@ -62,14 +62,13 @@ SOURCES += src/main.cpp\
 		src/widget/palettecontrol.cpp \
 		src/controller/cueinterpreter.cpp \
 		src/controller/showcontroller.cpp \
-		src/demo/animatedcanvasdemo.cpp \
 		lib/PixelMaestro/src/colorpresets.cpp \
 		lib/PixelMaestro/src/cue/cuehandler.cpp \
 		src/utility/canvasutility.cpp \
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
-    lib/PixelMaestro/src/core/timing/timing.cpp \
-    lib/PixelMaestro/src/core/timing/animationtiming.cpp \
-    src/window/simpledrawingareadialog.cpp
+	lib/PixelMaestro/src/core/timing/timing.cpp \
+	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
+	src/window/simpledrawingareadialog.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -125,13 +124,12 @@ HEADERS += \
 		src/widget/palettecontrol.h \
 		src/controller/cueinterpreter.h \
 		src/controller/showcontroller.h \
-		src/demo/animatedcanvasdemo.h \
 		lib/PixelMaestro/src/colorpresets.h \
 		src/utility/canvasutility.h \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
-    lib/PixelMaestro/src/core/timing/timing.h \
-    lib/PixelMaestro/src/core/timing/animationtiming.h \
-    src/window/simpledrawingareadialog.h
+	lib/PixelMaestro/src/core/timing/timing.h \
+	lib/PixelMaestro/src/core/timing/animationtiming.h \
+	src/window/simpledrawingareadialog.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \
@@ -142,15 +140,8 @@ FORMS	+= \
 		src/window/settingsdialog.ui \
 		src/widget/animation/radialanimationcontrol.ui \
 		src/widget/palettecontrol.ui \
-    src/window/simpledrawingareadialog.ui
+	src/window/simpledrawingareadialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \
 		$$PWD/lib/PixelMaestro/src
-
-DISTFILES += \
-		src/resources/nyan.gif \
-		src/resources/nyan.gif
-
-RESOURCES += \
-		src/resources.qrc
