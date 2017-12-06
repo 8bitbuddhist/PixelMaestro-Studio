@@ -3,7 +3,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.10] - In Progress
+## [v0.10] - 2017-12-05
 ### Added
 - Added donate link to Help menu.
 - Added ability to configure multiple output devices in settings.
@@ -13,6 +13,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added empty space between Sections.
 
 ### Changed
+- Moved project into Beta state.
 - Modified Show Event management UI
 	- Added ability to remove Events from Show Event list.
 	- Added timing method combo box.

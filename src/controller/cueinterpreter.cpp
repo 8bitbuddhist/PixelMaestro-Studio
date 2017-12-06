@@ -103,7 +103,9 @@ void CueInterpreter::interpret_animation_cue(uint8_t* cue, QString* result) {
 void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
 	result->append("Section: " + QString::number(cue[CanvasCueHandler::Byte::SectionByte]) + ", ");
 	result->append("Layer: " + QString::number(cue[CanvasCueHandler::Byte::LayerByte]) + ", ");
-	result->append("Canvas Type: " + CanvasTypes.at(cue[CanvasCueHandler::Byte::TypeByte]) + ", ");
+	if (cue[CanvasCueHandler::Byte::TypeByte] != 255) {
+		result->append("Canvas Type: " + CanvasTypes.at(cue[CanvasCueHandler::Byte::TypeByte]) + ", ");
+	}
 	result->append("Action: " + CanvasActions.at(cue[CanvasCueHandler::Byte::ActionByte]));
 
 	// TODO: Canvas parameters

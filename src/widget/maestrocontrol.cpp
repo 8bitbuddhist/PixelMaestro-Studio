@@ -53,7 +53,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 			else {
 				// Initialize the serial device
 				QSharedPointer<QSerialPort> serial_device(new QSerialPort());
-				serial_device->setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
+				serial_device->setPortName(settings.value(SettingsDialog::output_name).toString());
 				serial_device->setBaudRate(9600);
 
 				// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
@@ -65,7 +65,9 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 				if (!serial_device->open(QIODevice::WriteOnly)) {
 					QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_device->errorString()));
 				}
-				serial_devices_.push_back(serial_device);
+				else {
+					serial_devices_.push_back(serial_device);
+				}
 			}
 		}
 	}
@@ -267,9 +269,13 @@ void MaestroControl::initialize() {
 
 		show_controller_->initialize_events();
 
-		ui->timingMethodComboBox->setEnabled(false);
+		ui->timingMethodComboBox->blockSignals(true);
 		ui->timingMethodComboBox->setCurrentIndex(show->get_timing());
-		ui->timingMethodComboBox->setEnabled(true);
+		ui->timingMethodComboBox->blockSignals(false);
+
+		ui->loopCheckBox->blockSignals(true);
+		ui->loopCheckBox->setChecked(show->get_looping());
+		ui->loopCheckBox->blockSignals(false);
 	}
 
 	// Initialize Canvas elements
@@ -282,9 +288,6 @@ void MaestroControl::initialize() {
 
 	// Set Canvas defaults
 	ui->currentFrameSpinBox->setEnabled(false);
-
-	// Add fonts
-	ui->fontComboBox->addItems({"5x8"});
 
 	// Finally, open up the default Section
 	set_active_section(section);
@@ -334,16 +337,16 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	// Only change if the animation is different
-	if (active_section_->get_animation() == nullptr || active_section_->get_animation()->get_type() == index) {
+	if (active_section_->get_animation()->get_type() == (AnimationType::Type)index) {
 		return;
 	}
 
 	// Preserve the animation cycle between changes
-	run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType::Type)index, true, nullptr, 0));
+	PaletteController::Palette* palette = palette_controller_.get_palette(ui->colorComboBox->currentIndex());
+	run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType::Type)index, true, &palette->colors[0], palette->colors.size(), true));
 	show_extra_controls(active_section_->get_animation());
 
 	// Reapply animation settings
-	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 	on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
 	on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
 	on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
@@ -1005,11 +1008,12 @@ void MaestroControl::run_cue(uint8_t *cue) {
 		 * Send to serial devices.
 		 * Certain actions (e.g. grid resizing) should be caught here and prevented from running.
 		 */
-		if (cue[CueController::Byte::PayloadByte] != CueController::Handler::SectionHandler &&
-			cue[SectionCueHandler::Byte::ActionByte] != SectionCueHandler::Action::SetDimensions) {
+		if (!(cue[CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionHandler &&
+			cue[SectionCueHandler::Byte::ActionByte] == (uint8_t)SectionCueHandler::Action::SetDimensions)) {
 			for (int i = 0; i < serial_devices_.size(); i++) {
 				if (serial_devices_[i]->isOpen()) {
-					serial_devices_[i]->write((const char*)cue, cue_controller_->get_cue_size(cue));
+					int size = cue_controller_->get_cue_size(cue);
+					serial_devices_[i]->write((const char*)cue, size);
 				}
 			}
 		}
@@ -1176,15 +1180,21 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->columnsSpinBox->blockSignals(false);
 	ui->rowsSpinBox->blockSignals(false);
 
-	// Get scroll settings
-	ui->scrollXSpinBox->blockSignals(true);
-	ui->scrollYSpinBox->blockSignals(true);
+	// Get offset and scroll settings
+	ui->offsetXSpinBox->blockSignals(true);
+	ui->offsetYSpinBox->blockSignals(true);
+	ui->offsetXSpinBox->setValue(section->get_offset()->x);
+	ui->offsetYSpinBox->setValue(section->get_offset()->y);
+	ui->offsetXSpinBox->blockSignals(false);
+	ui->offsetYSpinBox->blockSignals(false);
 	if (section->get_scroll() != nullptr) {
+		ui->scrollXSpinBox->blockSignals(true);
+		ui->scrollYSpinBox->blockSignals(true);
 		ui->scrollXSpinBox->setValue(section->get_scroll()->interval_x);
 		ui->scrollYSpinBox->setValue(section->get_scroll()->interval_y);
+		ui->scrollXSpinBox->blockSignals(false);
+		ui->scrollYSpinBox->blockSignals(false);
 	}
-	ui->scrollXSpinBox->blockSignals(false);
-	ui->scrollYSpinBox->blockSignals(false);
 
 	// Get Layer settings
 	if (section->get_layer()) {
@@ -1193,7 +1203,7 @@ void MaestroControl::set_active_section(Section* section) {
 		ui->layerSpinBox->blockSignals(false);
 	}
 
-	// If this is an Layer, get the MixMode and alpha
+	// If this is a Layer, get the MixMode and alpha
 	if (section->get_parent_section() != nullptr) {
 		ui->mix_modeComboBox->blockSignals(true);
 		ui->alphaSpinBox->blockSignals(true);

@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -51,20 +51,14 @@
        <string>Section</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="scrollXSpinBox">
-         <property name="toolTip">
-          <string>Sets the scroll rate/direction along the x-axis</string>
-         </property>
-         <property name="minimum">
-          <number>-1000</number>
-         </property>
-         <property name="maximum">
-          <number>1000</number>
+       <item row="3" column="0">
+        <widget class="QLabel" name="mixModeLabel">
+         <property name="text">
+          <string>Mix Mode / Alpha</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="6">
+       <item row="0" column="3">
         <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -77,32 +71,16 @@
          </property>
         </spacer>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="gridSizeLabel">
-         <property name="text">
-          <string>Grid Size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="rowsSpinBox">
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="scrollXSpinBox">
          <property name="toolTip">
-          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
-         </property>
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
+          <string>Sets the scroll rate/direction along the x-axis</string>
          </property>
          <property name="minimum">
-          <number>1</number>
+          <number>-1000</number>
          </property>
          <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>10</number>
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -120,7 +98,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="5" column="2">
         <widget class="QSpinBox" name="scrollYSpinBox">
          <property name="toolTip">
           <string>Sets the scroll rate/direction along the y-axis</string>
@@ -143,7 +121,49 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="0" column="0">
+        <widget class="QLabel" name="sectionSelectLabel">
+         <property name="text">
+          <string>Active Section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Layers</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="scrollLabel">
+         <property name="text">
+          <string>Scroll</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="offsetLabel">
+         <property name="text">
+          <string>Offset</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="offsetXSpinBox">
+         <property name="toolTip">
+          <string>Sets the offset along the x axis</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="offsetYSpinBox">
+         <property name="toolTip">
+          <string>Sets the offset along the y axis</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
         <widget class="QComboBox" name="mix_modeComboBox">
          <property name="toolTip">
           <string>The method used to mix this Layer with its base Section</string>
@@ -170,7 +190,7 @@
          </item>
         </widget>
        </item>
-       <item row="5" column="2">
+       <item row="3" column="2">
         <widget class="QSpinBox" name="alphaSpinBox">
          <property name="toolTip">
           <string>The Layer's transparency</string>
@@ -183,38 +203,20 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="sectionSelectLabel">
+       <item row="4" column="0">
+        <widget class="QLabel" name="gridSizeLabel">
          <property name="text">
-          <string>Active Section</string>
+          <string>Grid Size</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Layers</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="scrollLabel">
-         <property name="text">
-          <string>Scroll</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="mixModeLabel">
-         <property name="text">
-          <string>Mix Mode / Alpha</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QSpinBox" name="columnsSpinBox">
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="rowsSpinBox">
          <property name="toolTip">
-          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
@@ -230,24 +232,22 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="offsetLabel">
-         <property name="text">
-          <string>Offset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="offsetXSpinBox">
-         <property name="toolTip">
-          <string>Sets the offset along the x axis</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="2">
-        <widget class="QSpinBox" name="offsetYSpinBox">
+        <widget class="QSpinBox" name="columnsSpinBox">
          <property name="toolTip">
-          <string>Sets the offset along the y axis</string>
+          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>65535</number>
+         </property>
+         <property name="value">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -763,6 +763,11 @@
              <property name="toolTip">
               <string/>
              </property>
+             <item>
+              <property name="text">
+               <string>5x8</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="8" column="5">
@@ -1257,10 +1262,6 @@
   <tabstop>sectionComboBox</tabstop>
   <tabstop>layerComboBox</tabstop>
   <tabstop>layerSpinBox</tabstop>
-  <tabstop>mix_modeComboBox</tabstop>
-  <tabstop>alphaSpinBox</tabstop>
-  <tabstop>rowsSpinBox</tabstop>
-  <tabstop>columnsSpinBox</tabstop>
   <tabstop>colorComboBox</tabstop>
   <tabstop>paletteControlButton</tabstop>
   <tabstop>animationComboBox</tabstop>
