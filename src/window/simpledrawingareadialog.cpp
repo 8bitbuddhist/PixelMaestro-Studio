@@ -1,11 +1,11 @@
 #include "simpledrawingareadialog.h"
-#include "ui_virtualserialdevicedialog.h"
+#include "ui_simpledrawingareadialog.h"
 
 using namespace PixelMaestro;
 
 SimpleDrawingAreaDialog::SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller) :
 	QDialog(parent),
-	ui(new Ui::SimpleDrawingaAreaDialog) {
+	ui(new Ui::SimpleDrawingAreaDialog) {
 	ui->setupUi(this);
 
 	this->maestro_controller_ = maestro_controller;

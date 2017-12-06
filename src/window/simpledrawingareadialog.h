@@ -2,8 +2,8 @@
  * VirtualSerialDeviceDialog - Manages a separate Maestro for testing serial output/Cue commands.
  */
 
-#ifndef VIRTUALSERIALDEVICEDIALOG_H
-#define VIRTUALSERIALDEVICEDIALOG_H
+#ifndef SIMPLEDRAWINGAREADIALOG_H
+#define SIMPLEDRAWINGAREADIALOG_H
 
 #include <QDialog>
 #include <QLabel>
@@ -15,7 +15,7 @@
 using namespace PixelMaestro;
 
 namespace Ui {
-	class SimpleDrawingaAreaDialog;
+	class SimpleDrawingAreaDialog;
 }
 
 class SimpleDrawingAreaDialog : public QDialog {
@@ -28,9 +28,9 @@ class SimpleDrawingAreaDialog : public QDialog {
 		~SimpleDrawingAreaDialog();
 
 	private:
-		Ui::SimpleDrawingaAreaDialog *ui;
+		Ui::SimpleDrawingAreaDialog *ui;
 		MaestroController* maestro_controller_;
 		std::unique_ptr<SimpleDrawingArea> drawing_area_;
 };
 
-#endif // VIRTUALSERIALDEVICEDIALOG_H
+#endif // SIMPLEDRAWINGAREADIALOG_H
