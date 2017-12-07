@@ -893,6 +893,24 @@ void MaestroControl::on_selectColorButton_clicked() {
 }
 
 /**
+ * Toggles between stopping and running the Maestro.
+ */
+void MaestroControl::on_showPauseButton_clicked() {
+	if (maestro_controller_->get_running()) {
+		// Stop the Maestro
+		maestro_controller_->stop();
+		ui->showPauseButton->setText("Resume");
+		ui->showPauseButton->setToolTip("Resume the Maestro");
+	}
+	else {
+		// Start the Maestro
+		maestro_controller_->start();
+		ui->showPauseButton->setText("Pause");
+		ui->showPauseButton->setToolTip("Pause the Maestro");
+	}
+}
+
+/**
  * Selects text for the next Canvas shape.
  * @param checked If true, the next shape will be text.
  */
@@ -1623,7 +1641,7 @@ void MaestroControl::show_extra_controls(Animation* animation) {
  * Renders the Maestro's last update time in currentTimeLineEdit.
  */
 void MaestroControl::update_maestro_last_time() {
-	ui->currentTimeLineEdit->setText(locale_.toString(maestro_controller_->get_maestro()->get_timing()->get_last_time()));
+	ui->currentTimeLineEdit->setText(locale_.toString((uint)maestro_controller_->get_total_elapsed_time()));
 
 	// Visually disable events that have recently ran.
 	int current_index = maestro_controller_->get_show()->get_current_index();

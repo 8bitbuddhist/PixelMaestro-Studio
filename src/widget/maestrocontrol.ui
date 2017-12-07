@@ -922,7 +922,7 @@
             <x>0</x>
             <y>0</y>
             <width>675</width>
-            <height>414</height>
+            <height>445</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -1160,6 +1160,13 @@
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="showPauseButton">
+                 <property name="text">
+                  <string>Pause</string>
                  </property>
                 </widget>
                </item>

@@ -3,7 +3,7 @@ PixelMaestro Studio is a Qt-based desktop application that lets you run the Pixe
 
 ## Build Requirements
 - QT 5 with the QtSerialPort module
-- [PixelMaestro core library](https://github.com/Anewman2/PixelMaestro) (included as submodule)
+- [PixelMaestro core library](https://github.com/8bitbuddhist/PixelMaestro) (included as submodule)
 
 ## Build Instructions
 1. Install Qt 5 with the QtSerialPort module

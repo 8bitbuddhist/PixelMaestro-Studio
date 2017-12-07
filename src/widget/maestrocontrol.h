@@ -179,6 +179,7 @@ class MaestroControl : public QWidget {
 
 		void update_maestro_last_time();
 
+		void on_showPauseButton_clicked();
 };
 
 #endif // MAESTROCONTROL_H

@@ -18,6 +18,8 @@
 
 using namespace PixelMaestro;
 
+class MaestroController;
+
 class MaestroDrawingArea : public QWidget {
 	Q_OBJECT
 
@@ -25,13 +27,10 @@ class MaestroDrawingArea : public QWidget {
 		MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 		MaestroController* get_maestro_controller();
 
+	public slots:
+		void refresh();
+
 	protected:
-		/// Tracks the time elapsed since the DrawingArea's initialization.
-		QElapsedTimer elapsed_timer_;
-
-		/// Handles calling the DrawingArea's refreshMaestro() method.
-		QTimer timer_;
-
 		/// The MaestroController managed by this DrawingArea.
 		MaestroController* maestro_controller_;
 
@@ -46,9 +45,6 @@ class MaestroDrawingArea : public QWidget {
 
 		/// Colors::RGB output from each Pixel
 		Colors::RGB tmp_rgb_;
-
-	private slots:
-		void refresh_maestro();
 };
 
 #endif // MAESTRODRAWINGAREA_H
