@@ -36,18 +36,29 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 		ui->outputListWidget->addItem(item);
 	}
 
-	// Check to see if each entry in the output selection box has already been configured.
 	/*
-	 * FIXME: If a device is found in settings but not in the list, add the device to the list, uncheck it, and make it unselectable.
+	 * Add saved devices to output selection box.
+	 * For devices that are already listed, either check them or uncheck them based on the user's saved preferences.
+	 * If the device isn't found, make it unselectable.
 	 */
 	int num_devices = settings_.beginReadArray(output_devices);
-	for (int list_item = 0; list_item < ui->outputListWidget->count(); list_item++) {
-		for (int device = 0; device < num_devices; device++) {
+	for (int device = 0; device < num_devices; device++) {
+		bool found= false;
+		for (int list_item = 0; list_item < ui->outputListWidget->count(); list_item++) {
 			settings_.setArrayIndex(device);
 			QListWidgetItem* item = ui->outputListWidget->item(list_item);
 			if (settings_.contains(output_name) && settings_.value(output_name).toString().compare(item->text(), Qt::CaseInsensitive) == 0) {
 				item->setCheckState((Qt::CheckState)settings_.value(output_enabled).toInt());
+				found = true;
 			}
+		}
+
+		if (!found) {
+			QListWidgetItem* saved_item = new QListWidgetItem(settings_.value(output_name).toString());
+			// Make the item un-interactable
+			saved_item->setCheckState((Qt::CheckState)0);
+			saved_item->setFlags(Qt::NoItemFlags);
+			ui->outputListWidget->addItem(saved_item);
 		}
 	}
 	settings_.endArray();

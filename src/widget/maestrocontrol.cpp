@@ -49,7 +49,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 				drawing_area_dialog_ = std::unique_ptr<SimpleDrawingAreaDialog>(new SimpleDrawingAreaDialog(this, this->maestro_controller_));
 				drawing_area_dialog_.get()->show();
 			}
-			// Detect all other devices (serial/USB)
+			// Detect serial/USB devices
 			else {
 				// Initialize the serial device
 				QSharedPointer<QSerialPort> serial_device(new QSerialPort());
@@ -62,10 +62,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 				serial_device->setDataBits(QSerialPort::DataBits::Data8);
 				serial_device->setStopBits(QSerialPort::StopBits::OneStop);
 
-				if (!serial_device->open(QIODevice::WriteOnly)) {
-					QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_device->errorString()));
-				}
-				else {
+				if (serial_device->open(QIODevice::WriteOnly)) {
 					serial_devices_.push_back(serial_device);
 				}
 			}
