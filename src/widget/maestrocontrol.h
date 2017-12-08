@@ -59,9 +59,7 @@ class MaestroControl : public QWidget {
 		uint8_t get_layer_index(Section* section);
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
-		void read_from_file(QString filename);
 		void run_cue(uint8_t* cue);
-		void save_to_file(QString filename);
 
 	private:
 		Ui::MaestroControl *ui;
@@ -114,8 +112,6 @@ class MaestroControl : public QWidget {
 		void initialize_palettes();
 		void on_section_resize(uint16_t x, uint16_t y);
 		void populate_layer_combobox();
-		void save_maestro_settings(QDataStream* datastream);
-		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
 		void set_active_section(Section* section);
 		void set_canvas_controls_enabled(bool enabled, CanvasType::Type type);
 		void set_offset();
@@ -132,7 +128,6 @@ class MaestroControl : public QWidget {
 		void set_show_controls_enabled(bool enabled);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
-		void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 
 	private slots:
 		void on_alphaSpinBox_valueChanged(int arg1);

@@ -7,6 +7,7 @@
 QString SettingsDialog::detached_window_option = QStringLiteral("Detached window");
 QString SettingsDialog::main_window_option = QStringLiteral("Main window");
 QString SettingsDialog::num_sections = QStringLiteral("maestro/num_sections");
+QString SettingsDialog::pause_on_start = QStringLiteral("interface/pauseonstart");
 QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
 QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
 QString SettingsDialog::output_devices = QStringLiteral("serial/outputs");
@@ -26,6 +27,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	// Maestro settings
 	ui->numSectionsSpinBox->setValue(settings_.value(num_sections, 1).toInt());			// Default to 1 Section
 	ui->refreshSpinBox->setValue(settings_.value(refresh_rate, 50).toInt());			// Default to 50 ms
+	ui->pauseOnStartCheckBox->setChecked(settings_.value(pause_on_start, false).toBool());	// Default to run on start
 
 	// Add serial devices to output selection box
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
@@ -68,6 +70,7 @@ void SettingsDialog::on_buttonBox_accepted() {
 	// Save Maestro settings
 	settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
 	settings_.setValue(num_sections, ui->numSectionsSpinBox->value());
+	settings_.setValue(pause_on_start, ui->pauseOnStartCheckBox->isChecked());
 
 	// Save selected output devices
 	settings_.beginWriteArray(output_devices);

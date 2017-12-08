@@ -36,8 +36,9 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	this->maestro_controller_ = maestro_controller;
 
-	// Open serial connections to output devices
 	QSettings settings;
+
+	// Open serial connections to output devices
 	int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
 	for (int device = 0; device < serial_count; device++) {
 		settings.setArrayIndex(device);
@@ -70,22 +71,21 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	}
 	settings.endArray();
 
-	// Initialize Cue Controller
-	cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller(UINT16_MAX);
-	animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
-	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
-	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
-	section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
-	show_handler = static_cast<ShowCueHandler*>(cue_controller_->enable_handler(CueController::Handler::ShowHandler));
+	// Get Cue Handlers
+	cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
+	animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->get_handler(CueController::Handler::AnimationHandler));
+	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->get_handler(CueController::Handler::CanvasHandler));
+	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->get_handler(CueController::Handler::MaestroHandler));
+	section_handler = static_cast<SectionCueHandler*>(cue_controller_->get_handler(CueController::Handler::SectionHandler));
+	show_handler = static_cast<ShowCueHandler*>(cue_controller_->get_handler(CueController::Handler::ShowHandler));
 
-	// Clear out and re-add the Maestro's Sections
-	active_section_ = nullptr;
-	maestro_controller_->reset_sections();
-
-	maestro_controller_->set_sections(settings.value(SettingsDialog::num_sections, 1).toInt());
-
-	// Finally, initialize the MaestroControl
+	// Initialize the MaestroControl
 	initialize();
+
+	// Finally, check to see if we need to pause the Maestro
+	if (settings.value(SettingsDialog::pause_on_start, false).toBool()) {
+		on_showPauseButton_clicked();
+	}
 }
 
 /**
@@ -984,33 +984,6 @@ void MaestroControl::populate_layer_combobox() {
 }
 
 /**
- * Reads a Cuefile.
- * @param filename The name and path of the Cuefile.
- */
-void MaestroControl::read_from_file(QString filename) {
-	QFile file(filename);
-
-	if (file.open(QFile::ReadOnly)) {
-		QByteArray bytes = file.readAll();
-		for (int i = 0; i < bytes.size(); i++) {
-			uint8_t byte = (uint8_t)bytes.at(i);
-			// Send the Cue on successful read
-			if(cue_controller_->read(byte)) {
-				// Yes, this means executing twice in some cases, but it's a temporary convenience
-				run_cue(cue_controller_->get_buffer());
-			}
-		}
-		file.close();
-	}
-
-	// Reinitialize UI
-	initialize();
-
-	// Set starting Section to 0 (to be safe)
-	on_sectionComboBox_currentIndexChanged(0);
-}
-
-/**
  * Forwards the specified Cue to the drawing area and/or serial device.
  * @param cue Cue to perform.
  */
@@ -1037,141 +1010,6 @@ void MaestroControl::run_cue(uint8_t *cue) {
 	// Update the ShowControl's history
 	if (show_controller_ != nullptr) {
 		add_cue_to_history(cue);
-	}
-}
-
-/**
- * Saves the Maestro to a Cuefile.
- * @param filename Target filename.
- */
-void MaestroControl::save_to_file(QString filename) {
-	if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
-		filename.append(".pmc");
-	}
-	QFile file(filename);
-	if (file.open(QFile::WriteOnly)) {
-		QDataStream datastream(&file);
-
-		save_maestro_settings(&datastream);
-		for (uint8_t i = 0; i < maestro_controller_->get_maestro()->get_num_sections(); i++) {
-			save_section_settings(&datastream, i, 0);
-		}
-
-		file.close();
-	}
-}
-
-/**
- * Saves Maestro-specific settings as Cues.
- * @param datastream Stream to save the Cues to.
- */
-void MaestroControl::save_maestro_settings(QDataStream *datastream) {
-	// Timing
-	write_cue_to_stream(datastream, maestro_handler->set_timing(maestro_controller_->get_maestro()->get_timing()->get_interval()));
-
-	// Save Show settings
-	Show* show = maestro_controller_->get_maestro()->get_show();
-	if (show != nullptr) {
-		write_cue_to_stream(datastream, maestro_handler->set_show());
-		write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), true));
-		write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
-		write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
-	}
-}
-
-/**
- * Saves Section-specific settings as Cues.
- * @param datastream Stream to save the Cues to.
- * @param section_id The index of the Section to save.
- * @param layer_id The index of the Layer to save.
- */
-void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
-
-	Section* section = maestro_controller_->get_maestro()->get_section(section_id);
-
-	if (layer_id > 0) {
-		for (uint8_t i = 0; i < layer_id; i++) {
-			section = section->get_layer()->section;
-		}
-	}
-
-	// Dimensions
-	write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
-
-	// Animation & Colors
-	Animation* animation = section->get_animation();
-	write_cue_to_stream(datastream,section_handler->set_animation(section_id, layer_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false));
-	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
-	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
-	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
-	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
-	// Save Animation-specific settings
-	switch(animation->get_type()) {
-		case AnimationType::Lightning:
-			{
-				LightningAnimation* la = static_cast<LightningAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
-			}
-			break;
-		case AnimationType::Plasma:
-			{
-				PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
-			}
-			break;
-		case AnimationType::Radial:
-			{
-				RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
-			}
-			break;
-		case AnimationType::Sparkle:
-			{
-				SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
-				write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
-			}
-			break;
-		default:
-			break;
-	}
-
-	// Scrolling and offset
-	write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
-	if (section->get_scroll()) {
-		write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y));
-	}
-
-	// Save Canvas settings
-	Canvas* canvas = section->get_canvas();
-	if (canvas != nullptr) {
-		write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_type(), canvas->get_num_frames()));
-
-		if (canvas->get_frame_timing()) {
-			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
-		}
-
-		// Draw and save each frame
-		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-			switch (canvas->get_type()) {
-				case CanvasType::AnimationCanvas:
-					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
-					break;
-				case CanvasType::ColorCanvas:
-					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
-					break;
-			}
-			if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
-				write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
-			}
-		}
-		write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(get_section_index(), get_layer_index(), 0));
-	}
-
-	// Layers
-	Section::Layer* layer = section->get_layer();
-	if (layer != nullptr) {
-		write_cue_to_stream(datastream, section_handler->set_layer(section_id, layer_id, layer->mix_mode, layer->alpha));
-		save_section_settings(datastream, section_id, layer_id + 1);
 	}
 }
 
@@ -1650,18 +1488,6 @@ void MaestroControl::update_maestro_last_time() {
 			ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::white);
 		}
 	}
-}
-
-/**
- * Appends a Cue to a stream.
- * @param stream Stream to append to.
- * @param cue Cue to append.
- */
-void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
-	if (cue == nullptr) {
-		return;
-	}
-	stream->writeRawData((const char*)cue, cue_controller_->get_cue_size(cue));
 }
 
 /**

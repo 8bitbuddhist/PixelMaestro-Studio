@@ -1,7 +1,22 @@
+#include "animation/lightninganimation.h"
+#include "animation/plasmaanimation.h"
+#include "animation/radialanimation.h"
+#include "animation/sparkleanimation.h"
+#include "canvas/animationcanvas.h"
+#include "canvas/canvas.h"
+#include "canvas/canvastype.h"
+#include "canvas/colorcanvas.h"
 #include "core/maestro.h"
+#include "cue/animationcuehandler.h"
+#include "cue/canvascuehandler.h"
+#include "cue/maestrocuehandler.h"
+#include "cue/sectioncuehandler.h"
 #include "cue/show.h"
+#include "cue/showcuehandler.h"
 #include "maestrocontroller.h"
 #include <memory>
+#include <QByteArray>
+#include <QFile>
 #include <QSettings>
 #include "window/settingsdialog.h"
 
@@ -11,15 +26,25 @@ using namespace PixelMaestro;
  * Empty constructor.
  */
 MaestroController::MaestroController() : QObject(), timer_(this) {
+	// Initalize the Maestro. Add the number of Sections specified in the options.
 	maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
+	QSettings settings;
+	set_sections(settings.value(SettingsDialog::num_sections, 1).toInt());
+
+	// Enable the Maestro's CueController
+	CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
+	controller->enable_handler(CueController::Handler::AnimationHandler);
+	controller->enable_handler(CueController::Handler::CanvasHandler);
+	controller->enable_handler(CueController::Handler::MaestroHandler);
+	controller->enable_handler(CueController::Handler::SectionHandler);
+	controller->enable_handler(CueController::Handler::ShowHandler);
 
 	// Initialize timers
 	timer_.setTimerType(Qt::PreciseTimer);
 	/*
-	 * Set timer's refresh rate to the Maestro's refresh rate.
+	 * Set timer's refresh rate to the user's settings.
 	 * If we can't load the configured refresh rate, default to 40 (25fps)
 	 */
-	QSettings settings;
 	int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(40)).toInt();
 
 	// Start timers
@@ -78,11 +103,179 @@ uint64_t MaestroController::get_total_elapsed_time() {
 }
 
 /**
+ * Loads a Cuefile into the Maestro.
+ * @param filename The name and path of the Cuefile.
+ */
+void MaestroController::load_cuefile(QString filename) {
+	QFile file(filename);
+
+	if (file.open(QFile::ReadOnly)) {
+		QByteArray bytes = file.readAll();
+		for (int i = 0; i < bytes.size(); i++) {
+			uint8_t byte = (uint8_t)bytes.at(i);
+			maestro_->get_cue_controller()->read(byte);
+		}
+		file.close();
+	}
+}
+
+/**
+ * Removes a DrawingArea from the controller's render list. Automatically called in the DrawingArea's destructor.
+ * @param drawing_area DrawingArea to remove.
+ */
+void MaestroController::remove_drawing_area(MaestroDrawingArea *drawing_area) {
+	disconnect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(refresh()));
+	drawing_areas_.removeOne(drawing_area);
+}
+
+/**
  * Re-initializes the Section array.
  */
 void MaestroController::reset_sections() {
 	delete [] sections_;
 	set_sections(num_sections_);
+}
+
+/**
+ * Saves the Maestro to a Cuefile.
+ * @param filename Name of the Cuefile to save to.
+ */
+void MaestroController::save_cuefile(QString filename) {
+	if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
+		filename.append(".pmc");
+	}
+	QFile file(filename);
+	if (file.open(QFile::WriteOnly)) {
+		QDataStream datastream(&file);
+
+		save_maestro_settings(&datastream);
+		for (uint8_t i = 0; i < maestro_->get_num_sections(); i++) {
+			save_section_settings(&datastream, i, 0);
+		}
+
+		file.close();
+	}
+}
+
+/**
+ * Saves Maestro-specific settings as Cues.
+ * @param datastream Stream to save the Cues to.
+ */
+void MaestroController::save_maestro_settings(QDataStream *datastream) {
+	// Timing
+	MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroHandler);
+	write_cue_to_stream(datastream, maestro_handler->set_timing(maestro_->get_timing()->get_interval()));
+
+	// Save Show settings
+	Show* show = maestro_->get_show();
+	if (show != nullptr) {
+		write_cue_to_stream(datastream, maestro_handler->set_show());
+		ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowHandler);
+		write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), true));
+		write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
+		write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
+	}
+}
+
+/**
+ * Saves Section-specific settings as Cues.
+ * @param datastream Stream to save the Cues to.
+ * @param section_id The index of the Section to save.
+ * @param layer_id The index of the Layer to save.
+ */
+void MaestroController::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
+
+	Section* section = maestro_->get_section(section_id);
+
+	if (layer_id > 0) {
+		for (uint8_t i = 0; i < layer_id; i++) {
+			section = section->get_layer()->section;
+		}
+	}
+
+	SectionCueHandler* section_handler = (SectionCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionHandler);
+
+	// Dimensions
+	write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
+
+	// Animation & Colors
+	Animation* animation = section->get_animation();
+	write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false));
+	AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationHandler);
+	write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
+	write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
+	write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
+	write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
+	// Save Animation-specific settings
+	switch(animation->get_type()) {
+		case AnimationType::Lightning:
+			{
+				LightningAnimation* la = static_cast<LightningAnimation*>(animation);
+				write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
+			}
+			break;
+		case AnimationType::Plasma:
+			{
+				PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
+				write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
+			}
+			break;
+		case AnimationType::Radial:
+			{
+				RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
+				write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
+			}
+			break;
+		case AnimationType::Sparkle:
+			{
+				SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
+				write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
+			}
+			break;
+		default:
+			break;
+	}
+
+	// Scrolling and offset
+	write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
+	if (section->get_scroll()) {
+		write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y));
+	}
+
+	// Save Canvas settings
+	Canvas* canvas = section->get_canvas();
+	if (canvas != nullptr) {
+		write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_type(), canvas->get_num_frames()));
+
+		CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasHandler);
+
+		if (canvas->get_frame_timing()) {
+			write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
+		}
+
+		// Draw and save each frame
+		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			switch (canvas->get_type()) {
+				case CanvasType::AnimationCanvas:
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
+					break;
+				case CanvasType::ColorCanvas:
+					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
+					break;
+			}
+			if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
+				write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
+			}
+		}
+		write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, 0));
+	}
+
+	// Layers
+	Section::Layer* layer = section->get_layer();
+	if (layer != nullptr) {
+		write_cue_to_stream(datastream, section_handler->set_layer(section_id, layer_id, layer->mix_mode, layer->alpha));
+		save_section_settings(datastream, section_id, layer_id + 1);
+	}
 }
 
 /**
@@ -118,6 +311,18 @@ void MaestroController::stop() {
 void MaestroController::update() {
 	// Force the Maestro to update
 	maestro_->update(get_total_elapsed_time(), true);
+}
+
+/**
+ * Appends a Cue to a stream.
+ * @param stream Stream to append to.
+ * @param cue Cue to append.
+ */
+void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
+	if (cue == nullptr) {
+		return;
+	}
+	stream->writeRawData((const char*)cue, maestro_->get_cue_controller()->get_cue_size(cue));
 }
 
 MaestroController::~MaestroController() {

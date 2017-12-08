@@ -5,9 +5,14 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.11] - In Progress
 ### Added
-- Moved Maestro timing to the MaestroController. This should reduce resource usage and prevent multiple outputs from falling out of sync.
+- Moved Maestro timing to the MaestroController. This should reduce resource usage and prevent outputs from falling out of sync with each other.
 - Animation Editor
-	- Added a Maestro pause/resume button to the Show tab.
+	- Added a pause/resume button to the Show tab. This lets you stop and start the Maestro at any time.
+- Settings
+	- Added the ability to pause the Maestro when the Animation Editor opens.
+	
+### Changed
+- Moved Cuefile processing and Maestro initialization into MaestroController.
 
 ## [v0.10] - 2017-12-05
 ### Added

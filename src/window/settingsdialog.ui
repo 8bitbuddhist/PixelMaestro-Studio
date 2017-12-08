@@ -603,6 +603,23 @@
           </item>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Pause on start</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="pauseOnStartCheckBox">
+          <property name="toolTip">
+           <string>If checked, the Maestro will be paused when the Animation Editor opens</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

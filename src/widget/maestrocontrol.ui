@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -922,7 +922,7 @@
             <x>0</x>
             <y>0</y>
             <width>675</width>
-            <height>445</height>
+            <height>414</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -934,7 +934,31 @@
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
             <layout class="QGridLayout" name="showControlLayout">
-             <item row="0" column="2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="enableShowLabel">
+               <property name="text">
+                <string>Enable Show</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="toggleShowModeLabel">
+               <property name="text">
+                <string>Event Edit Mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="toggleShowModeCheckBox">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -947,7 +971,17 @@
                </property>
               </spacer>
              </item>
-             <item row="2" column="0">
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="enableShowCheckBox">
+               <property name="toolTip">
+                <string>Enables support for queuing actions</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
               <widget class="QLabel" name="timingMethodLabel">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -963,41 +997,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="toggleShowModeCheckBox">
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QCheckBox" name="enableShowCheckBox">
-               <property name="toolTip">
-                <string>Enables support for queuing actions</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="toggleShowModeLabel">
-               <property name="text">
-                <string>Event Edit Mode</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="enableShowLabel">
-               <property name="text">
-                <string>Enable Show</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="0" column="3">
               <widget class="QComboBox" name="timingMethodComboBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -1020,14 +1020,14 @@
                </item>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="1" column="2">
               <widget class="QLabel" name="loopLabel">
                <property name="text">
                 <string>Loop Events</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
+             <item row="1" column="3">
               <widget class="QCheckBox" name="loopCheckBox">
                <property name="toolTip">
                 <string>Repeats the Show after the last Event (Relative timing only)</string>
@@ -1269,6 +1269,14 @@
   <tabstop>sectionComboBox</tabstop>
   <tabstop>layerComboBox</tabstop>
   <tabstop>layerSpinBox</tabstop>
+  <tabstop>mix_modeComboBox</tabstop>
+  <tabstop>alphaSpinBox</tabstop>
+  <tabstop>rowsSpinBox</tabstop>
+  <tabstop>columnsSpinBox</tabstop>
+  <tabstop>scrollXSpinBox</tabstop>
+  <tabstop>scrollYSpinBox</tabstop>
+  <tabstop>offsetXSpinBox</tabstop>
+  <tabstop>offsetYSpinBox</tabstop>
   <tabstop>colorComboBox</tabstop>
   <tabstop>paletteControlButton</tabstop>
   <tabstop>animationComboBox</tabstop>
@@ -1281,29 +1289,39 @@
   <tabstop>pauseSpinBox</tabstop>
   <tabstop>canvasScrollArea</tabstop>
   <tabstop>canvasComboBox</tabstop>
-  <tabstop>toggleCanvasModeCheckBox</tabstop>
   <tabstop>frameCountSpinBox</tabstop>
+  <tabstop>toggleCanvasModeCheckBox</tabstop>
   <tabstop>currentFrameSpinBox</tabstop>
   <tabstop>frameRateSpinBox</tabstop>
+  <tabstop>loadImageButton</tabstop>
   <tabstop>circleRadioButton</tabstop>
   <tabstop>lineRadioButton</tabstop>
   <tabstop>triangleRadioButton</tabstop>
   <tabstop>textRadioButton</tabstop>
   <tabstop>rectRadioButton</tabstop>
-  <tabstop>fontComboBox</tabstop>
   <tabstop>originXSpinBox</tabstop>
   <tabstop>originYSpinBox</tabstop>
   <tabstop>targetXSpinBox</tabstop>
   <tabstop>targetYSpinBox</tabstop>
   <tabstop>target2XSpinBox</tabstop>
   <tabstop>target2YSpinBox</tabstop>
+  <tabstop>fontComboBox</tabstop>
   <tabstop>textLineEdit</tabstop>
   <tabstop>selectColorButton</tabstop>
   <tabstop>fillCheckBox</tabstop>
+  <tabstop>drawButton</tabstop>
+  <tabstop>clearButton</tabstop>
   <tabstop>showScrollArea</tabstop>
   <tabstop>enableShowCheckBox</tabstop>
+  <tabstop>timingMethodComboBox</tabstop>
   <tabstop>toggleShowModeCheckBox</tabstop>
+  <tabstop>loopCheckBox</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
+  <tabstop>currentTimeLineEdit</tabstop>
+  <tabstop>showPauseButton</tabstop>
+  <tabstop>eventTimeSpinBox</tabstop>
+  <tabstop>addEventButton</tabstop>
+  <tabstop>removeEventButton</tabstop>
   <tabstop>eventListWidget</tabstop>
  </tabstops>
  <resources/>

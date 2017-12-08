@@ -17,6 +17,7 @@
 #include "settingsdialog.h"
 #include "ui_mainwindow.h"
 
+// TODO: Turn demos into Cuefiles and place in "examples/cuefiles" folder
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	this->main_layout_ = this->findChild<QLayout*>("mainLayout");
@@ -125,7 +126,7 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 	statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
 }
 
-void MainWindow::on_action_Open_Animation_Editor_triggered() {
+void MainWindow::on_action_Open_Animation_Editor_triggered(bool reset) {
 
 	// If Animation Editor is currently open, verify user wants to close
 	if (maestro_control_ != nullptr) {
@@ -136,7 +137,9 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 		}
 	}
 
-	reset_drawing_area();
+	if (reset) {
+		reset_drawing_area();
+	}
 
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
 
@@ -196,13 +199,14 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 void MainWindow::on_actionOpen_Maestro_triggered() {
 	QString filename = QFileDialog::getOpenFileName(this,
 		QString("Open Cue File"),
-		QDir::home().path(),
+		QString(),
 		QString("PixelMaestro Cue File (*.pmc)"));
 
 	if (!filename.isEmpty()) {
-		// Initialize the Animation editor and immediately read in the Cue file.
-		on_action_Open_Animation_Editor_triggered();
-		maestro_control_->read_from_file(filename);
+		// Read in the CueFile, then load the Animation Editor
+		reset_drawing_area();
+		controller_->load_cuefile(filename);
+		on_action_Open_Animation_Editor_triggered(false);
 	}
 }
 
@@ -217,5 +221,5 @@ void MainWindow::on_action_Save_Maestro_triggered() {
 		QDir::home().path(),
 		QString("PixelMaestro Cue File (*.pmc)"));
 
-	maestro_control_->save_to_file(filename);
+	controller_->save_cuefile(filename);
 }

@@ -15,6 +15,7 @@ class SettingsDialog : public QDialog
 
 	public:
 		static QString num_sections;
+		static QString pause_on_start;
 		static QString pixel_padding;
 		static QString pixel_shape;
 		static QString output_devices;

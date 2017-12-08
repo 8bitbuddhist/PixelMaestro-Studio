@@ -8,9 +8,11 @@
 #include "core/maestro.h"
 #include "core/section.h"
 #include "drawingarea/maestrodrawingarea.h"
+#include <QDataStream>
 #include <QElapsedTimer>
 #include <QObject>
 #include <QSharedPointer>
+#include <QString>
 #include <QTimer>
 #include <QVector>
 
@@ -28,7 +30,10 @@ class MaestroController : public QObject {
 		bool get_running();
 		Show *get_show();
 		uint64_t get_total_elapsed_time();
+		void load_cuefile(QString filename);
+		void remove_drawing_area(MaestroDrawingArea* drawing_area);
 		void reset_sections();
+		void save_cuefile(QString filename);
 		Section* set_sections(uint8_t num_sections, Point dimensions = Point(10, 10));
 		void stop();
 		void start();
@@ -54,6 +59,10 @@ class MaestroController : public QObject {
 
 		/// Sections belonging to the Maestro.
 		Section* sections_ = nullptr;
+
+		void save_maestro_settings(QDataStream* datastream);
+		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
+		void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 
 	private slots:
 		void update();

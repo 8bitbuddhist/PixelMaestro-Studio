@@ -26,3 +26,7 @@ MaestroController* MaestroDrawingArea::get_maestro_controller() {
 void MaestroDrawingArea::refresh() {
 	update();
 }
+
+MaestroDrawingArea::~MaestroDrawingArea() {
+	maestro_controller_->remove_drawing_area(this);
+}

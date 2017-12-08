@@ -25,6 +25,7 @@ class MaestroDrawingArea : public QWidget {
 
 	public:
 		MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
+		~MaestroDrawingArea();
 		MaestroController* get_maestro_controller();
 
 	public slots:
