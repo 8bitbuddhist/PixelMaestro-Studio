@@ -1408,6 +1408,8 @@ void MaestroControl::set_show_controls_enabled(bool enabled) {
 	ui->removeEventButton->setEnabled(enabled);
 	ui->loopLabel->setEnabled(enabled);
 	ui->loopCheckBox->setEnabled(enabled);
+	ui->relativeTimeLabel->setEnabled(enabled);
+	ui->relativeTimeLineEdit->setEnabled(enabled);
 }
 
 /// Sets the speed and/or pause interval for the active Animation.
@@ -1478,8 +1480,30 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 void MaestroControl::update_maestro_last_time() {
 	ui->currentTimeLineEdit->setText(locale_.toString((uint)maestro_controller_->get_total_elapsed_time()));
 
-	// Visually disable events that have recently ran.
 	int current_index = maestro_controller_->get_show()->get_current_index();
+
+	// Get the time that the last Event ran
+	Show* show = maestro_controller_->get_show();
+	int last_index = -1;
+	if (current_index == 0) {
+		if (show->get_looping()) {
+			last_index = show->get_num_events() - 1;
+		}
+	}
+	else {
+		last_index = show->get_current_index() - 1;
+	}
+
+	if (last_index == -1) {
+		ui->relativeTimeLineEdit->setEnabled(false);
+	}
+	else {
+		ui->relativeTimeLineEdit->setEnabled(true);
+		ui->relativeTimeLineEdit->setText(locale().toString((uint)maestro_controller_->get_total_elapsed_time() - show->get_events()[last_index].get_time()));
+	}
+
+
+	// Visually disable events that have recently ran.
 	for (int index = 0; index < ui->eventListWidget->count(); index++) {
 		if (current_index > 0 && index < current_index) {
 			ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::darkGray);

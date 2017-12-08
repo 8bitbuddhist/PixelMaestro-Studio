@@ -8,11 +8,14 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Moved Maestro timing to the MaestroController. This should reduce resource usage and prevent outputs from falling out of sync with each other.
 - Animation Editor
 	- Added a pause/resume button to the Show tab. This lets you stop and start the Maestro at any time.
+	- Added a relative time box to the Show tab. This shows the time elapsed since the last event that was ran.
 - Settings
 	- Added the ability to pause the Maestro when the Animation Editor opens.
 	
 ### Changed
 - Moved Cuefile processing and Maestro initialization into MaestroController.
+- Animation Editor
+	- Show tab: Renamed "Current Time" to "Absolute Time".
 
 ## [v0.10] - 2017-12-05
 ### Added

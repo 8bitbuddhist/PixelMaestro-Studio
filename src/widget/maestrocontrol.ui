@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -922,7 +922,7 @@
             <x>0</x>
             <y>0</y>
             <width>675</width>
-            <height>414</height>
+            <height>453</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -1140,7 +1140,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Current Time</string>
+                  <string>Absolute Time</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1156,7 +1156,42 @@
                   </sizepolicy>
                  </property>
                  <property name="toolTip">
-                  <string>The program's current runtime</string>
+                  <string>The Maestro's total runtime</string>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="relativeTimeLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>Relative Time</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="relativeTimeLineEdit">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip">
+                  <string>The amount of time since the last event</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
