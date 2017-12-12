@@ -11,22 +11,24 @@ namespace Ui {
 	class PlasmaAnimationControl;
 }
 
-class PlasmaAnimationControl : public QWidget {
-		Q_OBJECT
+namespace PixelMaestroStudio {
+	class PlasmaAnimationControl : public QWidget {
+			Q_OBJECT
 
-	public:
-		explicit PlasmaAnimationControl(PlasmaAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
-		~PlasmaAnimationControl();
+		public:
+			explicit PlasmaAnimationControl(PlasmaAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
+			~PlasmaAnimationControl();
 
-	private slots:
-		void on_sizeDoubleSpinBox_valueChanged(double arg1);
+		private slots:
+			void on_sizeDoubleSpinBox_valueChanged(double arg1);
 
-		void on_resolutionDoubleSpinBox_valueChanged(double arg1);
+			void on_resolutionDoubleSpinBox_valueChanged(double arg1);
 
-	private:
-		PlasmaAnimation* animation_;
-		MaestroControl* maestro_control_;
-		Ui::PlasmaAnimationControl *ui;
-};
+		private:
+			PlasmaAnimation* animation_;
+			MaestroControl* maestro_control_;
+			Ui::PlasmaAnimationControl *ui;
+	};
+}
 
 #endif // PLASMAANIMATIONCONTROL_H

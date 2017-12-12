@@ -18,19 +18,21 @@ namespace Ui {
 	class SimpleDrawingAreaDialog;
 }
 
-class SimpleDrawingAreaDialog : public QDialog {
-		Q_OBJECT
+namespace PixelMaestroStudio {
+	class SimpleDrawingAreaDialog : public QDialog {
+			Q_OBJECT
 
-	public:
-		QLabel* interpreted = nullptr;
+		public:
+			QLabel* interpreted = nullptr;
 
-		explicit SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
-		~SimpleDrawingAreaDialog();
+			explicit SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
+			~SimpleDrawingAreaDialog();
 
-	private:
-		Ui::SimpleDrawingAreaDialog *ui;
-		MaestroController* maestro_controller_;
-		std::unique_ptr<SimpleDrawingArea> drawing_area_;
-};
+		private:
+			Ui::SimpleDrawingAreaDialog *ui;
+			MaestroController* maestro_controller_;
+			std::unique_ptr<SimpleDrawingArea> drawing_area_;
+	};
+}
 
 #endif // SIMPLEDRAWINGAREADIALOG_H

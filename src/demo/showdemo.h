@@ -8,14 +8,16 @@
 #include "../drawingarea/simpledrawingarea.h"
 #include "controller/maestrocontroller.h"
 
-class ShowDemo : public SimpleDrawingArea {
-	public:
-		ShowDemo(QWidget* parent, MaestroController* maestro_controller);
-		~ShowDemo();
+namespace PixelMaestroStudio {
+	class ShowDemo : public SimpleDrawingArea {
+		public:
+			ShowDemo(QWidget* parent, MaestroController* maestro_controller);
+			~ShowDemo();
 
-	private:
-		Event* events_;
+		private:
+			Event* events_;
 
-};
+	};
+}
 
 #endif // SHOWDEMO_H

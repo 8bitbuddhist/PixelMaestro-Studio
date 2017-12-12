@@ -10,25 +10,27 @@
 
 using namespace PixelMaestro;
 
-class MaestroController;
+namespace PixelMaestroStudio {
+	class MaestroController;
 
-class ShowController {
-	public:
-		ShowController(MaestroController* maestro_controller);
-		Event* add_event(uint32_t time, uint8_t *cue);
-		Event* get_event(uint16_t index);
-		QString get_event_description(uint16_t index);
-		std::vector<Event> get_events();
-		uint8_t get_num_events();
-		void initialize_events();
-		void remove_event(uint16_t index);
+	class ShowController {
+		public:
+			ShowController(MaestroController* maestro_controller);
+			Event* add_event(uint32_t time, uint8_t *cue);
+			Event* get_event(uint16_t index);
+			QString get_event_description(uint16_t index);
+			std::vector<Event> get_events();
+			uint8_t get_num_events();
+			void initialize_events();
+			void remove_event(uint16_t index);
 
-	private:
-		CueInterpreter cue_interpreter_;
-		MaestroController* maestro_controller_;
-		std::vector<Event> events_;
-		Show* show_;
+		private:
+			CueInterpreter cue_interpreter_;
+			MaestroController* maestro_controller_;
+			std::vector<Event> events_;
+			Show* show_;
 
-};
+	};
+}
 
 #endif // SHOWCONTROLLER_H

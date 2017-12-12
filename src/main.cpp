@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 	QCoreApplication::setApplicationName("pixelmaestro");
 
 	QApplication app(argc, argv);
-	MainWindow w;
+	PixelMaestroStudio::MainWindow w;
 
 	// Set global color palette (https://gist.github.com/QuantumCD/6245215)
 	qApp->setStyle(QStyleFactory::create("fusion"));

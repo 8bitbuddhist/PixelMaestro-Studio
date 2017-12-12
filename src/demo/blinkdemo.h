@@ -8,9 +8,11 @@
 #include "../drawingarea/simpledrawingarea.h"
 #include "controller/maestrocontroller.h"
 
-class BlinkDemo : public SimpleDrawingArea {
-	public:
-		BlinkDemo(QWidget* parent, MaestroController* maestro_controller);
-};
+namespace PixelMaestroStudio {
+	class BlinkDemo : public SimpleDrawingArea {
+		public:
+			BlinkDemo(QWidget* parent, MaestroController* maestro_controller);
+	};
+}
 
 #endif // BLINKDEMO_H

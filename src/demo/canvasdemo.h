@@ -8,9 +8,11 @@
 #include "controller/maestrocontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 
-class CanvasDemo : public SimpleDrawingArea {
-	public:
-		CanvasDemo(QWidget* parent, MaestroController* maestro_controller);
-};
+namespace PixelMaestroStudio {
+	class CanvasDemo : public SimpleDrawingArea {
+		public:
+			CanvasDemo(QWidget* parent, MaestroController* maestro_controller);
+	};
+}
 
 #endif // PATTERNDEMO_H

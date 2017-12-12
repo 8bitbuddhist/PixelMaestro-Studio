@@ -11,26 +11,28 @@ namespace Ui {
 	class LightningAnimationControl;
 }
 
-class LightningAnimationControl : public QWidget {
-		Q_OBJECT
+namespace PixelMaestroStudio {
+	class LightningAnimationControl : public QWidget {
+			Q_OBJECT
 
-	public:
-		explicit LightningAnimationControl(LightningAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
-		~LightningAnimationControl();
+		public:
+			explicit LightningAnimationControl(LightningAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
+			~LightningAnimationControl();
 
-	private slots:
-		void on_forkChanceSpinBox_valueChanged(int arg1);
+		private slots:
+			void on_forkChanceSpinBox_valueChanged(int arg1);
 
-		void on_spreadDownSpinBox_valueChanged(int arg1);
+			void on_spreadDownSpinBox_valueChanged(int arg1);
 
-		void on_spreadUpSpinBox_valueChanged(int arg1);
+			void on_spreadUpSpinBox_valueChanged(int arg1);
 
-		void on_boltCountSpinBox_valueChanged(int arg1);
+			void on_boltCountSpinBox_valueChanged(int arg1);
 
-	private:
-		LightningAnimation* animation_;
-		MaestroControl* maestro_control_;
-		Ui::LightningAnimationControl *ui;
-};
+		private:
+			LightningAnimation* animation_;
+			MaestroControl* maestro_control_;
+			Ui::LightningAnimationControl *ui;
+	};
+}
 
 #endif // LIGHTNINGANIMATIONCONTROL_H

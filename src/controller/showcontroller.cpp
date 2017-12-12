@@ -1,43 +1,45 @@
 #include "controller/cueinterpreter.h"
 #include "showcontroller.h"
 
-ShowController::ShowController(MaestroController* maestro_controller) {
-	this->maestro_controller_ = maestro_controller;
+namespace PixelMaestroStudio {
+	ShowController::ShowController(MaestroController* maestro_controller) {
+		this->maestro_controller_ = maestro_controller;
 
-	if (maestro_controller_->get_show() == nullptr) {
-		this->show_ = maestro_controller_->get_maestro()->set_show(nullptr, 0);
-	}
-	else {
-		this->show_ = maestro_controller_->get_maestro()->get_show();
-	}
+		if (maestro_controller_->get_show() == nullptr) {
+			this->show_ = maestro_controller_->get_maestro()->set_show(nullptr, 0);
+		}
+		else {
+			this->show_ = maestro_controller_->get_maestro()->get_show();
+		}
 
-	events_.clear();
-}
-
-Event* ShowController::add_event(uint32_t time, uint8_t *cue) {
-	if (cue != nullptr) {
-		events_.push_back(Event(time, cue));
+		events_.clear();
 	}
 
-	return &events_[events_.size() - 1];
-}
+	Event* ShowController::add_event(uint32_t time, uint8_t *cue) {
+		if (cue != nullptr) {
+			events_.push_back(Event(time, cue));
+		}
 
-Event* ShowController::get_event(uint16_t index) {
-	return &events_.at(index);
-}
+		return &events_[events_.size() - 1];
+	}
 
-std::vector<Event> ShowController::get_events() {
-	return events_;
-}
+	Event* ShowController::get_event(uint16_t index) {
+		return &events_.at(index);
+	}
 
-uint8_t ShowController::get_num_events() {
-	return events_.size();
-}
+	std::vector<Event> ShowController::get_events() {
+		return events_;
+	}
 
-void ShowController::initialize_events() {
-	show_->set_events(&events_[0], events_.size());
-}
+	uint8_t ShowController::get_num_events() {
+		return events_.size();
+	}
 
-void ShowController::remove_event(uint16_t index) {
-	events_.erase(events_.begin() + index);
+	void ShowController::initialize_events() {
+		show_->set_events(&events_[0], events_.size());
+	}
+
+	void ShowController::remove_event(uint16_t index) {
+		events_.erase(events_.begin() + index);
+	}
 }
