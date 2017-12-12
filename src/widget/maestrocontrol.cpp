@@ -249,8 +249,8 @@ namespace PixelMaestroStudio {
 		set_show_controls_enabled(false);
 
 		// Initialize Show timer
-		show_timer_.setTimerType(Qt::CoarseTimer);
-		show_timer_.setInterval(250);
+		show_timer_.setTimerType(Qt::PreciseTimer);
+		show_timer_.setInterval(100);
 		connect(&show_timer_, SIGNAL(timeout()), this, SLOT(update_maestro_last_time()));
 
 		// Set Show controls
@@ -1483,7 +1483,7 @@ namespace PixelMaestroStudio {
 
 		int current_index = maestro_controller_->get_show()->get_current_index();
 
-		// Get the time that the last Event ran
+		// Get the index of the last Event that ran
 		Show* show = maestro_controller_->get_show();
 		int last_index = -1;
 		if (current_index == 0) {
@@ -1495,12 +1495,13 @@ namespace PixelMaestroStudio {
 			last_index = show->get_current_index() - 1;
 		}
 
+		// If Relative mode is enabled, calculate the time since the last Event
 		if (last_index == -1) {
 			ui->relativeTimeLineEdit->setEnabled(false);
 		}
 		else {
 			ui->relativeTimeLineEdit->setEnabled(true);
-			ui->relativeTimeLineEdit->setText(locale().toString((uint)maestro_controller_->get_total_elapsed_time() - show->get_events()[last_index].get_time()));
+			ui->relativeTimeLineEdit->setText(locale().toString((uint)maestro_controller_->get_total_elapsed_time() - (uint)show->get_last_time()));
 		}
 
 

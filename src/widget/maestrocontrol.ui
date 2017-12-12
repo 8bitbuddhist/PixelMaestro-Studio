@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -76,6 +76,9 @@
          <property name="toolTip">
           <string>Sets the scroll rate/direction along the x-axis</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="minimum">
           <number>-1000</number>
          </property>
@@ -103,6 +106,9 @@
          <property name="toolTip">
           <string>Sets the scroll rate/direction along the y-axis</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="minimum">
           <number>-1000</number>
          </property>
@@ -115,6 +121,9 @@
         <widget class="QSpinBox" name="layerSpinBox">
          <property name="toolTip">
           <string>Sets the number of Layers belonging to this Section</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="maximum">
           <number>255</number>
@@ -154,12 +163,18 @@
          <property name="toolTip">
           <string>Sets the offset along the x axis</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
         </widget>
        </item>
        <item row="6" column="2">
         <widget class="QSpinBox" name="offsetYSpinBox">
          <property name="toolTip">
           <string>Sets the offset along the y axis</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -195,6 +210,9 @@
          <property name="toolTip">
           <string>The Layer's transparency</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
@@ -218,6 +236,9 @@
          <property name="frame">
           <bool>true</bool>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
          </property>
@@ -236,6 +257,9 @@
         <widget class="QSpinBox" name="columnsSpinBox">
          <property name="toolTip">
           <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
@@ -279,6 +303,9 @@
        </item>
        <item row="5" column="6">
         <widget class="QSpinBox" name="pauseSpinBox">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="maximum">
           <number>3000</number>
          </property>
@@ -357,6 +384,9 @@
        </item>
        <item row="4" column="6">
         <widget class="QSpinBox" name="cycleSpinBox">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="maximum">
           <number>3000</number>
          </property>
@@ -564,6 +594,90 @@
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
+           <item row="7" column="3">
+            <widget class="QLabel" name="targetLabel">
+             <property name="text">
+              <string>Target</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QSpinBox" name="frameCountSpinBox">
+             <property name="toolTip">
+              <string>The total number of drawing surfaces</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>255</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QRadioButton" name="lineRadioButton">
+             <property name="text">
+              <string>Line</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QRadioButton" name="circleRadioButton">
+             <property name="text">
+              <string>Circle</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1">
+            <widget class="QCheckBox" name="fillCheckBox">
+             <property name="toolTip">
+              <string>Fills in shapes, otherwise draws only the shape's outline</string>
+             </property>
+             <property name="text">
+              <string>Fill</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QRadioButton" name="textRadioButton">
+             <property name="text">
+              <string>Text</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="5">
+            <widget class="QSpinBox" name="originYSpinBox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QPushButton" name="drawButton">
+             <property name="text">
+              <string>Draw</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QPushButton" name="loadImageButton">
+             <property name="text">
+              <string>Load Image...</string>
+             </property>
+            </widget>
+           </item>
            <item row="9" column="3">
             <widget class="QLabel" name="textLabel">
              <property name="text">
@@ -585,71 +699,6 @@
              </property>
              <property name="text">
               <string>Color...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="3">
-            <widget class="QLabel" name="target2Label">
-             <property name="text">
-              <string>Point 3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QLabel" name="frameRateLabel">
-             <property name="text">
-              <string>Frame Rate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="frameCountLabel">
-             <property name="text">
-              <string>Frame Count</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QSpinBox" name="currentFrameSpinBox">
-             <property name="toolTip">
-              <string>The current drawing surface</string>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>255</number>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="4" colspan="2">
-            <widget class="QLineEdit" name="textLineEdit">
-             <property name="toolTip">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="3">
-            <widget class="QLabel" name="originLabel">
-             <property name="text">
-              <string>Origin</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QRadioButton" name="rectRadioButton">
-             <property name="text">
-              <string>Rectangle</string>
              </property>
             </widget>
            </item>
@@ -706,6 +755,9 @@
              <property name="toolTip">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
@@ -716,6 +768,9 @@
              <property name="toolTip">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
@@ -723,6 +778,9 @@
            </item>
            <item row="8" column="4">
             <widget class="QSpinBox" name="target2XSpinBox">
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
@@ -753,6 +811,9 @@
              <property name="toolTip">
               <string/>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
@@ -772,6 +833,9 @@
            </item>
            <item row="8" column="5">
             <widget class="QSpinBox" name="target2YSpinBox">
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>65535</number>
              </property>
@@ -802,6 +866,9 @@
              <property name="toolTip">
               <string>Sets the amount of time between frames</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
              <property name="maximum">
               <number>1000000</number>
              </property>
@@ -810,17 +877,44 @@
              </property>
             </widget>
            </item>
-           <item row="7" column="3">
-            <widget class="QLabel" name="targetLabel">
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
-              <string>Target</string>
+              <string/>
              </property>
             </widget>
            </item>
-           <item row="0" column="4">
-            <widget class="QSpinBox" name="frameCountSpinBox">
+           <item row="8" column="3">
+            <widget class="QLabel" name="target2Label">
+             <property name="text">
+              <string>Point 3</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="frameRateLabel">
+             <property name="text">
+              <string>Frame Rate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="frameCountLabel">
+             <property name="text">
+              <string>Frame Count</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QSpinBox" name="currentFrameSpinBox">
              <property name="toolTip">
-              <string>The total number of drawing surfaces</string>
+              <string>The current drawing surface</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
              <property name="minimum">
               <number>1</number>
@@ -830,63 +924,39 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="1">
-            <widget class="QRadioButton" name="lineRadioButton">
-             <property name="text">
-              <string>Line</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QRadioButton" name="circleRadioButton">
-             <property name="text">
-              <string>Circle</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
-            <widget class="QCheckBox" name="fillCheckBox">
-             <property name="toolTip">
-              <string>Fills in shapes, otherwise draws only the shape's outline</string>
-             </property>
-             <property name="text">
-              <string>Fill</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QRadioButton" name="textRadioButton">
-             <property name="text">
-              <string>Text</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="5">
-            <widget class="QSpinBox" name="originYSpinBox">
+           <item row="9" column="4" colspan="2">
+            <widget class="QLineEdit" name="textLineEdit">
              <property name="toolTip">
               <string/>
              </property>
-             <property name="maximum">
-              <number>65535</number>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QLabel" name="originLabel">
+             <property name="text">
+              <string>Origin</string>
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="QPushButton" name="drawButton">
+           <item row="8" column="0">
+            <widget class="QRadioButton" name="rectRadioButton">
              <property name="text">
-              <string>Draw</string>
+              <string>Rectangle</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QPushButton" name="loadImageButton">
-             <property name="text">
-              <string>Load Image...</string>
+           <item row="6" column="6">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-            </widget>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -1158,6 +1228,9 @@
                  <property name="toolTip">
                   <string>The Maestro's total runtime</string>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
@@ -1192,6 +1265,9 @@
                  </property>
                  <property name="toolTip">
                   <string>The amount of time since the last event</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -1231,6 +1307,9 @@
                  </property>
                  <property name="toolTip">
                   <string>The time that the Event will run</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                  <property name="maximum">
                   <number>100000000</number>
