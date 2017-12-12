@@ -28,12 +28,14 @@ class CueInterpreter {
 		static const QStringList SectionActions;
 		static const QStringList ShowActions;
 		static const QStringList AnimationTypes;
+		static const QStringList AnimationOrientations;
 		static const QStringList CanvasTypes;
 		static const QStringList ColorMixModes;
 
 		QString interpret_cue(uint8_t* cue);
 
 	private:
+		void append_bool(bool value, QString* result);
 		void interpret_animation_cue(uint8_t* cue, QString* result);
 		void interpret_canvas_cue(uint8_t* cue, QString* result);
 		void interpret_maestro_cue(uint8_t* cue, QString* result);

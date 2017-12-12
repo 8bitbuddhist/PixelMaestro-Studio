@@ -126,7 +126,7 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 	statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
 }
 
-void MainWindow::on_action_Open_Animation_Editor_triggered(bool reset) {
+void MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
 
 	// If Animation Editor is currently open, verify user wants to close
 	if (maestro_control_ != nullptr) {
@@ -137,7 +137,7 @@ void MainWindow::on_action_Open_Animation_Editor_triggered(bool reset) {
 		}
 	}
 
-	if (reset) {
+	if (!keep_current_open) {
 		reset_drawing_area();
 	}
 
@@ -206,7 +206,7 @@ void MainWindow::on_actionOpen_Maestro_triggered() {
 		// Read in the CueFile, then load the Animation Editor
 		reset_drawing_area();
 		controller_->load_cuefile(filename);
-		on_action_Open_Animation_Editor_triggered(false);
+		on_action_Open_Animation_Editor_triggered(true);
 	}
 }
 

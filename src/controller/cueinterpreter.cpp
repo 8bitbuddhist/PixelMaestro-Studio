@@ -26,6 +26,7 @@ const QStringList CueInterpreter::CanvasActions({"Clear",
 												 "Draw Text",
 												 "Draw Triangle",
 												 "Next Frame",
+												 "Remove Frame Timing",
 												 "Set Current Frame Index",
 												 "Set Frame Timing",
 												 "Set Num Frames"});
@@ -58,6 +59,9 @@ const QStringList CueInterpreter::AnimationTypes({"Blink",
 												  "Sparkle",
 												  "Wave"});
 
+const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
+														 "Vertical"});
+
 const QStringList CueInterpreter::CanvasTypes({"Animation",
 											   "Color"});
 
@@ -67,6 +71,15 @@ const QStringList CueInterpreter::ColorMixModes({"Alpha",
 
 
 CueInterpreter::CueInterpreter() { }
+
+void CueInterpreter::append_bool(bool value, QString* result) {
+	if (value) {
+		result->append(": On");
+	}
+	else {
+		result->append(": Off");
+	}
+}
 
 QString CueInterpreter::interpret_cue(uint8_t* cue) {
 	QString result = QString("Handler: ") + Handlers.at(cue[CueController::Byte::PayloadByte]) + QString(", ");
@@ -97,7 +110,59 @@ void CueInterpreter::interpret_animation_cue(uint8_t* cue, QString* result) {
 	result->append("Layer: " + QString::number(cue[AnimationCueHandler::Byte::LayerByte]) + ", ");
 	result->append("Action: " + AnimationActions.at(cue[AnimationCueHandler::Byte::ActionByte]));
 
-	// TODO: Finish Animation parameters
+	switch((AnimationCueHandler::Action)cue[AnimationCueHandler::Byte::ActionByte]) {
+		case AnimationCueHandler::SetColors:
+			{
+				uint8_t num_colors = cue[AnimationCueHandler::Byte::OptionsByte];
+				Colors::RGB base_color(cue[AnimationCueHandler::Byte::OptionsByte + 1],
+										cue[AnimationCueHandler::Byte::OptionsByte + 2],
+										cue[AnimationCueHandler::Byte::OptionsByte + 3]);
+				result->append(": # colors: " + QString::number(num_colors));
+				result->append(", Base Color: {" +
+							   QString::number(base_color.r) + ", " +
+							   QString::number(base_color.g) + ", " +
+							   QString::number(base_color.b) + "}");
+			}
+			break;
+		case AnimationCueHandler::SetCycleIndex:
+			result->append(": " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
+			break;
+		case AnimationCueHandler::SetFade:
+			append_bool((bool)cue[AnimationCueHandler::Byte::OptionsByte], result);
+			break;
+		case AnimationCueHandler::SetLightningOptions:
+			{
+				result->append(", Bolt Chance: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
+				result->append(", Thresholds: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte + 1]));
+				result->append(" " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte + 2]));
+				result->append(", Fork Chance: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte + 3]));
+			}
+			break;
+		case AnimationCueHandler::SetOrientation:
+			result->append(": " + AnimationOrientations.at(cue[AnimationCueHandler::Byte::OptionsByte]));
+			break;
+		case AnimationCueHandler::SetPlasmaOptions:
+			{
+				result->append(", Size: " + QString::number(FloatByteConvert::byte_to_float(&cue[AnimationCueHandler::Byte::OptionsByte])));
+				result->append(", Resolution: " + QString::number(FloatByteConvert::byte_to_float(&cue[AnimationCueHandler::Byte::OptionsByte + 4])));
+			}
+			break;
+		case AnimationCueHandler::SetRadialOptions:
+			result->append(", Resolution: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
+			break;
+		case AnimationCueHandler::SetReverse:
+			append_bool((bool)cue[AnimationCueHandler::Byte::OptionsByte], result);
+			break;
+		case AnimationCueHandler::SetSparkleOptions:
+			result->append(", Threshold: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
+			break;
+		case AnimationCueHandler::SetTiming:
+			{
+				result->append(", Speed: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
+				result->append(", Pause: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte + 2])));
+			}
+			break;
+	}
 }
 
 void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
@@ -108,7 +173,25 @@ void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
 	}
 	result->append("Action: " + CanvasActions.at(cue[CanvasCueHandler::Byte::ActionByte]));
 
-	// TODO: Canvas parameters
+	switch((CanvasCueHandler::Action)cue[CanvasCueHandler::Byte::ActionByte]) {
+		case CanvasCueHandler::Action::Clear:
+			break;
+		case CanvasCueHandler::Action::NextFrame:
+			break;
+		case CanvasCueHandler::Action::RemoveFrameTiming:
+			break;
+		case CanvasCueHandler::Action::SetCurrentFrameIndex:
+			result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
+			break;
+		case CanvasCueHandler::Action::SetFrameTiming:
+			result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
+			break;
+		case CanvasCueHandler::Action::SetNumFrames:
+			result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
+			break;
+		default:	// Draw actions
+			break;
+	}
 }
 
 void CueInterpreter::interpret_maestro_cue(uint8_t* cue, QString* result) {
@@ -118,7 +201,7 @@ void CueInterpreter::interpret_maestro_cue(uint8_t* cue, QString* result) {
 		case MaestroCueHandler::Action::SetShow:
 			break;
 		case MaestroCueHandler::Action::SetTiming:
-			result->append(", Interval: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
+			result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
 			break;
 	}
 }
@@ -134,7 +217,7 @@ void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 		case SectionCueHandler::Action::RemoveLayer:
 			break;
 		case SectionCueHandler::Action::SetAnimation:
-			result->append(", Type: " + AnimationTypes.at(cue[SectionCueHandler::Byte::OptionsByte]));
+			result->append(": " + AnimationTypes.at(cue[SectionCueHandler::Byte::OptionsByte]));
 			break;
 		case SectionCueHandler::Action::SetCanvas:
 			{
@@ -156,14 +239,14 @@ void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
 			break;
 		case SectionCueHandler::Action::SetOffset:
 			{
-				result->append(", X offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
-				result->append(", Y offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
+				result->append(", X Offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
+				result->append(", Y Offset: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
 			}
 			break;
 		case SectionCueHandler::Action::SetScroll:
 			{
-				result->append(", X rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
-				result->append(", Y rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
+				result->append(", X Rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte])));
+				result->append(", Y Rate: " + QString::number(IntByteConvert::byte_to_int(&cue[SectionCueHandler::Byte::OptionsByte + 2])));
 			}
 			break;
 	}
