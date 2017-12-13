@@ -18,7 +18,6 @@
 #include "ui_mainwindow.h"
 
 namespace PixelMaestroStudio {
-	// TODO: Turn demos into Cuefiles and place in "examples/cuefiles" folder
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
 		this->main_layout_ = this->findChild<QLayout*>("mainLayout");

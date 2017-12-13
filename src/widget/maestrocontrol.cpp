@@ -343,12 +343,6 @@ namespace PixelMaestroStudio {
 		PaletteController::Palette* palette = palette_controller_.get_palette(ui->colorComboBox->currentIndex());
 		run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType::Type)index, true, &palette->colors[0], palette->colors.size(), true));
 		show_extra_controls(active_section_->get_animation());
-
-		// Reapply animation settings
-		on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
-		on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
-		on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
-		on_cycleSlider_valueChanged(ui->cycleSlider->value());
 	}
 
 	/**
