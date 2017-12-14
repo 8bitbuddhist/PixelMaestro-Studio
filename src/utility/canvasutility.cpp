@@ -8,6 +8,7 @@
 #include "canvasutility.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
+#include "canvas/palettecanvas.h"
 #include "core/point.h"
 
 namespace PixelMaestroStudio {
@@ -78,26 +79,44 @@ namespace PixelMaestroStudio {
 		QSize canvas_size(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
 		image.setScaledSize(canvas_size);
 
-		if (maestro_control) {
-			maestro_control->run_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.imageCount()));
-		}
-		else {
-			canvas->set_num_frames(image.imageCount());
-		}
+		maestro_control->run_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.imageCount()));
 
 		// For animated images, set the frame rate
 		if (image.imageCount() > 1) {
-			if (maestro_control) {
-				maestro_control->run_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
-			}
-			else {
-				canvas->set_frame_timing(image.nextImageDelay());
-			}
+			maestro_control->run_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
 		}
 
 		Point cursor(0, 0);
 		for (uint16_t i = 0; i < image.imageCount(); i++) {
 			QImage frame = image.read();
+
+			// For PaletteCanvases, convert the image into an 8-bit analogue
+			// FIXME: This runs multiple times for animations when it should only run once
+			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+				frame = frame.convertToFormat(QImage::Format_Indexed8);
+			}
+
+			// Extract the image's color table (for PaletteCanvases)
+			QVector<QRgb> color_table = frame.colorTable();
+			if (color_table.size() == 256) {
+				color_table.removeLast();
+			}
+
+			// For PaletteCanvases, set the Canvas' palette before continuing.
+			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+
+				// Copy the color table into a temporary RGB array so we can Cue it
+				Colors::RGB color_table_rgb[color_table.size()];
+				for (uint8_t color = 0; color < color_table.size() - 1; color++) {
+					color_table_rgb[color].r = qRed(color_table.at(color));
+					color_table_rgb[color].g = qGreen(color_table.at(color));
+					color_table_rgb[color].b = qBlue(color_table.at(color));
+				}
+
+				maestro_control->run_cue(maestro_control->canvas_handler->set_colors(maestro_control->get_section_index(), maestro_control->get_layer_index(), &color_table_rgb[0], color_table.size()));
+			}
+
+			// Iterate over each pixel and the frame and re-draw it
 			for (uint16_t y = 0; y < canvas_size.height(); y++) {
 				for (uint16_t x = 0; x < canvas_size.width(); x++) {
 					cursor.set(x, y);
@@ -110,36 +129,22 @@ namespace PixelMaestroStudio {
 								{
 									// Only draw if the Pixel is not completely black
 									if (color != Colors::RGB {0, 0, 0}) {
-										if (maestro_control) {
-											maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), x, y));
-										}
-										else {
-											canvas->draw_point(x, y);
-										}
+										maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), x, y));
 									}
 								}
 								break;
 							case CanvasType::ColorCanvas:
-								{
-									if (maestro_control) {
-										maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color, x, y));
-									}
-									else {
-										static_cast<ColorCanvas*>(canvas)->draw_point(color, x, y);
-									}
-								}
+								maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color, x, y));
+								break;
+							case CanvasType::PaletteCanvas:
+								maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color_table.indexOf(pix_color.rgb()), x, y));
 								break;
 						}
 					}
 				}
 			}
 			image.jumpToNextImage();
-			if (maestro_control) {
-				maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
-			}
-			else {
-				canvas->next_frame();
-			}
+			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 		}
 	}
 }

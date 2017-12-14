@@ -68,7 +68,8 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
 	lib/PixelMaestro/src/core/timing/timing.cpp \
 	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
-	src/window/simpledrawingareadialog.cpp
+	src/window/simpledrawingareadialog.cpp \
+    lib/PixelMaestro/src/canvas/palettecanvas.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -129,7 +130,8 @@ HEADERS += \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
 	lib/PixelMaestro/src/core/timing/timing.h \
 	lib/PixelMaestro/src/core/timing/animationtiming.h \
-	src/window/simpledrawingareadialog.h
+	src/window/simpledrawingareadialog.h \
+    lib/PixelMaestro/src/canvas/palettecanvas.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \

@@ -16,6 +16,7 @@
 #include "animation/sparkleanimationcontrol.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
+#include "canvas/palettecanvas.h"
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
@@ -294,14 +295,21 @@ namespace PixelMaestroStudio {
 
 	/// Reinitializes Palettes from Palette Dialog.
 	void MaestroControl::initialize_palettes() {
-		ui->colorComboBox->blockSignals(true);
-		ui->colorComboBox->clear();
 
-		// Populate color combo box
+		// Repopulate color combo boxes
+		ui->colorComboBox->blockSignals(true);
+		ui->canvasPaletteComboBox->blockSignals(true);
+
+		ui->colorComboBox->clear();
+		ui->canvasPaletteComboBox->clear();
+
 		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
 			ui->colorComboBox->addItem(palette_controller_.get_palette(i)->name);
+			ui->canvasPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 		}
+
 		ui->colorComboBox->blockSignals(false);
+		ui->canvasPaletteComboBox->blockSignals(false);
 	}
 
 	/**
@@ -346,6 +354,20 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Sets the color when drawing with PaletteCanvases.
+	 */
+	void MaestroControl::on_canvas_color_clicked() {
+		QPushButton* sender = (QPushButton*)QObject::sender();
+		canvas_color_index_ = sender->objectName().toInt();
+
+		PaletteController::Palette* palette = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
+		Colors::RGB color = palette->colors.at(canvas_color_index_);
+
+		// Change the color of the Color button to reflect the selection
+		ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+	}
+
+	/**
 	 * Changes the current Canvas.
 	 * @param index Index of the new Canvas type.
 	 */
@@ -361,6 +383,11 @@ namespace PixelMaestroStudio {
 			// Default to circle radio button so that the controls can be refreshed
 			ui->circleRadioButton->setChecked(true);
 			set_circle_controls_enabled(true);
+
+			// Select a palette
+			if ((CanvasType::Type)(index - 1) == CanvasType::PaletteCanvas) {
+				on_canvasPaletteComboBox_currentIndexChanged(0);
+			}
 		}
 		else {
 			set_canvas_controls_enabled(false, CanvasType::Type(index - 1));
@@ -369,6 +396,48 @@ namespace PixelMaestroStudio {
 			if (ui->toggleCanvasModeCheckBox->isChecked()) {
 				on_toggleCanvasModeCheckBox_toggled(false);
 			}
+		}
+	}
+
+	/// Opens the Palette Editor.
+	void MaestroControl::on_canvasEditPaletteButton_clicked() {
+		QString palette_name = ui->canvasPaletteComboBox->currentText();
+
+		PaletteControl palette_control(&palette_controller_, palette_name);
+		palette_control.exec();
+		initialize_palettes();
+		ui->canvasPaletteComboBox->setCurrentText(palette_name);
+	}
+
+	/**
+	 * Changes the Canvas' palette (PaletteCanvases only)
+	 * @param index New index.
+	 */
+	void MaestroControl::on_canvasPaletteComboBox_currentIndexChanged(int index) {
+		PaletteController::Palette* palette = palette_controller_.get_palette(index);
+		run_cue(canvas_handler->set_colors(get_section_index(), get_layer_index(), &palette->colors[0], palette->colors.size()));
+
+		// Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
+		// Delete existing color buttons
+		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
+		for (QPushButton* button : buttons) {
+			disconnect(button, &QPushButton::clicked, this, &MaestroControl::on_canvas_color_clicked);
+			delete button;
+		}
+
+		// Create new buttons and add an event handler that triggers on_canvas_color_clicked()
+		QLayout* layout = ui->canvasColorPickerScrollArea->findChild<QLayout*>("canvasColorPickerLayout");
+		for (uint8_t color_index = 0; color_index < palette->colors.size(); color_index++) {
+			Colors::RGB color = palette->colors.at(color_index);
+			QPushButton* button = new QPushButton();
+			button->setVisible(true);
+			button->setObjectName(QString::number(color_index));
+			button->setToolTip(QString::number(color_index + 1));
+			button->setMaximumWidth(40);
+			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+
+			layout->addWidget(button);
+			connect(button, &QPushButton::clicked, this, &MaestroControl::on_canvas_color_clicked);
 		}
 	}
 
@@ -467,39 +536,64 @@ namespace PixelMaestroStudio {
 	void MaestroControl::on_drawButton_clicked() {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
-		if ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1) == CanvasType::ColorCanvas) {
-			if (checked_button == ui->circleRadioButton) {
-				run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
-			else if (checked_button == ui->lineRadioButton) {
-				run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-			}
-			else if (checked_button == ui->rectRadioButton) {
-				run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
-			else if (checked_button == ui->textRadioButton) {
-				run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-			}
-			else {	// Triangle
-				run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
-		}
-		else {
-			if (checked_button == ui->circleRadioButton) {
-				run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
-			else if (checked_button == ui->lineRadioButton) {
-				run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-			}
-			else if (checked_button == ui->rectRadioButton) {
-				run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
-			else if (checked_button == ui->textRadioButton) {
-				run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-			}
-			else {	// Triangle
-				run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-			}
+		switch ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1)) {
+			case CanvasType::AnimationCanvas:
+				{
+					if (checked_button == ui->circleRadioButton) {
+						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->lineRadioButton) {
+						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+					}
+					else if (checked_button == ui->rectRadioButton) {
+						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->textRadioButton) {
+						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+					}
+					else {	// Triangle
+						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+				}
+				break;
+			case CanvasType::ColorCanvas:
+				{
+					if (checked_button == ui->circleRadioButton) {
+						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->lineRadioButton) {
+						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+					}
+					else if (checked_button == ui->rectRadioButton) {
+						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->textRadioButton) {
+						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+					}
+					else {	// Triangle
+						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+				}
+				break;
+			case CanvasType::PaletteCanvas:
+				{
+					if (checked_button == ui->circleRadioButton) {
+						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->lineRadioButton) {
+						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+					}
+					else if (checked_button == ui->rectRadioButton) {
+						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+					else if (checked_button == ui->textRadioButton) {
+						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+					}
+					else {	// Triangle
+						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
+					}
+				}
+				break;
 		}
 	}
 
@@ -687,7 +781,7 @@ namespace PixelMaestroStudio {
 	void MaestroControl::on_loadImageButton_clicked() {
 		QString filename = QFileDialog::getOpenFileName(this,
 			QString("Open Image"),
-			QDir::home().path(),
+			QString(),
 			QString("Images (*.bmp *.gif *.jpg *.png)"));
 
 		if (!filename.isEmpty()) {
@@ -859,6 +953,10 @@ namespace PixelMaestroStudio {
 						delete[] frames[frame];
 					}
 					delete[] frames;
+				}
+				else if (active_section_->get_canvas()->get_type() == CanvasType::PaletteCanvas) {
+					// TODO: Copy PaletteCanvas contents
+					run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
 				}
 			}
 			else {	// No Canvas set
@@ -1093,32 +1191,17 @@ namespace PixelMaestroStudio {
 		ui->pauseSlider->blockSignals(false);
 		ui->pauseSpinBox->blockSignals(false);
 
-		/*
-		 * Select Palette.
-		 * Find the corresponding palette in the Palette Controller.
-		 * If it's not there, add it.
-		 */
-		bool palette_found = false;
-		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
-			PaletteController::Palette* palette = palette_controller_.get_palette(i);
-			if (*palette == animation->get_colors()) {
-				ui->colorComboBox->blockSignals(true);
-				ui->colorComboBox->setCurrentText(palette->name);
-				ui->colorComboBox->blockSignals(false);
-				palette_found = true;
-				continue;
-			}
-		}
-
 		// Palette not found
-		if (!palette_found) {
-			QString name = "Custom - ";
-			if (section->get_parent_section() == nullptr) {
-				name += "Section " + QString::number(get_section_index());
-			}
-			else {
-				name += "Layer " + QString::number(get_layer_index());
-			}
+		int palette_index = palette_controller_.find(animation->get_colors());
+		if (palette_index >= 0) {
+			ui->colorComboBox->blockSignals(true);
+			ui->colorComboBox->setCurrentIndex(palette_index);
+			ui->colorComboBox->blockSignals(false);
+		}
+		else {
+			QString name = "Section " + QString::number(get_section_index() + 1) +
+						   " Layer " + QString::number(get_layer_index()) +
+						   " Animation";
 			palette_controller_.add_palette(name, animation->get_colors(), animation->get_num_colors());
 			ui->colorComboBox->blockSignals(true);
 			ui->colorComboBox->addItem(name);
@@ -1147,6 +1230,26 @@ namespace PixelMaestroStudio {
 				ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
 			}
 			set_canvas_controls_enabled(true, canvas->get_type());
+
+			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+				// Find the corresponding palette in the Palette Controller.
+				int palette_index = palette_controller_.find(static_cast<PaletteCanvas*>(canvas)->get_colors());
+				if (palette_index >= 0) {
+					ui->canvasPaletteComboBox->blockSignals(true);
+					ui->canvasPaletteComboBox->setCurrentIndex(palette_index);
+					ui->canvasPaletteComboBox->blockSignals(false);
+				}
+				else {
+					QString name = "Section " + QString::number(get_section_index() + 1) +
+								   " Layer " + QString::number(get_layer_index()) +
+								   " Canvas";
+					palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_num_colors());
+					ui->canvasPaletteComboBox->blockSignals(true);
+					ui->canvasPaletteComboBox->addItem(name);
+					ui->canvasPaletteComboBox->setCurrentText(name);
+					ui->canvasPaletteComboBox->blockSignals(false);
+				}
+			}
 		}
 		else {
 			ui->canvasComboBox->setCurrentIndex(0);
@@ -1200,6 +1303,11 @@ namespace PixelMaestroStudio {
 		ui->loadImageButton->setEnabled(enabled);
 		ui->drawButton->setEnabled(enabled);
 		ui->clearButton->setEnabled(enabled);
+
+		ui->canvasPaletteComboBox->setEnabled(enabled && type == CanvasType::PaletteCanvas);
+		ui->canvasPaletteLabel->setEnabled(enabled && type == CanvasType::PaletteCanvas);
+		ui->canvasEditPaletteButton->setEnabled(enabled && type == CanvasType::PaletteCanvas);
+		ui->canvasColorPickerScrollArea->setVisible(enabled && type == CanvasType::PaletteCanvas);
 	}
 
 	/**

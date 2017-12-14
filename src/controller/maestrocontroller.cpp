@@ -6,6 +6,7 @@
 #include "canvas/canvas.h"
 #include "canvas/canvastype.h"
 #include "canvas/colorcanvas.h"
+#include "canvas/palettecanvas.h"
 #include "core/maestro.h"
 #include "cue/animationcuehandler.h"
 #include "cue/canvascuehandler.h"
@@ -254,6 +255,11 @@ namespace PixelMaestroStudio {
 				write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
 			}
 
+			// Save the PaletteCanvas' palette
+			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+				write_cue_to_stream(datastream, canvas_handler->set_colors(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_num_colors()));
+			}
+
 			// Draw and save each frame
 			for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 				switch (canvas->get_type()) {
@@ -263,6 +269,8 @@ namespace PixelMaestroStudio {
 					case CanvasType::ColorCanvas:
 						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
 						break;
+					case CanvasType::PaletteCanvas:
+						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<PaletteCanvas*>(canvas)->get_frame(frame)));
 				}
 				if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
 					write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));

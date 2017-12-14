@@ -71,6 +71,9 @@ namespace PixelMaestroStudio {
 			/// Temporary storage for the Canvas drawing brush.
 			QColor canvas_color_ = QColor::fromRgb(0, 0, 0);
 
+			/// Color index storage for PaletteCanvases.
+			uint8_t canvas_color_index_ = 255;
+
 			/// Conversion from canvas_color_ into PixelMaestro color.
 			Colors::RGB canvas_rgb_color_;
 
@@ -175,7 +178,10 @@ namespace PixelMaestroStudio {
 
 			void update_maestro_last_time();
 
+			void on_canvas_color_clicked();
 			void on_showPauseButton_clicked();
+			void on_canvasEditPaletteButton_clicked();
+			void on_canvasPaletteComboBox_currentIndexChanged(int index);
 	};
 }
 

@@ -12,6 +12,22 @@ namespace PixelMaestroStudio {
 		return &palettes_[palettes_.size() - 1];
 	}
 
+	/**
+	 * Searches for the palette in the PaletteControl.
+	 * @param palette Palette to search for.
+	 * @return Index of the palette, or -1 if not found.
+	 */
+	int PaletteController::find(Colors::RGB *search_palette) {
+		for (uint16_t i = 0; i < palettes_.size(); i++) {
+			PaletteController::Palette* palette = &palettes_.at(i);
+			if (*palette == search_palette) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
 	PaletteController::Palette* PaletteController::get_palette(uint8_t index) {
 		return &palettes_[index];
 	}

@@ -35,6 +35,7 @@ namespace PixelMaestroStudio {
 
 			PaletteController();
 			Palette* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors);
+			int find(Colors::RGB* search_palette);
 			Palette* get_palette(uint8_t index);
 			Palette* get_palette(QString name);
 			std::vector<Palette>* get_palettes();
