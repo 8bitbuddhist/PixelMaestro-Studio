@@ -117,7 +117,7 @@ namespace PixelMaestroStudio {
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
 			void set_active_section(Section* section);
-			void set_canvas_controls_enabled(bool enabled, CanvasType::Type type);
+			void set_canvas_controls_enabled(uint8_t index);
 			void set_offset();
 
 			// Canvas control handling methods
@@ -130,7 +130,7 @@ namespace PixelMaestroStudio {
 			void set_scroll();
 			void set_layer_controls_enabled(bool enabled);
 			void set_show_controls_enabled(bool enabled);
-			void set_speed();
+			void set_timing();
 			void show_extra_controls(Animation* animation);
 
 		private slots:
@@ -139,14 +139,14 @@ namespace PixelMaestroStudio {
 			void on_canvasComboBox_currentIndexChanged(int index);
 			void on_colorComboBox_currentIndexChanged(int index);
 			void on_columnsSpinBox_editingFinished();
-			void on_cycleSlider_valueChanged(int value);
+			void on_timingSlider_valueChanged(int value);
 			void on_fadeCheckBox_toggled(bool checked);
 			void on_mix_modeComboBox_currentIndexChanged(int index);
 			void on_orientationComboBox_currentIndexChanged(int index);
 			void on_paletteControlButton_clicked();
 			void on_reverse_animationCheckBox_toggled(bool checked);
 			void on_rowsSpinBox_editingFinished();
-			void on_cycleSpinBox_editingFinished();
+			void on_timingSpinBox_editingFinished();
 			void on_enableShowCheckBox_toggled(bool checked);
 			void on_pauseSlider_valueChanged(int value);
 			void on_pauseSpinBox_valueChanged(int arg1);

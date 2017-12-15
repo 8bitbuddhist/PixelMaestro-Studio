@@ -58,19 +58,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="5" column="1">
         <widget class="QSpinBox" name="scrollXSpinBox">
          <property name="toolTip">
@@ -221,13 +208,6 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="gridSizeLabel">
-         <property name="text">
-          <string>Grid Size</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="1">
         <widget class="QSpinBox" name="rowsSpinBox">
          <property name="toolTip">
@@ -274,6 +254,26 @@
           <number>10</number>
          </property>
         </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="gridSizeLabel">
+         <property name="text">
+          <string>Grid Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -383,7 +383,7 @@
         </widget>
        </item>
        <item row="4" column="6">
-        <widget class="QSpinBox" name="cycleSpinBox">
+        <widget class="QSpinBox" name="timingSpinBox">
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
@@ -449,7 +449,7 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="cycleLabel">
+        <widget class="QLabel" name="timingLabel">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -457,7 +457,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Speed</string>
+          <string>Timing</string>
          </property>
         </widget>
        </item>
@@ -501,7 +501,7 @@
         </widget>
        </item>
        <item row="4" column="1" colspan="5">
-        <widget class="QSlider" name="cycleSlider">
+        <widget class="QSlider" name="timingSlider">
          <property name="toolTip">
           <string>The amount of time each cycle takes to complete</string>
          </property>
@@ -585,7 +585,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-32</y>
             <width>554</width>
             <height>460</height>
            </rect>
@@ -671,13 +671,6 @@
              </property>
              <property name="maximum">
               <number>65535</number>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="QPushButton" name="drawButton">
-             <property name="text">
-              <string>Draw</string>
              </property>
             </widget>
            </item>
@@ -859,13 +852,6 @@
              </property>
             </widget>
            </item>
-           <item row="12" column="1">
-            <widget class="QPushButton" name="clearButton">
-             <property name="text">
-              <string>Clear...</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="4">
             <widget class="QSpinBox" name="frameRateSpinBox">
              <property name="toolTip">
@@ -1003,6 +989,20 @@
                </item>
               </layout>
              </widget>
+            </widget>
+           </item>
+           <item row="12" column="0">
+            <widget class="QPushButton" name="clearButton">
+             <property name="text">
+              <string>Clear...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="4" colspan="2">
+            <widget class="QPushButton" name="drawButton">
+             <property name="text">
+              <string>Draw</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -1444,8 +1444,8 @@
   <tabstop>orientationComboBox</tabstop>
   <tabstop>reverse_animationCheckBox</tabstop>
   <tabstop>fadeCheckBox</tabstop>
-  <tabstop>cycleSlider</tabstop>
-  <tabstop>cycleSpinBox</tabstop>
+  <tabstop>timingSlider</tabstop>
+  <tabstop>timingSpinBox</tabstop>
   <tabstop>pauseSlider</tabstop>
   <tabstop>pauseSpinBox</tabstop>
   <tabstop>canvasScrollArea</tabstop>
@@ -1468,8 +1468,6 @@
   <tabstop>target2YSpinBox</tabstop>
   <tabstop>fontComboBox</tabstop>
   <tabstop>textLineEdit</tabstop>
-  <tabstop>drawButton</tabstop>
-  <tabstop>clearButton</tabstop>
   <tabstop>showScrollArea</tabstop>
   <tabstop>enableShowCheckBox</tabstop>
   <tabstop>timingMethodComboBox</tabstop>

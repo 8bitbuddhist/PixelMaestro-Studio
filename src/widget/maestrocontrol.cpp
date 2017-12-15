@@ -81,13 +81,13 @@ namespace PixelMaestroStudio {
 		section_handler = static_cast<SectionCueHandler*>(cue_controller_->get_handler(CueController::Handler::SectionHandler));
 		show_handler = static_cast<ShowCueHandler*>(cue_controller_->get_handler(CueController::Handler::ShowHandler));
 
-		// Initialize the MaestroControl
-		initialize();
-
-		// Finally, check to see if we need to pause the Maestro
+		// Check to see if we need to pause the Maestro
 		if (settings.value(SettingsDialog::pause_on_start, false).toBool()) {
 			on_showPauseButton_clicked();
 		}
+
+		// Finally, initialize the MaestroControl
+		initialize();
 	}
 
 	/**
@@ -245,12 +245,12 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->blockSignals(false);
 
 		// Disable advanced controls until they're activated manually
-		set_canvas_controls_enabled(false, CanvasType::AnimationCanvas);
+		set_canvas_controls_enabled(0);
 		set_layer_controls_enabled(false);
 		set_show_controls_enabled(false);
 
 		// Initialize Show timer
-		show_timer_.setTimerType(Qt::PreciseTimer);
+		show_timer_.setTimerType(Qt::CoarseTimer);
 		show_timer_.setInterval(100);
 		connect(&show_timer_, SIGNAL(timeout()), this, SLOT(update_maestro_last_time()));
 
@@ -288,14 +288,13 @@ namespace PixelMaestroStudio {
 		// Set Canvas defaults
 		ui->currentFrameSpinBox->setEnabled(false);
 
-		// Finally, open up the default Section
+		// Finally, show the default Section
 		set_active_section(section);
 		populate_layer_combobox();
 	}
 
-	/// Reinitializes Palettes from Palette Dialog.
+	/// Reinitializes Palettes from the Palette Dialog.
 	void MaestroControl::initialize_palettes() {
-
 		// Repopulate color combo boxes
 		ui->colorComboBox->blockSignals(true);
 		ui->canvasPaletteComboBox->blockSignals(true);
@@ -329,10 +328,6 @@ namespace PixelMaestroStudio {
 	 * @param arg1 Transparency level from 0 - 255.
 	 */
 	void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
-		if (active_section_->get_parent_section() == nullptr) {
-			return;
-		}
-
 		run_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_layer()->mix_mode, arg1));
 	}
 
@@ -341,7 +336,6 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new animation.
 	 */
 	void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-
 		// Only change if the animation is different
 		if (active_section_->get_animation()->get_type() == (AnimationType::Type)index) {
 			return;
@@ -354,7 +348,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Sets the color when drawing with PaletteCanvases.
+	 * Sets the active drawing color when using PaletteCanvases.
 	 */
 	void MaestroControl::on_canvas_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
@@ -372,17 +366,15 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Canvas type.
 	 */
 	void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
-		// Remove the existing Canvas
-		run_cue(section_handler->remove_canvas(get_section_index(), get_layer_index()));
+		set_canvas_controls_enabled(index);
 
 		// Add the new Canvas
 		if (index > 0) {
 			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), (CanvasType::Type)(index - 1)));
-			set_canvas_controls_enabled(true, CanvasType::Type(index - 1));
 
-			// Default to circle radio button so that the controls can be refreshed
+			// Default to the circle radio button so that the controls can be refreshed
 			ui->circleRadioButton->setChecked(true);
-			set_circle_controls_enabled(true);
+			on_circleRadioButton_toggled(true);
 
 			// Select a palette
 			if ((CanvasType::Type)(index - 1) == CanvasType::PaletteCanvas) {
@@ -390,16 +382,14 @@ namespace PixelMaestroStudio {
 			}
 		}
 		else {
-			set_canvas_controls_enabled(false, CanvasType::Type(index - 1));
-
-			// Check if Edit Frame mode is enabled, and disable it
+			// Check if Edit Frame mode is enabled. If it is, disable it
 			if (ui->toggleCanvasModeCheckBox->isChecked()) {
 				on_toggleCanvasModeCheckBox_toggled(false);
 			}
 		}
 	}
 
-	/// Opens the Palette Editor.
+	/// Opens the Palette Editor from the Canvas tab.
 	void MaestroControl::on_canvasEditPaletteButton_clicked() {
 		QString palette_name = ui->canvasPaletteComboBox->currentText();
 
@@ -508,26 +498,26 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the cycle speed.
-	 * @param value New cycle speed.
+	 * Changes the animation timing.
+	 * @param value New timing.
 	 */
-	void MaestroControl::on_cycleSlider_valueChanged(int value) {
-		ui->cycleSpinBox->blockSignals(true);
-		ui->cycleSpinBox->setValue(value);
-		ui->cycleSpinBox->blockSignals(false);
+	void MaestroControl::on_timingSlider_valueChanged(int value) {
+		ui->timingSpinBox->blockSignals(true);
+		ui->timingSpinBox->setValue(value);
+		ui->timingSpinBox->blockSignals(false);
 
-		set_speed();
+		set_timing();
 	}
 
 	/**
-	 * Changes the cycle speed.
+	 * Changes the animation timing.
 	 */
-	void MaestroControl::on_cycleSpinBox_editingFinished() {
-		ui->cycleSlider->blockSignals(true);
-		ui->cycleSlider->setValue(ui->cycleSpinBox->value());
-		ui->cycleSlider->blockSignals(false);
+	void MaestroControl::on_timingSpinBox_editingFinished() {
+		ui->timingSlider->blockSignals(true);
+		ui->timingSlider->setValue(ui->timingSpinBox->value());
+		ui->timingSlider->blockSignals(false);
 
-		set_speed();
+		set_timing();
 	}
 
 	/**
@@ -840,7 +830,7 @@ namespace PixelMaestroStudio {
 		ui->pauseSpinBox->setValue(value);
 		ui->pauseSpinBox->blockSignals(false);
 
-		set_speed();
+		set_timing();
 	}
 
 	/**
@@ -852,7 +842,7 @@ namespace PixelMaestroStudio {
 		ui->pauseSlider->setValue(arg1);
 		ui->pauseSlider->blockSignals(false);
 
-		set_speed();
+		set_timing();
 	}
 
 	/**
@@ -1175,35 +1165,36 @@ namespace PixelMaestroStudio {
 			ui->alphaSpinBox->blockSignals(false);
 		}
 
-		// Get animation options and speed
+		// Get animation options and timing
 		// If no animation is set, initialize one.
-		if (section->get_animation() == nullptr) {
+		Animation* animation = section->get_animation();
+		if (animation == nullptr) {
 			PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
 			run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), AnimationType::Solid, true, &palette->colors[0], palette->colors.size()));
 			run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), 1000));
+			animation = section->get_animation();
 		}
 
 		// Animation settings
-		Animation* animation = section->get_animation();
 		ui->orientationComboBox->blockSignals(true);
 		ui->reverse_animationCheckBox->blockSignals(true);
 		ui->fadeCheckBox->blockSignals(true);
-		ui->cycleSlider->blockSignals(true);
-		ui->cycleSpinBox->blockSignals(true);
+		ui->timingSlider->blockSignals(true);
+		ui->timingSpinBox->blockSignals(true);
 		ui->pauseSlider->blockSignals(true);
 		ui->pauseSpinBox->blockSignals(true);
 		ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 		ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 		ui->fadeCheckBox->setChecked(animation->get_fade());
-		ui->cycleSlider->setValue(animation->get_timing()->get_interval());
-		ui->cycleSpinBox->setValue(animation->get_timing()->get_interval());
+		ui->timingSlider->setValue(animation->get_timing()->get_interval());
+		ui->timingSpinBox->setValue(animation->get_timing()->get_interval());
 		ui->pauseSlider->setValue(animation->get_timing()->get_pause());
 		ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
 		ui->orientationComboBox->blockSignals(false);
 		ui->reverse_animationCheckBox->blockSignals(false);
 		ui->fadeCheckBox->blockSignals(false);
-		ui->cycleSlider->blockSignals(false);
-		ui->cycleSpinBox->blockSignals(false);
+		ui->timingSlider->blockSignals(false);
+		ui->timingSpinBox->blockSignals(false);
 		ui->pauseSlider->blockSignals(false);
 		ui->pauseSpinBox->blockSignals(false);
 
@@ -1245,7 +1236,7 @@ namespace PixelMaestroStudio {
 			if (canvas->get_frame_timing() != nullptr) {
 				ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
 			}
-			set_canvas_controls_enabled(true, canvas->get_type());
+			set_canvas_controls_enabled((uint8_t)(canvas->get_type() + 1));
 
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
 				// Find the corresponding palette in the Palette Controller.
@@ -1272,7 +1263,7 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->setValue(1);
 			ui->currentFrameSpinBox->setValue(1);
 			ui->frameRateSpinBox->setValue(100);
-			set_canvas_controls_enabled(false, CanvasType::Type::AnimationCanvas);
+			set_canvas_controls_enabled(0);
 		}
 
 		ui->frameCountSpinBox->blockSignals(false);
@@ -1283,47 +1274,48 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Enables Canvas controls.
-	 * @param enabled If true, controls are enabled.
-	 * @param type The type of Canvas.
+	 * @param index Index of the Canvas in the drop-down list. 0 for no Canvas.
 	 */
-	void MaestroControl::set_canvas_controls_enabled(bool enabled, CanvasType::Type type) {
-		ui->toggleCanvasModeLabel->setEnabled(enabled);
-		ui->toggleCanvasModeCheckBox->setEnabled(enabled);
-		ui->frameCountLabel->setEnabled(enabled);
-		ui->frameCountSpinBox->setEnabled(enabled);
-		ui->currentFrameLabel->setEnabled(enabled);
-		ui->currentFrameSpinBox->setEnabled(enabled);
-		ui->frameRateLabel->setEnabled(enabled);
-		ui->frameRateSpinBox->setEnabled(enabled);
-		ui->drawingToolsLabel->setEnabled(enabled);
-		ui->circleRadioButton->setEnabled(enabled);
-		ui->lineRadioButton->setEnabled(enabled);
-		ui->triangleRadioButton->setEnabled(enabled);
-		ui->textRadioButton->setEnabled(enabled);
-		ui->rectRadioButton->setEnabled(enabled);
-		ui->originLabel->setEnabled(enabled);
-		ui->originXSpinBox->setEnabled(enabled);
-		ui->originYSpinBox->setEnabled(enabled);
-		ui->targetLabel->setEnabled(enabled);
-		ui->targetXSpinBox->setEnabled(enabled);
-		ui->targetYSpinBox->setEnabled(enabled);
-		ui->target2Label->setEnabled(enabled);
-		ui->target2XSpinBox->setEnabled(enabled);
-		ui->target2YSpinBox->setEnabled(enabled);
-		ui->fontLabel->setEnabled(enabled);
-		ui->fontComboBox->setEnabled(enabled);
-		ui->textLabel->setEnabled(enabled);
-		ui->textLineEdit->setEnabled(enabled);
-		ui->selectColorButton->setEnabled(enabled && type == CanvasType::ColorCanvas);
-		ui->fillCheckBox->setEnabled(enabled);
-		ui->loadImageButton->setEnabled(enabled);
-		ui->drawButton->setEnabled(enabled);
-		ui->clearButton->setEnabled(enabled);
+	void MaestroControl::set_canvas_controls_enabled(uint8_t index) {
+		ui->toggleCanvasModeLabel->setEnabled(index);
+		ui->toggleCanvasModeCheckBox->setEnabled(index);
+		ui->frameCountLabel->setEnabled(index);
+		ui->frameCountSpinBox->setEnabled(index);
+		ui->currentFrameLabel->setEnabled(index);
+		ui->currentFrameSpinBox->setEnabled(index);
+		ui->frameRateLabel->setEnabled(index);
+		ui->frameRateSpinBox->setEnabled(index);
+		ui->drawingToolsLabel->setEnabled(index);
+		ui->circleRadioButton->setEnabled(index);
+		ui->lineRadioButton->setEnabled(index);
+		ui->triangleRadioButton->setEnabled(index);
+		ui->textRadioButton->setEnabled(index);
+		ui->rectRadioButton->setEnabled(index);
+		ui->originLabel->setEnabled(index);
+		ui->originXSpinBox->setEnabled(index);
+		ui->originYSpinBox->setEnabled(index);
+		ui->targetLabel->setEnabled(index);
+		ui->targetXSpinBox->setEnabled(index);
+		ui->targetYSpinBox->setEnabled(index);
+		ui->target2Label->setEnabled(index);
+		ui->target2XSpinBox->setEnabled(index);
+		ui->target2YSpinBox->setEnabled(index);
+		ui->fontLabel->setEnabled(index);
+		ui->fontComboBox->setEnabled(index);
+		ui->textLabel->setEnabled(index);
+		ui->textLineEdit->setEnabled(index);
+		ui->fillCheckBox->setEnabled(index);
+		ui->loadImageButton->setEnabled(index);
+		ui->drawButton->setEnabled(index);
+		ui->clearButton->setEnabled(index);
 
-		ui->canvasPaletteComboBox->setEnabled(enabled && type == CanvasType::PaletteCanvas);
-		ui->canvasPaletteLabel->setEnabled(enabled && type == CanvasType::PaletteCanvas);
-		ui->canvasEditPaletteButton->setEnabled(enabled && type == CanvasType::PaletteCanvas);
-		ui->canvasColorPickerScrollArea->setVisible(enabled && type == CanvasType::PaletteCanvas);
+		// Canvas-specific controls
+		CanvasType::Type type = (CanvasType::Type)(index - 1);
+		ui->selectColorButton->setEnabled(index && type  == CanvasType::ColorCanvas);
+		ui->canvasPaletteComboBox->setEnabled(index && type == CanvasType::PaletteCanvas);
+		ui->canvasPaletteLabel->setEnabled(index && type == CanvasType::PaletteCanvas);
+		ui->canvasEditPaletteButton->setEnabled(index && type == CanvasType::PaletteCanvas);
+		ui->canvasColorPickerScrollArea->setVisible(index && type == CanvasType::PaletteCanvas);
 	}
 
 	/**
@@ -1481,7 +1473,7 @@ namespace PixelMaestroStudio {
 		Section::Scroll* scroll = active_section_->get_scroll();
 		if (scroll == nullptr ||
 			(scroll != nullptr &&
-			 (scroll->interval_x != new_x ||
+			(scroll->interval_x != new_x ||
 			 scroll->interval_y != new_y))) {
 			run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), new_x, new_y));
 		}
@@ -1531,13 +1523,13 @@ namespace PixelMaestroStudio {
 		ui->relativeTimeLineEdit->setEnabled(enabled);
 	}
 
-	/// Sets the speed and/or pause interval for the active Animation.
-	void MaestroControl::set_speed() {
+	/// Sets the timing and pause intervals for the active Animation.
+	void MaestroControl::set_timing() {
 		uint16_t pause = ui->pauseSpinBox->value();
-		uint16_t speed = ui->cycleSpinBox->value();
+		uint16_t new_timing = ui->timingSpinBox->value();
 		AnimationTiming* timing = active_section_->get_animation()->get_timing();
-		if (speed != timing->get_interval() || pause != timing->get_pause()) {
-			run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), speed, pause));
+		if (new_timing != timing->get_interval() || pause != timing->get_pause()) {
+			run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), new_timing, pause));
 		}
 	}
 
