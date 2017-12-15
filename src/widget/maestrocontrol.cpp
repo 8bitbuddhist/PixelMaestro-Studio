@@ -955,8 +955,24 @@ namespace PixelMaestroStudio {
 					delete[] frames;
 				}
 				else if (active_section_->get_canvas()->get_type() == CanvasType::PaletteCanvas) {
-					// TODO: Copy PaletteCanvas contents
+					PaletteCanvas* canvas = static_cast<PaletteCanvas*>(active_section_->get_canvas());
+
+					// Create temporary frameset
+					Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+					uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
+					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+						frames[frame] = new uint8_t[frame_bounds.size()];
+					}
+					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
+
 					run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+
+					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
+
+					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+						delete[] frames[frame];
+					}
+					delete[] frames;
 				}
 			}
 			else {	// No Canvas set

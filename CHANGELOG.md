@@ -5,13 +5,14 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.11] - In Progress
 ### Added
-- Moved Maestro timing to the MaestroController. This should reduce resource usage and prevent outputs from falling out of sync with each other.
+- Moved Maestro timing to the MaestroController. This should reduce resource usage and keep screen outputs from falling out of sync with each other.
 - Animation Editor
+	- Added support for `PaletteCanvases`.
 	- Added a pause/resume button to the Show tab. This lets you stop and start the Maestro at any time.
 	- Added a relative time box to the Show tab. This shows the time elapsed since the last event that was ran.
 - Demos: Added sample Cue files for each demo. You can load these files in the Animation Editor.
 - Settings
-	- Added the ability to pause the Maestro when the Animation Editor opens.
+	- Added the ability to pause the Maestro when the Animation Editor first opens.
 	
 ### Changed
 - Moved Cuefile processing and Maestro initialization into MaestroController.

@@ -45,8 +45,6 @@ namespace PixelMaestroStudio {
 	 * @param target Target frameset.
 	 * @param target_x Target width.
 	 * @param target_y Target height.
-	 * @param copy_from_canvas If true, copy from the Canvas to the target. Otherwise, copy from the target to the Canvas.
-	 * @param maestro_control If copying to Canvas and serial is enabled, rebuild the Canvas on the serial device.
 	 */
 	void CanvasUtility::copy_from_canvas(ColorCanvas *canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y) {
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
@@ -62,6 +60,33 @@ namespace PixelMaestroStudio {
 	}
 
 	void CanvasUtility::copy_to_canvas(ColorCanvas *canvas, Colors::RGB **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
+			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
+		}
+	}
+
+	/**
+	 * Copies frames from a PaletteCanvas.
+	 * @param canvas PaletteCanvas to copy from.
+	 * @param target Target frameset.
+	 * @param target_x Target width.
+	 * @param target_y Target height.
+	 */
+	void CanvasUtility::copy_from_canvas(PaletteCanvas *canvas, uint8_t** target, uint16_t target_x, uint16_t target_y) {
+		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			Point target_bounds(target_x, target_y);
+			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+					if (x <= target_x && y <= target_y) {
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+					}
+				}
+			}
+		}
+	}
+
+	void CanvasUtility::copy_to_canvas(PaletteCanvas *canvas, uint8_t** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
 			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
@@ -91,7 +116,7 @@ namespace PixelMaestroStudio {
 			QImage frame = image.read();
 
 			// For PaletteCanvases, convert the image into an 8-bit analogue
-			// FIXME: This runs multiple times for animations when it should only run once
+			// WARNING: This runs multiple times for animated images when it should only run once
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
 				frame = frame.convertToFormat(QImage::Format_Indexed8);
 			}
