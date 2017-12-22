@@ -10,7 +10,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added support for `PaletteCanvases`.
 	- Added a pause/resume button to the Show tab. This lets you stop and start the Maestro at any time.
 	- Added a relative time box to the Show tab. This shows the time elapsed since the last event that was ran.
-- Demos: Added sample Cue files for each demo. You can load these files in the Animation Editor.
+- Demos
+	- Added sample Cue files for each demo. You can load these files in the Animation Editor.
 - Settings
 	- Added the ability to pause the Maestro when the Animation Editor first opens.
 	
