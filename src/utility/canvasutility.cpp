@@ -20,12 +20,14 @@ namespace PixelMaestroStudio {
 	 * @param target_y Target height.
 	 */
 	void CanvasUtility::copy_from_canvas(AnimationCanvas *canvas, bool** target, uint16_t target_x, uint16_t target_y) {
+		Point target_bounds(target_x, target_y);
+		Point canvas_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-			Point target_bounds(target_x, target_y);
-			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < canvas_bounds.y; y++) {
+				for (uint16_t x = 0; x < canvas_bounds.x; x++) {
 					if (x <= target_x && y <= target_y) {
-						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas_bounds.get_inline_index(x, y)];
 					}
 				}
 			}
@@ -34,8 +36,8 @@ namespace PixelMaestroStudio {
 
 	void CanvasUtility::copy_to_canvas(AnimationCanvas *canvas, bool **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
 			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
-			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 		}
 	}
 
@@ -47,12 +49,14 @@ namespace PixelMaestroStudio {
 	 * @param target_y Target height.
 	 */
 	void CanvasUtility::copy_from_canvas(ColorCanvas *canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y) {
+		Point target_bounds(target_x, target_y);
+		Point canvas_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-			Point target_bounds(target_x, target_y);
-			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < canvas_bounds.y; y++) {
+				for (uint16_t x = 0; x < canvas_bounds.x; x++) {
 					if (x <= target_x && y <= target_y) {
-						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas_bounds.get_inline_index(x, y)];
 					}
 				}
 			}
@@ -61,8 +65,8 @@ namespace PixelMaestroStudio {
 
 	void CanvasUtility::copy_to_canvas(ColorCanvas *canvas, Colors::RGB **source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
 			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
-			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
 		}
 	}
 
@@ -74,12 +78,14 @@ namespace PixelMaestroStudio {
 	 * @param target_y Target height.
 	 */
 	void CanvasUtility::copy_from_canvas(PaletteCanvas *canvas, uint8_t** target, uint16_t target_x, uint16_t target_y) {
+		Point target_bounds(target_x, target_y);
+		Point canvas_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-			Point target_bounds(target_x, target_y);
-			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < canvas_bounds.y; y++) {
+				for (uint16_t x = 0; x < canvas_bounds.x; x++) {
 					if (x <= target_x && y <= target_y) {
-						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas_bounds.get_inline_index(x, y)];
 					}
 				}
 			}
@@ -88,8 +94,15 @@ namespace PixelMaestroStudio {
 
 	void CanvasUtility::copy_to_canvas(PaletteCanvas *canvas, uint8_t** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
 			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
-			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
+		}
+	}
+
+	void CanvasUtility::copy_to_canvas(PaletteCanvas *canvas, T** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+			maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
+			maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
 		}
 	}
 

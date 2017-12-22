@@ -11,6 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
+DEFINES += BUILD_VERSION=\\\"v0.11\\\"
 
 SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \
@@ -69,7 +70,7 @@ SOURCES += src/main.cpp\
 	lib/PixelMaestro/src/core/timing/timing.cpp \
 	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
 	src/window/simpledrawingareadialog.cpp \
-    lib/PixelMaestro/src/canvas/palettecanvas.cpp
+	lib/PixelMaestro/src/canvas/palettecanvas.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -131,7 +132,7 @@ HEADERS += \
 	lib/PixelMaestro/src/core/timing/timing.h \
 	lib/PixelMaestro/src/core/timing/animationtiming.h \
 	src/window/simpledrawingareadialog.h \
-    lib/PixelMaestro/src/canvas/palettecanvas.h
+	lib/PixelMaestro/src/canvas/palettecanvas.h
 
 FORMS	+= \
 		src/widget/maestrocontrol.ui \

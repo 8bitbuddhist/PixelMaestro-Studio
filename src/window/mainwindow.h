@@ -39,7 +39,7 @@ namespace PixelMaestroStudio {
 			void on_action_Donate_triggered();
 
 		private:
-			MaestroController* controller_ = nullptr;
+			MaestroController* maestro_controller_ = nullptr;
 			QWidget* drawing_area_ = nullptr;
 			MaestroControl* maestro_control_ = nullptr;
 			QLayout* main_layout_ = nullptr;

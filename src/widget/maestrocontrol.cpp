@@ -791,11 +791,9 @@ namespace PixelMaestroStudio {
 			}
 
 			// Disable frame count spin box if necessary
-			if (!ui->toggleCanvasModeCheckBox->isChecked()) {
-				ui->currentFrameSpinBox->setEnabled(false);
-			}
-			else {
-				ui->currentFrameSpinBox->setEnabled(true);
+			if (ui->toggleCanvasModeCheckBox->isChecked()) {
+				ui->toggleCanvasModeCheckBox->setChecked(false);
+				on_toggleCanvasModeCheckBox_toggled(false);
 			}
 		}
 	}
@@ -906,10 +904,10 @@ namespace PixelMaestroStudio {
 			 * If one is set, copy its contents to a temporary buffer, then copy it back once the new Canvas is created.
 			 */
 			if (active_section_->get_canvas() != nullptr) {
+				Point frame_bounds(active_section_->get_dimensions()->x, active_section_->get_dimensions()->y);
 				if (active_section_->get_canvas()->get_type() == CanvasType::AnimationCanvas) {
 					AnimationCanvas* canvas = static_cast<AnimationCanvas*>(active_section_->get_canvas());
-					// Create temporary frameset
-					Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
 					bool** frames = new bool*[canvas->get_num_frames()];
 					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 						frames[frame] = new bool[frame_bounds.size()];
@@ -927,8 +925,7 @@ namespace PixelMaestroStudio {
 				}
 				else if (active_section_->get_canvas()->get_type() == CanvasType::ColorCanvas) {
 					ColorCanvas* canvas = static_cast<ColorCanvas*>(active_section_->get_canvas());
-					// Create temporary frameset
-					Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
 					Colors::RGB** frames = new Colors::RGB*[canvas->get_num_frames()];
 					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 						frames[frame] = new Colors::RGB[frame_bounds.size()];
@@ -947,8 +944,6 @@ namespace PixelMaestroStudio {
 				else if (active_section_->get_canvas()->get_type() == CanvasType::PaletteCanvas) {
 					PaletteCanvas* canvas = static_cast<PaletteCanvas*>(active_section_->get_canvas());
 
-					// Create temporary frameset
-					Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
 					uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
 					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 						frames[frame] = new uint8_t[frame_bounds.size()];
@@ -1261,7 +1256,7 @@ namespace PixelMaestroStudio {
 		else {
 			ui->canvasComboBox->setCurrentIndex(0);
 			ui->frameCountSpinBox->setValue(1);
-			ui->currentFrameSpinBox->setValue(1);
+			ui->currentFrameSpinBox->setValue(0);
 			ui->frameRateSpinBox->setValue(100);
 			set_canvas_controls_enabled(0);
 		}

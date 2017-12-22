@@ -9,6 +9,7 @@
 #include "drawingarea/canvasdrawingarea.h"
 #include "mainwindow.h"
 #include <memory>
+#include <QDate>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -30,7 +31,11 @@ namespace PixelMaestroStudio {
 	}
 
 	void MainWindow::on_action_About_triggered() {
-		QMessageBox::about(this, QString("PixelMaestro Studio"), QString("PixelMaestro v0.10\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
+		QMessageBox::about(this, QString("PixelMaestro Studio"), QString("PixelMaestro ") +
+						   QString(BUILD_VERSION) +
+						   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
+						   QString("\n\n© ") +
+						   QString::number(QDate::currentDate().year()));
 	}
 
 	void MainWindow::on_action_Exit_triggered() {
@@ -70,12 +75,12 @@ namespace PixelMaestroStudio {
 			delete maestro_control_;
 			maestro_control_ = nullptr;
 		}
-		if (controller_) {
-			delete controller_;
-			controller_ = nullptr;
+		if (maestro_controller_) {
+			delete maestro_controller_;
+			maestro_controller_ = nullptr;
 		}
 
-		controller_ = new MaestroController();
+		maestro_controller_ = new MaestroController();
 	}
 
 	void MainWindow::on_action_Donate_triggered() {
@@ -85,7 +90,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_action_Blink_Demo_triggered() {
 		reset_drawing_area();
 
-		drawing_area_ = new BlinkDemo(main_layout_->widget(), controller_);
+		drawing_area_ = new BlinkDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
 		ui->action_Blink_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
@@ -95,7 +100,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_action_Show_Demo_triggered() {
 		reset_drawing_area();
 
-		drawing_area_ = new ShowDemo(main_layout_->widget(), controller_);
+		drawing_area_ = new ShowDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
 		ui->action_Show_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
@@ -105,7 +110,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_action_Canvas_Demo_triggered() {
 		reset_drawing_area();
 
-		drawing_area_ = new CanvasDemo(main_layout_->widget(), controller_);
+		drawing_area_ = new CanvasDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
 
 		// Update UI
@@ -117,7 +122,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_actionCommand_Demo_triggered() {
 		reset_drawing_area();
 
-		drawing_area_ = new CueDemo(main_layout_->widget(), controller_);
+		drawing_area_ = new CueDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
 
 		// Update UI
@@ -141,7 +146,7 @@ namespace PixelMaestroStudio {
 			reset_drawing_area();
 		}
 
-		maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
+		maestro_control_ = new MaestroControl(main_layout_->widget(), maestro_controller_);
 
 		// Check to see if the Screen is enabled as	an output device
 		QSettings settings;
@@ -150,7 +155,7 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(device);
 			if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
 				settings.value(SettingsDialog::output_enabled).toInt() > 0) {
-				drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
+				drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), maestro_controller_);
 				main_layout_->addWidget(drawing_area_);
 			}
 		}
@@ -169,14 +174,14 @@ namespace PixelMaestroStudio {
 		reset_drawing_area();
 
 		// Initialize a new 50x50 drawing grid
-		Section* section = controller_->set_sections(1, Point(50, 50));
+		Section* section = maestro_controller_->set_sections(1, Point(50, 50));
 		Animation* animation = section->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
 		animation->set_reverse(true);
 		animation->set_timing(250);
 
 		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
 
-		drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
+		drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), maestro_controller_, canvas);
 		installEventFilter(drawing_area_);
 		main_layout_->addWidget(drawing_area_);
 		ui->actionDrawing_Demo->setEnabled(false);
@@ -187,7 +192,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 		reset_drawing_area();
 
-		drawing_area_ = new ColorCanvasDemo(main_layout_->widget(), controller_);
+		drawing_area_ = new ColorCanvasDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
 
 		// Update UI
@@ -205,7 +210,7 @@ namespace PixelMaestroStudio {
 		if (!filename.isEmpty()) {
 			// Read in the CueFile, then load the Animation Editor
 			reset_drawing_area();
-			controller_->load_cuefile(filename);
+			maestro_controller_->load_cuefile(filename);
 			on_action_Open_Animation_Editor_triggered(true);
 		}
 	}
@@ -221,6 +226,6 @@ namespace PixelMaestroStudio {
 			QDir::home().path(),
 			QString("PixelMaestro Cue File (*.pmc)"));
 
-		controller_->save_cuefile(filename);
+		maestro_controller_->save_cuefile(filename);
 	}
 }

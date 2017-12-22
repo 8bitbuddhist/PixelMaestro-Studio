@@ -585,7 +585,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-32</y>
+            <y>0</y>
             <width>554</width>
             <height>460</height>
            </rect>
@@ -787,7 +787,7 @@
            <item row="1" column="3">
             <widget class="QLabel" name="currentFrameLabel">
              <property name="text">
-              <string>Current Frame</string>
+              <string>Current Index</string>
              </property>
             </widget>
            </item>
@@ -908,10 +908,13 @@
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
              <property name="minimum">
-              <number>1</number>
+              <number>0</number>
              </property>
              <property name="maximum">
               <number>255</number>
+             </property>
+             <property name="value">
+              <number>0</number>
              </property>
             </widget>
            </item>
@@ -1468,6 +1471,13 @@
   <tabstop>target2YSpinBox</tabstop>
   <tabstop>fontComboBox</tabstop>
   <tabstop>textLineEdit</tabstop>
+  <tabstop>fillCheckBox</tabstop>
+  <tabstop>selectColorButton</tabstop>
+  <tabstop>canvasPaletteComboBox</tabstop>
+  <tabstop>canvasEditPaletteButton</tabstop>
+  <tabstop>canvasColorPickerScrollArea</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>drawButton</tabstop>
   <tabstop>showScrollArea</tabstop>
   <tabstop>enableShowCheckBox</tabstop>
   <tabstop>timingMethodComboBox</tabstop>
@@ -1475,6 +1485,7 @@
   <tabstop>loopCheckBox</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
   <tabstop>currentTimeLineEdit</tabstop>
+  <tabstop>relativeTimeLineEdit</tabstop>
   <tabstop>showPauseButton</tabstop>
   <tabstop>eventTimeSpinBox</tabstop>
   <tabstop>addEventButton</tabstop>
