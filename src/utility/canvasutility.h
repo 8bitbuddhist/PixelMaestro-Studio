@@ -19,12 +19,36 @@ using namespace PixelMaestro;
 namespace PixelMaestroStudio {
 	class CanvasUtility {
 		public:
-			static void copy_from_canvas(AnimationCanvas* canvas, bool** target, uint16_t target_x, uint16_t target_y);
-			static void copy_from_canvas(ColorCanvas* canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y);
-			static void copy_from_canvas(PaletteCanvas* canvas, uint8_t** target, uint16_t target_x, uint16_t target_y);
-			static void copy_to_canvas(AnimationCanvas* canvas, bool** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control);
-			static void copy_to_canvas(ColorCanvas* canvas, Colors::RGB** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control);
-			static void copy_to_canvas(PaletteCanvas* canvas, uint8_t** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control);
+			/**
+			 * Copies frames from a Canvas.
+			 * @param canvas Canvas to copy from.
+			 * @param target Target frameset.
+			 * @param target_x Target width.
+			 * @param target_y Target height.
+			 */
+			template <class CanvasT, class SourceT>
+			static void copy_from_canvas(CanvasT* canvas, SourceT** target, uint16_t target_x, uint16_t target_y) {
+				Point target_bounds(target_x, target_y);
+				Point canvas_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					for (uint16_t y = 0; y < canvas_bounds.y; y++) {
+						for (uint16_t x = 0; x < canvas_bounds.x; x++) {
+							if (x <= target_x && y <= target_y) {
+								target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas_bounds.get_inline_index(x, y)];
+							}
+						}
+					}
+				}
+			}
+
+			template <class CanvasT, class SourceT>
+			static void copy_to_canvas(CanvasT* canvas, SourceT** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
+					maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
+				}
+			}
 			static void load_image(QString filename, Canvas* canvas, MaestroControl* maestro_control = nullptr);
 	};
 }
