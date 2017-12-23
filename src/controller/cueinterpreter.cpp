@@ -85,7 +85,7 @@ namespace PixelMaestroStudio {
 	}
 
 	QString CueInterpreter::interpret_cue(uint8_t* cue) {
-		QString result = Handlers.at(cue[CueController::Byte::PayloadByte]) + QString("Handler, ");
+		QString result = Handlers.at(cue[CueController::Byte::PayloadByte]) + QString(", ");
 		// Delegate to the correct handler
 		switch ((CueController::Handler)cue[CueController::Byte::PayloadByte]) {
 			case CueController::Handler::AnimationHandler:

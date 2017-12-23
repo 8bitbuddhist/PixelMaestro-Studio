@@ -460,7 +460,7 @@
         <item row="0" column="1">
          <widget class="QComboBox" name="paddingComboBox">
           <property name="toolTip">
-           <string>Sets the size of each individual pixel</string>
+           <string>Sets the size of individual pixels rendered on screen</string>
           </property>
           <item>
            <property name="text">
@@ -494,7 +494,7 @@
         <item row="1" column="1">
          <widget class="QComboBox" name="pixelShapeComboBox">
           <property name="toolTip">
-           <string>Sets the shape of each individual pixel</string>
+           <string>Sets the shape of individual pixels rendered on screen</string>
           </property>
           <property name="currentText">
            <string>Circle</string>
@@ -521,7 +521,7 @@
         <item row="2" column="1">
          <widget class="QSpinBox" name="refreshSpinBox">
           <property name="toolTip">
-           <string>Sets the time between redraws (lower is faster)</string>
+           <string>Sets the interval between Maestro updates</string>
           </property>
           <property name="minimum">
            <number>10</number>
@@ -579,6 +579,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QListWidget" name="outputListWidget">
+          <property name="toolTip">
+           <string>Enables or disables output devices</string>
+          </property>
           <property name="showDropIndicator" stdset="0">
            <bool>false</bool>
           </property>

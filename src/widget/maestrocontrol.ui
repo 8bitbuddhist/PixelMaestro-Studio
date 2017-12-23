@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -871,7 +871,7 @@
            <item row="1" column="1">
             <widget class="QCheckBox" name="toggleCanvasModeCheckBox">
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>If enabled, frames will no longer switch automatically, allowing you to manually step through and edit individual frames</string>
              </property>
              <property name="text">
               <string/>
@@ -1071,7 +1071,7 @@
              <item row="1" column="1">
               <widget class="QCheckBox" name="toggleShowModeCheckBox">
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actions will no longer update the Maestro but will still be listed in the Event History&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>If enabled, actions will no longer update the Maestro but will still be listed in the Event History</string>
                </property>
                <property name="text">
                 <string/>

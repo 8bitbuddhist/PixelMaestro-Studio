@@ -366,18 +366,31 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Canvas type.
 	 */
 	void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
-		set_canvas_controls_enabled(index);
+		CanvasType::Type new_canvas_type = (CanvasType::Type)(index - 1);
+
+		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
+		if (active_section_->get_canvas() && active_section_->get_canvas()->get_type() != new_canvas_type) {
+			QMessageBox::StandardButton confirm;
+			confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			if (confirm != QMessageBox::Yes) {
+				ui->canvasComboBox->blockSignals(true);
+				ui->canvasComboBox->setCurrentIndex((int)active_section_->get_canvas()->get_type() + 1);
+				ui->canvasComboBox->blockSignals(false);
+				return;
+			}
+		}
 
 		// Add the new Canvas
+		set_canvas_controls_enabled(index);
 		if (index > 0) {
-			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), (CanvasType::Type)(index - 1)));
+			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), new_canvas_type));
 
 			// Default to the circle radio button so that the controls can be refreshed
 			ui->circleRadioButton->setChecked(true);
 			on_circleRadioButton_toggled(true);
 
 			// Select a palette
-			if ((CanvasType::Type)(index - 1) == CanvasType::PaletteCanvas) {
+			if (new_canvas_type == CanvasType::PaletteCanvas) {
 				on_canvasPaletteComboBox_currentIndexChanged(0);
 			}
 		}
@@ -458,7 +471,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControl::on_clearButton_clicked() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Clear Canvas Frame", "This action will clear the current Canvas frame. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
 			run_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
 		}
