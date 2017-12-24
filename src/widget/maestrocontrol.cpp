@@ -808,6 +808,18 @@ namespace PixelMaestroStudio {
 				ui->toggleCanvasModeCheckBox->setChecked(false);
 				on_toggleCanvasModeCheckBox_toggled(false);
 			}
+
+			// If PaletteCanvas, add Palette to list
+			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+				QString name = "Section " + QString::number(get_section_index() + 1) +
+							   " Layer " + QString::number(get_layer_index()) +
+							   " Canvas";
+				palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_num_colors());
+				ui->canvasPaletteComboBox->blockSignals(true);
+				ui->canvasPaletteComboBox->addItem(name);
+				ui->canvasPaletteComboBox->blockSignals(false);
+				ui->canvasPaletteComboBox->setCurrentText(name);
+			}
 		}
 	}
 

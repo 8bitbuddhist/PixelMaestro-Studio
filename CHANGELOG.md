@@ -3,7 +3,12 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.11] - In Progress
+## [v0.12] - In Progress
+### Changed
+- Animation Editor
+	- Loading an image into a PaletteCanvas now adds the palette to the palette drop-down.
+
+## [v0.11] - 2017-12-23
 ### Added
 - Moved Maestro timing to the MaestroController. This should reduce resource usage and keep screen outputs from falling out of sync with each other.
 - Animation Editor

@@ -42,7 +42,7 @@ namespace PixelMaestroStudio {
 
 			// Extract the image's color table (for PaletteCanvases)
 			QVector<QRgb> color_table = frame.colorTable();
-			if (color_table.size() == 256) {
+			while (color_table.size() >= 256) {
 				color_table.removeLast();
 			}
 
