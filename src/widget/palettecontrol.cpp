@@ -58,7 +58,7 @@ namespace PixelMaestroStudio {
 	/// Updates the target color.
 	void PaletteControl::on_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
-		Colors::RGB* source_color = &active_palette_->colors.at(sender->objectName().toInt());
+		Colors::RGB* source_color = &active_palette_->colors[sender->objectName().toInt()];
 		QColor new_color = QColorDialog::getColor(QColor(source_color->r, source_color->g, source_color->b), this, "Select Color");
 		source_color->r = new_color.red();
 		source_color->g = new_color.green();

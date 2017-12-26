@@ -3,7 +3,7 @@
 
 #include "core/colors.h"
 #include <QString>
-#include <string>
+#include <QVector>
 #include <vector>
 
 using namespace PixelMaestro;
@@ -13,12 +13,12 @@ namespace PixelMaestroStudio {
 		public:
 			struct Palette {
 				QString name = "";
-				std::vector<Colors::RGB> colors;
+				QVector<Colors::RGB> colors;
 
 				bool operator==(Colors::RGB* section_colors) {
 					bool matches = true;
 					for (uint8_t i = 0; i < this->colors.size(); i++) {
-						if (this->colors.at(i) != section_colors[i]) {
+						if (this->colors[i] != section_colors[i]) {
 							matches = false;
 						}
 					}

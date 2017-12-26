@@ -131,6 +131,10 @@ namespace PixelMaestroStudio {
 		statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
 	}
 
+	/**
+	 * Opens a new Animation Editor instance.
+	 * @param keep_current_open If true, uses the existing DrawingArea insteado of creating a new one. This is needed when reading Cuefiles.
+	 */
 	void MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
 
 		// If Animation Editor is currently open, verify user wants to close
