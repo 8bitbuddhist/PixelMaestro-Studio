@@ -43,7 +43,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void MainWindow::on_action_Online_Help_triggered() {
-		QDesktopServices::openUrl(QUrl("https://github.com/Anewman2/PixelMaestro/wiki", QUrl::TolerantMode));
+		QDesktopServices::openUrl(QUrl("https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki", QUrl::TolerantMode));
 	}
 
 	void MainWindow::reset_drawing_area() {

@@ -26,6 +26,7 @@
 #include "widget/palettecontrol.h"
 #include "ui_maestrocontrol.h"
 #include "utility/canvasutility.h"
+#include "utility.h"
 
 namespace PixelMaestroStudio {
 	/**
@@ -1162,8 +1163,11 @@ namespace PixelMaestroStudio {
 		if (section->get_scroll() != nullptr) {
 			ui->scrollXSpinBox->blockSignals(true);
 			ui->scrollYSpinBox->blockSignals(true);
-			ui->scrollXSpinBox->setValue(section->get_scroll()->interval_x);
-			ui->scrollYSpinBox->setValue(section->get_scroll()->interval_y);
+
+			// When getting the scroll value, invert if < 0
+			ui->scrollXSpinBox->setValue(section->get_scroll()->step_x * (section->get_scroll()->step_x < 0 ? -1 : 1));
+			ui->scrollYSpinBox->setValue(section->get_scroll()->step_y * (section->get_scroll()->step_y < 0 ? -1 : 1));
+
 			ui->scrollXSpinBox->blockSignals(false);
 			ui->scrollYSpinBox->blockSignals(false);
 		}
@@ -1487,16 +1491,9 @@ namespace PixelMaestroStudio {
 	 * Sets the Canvas' scrolling behavior.
 	 */
 	void MaestroControl::set_scroll() {
-		// Only update if the scroll doesn't exist, or the scroll does exist and its values don't match the new values
 		int new_x = ui->scrollXSpinBox->value();
 		int new_y = ui->scrollYSpinBox->value();
-		Section::Scroll* scroll = active_section_->get_scroll();
-		if (scroll == nullptr ||
-			(scroll != nullptr &&
-			(scroll->interval_x != new_x ||
-			 scroll->interval_y != new_y))) {
-			run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), new_x, new_y));
-		}
+		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), new_x < 0, new_y < 0));
 
 		// Enable/disable offset controls
 		if (new_x != 0 || new_y != 0) {

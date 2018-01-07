@@ -11,7 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.11\\\"
+DEFINES += BUILD_VERSION=\\\"v0.12\\\"
 
 SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \

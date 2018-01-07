@@ -241,7 +241,7 @@ namespace PixelMaestroStudio {
 		// Scrolling and offset
 		write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
 		if (section->get_scroll()) {
-			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y));
+			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->step_x, section->get_scroll()->step_y));
 		}
 
 		// Save Canvas settings
