@@ -1160,17 +1160,42 @@ namespace PixelMaestroStudio {
 		ui->offsetYSpinBox->setValue(section->get_offset()->y);
 		ui->offsetXSpinBox->blockSignals(false);
 		ui->offsetYSpinBox->blockSignals(false);
+		ui->scrollXSpinBox->blockSignals(true);
+		ui->scrollYSpinBox->blockSignals(true);
+		int32_t interval_x = 0;
+		int32_t interval_y = 0;
 		if (section->get_scroll() != nullptr) {
-			ui->scrollXSpinBox->blockSignals(true);
-			ui->scrollYSpinBox->blockSignals(true);
+			Section::Scroll* scroll = section->get_scroll();
+			uint16_t refresh = maestro_controller_->get_maestro()->get_timing()->get_interval();
+			// x axis
+			if (scroll->timing_x != nullptr) {
+				float x = refresh / (float)scroll->timing_x->get_interval();
+				interval_x = (section->get_dimensions()->x * refresh) / x;
+			}
+			else {
+				if (scroll->step_x > 0) {
+					interval_x = (section->get_dimensions()->x * refresh) / (float)scroll->step_x;
+				}
+			}
+			if (scroll->reverse_x) interval_x *= -1;
 
-			// When getting the scroll value, invert if < 0
-			ui->scrollXSpinBox->setValue(section->get_scroll()->step_x * (section->get_scroll()->step_x < 0 ? -1 : 1));
-			ui->scrollYSpinBox->setValue(section->get_scroll()->step_y * (section->get_scroll()->step_y < 0 ? -1 : 1));
-
-			ui->scrollXSpinBox->blockSignals(false);
-			ui->scrollYSpinBox->blockSignals(false);
+			// y axis
+			if (scroll->timing_y != nullptr) {
+				float y = refresh / (float)scroll->timing_y->get_interval();
+				interval_y = (section->get_dimensions()->y * refresh) / y;
+			}
+			else {
+				if (scroll->step_y > 0) {
+					interval_y = (section->get_dimensions()->y * refresh) / (float)scroll->step_y;
+				}
+			}
+			if (scroll->reverse_y) interval_y *= -1;
 		}
+		ui->scrollXSpinBox->setValue(interval_x);
+		ui->scrollYSpinBox->setValue(interval_y);
+
+		ui->scrollXSpinBox->blockSignals(false);
+		ui->scrollYSpinBox->blockSignals(false);
 
 		// Get Layer settings
 		if (section->get_layer()) {
@@ -1493,7 +1518,7 @@ namespace PixelMaestroStudio {
 	void MaestroControl::set_scroll() {
 		int new_x = ui->scrollXSpinBox->value();
 		int new_y = ui->scrollYSpinBox->value();
-		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), new_x < 0, new_y < 0));
+		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), (new_x < 0), (new_y < 0)));
 
 		// Enable/disable offset controls
 		if (new_x != 0 || new_y != 0) {

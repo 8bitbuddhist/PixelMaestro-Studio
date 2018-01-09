@@ -18,6 +18,7 @@
 #include "settingsdialog.h"
 #include "ui_mainwindow.h"
 
+// TODO: Run MaestroController on a separate thread
 namespace PixelMaestroStudio {
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
