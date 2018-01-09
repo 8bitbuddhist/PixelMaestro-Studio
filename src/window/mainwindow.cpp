@@ -18,7 +18,6 @@
 #include "settingsdialog.h"
 #include "ui_mainwindow.h"
 
-// TODO: Run MaestroController on a separate thread
 namespace PixelMaestroStudio {
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
@@ -93,6 +92,8 @@ namespace PixelMaestroStudio {
 
 		drawing_area_ = new BlinkDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
+
 		ui->action_Blink_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates a simple Blink animation"));
@@ -103,6 +104,8 @@ namespace PixelMaestroStudio {
 
 		drawing_area_ = new ShowDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
+
 		ui->action_Show_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates using a Show to queue actions"));
@@ -113,8 +116,8 @@ namespace PixelMaestroStudio {
 
 		drawing_area_ = new CanvasDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
 
-		// Update UI
 		ui->action_Canvas_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates drawing shapes on a Canvas"));
@@ -125,8 +128,8 @@ namespace PixelMaestroStudio {
 
 		drawing_area_ = new CueDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
 
-		// Update UI
 		ui->actionCommand_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
@@ -166,6 +169,7 @@ namespace PixelMaestroStudio {
 		}
 
 		main_layout_->addWidget(maestro_control_);
+		maestro_controller_->start();
 
 		ui->action_Close_Workspace->setEnabled(true);
 		ui->action_Save_Maestro->setEnabled(true);
@@ -189,6 +193,8 @@ namespace PixelMaestroStudio {
 		drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), maestro_controller_, canvas);
 		installEventFilter(drawing_area_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
+
 		ui->actionDrawing_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates an interactive Canvas. Use left-click to draw, right-click to erase, and Delete to clear"));
@@ -199,8 +205,8 @@ namespace PixelMaestroStudio {
 
 		drawing_area_ = new ColorCanvasDemo(main_layout_->widget(), maestro_controller_);
 		main_layout_->addWidget(drawing_area_);
+		maestro_controller_->start();
 
-		// Update UI
 		ui->action_Color_Canvas_Demo->setEnabled(false);
 		ui->action_Close_Workspace->setEnabled(true);
 		statusBar()->addWidget(new QLabel("Demonstrates a Color Canvas"));

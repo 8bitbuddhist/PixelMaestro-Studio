@@ -45,13 +45,10 @@ namespace PixelMaestroStudio {
 		timer_.setTimerType(Qt::PreciseTimer);
 		/*
 		 * Set timer's refresh rate to the user's settings.
-		 * If we can't load the configured refresh rate, default to 40 (25fps)
+		 * If we can't load the configured refresh rate, default to 50 (20fps)
 		 */
-		int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(40)).toInt();
-
-		// Start timers
-		timer_.start(refresh);
-		elapsed_timer_.start();
+		int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(50)).toInt();
+		maestro_->set_timing(refresh);
 
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
@@ -309,7 +306,7 @@ namespace PixelMaestroStudio {
 
 	void MaestroController::start() {
 		elapsed_timer_.restart();
-		timer_.start();
+		timer_.start(this->maestro_->get_timing()->get_interval());
 	}
 
 	void MaestroController::stop() {

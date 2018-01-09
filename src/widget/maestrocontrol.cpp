@@ -842,7 +842,6 @@ namespace PixelMaestroStudio {
 		PaletteControl palette_control(&palette_controller_, palette_name);
 		palette_control.exec();
 		initialize_palettes();
-		ui->colorComboBox->setCurrentText(palette_name);
 	}
 
 	/**
