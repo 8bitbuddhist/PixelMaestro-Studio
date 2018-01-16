@@ -28,6 +28,9 @@ namespace PixelMaestroStudio {
 			explicit SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
 			~SimpleDrawingAreaDialog();
 
+		protected:
+			bool eventFilter(QObject *watched, QEvent *event);
+
 		private:
 			Ui::SimpleDrawingAreaDialog *ui;
 			MaestroController* maestro_controller_;
