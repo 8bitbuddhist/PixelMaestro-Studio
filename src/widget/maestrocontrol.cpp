@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QModelIndex>
+#include <QKeyEvent>
 #include <QSettings>
 #include <QString>
 #include "animation/lightninganimation.h"
@@ -35,6 +36,9 @@ namespace PixelMaestroStudio {
 	 * @param maestro_controller The MaestroController being controlled.
 	 */
 	MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl) {
+		// Capture button key presses
+		qApp->installEventFilter(this);
+
 		ui->setupUi(this);
 
 		this->maestro_controller_ = maestro_controller;
@@ -120,6 +124,27 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControl::enable_show_edit_mode(bool enable) {
 		show_mode_enabled_ = enable;
+	}
+
+	/**
+	 * Handle keypress events.
+	 * @param watched Object that the keypress occurred in.
+	 * @param event Keypress event.
+	 * @return True on success.
+	 */
+	bool MaestroControl::eventFilter(QObject *watched, QEvent *event) {
+		if (event->type() == QEvent::KeyPress) {
+			// Handle delete key where 'watched' == EventList widget
+			if (watched == ui->eventListWidget) {
+				QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+				if (key_event->key() == Qt::Key_Delete) {
+					on_removeEventButton_clicked();
+					return true;
+				}
+			}
+		}
+
+		return QObject::eventFilter(watched, event);
 	}
 
 	/**
@@ -316,6 +341,8 @@ namespace PixelMaestroStudio {
 	 * Adds the selected Event(s) to the Show's Event list.
 	 */
 	void MaestroControl::on_addEventButton_clicked() {
+		// TODO: Allow moving Events up and down in list
+
 		// Add selected Cues to the Show
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
@@ -675,6 +702,32 @@ namespace PixelMaestroStudio {
 			else {
 				ui->alphaSpinBox->setEnabled(false);
 			}
+		}
+	}
+
+	/// Moves the selected Show Event down by one.
+	void MaestroControl::on_moveEventDownButton_clicked() {
+		int current_row = ui->eventListWidget->currentRow();
+
+		if (current_row != ui->eventListWidget->count() - 1) {
+			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
+			ui->eventListWidget->insertItem(current_row + 1, current_item);
+
+			show_controller_->get_events().move(current_row, current_row + 1);
+			show_controller_->initialize_events();
+		}
+	}
+
+	/// Moves the selected Show Event up by one.
+	void MaestroControl::on_moveEventUpButton_clicked() {
+		int current_row = ui->eventListWidget->currentRow();
+
+		if (current_row != 0) {
+			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
+			ui->eventListWidget->insertItem(current_row - 1, current_item);
+
+			show_controller_->get_events().move(current_row, current_row - 1);
+			show_controller_->initialize_events();
 		}
 	}
 
@@ -1558,6 +1611,8 @@ namespace PixelMaestroStudio {
 		ui->eventTimeSpinBox->setEnabled(enabled);
 		ui->addEventButton->setEnabled(enabled);
 		ui->removeEventButton->setEnabled(enabled);
+		ui->moveEventDownButton->setEnabled(enabled);
+		ui->moveEventUpButton->setEnabled(enabled);
 		ui->loopLabel->setEnabled(enabled);
 		ui->loopCheckBox->setEnabled(enabled);
 		ui->relativeTimeLabel->setEnabled(enabled);
@@ -1630,7 +1685,8 @@ namespace PixelMaestroStudio {
 	 * Renders the Maestro's last update time in currentTimeLineEdit.
 	 */
 	void MaestroControl::update_maestro_last_time() {
-		ui->currentTimeLineEdit->setText(locale_.toString((uint)maestro_controller_->get_total_elapsed_time()));
+		uint last_time = (uint)maestro_controller_->get_total_elapsed_time();
+		ui->currentTimeLineEdit->setText(locale_.toString(last_time));
 
 		int current_index = maestro_controller_->get_show()->get_current_index();
 

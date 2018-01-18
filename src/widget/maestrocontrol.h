@@ -62,6 +62,9 @@ namespace PixelMaestroStudio {
 			uint8_t get_section_index(Section* section);
 			void run_cue(uint8_t* cue);
 
+		protected:
+			bool eventFilter(QObject *watched, QEvent *event);
+
 		private:
 			Ui::MaestroControl *ui;
 
@@ -182,6 +185,8 @@ namespace PixelMaestroStudio {
 			void on_showPauseButton_clicked();
 			void on_canvasEditPaletteButton_clicked();
 			void on_canvasPaletteComboBox_currentIndexChanged(int index);
+			void on_moveEventUpButton_clicked();
+			void on_moveEventDownButton_clicked();
 	};
 }
 

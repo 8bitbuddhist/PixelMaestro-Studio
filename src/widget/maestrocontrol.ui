@@ -1051,7 +1051,7 @@
             <x>0</x>
             <y>0</y>
             <width>675</width>
-            <height>453</height>
+            <height>521</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -1407,6 +1407,20 @@
                  </property>
                  <property name="text">
                   <string>Remove &lt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="moveEventUpButton">
+                 <property name="text">
+                  <string>Move Up ^</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="moveEventDownButton">
+                 <property name="text">
+                  <string>Move Down v</string>
                  </property>
                 </widget>
                </item>
