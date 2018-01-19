@@ -317,6 +317,10 @@ namespace PixelMaestroStudio {
 		// Finally, show the default Section
 		set_active_section(section);
 		populate_layer_combobox();
+
+		// FIXME: Disable Event reordering due to SIGSEGV in ShowController.
+		ui->moveEventDownButton->setVisible(false);
+		ui->moveEventUpButton->setVisible(false);
 	}
 
 	/// Reinitializes Palettes from the Palette Dialog.
@@ -341,8 +345,6 @@ namespace PixelMaestroStudio {
 	 * Adds the selected Event(s) to the Show's Event list.
 	 */
 	void MaestroControl::on_addEventButton_clicked() {
-		// TODO: Allow moving Events up and down in list
-
 		// Add selected Cues to the Show
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
