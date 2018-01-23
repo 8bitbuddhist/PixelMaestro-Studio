@@ -6,11 +6,11 @@
 #include <QSettings>
 
 namespace Ui {
-	class SettingsDialog;
+	class PreferencesDialog;
 }
 
 namespace PixelMaestroStudio {
-	class SettingsDialog : public QDialog {
+	class PreferencesDialog : public QDialog {
 			Q_OBJECT
 
 		public:
@@ -27,15 +27,15 @@ namespace PixelMaestroStudio {
 			static QString serial_port;
 			static QString detached_window_option;
 
-			explicit SettingsDialog(QWidget *parent = 0);
-			~SettingsDialog();
+			explicit PreferencesDialog(QWidget *parent = 0);
+			~PreferencesDialog();
 
 		private slots:
 			void on_buttonBox_accepted();
 
 		private:
 			QSettings settings_;
-			Ui::SettingsDialog *ui;
+			Ui::PreferencesDialog *ui;
 	};
 }
 

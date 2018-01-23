@@ -1,24 +1,24 @@
 #include <QSerialPortInfo>
 #include <QSettings>
-#include "settingsdialog.h"
-#include "ui_settingsdialog.h"
+#include "preferencesdialog.h"
+#include "ui_preferencesdialog.h"
 
 namespace PixelMaestroStudio {
 	// Initialize strings
-	QString SettingsDialog::detached_window_option = QStringLiteral("Detached window");
-	QString SettingsDialog::main_window_option = QStringLiteral("Main window");
-	QString SettingsDialog::num_sections = QStringLiteral("maestro/num_sections");
-	QString SettingsDialog::pause_on_start = QStringLiteral("interface/pauseonstart");
-	QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
-	QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
-	QString SettingsDialog::output_devices = QStringLiteral("serial/outputs");
-	QString SettingsDialog::output_enabled = QStringLiteral("enabled");
-	QString SettingsDialog::output_name = QStringLiteral("port");
-	QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
-	QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
-	QString SettingsDialog::serial_port = QStringLiteral("serial/port");
+	QString PreferencesDialog::detached_window_option = QStringLiteral("Detached window");
+	QString PreferencesDialog::main_window_option = QStringLiteral("Main window");
+	QString PreferencesDialog::num_sections = QStringLiteral("maestro/num_sections");
+	QString PreferencesDialog::pause_on_start = QStringLiteral("interface/pauseonstart");
+	QString PreferencesDialog::pixel_padding = QStringLiteral("interface/padding");
+	QString PreferencesDialog::pixel_shape = QStringLiteral("interface/shape");
+	QString PreferencesDialog::output_devices = QStringLiteral("serial/outputs");
+	QString PreferencesDialog::output_enabled = QStringLiteral("enabled");
+	QString PreferencesDialog::output_name = QStringLiteral("port");
+	QString PreferencesDialog::refresh_rate = QStringLiteral("maestro/refresh");
+	QString PreferencesDialog::serial_enabled = QStringLiteral("serial/enabled");
+	QString PreferencesDialog::serial_port = QStringLiteral("serial/port");
 
-	SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SettingsDialog) {
+	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 		ui->setupUi(this);
 
 		// Interface settings
@@ -67,7 +67,7 @@ namespace PixelMaestroStudio {
 		settings_.endArray();
 	}
 
-	void SettingsDialog::on_buttonBox_accepted() {
+	void PreferencesDialog::on_buttonBox_accepted() {
 		// Save Maestro settings
 		settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
 		settings_.setValue(num_sections, ui->numSectionsSpinBox->value());
@@ -88,7 +88,7 @@ namespace PixelMaestroStudio {
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 	}
 
-	SettingsDialog::~SettingsDialog() {
+	PreferencesDialog::~PreferencesDialog() {
 		delete ui;
 	}
 }

@@ -15,7 +15,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QUrl>
-#include "settingsdialog.h"
+#include "preferencesdialog.h"
 #include "ui_mainwindow.h"
 
 namespace PixelMaestroStudio {
@@ -158,11 +158,11 @@ namespace PixelMaestroStudio {
 
 		// Check to see if the Screen is enabled as	an output device
 		QSettings settings;
-		int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
+		int serial_count = settings.beginReadArray(PreferencesDialog::output_devices);
 		for (int device = 0; device < serial_count; device++) {
 			settings.setArrayIndex(device);
-			if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
-				settings.value(SettingsDialog::output_enabled).toInt() > 0) {
+			if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
+				settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
 				drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), maestro_controller_);
 				main_layout_->addWidget(drawing_area_);
 			}
@@ -227,8 +227,8 @@ namespace PixelMaestroStudio {
 	}
 
 	void MainWindow::on_action_Preferences_triggered() {
-		SettingsDialog settings;
-		settings.exec();
+		PreferencesDialog preferences;
+		preferences.exec();
 	}
 
 	void MainWindow::on_action_Save_Maestro_triggered() {

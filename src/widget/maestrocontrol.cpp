@@ -23,7 +23,7 @@
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
 #include "maestrocontrol.h"
-#include "window/settingsdialog.h"
+#include "window/preferencesdialog.h"
 #include "widget/palettecontrol.h"
 #include "ui_maestrocontrol.h"
 #include "utility/canvasutility.h"
@@ -46,14 +46,14 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 
 		// Open serial connections to output devices
-		int serial_count = settings.beginReadArray(SettingsDialog::output_devices);
+		int serial_count = settings.beginReadArray(PreferencesDialog::output_devices);
 		for (int device = 0; device < serial_count; device++) {
 			settings.setArrayIndex(device);
-			if (settings.value(SettingsDialog::output_enabled).toInt() > 0) {
+			if (settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
 				// Detect and skip over the screen
-				if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::main_window_option, Qt::CaseInsensitive) == 0) { }
+				if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0) { }
 				// Detect and initialize the simulated serial device
-				else if (settings.value(SettingsDialog::output_name).toString().compare(SettingsDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
+				else if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
 					drawing_area_dialog_ = std::unique_ptr<SimpleDrawingAreaDialog>(new SimpleDrawingAreaDialog(this, this->maestro_controller_));
 					drawing_area_dialog_.get()->show();
 				}
@@ -61,7 +61,7 @@ namespace PixelMaestroStudio {
 				else {
 					// Initialize the serial device
 					QSharedPointer<QSerialPort> serial_device(new QSerialPort());
-					serial_device->setPortName(settings.value(SettingsDialog::output_name).toString());
+					serial_device->setPortName(settings.value(PreferencesDialog::output_name).toString());
 					serial_device->setBaudRate(9600);
 
 					// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
@@ -87,7 +87,7 @@ namespace PixelMaestroStudio {
 		show_handler = static_cast<ShowCueHandler*>(cue_controller_->get_handler(CueController::Handler::ShowHandler));
 
 		// Check to see if we need to pause the Maestro
-		if (settings.value(SettingsDialog::pause_on_start, false).toBool()) {
+		if (settings.value(PreferencesDialog::pause_on_start, false).toBool()) {
 			on_showPauseButton_clicked();
 		}
 

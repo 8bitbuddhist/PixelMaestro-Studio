@@ -57,7 +57,7 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/canvascuehandler.cpp \
 		lib/PixelMaestro/src/cue/maestrocuehandler.cpp \
 		lib/PixelMaestro/src/cue/sectioncuehandler.cpp \
-		src/window/settingsdialog.cpp \
+		src/window/preferencesdialog.cpp \
 		src/widget/animation/radialanimationcontrol.cpp \
 		src/controller/palettecontroller.cpp \
 		src/widget/palettecontrol.cpp \
@@ -120,7 +120,7 @@ HEADERS += \
 		lib/PixelMaestro/src/cue/maestrocuehandler.h \
 		lib/PixelMaestro/src/cue/sectioncuehandler.h \
 		lib/PixelMaestro/src/animation/animationtype.h \
-		src/window/settingsdialog.h \
+		src/window/preferencesdialog.h \
 		src/widget/animation/radialanimationcontrol.h \
 		src/controller/palettecontroller.h \
 		src/widget/palettecontrol.h \
@@ -140,7 +140,7 @@ FORMS	+= \
 		src/widget/animation/lightninganimationcontrol.ui \
 		src/widget/animation/plasmaanimationcontrol.ui \
 		src/widget/animation/sparkleanimationcontrol.ui \
-		src/window/settingsdialog.ui \
+		src/window/preferencesdialog.ui \
 		src/widget/animation/radialanimationcontrol.ui \
 		src/widget/palettecontrol.ui \
 	src/window/simpledrawingareadialog.ui

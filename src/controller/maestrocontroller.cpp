@@ -19,7 +19,7 @@
 #include <QByteArray>
 #include <QFile>
 #include <QSettings>
-#include "window/settingsdialog.h"
+#include "window/preferencesdialog.h"
 
 using namespace PixelMaestro;
 
@@ -31,7 +31,7 @@ namespace PixelMaestroStudio {
 		// Initalize the Maestro. Add the number of Sections specified in the options.
 		maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
 		QSettings settings;
-		set_sections(settings.value(SettingsDialog::num_sections, 1).toInt());
+		set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
 
 		// Enable the Maestro's CueController
 		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 		 * Set timer's refresh rate to the user's settings.
 		 * If we can't load the configured refresh rate, default to 50 (20fps)
 		 */
-		int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(50)).toInt();
+		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
 		maestro_->set_timing(refresh);
 
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));

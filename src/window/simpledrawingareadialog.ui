@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>325</width>
     <height>300</height>
    </rect>
   </property>
@@ -428,10 +428,19 @@
   <property name="windowTitle">
    <string>PixelMaestro Studio - Detached Window</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="maestroLayout"/>
-   </item>
+  <layout class="QGridLayout" name="maestroLayout">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
   </layout>
  </widget>
  <resources/>

@@ -1,5 +1,5 @@
 #include "controller/maestrocontroller.h"
-#include "window/settingsdialog.h"
+#include "window/preferencesdialog.h"
 #include "maestrodrawingarea.h"
 #include "simpledrawingarea.h"
 #include <QPainter>
@@ -44,7 +44,7 @@ namespace PixelMaestroStudio {
 				 * Determine which shape to draw.
 				 * If none is set, default to "Square"
 				 */
-				switch (settings_.value(SettingsDialog::pixel_shape, 1).toInt()) {
+				switch (settings_.value(PreferencesDialog::pixel_shape, 1).toInt()) {
 					case 0:	// Circle
 						painter->drawEllipse(tmp_rect_);
 						break;
@@ -126,7 +126,7 @@ namespace PixelMaestroStudio {
 		pad_ = radius_;
 
 		// Finally, calculate the radius using the Settings dialog
-		switch (settings_.value(SettingsDialog::pixel_padding).toInt()) {
+		switch (settings_.value(PreferencesDialog::pixel_padding).toInt()) {
 			case 1:	// Small
 				radius_ *= 0.8;
 				break;
