@@ -3,10 +3,13 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.12] - In Progress
+## [v0.12] - 2018-01-22
 ### Changed
-- Animation Editor
+- Animation Editor:
 	- Loading an image into a PaletteCanvas now adds the palette to the palette drop-down.
+- MaestroController: Changed default refresh rate to 50ms.
+- SimpleDrawingAreaDialog: Added fullscreen toggle.
+- Renamed `Settings` to `Preferences`.
 
 ## [v0.11] - 2017-12-23
 ### Added
@@ -19,12 +22,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added sample Cue files for each demo. You can load these files in the Animation Editor.
 - Settings
 	- Added the ability to pause the Maestro when the Animation Editor first opens.
-	
+
 ### Changed
 - Moved Cuefile processing and Maestro initialization into MaestroController.
 - Animation Editor
 	- Show tab: Renamed "Current Time" to "Absolute Time".
-	
+
 ### Changed
 - Animation Editor: Removed alert when a saved USB device is no longer connected. The device now appears greyed out on the Settings page.
 
@@ -44,7 +47,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added timing method combo box.
 	- Simplified Event History selection.
 	- Events that have already run will now appear grayed out.
-	
+
 ### Removed
 - Removed device simulator.
 - Removed Animated Canvas demo.
