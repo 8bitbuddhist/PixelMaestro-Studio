@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "../controller/maestrocontroller.h"
-#include "../widget/maestrocontrol.h"
+#include "../widget/maestrocontrolwidget.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -41,7 +41,7 @@ namespace PixelMaestroStudio {
 		private:
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* drawing_area_ = nullptr;
-			MaestroControl* maestro_control_ = nullptr;
+			MaestroControlWidget* maestro_control_ = nullptr;
 			QLayout* main_layout_ = nullptr;
 			Ui::MainWindow* ui;
 

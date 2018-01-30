@@ -2,8 +2,8 @@
  * MaestroControl - Widget for interacting with a MaestroController.
  */
 
-#ifndef MAESTROCONTROL_H
-#define MAESTROCONTROL_H
+#ifndef MAESTROCONTROLWIDGET_H
+#define MAESTROCONTROLWIDGET_H
 
 #include <memory>
 #include <QButtonGroup>
@@ -28,13 +28,13 @@
 #include "window/simpledrawingareadialog.h"
 
 namespace Ui {
-	class MaestroControl;
+	class MaestroControlWidget;
 }
 
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
-	class MaestroControl : public QWidget {
+	class MaestroControlWidget : public QWidget {
 		Q_OBJECT
 
 		public:
@@ -53,8 +53,8 @@ namespace PixelMaestroStudio {
 			SectionCueHandler* section_handler = nullptr;
 			ShowCueHandler* show_handler = nullptr;
 
-			explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
-			~MaestroControl();
+			explicit MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller);
+			~MaestroControlWidget();
 			void enable_show_edit_mode(bool enable);
 			int16_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
@@ -66,7 +66,7 @@ namespace PixelMaestroStudio {
 			bool eventFilter(QObject *watched, QEvent *event);
 
 		private:
-			Ui::MaestroControl *ui;
+			Ui::MaestroControlWidget *ui;
 
 			/// Extra animation controls
 			std::unique_ptr<QWidget> animation_extra_control_widget_;
@@ -190,4 +190,4 @@ namespace PixelMaestroStudio {
 	};
 }
 
-#endif // MAESTROCONTROL_H
+#endif // MAESTROCONTROLWIDGET_H

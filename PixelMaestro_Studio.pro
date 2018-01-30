@@ -17,7 +17,6 @@ SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \
 		src/drawingarea/simpledrawingarea.cpp \
 		src/demo/blinkdemo.cpp \
-		src/widget/maestrocontrol.cpp \
 		src/controller/maestrocontroller.cpp \
 		src/demo/showdemo.cpp \
 		lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
@@ -42,9 +41,6 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/animation/mandelbrotanimation.cpp \
 		lib/PixelMaestro/src/animation/plasmaanimation.cpp \
 		lib/PixelMaestro/src/animation/lightninganimation.cpp \
-		src/widget/animation/lightninganimationcontrol.cpp \
-		src/widget/animation/plasmaanimationcontrol.cpp \
-		src/widget/animation/sparkleanimationcontrol.cpp \
 		lib/PixelMaestro/src/canvas/colorcanvas.cpp \
 		src/demo/colorcanvasdemo.cpp \
 		lib/PixelMaestro/src/canvas/animationcanvas.cpp \
@@ -57,10 +53,7 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/canvascuehandler.cpp \
 		lib/PixelMaestro/src/cue/maestrocuehandler.cpp \
 		lib/PixelMaestro/src/cue/sectioncuehandler.cpp \
-		src/window/preferencesdialog.cpp \
-		src/widget/animation/radialanimationcontrol.cpp \
 		src/controller/palettecontroller.cpp \
-		src/widget/palettecontrol.cpp \
 		src/controller/cueinterpreter.cpp \
 		src/controller/showcontroller.cpp \
 		lib/PixelMaestro/src/colorpresets.cpp \
@@ -69,14 +62,20 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
 	lib/PixelMaestro/src/core/timing/timing.cpp \
 	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
-	src/window/simpledrawingareadialog.cpp \
-	lib/PixelMaestro/src/canvas/palettecanvas.cpp
+	lib/PixelMaestro/src/canvas/palettecanvas.cpp \
+    src/widget/maestrocontrolwidget.cpp \
+    src/widget/palettecontrolwidget.cpp \
+    src/widget/animation/lightninganimationcontrolwidget.cpp \
+    src/widget/animation/plasmaanimationcontrolwidget.cpp \
+    src/widget/animation/radialanimationcontrolwidget.cpp \
+    src/widget/animation/sparkleanimationcontrolwidget.cpp \
+    src/dialog/preferencesdialog.cpp \
+    src/dialog/simpledrawingareadialog.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
 		src/drawingarea/maestrodrawingarea.h \
 		src/drawingarea/simpledrawingarea.h \
-		src/widget/maestrocontrol.h \
 		src/controller/maestrocontroller.h \
 		src/demo/showdemo.h \
 		lib/PixelMaestro/src/canvas/fonts/font.h \
@@ -102,9 +101,6 @@ HEADERS += \
 		lib/PixelMaestro/src/animation/mandelbrotanimation.h \
 		lib/PixelMaestro/src/animation/plasmaanimation.h \
 		lib/PixelMaestro/src/animation/lightninganimation.h \
-		src/widget/animation/lightninganimationcontrol.h \
-		src/widget/animation/plasmaanimationcontrol.h \
-		src/widget/animation/sparkleanimationcontrol.h \
 		lib/PixelMaestro/src/canvas/colorcanvas.h \
 		src/demo/colorcanvasdemo.h \
 		lib/PixelMaestro/src/canvas/canvastype.h \
@@ -120,10 +116,7 @@ HEADERS += \
 		lib/PixelMaestro/src/cue/maestrocuehandler.h \
 		lib/PixelMaestro/src/cue/sectioncuehandler.h \
 		lib/PixelMaestro/src/animation/animationtype.h \
-		src/window/preferencesdialog.h \
-		src/widget/animation/radialanimationcontrol.h \
 		src/controller/palettecontroller.h \
-		src/widget/palettecontrol.h \
 		src/controller/cueinterpreter.h \
 		src/controller/showcontroller.h \
 		lib/PixelMaestro/src/colorpresets.h \
@@ -131,19 +124,26 @@ HEADERS += \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
 	lib/PixelMaestro/src/core/timing/timing.h \
 	lib/PixelMaestro/src/core/timing/animationtiming.h \
-	src/window/simpledrawingareadialog.h \
-	lib/PixelMaestro/src/canvas/palettecanvas.h
+	lib/PixelMaestro/src/canvas/palettecanvas.h \
+    src/widget/maestrocontrolwidget.h \
+    src/widget/palettecontrolwidget.h \
+    src/widget/animation/lightninganimationcontrolwidget.h \
+    src/widget/animation/plasmaanimationcontrolwidget.h \
+    src/widget/animation/radialanimationcontrolwidget.h \
+    src/widget/animation/sparkleanimationcontrolwidget.h \
+    src/dialog/preferencesdialog.h \
+    src/dialog/simpledrawingareadialog.h
 
 FORMS	+= \
-		src/widget/maestrocontrol.ui \
 		src/window/mainwindow.ui \
-		src/widget/animation/lightninganimationcontrol.ui \
-		src/widget/animation/plasmaanimationcontrol.ui \
-		src/widget/animation/sparkleanimationcontrol.ui \
-		src/window/preferencesdialog.ui \
-		src/widget/animation/radialanimationcontrol.ui \
-		src/widget/palettecontrol.ui \
-	src/window/simpledrawingareadialog.ui
+    src/widget/maestrocontrolwidget.ui \
+    src/widget/palettecontrolwidget.ui \
+    src/widget/animation/lightninganimationcontrolwidget.ui \
+    src/widget/animation/plasmaanimationcontrolwidget.ui \
+    src/widget/animation/radialanimationcontrolwidget.ui \
+    src/widget/animation/sparkleanimationcontrolwidget.ui \
+    src/dialog/preferencesdialog.ui \
+    src/dialog/simpledrawingareadialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

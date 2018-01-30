@@ -12,7 +12,7 @@
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "core/colors.h"
-#include "widget/maestrocontrol.h"
+#include "widget/maestrocontrolwidget.h"
 
 using namespace PixelMaestro;
 
@@ -43,13 +43,13 @@ namespace PixelMaestroStudio {
 			}
 
 			template <class CanvasT, class SourceT>
-			static void copy_to_canvas(CanvasT* canvas, SourceT** source, uint16_t target_x, uint16_t target_y, MaestroControl* maestro_control) {
+			static void copy_to_canvas(CanvasT* canvas, SourceT** source, uint16_t target_x, uint16_t target_y, MaestroControlWidget* maestro_control) {
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
 					maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
 				}
 			}
-			static void load_image(QString filename, Canvas* canvas, MaestroControl* maestro_control = nullptr);
+			static void load_image(QString filename, Canvas* canvas, MaestroControlWidget* maestro_control = nullptr);
 	};
 }
 

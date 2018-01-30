@@ -8,13 +8,13 @@
 #include <QSettings>
 #include <QString>
 #include "animation/lightninganimation.h"
-#include "animation/lightninganimationcontrol.h"
+#include "animation/lightninganimationcontrolwidget.h"
 #include "animation/plasmaanimation.h"
-#include "animation/plasmaanimationcontrol.h"
+#include "animation/plasmaanimationcontrolwidget.h"
 #include "animation/radialanimation.h"
-#include "animation/radialanimationcontrol.h"
+#include "animation/radialanimationcontrolwidget.h"
 #include "animation/sparkleanimation.h"
-#include "animation/sparkleanimationcontrol.h"
+#include "animation/sparkleanimationcontrolwidget.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
@@ -22,20 +22,21 @@
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
-#include "maestrocontrol.h"
+#include "maestrocontrolwidget.h"
 #include "window/preferencesdialog.h"
-#include "widget/palettecontrol.h"
-#include "ui_maestrocontrol.h"
+#include "widget/palettecontrolwidget.h"
+#include "ui_maestrocontrolwidget.h"
 #include "utility/canvasutility.h"
 #include "utility.h"
 
+// TODO: Split Section-specific methods into separate "SectionControlWidget"
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
 	 * @param parent The QWidget containing this controller.
 	 * @param maestro_controller The MaestroController being controlled.
 	 */
-	MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl) {
+	MaestroControlWidget::MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControlWidget) {
 		// Capture button key presses
 		qApp->installEventFilter(this);
 
@@ -99,7 +100,7 @@ namespace PixelMaestroStudio {
 	 * Adds an action to the event history.
 	 * @param cue Action performed.
 	 */
-	void MaestroControl::add_cue_to_history(uint8_t *cue) {
+	void MaestroControlWidget::add_cue_to_history(uint8_t *cue) {
 		ui->eventHistoryWidget->addItem(cue_interpreter_.interpret_cue(cue));
 
 		// Convert the Cue into an actual byte array, which we'll store in the Event History
@@ -122,7 +123,7 @@ namespace PixelMaestroStudio {
 	 * Enables Show Edit mode, which disables updates to the Maestro.
 	 * @param enable If true, don't update the Maestro.
 	 */
-	void MaestroControl::enable_show_edit_mode(bool enable) {
+	void MaestroControlWidget::enable_show_edit_mode(bool enable) {
 		show_mode_enabled_ = enable;
 	}
 
@@ -132,7 +133,7 @@ namespace PixelMaestroStudio {
 	 * @param event Keypress event.
 	 * @return True on success.
 	 */
-	bool MaestroControl::eventFilter(QObject *watched, QEvent *event) {
+	bool MaestroControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
 			// Handle delete key where 'watched' == EventList widget
 			if (watched == ui->eventListWidget) {
@@ -151,7 +152,7 @@ namespace PixelMaestroStudio {
 	 * Returns the index of the current Layer.
 	 * @return Layer index.
 	 */
-	int16_t MaestroControl::get_layer_index() {
+	int16_t MaestroControlWidget::get_layer_index() {
 		/*
 		 * Find the depth of the current Section by traversing parent_section_.
 		 * Once parent_section == nullptr, we know we've hit the base Section.
@@ -170,7 +171,7 @@ namespace PixelMaestroStudio {
 	 * @param section Section belonging to the Layer.
 	 * @return Layer index.
 	 */
-	uint8_t MaestroControl::get_layer_index(Section* section) {
+	uint8_t MaestroControlWidget::get_layer_index(Section* section) {
 		uint8_t level = 0;
 		Section* test_section = section;
 		while (test_section->get_parent_section() != nullptr) {
@@ -185,7 +186,7 @@ namespace PixelMaestroStudio {
 	 * @param section Section to ID.
 	 * @return Section index.
 	 */
-	uint8_t MaestroControl::get_section_index(Section* section) {
+	uint8_t MaestroControlWidget::get_section_index(Section* section) {
 
 		uint8_t index = 0;
 		Section* test_section = section;
@@ -207,7 +208,7 @@ namespace PixelMaestroStudio {
 	 * Returns the index of the current Section.
 	 * @return Current Section index (or -1 if not found).
 	 */
-	int16_t MaestroControl::get_section_index() {
+	int16_t MaestroControlWidget::get_section_index() {
 		Section* target_section = active_section_;
 
 		// If this is an Layer, iterate until we find the parent ID
@@ -231,7 +232,7 @@ namespace PixelMaestroStudio {
 	 * @param section Section to scan.
 	 * @return Number of Layers.
 	 */
-	uint8_t MaestroControl::get_num_layers(Section *section) {
+	uint8_t MaestroControlWidget::get_num_layers(Section *section) {
 		uint8_t count = 0;
 		Section::Layer* layer = section->get_layer();
 		while (layer != nullptr) {
@@ -244,7 +245,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Build the MaestroControl UI.
 	 */
-	void MaestroControl::initialize() {
+	void MaestroControlWidget::initialize() {
 		// Get the base Section
 		Section* section = maestro_controller_->get_maestro()->get_section(0);
 
@@ -324,7 +325,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Reinitializes Palettes from the Palette Dialog.
-	void MaestroControl::initialize_palettes() {
+	void MaestroControlWidget::initialize_palettes() {
 		// Repopulate color combo boxes
 		ui->colorComboBox->blockSignals(true);
 		ui->canvasPaletteComboBox->blockSignals(true);
@@ -344,7 +345,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Adds the selected Event(s) to the Show's Event list.
 	 */
-	void MaestroControl::on_addEventButton_clicked() {
+	void MaestroControlWidget::on_addEventButton_clicked() {
 		// Add selected Cues to the Show
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
@@ -357,7 +358,7 @@ namespace PixelMaestroStudio {
 	 * Sets the Layer's transparency level.
 	 * @param arg1 Transparency level from 0 - 255.
 	 */
-	void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
+	void MaestroControlWidget::on_alphaSpinBox_valueChanged(int arg1) {
 		run_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_layer()->mix_mode, arg1));
 	}
 
@@ -365,7 +366,7 @@ namespace PixelMaestroStudio {
 	 * Changes the current animation.
 	 * @param index Index of the new animation.
 	 */
-	void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
 		// Only change if the animation is different
 		if (active_section_->get_animation()->get_type() == (AnimationType::Type)index) {
 			return;
@@ -380,7 +381,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the active drawing color when using PaletteCanvases.
 	 */
-	void MaestroControl::on_canvas_color_clicked() {
+	void MaestroControlWidget::on_canvas_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
 		canvas_color_index_ = sender->objectName().toInt();
 
@@ -395,7 +396,7 @@ namespace PixelMaestroStudio {
 	 * Changes the current Canvas.
 	 * @param index Index of the new Canvas type.
 	 */
-	void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_canvasComboBox_currentIndexChanged(int index) {
 		CanvasType::Type new_canvas_type = (CanvasType::Type)(index - 1);
 
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
@@ -433,10 +434,10 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Opens the Palette Editor from the Canvas tab.
-	void MaestroControl::on_canvasEditPaletteButton_clicked() {
+	void MaestroControlWidget::on_canvasEditPaletteButton_clicked() {
 		QString palette_name = ui->canvasPaletteComboBox->currentText();
 
-		PaletteControl palette_control(&palette_controller_, palette_name);
+		PaletteControlWidget palette_control(&palette_controller_, palette_name);
 		palette_control.exec();
 		initialize_palettes();
 		ui->canvasPaletteComboBox->setCurrentText(palette_name);
@@ -446,7 +447,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Canvas' palette (PaletteCanvases only)
 	 * @param index New index.
 	 */
-	void MaestroControl::on_canvasPaletteComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_canvasPaletteComboBox_currentIndexChanged(int index) {
 		PaletteController::Palette* palette = palette_controller_.get_palette(index);
 		run_cue(canvas_handler->set_colors(get_section_index(), get_layer_index(), &palette->colors[0], palette->colors.size()));
 
@@ -454,7 +455,7 @@ namespace PixelMaestroStudio {
 		// Delete existing color buttons
 		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
 		for (QPushButton* button : buttons) {
-			disconnect(button, &QPushButton::clicked, this, &MaestroControl::on_canvas_color_clicked);
+			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
 			delete button;
 		}
 
@@ -470,21 +471,21 @@ namespace PixelMaestroStudio {
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
 			layout->addWidget(button);
-			connect(button, &QPushButton::clicked, this, &MaestroControl::on_canvas_color_clicked);
+			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
 		}
 	}
 
 	/**
 	 * Sets the offset x value.
 	 */
-	void MaestroControl::on_offsetXSpinBox_editingFinished() {
+	void MaestroControlWidget::on_offsetXSpinBox_editingFinished() {
 		set_offset();
 	}
 
 	/**
 	 * Sets the offset y value.
 	 */
-	void MaestroControl::on_offsetYSpinBox_editingFinished() {
+	void MaestroControlWidget::on_offsetYSpinBox_editingFinished() {
 		set_offset();
 	}
 
@@ -492,14 +493,14 @@ namespace PixelMaestroStudio {
 	 * Selects a circle for drawing.
 	 * @param checked If true, next shape will be a circle.
 	 */
-	void MaestroControl::on_circleRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_circleRadioButton_toggled(bool checked) {
 		set_circle_controls_enabled(checked);
 	}
 
 	/**
 	 * Clears the current Canvas frame.
 	 */
-	void MaestroControl::on_clearButton_clicked() {
+	void MaestroControlWidget::on_clearButton_clicked() {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
@@ -511,7 +512,7 @@ namespace PixelMaestroStudio {
 	 * Changes the color scheme.
 	 * @param index Index of the new color scheme.
 	 */
-	void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_colorComboBox_currentIndexChanged(int index) {
 		PaletteController::Palette* palette = palette_controller_.get_palette(index);
 		run_cue(animation_handler->set_colors(get_section_index(), get_layer_index(), &palette->colors[0], palette->colors.size()));
 	}
@@ -519,14 +520,14 @@ namespace PixelMaestroStudio {
 	/**
 	 * Changes the number of columns in the display grid.
 	 */
-	void MaestroControl::on_columnsSpinBox_editingFinished() {
+	void MaestroControlWidget::on_columnsSpinBox_editingFinished() {
 		on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 	}
 
 	/**
 	 * Switches to the Canvas Frame index specified in currentFrameSpinBox.
 	 */
-	void MaestroControl::on_currentFrameSpinBox_editingFinished() {
+	void MaestroControlWidget::on_currentFrameSpinBox_editingFinished() {
 		int frame = ui->currentFrameSpinBox->value();
 
 		// If the selected frame exceeds the number of frames, set to the number of frames.
@@ -544,7 +545,7 @@ namespace PixelMaestroStudio {
 	 * Changes the animation timing.
 	 * @param value New timing.
 	 */
-	void MaestroControl::on_timingSlider_valueChanged(int value) {
+	void MaestroControlWidget::on_timingSlider_valueChanged(int value) {
 		ui->timingSpinBox->blockSignals(true);
 		ui->timingSpinBox->setValue(value);
 		ui->timingSpinBox->blockSignals(false);
@@ -555,7 +556,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Changes the animation timing.
 	 */
-	void MaestroControl::on_timingSpinBox_editingFinished() {
+	void MaestroControlWidget::on_timingSpinBox_editingFinished() {
 		ui->timingSlider->blockSignals(true);
 		ui->timingSlider->setValue(ui->timingSpinBox->value());
 		ui->timingSlider->blockSignals(false);
@@ -566,7 +567,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Handles drawing onto the current Canvas frame.
 	 */
-	void MaestroControl::on_drawButton_clicked() {
+	void MaestroControlWidget::on_drawButton_clicked() {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
 		switch ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1)) {
@@ -634,7 +635,7 @@ namespace PixelMaestroStudio {
 	 * Initializes the Maestro's Show.
 	 * @param checked If true, creates a new Show.
 	 */
-	void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
+	void MaestroControlWidget::on_enableShowCheckBox_toggled(bool checked) {
 		set_show_controls_enabled(checked);
 
 		// Initialize Show if necessary
@@ -657,14 +658,14 @@ namespace PixelMaestroStudio {
 	 * Toggles fading.
 	 * @param checked If true, fading is enabled.
 	 */
-	void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
+	void MaestroControlWidget::on_fadeCheckBox_toggled(bool checked) {
 		run_cue(animation_handler->set_fade(get_section_index(), get_layer_index(), checked));
 	}
 
 	/**
 	 * Sets the number of Canvas frames.
 	 */
-	void MaestroControl::on_frameCountSpinBox_editingFinished() {
+	void MaestroControlWidget::on_frameCountSpinBox_editingFinished() {
 		int new_max = ui->frameCountSpinBox->value();
 		if (new_max < ui->currentFrameSpinBox->value()) {
 			ui->currentFrameSpinBox->setValue(new_max);
@@ -679,7 +680,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Changes the Canvas' frame rate.
 	 */
-	void MaestroControl::on_frameRateSpinBox_editingFinished() {
+	void MaestroControlWidget::on_frameRateSpinBox_editingFinished() {
 		if (!ui->toggleCanvasModeCheckBox->isChecked()) {
 			run_cue(canvas_handler->set_frame_timing(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
 		}
@@ -689,7 +690,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Layer's mix mode.
 	 * @param index
 	 */
-	void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_mix_modeComboBox_currentIndexChanged(int index) {
 		if (active_section_->get_parent_section() == nullptr) {
 			return;
 		}
@@ -708,7 +709,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Moves the selected Show Event down by one.
-	void MaestroControl::on_moveEventDownButton_clicked() {
+	void MaestroControlWidget::on_moveEventDownButton_clicked() {
 		int current_row = ui->eventListWidget->currentRow();
 
 		if (current_row != ui->eventListWidget->count() - 1) {
@@ -721,7 +722,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Moves the selected Show Event up by one.
-	void MaestroControl::on_moveEventUpButton_clicked() {
+	void MaestroControlWidget::on_moveEventUpButton_clicked() {
 		int current_row = ui->eventListWidget->currentRow();
 
 		if (current_row != 0) {
@@ -737,21 +738,21 @@ namespace PixelMaestroStudio {
 	 * Selects a rectangle for the next shape.
 	 * @param checked If true, the next shape will be a rectangle.
 	 */
-	void MaestroControl::on_rectRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_rectRadioButton_toggled(bool checked) {
 		set_rect_controls_enabled(checked);
 	}
 
 	/**
 	 * Sets the Canvas scroll rate along the x axis.
 	 */
-	void MaestroControl::on_scrollXSpinBox_editingFinished() {
+	void MaestroControlWidget::on_scrollXSpinBox_editingFinished() {
 		set_scroll();
 	}
 
 	/**
 	 * Sets the Canvas scroll rate along the y axis.
 	 */
-	void MaestroControl::on_scrollYSpinBox_editingFinished() {
+	void MaestroControlWidget::on_scrollYSpinBox_editingFinished() {
 		set_scroll();
 	}
 
@@ -759,7 +760,7 @@ namespace PixelMaestroStudio {
 	 * Sets the animation's orientation.
 	 * @param index New orientation.
 	 */
-	void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_orientationComboBox_currentIndexChanged(int index) {
 		if ((Animation::Orientation)index != active_section_->get_animation()->get_orientation()) {
 			run_cue(animation_handler->set_orientation(get_section_index(), get_layer_index(), (Animation::Orientation)index));
 		}
@@ -769,7 +770,7 @@ namespace PixelMaestroStudio {
 	 * Changes the current Layer.
 	 * @param index Index of the desired Layer.
 	 */
-	void MaestroControl::on_layerComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_layerComboBox_currentIndexChanged(int index) {
 		/*
 		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 		 * If we selected 'None', use the base Section as the active Section.
@@ -789,7 +790,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the number of Layers for the Section.
 	 */
-	void MaestroControl::on_layerSpinBox_editingFinished() {
+	void MaestroControlWidget::on_layerSpinBox_editingFinished() {
 		Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 		Section* last_section = base_section;
 
@@ -829,7 +830,7 @@ namespace PixelMaestroStudio {
 	 * Selects a line for the next shape.
 	 * @param checked If true, the next shape will be a line.
 	 */
-	void MaestroControl::on_lineRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_lineRadioButton_toggled(bool checked) {
 		set_line_controls_enabled(checked);
 	}
 
@@ -837,7 +838,7 @@ namespace PixelMaestroStudio {
 	 * Loads an image into the Canvas.
 	 * This overwrites all Canvas frames.
 	 */
-	void MaestroControl::on_loadImageButton_clicked() {
+	void MaestroControlWidget::on_loadImageButton_clicked() {
 		QString filename = QFileDialog::getOpenFileName(this,
 			QString("Open Image"),
 			QString(),
@@ -883,7 +884,7 @@ namespace PixelMaestroStudio {
 	 * Enables/disables Show looping.
 	 * @param checked If true, the Show will loop its Event queue.
 	 */
-	void MaestroControl::on_loopCheckBox_toggled(bool checked) {
+	void MaestroControlWidget::on_loopCheckBox_toggled(bool checked) {
 		run_cue(show_handler->set_looping(checked));
 	}
 
@@ -891,10 +892,10 @@ namespace PixelMaestroStudio {
 	/**
 	 * Opens the Palette Editor.
 	 */
-	void MaestroControl::on_paletteControlButton_clicked() {
+	void MaestroControlWidget::on_paletteControlButton_clicked() {
 		QString palette_name = ui->colorComboBox->currentText();
 
-		PaletteControl palette_control(&palette_controller_, palette_name);
+		PaletteControlWidget palette_control(&palette_controller_, palette_name);
 		palette_control.exec();
 		initialize_palettes();
 	}
@@ -903,7 +904,7 @@ namespace PixelMaestroStudio {
 	 * Sets the delay between Animation cycles.
 	 * @param value New pause interval.
 	 */
-	void MaestroControl::on_pauseSlider_valueChanged(int value) {
+	void MaestroControlWidget::on_pauseSlider_valueChanged(int value) {
 		ui->pauseSpinBox->blockSignals(true);
 		ui->pauseSpinBox->setValue(value);
 		ui->pauseSpinBox->blockSignals(false);
@@ -915,7 +916,7 @@ namespace PixelMaestroStudio {
 	 * Sets the delay between Animation cycles.
 	 * @param arg1 New pause interval.
 	 */
-	void MaestroControl::on_pauseSpinBox_valueChanged(int arg1) {
+	void MaestroControlWidget::on_pauseSpinBox_valueChanged(int arg1) {
 		ui->pauseSlider->blockSignals(true);
 		ui->pauseSlider->setValue(arg1);
 		ui->pauseSlider->blockSignals(false);
@@ -926,7 +927,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Removes the selected Event(s) from the Show.
 	 */
-	void MaestroControl::on_removeEventButton_clicked() {
+	void MaestroControlWidget::on_removeEventButton_clicked() {
 		for (QModelIndex index : ui->eventListWidget->selectionModel()->selectedIndexes()) {
 			show_controller_->remove_event(index.row());
 			ui->eventListWidget->takeItem(index.row());
@@ -938,14 +939,14 @@ namespace PixelMaestroStudio {
 	 * Toggles whether the color animation is shown in reverse.
 	 * @param checked If true, reverse the animation.
 	 */
-	void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
+	void MaestroControlWidget::on_reverse_animationCheckBox_toggled(bool checked) {
 		run_cue(animation_handler->set_reverse(get_section_index(), get_layer_index(), checked));
 	}
 
 	/**
 	 * Changes the number of rows in the displayed grid.
 	 */
-	void MaestroControl::on_rowsSpinBox_editingFinished() {
+	void MaestroControlWidget::on_rowsSpinBox_editingFinished() {
 		on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 	}
 
@@ -953,7 +954,7 @@ namespace PixelMaestroStudio {
 	 * Changes the current Section.
 	 * @param index Index of the desired Section.
 	 */
-	void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_sectionComboBox_currentIndexChanged(int index) {
 		// Hide Layer controls
 		set_layer_controls_enabled(false);
 
@@ -975,7 +976,7 @@ namespace PixelMaestroStudio {
 	 * @param x Number of rows.
 	 * @param y Number of columns.
 	 */
-	void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
+	void MaestroControlWidget::on_section_resize(uint16_t x, uint16_t y) {
 		if ((x != active_section_->get_dimensions()->x) || (y != active_section_->get_dimensions()->y)) {
 
 			/*
@@ -1049,7 +1050,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the ColorCanvas drawing color.
 	 */
-	void MaestroControl::on_selectColorButton_clicked() {
+	void MaestroControlWidget::on_selectColorButton_clicked() {
 		QColor new_color = QColorDialog::getColor(canvas_color_, this);
 
 		if (new_color != canvas_color_) {
@@ -1066,7 +1067,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Toggles between stopping and running the Maestro.
 	 */
-	void MaestroControl::on_showPauseButton_clicked() {
+	void MaestroControlWidget::on_showPauseButton_clicked() {
 		if (maestro_controller_->get_running()) {
 			// Stop the Maestro
 			maestro_controller_->stop();
@@ -1085,7 +1086,7 @@ namespace PixelMaestroStudio {
 	 * Selects text for the next Canvas shape.
 	 * @param checked If true, the next shape will be text.
 	 */
-	void MaestroControl::on_textRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_textRadioButton_toggled(bool checked) {
 		set_text_controls_enabled(checked);
 	}
 
@@ -1093,7 +1094,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Show's timing method.
 	 * @param index Index of the timing method in timingMethodComboBox.
 	 */
-	void MaestroControl::on_timingMethodComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_timingMethodComboBox_currentIndexChanged(int index) {
 		maestro_controller_->get_maestro()->get_show()->set_timing((Show::TimingMode)index);
 
 		// Enable/disable loop controls for relative mode
@@ -1111,7 +1112,7 @@ namespace PixelMaestroStudio {
 	 * Toggles Canvas Edit mode, which prevents the Canvas from automatically switching frames.
 	 * @param checked If true, Canvas Edit mode is enabled.
 	 */
-	void MaestroControl::on_toggleCanvasModeCheckBox_toggled(bool checked) {
+	void MaestroControlWidget::on_toggleCanvasModeCheckBox_toggled(bool checked) {
 		// Enables/disable the 'current frame' control
 		ui->currentFrameSpinBox->setEnabled(checked);
 
@@ -1130,7 +1131,7 @@ namespace PixelMaestroStudio {
 	 * Toggles Show Edit mode. Show Edit mode lets the user populate the Event History without affecting the output.
 	 * @param checked If true, Show Edit mode is enabled.
 	 */
-	void MaestroControl::on_toggleShowModeCheckBox_clicked(bool checked) {
+	void MaestroControlWidget::on_toggleShowModeCheckBox_clicked(bool checked) {
 		enable_show_edit_mode(checked);
 	}
 
@@ -1138,14 +1139,14 @@ namespace PixelMaestroStudio {
 	 * Sets the next shape to triangle.
 	 * @param checked If true, the next Canvas shape drawn will be a triangle.
 	 */
-	void MaestroControl::on_triangleRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_triangleRadioButton_toggled(bool checked) {
 		set_triangle_controls_enabled(checked);
 	}
 
 	/**
 	 * Rebuilds the Layer combobox using the current active Section.
 	 */
-	void MaestroControl::populate_layer_combobox() {
+	void MaestroControlWidget::populate_layer_combobox() {
 		ui->layerComboBox->blockSignals(true);
 		ui->layerComboBox->clear();
 		ui->layerComboBox->addItem("Base Section");
@@ -1161,7 +1162,7 @@ namespace PixelMaestroStudio {
 	 * Forwards the specified Cue to the drawing area and/or serial device.
 	 * @param cue Cue to perform.
 	 */
-	void MaestroControl::run_cue(uint8_t *cue) {
+	void MaestroControlWidget::run_cue(uint8_t *cue) {
 		// Only render to outputs if Show Edit mode isn't enabled
 		if (!show_mode_enabled_) {
 			cue_controller_->run(cue);
@@ -1191,7 +1192,7 @@ namespace PixelMaestroStudio {
 	 * Changes the active Section and sets all GUI controls to the Section's settings.
 	 * @param section New active Section.
 	 */
-	void MaestroControl::set_active_section(Section* section) {
+	void MaestroControlWidget::set_active_section(Section* section) {
 		if (section == nullptr) {
 			return;
 		}
@@ -1379,7 +1380,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas controls.
 	 * @param index Index of the Canvas in the drop-down list. 0 for no Canvas.
 	 */
-	void MaestroControl::set_canvas_controls_enabled(uint8_t index) {
+	void MaestroControlWidget::set_canvas_controls_enabled(uint8_t index) {
 		ui->toggleCanvasModeLabel->setEnabled(index);
 		ui->toggleCanvasModeCheckBox->setEnabled(index);
 		ui->frameCountLabel->setEnabled(index);
@@ -1425,7 +1426,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas circle controls.
 	 * @param enabled If true, circle controls are enabled.
 	 */
-	void MaestroControl::set_circle_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_circle_controls_enabled(bool enabled) {
 		if (enabled) {
 			set_line_controls_enabled(false);
 			set_rect_controls_enabled(false);
@@ -1450,7 +1451,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas line controls.
 	 * @param enabled If true, line controls are enabled.
 	 */
-	void MaestroControl::set_line_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_line_controls_enabled(bool enabled) {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_rect_controls_enabled(false);
@@ -1472,7 +1473,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas rectangle controls.
 	 * @param enabled If true, rectangle controls are enabled.
 	 */
-	void MaestroControl::set_rect_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_rect_controls_enabled(bool enabled) {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
@@ -1499,7 +1500,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas text controls.
 	 * @param enabled If true, text controls are enabled.
 	 */
-	void MaestroControl::set_text_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_text_controls_enabled(bool enabled) {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
@@ -1523,7 +1524,7 @@ namespace PixelMaestroStudio {
 	 * Enables Canvas triangle controls.
 	 * @param enabled If true, triangle controls are enabled.
 	 */
-	void MaestroControl::set_triangle_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_triangle_controls_enabled(bool enabled) {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
@@ -1559,7 +1560,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the Animation's center to the specified coordinates.
 	 */
-	void MaestroControl::set_offset() {
+	void MaestroControlWidget::set_offset() {
 		// Don't allow changes if scrolling is enabled
 		if (ui->scrollXSpinBox->value() == 0 && ui->scrollYSpinBox->value() == 0) {
 			run_cue(section_handler->set_offset(get_section_index(), get_layer_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
@@ -1569,7 +1570,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the Canvas' scrolling behavior.
 	 */
-	void MaestroControl::set_scroll() {
+	void MaestroControlWidget::set_scroll() {
 		int new_x = ui->scrollXSpinBox->value();
 		int new_y = ui->scrollYSpinBox->value();
 		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), (new_x < 0), (new_y < 0)));
@@ -1598,7 +1599,7 @@ namespace PixelMaestroStudio {
 	 * Enables Show controls.
 	 * @param enabled If true, Show controls are enabled.
 	 */
-	void MaestroControl::set_show_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_show_controls_enabled(bool enabled) {
 		ui->currentTimeLabel->setEnabled(enabled);
 		ui->currentTimeLineEdit->setEnabled(enabled);
 		ui->toggleShowModeCheckBox->setEnabled(enabled);
@@ -1622,7 +1623,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Sets the timing and pause intervals for the active Animation.
-	void MaestroControl::set_timing() {
+	void MaestroControlWidget::set_timing() {
 		uint16_t pause = ui->pauseSpinBox->value();
 		uint16_t new_timing = ui->timingSpinBox->value();
 		AnimationTiming* timing = active_section_->get_animation()->get_timing();
@@ -1635,7 +1636,7 @@ namespace PixelMaestroStudio {
 	 * Sets Layer-related controls enabled.
 	 * @param visible True if you want to enable the controls.
 	 */
-	void MaestroControl::set_layer_controls_enabled(bool enabled) {
+	void MaestroControlWidget::set_layer_controls_enabled(bool enabled) {
 		// If visible, enable Layer controls
 		ui->mixModeLabel->setEnabled(enabled);
 		ui->mix_modeComboBox->setEnabled(enabled);
@@ -1652,7 +1653,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the animation in the animations list.
 	 * @param animation Pointer to the animation.
 	 */
-	void MaestroControl::show_extra_controls(Animation* animation) {
+	void MaestroControlWidget::show_extra_controls(Animation* animation) {
 		// First, remove any existing extra control widgets
 		if (animation_extra_control_widget_ != nullptr) {
 			this->findChild<QLayout*>("animationExtraOptionsLayout")->removeWidget(animation_extra_control_widget_.get());
@@ -1663,16 +1664,16 @@ namespace PixelMaestroStudio {
 
 		switch(animation->get_type()) {
 			case AnimationType::Lightning:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControlWidget((LightningAnimation*)animation, this, layout->widget()));
 				break;
 			case AnimationType::Plasma:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, this, layout->widget()));
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControlWidget((PlasmaAnimation*)animation, this, layout->widget()));
 				break;
 			case AnimationType::Radial:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControl((RadialAnimation*)animation, this, layout->widget()));
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControlWidget((RadialAnimation*)animation, this, layout->widget()));
 				break;
 			case AnimationType::Sparkle:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControlWidget((SparkleAnimation*)animation, this, layout->widget()));
 				break;
 			default:
 				break;
@@ -1686,7 +1687,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Renders the Maestro's last update time in currentTimeLineEdit.
 	 */
-	void MaestroControl::update_maestro_last_time() {
+	void MaestroControlWidget::update_maestro_last_time() {
 		uint last_time = (uint)maestro_controller_->get_total_elapsed_time();
 		ui->currentTimeLineEdit->setText(locale_.toString(last_time));
 
@@ -1728,7 +1729,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Destructor.
 	 */
-	MaestroControl::~MaestroControl() {
+	MaestroControlWidget::~MaestroControlWidget() {
 		// Close all open serial devices
 		for (int i = 0;	i < serial_devices_.size(); i++) {
 			if (serial_devices_[i]->isOpen()) {

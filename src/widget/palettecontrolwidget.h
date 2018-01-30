@@ -1,21 +1,21 @@
-#ifndef PALETTECONTROL_H
-#define PALETTECONTROL_H
+#ifndef PALETTECONTROLWIDGET_H
+#define PALETTECONTROLWIDGET_H
 
 #include "controller/palettecontroller.h"
 #include <QAbstractButton>
 #include <QDialog>
 
 namespace Ui {
-	class PaletteControl;
+	class PaletteControlWidget;
 }
 
 namespace PixelMaestroStudio {
-	class PaletteControl : public QDialog {
+	class PaletteControlWidget : public QDialog {
 			Q_OBJECT
 
 		public:
-			explicit PaletteControl(PaletteController* controller, QString initial_palette = "", QWidget *parent = 0);
-			~PaletteControl();
+			explicit PaletteControlWidget(PaletteController* controller, QString initial_palette = "", QWidget *parent = 0);
+			~PaletteControlWidget();
 
 		private slots:
 			void on_baseColorButton_clicked();
@@ -31,7 +31,7 @@ namespace PixelMaestroStudio {
 			void set_button_color(QPushButton* button, uint8_t red, uint8_t green, uint8_t blue);
 
 		private:
-			Ui::PaletteControl *ui;
+			Ui::PaletteControlWidget *ui;
 			PaletteController::Palette* active_palette_ = nullptr;
 			PaletteController* palette_controller_ = nullptr;
 
@@ -43,4 +43,4 @@ namespace PixelMaestroStudio {
 	};
 }
 
-#endif // PALETTECONTROL_H
+#endif // PALETTECONTROLWIDGET_H

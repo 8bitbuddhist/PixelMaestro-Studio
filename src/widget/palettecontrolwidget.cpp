@@ -3,11 +3,11 @@
 #include <QColorDialog>
 #include <QDesktopWidget>
 #include <QMessageBox>
-#include "palettecontrol.h"
-#include "ui_palettecontrol.h"
+#include "palettecontrolwidget.h"
+#include "ui_palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	PaletteControl::PaletteControl(PaletteController* controller, QString initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControl) {
+	PaletteControlWidget::PaletteControlWidget(PaletteController* controller, QString initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget) {
 		this->palette_controller_ = controller;
 		ui->setupUi(this);
 
@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 		set_create_palette_controls_visible(false);
 	}
 
-	void PaletteControl::initialize_palettes(QString initial_palette) {
+	void PaletteControlWidget::initialize_palettes(QString initial_palette) {
 		// Initialize palette list
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
@@ -39,12 +39,12 @@ namespace PixelMaestroStudio {
 		on_paletteComboBox_currentIndexChanged(ui->paletteComboBox->currentIndex());
 	}
 
-	void PaletteControl::on_baseColorButton_clicked() {
+	void PaletteControlWidget::on_baseColorButton_clicked() {
 		base_color_ = QColorDialog::getColor(Qt::white, this, "Select Base Color");
 		set_button_color(ui->baseColorButton, base_color_.red(), base_color_.green(), base_color_.blue());
 	}
 
-	void PaletteControl::on_buttonBox_clicked(QAbstractButton *button) {
+	void PaletteControlWidget::on_buttonBox_clicked(QAbstractButton *button) {
 		if (button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Reset Palettes", "This will reset all Palettes to their default settings. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
@@ -56,7 +56,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Updates the target color.
-	void PaletteControl::on_color_clicked() {
+	void PaletteControlWidget::on_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
 		Colors::RGB* source_color = &active_palette_->colors[sender->objectName().toInt()];
 		QColor new_color = QColorDialog::getColor(QColor(source_color->r, source_color->g, source_color->b), this, "Select Color");
@@ -67,7 +67,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Creates a new Palette.
-	void PaletteControl::on_createButtonBox_accepted() {
+	void PaletteControlWidget::on_createButtonBox_accepted() {
 		uint8_t num_colors = ui->numColorsSpinBox->value();
 		QString name = ui->nameLineEdit->text();
 
@@ -110,12 +110,12 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Cancels creating a new Palette.
-	void PaletteControl::on_createButtonBox_rejected() {
+	void PaletteControlWidget::on_createButtonBox_rejected() {
 		set_create_palette_controls_visible(false);
 	}
 
 	/// Creates a new Palette.
-	void PaletteControl::on_createPaletteButton_clicked() {
+	void PaletteControlWidget::on_createPaletteButton_clicked() {
 		set_create_palette_controls_visible(true);
 	}
 
@@ -123,13 +123,13 @@ namespace PixelMaestroStudio {
 	 * Switches the current Palette.
 	 * @param index Index of the new Palette.
 	 */
-	void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
+	void PaletteControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
 		active_palette_ = palette_controller_->get_palette(index);
 
 		// Delete existing color buttons
 		QList<QPushButton*> buttons = ui->colorsGroupBox->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
 		for (QPushButton* button : buttons) {
-			disconnect(button, &QPushButton::clicked, this, &PaletteControl::on_color_clicked);
+			disconnect(button, &QPushButton::clicked, this, &PaletteControlWidget::on_color_clicked);
 			delete button;
 		}
 
@@ -145,12 +145,12 @@ namespace PixelMaestroStudio {
 			set_button_color(button, color.r, color.g, color.b);
 
 			layout->addWidget(button);
-			connect(button, &QPushButton::clicked, this, &PaletteControl::on_color_clicked);
+			connect(button, &QPushButton::clicked, this, &PaletteControlWidget::on_color_clicked);
 		}
 	}
 
 	/// Deletes the current Palette.
-	void PaletteControl::on_removeButton_clicked() {
+	void PaletteControlWidget::on_removeButton_clicked() {
 		if (palette_controller_->get_palettes()->size() > 1) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
@@ -166,7 +166,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/// Changes the target color.
-	void PaletteControl::on_targetColorButton_clicked() {
+	void PaletteControlWidget::on_targetColorButton_clicked() {
 		target_color_ = QColorDialog::getColor(Qt::white, this, "Select Target Color");
 		set_button_color(ui->targetColorButton, target_color_.red(), target_color_.green(), target_color_.blue());
 	}
@@ -175,7 +175,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Palette generation method.
 	 * @param index Index of new method.
 	 */
-	void PaletteControl::on_typeComboBox_currentIndexChanged(int index) {
+	void PaletteControlWidget::on_typeComboBox_currentIndexChanged(int index) {
 		ui->baseColorLabel->setVisible(false);
 		ui->baseColorButton->setVisible(false);
 		ui->targetColorLabel->setVisible(false);
@@ -202,7 +202,7 @@ namespace PixelMaestroStudio {
 	 * @param green Green value.
 	 * @param blue Blue value.
 	 */
-	void PaletteControl::set_button_color(QPushButton *button, uint8_t red, uint8_t green, uint8_t blue) {
+	void PaletteControlWidget::set_button_color(QPushButton *button, uint8_t red, uint8_t green, uint8_t blue) {
 		button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(red).arg(green).arg(blue));
 	}
 
@@ -210,7 +210,7 @@ namespace PixelMaestroStudio {
 	 * Sets the visibility of the Palette creation controls.
 	 * @param visible If true, show Palette controls.
 	 */
-	void PaletteControl::set_create_palette_controls_visible(bool visible) {
+	void PaletteControlWidget::set_create_palette_controls_visible(bool visible) {
 		// Hide palette controls
 		ui->paletteComboBox->setVisible(!visible);
 		ui->createPaletteButton->setVisible(!visible);
@@ -239,7 +239,7 @@ namespace PixelMaestroStudio {
 		ui->createButtonBox->setVisible(visible);
 	}
 
-	PaletteControl::~PaletteControl() {
+	PaletteControlWidget::~PaletteControlWidget() {
 		delete ui;
 	}
 }

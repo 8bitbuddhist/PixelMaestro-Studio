@@ -154,7 +154,7 @@ namespace PixelMaestroStudio {
 			reset_drawing_area();
 		}
 
-		maestro_control_ = new MaestroControl(main_layout_->widget(), maestro_controller_);
+		maestro_control_ = new MaestroControlWidget(main_layout_->widget(), maestro_controller_);
 
 		// Check to see if the Screen is enabled as	an output device
 		QSettings settings;
