@@ -23,13 +23,12 @@
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
 #include "maestrocontrolwidget.h"
-#include "window/preferencesdialog.h"
+#include "dialog/preferencesdialog.h"
 #include "widget/palettecontrolwidget.h"
 #include "ui_maestrocontrolwidget.h"
 #include "utility/canvasutility.h"
 #include "utility.h"
 
-// TODO: Split Section-specific methods into separate "SectionControlWidget"
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
@@ -152,7 +151,7 @@ namespace PixelMaestroStudio {
 	 * Returns the index of the current Layer.
 	 * @return Layer index.
 	 */
-	int16_t MaestroControlWidget::get_layer_index() {
+	uint8_t MaestroControlWidget::get_layer_index() {
 		/*
 		 * Find the depth of the current Section by traversing parent_section_.
 		 * Once parent_section == nullptr, we know we've hit the base Section.
@@ -208,7 +207,7 @@ namespace PixelMaestroStudio {
 	 * Returns the index of the current Section.
 	 * @return Current Section index (or -1 if not found).
 	 */
-	int16_t MaestroControlWidget::get_section_index() {
+	uint8_t MaestroControlWidget::get_section_index() {
 		Section* target_section = active_section_;
 
 		// If this is an Layer, iterate until we find the parent ID

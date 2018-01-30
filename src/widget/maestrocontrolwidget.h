@@ -25,7 +25,7 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/showcuehandler.h"
-#include "window/simpledrawingareadialog.h"
+#include "dialog/simpledrawingareadialog.h"
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -56,9 +56,9 @@ namespace PixelMaestroStudio {
 			explicit MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroControlWidget();
 			void enable_show_edit_mode(bool enable);
-			int16_t get_layer_index();
+			uint8_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
-			int16_t get_section_index();
+			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
 			void run_cue(uint8_t* cue);
 

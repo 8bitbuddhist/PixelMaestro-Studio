@@ -15,7 +15,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QUrl>
-#include "preferencesdialog.h"
+#include "dialog/preferencesdialog.h"
 #include "ui_mainwindow.h"
 
 namespace PixelMaestroStudio {
