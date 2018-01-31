@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>38</height>
+    <height>47</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,20 +23,9 @@
    </item>
    <item>
     <widget class="QSpinBox" name="multiplierSpinBox">
-     <property name="maximum">
-      <number>255</number>
+     <property name="toolTip">
+      <string>Sets the scale of the flames rising through the grid</string>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="divisorLabel">
-     <property name="text">
-      <string>Divisor</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSpinBox" name="divisorSpinBox">
      <property name="maximum">
       <number>255</number>
      </property>

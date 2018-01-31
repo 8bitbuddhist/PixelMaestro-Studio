@@ -211,7 +211,7 @@ namespace PixelMaestroStudio {
 			case AnimationType::Fire:
 				{
 					FireAnimation* fa = static_cast<FireAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier(), fa->get_divisor()));
+					write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier()));
 				}
 				break;
 			case AnimationType::Lightning:

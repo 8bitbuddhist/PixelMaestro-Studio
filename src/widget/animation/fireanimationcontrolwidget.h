@@ -20,8 +20,6 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_multiplierSpinBox_valueChanged(int arg1);
 
-			void on_divisorSpinBox_valueChanged(int arg1);
-
 		private:
 			FireAnimation* animation_;
 			MaestroControlWidget* maestro_control_widget_;
