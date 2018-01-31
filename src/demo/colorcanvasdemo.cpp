@@ -8,19 +8,19 @@ namespace PixelMaestroStudio {
 	ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
-		Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::COLORWHEEL, 12);
+		Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::Colorwheel, 12);
 		animation->set_timing(250);
 		animation->set_reverse(true);
 
 		Section::Layer* layer = section->set_layer(Colors::MixMode::Overlay);
 		ColorCanvas* canvas = static_cast<ColorCanvas*>(layer->section->set_canvas(CanvasType::Type::ColorCanvas));
 
-		canvas->draw_circle(ColorPresets::BLUE, 40, 40, 40, true);
-		canvas->draw_circle(ColorPresets::GREEN, 40, 40, 30, true);
-		canvas->draw_circle(ColorPresets::RED, 40, 40, 20, true);
+		canvas->draw_circle(ColorPresets::Blue, 40, 40, 40, true);
+		canvas->draw_circle(ColorPresets::Green, 40, 40, 30, true);
+		canvas->draw_circle(ColorPresets::Red, 40, 40, 20, true);
 
 		// Not true black since the Layer mix mode treats black as transparent
 		canvas->draw_rect({0, 0, 1}, 9, 36, 62, 9, true);
-		canvas->draw_text(ColorPresets::WHITE, 10, 37, new Font5x8(), (char*)"PixelMaestro", 12);
+		canvas->draw_text(ColorPresets::White, 10, 37, new Font5x8(), (char*)"PixelMaestro", 12);
 	}
 }
