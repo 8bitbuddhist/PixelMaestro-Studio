@@ -38,7 +38,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -342,6 +342,11 @@
          <item>
           <property name="text">
            <string>Cycle</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fire</string>
           </property>
          </item>
          <item>

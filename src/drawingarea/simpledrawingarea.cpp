@@ -1,5 +1,5 @@
 #include "controller/maestrocontroller.h"
-#include "window/preferencesdialog.h"
+#include "dialog/preferencesdialog.h"
 #include "maestrodrawingarea.h"
 #include "simpledrawingarea.h"
 #include <QPainter>

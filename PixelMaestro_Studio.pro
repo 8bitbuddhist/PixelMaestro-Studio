@@ -11,7 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.12\\\"
+DEFINES += BUILD_VERSION=\\\"v0.13\\\"
 
 SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \
@@ -63,14 +63,16 @@ SOURCES += src/main.cpp\
 	lib/PixelMaestro/src/core/timing/timing.cpp \
 	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
 	lib/PixelMaestro/src/canvas/palettecanvas.cpp \
-    src/widget/maestrocontrolwidget.cpp \
-    src/widget/palettecontrolwidget.cpp \
-    src/widget/animation/lightninganimationcontrolwidget.cpp \
-    src/widget/animation/plasmaanimationcontrolwidget.cpp \
-    src/widget/animation/radialanimationcontrolwidget.cpp \
-    src/widget/animation/sparkleanimationcontrolwidget.cpp \
-    src/dialog/preferencesdialog.cpp \
-    src/dialog/simpledrawingareadialog.cpp
+	src/widget/maestrocontrolwidget.cpp \
+	src/widget/palettecontrolwidget.cpp \
+	src/widget/animation/lightninganimationcontrolwidget.cpp \
+	src/widget/animation/plasmaanimationcontrolwidget.cpp \
+	src/widget/animation/radialanimationcontrolwidget.cpp \
+	src/widget/animation/sparkleanimationcontrolwidget.cpp \
+	src/dialog/preferencesdialog.cpp \
+	src/dialog/simpledrawingareadialog.cpp \
+	lib/PixelMaestro/src/animation/fireanimation.cpp \
+	src/widget/animation/fireanimationcontrolwidget.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -125,25 +127,28 @@ HEADERS += \
 	lib/PixelMaestro/src/core/timing/timing.h \
 	lib/PixelMaestro/src/core/timing/animationtiming.h \
 	lib/PixelMaestro/src/canvas/palettecanvas.h \
-    src/widget/maestrocontrolwidget.h \
-    src/widget/palettecontrolwidget.h \
-    src/widget/animation/lightninganimationcontrolwidget.h \
-    src/widget/animation/plasmaanimationcontrolwidget.h \
-    src/widget/animation/radialanimationcontrolwidget.h \
-    src/widget/animation/sparkleanimationcontrolwidget.h \
-    src/dialog/preferencesdialog.h \
-    src/dialog/simpledrawingareadialog.h
+	src/widget/maestrocontrolwidget.h \
+	src/widget/palettecontrolwidget.h \
+	src/widget/animation/lightninganimationcontrolwidget.h \
+	src/widget/animation/plasmaanimationcontrolwidget.h \
+	src/widget/animation/radialanimationcontrolwidget.h \
+	src/widget/animation/sparkleanimationcontrolwidget.h \
+	src/dialog/preferencesdialog.h \
+	src/dialog/simpledrawingareadialog.h \
+	lib/PixelMaestro/src/animation/fireanimation.h \
+	src/widget/animation/fireanimationcontrolwidget.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \
-    src/widget/maestrocontrolwidget.ui \
-    src/widget/palettecontrolwidget.ui \
-    src/widget/animation/lightninganimationcontrolwidget.ui \
-    src/widget/animation/plasmaanimationcontrolwidget.ui \
-    src/widget/animation/radialanimationcontrolwidget.ui \
-    src/widget/animation/sparkleanimationcontrolwidget.ui \
-    src/dialog/preferencesdialog.ui \
-    src/dialog/simpledrawingareadialog.ui
+	src/widget/maestrocontrolwidget.ui \
+	src/widget/palettecontrolwidget.ui \
+	src/widget/animation/lightninganimationcontrolwidget.ui \
+	src/widget/animation/plasmaanimationcontrolwidget.ui \
+	src/widget/animation/radialanimationcontrolwidget.ui \
+	src/widget/animation/sparkleanimationcontrolwidget.ui \
+	src/dialog/preferencesdialog.ui \
+	src/dialog/simpledrawingareadialog.ui \
+	src/widget/animation/fireanimationcontrolwidget.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

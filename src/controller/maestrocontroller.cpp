@@ -1,3 +1,4 @@
+#include "animation/fireanimation.h"
 #include "animation/lightninganimation.h"
 #include "animation/plasmaanimation.h"
 #include "animation/radialanimation.h"
@@ -19,7 +20,7 @@
 #include <QByteArray>
 #include <QFile>
 #include <QSettings>
-#include "window/preferencesdialog.h"
+#include "dialog/preferencesdialog.h"
 
 using namespace PixelMaestro;
 
@@ -207,6 +208,12 @@ namespace PixelMaestroStudio {
 		write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
 		// Save Animation-specific settings
 		switch(animation->get_type()) {
+			case AnimationType::Fire:
+				{
+					FireAnimation* fa = static_cast<FireAnimation*>(animation);
+					write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier(), fa->get_divisor()));
+				}
+				break;
 			case AnimationType::Lightning:
 				{
 					LightningAnimation* la = static_cast<LightningAnimation*>(animation);

@@ -7,6 +7,8 @@
 #include <QKeyEvent>
 #include <QSettings>
 #include <QString>
+#include "animation/fireanimation.h"
+#include "animation/fireanimationcontrolwidget.h"
 #include "animation/lightninganimation.h"
 #include "animation/lightninganimationcontrolwidget.h"
 #include "animation/plasmaanimation.h"
@@ -1662,6 +1664,9 @@ namespace PixelMaestroStudio {
 		QLayout* layout = this->findChild<QLayout*>("animationExtraOptionsLayout");
 
 		switch(animation->get_type()) {
+			case AnimationType::Fire:
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new FireAnimationControlWidget((FireAnimation*)animation, this, layout->widget()));
+				break;
 			case AnimationType::Lightning:
 				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControlWidget((LightningAnimation*)animation, this, layout->widget()));
 				break;

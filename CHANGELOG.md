@@ -3,6 +3,11 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.13] - In Progress
+### Added
+- Animation Editor
+	- Added support for the Fire animation introduced in PixelMaestro 0.13.
+
 ## [v0.12] - 2018-01-22
 ### Changed
 - Animation Editor:

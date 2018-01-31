@@ -2,8 +2,9 @@
 #include "ui_lightninganimationcontrol.h"
 
 namespace PixelMaestroStudio {
-	LightningAnimationControlWidget::LightningAnimationControlWidget(LightningAnimation* animation, MaestroControlWidget* controller, QWidget *parent) :	QWidget(parent), ui(new Ui::LightningAnimationControlWidget) {
+	LightningAnimationControlWidget::LightningAnimationControlWidget(LightningAnimation* animation, MaestroControlWidget* controller, QWidget *parent) : QWidget(parent), ui(new Ui::LightningAnimationControlWidget) {
 		ui->setupUi(this);
+
 		this->animation_ = animation;
 		this->maestro_control_ = controller;
 		ui->boltCountSpinBox->setValue(animation->get_bolt_count());

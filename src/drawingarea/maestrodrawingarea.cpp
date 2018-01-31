@@ -1,6 +1,6 @@
 #include "core/maestro.h"
 #include "maestrodrawingarea.h"
-#include "window/preferencesdialog.h"
+#include "dialog/preferencesdialog.h"
 #include <QElapsedTimer>
 #include <QSettings>
 #include <QTimer>

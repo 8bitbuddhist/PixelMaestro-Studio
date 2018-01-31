@@ -10,6 +10,7 @@ namespace PixelMaestroStudio {
 	const QStringList CueInterpreter::AnimationActions({"Set Colors",
 														"Set Cycle Index",
 														"Set Fade",
+														"Set Fire Options",
 														"Set Lightning Options",
 														"Set Orientation",
 														"Set Plasma Options",
@@ -132,6 +133,12 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationCueHandler::SetFade:
 				append_bool((bool)cue[AnimationCueHandler::Byte::OptionsByte], result);
+				break;
+			case AnimationCueHandler::SetFireOptions:
+				{
+					result->append(", Multiplier: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
+					result->append(", Divisor: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte + 1]));
+				}
 				break;
 			case AnimationCueHandler::SetLightningOptions:
 				{
