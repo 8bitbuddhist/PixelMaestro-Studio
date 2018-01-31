@@ -346,11 +346,6 @@
          </item>
          <item>
           <property name="text">
-           <string>Fire</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Lightning</string>
           </property>
          </item>
@@ -392,6 +387,11 @@
          <item>
           <property name="text">
            <string>Wave</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fire</string>
           </property>
          </item>
         </widget>

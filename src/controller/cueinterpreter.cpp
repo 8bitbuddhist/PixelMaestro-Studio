@@ -10,14 +10,14 @@ namespace PixelMaestroStudio {
 	const QStringList CueInterpreter::AnimationActions({"Set Colors",
 														"Set Cycle Index",
 														"Set Fade",
-														"Set Fire Options",
 														"Set Lightning Options",
 														"Set Orientation",
 														"Set Plasma Options",
 														"Set Radial Options",
 														"Set Reverse",
 														"Set Sparkle Options",
-														"Set Timing"});
+														"Set Timing",
+														"Set Fire Options"});
 
 	const QStringList CueInterpreter::CanvasActions({"Clear",
 													 "Draw Circle",
@@ -60,7 +60,8 @@ namespace PixelMaestroStudio {
 													  "Random",
 													  "Solid",
 													  "Sparkle",
-													  "Wave"});
+													  "Wave",
+													  "Fire"});
 
 	const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
 															 "Vertical"});
