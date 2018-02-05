@@ -133,7 +133,7 @@ namespace PixelMaestroStudio {
 			void set_scroll();
 			void set_layer_controls_enabled(bool enabled);
 			void set_show_controls_enabled(bool enabled);
-			void set_timing();
+			void set_animation_timer();
 			void show_extra_controls(Animation* animation);
 
 		private slots:
@@ -142,14 +142,14 @@ namespace PixelMaestroStudio {
 			void on_canvasComboBox_currentIndexChanged(int index);
 			void on_colorComboBox_currentIndexChanged(int index);
 			void on_columnsSpinBox_editingFinished();
-			void on_timingSlider_valueChanged(int value);
+			void on_animationTimerSlider_valueChanged(int value);
 			void on_fadeCheckBox_toggled(bool checked);
 			void on_mix_modeComboBox_currentIndexChanged(int index);
 			void on_orientationComboBox_currentIndexChanged(int index);
 			void on_paletteControlButton_clicked();
 			void on_reverse_animationCheckBox_toggled(bool checked);
 			void on_rowsSpinBox_editingFinished();
-			void on_timingSpinBox_editingFinished();
+			void on_animationIntervalSpinBox_editingFinished();
 			void on_enableShowCheckBox_toggled(bool checked);
 			void on_pauseSlider_valueChanged(int value);
 			void on_pauseSpinBox_valueChanged(int arg1);
@@ -176,7 +176,7 @@ namespace PixelMaestroStudio {
 			void on_scrollXSpinBox_editingFinished();
 			void on_scrollYSpinBox_editingFinished();
 			void on_removeEventButton_clicked();
-			void on_timingMethodComboBox_currentIndexChanged(int index);
+			void on_showTimingMethodComboBox_currentIndexChanged(int index);
 			void on_loopCheckBox_toggled(bool checked);
 
 			void update_maestro_last_time();

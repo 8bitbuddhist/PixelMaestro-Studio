@@ -27,7 +27,7 @@ namespace PixelMaestroStudio {
 
 		// For animated images, set the frame rate
 		if (image.imageCount() > 1) {
-			maestro_control->run_cue(maestro_control->canvas_handler->set_frame_timing(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
+			maestro_control->run_cue(maestro_control->canvas_handler->set_frame_timer(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
 		}
 
 		Point cursor(0, 0);

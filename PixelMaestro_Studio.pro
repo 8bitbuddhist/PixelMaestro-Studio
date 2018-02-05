@@ -60,8 +60,6 @@ SOURCES += src/main.cpp\
 		lib/PixelMaestro/src/cue/cuehandler.cpp \
 		src/utility/canvasutility.cpp \
 		lib/PixelMaestro/src/cue/showcuehandler.cpp \
-	lib/PixelMaestro/src/core/timing/timing.cpp \
-	lib/PixelMaestro/src/core/timing/animationtiming.cpp \
 	lib/PixelMaestro/src/canvas/palettecanvas.cpp \
 	src/widget/maestrocontrolwidget.cpp \
 	src/widget/palettecontrolwidget.cpp \
@@ -72,7 +70,9 @@ SOURCES += src/main.cpp\
 	src/dialog/preferencesdialog.cpp \
 	src/dialog/simpledrawingareadialog.cpp \
 	lib/PixelMaestro/src/animation/fireanimation.cpp \
-	src/widget/animation/fireanimationcontrolwidget.cpp
+	src/widget/animation/fireanimationcontrolwidget.cpp \
+    lib/PixelMaestro/src/core/timer/timer.cpp \
+    lib/PixelMaestro/src/core/timer/animationtimer.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -124,8 +124,6 @@ HEADERS += \
 		lib/PixelMaestro/src/colorpresets.h \
 		src/utility/canvasutility.h \
 		lib/PixelMaestro/src/cue/showcuehandler.h \
-	lib/PixelMaestro/src/core/timing/timing.h \
-	lib/PixelMaestro/src/core/timing/animationtiming.h \
 	lib/PixelMaestro/src/canvas/palettecanvas.h \
 	src/widget/maestrocontrolwidget.h \
 	src/widget/palettecontrolwidget.h \
@@ -136,7 +134,9 @@ HEADERS += \
 	src/dialog/preferencesdialog.h \
 	src/dialog/simpledrawingareadialog.h \
 	lib/PixelMaestro/src/animation/fireanimation.h \
-	src/widget/animation/fireanimationcontrolwidget.h
+	src/widget/animation/fireanimationcontrolwidget.h \
+    lib/PixelMaestro/src/core/timer/timer.h \
+    lib/PixelMaestro/src/core/timer/animationtimer.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \

@@ -186,7 +186,7 @@ namespace PixelMaestroStudio {
 		Section* section = maestro_controller_->set_sections(1, Point(50, 50));
 		Animation* animation = section->set_animation(AnimationType::Wave, ColorPresets::Colorwheel, 12);
 		animation->set_reverse(true);
-		animation->set_timing(250);
+		animation->set_timer(250);
 
 		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
 

@@ -296,9 +296,9 @@ namespace PixelMaestroStudio {
 
 			show_controller_->initialize_events();
 
-			ui->timingMethodComboBox->blockSignals(true);
-			ui->timingMethodComboBox->setCurrentIndex(show->get_timing());
-			ui->timingMethodComboBox->blockSignals(false);
+			ui->showTimingMethodComboBox->blockSignals(true);
+			ui->showTimingMethodComboBox->setCurrentIndex(show->get_timing());
+			ui->showTimingMethodComboBox->blockSignals(false);
 
 			ui->loopCheckBox->blockSignals(true);
 			ui->loopCheckBox->setChecked(show->get_looping());
@@ -543,26 +543,26 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the animation timing.
-	 * @param value New timing.
+	 * Changes the animation timer.
+	 * @param value New timer.
 	 */
-	void MaestroControlWidget::on_timingSlider_valueChanged(int value) {
-		ui->timingSpinBox->blockSignals(true);
-		ui->timingSpinBox->setValue(value);
-		ui->timingSpinBox->blockSignals(false);
+	void MaestroControlWidget::on_animationTimerSlider_valueChanged(int value) {
+		ui->animationIntervalSpinBox->blockSignals(true);
+		ui->animationIntervalSpinBox->setValue(value);
+		ui->animationIntervalSpinBox->blockSignals(false);
 
-		set_timing();
+		set_animation_timer();
 	}
 
 	/**
-	 * Changes the animation timing.
+	 * Changes the animation timer.
 	 */
-	void MaestroControlWidget::on_timingSpinBox_editingFinished() {
-		ui->timingSlider->blockSignals(true);
-		ui->timingSlider->setValue(ui->timingSpinBox->value());
-		ui->timingSlider->blockSignals(false);
+	void MaestroControlWidget::on_animationIntervalSpinBox_editingFinished() {
+		ui->animationTimerSlider->blockSignals(true);
+		ui->animationTimerSlider->setValue(ui->animationIntervalSpinBox->value());
+		ui->animationTimerSlider->blockSignals(false);
 
-		set_timing();
+		set_animation_timer();
 	}
 
 	/**
@@ -683,7 +683,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_frameRateSpinBox_editingFinished() {
 		if (!ui->toggleCanvasModeCheckBox->isChecked()) {
-			run_cue(canvas_handler->set_frame_timing(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
+			run_cue(canvas_handler->set_frame_timer(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
 		}
 	}
 
@@ -855,9 +855,9 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->frameCountSpinBox->blockSignals(false);
 
-			if (canvas->get_frame_timing() != nullptr) {
+			if (canvas->get_frame_timer() != nullptr) {
 				ui->frameRateSpinBox->blockSignals(true);
-				ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
+				ui->frameRateSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 				ui->frameRateSpinBox->blockSignals(false);
 			}
 
@@ -910,7 +910,7 @@ namespace PixelMaestroStudio {
 		ui->pauseSpinBox->setValue(value);
 		ui->pauseSpinBox->blockSignals(false);
 
-		set_timing();
+		set_animation_timer();
 	}
 
 	/**
@@ -922,7 +922,7 @@ namespace PixelMaestroStudio {
 		ui->pauseSlider->setValue(arg1);
 		ui->pauseSlider->blockSignals(false);
 
-		set_timing();
+		set_animation_timer();
 	}
 
 	/**
@@ -1093,9 +1093,9 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Changes the Show's timing method.
-	 * @param index Index of the timing method in timingMethodComboBox.
+	 * @param index Index of the timing method in showTimingMethodComboBox.
 	 */
-	void MaestroControlWidget::on_timingMethodComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_showTimingMethodComboBox_currentIndexChanged(int index) {
 		maestro_controller_->get_maestro()->get_show()->set_timing((Show::TimingMode)index);
 
 		// Enable/disable loop controls for relative mode
@@ -1118,7 +1118,7 @@ namespace PixelMaestroStudio {
 		ui->currentFrameSpinBox->setEnabled(checked);
 
 		if (checked) {
-			run_cue(canvas_handler->remove_frame_timing(get_section_index(), get_layer_index()));
+			run_cue(canvas_handler->remove_frame_timer(get_section_index(), get_layer_index()));
 			ui->currentFrameSpinBox->blockSignals(true);
 			ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
 			ui->currentFrameSpinBox->blockSignals(false);
@@ -1222,10 +1222,10 @@ namespace PixelMaestroStudio {
 		int32_t interval_y = 0;
 		if (section->get_scroll() != nullptr) {
 			Section::Scroll* scroll = section->get_scroll();
-			uint16_t refresh = maestro_controller_->get_maestro()->get_timing()->get_interval();
+			uint16_t refresh = maestro_controller_->get_maestro()->get_timer()->get_interval();
 			// x axis
-			if (scroll->timing_x != nullptr) {
-				float x = refresh / (float)scroll->timing_x->get_interval();
+			if (scroll->timer_x != nullptr) {
+				float x = refresh / (float)scroll->timer_x->get_interval();
 				interval_x = (section->get_dimensions()->x * refresh) / x;
 			}
 			else {
@@ -1236,8 +1236,8 @@ namespace PixelMaestroStudio {
 			if (scroll->reverse_x) interval_x *= -1;
 
 			// y axis
-			if (scroll->timing_y != nullptr) {
-				float y = refresh / (float)scroll->timing_y->get_interval();
+			if (scroll->timer_y != nullptr) {
+				float y = refresh / (float)scroll->timer_y->get_interval();
 				interval_y = (section->get_dimensions()->y * refresh) / y;
 			}
 			else {
@@ -1270,13 +1270,13 @@ namespace PixelMaestroStudio {
 			ui->alphaSpinBox->blockSignals(false);
 		}
 
-		// Get animation options and timing
+		// Get animation options and timer.
 		// If no animation is set, initialize one.
 		Animation* animation = section->get_animation();
 		if (animation == nullptr) {
 			PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
 			run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), AnimationType::Solid, true, &palette->colors[0], palette->colors.size()));
-			run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), 1000));
+			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), 1000));
 			animation = section->get_animation();
 		}
 
@@ -1284,22 +1284,22 @@ namespace PixelMaestroStudio {
 		ui->orientationComboBox->blockSignals(true);
 		ui->reverse_animationCheckBox->blockSignals(true);
 		ui->fadeCheckBox->blockSignals(true);
-		ui->timingSlider->blockSignals(true);
-		ui->timingSpinBox->blockSignals(true);
+		ui->animationTimerSlider->blockSignals(true);
+		ui->animationIntervalSpinBox->blockSignals(true);
 		ui->pauseSlider->blockSignals(true);
 		ui->pauseSpinBox->blockSignals(true);
 		ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 		ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 		ui->fadeCheckBox->setChecked(animation->get_fade());
-		ui->timingSlider->setValue(animation->get_timing()->get_interval());
-		ui->timingSpinBox->setValue(animation->get_timing()->get_interval());
-		ui->pauseSlider->setValue(animation->get_timing()->get_pause());
-		ui->pauseSpinBox->setValue(animation->get_timing()->get_pause());
+		ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
+		ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
+		ui->pauseSlider->setValue(animation->get_timer()->get_pause());
+		ui->pauseSpinBox->setValue(animation->get_timer()->get_pause());
 		ui->orientationComboBox->blockSignals(false);
 		ui->reverse_animationCheckBox->blockSignals(false);
 		ui->fadeCheckBox->blockSignals(false);
-		ui->timingSlider->blockSignals(false);
-		ui->timingSpinBox->blockSignals(false);
+		ui->animationTimerSlider->blockSignals(false);
+		ui->animationIntervalSpinBox->blockSignals(false);
 		ui->pauseSlider->blockSignals(false);
 		ui->pauseSpinBox->blockSignals(false);
 
@@ -1338,8 +1338,8 @@ namespace PixelMaestroStudio {
 			ui->canvasComboBox->setCurrentIndex((int)canvas->get_type() + 1);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
-			if (canvas->get_frame_timing() != nullptr) {
-				ui->frameRateSpinBox->setValue(canvas->get_frame_timing()->get_interval());
+			if (canvas->get_frame_timer() != nullptr) {
+				ui->frameRateSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 			}
 			set_canvas_controls_enabled((uint8_t)(canvas->get_type() + 1));
 
@@ -1605,8 +1605,8 @@ namespace PixelMaestroStudio {
 		ui->currentTimeLineEdit->setEnabled(enabled);
 		ui->toggleShowModeCheckBox->setEnabled(enabled);
 		ui->toggleShowModeLabel->setEnabled(enabled);
-		ui->timingMethodLabel->setEnabled(enabled);
-		ui->timingMethodComboBox->setEnabled(enabled);
+		ui->showTimingMethodLabel->setEnabled(enabled);
+		ui->showTimingMethodComboBox->setEnabled(enabled);
 		ui->eventHistoryLabel->setEnabled(enabled);
 		ui->eventHistoryWidget->setEnabled(enabled);
 		ui->eventListLabel->setEnabled(enabled);
@@ -1623,13 +1623,13 @@ namespace PixelMaestroStudio {
 		ui->relativeTimeLineEdit->setEnabled(enabled);
 	}
 
-	/// Sets the timing and pause intervals for the active Animation.
-	void MaestroControlWidget::set_timing() {
+	/// Sets the active Animation's timer.
+	void MaestroControlWidget::set_animation_timer() {
 		uint16_t pause = ui->pauseSpinBox->value();
-		uint16_t new_timing = ui->timingSpinBox->value();
-		AnimationTiming* timing = active_section_->get_animation()->get_timing();
-		if (new_timing != timing->get_interval() || pause != timing->get_pause()) {
-			run_cue(animation_handler->set_timing(get_section_index(), get_layer_index(), new_timing, pause));
+		uint16_t new_interval = ui->animationIntervalSpinBox->value();
+		AnimationTimer* timer = active_section_->get_animation()->get_timer();
+		if (new_interval != timer->get_interval() || pause != timer->get_pause()) {
+			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
 		}
 	}
 

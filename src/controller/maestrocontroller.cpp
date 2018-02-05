@@ -49,7 +49,10 @@ namespace PixelMaestroStudio {
 		 * If we can't load the configured refresh rate, default to 50 (20fps)
 		 */
 		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
-		maestro_->set_timing(refresh);
+		maestro_->set_timer(refresh);
+
+		// TODO: Testing auto-sync
+		//maestro_->set_auto_sync(10000);
 
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
@@ -162,9 +165,9 @@ namespace PixelMaestroStudio {
 	 * @param datastream Stream to save the Cues to.
 	 */
 	void MaestroController::save_maestro_settings(QDataStream *datastream) {
-		// Timing
+		// Timer
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroHandler);
-		write_cue_to_stream(datastream, maestro_handler->set_timing(maestro_->get_timing()->get_interval()));
+		write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 
 		// Save Show settings
 		Show* show = maestro_->get_show();
@@ -205,7 +208,7 @@ namespace PixelMaestroStudio {
 		write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 		write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
-		write_cue_to_stream(datastream, animation_handler->set_timing(section_id, layer_id, animation->get_timing()->get_interval(), animation->get_timing()->get_pause()));
+		write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_pause()));
 		// Save Animation-specific settings
 		switch(animation->get_type()) {
 			case AnimationType::Fire:
@@ -255,8 +258,8 @@ namespace PixelMaestroStudio {
 
 			CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasHandler);
 
-			if (canvas->get_frame_timing()) {
-				write_cue_to_stream(datastream, canvas_handler->set_frame_timing(section_id, layer_id, canvas->get_frame_timing()->get_interval()));
+			if (canvas->get_frame_timer()) {
+				write_cue_to_stream(datastream, canvas_handler->set_frame_timer(section_id, layer_id, canvas->get_frame_timer()->get_interval()));
 			}
 
 			// Save the PaletteCanvas' palette
@@ -313,7 +316,7 @@ namespace PixelMaestroStudio {
 
 	void MaestroController::start() {
 		elapsed_timer_.restart();
-		timer_.start(this->maestro_->get_timing()->get_interval());
+		timer_.start(this->maestro_->get_timer()->get_interval());
 	}
 
 	void MaestroController::stop() {

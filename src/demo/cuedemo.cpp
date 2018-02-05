@@ -25,7 +25,7 @@ namespace PixelMaestroStudio {
 		controller->run();
 
 		AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
-		animation_handler->set_timing(0, 0, 2000, 1500);
+		animation_handler->set_timer(0, 0, 2000, 1500);
 		controller->run();
 
 		// Note that this isn't true black because the Layer mixmode treats true black as transparent.
@@ -33,7 +33,7 @@ namespace PixelMaestroStudio {
 		section_handler->set_animation(0, 1, AnimationType::Type::Cycle, false, colors_white, 2);
 		controller->run();
 
-		animation_handler->set_timing(0, 1, 2000, 1500);
+		animation_handler->set_timer(0, 1, 2000, 1500);
 		controller->run();
 
 		section_handler->set_canvas(0, 1, CanvasType::AnimationCanvas);

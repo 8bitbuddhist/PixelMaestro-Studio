@@ -16,8 +16,10 @@ namespace PixelMaestroStudio {
 														"Set Radial Options",
 														"Set Reverse",
 														"Set Sparkle Options",
-														"Set Timing",
-														"Set Fire Options"});
+														"Set Timer",
+														"Set Fire Options",
+														"Start",
+														"Stop"});
 
 	const QStringList CueInterpreter::CanvasActions({"Clear",
 													 "Draw Circle",
@@ -28,14 +30,19 @@ namespace PixelMaestroStudio {
 													 "Draw Text",
 													 "Draw Triangle",
 													 "Next Frame",
-													 "Remove Frame Timing",
+													 "Remove Frame Timer",
 													 "Set Colors",
 													 "Set Current Frame Index",
-													 "Set Frame Timing",
-													 "Set Num Frames"});
+													 "Set Frame Timer",
+													 "Set Num Frames",
+													 "Start Frame Timer",
+													 "Stop Frame Timer"});
 
 	const QStringList CueInterpreter::MaestroActions({"Set Show",
-													  "Set Timing"});
+													  "Set Timer",
+													  "Start",
+													  "Stop"
+													  "Sync"});
 
 	const QStringList CueInterpreter::SectionActions({"Remove Canvas",
 													  "Remove Layer",
@@ -167,11 +174,17 @@ namespace PixelMaestroStudio {
 			case AnimationCueHandler::SetSparkleOptions:
 				result->append(", Threshold: " + QString::number(cue[AnimationCueHandler::Byte::OptionsByte]));
 				break;
-			case AnimationCueHandler::SetTiming:
+			case AnimationCueHandler::SetTimer:
 				{
 					result->append(", Timing: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
 					result->append(", Pause: " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte + 2])));
 				}
+				break;
+			case AnimationCueHandler::Start:
+				result->append(", Start");
+				break;
+			case AnimationCueHandler::Stop:
+				result->append(", Stop");
 				break;
 		}
 	}
@@ -189,12 +202,12 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasCueHandler::Action::NextFrame:
 				break;
-			case CanvasCueHandler::Action::RemoveFrameTiming:
+			case CanvasCueHandler::Action::RemoveFrameTimer:
 				break;
 			case CanvasCueHandler::Action::SetCurrentFrameIndex:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
 				break;
-			case CanvasCueHandler::Action::SetFrameTiming:
+			case CanvasCueHandler::Action::SetFrameTimer:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
 				break;
 			case CanvasCueHandler::Action::SetNumFrames:
@@ -211,8 +224,15 @@ namespace PixelMaestroStudio {
 		switch((MaestroCueHandler::Action)cue[MaestroCueHandler::Byte::ActionByte]) {
 			case MaestroCueHandler::Action::SetShow:
 				break;
-			case MaestroCueHandler::Action::SetTiming:
+			case MaestroCueHandler::Action::SetTimer:
+			case MaestroCueHandler::Action::Sync:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte])));
+				break;
+			case MaestroCueHandler::Start:
+				result->append(", Start");
+				break;
+			case MaestroCueHandler::Stop:
+				result->append(", Stop");
 				break;
 		}
 	}

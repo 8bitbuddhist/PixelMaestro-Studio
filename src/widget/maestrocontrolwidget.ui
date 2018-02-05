@@ -397,7 +397,7 @@
         </widget>
        </item>
        <item row="4" column="6">
-        <widget class="QSpinBox" name="timingSpinBox">
+        <widget class="QSpinBox" name="animationIntervalSpinBox">
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
@@ -463,7 +463,7 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="timingLabel">
+        <widget class="QLabel" name="animationTimerLabel">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -471,7 +471,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Timing</string>
+          <string>Timer</string>
          </property>
         </widget>
        </item>
@@ -515,7 +515,7 @@
         </widget>
        </item>
        <item row="4" column="1" colspan="5">
-        <widget class="QSlider" name="timingSlider">
+        <widget class="QSlider" name="animationTimerSlider">
          <property name="toolTip">
           <string>The amount of time each cycle takes to complete</string>
          </property>
@@ -600,7 +600,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>554</width>
+            <width>544</width>
             <height>460</height>
            </rect>
           </property>
@@ -996,8 +996,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>534</width>
-                <height>68</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_7">
@@ -1116,7 +1116,7 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QLabel" name="timingMethodLabel">
+              <widget class="QLabel" name="showTimingMethodLabel">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1132,7 +1132,7 @@
               </widget>
              </item>
              <item row="0" column="3">
-              <widget class="QComboBox" name="timingMethodComboBox">
+              <widget class="QComboBox" name="showTimingMethodComboBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1475,8 +1475,8 @@
   <tabstop>orientationComboBox</tabstop>
   <tabstop>reverse_animationCheckBox</tabstop>
   <tabstop>fadeCheckBox</tabstop>
-  <tabstop>timingSlider</tabstop>
-  <tabstop>timingSpinBox</tabstop>
+  <tabstop>animationTimerSlider</tabstop>
+  <tabstop>animationIntervalSpinBox</tabstop>
   <tabstop>pauseSlider</tabstop>
   <tabstop>pauseSpinBox</tabstop>
   <tabstop>canvasScrollArea</tabstop>
@@ -1508,7 +1508,7 @@
   <tabstop>drawButton</tabstop>
   <tabstop>showScrollArea</tabstop>
   <tabstop>enableShowCheckBox</tabstop>
-  <tabstop>timingMethodComboBox</tabstop>
+  <tabstop>showTimingMethodComboBox</tabstop>
   <tabstop>toggleShowModeCheckBox</tabstop>
   <tabstop>loopCheckBox</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
