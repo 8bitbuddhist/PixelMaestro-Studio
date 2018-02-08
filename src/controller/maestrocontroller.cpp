@@ -51,9 +51,6 @@ namespace PixelMaestroStudio {
 		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
 		maestro_->set_timer(refresh);
 
-		// TODO: Testing auto-sync
-		//maestro_->set_auto_sync(10000);
-
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
 
