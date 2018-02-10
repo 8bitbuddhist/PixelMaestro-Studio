@@ -3,6 +3,7 @@
 #include "animation/plasmaanimation.h"
 #include "animation/radialanimation.h"
 #include "animation/sparkleanimation.h"
+#include "animation/waveanimation.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/canvas.h"
 #include "canvas/canvastype.h"
@@ -238,6 +239,11 @@ namespace PixelMaestroStudio {
 					write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
 				}
 				break;
+			case AnimationType::Wave:
+				{
+					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
+					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_skew()));
+				}
 			default:
 				break;
 		}

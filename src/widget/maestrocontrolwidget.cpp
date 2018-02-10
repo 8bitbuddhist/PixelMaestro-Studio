@@ -17,6 +17,8 @@
 #include "animation/radialanimationcontrolwidget.h"
 #include "animation/sparkleanimation.h"
 #include "animation/sparkleanimationcontrolwidget.h"
+#include "animation/waveanimation.h"
+#include "animation/waveanimationcontrolwidget.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
@@ -1679,6 +1681,8 @@ namespace PixelMaestroStudio {
 			case AnimationType::Sparkle:
 				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControlWidget((SparkleAnimation*)animation, this, layout->widget()));
 				break;
+			case AnimationType::Wave:
+				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new WaveAnimationControlWidget((WaveAnimation*)animation, this, layout->widget()));
 			default:
 				break;
 		}
