@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WaveAnimationControlWidget</class>
- <widget class="QWidget" name="WaveAnimationControlWidget">
+ <class>MergeAnimationControlWidget</class>
+ <widget class="QWidget" name="MergeAnimationControlWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>239</width>
+    <width>214</width>
     <height>47</height>
    </rect>
   </property>
