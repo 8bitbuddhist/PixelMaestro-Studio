@@ -221,7 +221,10 @@ namespace PixelMaestroStudio {
 			case CanvasCueHandler::Action::SetNumFrames:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[CanvasCueHandler::Byte::OptionsByte])));
 				break;
-			default:	// Draw actions
+			case CanvasCueHandler::DrawText:
+				result->append(": \"" + QString::fromLatin1((char*)&cue[CanvasCueHandler::Byte::OptionsByte + 6], cue[CanvasCueHandler::Byte::OptionsByte + 5]) + "\"");
+				break;
+			default:	// TODO: Other draw actions
 				break;
 		}
 	}
