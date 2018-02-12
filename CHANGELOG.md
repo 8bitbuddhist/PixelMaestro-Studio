@@ -8,6 +8,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Animation Editor
 	- Added support for the Fire animation introduced in PixelMaestro 0.13.
 	- Added `skew` parameters for Merge and Wave animations.
+	- Readded ability to reorder Show Events.
 
 ## [v0.12] - 2018-01-22
 ### Changed

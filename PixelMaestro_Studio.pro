@@ -71,11 +71,11 @@ SOURCES += src/main.cpp\
 	src/dialog/simpledrawingareadialog.cpp \
 	lib/PixelMaestro/src/animation/fireanimation.cpp \
 	src/widget/animation/fireanimationcontrolwidget.cpp \
-    lib/PixelMaestro/src/core/timer/timer.cpp \
-    lib/PixelMaestro/src/core/timer/animationtimer.cpp \
-    lib/PixelMaestro/src/animation/mappedanimation.cpp \
-    src/widget/animation/waveanimationcontrolwidget.cpp \
-    src/widget/animation/mergeanimationcontrolwidget.cpp
+	lib/PixelMaestro/src/core/timer/timer.cpp \
+	lib/PixelMaestro/src/core/timer/animationtimer.cpp \
+	lib/PixelMaestro/src/animation/mappedanimation.cpp \
+	src/widget/animation/waveanimationcontrolwidget.cpp \
+	src/widget/animation/mergeanimationcontrolwidget.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -138,11 +138,11 @@ HEADERS += \
 	src/dialog/simpledrawingareadialog.h \
 	lib/PixelMaestro/src/animation/fireanimation.h \
 	src/widget/animation/fireanimationcontrolwidget.h \
-    lib/PixelMaestro/src/core/timer/timer.h \
-    lib/PixelMaestro/src/core/timer/animationtimer.h \
-    lib/PixelMaestro/src/animation/mappedanimation.h \
-    src/widget/animation/waveanimationcontrolwidget.h \
-    src/widget/animation/mergeanimationcontrolwidget.h
+	lib/PixelMaestro/src/core/timer/timer.h \
+	lib/PixelMaestro/src/core/timer/animationtimer.h \
+	lib/PixelMaestro/src/animation/mappedanimation.h \
+	src/widget/animation/waveanimationcontrolwidget.h \
+	src/widget/animation/mergeanimationcontrolwidget.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \
@@ -155,9 +155,11 @@ FORMS	+= \
 	src/dialog/preferencesdialog.ui \
 	src/dialog/simpledrawingareadialog.ui \
 	src/widget/animation/fireanimationcontrolwidget.ui \
-    src/widget/animation/waveanimationcontrolwidget.ui \
-    src/widget/animation/mergeanimationcontrolwidget.ui
+	src/widget/animation/waveanimationcontrolwidget.ui \
+	src/widget/animation/mergeanimationcontrolwidget.ui
 
 INCLUDEPATH += \
 		$$PWD/src \
 		$$PWD/lib/PixelMaestro/src
+
+DISTFILES +=

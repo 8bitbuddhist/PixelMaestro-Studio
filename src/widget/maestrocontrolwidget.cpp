@@ -323,10 +323,6 @@ namespace PixelMaestroStudio {
 		// Finally, show the default Section
 		set_active_section(section);
 		populate_layer_combobox();
-
-		// FIXME: Disable Event reordering due to SIGSEGV in ShowController.
-		ui->moveEventDownButton->setVisible(false);
-		ui->moveEventUpButton->setVisible(false);
 	}
 
 	/// Reinitializes Palettes from the Palette Dialog.
@@ -355,6 +351,11 @@ namespace PixelMaestroStudio {
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
 			ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
+
+			int row = ui->eventListWidget->count() - 1;
+			QListWidgetItem* item = ui->eventListWidget->item(row);
+			item->setData(0, event->get_time());
+			item->setData(1, *event->get_cue());
 		}
 		show_controller_->initialize_events();
 	}
@@ -718,11 +719,10 @@ namespace PixelMaestroStudio {
 		int current_row = ui->eventListWidget->currentRow();
 
 		if (current_row != ui->eventListWidget->count() - 1) {
+			show_controller_->move(current_row, current_row	+ 1);
+
 			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
 			ui->eventListWidget->insertItem(current_row + 1, current_item);
-
-			show_controller_->get_events().move(current_row, current_row + 1);
-			show_controller_->initialize_events();
 		}
 	}
 
@@ -731,11 +731,10 @@ namespace PixelMaestroStudio {
 		int current_row = ui->eventListWidget->currentRow();
 
 		if (current_row != 0) {
+			show_controller_->move(current_row, current_row - 1);
+
 			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
 			ui->eventListWidget->insertItem(current_row - 1, current_item);
-
-			show_controller_->get_events().move(current_row, current_row - 1);
-			show_controller_->initialize_events();
 		}
 	}
 

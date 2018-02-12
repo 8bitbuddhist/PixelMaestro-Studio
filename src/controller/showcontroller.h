@@ -21,6 +21,7 @@ namespace PixelMaestroStudio {
 			QString get_event_description(uint16_t index);
 			QVector<Event> get_events();
 			void initialize_events();
+			void move(uint16_t from, uint16_t to);
 			void remove_event(uint16_t index);
 
 		private:
