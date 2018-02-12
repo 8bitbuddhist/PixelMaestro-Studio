@@ -35,19 +35,20 @@ namespace PixelMaestroStudio {
 			QImage frame = image.read();
 
 			// For PaletteCanvases, convert the image into an 8-bit analogue
-			// WARNING: This runs multiple times for animated images when it should only run once
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
 				frame = frame.convertToFormat(QImage::Format_Indexed8);
 			}
 
-			// Extract the image's color table (for PaletteCanvases)
+			// Extract the image's color table
 			QVector<QRgb> color_table = frame.colorTable();
-			while (color_table.size() >= 256) {
-				color_table.removeLast();
-			}
 
 			// For PaletteCanvases, set the Canvas' palette before continuing.
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
+
+				// Pare down the frame's palette so it fits in the Canvas' palette.
+				while (color_table.size() >= 256) {
+					color_table.removeLast();
+				}
 
 				// Copy the color table into a temporary RGB array so we can Cue it
 				Colors::RGB color_table_rgb[color_table.size()];

@@ -600,7 +600,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
+            <width>554</width>
             <height>460</height>
            </rect>
           </property>
@@ -801,7 +801,7 @@
            <item row="1" column="3">
             <widget class="QLabel" name="currentFrameLabel">
              <property name="text">
-              <string>Current Index</string>
+              <string>Current Frame</string>
              </property>
             </widget>
            </item>
@@ -996,8 +996,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>534</width>
+                <height>68</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_7">
