@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 		animation->set_timer(250);
 		animation->set_orientation(Animation::Orientation::Vertical);
 
-		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
+		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::AnimationCanvas));
 
 		// Start drawing
 		// First, box off the Canvas into 4 quadrants

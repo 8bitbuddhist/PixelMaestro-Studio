@@ -301,7 +301,7 @@ namespace PixelMaestroStudio {
 			show_controller_->initialize_events();
 
 			ui->showTimingMethodComboBox->blockSignals(true);
-			ui->showTimingMethodComboBox->setCurrentIndex(show->get_timing());
+			ui->showTimingMethodComboBox->setCurrentIndex((uint8_t)show->get_timing());
 			ui->showTimingMethodComboBox->blockSignals(false);
 
 			ui->loopCheckBox->blockSignals(true);
@@ -374,13 +374,13 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
 		// Only change if the animation is different
-		if (active_section_->get_animation()->get_type() == (AnimationType::Type)index) {
+		if (active_section_->get_animation()->get_type() == (AnimationType)index) {
 			return;
 		}
 
 		// Preserve the animation cycle between changes
 		PaletteController::Palette* palette = palette_controller_.get_palette(ui->colorComboBox->currentIndex());
-		run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType::Type)index, true, &palette->colors[0], palette->colors.size(), true));
+		run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)index, true, &palette->colors[0], palette->colors.size(), true));
 		show_extra_controls(active_section_->get_animation());
 	}
 
@@ -403,7 +403,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Canvas type.
 	 */
 	void MaestroControlWidget::on_canvasComboBox_currentIndexChanged(int index) {
-		CanvasType::Type new_canvas_type = (CanvasType::Type)(index - 1);
+		CanvasType new_canvas_type = (CanvasType)(index - 1);
 
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
 		if (active_section_->get_canvas() && active_section_->get_canvas()->get_type() != new_canvas_type) {
@@ -576,7 +576,7 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_drawButton_clicked() {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
-		switch ((CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1)) {
+		switch ((CanvasType)(ui->canvasComboBox->currentIndex() - 1)) {
 			case CanvasType::AnimationCanvas:
 				{
 					if (checked_button == ui->circleRadioButton) {
@@ -1175,8 +1175,8 @@ namespace PixelMaestroStudio {
 			 * Send to serial devices.
 			 * Certain actions (e.g. grid resizing) should be caught here and prevented from running.
 			 */
-			if (!(cue[CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionHandler &&
-				cue[SectionCueHandler::Byte::ActionByte] == (uint8_t)SectionCueHandler::Action::SetDimensions)) {
+			if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionHandler &&
+				cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)SectionCueHandler::Action::SetDimensions)) {
 				for (int i = 0; i < serial_devices_.size(); i++) {
 					if (serial_devices_[i]->isOpen()) {
 						int size = cue_controller_->get_cue_size(cue);
@@ -1267,7 +1267,7 @@ namespace PixelMaestroStudio {
 		if (section->get_parent_section() != nullptr) {
 			ui->mix_modeComboBox->blockSignals(true);
 			ui->alphaSpinBox->blockSignals(true);
-			ui->mix_modeComboBox->setCurrentIndex(section->get_parent_section()->get_layer()->mix_mode);
+			ui->mix_modeComboBox->setCurrentIndex((uint8_t)section->get_parent_section()->get_layer()->mix_mode);
 			ui->alphaSpinBox->setValue(section->get_parent_section()->get_layer()->alpha);
 			ui->mix_modeComboBox->blockSignals(false);
 			ui->alphaSpinBox->blockSignals(false);
@@ -1291,7 +1291,7 @@ namespace PixelMaestroStudio {
 		ui->animationIntervalSpinBox->blockSignals(true);
 		ui->pauseSlider->blockSignals(true);
 		ui->pauseSpinBox->blockSignals(true);
-		ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
+		ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
 		ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 		ui->fadeCheckBox->setChecked(animation->get_fade());
 		ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
@@ -1326,7 +1326,7 @@ namespace PixelMaestroStudio {
 
 		// Set the animation
 		ui->animationComboBox->blockSignals(true);
-		ui->animationComboBox->setCurrentIndex(animation->get_type());
+		ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type());
 		ui->animationComboBox->blockSignals(false);
 		show_extra_controls(animation);
 
@@ -1344,7 +1344,7 @@ namespace PixelMaestroStudio {
 			if (canvas->get_frame_timer() != nullptr) {
 				ui->frameRateSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 			}
-			set_canvas_controls_enabled((uint8_t)(canvas->get_type() + 1));
+			set_canvas_controls_enabled(((uint8_t)canvas->get_type() + 1));
 
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
 				// Find the corresponding palette in the Palette Controller.
@@ -1418,7 +1418,7 @@ namespace PixelMaestroStudio {
 		ui->clearButton->setEnabled(index);
 
 		// Canvas-specific controls
-		CanvasType::Type type = (CanvasType::Type)(index - 1);
+		CanvasType type = (CanvasType)(index - 1);
 		ui->selectColorButton->setEnabled(index && type  == CanvasType::ColorCanvas);
 		ui->canvasPaletteComboBox->setEnabled(index && type == CanvasType::PaletteCanvas);
 		ui->canvasPaletteLabel->setEnabled(index && type == CanvasType::PaletteCanvas);

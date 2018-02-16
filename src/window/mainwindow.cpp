@@ -188,7 +188,7 @@ namespace PixelMaestroStudio {
 		animation->set_reverse(true);
 		animation->set_timer(250);
 
-		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
+		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::AnimationCanvas));
 
 		drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), maestro_controller_, canvas);
 		installEventFilter(drawing_area_);

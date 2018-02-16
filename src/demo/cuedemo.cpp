@@ -21,7 +21,7 @@ namespace PixelMaestroStudio {
 		controller->run();
 
 		Colors::RGB colors_black[] = {ColorPresets::Black, ColorPresets::White};
-		section_handler->set_animation(0, 0, AnimationType::Type::Cycle, false, colors_black, 2);
+		section_handler->set_animation(0, 0, AnimationType::Cycle, false, colors_black, 2);
 		controller->run();
 
 		AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
@@ -30,7 +30,7 @@ namespace PixelMaestroStudio {
 
 		// Note that this isn't true black because the Layer mixmode treats true black as transparent.
 		Colors::RGB colors_white[] = {ColorPresets::White, {0, 0, 1}};
-		section_handler->set_animation(0, 1, AnimationType::Type::Cycle, false, colors_white, 2);
+		section_handler->set_animation(0, 1, AnimationType::Cycle, false, colors_white, 2);
 		controller->run();
 
 		animation_handler->set_timer(0, 1, 2000, 1500);

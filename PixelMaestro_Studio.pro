@@ -8,7 +8,7 @@ QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
-QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
+QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
 DEFINES += BUILD_VERSION=\\\"v0.13\\\"
@@ -96,6 +96,7 @@ HEADERS += \
 		lib/PixelMaestro/src/animation/sparkleanimation.h \
 		lib/PixelMaestro/src/animation/waveanimation.h \
 		lib/PixelMaestro/src/animation/animation.h \
+		lib/PixelMaestro/src/animation/animationtype.h \
 		lib/PixelMaestro/src/core/colors.h \
 		lib/PixelMaestro/src/core/maestro.h \
 		lib/PixelMaestro/src/core/pixel.h \
@@ -120,7 +121,6 @@ HEADERS += \
 		lib/PixelMaestro/src/cue/canvascuehandler.h \
 		lib/PixelMaestro/src/cue/maestrocuehandler.h \
 		lib/PixelMaestro/src/cue/sectioncuehandler.h \
-		lib/PixelMaestro/src/animation/animationtype.h \
 		src/controller/palettecontroller.h \
 		src/controller/cueinterpreter.h \
 		src/controller/showcontroller.h \
@@ -161,5 +161,3 @@ FORMS	+= \
 INCLUDEPATH += \
 		$$PWD/src \
 		$$PWD/lib/PixelMaestro/src
-
-DISTFILES +=

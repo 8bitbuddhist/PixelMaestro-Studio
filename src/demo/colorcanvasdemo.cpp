@@ -13,7 +13,7 @@ namespace PixelMaestroStudio {
 		animation->set_reverse(true);
 
 		Section::Layer* layer = section->set_layer(Colors::MixMode::Overlay);
-		ColorCanvas* canvas = static_cast<ColorCanvas*>(layer->section->set_canvas(CanvasType::Type::ColorCanvas));
+		ColorCanvas* canvas = static_cast<ColorCanvas*>(layer->section->set_canvas(CanvasType::ColorCanvas));
 
 		canvas->draw_circle(ColorPresets::Blue, 40, 40, 40, true);
 		canvas->draw_circle(ColorPresets::Green, 40, 40, 30, true);
