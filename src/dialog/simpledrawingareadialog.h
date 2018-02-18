@@ -19,6 +19,7 @@ namespace Ui {
 }
 
 namespace PixelMaestroStudio {
+	class SimpleDrawingArea;
 	class SimpleDrawingAreaDialog : public QDialog {
 			Q_OBJECT
 

@@ -7,13 +7,16 @@
 
 #include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
+#include "widget/maestrocontrolwidget.h"
 #include <QSettings>
 
 namespace PixelMaestroStudio {
+	class MaestroControlWidget;
 	class SimpleDrawingArea : public MaestroDrawingArea {
 		public:
 			SimpleDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			void resize_pixels();
+			void set_maestro_control_widget(MaestroControlWidget* maestro_control_widget);
 
 		protected:
 			void draw_section(QPainter* painter, uint8_t section_index, QRect start);
@@ -29,6 +32,7 @@ namespace PixelMaestroStudio {
 			std::vector<uint32_t> last_pixel_count_;
 
 		private:
+			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			QSettings settings_;
 	};
 }

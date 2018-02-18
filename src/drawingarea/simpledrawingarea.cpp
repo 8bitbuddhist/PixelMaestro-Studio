@@ -54,6 +54,16 @@ namespace PixelMaestroStudio {
 				}
 			}
 		}
+
+		// FIXME: If this is the active Section, highlight it
+		if (maestro_control_widget_ != nullptr && maestro_control_widget_->get_section_index() == section_index) {
+			tmp_brush_.setColor(Qt::cyan);
+			tmp_brush_.setStyle(Qt::BrushStyle::NoBrush);
+			tmp_rect_.setRect(start.x(), 0, radius_ * section->get_dimensions()->x, radius_ * section->get_dimensions()->y);
+			painter->setBrush(tmp_brush_);
+			painter->setPen(Qt::PenStyle::SolidLine);
+			painter->drawRect(tmp_rect_);
+		}
 	}
 
 	/**
@@ -137,5 +147,13 @@ namespace PixelMaestroStudio {
 				radius_ *= 0.4;
 				break;
 		}
+	}
+
+	/**
+	 * Sets the widget controlling this DrawingArea.
+	 * @param maestro_control_widget Controlling widget.
+	 */
+	void SimpleDrawingArea::set_maestro_control_widget(MaestroControlWidget *maestro_control_widget) {
+		this->maestro_control_widget_ = maestro_control_widget;
 	}
 }

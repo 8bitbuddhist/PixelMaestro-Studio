@@ -17,6 +17,7 @@ namespace PixelMaestroStudio {
 		this->maestro_controller_ = maestro_controller;
 		QLayout* layout = this->findChild<QLayout*>("maestroLayout");
 		drawing_area_ = std::unique_ptr<SimpleDrawingArea>(new SimpleDrawingArea(layout->widget(), maestro_controller_));
+		drawing_area_->set_maestro_control_widget((MaestroControlWidget*)parent);
 		layout->addWidget(drawing_area_.get());
 
 		this->setWindowFlags(Qt::Window);

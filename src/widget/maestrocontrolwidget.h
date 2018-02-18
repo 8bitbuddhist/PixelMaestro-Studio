@@ -34,6 +34,7 @@ namespace Ui {
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
+	class SimpleDrawingAreaDialog;
 	class MaestroControlWidget : public QWidget {
 		Q_OBJECT
 
