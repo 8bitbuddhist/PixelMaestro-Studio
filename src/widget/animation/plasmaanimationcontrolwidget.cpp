@@ -1,5 +1,5 @@
 #include "plasmaanimationcontrolwidget.h"
-#include "ui_plasmaanimationcontrol.h"
+#include "ui_plasmaanimationcontrolwidget.h"
 
 namespace PixelMaestroStudio {
 	PlasmaAnimationControlWidget::PlasmaAnimationControlWidget(PlasmaAnimation* animation, MaestroControlWidget* controller, QWidget *parent) :

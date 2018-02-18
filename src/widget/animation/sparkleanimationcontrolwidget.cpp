@@ -1,5 +1,5 @@
 #include "sparkleanimationcontrolwidget.h"
-#include "ui_sparkleanimationcontrol.h"
+#include "ui_sparkleanimationcontrolwidget.h"
 
 namespace PixelMaestroStudio {
 	SparkleAnimationControlWidget::SparkleAnimationControlWidget(SparkleAnimation* animation, MaestroControlWidget* controller, QWidget *parent) :

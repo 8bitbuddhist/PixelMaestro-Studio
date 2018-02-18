@@ -13,10 +13,10 @@ namespace Ui {
 
 namespace PixelMaestroStudio {
 	class LightningAnimationControlWidget : public QWidget {
-			Q_OBJECT
+		Q_OBJECT
 
 		public:
-			explicit LightningAnimationControlWidget(LightningAnimation* animation, MaestroControlWidget* controller, QWidget *parent = 0);
+			explicit LightningAnimationControlWidget(LightningAnimation* animation, MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
 			~LightningAnimationControlWidget();
 
 		private slots:
@@ -30,7 +30,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			LightningAnimation* animation_;
-			MaestroControlWidget* maestro_control_;
+			MaestroControlWidget* maestro_control_widget_;
 			Ui::LightningAnimationControlWidget *ui;
 	};
 }

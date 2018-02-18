@@ -1,5 +1,5 @@
 #include "radialanimationcontrolwidget.h"
-#include "ui_radialanimationcontrol.h"
+#include "ui_radialanimationcontrolwidget.h"
 
 namespace PixelMaestroStudio {
 	RadialAnimationControlWidget::RadialAnimationControlWidget(RadialAnimation* animation, MaestroControlWidget* maestro_control, QWidget *parent) :
