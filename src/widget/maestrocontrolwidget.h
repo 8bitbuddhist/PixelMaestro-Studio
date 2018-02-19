@@ -25,7 +25,7 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/showcuehandler.h"
-#include "dialog/simpledrawingareadialog.h"
+#include "dialog/maestrodrawingareadialog.h"
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -34,7 +34,9 @@ namespace Ui {
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
-	class SimpleDrawingAreaDialog;
+	class MaestroController;
+	class ShowController;
+	class MaestroDrawingAreaDialog;
 	class MaestroControlWidget : public QWidget {
 		Q_OBJECT
 
@@ -62,6 +64,7 @@ namespace PixelMaestroStudio {
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
 			void run_cue(uint8_t* cue);
+			void set_active_section(Section* section);
 
 		protected:
 			bool eventFilter(QObject *watched, QEvent *event);
@@ -85,7 +88,7 @@ namespace PixelMaestroStudio {
 			QButtonGroup canvas_shape_type_group_;
 
 			/// Separate Maestro DrawingArea
-			std::unique_ptr<SimpleDrawingAreaDialog> drawing_area_dialog_;
+			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
 
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
@@ -120,7 +123,6 @@ namespace PixelMaestroStudio {
 			void initialize_palettes();
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
-			void set_active_section(Section* section);
 			void set_canvas_controls_enabled(uint8_t index);
 			void set_offset();
 

@@ -6,10 +6,10 @@
 #define PATTERNDEMO_H
 
 #include "controller/maestrocontroller.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 
 namespace PixelMaestroStudio {
-	class CanvasDemo : public SimpleDrawingArea {
+	class CanvasDemo : public MaestroDrawingArea {
 		public:
 			CanvasDemo(QWidget* parent, MaestroController* maestro_controller);
 	};

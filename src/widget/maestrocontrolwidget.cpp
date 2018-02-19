@@ -27,7 +27,7 @@
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 #include "maestrocontrolwidget.h"
 #include "dialog/preferencesdialog.h"
 #include "widget/palettecontrolwidget.h"
@@ -60,7 +60,7 @@ namespace PixelMaestroStudio {
 				if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0) { }
 				// Detect and initialize the simulated serial device
 				else if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
-					drawing_area_dialog_ = std::unique_ptr<SimpleDrawingAreaDialog>(new SimpleDrawingAreaDialog(this, this->maestro_controller_));
+					drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
 					drawing_area_dialog_.get()->show();
 				}
 				// Detect serial/USB devices

@@ -1,14 +1,14 @@
-#include "simpledrawingareadialog.h"
-#include "ui_simpledrawingareadialog.h"
+#include "maestrodrawingareadialog.h"
+#include "ui_maestrodrawingareadialog.h"
 #include <QEvent>
 #include <QKeyEvent>
 
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
-	SimpleDrawingAreaDialog::SimpleDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller) :
+	MaestroDrawingAreaDialog::MaestroDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller) :
 		QDialog(parent),
-		ui(new Ui::SimpleDrawingAreaDialog) {
+		ui(new Ui::MaestroDrawingAreaDialog) {
 		// Capture button key presses
 		qApp->installEventFilter(this);
 
@@ -16,7 +16,7 @@ namespace PixelMaestroStudio {
 
 		this->maestro_controller_ = maestro_controller;
 		QLayout* layout = this->findChild<QLayout*>("maestroLayout");
-		drawing_area_ = std::unique_ptr<SimpleDrawingArea>(new SimpleDrawingArea(layout->widget(), maestro_controller_));
+		drawing_area_ = std::unique_ptr<MaestroDrawingArea>(new MaestroDrawingArea(layout->widget(), maestro_controller_));
 		drawing_area_->set_maestro_control_widget((MaestroControlWidget*)parent);
 		layout->addWidget(drawing_area_.get());
 
@@ -29,7 +29,7 @@ namespace PixelMaestroStudio {
 	 * @param event Keypress event.
 	 * @return True on success.
 	 */
-	bool SimpleDrawingAreaDialog::eventFilter(QObject *watched, QEvent *event) {
+	bool MaestroDrawingAreaDialog::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
 			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
 			if (key_event->key() == Qt::Key_F11) {
@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 		return QObject::eventFilter(watched, event);
 	}
 
-	SimpleDrawingAreaDialog::~SimpleDrawingAreaDialog() {
+	MaestroDrawingAreaDialog::~MaestroDrawingAreaDialog() {
 		delete ui;
 	}
 }

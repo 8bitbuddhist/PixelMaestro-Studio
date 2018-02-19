@@ -15,7 +15,6 @@ DEFINES += BUILD_VERSION=\\\"v0.13\\\"
 
 SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \
-		src/drawingarea/simpledrawingarea.cpp \
 		src/demo/blinkdemo.cpp \
 		src/controller/maestrocontroller.cpp \
 		src/demo/showdemo.cpp \
@@ -68,19 +67,19 @@ SOURCES += src/main.cpp\
 	src/widget/animation/radialanimationcontrolwidget.cpp \
 	src/widget/animation/sparkleanimationcontrolwidget.cpp \
 	src/dialog/preferencesdialog.cpp \
-	src/dialog/simpledrawingareadialog.cpp \
 	lib/PixelMaestro/src/animation/fireanimation.cpp \
 	src/widget/animation/fireanimationcontrolwidget.cpp \
 	lib/PixelMaestro/src/core/timer/timer.cpp \
 	lib/PixelMaestro/src/core/timer/animationtimer.cpp \
 	lib/PixelMaestro/src/animation/mappedanimation.cpp \
 	src/widget/animation/waveanimationcontrolwidget.cpp \
-	src/widget/animation/mergeanimationcontrolwidget.cpp
+	src/widget/animation/mergeanimationcontrolwidget.cpp \
+    src/drawingarea/sectiondrawingarea.cpp \
+    src/dialog/maestrodrawingareadialog.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
 		src/drawingarea/maestrodrawingarea.h \
-		src/drawingarea/simpledrawingarea.h \
 		src/controller/maestrocontroller.h \
 		src/demo/showdemo.h \
 		lib/PixelMaestro/src/canvas/fonts/font.h \
@@ -135,14 +134,15 @@ HEADERS += \
 	src/widget/animation/radialanimationcontrolwidget.h \
 	src/widget/animation/sparkleanimationcontrolwidget.h \
 	src/dialog/preferencesdialog.h \
-	src/dialog/simpledrawingareadialog.h \
 	lib/PixelMaestro/src/animation/fireanimation.h \
 	src/widget/animation/fireanimationcontrolwidget.h \
 	lib/PixelMaestro/src/core/timer/timer.h \
 	lib/PixelMaestro/src/core/timer/animationtimer.h \
 	lib/PixelMaestro/src/animation/mappedanimation.h \
 	src/widget/animation/waveanimationcontrolwidget.h \
-	src/widget/animation/mergeanimationcontrolwidget.h
+	src/widget/animation/mergeanimationcontrolwidget.h \
+    src/drawingarea/sectiondrawingarea.h \
+    src/dialog/maestrodrawingareadialog.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \
@@ -153,10 +153,10 @@ FORMS	+= \
 	src/widget/animation/radialanimationcontrolwidget.ui \
 	src/widget/animation/sparkleanimationcontrolwidget.ui \
 	src/dialog/preferencesdialog.ui \
-	src/dialog/simpledrawingareadialog.ui \
 	src/widget/animation/fireanimationcontrolwidget.ui \
 	src/widget/animation/waveanimationcontrolwidget.ui \
-	src/widget/animation/mergeanimationcontrolwidget.ui
+	src/widget/animation/mergeanimationcontrolwidget.ui \
+    src/dialog/maestrodrawingareadialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

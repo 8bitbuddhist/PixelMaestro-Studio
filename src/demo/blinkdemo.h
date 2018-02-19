@@ -5,11 +5,11 @@
 #ifndef BLINKDEMO_H
 #define BLINKDEMO_H
 
-#include "../drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 #include "controller/maestrocontroller.h"
 
 namespace PixelMaestroStudio {
-	class BlinkDemo : public SimpleDrawingArea {
+	class BlinkDemo : public MaestroDrawingArea {
 		public:
 			BlinkDemo(QWidget* parent, MaestroController* maestro_controller);
 	};

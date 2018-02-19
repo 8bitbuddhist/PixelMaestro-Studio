@@ -2,10 +2,10 @@
 #define COMMANDDEMO_H
 
 #include "controller/maestrocontroller.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 
 namespace PixelMaestroStudio {
-	class CueDemo : public SimpleDrawingArea {
+	class CueDemo : public MaestroDrawingArea {
 		public:
 			CueDemo(QWidget* parent, MaestroController* maestro_controller);
 			~CueDemo();

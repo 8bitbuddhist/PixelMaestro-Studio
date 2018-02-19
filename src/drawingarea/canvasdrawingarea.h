@@ -9,10 +9,10 @@
 #define CANVASDRAWINGAREA_H
 
 #include "core/point.h"
-#include "simpledrawingarea.h"
+#include "maestrodrawingarea.h"
 
 namespace PixelMaestroStudio {
-	class CanvasDrawingArea : public SimpleDrawingArea {
+	class CanvasDrawingArea : public MaestroDrawingArea {
 		public:
 			CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, Canvas* canvas);
 			~CanvasDrawingArea();

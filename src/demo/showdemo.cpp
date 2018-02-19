@@ -8,12 +8,12 @@
 #include "cue/canvascuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/event.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 #include <memory>
 #include "showdemo.h"
 
 namespace PixelMaestroStudio {
-	ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
+	ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		maestro_controller_->set_sections(1, Point(25, 10));
 
 		CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();

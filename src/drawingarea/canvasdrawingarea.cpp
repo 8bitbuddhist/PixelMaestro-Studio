@@ -10,7 +10,7 @@
 #include "QToolTip"
 
 namespace PixelMaestroStudio {
-	CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, Canvas* canvas) : SimpleDrawingArea(parent, maestro_controller) {
+	CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, Canvas* canvas) : MaestroDrawingArea(parent, maestro_controller) {
 		// Enable mouse tracking
 		this->setMouseTracking(true);
 		this->canvas_ = canvas;
@@ -42,10 +42,11 @@ namespace PixelMaestroStudio {
 		 * If the right mouse button is held, disable the pixel.
 		 */
 		if (event->buttons() == Qt::LeftButton) {
-			canvas_->draw_point(event->pos().x() / pad_, event->pos().y() / pad_);
+			// TODO: Fix Canvas drawing
+			//canvas_->draw_point(event->pos().x() / pad_, event->pos().y() / pad_);
 		}
 		else if (event->buttons() == Qt::RightButton) {
-			canvas_->erase(event->pos().x() / pad_, event->pos().y() / pad_);
+			//canvas_->erase(event->pos().x() / pad_, event->pos().y() / pad_);
 		}
 	}
 

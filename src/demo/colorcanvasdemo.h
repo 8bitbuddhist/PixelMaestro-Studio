@@ -2,10 +2,10 @@
 #define COLORCANVASDEMO_H
 
 #include "controller/maestrocontroller.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 
 namespace PixelMaestroStudio {
-	class ColorCanvasDemo : public SimpleDrawingArea {
+	class ColorCanvasDemo : public MaestroDrawingArea {
 		public:
 			ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller);
 	};

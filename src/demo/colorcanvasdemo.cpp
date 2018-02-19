@@ -5,7 +5,7 @@
 #include "colorpresets.h"
 
 namespace PixelMaestroStudio {
-	ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
+	ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
 		Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::Colorwheel, 12);

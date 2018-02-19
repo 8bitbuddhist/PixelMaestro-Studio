@@ -163,7 +163,8 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(device);
 			if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
 				settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
-				drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), maestro_controller_);
+				drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
+				static_cast<MaestroDrawingArea*>(drawing_area_)->set_maestro_control_widget(maestro_control_);
 				main_layout_->addWidget(drawing_area_);
 			}
 		}

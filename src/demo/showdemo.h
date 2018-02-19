@@ -5,11 +5,11 @@
 #ifndef SHOWDEMO_H
 #define SHOWDEMO_H
 
-#include "../drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 #include "controller/maestrocontroller.h"
 
 namespace PixelMaestroStudio {
-	class ShowDemo : public SimpleDrawingArea {
+	class ShowDemo : public MaestroDrawingArea {
 		public:
 			ShowDemo(QWidget* parent, MaestroController* maestro_controller);
 			~ShowDemo();

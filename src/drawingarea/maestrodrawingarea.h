@@ -11,6 +11,8 @@
 #include "core/pixel.h"
 #include "core/section.h"
 #include "maestrodrawingarea.h"
+#include "sectiondrawingarea.h"
+#include "widget/maestrocontrolwidget.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
@@ -20,6 +22,8 @@ using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
 	class MaestroController;
+	class MaestroControlWidget;
+	class SectionDrawingArea;
 
 	class MaestroDrawingArea : public QWidget {
 		Q_OBJECT
@@ -27,26 +31,22 @@ namespace PixelMaestroStudio {
 		public:
 			MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroDrawingArea();
+			MaestroControlWidget* get_maestro_control_widget();
 			MaestroController* get_maestro_controller();
+			void set_maestro_control_widget(MaestroControlWidget* widget);
 
 		public slots:
 			void refresh();
 
 		protected:
+			MaestroControlWidget* maestro_control_widget_ = nullptr;
+
 			/// The MaestroController managed by this DrawingArea.
 			MaestroController* maestro_controller_;
 
-			/// tmp_rgb_ converted to QColor
-			QColor tmp_color_;
+			QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
 
-			/// Brush used to paint tmp_color
-			QBrush tmp_brush_;
-
-			/// Size and location of the Pixel to draw using tmp_brush
-			QRect tmp_rect_;
-
-			/// Colors::RGB output from each Pixel
-			Colors::RGB tmp_rgb_;
+			QSettings settings_;
 	};
 }
 

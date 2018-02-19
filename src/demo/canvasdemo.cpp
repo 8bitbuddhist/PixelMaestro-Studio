@@ -4,7 +4,7 @@
 
 #include "colorpresets.h"
 #include "canvas/animationcanvas.h"
-#include "drawingarea/simpledrawingarea.h"
+#include "drawingarea/maestrodrawingarea.h"
 #include "canvasdemo.h"
 #include "animation/mergeanimation.h"
 #include "canvas/fonts/font5x8.h"
@@ -12,7 +12,7 @@
 #include "core/point.h"
 
 namespace PixelMaestroStudio {
-	CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
+	CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
 		Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::Colorwheel, 12);
