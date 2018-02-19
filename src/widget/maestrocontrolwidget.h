@@ -59,6 +59,7 @@ namespace PixelMaestroStudio {
 			explicit MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroControlWidget();
 			void enable_show_edit_mode(bool enable);
+			Section* get_active_section();
 			uint8_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
 			uint8_t get_section_index();

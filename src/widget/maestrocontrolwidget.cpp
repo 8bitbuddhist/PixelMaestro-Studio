@@ -154,6 +154,14 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns the Section currently being edited.
+	 * @return Active Section.
+	 */
+	Section* MaestroControlWidget::get_active_section() {
+		return active_section_;
+	}
+
+	/**
 	 * Returns the index of the current Layer.
 	 * @return Layer index.
 	 */

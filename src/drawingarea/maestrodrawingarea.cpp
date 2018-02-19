@@ -28,10 +28,7 @@ namespace PixelMaestroStudio {
 				)
 			);
 			QWidget* drawing_area = section_drawing_areas_[section].data();
-			drawing_area->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 			layout->addWidget(drawing_area);
-			// FIXME: Changing the alignment shrinks the widget size
-			//layout->setAlignment(drawing_area, Qt::AlignHCenter);
 		}
 	}
 

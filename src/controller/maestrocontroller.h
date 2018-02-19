@@ -29,6 +29,7 @@ namespace PixelMaestroStudio {
 			void add_drawing_area(MaestroDrawingArea* drawing_area);
 			Maestro* get_maestro();
 			bool get_running();
+			uint8_t get_section_index(Section* section);
 			Show *get_show();
 			uint64_t get_total_elapsed_time();
 			void load_cuefile(QString filename);

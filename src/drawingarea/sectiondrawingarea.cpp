@@ -3,15 +3,17 @@
 #include "dialog/preferencesdialog.h"
 
 namespace PixelMaestroStudio {
-	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section) : QWidget(parent) {
+	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section) : QFrame(parent) {
 		this->maestro_drawing_area_ = (MaestroDrawingArea*)parent;
 		this->section_ = section;
+
+		this->setFrameStyle(QFrame::Box | QFrame::Plain);
 	}
 
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
 		MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
 		if (widget != nullptr && event->buttons() == Qt::LeftButton) {
-			// FIXME: Update Section selection combobox as well
+			// FIXME: Update Section selection combobox
 			widget->set_active_section(this->section_);
 		}
 	}
@@ -23,6 +25,14 @@ namespace PixelMaestroStudio {
 		if (last_pixel_count_ != section_->get_dimensions()->size()) {
 			resizeEvent(nullptr);
 			last_pixel_count_ = section_->get_dimensions()->size();
+		}
+
+		// If this is the active Section, highlight the frame, otherwise dim the frame.
+		if (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section()) {
+			this->setStyleSheet("color: white;");
+		}
+		else {
+			this->setStyleSheet("color: gray;");
 		}
 
 		for (uint16_t row = 0; row < section_->get_dimensions()->y; row++) {
@@ -38,7 +48,7 @@ namespace PixelMaestroStudio {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				tmp_rect_.setRect(column * pad_, row * pad_, radius_, radius_);
+				tmp_rect_.setRect(cursor_.x + (column * pad_), cursor_.y + (row * pad_), radius_, radius_);
 				painter.setBrush(tmp_brush_);
 				painter.setPen(Qt::PenStyle::NoPen);
 
@@ -56,26 +66,35 @@ namespace PixelMaestroStudio {
 				}
 			}
 		}
+
+		QFrame::paintEvent(event);
 	}
 
 	void SectionDrawingArea::resizeEvent(QResizeEvent *event) {
 		QSize widget_size = this->size();
 
 		// Next, get the max size of each Pixel via the window size.
-		uint16_t max_width = widget_size.width() / section_->get_dimensions()->x;
-		uint16_t max_height = widget_size.height() / section_->get_dimensions()->y;
+		uint16_t max_pixel_width = widget_size.width() / section_->get_dimensions()->x;
+		uint16_t max_pixel_height = widget_size.height() / section_->get_dimensions()->y;
 
 		// Find the smaller dimension
-		if (max_width < max_height) {
-			radius_ = max_width;
+		if (max_pixel_width < max_pixel_height) {
+			radius_ = max_pixel_width;
 		}
 		else {
-			radius_ = max_height;
+			radius_ = max_pixel_height;
 		}
 
 		pad_ = radius_;
 
-		// Finally, calculate the radius using the Settings dialog
+		// Calculate the location where the Section will be rendered. The intent is to align the Section both horizontally and vertically.
+		uint32_t render_width = section_->get_dimensions()->x * radius_;
+		uint32_t render_height = section_->get_dimensions()->y * radius_;
+
+		cursor_.x = (widget_size.width() - render_width) / 2;
+		cursor_.y = (widget_size.height() - render_height) / 2;
+
+		// Calculate the actual size of each Pixel
 		switch (settings_.value(PreferencesDialog::pixel_padding).toInt()) {
 			case 1:	// Small
 				radius_ *= 0.8;
@@ -87,6 +106,7 @@ namespace PixelMaestroStudio {
 				radius_ *= 0.4;
 				break;
 		}
+
 	}
 
 	/**

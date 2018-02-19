@@ -1,6 +1,7 @@
 #ifndef SECTIONDRAWINGAREA_H
 #define SECTIONDRAWINGAREA_H
 
+#include <QFrame>
 #include <QMouseEvent>
 #include <QSettings>
 #include <QWidget>
@@ -9,7 +10,7 @@
 
 namespace PixelMaestroStudio {
 	class MaestroDrawingArea;
-	class SectionDrawingArea : public QWidget {
+	class SectionDrawingArea : public QFrame {
 		Q_OBJECT
 
 		public:
@@ -37,10 +38,14 @@ namespace PixelMaestroStudio {
 			QSize sizeHint() const override;
 
 		private:
+			/// The location where the Section will be rendered.
+			Point cursor_;
+
 			/// The Section's last recorded size. Used to determine when to resize the output.
 			uint32_t last_pixel_count_;
 
 			MaestroDrawingArea* maestro_drawing_area_ = nullptr;
+
 			/// The size of each rendered Pixel.
 			uint8_t radius_ = 20;
 			/// The amount of space between each Pixel. Gets initialized in resizeEvent().

@@ -84,6 +84,21 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns the index of the specified Section.
+	 * @param section Section to find.
+	 * @return Section index.
+	 */
+	uint8_t MaestroController::get_section_index(Section *section) {
+		for (uint8_t i = 0; i < maestro_->get_num_sections(); i++) {
+			if (section == &sections_[i]) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Returns the Show managed in this Maestro (if applicable)
 	 * @return Show managed by this Maestro.
 	 */
