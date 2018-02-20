@@ -222,7 +222,7 @@ namespace PixelMaestroStudio {
 		write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 		write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
-		write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_pause()));
+		write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_delay()));
 		// Save Animation-specific settings
 		switch(animation->get_type()) {
 			case AnimationType::Fire:

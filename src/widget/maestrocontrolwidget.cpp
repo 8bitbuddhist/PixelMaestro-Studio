@@ -84,20 +84,30 @@ namespace PixelMaestroStudio {
 		}
 		settings.endArray();
 
-		// Get Cue Handlers
+		// Initialize Cue Handlers
 		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
-		animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->get_handler(CueController::Handler::AnimationHandler));
-		canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->get_handler(CueController::Handler::CanvasHandler));
-		maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->get_handler(CueController::Handler::MaestroHandler));
-		section_handler = static_cast<SectionCueHandler*>(cue_controller_->get_handler(CueController::Handler::SectionHandler));
-		show_handler = static_cast<ShowCueHandler*>(cue_controller_->get_handler(CueController::Handler::ShowHandler));
+		animation_handler = static_cast<AnimationCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::AnimationHandler)
+		);
+		canvas_handler = static_cast<CanvasCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::CanvasHandler)
+		);
+		maestro_handler = static_cast<MaestroCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::MaestroHandler)
+		);
+		section_handler = static_cast<SectionCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::SectionHandler)
+		);
+		show_handler = static_cast<ShowCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::ShowHandler)
+		);
 
 		// Check to see if we need to pause the Maestro
 		if (settings.value(PreferencesDialog::pause_on_start, false).toBool()) {
 			on_showPauseButton_clicked();
 		}
 
-		// Finally, initialize the MaestroControl
+		// Finally, initialize the MaestroControlWidget UI
 		initialize();
 	}
 
@@ -108,7 +118,7 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::add_cue_to_history(uint8_t *cue) {
 		ui->eventHistoryWidget->addItem(cue_interpreter_.interpret_cue(cue));
 
-		// Convert the Cue into an actual byte array, which we'll store in the Event History
+		// Convert the Cue into an actual byte array, which we'll store in the Event History for later use.
 		uint16_t cue_size = cue_controller_->get_cue_size(cue);
 		QVector<uint8_t> cue_vector(cue_size);
 		for (uint16_t byte = 0; byte < cue_size; byte++) {
@@ -117,7 +127,7 @@ namespace PixelMaestroStudio {
 
 		event_history_.push_back(cue_vector);
 
-		// Start removing older items
+		// Remove all but the last 10 Events
 		if (event_history_.size() >= 10) {
 			ui->eventHistoryWidget->takeItem(0);
 			event_history_.remove(0);
@@ -140,7 +150,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool MaestroControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
-			// Handle delete key where 'watched' == EventList widget
+			// Handle Delete key in the Event list
 			if (watched == ui->eventListWidget) {
 				QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
 				if (key_event->key() == Qt::Key_Delete) {
@@ -1319,8 +1329,8 @@ namespace PixelMaestroStudio {
 		ui->fadeCheckBox->setChecked(animation->get_fade());
 		ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
 		ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
-		ui->pauseSlider->setValue(animation->get_timer()->get_pause());
-		ui->pauseSpinBox->setValue(animation->get_timer()->get_pause());
+		ui->pauseSlider->setValue(animation->get_timer()->get_delay());
+		ui->pauseSpinBox->setValue(animation->get_timer()->get_delay());
 		ui->orientationComboBox->blockSignals(false);
 		ui->reverse_animationCheckBox->blockSignals(false);
 		ui->fadeCheckBox->blockSignals(false);
@@ -1654,7 +1664,7 @@ namespace PixelMaestroStudio {
 		uint16_t pause = ui->pauseSpinBox->value();
 		uint16_t new_interval = ui->animationIntervalSpinBox->value();
 		AnimationTimer* timer = active_section_->get_animation()->get_timer();
-		if (new_interval != timer->get_interval() || pause != timer->get_pause()) {
+		if (new_interval != timer->get_interval() || pause != timer->get_delay()) {
 			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
 		}
 	}

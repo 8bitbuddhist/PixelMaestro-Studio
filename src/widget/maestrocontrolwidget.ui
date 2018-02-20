@@ -34,11 +34,23 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
      <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="sectionTab">
       <property name="sizePolicy">
@@ -330,7 +342,7 @@
         <widget class="QComboBox" name="animationComboBox">
          <property name="minimumSize">
           <size>
-           <width>150</width>
+           <width>102</width>
            <height>0</height>
           </size>
          </property>
@@ -471,7 +483,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Timer</string>
+          <string>Refresh Interval</string>
          </property>
         </widget>
        </item>
@@ -510,7 +522,7 @@
        <item row="5" column="0">
         <widget class="QLabel" name="pauseLabel">
          <property name="text">
-          <string>Pause</string>
+          <string>Delay</string>
          </property>
         </widget>
        </item>
@@ -552,7 +564,7 @@
         <widget class="QComboBox" name="colorComboBox">
          <property name="minimumSize">
           <size>
-           <width>150</width>
+           <width>102</width>
            <height>0</height>
           </size>
          </property>
