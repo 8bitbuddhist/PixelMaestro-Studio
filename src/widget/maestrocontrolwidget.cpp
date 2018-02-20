@@ -822,20 +822,23 @@ namespace PixelMaestroStudio {
 				run_cue(section_handler->set_layer(get_section_index(base_section), get_layer_index(last_section), Colors::MixMode::None, 0));
 				diff--;
 			}
+
+			// Refresh the active section
+			set_active_section(get_active_section());
 		}
 		// If the diff is negative, remove Layers
 		else if (diff < 0) {
-			// To be safe, jump back to the base Section
-			on_layerComboBox_currentIndexChanged(0);
-
 			while (diff < 0) {
 				last_section = last_section->get_parent_section();
 				run_cue(section_handler->remove_layer(get_section_index(base_section), get_layer_index(last_section)));
 				diff++;
 			}
-		}
 
-		populate_layer_combobox();
+			// If the active Layer no longer exists, go to the last Section
+			if (get_layer_index() >= get_num_layers(base_section)) {
+				set_active_section(last_section);
+			}
+		}
 	}
 
 	/**
@@ -974,13 +977,6 @@ namespace PixelMaestroStudio {
 
 		// Set active controller
 		set_active_section(section);
-
-		// Set Layer count
-		ui->layerSpinBox->blockSignals(true);
-		ui->layerSpinBox->setValue(get_num_layers(section));
-		ui->layerSpinBox->blockSignals(false);
-
-		populate_layer_combobox();
 	}
 
 	/**
@@ -1211,6 +1207,32 @@ namespace PixelMaestroStudio {
 
 		active_section_ = section;
 
+		// Handle the Section and Layer comboboxes
+
+		// If the current Section doesn't match the Section drop-down, update the drop-down
+		if (ui->sectionComboBox->currentIndex() != get_section_index()) {
+			ui->sectionComboBox->blockSignals(true);
+			ui->sectionComboBox->setCurrentIndex(get_section_index());
+			ui->sectionComboBox->blockSignals(false);
+		}
+
+		// Update the Layer combo box based on our selection
+		if (get_layer_index() == 0) {
+			// Set Layer count
+			ui->layerSpinBox->blockSignals(true);
+			ui->layerSpinBox->setValue(get_num_layers(section));
+			ui->layerSpinBox->blockSignals(false);
+
+			populate_layer_combobox();
+		}
+
+		// Handle Layer combobox
+		if (ui->layerComboBox->currentIndex() != get_layer_index()) {
+			ui->layerComboBox->blockSignals(true);
+			ui->layerComboBox->setCurrentIndex(get_layer_index());
+			ui->layerComboBox->blockSignals(false);
+		}
+
 		// Set dimensions
 		ui->columnsSpinBox->blockSignals(true);
 		ui->rowsSpinBox->blockSignals(true);
@@ -1263,13 +1285,6 @@ namespace PixelMaestroStudio {
 
 		ui->scrollXSpinBox->blockSignals(false);
 		ui->scrollYSpinBox->blockSignals(false);
-
-		// Get Layer settings
-		if (section->get_layer()) {
-			ui->layerSpinBox->blockSignals(true);
-			ui->layerSpinBox->setValue(get_num_layers(section));
-			ui->layerSpinBox->blockSignals(false);
-		}
 
 		// If this is a Layer, get the MixMode and alpha
 		if (section->get_parent_section() != nullptr) {

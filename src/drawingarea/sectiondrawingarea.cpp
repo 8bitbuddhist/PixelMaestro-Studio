@@ -13,7 +13,6 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
 		MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
 		if (widget != nullptr && event->buttons() == Qt::LeftButton) {
-			// FIXME: Update Section selection combobox
 			widget->set_active_section(this->section_);
 		}
 	}
