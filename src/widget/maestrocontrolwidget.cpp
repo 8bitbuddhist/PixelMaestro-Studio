@@ -345,6 +345,9 @@ namespace PixelMaestroStudio {
 
 	/// Reinitializes Palettes from the Palette Dialog.
 	void MaestroControlWidget::initialize_palettes() {
+		QString color_palette = ui->colorComboBox->currentText();
+		QString canvas_palette = ui->canvasPaletteComboBox->currentText();
+
 		// Repopulate color combo boxes
 		ui->colorComboBox->blockSignals(true);
 		ui->canvasPaletteComboBox->blockSignals(true);
@@ -356,6 +359,9 @@ namespace PixelMaestroStudio {
 			ui->colorComboBox->addItem(palette_controller_.get_palette(i)->name);
 			ui->canvasPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 		}
+
+		ui->colorComboBox->setCurrentText(color_palette);
+		ui->canvasPaletteComboBox->setCurrentText(canvas_palette);
 
 		ui->colorComboBox->blockSignals(false);
 		ui->canvasPaletteComboBox->blockSignals(false);
