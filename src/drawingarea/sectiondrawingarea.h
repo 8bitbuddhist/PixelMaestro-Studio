@@ -38,6 +38,9 @@ namespace PixelMaestroStudio {
 			QSize sizeHint() const override;
 
 		private:
+			/// Tracks whether this is the active Section.
+			bool is_active_ = false;
+
 			/// The location where the Section will be rendered.
 			Point cursor_;
 

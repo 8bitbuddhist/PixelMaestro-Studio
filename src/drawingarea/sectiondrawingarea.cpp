@@ -27,11 +27,16 @@ namespace PixelMaestroStudio {
 		}
 
 		// If this is the active Section, highlight the frame, otherwise dim the frame.
-		if (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section()) {
-			this->setStyleSheet("color: white;");
-		}
-		else {
-			this->setStyleSheet("color: gray;");
+		bool active = (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section());
+		if (active != this->is_active_) {
+			if (active) {
+				this->setStyleSheet("color: #FFFFFF;");
+				this->is_active_ = true;
+			}
+			else {
+				this->setStyleSheet("color: #505050;");
+				this->is_active_ = false;
+			}
 		}
 
 		for (uint16_t row = 0; row < section_->get_dimensions()->y; row++) {
