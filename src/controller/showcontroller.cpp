@@ -35,23 +35,10 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Gets the Event at the specified index.
-	 * @param index Event index.
-	 * @return Event.
-	 */
-	Event* ShowController::get_event(uint16_t index) {
-		if (index < events_.size()) {
-			return &events_[index];
-		}
-
-		return nullptr;
-	}
-
-	/**
 	 * Gets the list of Events.
 	 * @return Event list.
 	 */
-	QVector<Event> ShowController::get_events() {
+	QVector<Event> ShowController::get_events() const {
 		return events_;
 	}
 

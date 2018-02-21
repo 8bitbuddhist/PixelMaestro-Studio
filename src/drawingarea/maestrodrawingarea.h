@@ -32,7 +32,6 @@ namespace PixelMaestroStudio {
 			MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroDrawingArea();
 			MaestroControlWidget* get_maestro_control_widget();
-			MaestroController* get_maestro_controller();
 			void set_maestro_control_widget(MaestroControlWidget* widget);
 
 		public slots:

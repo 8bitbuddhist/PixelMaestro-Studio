@@ -42,14 +42,14 @@ namespace PixelMaestroStudio {
 			Point cursor_;
 
 			/// The Section's last recorded size. Used to determine when to resize the output.
-			uint32_t last_pixel_count_;
+			uint32_t last_pixel_count_ = 0;
 
 			MaestroDrawingArea* maestro_drawing_area_ = nullptr;
 
 			/// The size of each rendered Pixel.
 			uint8_t radius_ = 20;
 			/// The amount of space between each Pixel. Gets initialized in resizeEvent().
-			uint8_t pad_;
+			uint8_t pad_ = 0;
 
 			QSettings settings_;
 	};

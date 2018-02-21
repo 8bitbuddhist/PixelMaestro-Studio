@@ -36,10 +36,6 @@ namespace PixelMaestroStudio {
 		return maestro_control_widget_;
 	}
 
-	MaestroController* MaestroDrawingArea::get_maestro_controller() {
-		return maestro_controller_;
-	}
-
 	void MaestroDrawingArea::refresh() {
 		for (uint16_t i = 0; i < section_drawing_areas_.size(); i++) {
 			section_drawing_areas_[i]->update();

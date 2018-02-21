@@ -146,14 +146,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Re-initializes the Section array.
-	 */
-	void MaestroController::reset_sections() {
-		delete [] sections_;
-		set_sections(num_sections_);
-	}
-
-	/**
 	 * Saves the Maestro to a Cuefile.
 	 * @param filename Name of the Cuefile to save to.
 	 */

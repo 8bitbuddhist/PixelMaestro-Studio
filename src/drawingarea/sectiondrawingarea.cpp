@@ -4,7 +4,7 @@
 
 namespace PixelMaestroStudio {
 	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section) : QFrame(parent) {
-		this->maestro_drawing_area_ = (MaestroDrawingArea*)parent;
+		this->maestro_drawing_area_ = static_cast<MaestroDrawingArea*>(parent);
 		this->section_ = section;
 
 		this->setFrameStyle(QFrame::Box | QFrame::Plain);

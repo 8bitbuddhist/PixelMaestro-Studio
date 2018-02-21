@@ -34,7 +34,6 @@ namespace PixelMaestroStudio {
 			uint64_t get_total_elapsed_time();
 			void load_cuefile(QString filename);
 			void remove_drawing_area(MaestroDrawingArea* drawing_area);
-			void reset_sections();
 			void save_cuefile(QString filename);
 			Section* set_sections(uint8_t num_sections, Point dimensions = Point(10, 10));
 			void stop();
