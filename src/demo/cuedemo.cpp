@@ -7,7 +7,7 @@
 
 namespace PixelMaestroStudio {
 	CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
-		maestro_controller_->set_sections(1, Point(10, 10));
+		Section* section = maestro_controller_->set_sections(1, Point(10, 10));
 
 		Maestro* maestro = maestro_controller_->get_maestro();
 

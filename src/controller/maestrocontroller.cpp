@@ -34,7 +34,6 @@ namespace PixelMaestroStudio {
 		// Initalize the Maestro. Add the number of Sections specified in the options.
 		maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
 		QSettings settings;
-		set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
 
 		// Enable the Maestro's CueController
 		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
@@ -324,6 +323,13 @@ namespace PixelMaestroStudio {
 		// Sets the size of each Section
 		for (uint8_t section = 0; section < num_sections; section++) {
 			sections_[section].set_dimensions(dimensions.x, dimensions.y);
+		}
+
+		// Add a SectionDrawingArea to each MaestroDrawingArea
+		for (MaestroDrawingArea* drawing_area : drawing_areas_) {
+			for (uint8_t section = 0; section < num_sections; section++) {
+				drawing_area->add_section_drawing_area(&sections_[section]);
+			}
 		}
 
 		maestro_->set_sections(sections_, num_sections_);

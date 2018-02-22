@@ -16,11 +16,10 @@ DEFINES += BUILD_VERSION=\\\"v0.13\\\"
 SOURCES += src/main.cpp\
 		src/drawingarea/maestrodrawingarea.cpp \
 		src/demo/blinkdemo.cpp \
+		src/demo/canvasdemo.cpp \
 		src/controller/maestrocontroller.cpp \
 		src/demo/showdemo.cpp \
 		lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
-		src/demo/canvasdemo.cpp \
-		src/drawingarea/canvasdrawingarea.cpp \
 		src/window/mainwindow.cpp \
 		lib/PixelMaestro/src/animation/blinkanimation.cpp \
 		lib/PixelMaestro/src/animation/cycleanimation.cpp \
@@ -74,18 +73,17 @@ SOURCES += src/main.cpp\
 	lib/PixelMaestro/src/animation/mappedanimation.cpp \
 	src/widget/animation/waveanimationcontrolwidget.cpp \
 	src/widget/animation/mergeanimationcontrolwidget.cpp \
-    src/drawingarea/sectiondrawingarea.cpp \
-    src/dialog/maestrodrawingareadialog.cpp
+	src/drawingarea/sectiondrawingarea.cpp \
+	src/dialog/maestrodrawingareadialog.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
+		src/demo/canvasdemo.h \
 		src/drawingarea/maestrodrawingarea.h \
 		src/controller/maestrocontroller.h \
 		src/demo/showdemo.h \
 		lib/PixelMaestro/src/canvas/fonts/font.h \
 		lib/PixelMaestro/src/canvas/fonts/font5x8.h \
-		src/demo/canvasdemo.h \
-		src/drawingarea/canvasdrawingarea.h \
 		src/window/mainwindow.h \
 		lib/PixelMaestro/src/animation/blinkanimation.h \
 		lib/PixelMaestro/src/animation/cycleanimation.h \
@@ -141,8 +139,8 @@ HEADERS += \
 	lib/PixelMaestro/src/animation/mappedanimation.h \
 	src/widget/animation/waveanimationcontrolwidget.h \
 	src/widget/animation/mergeanimationcontrolwidget.h \
-    src/drawingarea/sectiondrawingarea.h \
-    src/dialog/maestrodrawingareadialog.h
+	src/drawingarea/sectiondrawingarea.h \
+	src/dialog/maestrodrawingareadialog.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \
@@ -156,7 +154,7 @@ FORMS	+= \
 	src/widget/animation/fireanimationcontrolwidget.ui \
 	src/widget/animation/waveanimationcontrolwidget.ui \
 	src/widget/animation/mergeanimationcontrolwidget.ui \
-    src/dialog/maestrodrawingareadialog.ui
+	src/dialog/maestrodrawingareadialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

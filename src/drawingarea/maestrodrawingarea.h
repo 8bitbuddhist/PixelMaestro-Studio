@@ -14,6 +14,7 @@
 #include "sectiondrawingarea.h"
 #include "widget/maestrocontrolwidget.h"
 #include <QElapsedTimer>
+#include <QHBoxLayout>
 #include <QTimer>
 #include <QWidget>
 #include <vector>
@@ -31,6 +32,7 @@ namespace PixelMaestroStudio {
 		public:
 			MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroDrawingArea();
+			SectionDrawingArea* add_section_drawing_area(Section* section);
 			MaestroControlWidget* get_maestro_control_widget();
 			void set_maestro_control_widget(MaestroControlWidget* widget);
 
@@ -46,6 +48,9 @@ namespace PixelMaestroStudio {
 			QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
 
 			QSettings settings_;
+
+		private:
+			QHBoxLayout* section_layout_ = nullptr;
 	};
 }
 

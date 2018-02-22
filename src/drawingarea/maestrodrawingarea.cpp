@@ -20,16 +20,17 @@ namespace PixelMaestroStudio {
 		// Let the DrawingArea be managed by the MaestroController
 		maestro_controller->add_drawing_area(this);
 
-		QHBoxLayout* layout	= new QHBoxLayout(this);
-		for (uint8_t section = 0; section < maestro_controller->get_maestro()->get_num_sections(); section++) {
-			section_drawing_areas_.push_back(
-				QSharedPointer<SectionDrawingArea>(
-					new SectionDrawingArea(this, maestro_controller->get_maestro()->get_section(section))
-				)
-			);
-			QWidget* drawing_area = section_drawing_areas_[section].data();
-			layout->addWidget(drawing_area);
-		}
+		section_layout_ = new QHBoxLayout(this);
+	}
+
+	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section* section) {
+		section_drawing_areas_.push_back(
+			QSharedPointer<SectionDrawingArea>(
+				new SectionDrawingArea(this, section)
+			)
+		);
+		QWidget* drawing_area = section_drawing_areas_.last().data();
+		section_layout_->addWidget(drawing_area);
 	}
 
 	MaestroControlWidget* MaestroDrawingArea::get_maestro_control_widget() {

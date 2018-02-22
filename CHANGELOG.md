@@ -6,9 +6,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.13] - In Progress
 ### Added
 - Animation Editor
-	- Added support for the Fire animation introduced in PixelMaestro 0.13.
+	- Added support for the Fire animation.
 	- Added `skew` parameters for Merge and Wave animations.
 	- Readded ability to reorder Show Events.
+- Rebuilt Maestro drawing system. This meant having to (temporarily) remove the CanvasDrawingArea demo.
 
 ## [v0.12] - 2018-01-22
 ### Changed

@@ -84,6 +84,9 @@ namespace PixelMaestroStudio {
 		}
 		settings.endArray();
 
+		// Set the Maestro's Sections
+		maestro_controller_->set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
+
 		// Initialize Cue Handlers
 		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
 		animation_handler = static_cast<AnimationCueHandler*>(
@@ -269,9 +272,6 @@ namespace PixelMaestroStudio {
 	 * Build the MaestroControl UI.
 	 */
 	void MaestroControlWidget::initialize() {
-		// Get the base Section
-		Section* section = maestro_controller_->get_maestro()->get_section(0);
-
 		initialize_palettes();
 
 		// There must be a better way to bulk block signals.
@@ -339,7 +339,7 @@ namespace PixelMaestroStudio {
 		ui->currentFrameSpinBox->setEnabled(false);
 
 		// Finally, show the default Section
-		set_active_section(section);
+		set_active_section(maestro_controller_->get_maestro()->get_section(0));
 		populate_layer_combobox();
 	}
 

@@ -7,7 +7,8 @@ namespace PixelMaestroStudio {
 		this->maestro_drawing_area_ = static_cast<MaestroDrawingArea*>(parent);
 		this->section_ = section;
 
-		this->setFrameStyle(QFrame::Box | QFrame::Plain);
+		// Default to dim frame
+		this->setStyleSheet("color: #505050;");
 	}
 
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
@@ -26,25 +27,40 @@ namespace PixelMaestroStudio {
 			last_pixel_count_ = section_->get_dimensions()->size();
 		}
 
-		// If this is the active Section, highlight the frame, otherwise dim the frame.
-		bool active = (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section());
-		if (active != this->is_active_) {
-			if (active) {
-				this->setStyleSheet("color: #FFFFFF;");
-				this->is_active_ = true;
+		/*
+		 * If this is the active Section, highlight the frame, otherwise dim the frame.
+		 * Only applies if maestro_drawing_area_::maestro_control_widget_ is set.
+		 */
+		if (maestro_drawing_area_->get_maestro_control_widget() != nullptr) {
+
+			// Display a frame if none is set.
+			if (this->frameStyle() == QFrame::Plain) {
+				this->setFrameStyle(QFrame::Box | QFrame::Plain);
 			}
-			else {
-				this->setStyleSheet("color: #505050;");
-				this->is_active_ = false;
+
+			bool active = (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section());
+			if (active != this->is_active_) {
+				if (active) {
+					this->setStyleSheet("color: #FFFFFF;");
+					this->is_active_ = true;
+				}
+				else {
+					this->setStyleSheet("color: #505050;");
+					this->is_active_ = false;
+				}
 			}
 		}
 
 		for (uint16_t row = 0; row < section_->get_dimensions()->y; row++) {
 			for (uint16_t column = 0; column < section_->get_dimensions()->x; column++) {
-				tmp_rgb_ = section_->get_pixel_color(column, row);
-				tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
-				tmp_brush_.setColor(tmp_color_);
-				tmp_brush_.setStyle(Qt::BrushStyle::SolidPattern);
+				Colors::RGB rgb = section_->get_pixel_color(column, row);
+				QColor qcolor;
+				QBrush brush;
+				QRect rect;
+
+				qcolor.setRgb(rgb.r, rgb.g, rgb.b);
+				brush.setColor(qcolor);
+				brush.setStyle(Qt::BrushStyle::SolidPattern);
 
 				/*
 				 * Draw the Pixel.
@@ -52,8 +68,8 @@ namespace PixelMaestroStudio {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				tmp_rect_.setRect(cursor_.x + (column * pad_), cursor_.y + (row * pad_), radius_, radius_);
-				painter.setBrush(tmp_brush_);
+				rect.setRect(cursor_.x + (column * pad_), cursor_.y + (row * pad_), radius_, radius_);
+				painter.setBrush(brush);
 				painter.setPen(Qt::PenStyle::NoPen);
 
 				/*
@@ -62,10 +78,10 @@ namespace PixelMaestroStudio {
 				 */
 				switch (settings_.value(PreferencesDialog::pixel_shape, 1).toInt()) {
 					case 0:	// Circle
-						painter.drawEllipse(tmp_rect_);
+						painter.drawEllipse(rect);
 						break;
 					case 1:	// Rect
-						painter.drawRect(tmp_rect_);
+						painter.drawRect(rect);
 						break;
 				}
 			}
