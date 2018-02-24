@@ -185,7 +185,7 @@ namespace PixelMaestroStudio {
 
 			void update_maestro_last_time();
 
-			void on_canvas_color_clicked();
+			void on_palette_canvas_color_clicked();
 			void on_showPauseButton_clicked();
 			void on_canvasEditPaletteButton_clicked();
 			void on_canvasPaletteComboBox_currentIndexChanged(int index);

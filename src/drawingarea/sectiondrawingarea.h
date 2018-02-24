@@ -22,7 +22,7 @@ namespace PixelMaestroStudio {
 		protected:
 			Section* section_;
 
-			void mousePressEvent(QMouseEvent* event) override;
+			void mouseMoveEvent(QMouseEvent* event) override;
 			void paintEvent(QPaintEvent *event) override;
 			void resizeEvent(QResizeEvent *event) override;
 			QSize sizeHint() const override;
@@ -47,6 +47,8 @@ namespace PixelMaestroStudio {
 			uint8_t pad_ = 0;
 
 			QSettings settings_;
+
+			Point map_cursor_to_pixel(const QPoint cursor);
 	};
 }
 

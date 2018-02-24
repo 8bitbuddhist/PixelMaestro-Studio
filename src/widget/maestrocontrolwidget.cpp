@@ -409,20 +409,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Sets the active drawing color when using PaletteCanvases.
-	 */
-	void MaestroControlWidget::on_canvas_color_clicked() {
-		QPushButton* sender = (QPushButton*)QObject::sender();
-		canvas_color_index_ = sender->objectName().toInt();
-
-		PaletteController::Palette* palette = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
-		Colors::RGB color = palette->colors.at(canvas_color_index_);
-
-		// Change the color of the Color button to reflect the selection
-		ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
-	}
-
-	/**
 	 * Changes the current Canvas.
 	 * @param index Index of the new Canvas type.
 	 */
@@ -485,7 +471,7 @@ namespace PixelMaestroStudio {
 		// Delete existing color buttons
 		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
 		for (QPushButton* button : buttons) {
-			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
+			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
 			delete button;
 		}
 
@@ -501,7 +487,7 @@ namespace PixelMaestroStudio {
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
 			layout->addWidget(button);
-			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
+			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
 		}
 	}
 
@@ -819,6 +805,7 @@ namespace PixelMaestroStudio {
 	 * Sets the number of Layers for the Section.
 	 */
 	void MaestroControlWidget::on_layerSpinBox_editingFinished() {
+		// TODO: Add ability to add/remove specific layers
 		Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 		Section* last_section = base_section;
 
@@ -919,6 +906,21 @@ namespace PixelMaestroStudio {
 		run_cue(show_handler->set_looping(checked));
 	}
 
+	/**
+	 * Sets the active drawing color when using PaletteCanvases.
+	 */
+	void MaestroControlWidget::on_palette_canvas_color_clicked() {
+		QPushButton* sender = (QPushButton*)QObject::sender();
+		canvas_color_index_ = sender->objectName().toInt();
+
+		PaletteController::Palette* palette = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
+		Colors::RGB color = palette->colors.at(canvas_color_index_);
+
+		// Change the color of the Color button to reflect the selection
+		ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+
+		run_cue(canvas_handler->set_drawing_color(get_section_index(), get_layer_index(), canvas_color_index_));
+	}
 
 	/**
 	 * Opens the Palette Editor.
@@ -1086,6 +1088,8 @@ namespace PixelMaestroStudio {
 		canvas_rgb_color_.r = canvas_color_.red();
 		canvas_rgb_color_.g = canvas_color_.green();
 		canvas_rgb_color_.b = canvas_color_.blue();
+
+		run_cue(canvas_handler->set_drawing_color(get_section_index(), get_layer_index(), canvas_rgb_color_));
 	}
 
 	/**

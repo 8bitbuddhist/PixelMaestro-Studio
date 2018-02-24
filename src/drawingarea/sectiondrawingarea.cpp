@@ -7,14 +7,36 @@ namespace PixelMaestroStudio {
 		this->maestro_drawing_area_ = static_cast<MaestroDrawingArea*>(parent);
 		this->section_ = section;
 
+		// Enable mouse tracking
+		this->setMouseTracking(true);
+
 		// Default to dim frame
 		this->setStyleSheet("color: #505050;");
 	}
 
-	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
-		MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
-		if (widget != nullptr && event->buttons() == Qt::LeftButton) {
-			widget->set_active_section(this->section_);
+	Point SectionDrawingArea::map_cursor_to_pixel(const QPoint cursor) {
+		uint16_t x = (cursor.x() - cursor_.x) / radius_;
+		uint16_t y = (cursor.y() - cursor_.y) / radius_;
+		return Point(x, y);
+	}
+
+	void SectionDrawingArea::mouseMoveEvent(QMouseEvent *event) {
+		if (event->buttons() == Qt::LeftButton | Qt::RightButton) {
+			/*
+			 * When Canvas is enabled, users can draw onto the Section using the mouse.
+			 * Left-click activates, right-click deactivates, delete clears.
+			 * Add a function (map_cursor_to_pixel?) that translates Qt coordinates to an actual Pixel.
+			 */
+			Canvas* canvas = section_->get_canvas();
+			if (canvas != nullptr) {
+				Point test = map_cursor_to_pixel(event->pos());
+				if (event->buttons() == Qt::LeftButton) {
+					canvas->activate(test.x, test.y);
+				}
+				else if (event->buttons() == Qt::RightButton) {
+					canvas->deactivate(test.x, test.y);
+				}
+			}
 		}
 	}
 
@@ -107,12 +129,12 @@ namespace PixelMaestroStudio {
 
 		pad_ = radius_;
 
-		// Calculate the location where the Section will be rendered. The intent is to align the Section both horizontally and vertically.
-		uint32_t render_width = section_->get_dimensions()->x * radius_;
-		uint32_t render_height = section_->get_dimensions()->y * radius_;
-
-		cursor_.x = (widget_size.width() - render_width) / 2;
-		cursor_.y = (widget_size.height() - render_height) / 2;
+		/*
+		 * Calculate the location where the Section will be rendered.
+		 * Setting cursor_ aligns the Section both horizontally and vertically.
+		 */
+		cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
+		cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
 
 		// Calculate the actual size of each Pixel
 		switch (settings_.value(PreferencesDialog::pixel_padding).toInt()) {

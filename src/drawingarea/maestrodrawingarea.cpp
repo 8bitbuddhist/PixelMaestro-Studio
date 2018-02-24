@@ -31,6 +31,7 @@ namespace PixelMaestroStudio {
 		);
 		QWidget* drawing_area = section_drawing_areas_.last().data();
 		section_layout_->addWidget(drawing_area);
+		return static_cast<SectionDrawingArea*>(drawing_area);
 	}
 
 	MaestroControlWidget* MaestroDrawingArea::get_maestro_control_widget() {
