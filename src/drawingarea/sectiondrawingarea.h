@@ -23,6 +23,7 @@ namespace PixelMaestroStudio {
 			Section* section_;
 
 			void mouseMoveEvent(QMouseEvent* event) override;
+			void mousePressEvent(QMouseEvent* event) override;
 			void paintEvent(QPaintEvent *event) override;
 			void resizeEvent(QResizeEvent *event) override;
 			QSize sizeHint() const override;

@@ -419,7 +419,11 @@ namespace PixelMaestroStudio {
 		if (active_section_->get_canvas() && active_section_->get_canvas()->get_type() != new_canvas_type) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
-			if (confirm != QMessageBox::Yes) {
+			if (confirm == QMessageBox::Yes) {
+				run_cue(section_handler->remove_canvas(get_section_index(), get_layer_index()));
+			}
+			else {
+				// Return to the previous settings and exit.
 				ui->canvasComboBox->blockSignals(true);
 				ui->canvasComboBox->setCurrentIndex((int)active_section_->get_canvas()->get_type() + 1);
 				ui->canvasComboBox->blockSignals(false);
@@ -427,7 +431,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Add the new Canvas
+		// Display/hide controls as necessary
 		set_canvas_controls_enabled(index);
 		if (index > 0) {
 			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), new_canvas_type));
@@ -442,10 +446,9 @@ namespace PixelMaestroStudio {
 			}
 		}
 		else {
-			// Check if Edit Frame mode is enabled. If it is, disable it
-			if (ui->toggleCanvasModeCheckBox->isChecked()) {
-				on_toggleCanvasModeCheckBox_toggled(false);
-			}
+			// Disable Edit Frame mode
+			ui->toggleCanvasModeCheckBox->setChecked(false);
+			on_toggleCanvasModeCheckBox_toggled(false);
 		}
 	}
 
