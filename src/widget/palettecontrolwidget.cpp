@@ -69,10 +69,14 @@ namespace PixelMaestroStudio {
 	/// Creates a new Palette.
 	void PaletteControlWidget::on_createButtonBox_accepted() {
 		uint8_t num_colors = ui->numColorsSpinBox->value();
-		QString name = ui->nameLineEdit->text();
+
+		/*
+		 * The following causes Segfaults, so instead we just call ui->nameLineEdit->text() everywhere we need it.
+		 */
+		//QString name = ui->nameLineEdit->text();
 
 		// Only allow the Palette to be created if the name is set
-		if (name.size()) {
+		if (ui->nameLineEdit->text().size()) {
 			Colors::RGB colors[num_colors];
 
 			// Handle generation method
@@ -97,9 +101,9 @@ namespace PixelMaestroStudio {
 			}
 
 			// Add the new Palette
-			palette_controller_->add_palette(name, colors, num_colors);
-			ui->paletteComboBox->addItem(name);
-			ui->paletteComboBox->setCurrentText(name);
+			palette_controller_->add_palette(ui->nameLineEdit->text(), colors, num_colors);
+			ui->paletteComboBox->addItem(ui->nameLineEdit->text());
+			ui->paletteComboBox->setCurrentText(ui->nameLineEdit->text());
 
 			set_create_palette_controls_visible(false);
 		}
