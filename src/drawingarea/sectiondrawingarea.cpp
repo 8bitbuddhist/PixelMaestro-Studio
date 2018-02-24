@@ -21,7 +21,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void SectionDrawingArea::mouseMoveEvent(QMouseEvent *event) {
-		if (event->buttons() == Qt::LeftButton | Qt::RightButton) {
+		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
 			/*
 			 * When Canvas is enabled, users can draw onto the Section using the mouse.
 			 * Left-click activates, right-click deactivates, delete clears.
@@ -29,12 +29,36 @@ namespace PixelMaestroStudio {
 			 */
 			Canvas* canvas = section_->get_canvas();
 			if (canvas != nullptr) {
-				Point test = map_cursor_to_pixel(event->pos());
-				if (event->buttons() == Qt::LeftButton) {
-					canvas->activate(test.x, test.y);
+				Point pixel = map_cursor_to_pixel(event->pos());
+				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
+
+				if (widget != nullptr) {
+					if (event->buttons() == Qt::LeftButton) {
+						widget->run_cue(
+							widget->canvas_handler->activate(
+								widget->get_section_index(),
+								widget->get_layer_index(),
+								pixel.x,
+								pixel.y)
+						);
+					}
+					else if (event->buttons() == Qt::RightButton) {
+						widget->run_cue(
+							widget->canvas_handler->deactivate(
+								widget->get_section_index(),
+								widget->get_layer_index(),
+								pixel.x,
+								pixel.y)
+						);
+					}
 				}
-				else if (event->buttons() == Qt::RightButton) {
-					canvas->deactivate(test.x, test.y);
+				else {
+					if (event->buttons() == Qt::LeftButton) {
+						canvas->activate(pixel.x, pixel.y);
+					}
+					else if (event->buttons() == Qt::RightButton) {
+						canvas->deactivate(pixel.x, pixel.y);
+					}
 				}
 			}
 		}
