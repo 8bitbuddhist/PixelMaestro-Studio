@@ -66,6 +66,7 @@ namespace PixelMaestroStudio {
 			uint8_t get_section_index(Section* section);
 			void run_cue(uint8_t* cue);
 			void set_active_section(Section* section);
+			void set_canvas_origin(Point* coordinates);
 
 		protected:
 			bool eventFilter(QObject *watched, QEvent *event);

@@ -25,8 +25,6 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			QLabel* interpreted = nullptr;
-
 			explicit MaestroDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
 			~MaestroDrawingAreaDialog();
 

@@ -56,10 +56,8 @@ namespace PixelMaestroStudio {
 		for (int device = 0; device < serial_count; device++) {
 			settings.setArrayIndex(device);
 			if (settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
-				// Detect and skip over the screen
-				if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0) { }
 				// Detect and initialize the simulated serial device
-				else if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
+				if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
 					drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
 					drawing_area_dialog_.get()->show();
 				}
@@ -1470,6 +1468,18 @@ namespace PixelMaestroStudio {
 		ui->canvasPaletteLabel->setEnabled(index && type == CanvasType::PaletteCanvas);
 		ui->canvasEditPaletteButton->setEnabled(index && type == CanvasType::PaletteCanvas);
 		ui->canvasColorPickerScrollArea->setVisible(index && type == CanvasType::PaletteCanvas);
+	}
+
+	/**
+	 * Sets the Canvas' origin to the specified coordinates.
+	 */
+	void MaestroControlWidget::set_canvas_origin(Point* coordinates) {
+		ui->originXSpinBox->blockSignals(true);
+		ui->originYSpinBox->blockSignals(true);
+		ui->originXSpinBox->setValue(coordinates->x);
+		ui->originYSpinBox->setValue(coordinates->y);
+		ui->originXSpinBox->blockSignals(false);
+		ui->originYSpinBox->blockSignals(false);
 	}
 
 	/**

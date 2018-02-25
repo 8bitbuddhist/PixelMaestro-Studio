@@ -101,9 +101,10 @@ namespace PixelMaestroStudio {
 				settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
 				maestro_drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
 				main_layout_->addWidget(maestro_drawing_area_);
-				maestro_controller_->start();
 			}
 		}
+
+		maestro_controller_->start();
 
 		// Initialize MaestroControlWidget
 		maestro_control_widget_ = new MaestroControlWidget(main_layout_->widget(), maestro_controller_);
@@ -141,8 +142,8 @@ namespace PixelMaestroStudio {
 		if (!filename.isEmpty()) {
 			// Read in the CueFile, then load the Animation Editor
 			reset_drawing_area();
-			maestro_controller_->load_cuefile(filename);
 			on_action_Open_Animation_Editor_triggered(true);
+			maestro_controller_->load_cuefile(filename);
 		}
 	}
 

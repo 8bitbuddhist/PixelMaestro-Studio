@@ -58,6 +58,9 @@ namespace PixelMaestroStudio {
 								pixel.y)
 						);
 					}
+
+					// Set the cursor location in the MaestroControlWidget
+					widget->set_canvas_origin(&pixel);
 				}
 				else {
 					if (event->buttons() == Qt::LeftButton) {
@@ -79,7 +82,7 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
 		// If there's a MaestroControlWidget and this isn't the curent active Section, activate it.
 		MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
-		if (widget != nullptr && event->buttons() == Qt::LeftButton) {
+		if (widget != nullptr && event->buttons() == Qt::LeftButton && section_ != widget->get_active_section()) {
 			widget->set_active_section(this->section_);
 		}
 		mouseMoveEvent(event);
