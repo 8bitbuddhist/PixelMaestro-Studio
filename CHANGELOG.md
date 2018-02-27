@@ -10,6 +10,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added support for the Fire animation.
 	- Added `skew` parameter to Merge and Wave animations.
 	- Added ability to reorder Show Events.
+	
+### Removed
+- Animations
+	- Merge animation is now a part of the Wave animation. Use `WaveAnimation::set_merge(boolean)` to recreate a MergeAnimation.
 
 ## [v0.12] - 2018-01-22
 ### Changed

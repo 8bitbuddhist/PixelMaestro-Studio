@@ -6,7 +6,6 @@
 #include "canvas/animationcanvas.h"
 #include "drawingarea/maestrodrawingarea.h"
 #include "canvasdemo.h"
-#include "animation/mergeanimation.h"
 #include "canvas/fonts/font5x8.h"
 #include "controller/maestrocontroller.h"
 #include "core/point.h"

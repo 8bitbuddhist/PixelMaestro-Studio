@@ -20,7 +20,6 @@ namespace PixelMaestroStudio {
 														"Set Fire Options",
 														"Start",
 														"Stop",
-														"Set Merge Options",
 														"Set Wave Options"});
 
 	const QStringList CueInterpreter::CanvasActions({"Clear",
@@ -63,7 +62,6 @@ namespace PixelMaestroStudio {
 													  "Cycle",
 													  "Lightning",
 													  "Mandelbrot",
-													  "Merge",
 													  "Plasma",
 													  "Radial",
 													  "Random",
@@ -158,9 +156,6 @@ namespace PixelMaestroStudio {
 					result->append(", Fork Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]));
 				}
 				break;
-			case AnimationCueHandler::Action::SetMergeOptions:
-				result->append(", Skew: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
-				break;
 			case AnimationCueHandler::Action::SetOrientation:
 				result->append(": " + AnimationOrientations.at(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
@@ -186,7 +181,10 @@ namespace PixelMaestroStudio {
 				}
 				break;
 			case AnimationCueHandler::Action::SetWaveOptions:
-				result->append(", Skew: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+				{
+					result->append(", Merge: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+					result->append(", Skew: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
+				}
 				break;
 			case AnimationCueHandler::Action::Start:
 				result->append(", Start");

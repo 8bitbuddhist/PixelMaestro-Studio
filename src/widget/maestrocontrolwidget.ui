@@ -368,11 +368,6 @@
          </item>
          <item>
           <property name="text">
-           <string>Merge</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Plasma</string>
           </property>
          </item>

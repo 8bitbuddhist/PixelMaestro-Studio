@@ -11,8 +11,6 @@
 #include "animation/fireanimationcontrolwidget.h"
 #include "animation/lightninganimation.h"
 #include "animation/lightninganimationcontrolwidget.h"
-#include "animation/mergeanimation.h"
-#include "animation/mergeanimationcontrolwidget.h"
 #include "animation/plasmaanimation.h"
 #include "animation/plasmaanimationcontrolwidget.h"
 #include "animation/radialanimation.h"
@@ -1728,9 +1726,6 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationType::Lightning:
 				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControlWidget((LightningAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Merge:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new MergeAnimationControlWidget((MergeAnimation*)animation, this, layout->widget()));
 				break;
 			case AnimationType::Plasma:
 				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControlWidget((PlasmaAnimation*)animation, this, layout->widget()));

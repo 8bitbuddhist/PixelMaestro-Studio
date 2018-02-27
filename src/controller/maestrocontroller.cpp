@@ -1,6 +1,5 @@
 #include "animation/fireanimation.h"
 #include "animation/lightninganimation.h"
-#include "animation/mergeanimation.h"
 #include "animation/plasmaanimation.h"
 #include "animation/radialanimation.h"
 #include "animation/sparkleanimation.h"
@@ -228,12 +227,6 @@ namespace PixelMaestroStudio {
 					write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
 				}
 				break;
-			case AnimationType::Merge:
-				{
-					MergeAnimation* ma = static_cast<MergeAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_merge_options(section_id, layer_id, ma->get_skew()));
-				}
-				break;
 			case AnimationType::Plasma:
 				{
 					PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
@@ -255,7 +248,7 @@ namespace PixelMaestroStudio {
 			case AnimationType::Wave:
 				{
 					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_skew()));
+					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_merge(), wa->get_skew()));
 				}
 			default:
 				break;
