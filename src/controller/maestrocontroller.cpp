@@ -190,6 +190,7 @@ namespace PixelMaestroStudio {
 	 * @param section_id The index of the Section to save.
 	 * @param layer_id The index of the Layer to save.
 	 */
+	// TODO: Completely broken in recent versions.
 	void MaestroController::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
 
 		Section* section = maestro_->get_section(section_id);
@@ -248,7 +249,7 @@ namespace PixelMaestroStudio {
 			case AnimationType::Wave:
 				{
 					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_merge(), wa->get_skew()));
+					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_mirror(), wa->get_skew()));
 				}
 			default:
 				break;

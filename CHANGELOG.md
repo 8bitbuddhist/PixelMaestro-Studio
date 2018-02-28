@@ -3,7 +3,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.13] - In Progress
+## [v0.20] - In Progress
 ### Added
 - Animation Editor
 	- Added ability to draw directly onto a Canvas.

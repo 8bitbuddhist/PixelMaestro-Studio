@@ -182,7 +182,7 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationCueHandler::Action::SetWaveOptions:
 				{
-					result->append(", Merge: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+					result->append(", Mirror: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 					result->append(", Skew: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
 				}
 				break;

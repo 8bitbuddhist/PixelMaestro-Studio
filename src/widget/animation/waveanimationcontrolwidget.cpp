@@ -13,7 +13,7 @@ namespace PixelMaestroStudio {
 		ui->skewSpinBox->blockSignals(false);
 	}
 
-	void WaveAnimationControlWidget::on_mergeCheckBox_stateChanged(int arg1) {
+	void WaveAnimationControlWidget::on_mirrorCheckBox_stateChanged(int arg1) {
 		maestro_control_widget_->run_cue(
 			maestro_control_widget_->animation_handler->set_wave_options(
 				maestro_control_widget_->get_section_index(),
@@ -29,7 +29,7 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->animation_handler->set_wave_options(
 				maestro_control_widget_->get_section_index(),
 				maestro_control_widget_->get_layer_index(),
-				ui->mergeCheckBox->isChecked(),
+				ui->mirrorCheckBox->isChecked(),
 				ui->skewSpinBox->value())
 		);
 	}

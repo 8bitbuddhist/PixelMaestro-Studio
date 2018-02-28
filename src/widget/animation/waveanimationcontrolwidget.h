@@ -20,7 +20,7 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_skewSpinBox_editingFinished();
 
-			void on_mergeCheckBox_stateChanged(int arg1);
+			void on_mirrorCheckBox_stateChanged(int arg1);
 
 		private:
 			WaveAnimation* animation_;
