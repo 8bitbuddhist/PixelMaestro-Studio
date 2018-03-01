@@ -45,7 +45,8 @@ namespace PixelMaestroStudio {
 													  "Stop"
 													  "Sync"});
 
-	const QStringList CueInterpreter::SectionActions({"Remove Canvas",
+	const QStringList CueInterpreter::SectionActions({"Remove Animation",
+													  "Remove Canvas",
 													  "Remove Layer",
 													  "Set Animation",
 													  "Set Canvas",
@@ -252,6 +253,8 @@ namespace PixelMaestroStudio {
 		result->append(SectionActions.at(cue[(uint8_t)SectionCueHandler::Byte::ActionByte]));
 
 		switch ((SectionCueHandler::Action)cue[(uint8_t)SectionCueHandler::Byte::ActionByte]) {
+			case SectionCueHandler::Action::RemoveAnimation:
+				break;
 			case SectionCueHandler::Action::RemoveCanvas:
 				break;
 			case SectionCueHandler::Action::RemoveLayer:

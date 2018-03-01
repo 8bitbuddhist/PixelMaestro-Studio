@@ -154,3 +154,6 @@ FORMS	+= \
 INCLUDEPATH += \
 		$$PWD/src \
 		$$PWD/lib/PixelMaestro/src
+
+RESOURCES += \
+    src/resources/images/images.qrc

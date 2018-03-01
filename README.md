@@ -11,4 +11,8 @@ PixelMaestro Studio is a Qt-based desktop application that lets you run the Pixe
 3. Navigate to the newly created repository folder and use `git submodule init` and `git submodule update` to fetch the PixelMaestro core library.
 4. Open the `PixelMaestro_Studio.pro` file in Qt Creator, or use Qmake to build the project.
 
+## Credits
+
+Icons courtesy of [Openclipart](https://openclipart.org/).
+
 [![Support this project on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=8547028)

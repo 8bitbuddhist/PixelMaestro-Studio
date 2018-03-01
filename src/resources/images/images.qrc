@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon_circle.png</file>
+        <file>icon_line.png</file>
+        <file>icon_rectangle.png</file>
+        <file>icon_text.png</file>
+        <file>icon_triangle.png</file>
+        <file>icon_play.png</file>
+        <file>icon_pause.png</file>
+        <file>icon_next.png</file>
+        <file>icon_back.png</file>
+        <file>icon_draw.png</file>
+        <file>icon_paint.png</file>
+    </qresource>
+</RCC>

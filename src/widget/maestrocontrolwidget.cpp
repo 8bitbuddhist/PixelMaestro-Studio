@@ -325,11 +325,11 @@ namespace PixelMaestroStudio {
 
 		// Initialize Canvas elements
 		// Add radio buttons to groups
-		canvas_shape_type_group_.addButton(ui->circleRadioButton);
-		canvas_shape_type_group_.addButton(ui->lineRadioButton);
-		canvas_shape_type_group_.addButton(ui->rectRadioButton);
-		canvas_shape_type_group_.addButton(ui->textRadioButton);
-		canvas_shape_type_group_.addButton(ui->triangleRadioButton);
+		canvas_shape_type_group_.addButton(ui->circleToolButton);
+		canvas_shape_type_group_.addButton(ui->lineToolButton);
+		canvas_shape_type_group_.addButton(ui->rectToolButton);
+		canvas_shape_type_group_.addButton(ui->textToolButton);
+		canvas_shape_type_group_.addButton(ui->triangleToolButton);
 
 		// Set Canvas defaults
 		ui->currentFrameSpinBox->setEnabled(false);
@@ -433,8 +433,8 @@ namespace PixelMaestroStudio {
 			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), new_canvas_type));
 
 			// Default to the circle radio button so that the controls can be refreshed
-			ui->circleRadioButton->setChecked(true);
-			on_circleRadioButton_toggled(true);
+			ui->circleToolButton->setChecked(true);
+			on_circleToolButton_toggled(true);
 
 			// Select a palette
 			if (new_canvas_type == CanvasType::PaletteCanvas) {
@@ -442,9 +442,9 @@ namespace PixelMaestroStudio {
 			}
 		}
 		else {
-			// Disable Edit Frame mode
-			ui->toggleCanvasModeCheckBox->setChecked(false);
-			on_toggleCanvasModeCheckBox_toggled(false);
+			// Disable Canvas playback
+			ui->canvasPlaybackStartStopToolButton->setChecked(false);
+			on_canvasPlaybackStartStopToolButton_toggled(false);
 		}
 	}
 
@@ -491,8 +491,53 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Moves the Canvas animation back a frame.
+	 */
+	void MaestroControlWidget::on_canvasPlaybackBackToolButton_clicked() {
+		run_cue(
+			canvas_handler->previous_frame(get_section_index(), get_layer_index())
+		);
+
+		ui->currentFrameSpinBox->blockSignals(true);
+		ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->blockSignals(false);
+	}
+
+	/**
+	 * Advances the Canvas animation by a single frame.
+	 */
+	void MaestroControlWidget::on_canvasPlaybackNextToolButton_clicked() {
+		run_cue(
+			canvas_handler->next_frame(get_section_index(), get_layer_index())
+		);
+
+		ui->currentFrameSpinBox->blockSignals(true);
+		ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->blockSignals(false);
+	}
+
+	/**
+	 * Toggles Canvas animation playback.
+	 * @param checked If true, run the Canvas animation.
+	 */
+	void MaestroControlWidget::on_canvasPlaybackStartStopToolButton_toggled(bool checked) {
+		if (checked) {
+			// Enables/disable the 'current frame' control
+			ui->currentFrameSpinBox->setEnabled(false);
+			on_frameRateSpinBox_editingFinished();
+		}
+		else {
+			run_cue(canvas_handler->remove_frame_timer(get_section_index(), get_layer_index()));
+			ui->currentFrameSpinBox->blockSignals(true);
+			ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
+			ui->currentFrameSpinBox->blockSignals(false);
+		}
+	}
+
+	/**
 	 * Sets the offset x value.
 	 */
+	// FIXME: Only triggers when a second editingFinished is triggered
 	void MaestroControlWidget::on_offsetXSpinBox_editingFinished() {
 		set_offset();
 	}
@@ -508,7 +553,7 @@ namespace PixelMaestroStudio {
 	 * Selects a circle for drawing.
 	 * @param checked If true, next shape will be a circle.
 	 */
-	void MaestroControlWidget::on_circleRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_circleToolButton_toggled(bool checked) {
 		set_circle_controls_enabled(checked);
 	}
 
@@ -517,7 +562,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_clearButton_clicked() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
 			run_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
 		}
@@ -588,16 +633,16 @@ namespace PixelMaestroStudio {
 		switch ((CanvasType)(ui->canvasComboBox->currentIndex() - 1)) {
 			case CanvasType::AnimationCanvas:
 				{
-					if (checked_button == ui->circleRadioButton) {
+					if (checked_button == ui->circleToolButton) {
 						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->lineRadioButton) {
+					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
-					else if (checked_button == ui->rectRadioButton) {
+					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->textRadioButton) {
+					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
 					else {	// Triangle
@@ -607,16 +652,16 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasType::ColorCanvas:
 				{
-					if (checked_button == ui->circleRadioButton) {
+					if (checked_button == ui->circleToolButton) {
 						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->lineRadioButton) {
+					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
-					else if (checked_button == ui->rectRadioButton) {
+					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->textRadioButton) {
+					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
 					else {	// Triangle
@@ -626,16 +671,16 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasType::PaletteCanvas:
 				{
-					if (checked_button == ui->circleRadioButton) {
+					if (checked_button == ui->circleToolButton) {
 						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->lineRadioButton) {
+					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
-					else if (checked_button == ui->rectRadioButton) {
+					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
-					else if (checked_button == ui->textRadioButton) {
+					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
 					else {	// Triangle
@@ -696,9 +741,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Canvas' frame rate.
 	 */
 	void MaestroControlWidget::on_frameRateSpinBox_editingFinished() {
-		if (!ui->toggleCanvasModeCheckBox->isChecked()) {
-			run_cue(canvas_handler->set_frame_timer(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
-		}
+		run_cue(canvas_handler->set_frame_timer(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
 	}
 
 	/**
@@ -712,15 +755,11 @@ namespace PixelMaestroStudio {
 
 		if ((Colors::MixMode)index != active_section_->get_parent_section()->get_layer()->mix_mode) {
 			run_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
-
-			// Enable spin box for alpha only
-			if ((Colors::MixMode)index == Colors::MixMode::Alpha) {
-				ui->alphaSpinBox->setEnabled(true);
-			}
-			else {
-				ui->alphaSpinBox->setEnabled(false);
-			}
 		}
+
+		// Enable spin box for alpha only
+		ui->alphaLabel->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
+		ui->alphaSpinBox->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
 	}
 
 	/// Moves the selected Show Event down by one.
@@ -751,7 +790,7 @@ namespace PixelMaestroStudio {
 	 * Selects a rectangle for the next shape.
 	 * @param checked If true, the next shape will be a rectangle.
 	 */
-	void MaestroControlWidget::on_rectRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_rectToolButton_toggled(bool checked) {
 		set_rect_controls_enabled(checked);
 	}
 
@@ -808,46 +847,50 @@ namespace PixelMaestroStudio {
 		Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 		Section* last_section = base_section;
 
-		// Get the current number of Layers
-		int num_layers = get_num_layers(base_section);
-
-		// Get the last Layer in the Maestro
+		// Get the number of Layers (and the index of the last Layer) in the Section
+		int num_layers = 0;
 		while (last_section->get_layer() != nullptr) {
 			last_section = last_section->get_layer()->section;
+			num_layers++;
 		}
+		int last_layer_index = num_layers;
 
+		/*
+		 * Get the difference between the current Layer count and the new Layer count.
+		 * If diff is positive, add more Layers. Otherwise, remove Layers.
+		 */
 		int diff = ui->layerSpinBox->value() - num_layers;
-
-		// If diff is positive, add more Layers
 		if (diff > 0) {
 			while (diff > 0) {
-				run_cue(section_handler->set_layer(get_section_index(base_section), get_layer_index(last_section), Colors::MixMode::None, 0));
+				run_cue(section_handler->set_layer(get_section_index(), last_layer_index, Colors::MixMode::None, 0));
+				last_layer_index++;
 				diff--;
 			}
-
-			// Refresh the active section
-			set_active_section(get_active_section());
 		}
 		// If the diff is negative, remove Layers
 		else if (diff < 0) {
 			while (diff < 0) {
 				last_section = last_section->get_parent_section();
-				run_cue(section_handler->remove_layer(get_section_index(base_section), get_layer_index(last_section)));
+				run_cue(section_handler->remove_layer(get_section_index(), last_layer_index - 1));
+				last_layer_index--;
 				diff++;
 			}
 
-			// If the active Layer no longer exists, go to the last Section
-			if (get_layer_index() >= get_num_layers(base_section)) {
+			// If the active Layer no longer exists, jump to the last available Layer
+			if (ui->layerSpinBox->value() >= last_layer_index) {
 				set_active_section(last_section);
 			}
 		}
+
+		// Refresh layer combobox
+		populate_layer_combobox();
 	}
 
 	/**
 	 * Selects a line for the next shape.
 	 * @param checked If true, the next shape will be a line.
 	 */
-	void MaestroControlWidget::on_lineRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_lineToolButton_toggled(bool checked) {
 		set_line_controls_enabled(checked);
 	}
 
@@ -878,9 +921,9 @@ namespace PixelMaestroStudio {
 			}
 
 			// Disable frame count spin box if necessary
-			if (ui->toggleCanvasModeCheckBox->isChecked()) {
-				ui->toggleCanvasModeCheckBox->setChecked(false);
-				on_toggleCanvasModeCheckBox_toggled(false);
+			if (ui->canvasPlaybackStartStopToolButton->isChecked()) {
+				ui->canvasPlaybackStartStopToolButton->setChecked(false);
+				on_canvasPlaybackStartStopToolButton_toggled(false);
 			}
 
 			// If PaletteCanvas, add Palette to list
@@ -894,6 +937,9 @@ namespace PixelMaestroStudio {
 				ui->canvasPaletteComboBox->blockSignals(false);
 				ui->canvasPaletteComboBox->setCurrentText(name);
 			}
+
+			// Start playback
+			ui->canvasPlaybackStartStopToolButton->setChecked(true);
 		}
 	}
 
@@ -903,6 +949,10 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_loopCheckBox_toggled(bool checked) {
 		run_cue(show_handler->set_looping(checked));
+	}
+
+	void MaestroControlWidget::on_paintToolButton_toggled(bool checked) {
+		// TODO: Implement
 	}
 
 	/**
@@ -1020,7 +1070,7 @@ namespace PixelMaestroStudio {
 					}
 					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-					run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 
 					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -1038,7 +1088,7 @@ namespace PixelMaestroStudio {
 					}
 					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-					run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 
 					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -1056,7 +1106,7 @@ namespace PixelMaestroStudio {
 					}
 					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-					run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 
 					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
@@ -1067,7 +1117,7 @@ namespace PixelMaestroStudio {
 				}
 			}
 			else {	// No Canvas set
-				run_cue(section_handler->set_dimensions(get_section_index(), get_layer_index(), x, y));
+				run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 			}
 		}
 	}
@@ -1113,7 +1163,7 @@ namespace PixelMaestroStudio {
 	 * Selects text for the next Canvas shape.
 	 * @param checked If true, the next shape will be text.
 	 */
-	void MaestroControlWidget::on_textRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_textToolButton_toggled(bool checked) {
 		set_text_controls_enabled(checked);
 	}
 
@@ -1136,25 +1186,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Toggles Canvas Edit mode, which prevents the Canvas from automatically switching frames.
-	 * @param checked If true, Canvas Edit mode is enabled.
-	 */
-	void MaestroControlWidget::on_toggleCanvasModeCheckBox_toggled(bool checked) {
-		// Enables/disable the 'current frame' control
-		ui->currentFrameSpinBox->setEnabled(checked);
-
-		if (checked) {
-			run_cue(canvas_handler->remove_frame_timer(get_section_index(), get_layer_index()));
-			ui->currentFrameSpinBox->blockSignals(true);
-			ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
-			ui->currentFrameSpinBox->blockSignals(false);
-		}
-		else {
-			on_frameRateSpinBox_editingFinished();
-		}
-	}
-
-	/**
 	 * Toggles Show Edit mode. Show Edit mode lets the user populate the Event History without affecting the output.
 	 * @param checked If true, Show Edit mode is enabled.
 	 */
@@ -1166,7 +1197,7 @@ namespace PixelMaestroStudio {
 	 * Sets the next shape to triangle.
 	 * @param checked If true, the next Canvas shape drawn will be a triangle.
 	 */
-	void MaestroControlWidget::on_triangleRadioButton_toggled(bool checked) {
+	void MaestroControlWidget::on_triangleToolButton_toggled(bool checked) {
 		set_triangle_controls_enabled(checked);
 	}
 
@@ -1178,8 +1209,8 @@ namespace PixelMaestroStudio {
 		ui->layerComboBox->clear();
 		ui->layerComboBox->addItem("Base Section");
 
-		for (uint8_t layer = 1; layer <= get_num_layers(maestro_controller_->get_maestro()->get_section(get_section_index())); layer++) {
-			ui->layerComboBox->addItem(QString("Layer ") + QString::number(layer));
+		for (uint8_t layer = 0; layer < get_num_layers(maestro_controller_->get_maestro()->get_section(get_section_index())); layer++) {
+			ui->layerComboBox->addItem(QString("Layer ") + QString::number(layer + 1));
 		}
 
 		ui->layerComboBox->blockSignals(false);
@@ -1427,37 +1458,9 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the Canvas in the drop-down list. 0 for no Canvas.
 	 */
 	void MaestroControlWidget::set_canvas_controls_enabled(uint8_t index) {
-		ui->toggleCanvasModeLabel->setEnabled(index);
-		ui->toggleCanvasModeCheckBox->setEnabled(index);
-		ui->frameCountLabel->setEnabled(index);
-		ui->frameCountSpinBox->setEnabled(index);
-		ui->currentFrameLabel->setEnabled(index);
-		ui->currentFrameSpinBox->setEnabled(index);
-		ui->frameRateLabel->setEnabled(index);
-		ui->frameRateSpinBox->setEnabled(index);
-		ui->drawingToolsLabel->setEnabled(index);
-		ui->circleRadioButton->setEnabled(index);
-		ui->lineRadioButton->setEnabled(index);
-		ui->triangleRadioButton->setEnabled(index);
-		ui->textRadioButton->setEnabled(index);
-		ui->rectRadioButton->setEnabled(index);
-		ui->originLabel->setEnabled(index);
-		ui->originXSpinBox->setEnabled(index);
-		ui->originYSpinBox->setEnabled(index);
-		ui->targetLabel->setEnabled(index);
-		ui->targetXSpinBox->setEnabled(index);
-		ui->targetYSpinBox->setEnabled(index);
-		ui->target2Label->setEnabled(index);
-		ui->target2XSpinBox->setEnabled(index);
-		ui->target2YSpinBox->setEnabled(index);
-		ui->fontLabel->setEnabled(index);
-		ui->fontComboBox->setEnabled(index);
-		ui->textLabel->setEnabled(index);
-		ui->textLineEdit->setEnabled(index);
-		ui->fillCheckBox->setEnabled(index);
+		ui->drawingToolsGroupBox->setEnabled(index);
+		ui->animationToolsGroupBox->setEnabled(index);
 		ui->loadImageButton->setEnabled(index);
-		ui->drawButton->setEnabled(index);
-		ui->clearButton->setEnabled(index);
 
 		// Canvas-specific controls
 		CanvasType type = (CanvasType)(index - 1);
@@ -1619,10 +1622,7 @@ namespace PixelMaestroStudio {
 	 * Sets the Animation's center to the specified coordinates.
 	 */
 	void MaestroControlWidget::set_offset() {
-		// Don't allow changes if scrolling is enabled
-		if (ui->scrollXSpinBox->value() == 0 && ui->scrollYSpinBox->value() == 0) {
-			run_cue(section_handler->set_offset(get_section_index(), get_layer_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
-		}
+		run_cue(section_handler->set_offset(get_section_index(), get_layer_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
 	}
 
 	/**
@@ -1634,21 +1634,17 @@ namespace PixelMaestroStudio {
 		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), (new_x < 0), (new_y < 0)));
 
 		// Enable/disable offset controls
-		if (new_x != 0 || new_y != 0) {
-			ui->offsetLabel->setEnabled(false);
-			ui->offsetXSpinBox->setEnabled(false);
-			ui->offsetYSpinBox->setEnabled(false);
-		}
-		else {
-			ui->offsetLabel->setEnabled(true);
-			ui->offsetXSpinBox->setEnabled(true);
-			ui->offsetYSpinBox->setEnabled(true);
+		ui->offsetXSpinBox->setEnabled(new_x ==0);
+		ui->offsetYSpinBox->setEnabled(new_y == 0);
 
+		if (new_x == 0) {
 			ui->offsetXSpinBox->blockSignals(true);
-			ui->offsetYSpinBox->blockSignals(true);
 			ui->offsetXSpinBox->setValue(active_section_->get_offset()->x);
+			ui->offsetYSpinBox->blockSignals(false);
+		}
+		if (new_y == 0) {
+			ui->offsetYSpinBox->blockSignals(true);
 			ui->offsetYSpinBox->setValue(active_section_->get_offset()->y);
-			ui->offsetXSpinBox->blockSignals(false);
 			ui->offsetYSpinBox->blockSignals(false);
 		}
 	}
@@ -1698,12 +1694,8 @@ namespace PixelMaestroStudio {
 		// If visible, enable Layer controls
 		ui->mixModeLabel->setEnabled(enabled);
 		ui->mix_modeComboBox->setEnabled(enabled);
+		ui->alphaLabel->setEnabled(enabled);
 		ui->alphaSpinBox->setEnabled(enabled);
-
-		// Invert layout controls
-		ui->gridSizeLabel->setEnabled(!enabled);
-		ui->columnsSpinBox->setEnabled(!enabled);
-		ui->rowsSpinBox->setEnabled(!enabled);
 	}
 
 	/**

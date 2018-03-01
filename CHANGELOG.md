@@ -11,6 +11,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added `skew` parameter to Merge and Wave animations.
 	- Added ability to reorder Show Events.
 	
+### Changed
+- Animation Editor
+	- Minor UI changes.
+	- Enabled changing the grid size while a Layer is active.
+	- Enabled changing per-axis offset values while scrolling is disabled on that axis.
+	
 ### Removed
 - Animations
 	- Merge animation is now a part of the Wave animation. Use `WaveAnimation::set_merge(boolean)` to recreate a MergeAnimation.

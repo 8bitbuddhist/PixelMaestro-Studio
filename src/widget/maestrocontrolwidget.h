@@ -166,14 +166,8 @@ namespace PixelMaestroStudio {
 			void on_toggleShowModeCheckBox_clicked(bool checked);
 			void on_addEventButton_clicked();
 			void on_frameCountSpinBox_editingFinished();
-			void on_toggleCanvasModeCheckBox_toggled(bool checked);
 			void on_currentFrameSpinBox_editingFinished();
 			void on_frameRateSpinBox_editingFinished();
-			void on_circleRadioButton_toggled(bool checked);
-			void on_lineRadioButton_toggled(bool checked);
-			void on_triangleRadioButton_toggled(bool checked);
-			void on_textRadioButton_toggled(bool checked);
-			void on_rectRadioButton_toggled(bool checked);
 			void on_selectColorButton_clicked();
 			void on_loadImageButton_clicked();
 			void on_clearButton_clicked();
@@ -192,6 +186,14 @@ namespace PixelMaestroStudio {
 			void on_canvasPaletteComboBox_currentIndexChanged(int index);
 			void on_moveEventUpButton_clicked();
 			void on_moveEventDownButton_clicked();
+			void on_circleToolButton_toggled(bool checked);
+			void on_lineToolButton_toggled(bool checked);
+			void on_triangleToolButton_toggled(bool checked);
+			void on_textToolButton_toggled(bool checked);
+			void on_rectToolButton_toggled(bool checked);
+			void on_canvasPlaybackStartStopToolButton_toggled(bool checked);
+			void on_canvasPlaybackNextToolButton_clicked();
+			void on_canvasPlaybackBackToolButton_clicked();
 	};
 }
 
