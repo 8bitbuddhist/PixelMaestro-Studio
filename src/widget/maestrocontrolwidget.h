@@ -62,6 +62,7 @@ namespace PixelMaestroStudio {
 			Section* get_active_section();
 			uint8_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
+			bool get_canvas_painting_enabled();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
 			void run_cue(uint8_t* cue);
@@ -131,6 +132,7 @@ namespace PixelMaestroStudio {
 			// Canvas control handling methods
 			void set_circle_controls_enabled(bool enabled);
 			void set_line_controls_enabled(bool enabled);
+			void set_paint_controls_enabled(bool enabled);
 			void set_rect_controls_enabled(bool enabled);
 			void set_text_controls_enabled(bool enabled);
 			void set_triangle_controls_enabled(bool enabled);
@@ -194,6 +196,7 @@ namespace PixelMaestroStudio {
 			void on_canvasPlaybackStartStopToolButton_toggled(bool checked);
 			void on_canvasPlaybackNextToolButton_clicked();
 			void on_canvasPlaybackBackToolButton_clicked();
+			void on_paintToolButton_toggled(bool checked);
 	};
 }
 

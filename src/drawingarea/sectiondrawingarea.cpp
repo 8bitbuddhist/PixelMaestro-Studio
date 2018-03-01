@@ -40,23 +40,26 @@ namespace PixelMaestroStudio {
 				// If there's a MaestroControlWidget, use run_cue instead of modifying the Canvas directly.
 				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
 				if (widget != nullptr) {
-					if (event->buttons() == Qt::LeftButton) {
-						widget->run_cue(
-							widget->canvas_handler->activate(
-								widget->get_section_index(),
-								widget->get_layer_index(),
-								pixel.x,
-								pixel.y)
-						);
-					}
-					else if (event->buttons() == Qt::RightButton) {
-						widget->run_cue(
-							widget->canvas_handler->deactivate(
-								widget->get_section_index(),
-								widget->get_layer_index(),
-								pixel.x,
-								pixel.y)
-						);
+					// Check to see if paint mode is enabled.
+					if (widget->get_canvas_painting_enabled()) {
+						if (event->buttons() == Qt::LeftButton) {
+							widget->run_cue(
+								widget->canvas_handler->activate(
+									widget->get_section_index(),
+									widget->get_layer_index(),
+									pixel.x,
+									pixel.y)
+							);
+						}
+						else if (event->buttons() == Qt::RightButton) {
+							widget->run_cue(
+								widget->canvas_handler->deactivate(
+									widget->get_section_index(),
+									widget->get_layer_index(),
+									pixel.x,
+									pixel.y)
+							);
+						}
 					}
 
 					// Set the cursor location in the MaestroControlWidget

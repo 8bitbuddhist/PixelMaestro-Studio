@@ -171,6 +171,14 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns whether the Canvas paint tool button is currently active.
+	 * @return True if the paintToolButton is active.
+	 */
+	bool MaestroControlWidget::get_canvas_painting_enabled() {
+		return (ui->paintToolButton->isEnabled() && ui->paintToolButton->isChecked());
+	}
+
+	/**
 	 * Returns the index of the current Layer.
 	 * @return Layer index.
 	 */
@@ -324,9 +332,10 @@ namespace PixelMaestroStudio {
 		}
 
 		// Initialize Canvas elements
-		// Add radio buttons to groups
+		// Add drawing buttons to group
 		canvas_shape_type_group_.addButton(ui->circleToolButton);
 		canvas_shape_type_group_.addButton(ui->lineToolButton);
+		canvas_shape_type_group_.addButton(ui->paintToolButton);
 		canvas_shape_type_group_.addButton(ui->rectToolButton);
 		canvas_shape_type_group_.addButton(ui->textToolButton);
 		canvas_shape_type_group_.addButton(ui->triangleToolButton);
@@ -521,6 +530,8 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, run the Canvas animation.
 	 */
 	void MaestroControlWidget::on_canvasPlaybackStartStopToolButton_toggled(bool checked) {
+		if (active_section_->get_canvas() == nullptr) return;
+
 		if (checked) {
 			// Enables/disable the 'current frame' control
 			ui->currentFrameSpinBox->setEnabled(false);
@@ -639,13 +650,16 @@ namespace PixelMaestroStudio {
 					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
+					else if (checked_button == ui->paintToolButton) {
+						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value()));
+					}
 					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
-					else {	// Triangle
+					else if (checked_button == ui->triangleToolButton) {
 						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 				}
@@ -658,13 +672,16 @@ namespace PixelMaestroStudio {
 					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
+					else if (checked_button == ui->paintToolButton) {
+						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value()));
+					}
 					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
-					else {	// Triangle
+					else if (checked_button == ui->triangleToolButton) {
 						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 				}
@@ -677,13 +694,16 @@ namespace PixelMaestroStudio {
 					else if (checked_button == ui->lineToolButton) {
 						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
 					}
+					else if (checked_button == ui->paintToolButton) {
+						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value()));
+					}
 					else if (checked_button == ui->rectToolButton) {
 						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 					else if (checked_button == ui->textToolButton) {
 						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
 					}
-					else {	// Triangle
+					else if (checked_button == ui->triangleToolButton) {
 						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 					}
 				}
@@ -727,14 +747,16 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_frameCountSpinBox_editingFinished() {
 		int new_max = ui->frameCountSpinBox->value();
-		if (new_max < ui->currentFrameSpinBox->value()) {
-			ui->currentFrameSpinBox->setValue(new_max);
-		}
-		ui->currentFrameSpinBox->setMaximum(new_max);
-		run_cue(canvas_handler->set_num_frames(get_section_index(), get_layer_index(), new_max));
+		if (new_max != active_section_->get_canvas()->get_num_frames()) {
+			if (new_max < ui->currentFrameSpinBox->value()) {
+				ui->currentFrameSpinBox->setValue(new_max);
+			}
+			ui->currentFrameSpinBox->setMaximum(new_max);
+			run_cue(canvas_handler->set_num_frames(get_section_index(), get_layer_index(), new_max));
 
-		// Set the new maximum for the current_frame spinbox
-		ui->currentFrameSpinBox->setMaximum(new_max);
+			// Set the new maximum for the current_frame spinbox
+			ui->currentFrameSpinBox->setMaximum(new_max);
+		}
 	}
 
 	/**
@@ -952,7 +974,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void MaestroControlWidget::on_paintToolButton_toggled(bool checked) {
-		// TODO: Implement
+		set_paint_controls_enabled(checked);
 	}
 
 	/**
@@ -1528,6 +1550,23 @@ namespace PixelMaestroStudio {
 		ui->targetLabel->setEnabled(enabled);
 		ui->targetXSpinBox->setEnabled(enabled);
 		ui->targetYSpinBox->setEnabled(enabled);
+	}
+
+	/**
+	 * Enables Canvas paint controls.
+	 * @param enabled If true, paint controls are enabled.
+	 */
+	void MaestroControlWidget::set_paint_controls_enabled(bool enabled) {
+		set_circle_controls_enabled(false);
+		set_line_controls_enabled(false);
+		set_rect_controls_enabled(false);
+		set_text_controls_enabled(false);
+		set_triangle_controls_enabled(false);
+
+		ui->originLabel->setEnabled(enabled);
+		ui->originXSpinBox->setEnabled(enabled);
+		ui->originYSpinBox->setEnabled(enabled);
+		ui->originLabel->setText("Point");
 	}
 
 	/**
