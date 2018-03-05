@@ -5,6 +5,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.20] - In Progress
 ### Added
+- Added new `Palette` class for storing color palettes.
 - Animation Editor
 	- Added ability to draw directly onto a Canvas.
 	- Added support for the Fire animation.

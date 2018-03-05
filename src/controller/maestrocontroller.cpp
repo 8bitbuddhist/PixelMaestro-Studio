@@ -208,8 +208,10 @@ namespace PixelMaestroStudio {
 
 		// Animation & Colors
 		Animation* animation = section->get_animation();
-		write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false));
+		write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
+
 		AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationHandler);
+		write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
 		write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 		write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
@@ -274,7 +276,7 @@ namespace PixelMaestroStudio {
 
 			// Save the PaletteCanvas' palette
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				write_cue_to_stream(datastream, canvas_handler->set_colors(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_num_colors()));
+				write_cue_to_stream(datastream, canvas_handler->set_colors(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size()));
 			}
 
 			// Draw and save each frame

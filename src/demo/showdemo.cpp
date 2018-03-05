@@ -22,7 +22,8 @@ namespace PixelMaestroStudio {
 		AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
 		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
 
-		controller->run(section_handler->set_animation(0, 0, AnimationType::Wave, false, ColorPresets::Colorwheel, 12));
+		controller->run(section_handler->set_animation(0, 0, AnimationType::Wave, false));
+		controller->run(animation_handler->set_palette(0, 0, new Palette(ColorPresets::Colorwheel, 12, true)));
 		controller->run(animation_handler->set_timer(0, 0, 500));
 		controller->run(section_handler->set_canvas(0, 0, CanvasType::AnimationCanvas));
 

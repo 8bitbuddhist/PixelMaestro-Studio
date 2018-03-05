@@ -7,11 +7,11 @@ namespace PixelMaestroStudio {
 												"Section",
 												"Show"});
 
-	const QStringList CueInterpreter::AnimationActions({"Set Colors",
-														"Set Cycle Index",
+	const QStringList CueInterpreter::AnimationActions({"Set Cycle Index",
 														"Set Fade",
 														"Set Lightning Options",
 														"Set Orientation",
+														"Set Palette",
 														"Set Plasma Options",
 														"Set Radial Options",
 														"Set Reverse",
@@ -124,7 +124,7 @@ namespace PixelMaestroStudio {
 		result->append(AnimationActions.at(cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]));
 
 		switch((AnimationCueHandler::Action)cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]) {
-			case AnimationCueHandler::Action::SetColors:
+			case AnimationCueHandler::Action::SetPalette:
 				{
 					uint8_t num_colors = cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte];
 					Colors::RGB base_color(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1],

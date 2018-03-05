@@ -32,7 +32,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			Ui::PaletteControlWidget *ui;
-			PaletteController::Palette* active_palette_ = nullptr;
+			PaletteController::PaletteWrapper* active_palette_ = nullptr;
 			PaletteController* palette_controller_ = nullptr;
 
 			QColor base_color_ = Qt::black;

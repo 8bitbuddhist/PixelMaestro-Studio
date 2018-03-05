@@ -14,7 +14,8 @@ namespace PixelMaestroStudio {
 	CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
-		Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::Colorwheel, 12);
+		Animation* animation = section->set_animation(AnimationType::Radial);
+		animation->set_palette(new Palette(ColorPresets::Colorwheel, 12, false));
 		animation->set_timer(250);
 		animation->set_orientation(Animation::Orientation::Vertical);
 

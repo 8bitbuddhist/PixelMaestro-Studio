@@ -14,8 +14,8 @@ namespace PixelMaestroStudio {
 	 * @param num_colors Number of colors in the palette.
 	 * @return New palette.
 	 */
-	PaletteController::Palette* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors) {
-		palettes_.push_back(Palette(name, colors, num_colors));
+	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors) {
+		palettes_.push_back(PaletteWrapper(name, colors, num_colors));
 		return &palettes_[palettes_.size() - 1];
 	}
 
@@ -26,7 +26,7 @@ namespace PixelMaestroStudio {
 	 */
 	int PaletteController::find(Colors::RGB *search_palette) {
 		for (uint16_t i = 0; i < palettes_.size(); i++) {
-			PaletteController::Palette* palette = &palettes_.at(i);
+			PaletteController::PaletteWrapper* palette = &palettes_.at(i);
 			if (*palette == search_palette) {
 				return i;
 			}
@@ -40,7 +40,7 @@ namespace PixelMaestroStudio {
 	 * @param index Palette index.
 	 * @return Palette.
 	 */
-	PaletteController::Palette* PaletteController::get_palette(uint8_t index) {
+	PaletteController::PaletteWrapper* PaletteController::get_palette(uint8_t index) {
 		return &palettes_[index];
 	}
 
@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 	 * @param name Palette name.
 	 * @return Palette.
 	 */
-	PaletteController::Palette* PaletteController::get_palette(QString name) {
+	PaletteController::PaletteWrapper* PaletteController::get_palette(QString name) {
 		for (uint8_t i = 0; i < palettes_.size(); i++) {
 			if (palettes_[i].name == name) {
 				return &palettes_[i];
@@ -62,7 +62,7 @@ namespace PixelMaestroStudio {
 	 * Gets the full list of palettes.
 	 * @return Palette list.
 	 */
-	std::vector<PaletteController::Palette>* PaletteController::get_palettes() {
+	std::vector<PaletteController::PaletteWrapper>* PaletteController::get_palettes() {
 		return &palettes_;
 	}
 
@@ -76,12 +76,12 @@ namespace PixelMaestroStudio {
 		palettes_.clear();
 
 		Colors::generate_scaling_color_array(colors, &ColorPresets::Red, &ColorPresets::Yellow, num_colors, true);
-		palettes_.push_back(Palette("Fire", colors, num_colors));
+		palettes_.push_back(PaletteWrapper("Fire", colors, num_colors));
 
 		Colors::generate_scaling_color_array(colors, &ColorPresets::Blue, &ColorPresets::Green, num_colors, true);
-		palettes_.push_back(Palette("Deep Sea", colors, num_colors));
+		palettes_.push_back(PaletteWrapper("Deep Sea", colors, num_colors));
 
-		palettes_.push_back(Palette("Color Wheel", ColorPresets::Colorwheel, 12));
+		palettes_.push_back(PaletteWrapper("Color Wheel", ColorPresets::Colorwheel, 12));
 	}
 
 	/**

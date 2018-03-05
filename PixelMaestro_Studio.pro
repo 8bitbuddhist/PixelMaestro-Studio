@@ -72,7 +72,8 @@ SOURCES += src/main.cpp\
 	lib/PixelMaestro/src/animation/mappedanimation.cpp \
 	src/widget/animation/waveanimationcontrolwidget.cpp \
 	src/drawingarea/sectiondrawingarea.cpp \
-	src/dialog/maestrodrawingareadialog.cpp
+	src/dialog/maestrodrawingareadialog.cpp \
+    lib/PixelMaestro/src/core/palette.cpp
 
 HEADERS += \
 		src/demo/blinkdemo.h \
@@ -136,7 +137,8 @@ HEADERS += \
 	lib/PixelMaestro/src/animation/mappedanimation.h \
 	src/widget/animation/waveanimationcontrolwidget.h \
 	src/drawingarea/sectiondrawingarea.h \
-	src/dialog/maestrodrawingareadialog.h
+	src/dialog/maestrodrawingareadialog.h \
+    lib/PixelMaestro/src/core/palette.h
 
 FORMS	+= \
 		src/window/mainwindow.ui \

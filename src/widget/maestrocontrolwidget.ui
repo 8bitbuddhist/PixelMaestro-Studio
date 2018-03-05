@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -678,7 +678,7 @@
               <item row="0" column="3">
                <widget class="QLabel" name="originLabel">
                 <property name="text">
-                 <string>Origin</string>
+                 <string>Cursor</string>
                 </property>
                </widget>
               </item>
