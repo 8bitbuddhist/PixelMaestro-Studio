@@ -147,7 +147,7 @@ namespace PixelMaestroStudio {
 			void on_alphaSpinBox_valueChanged(int arg1);
 			void on_animationComboBox_currentIndexChanged(int index);
 			void on_canvasComboBox_currentIndexChanged(int index);
-			void on_colorComboBox_currentIndexChanged(int index);
+			void on_animationPaletteComboBox_currentIndexChanged(int index);
 			void on_columnsSpinBox_editingFinished();
 			void on_animationTimerSlider_valueChanged(int value);
 			void on_fadeCheckBox_toggled(bool checked);

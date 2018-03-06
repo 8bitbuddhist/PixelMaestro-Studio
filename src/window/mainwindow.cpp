@@ -92,7 +92,7 @@ namespace PixelMaestroStudio {
 			reset_drawing_area();
 		}
 
-		// Check to see if the Screen is enabled as	an output device
+		// If the main DrawingArea is enabled as an output device, display it
 		QSettings settings;
 		int serial_count = settings.beginReadArray(PreferencesDialog::output_devices);
 		for (int device = 0; device < serial_count; device++) {
@@ -144,6 +144,7 @@ namespace PixelMaestroStudio {
 			reset_drawing_area();
 			on_action_Open_Animation_Editor_triggered(true);
 			maestro_controller_->load_cuefile(filename);
+			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());	// Refresh the MaestroControlWidget after loading the Cue
 		}
 	}
 

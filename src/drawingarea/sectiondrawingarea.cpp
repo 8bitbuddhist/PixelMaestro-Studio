@@ -122,6 +122,7 @@ namespace PixelMaestroStudio {
 			/*
 			 * Set the frame color.
 			 * The current Section has a white border, and other Sections have gray borders.
+			 * TODO: Highlight Layers in a different color.
 			 */
 			bool active = (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section());
 			if (active != this->is_active_) {

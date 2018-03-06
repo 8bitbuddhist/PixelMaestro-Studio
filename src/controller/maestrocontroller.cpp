@@ -190,7 +190,6 @@ namespace PixelMaestroStudio {
 	 * @param section_id The index of the Section to save.
 	 * @param layer_id The index of the Layer to save.
 	 */
-	// TODO: Completely broken in recent versions.
 	void MaestroController::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
 
 		Section* section = maestro_->get_section(section_id);
@@ -216,6 +215,7 @@ namespace PixelMaestroStudio {
 		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 		write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
 		write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_delay()));
+
 		// Save Animation-specific settings
 		switch(animation->get_type()) {
 			case AnimationType::Fire:
@@ -276,7 +276,7 @@ namespace PixelMaestroStudio {
 
 			// Save the PaletteCanvas' palette
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				write_cue_to_stream(datastream, canvas_handler->set_colors(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size()));
+				write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_palette()));
 			}
 
 			// Draw and save each frame

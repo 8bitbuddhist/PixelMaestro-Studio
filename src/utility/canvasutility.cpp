@@ -58,7 +58,7 @@ namespace PixelMaestroStudio {
 					color_table_rgb[color].b = qBlue(color_table.at(color));
 				}
 
-				maestro_control->run_cue(maestro_control->canvas_handler->set_colors(maestro_control->get_section_index(), maestro_control->get_layer_index(), &color_table_rgb[0], color_table.size()));
+				maestro_control->run_cue(maestro_control->canvas_handler->set_palette(maestro_control->get_section_index(), maestro_control->get_layer_index(), new Palette(&color_table_rgb[0], color_table.size(), true)));
 			}
 
 			// Iterate over each pixel and the frame and re-draw it

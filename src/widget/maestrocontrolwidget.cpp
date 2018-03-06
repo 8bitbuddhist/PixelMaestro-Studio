@@ -350,25 +350,25 @@ namespace PixelMaestroStudio {
 
 	/// Reinitializes Palettes from the Palette Dialog.
 	void MaestroControlWidget::initialize_palettes() {
-		QString color_palette = ui->colorComboBox->currentText();
+		QString color_palette = ui->animationPaletteComboBox->currentText();
 		QString canvas_palette = ui->canvasPaletteComboBox->currentText();
 
 		// Repopulate color combo boxes
-		ui->colorComboBox->blockSignals(true);
+		ui->animationPaletteComboBox->blockSignals(true);
 		ui->canvasPaletteComboBox->blockSignals(true);
 
-		ui->colorComboBox->clear();
+		ui->animationPaletteComboBox->clear();
 		ui->canvasPaletteComboBox->clear();
 
 		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
-			ui->colorComboBox->addItem(palette_controller_.get_palette(i)->name);
+			ui->animationPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 			ui->canvasPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 		}
 
-		ui->colorComboBox->setCurrentText(color_palette);
+		ui->animationPaletteComboBox->setCurrentText(color_palette);
 		ui->canvasPaletteComboBox->setCurrentText(canvas_palette);
 
-		ui->colorComboBox->blockSignals(false);
+		ui->animationPaletteComboBox->blockSignals(false);
 		ui->canvasPaletteComboBox->blockSignals(false);
 	}
 
@@ -413,6 +413,15 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Changes the Animation's Palette.
+	 * @param index Index of the new Palette.
+	 */
+	void MaestroControlWidget::on_animationPaletteComboBox_currentIndexChanged(int index) {
+		PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(index);
+		run_cue(animation_handler->set_palette(get_section_index(), get_layer_index(), &palette_wrapper->palette));
+	}
+
+	/**
 	 * Changes the current Canvas.
 	 * @param index Index of the new Canvas type.
 	 */
@@ -422,7 +431,7 @@ namespace PixelMaestroStudio {
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
 		if (active_section_->get_canvas() && active_section_->get_canvas()->get_type() != new_canvas_type) {
 			QMessageBox::StandardButton confirm;
-			confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
 				run_cue(section_handler->remove_canvas(get_section_index(), get_layer_index()));
 			}
@@ -472,7 +481,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_canvasPaletteComboBox_currentIndexChanged(int index) {
 		PaletteController::PaletteWrapper* palette = palette_controller_.get_palette(index);
-		run_cue(canvas_handler->set_colors(get_section_index(), get_layer_index(), &palette->colors[0], palette->colors.size()));
+		run_cue(canvas_handler->set_palette(get_section_index(), get_layer_index(), &palette->palette));
 
 		// Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
 		// Delete existing color buttons
@@ -576,15 +585,6 @@ namespace PixelMaestroStudio {
 		if (confirm == QMessageBox::Yes) {
 			run_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
 		}
-	}
-
-	/**
-	 * Changes the color scheme.
-	 * @param index Index of the new color scheme.
-	 */
-	void MaestroControlWidget::on_colorComboBox_currentIndexChanged(int index) {
-		PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(index);
-		run_cue(animation_handler->set_palette(get_section_index(), get_layer_index(), &palette_wrapper->palette));
 	}
 
 	/**
@@ -864,7 +864,6 @@ namespace PixelMaestroStudio {
 	 * Sets the number of Layers for the Section.
 	 */
 	void MaestroControlWidget::on_layerSpinBox_editingFinished() {
-		// TODO: Add ability to add/remove specific layers
 		Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 		Section* last_section = base_section;
 
@@ -996,7 +995,7 @@ namespace PixelMaestroStudio {
 	 * Opens the Palette Editor.
 	 */
 	void MaestroControlWidget::on_paletteControlButton_clicked() {
-		QString palette_name = ui->colorComboBox->currentText();
+		QString palette_name = ui->animationPaletteComboBox->currentText();
 
 		PaletteControlWidget palette_control(&palette_controller_, palette_name);
 		palette_control.exec();
@@ -1404,19 +1403,19 @@ namespace PixelMaestroStudio {
 		// Palette not found
 		int palette_index = palette_controller_.find(animation->get_palette()->get_colors());
 		if (palette_index >= 0) {
-			ui->colorComboBox->blockSignals(true);
-			ui->colorComboBox->setCurrentIndex(palette_index);
-			ui->colorComboBox->blockSignals(false);
+			ui->animationPaletteComboBox->blockSignals(true);
+			ui->animationPaletteComboBox->setCurrentIndex(palette_index);
+			ui->animationPaletteComboBox->blockSignals(false);
 		}
 		else {
 			QString name = "Section " + QString::number(get_section_index() + 1) +
 						   " Layer " + QString::number(get_layer_index()) +
 						   " Animation";
 			palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_size());
-			ui->colorComboBox->blockSignals(true);
-			ui->colorComboBox->addItem(name);
-			ui->colorComboBox->setCurrentText(name);
-			ui->colorComboBox->blockSignals(false);
+			ui->animationPaletteComboBox->blockSignals(true);
+			ui->animationPaletteComboBox->addItem(name);
+			ui->animationPaletteComboBox->setCurrentText(name);
+			ui->animationPaletteComboBox->blockSignals(false);
 		}
 
 		// Set the animation

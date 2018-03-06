@@ -43,6 +43,7 @@ namespace PixelMaestroStudio {
 		 * Add saved devices to output selection box.
 		 * For devices that are already listed, either check them or uncheck them based on the user's saved preferences.
 		 * If the device isn't found, make it unselectable.
+		 * TODO: Allow for non-serial and custom devices
 		 */
 		int num_devices = settings_.beginReadArray(output_devices);
 		for (int device = 0; device < num_devices; device++) {

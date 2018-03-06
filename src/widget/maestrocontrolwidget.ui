@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -63,251 +63,265 @@
        <string>Section</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="rowsSpinBox">
-         <property name="toolTip">
-          <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
+       <item row="0" column="7" alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="layerSettingsGroupBox">
+         <property name="title">
+          <string>Layer Settings</string>
          </property>
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="1" column="1">
+           <widget class="QComboBox" name="mix_modeComboBox">
+            <property name="toolTip">
+             <string>The method used to mix this Layer with its base Section</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Alpha</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Multiply</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Overlay</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="layerComboBox">
+            <property name="toolTip">
+             <string>The currently selected Layer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Active Layer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="mixModeLabel">
+            <property name="text">
+             <string>Mix Mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="alphaLabel">
+            <property name="text">
+             <string>Alpha</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="alphaSpinBox">
+            <property name="toolTip">
+             <string>The Layer's transparency</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="maximum">
+             <number>255</number>
+            </property>
+            <property name="singleStep">
+             <number>5</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="QComboBox" name="layerComboBox">
-         <property name="toolTip">
-          <string>The currently selected Layer</string>
+       <item row="0" column="3" alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="sectionSettingsGroupBox">
+         <property name="title">
+          <string>Section Settings</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QLabel" name="sectionSelectLabel">
+            <property name="text">
+             <string>Active Section</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="sectionComboBox">
+            <property name="toolTip">
+             <string>The currently selected Section</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Layers</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="layerSpinBox">
+            <property name="toolTip">
+             <string>Sets the number of Layers belonging to this Section</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="maximum">
+             <number>255</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="mixModeLabel">
-         <property name="text">
-          <string>Mix Mode</string>
+       <item row="0" column="8" alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="generalSettingsGroupBox">
+         <property name="title">
+          <string>General Settings</string>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QSpinBox" name="scrollXSpinBox">
-         <property name="toolTip">
-          <string>Sets the scroll rate/direction along the x-axis</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="minimum">
-          <number>-60000</number>
-         </property>
-         <property name="maximum">
-          <number>60000</number>
-         </property>
-         <property name="singleStep">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Active Layer</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLabel" name="scrollLabel">
-         <property name="text">
-          <string>Scroll</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QComboBox" name="mix_modeComboBox">
-         <property name="toolTip">
-          <string>The method used to mix this Layer with its base Section</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>None</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Alpha</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Multiply</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Overlay</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Layers</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QSpinBox" name="scrollYSpinBox">
-         <property name="toolTip">
-          <string>Sets the scroll rate/direction along the y-axis</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="minimum">
-          <number>-60000</number>
-         </property>
-         <property name="maximum">
-          <number>60000</number>
-         </property>
-         <property name="singleStep">
-          <number>100</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="gridSizeLabel">
-         <property name="text">
-          <string>Grid Size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="alphaLabel">
-         <property name="text">
-          <string>Alpha</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QSpinBox" name="alphaSpinBox">
-         <property name="toolTip">
-          <string>The Layer's transparency</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-         <property name="singleStep">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QSpinBox" name="columnsSpinBox">
-         <property name="toolTip">
-          <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="layerSpinBox">
-         <property name="toolTip">
-          <string>Sets the number of Layers belonging to this Section</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="6">
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="sectionComboBox">
-         <property name="toolTip">
-          <string>The currently selected Section</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="sectionSelectLabel">
-         <property name="text">
-          <string>Active Section</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QLabel" name="offsetLabel">
-         <property name="text">
-          <string>Offset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="4">
-        <widget class="QSpinBox" name="offsetXSpinBox">
-         <property name="toolTip">
-          <string>Sets the offset along the x axis</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="5">
-        <widget class="QSpinBox" name="offsetYSpinBox">
-         <property name="toolTip">
-          <string>Sets the offset along the y axis</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="1" column="0">
+           <widget class="QLabel" name="scrollLabel">
+            <property name="text">
+             <string>Scroll</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="scrollXSpinBox">
+            <property name="toolTip">
+             <string>Sets the scroll rate/direction along the x-axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="minimum">
+             <number>-60000</number>
+            </property>
+            <property name="maximum">
+             <number>60000</number>
+            </property>
+            <property name="singleStep">
+             <number>100</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="gridSizeLabel">
+            <property name="text">
+             <string>Grid Size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSpinBox" name="scrollYSpinBox">
+            <property name="toolTip">
+             <string>Sets the scroll rate/direction along the y-axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="minimum">
+             <number>-60000</number>
+            </property>
+            <property name="maximum">
+             <number>60000</number>
+            </property>
+            <property name="singleStep">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="rowsSpinBox">
+            <property name="toolTip">
+             <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::PlusMinus</enum>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="columnsSpinBox">
+            <property name="toolTip">
+             <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::PlusMinus</enum>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="offsetLabel">
+            <property name="text">
+             <string>Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="offsetXSpinBox">
+            <property name="toolTip">
+             <string>Sets the offset along the x axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="offsetYSpinBox">
+            <property name="toolTip">
+             <string>Sets the offset along the y axis</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -570,7 +584,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="colorComboBox">
+        <widget class="QComboBox" name="animationPaletteComboBox">
          <property name="minimumSize">
           <size>
            <width>102</width>
@@ -1580,18 +1594,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>sectionComboBox</tabstop>
-  <tabstop>layerSpinBox</tabstop>
-  <tabstop>rowsSpinBox</tabstop>
-  <tabstop>columnsSpinBox</tabstop>
-  <tabstop>layerComboBox</tabstop>
-  <tabstop>mix_modeComboBox</tabstop>
-  <tabstop>alphaSpinBox</tabstop>
-  <tabstop>scrollXSpinBox</tabstop>
-  <tabstop>scrollYSpinBox</tabstop>
-  <tabstop>offsetXSpinBox</tabstop>
-  <tabstop>offsetYSpinBox</tabstop>
-  <tabstop>colorComboBox</tabstop>
+  <tabstop>animationPaletteComboBox</tabstop>
   <tabstop>paletteControlButton</tabstop>
   <tabstop>animationComboBox</tabstop>
   <tabstop>orientationComboBox</tabstop>
