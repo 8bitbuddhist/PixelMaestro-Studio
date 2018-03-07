@@ -57,7 +57,10 @@ namespace PixelMaestroStudio {
 
 	const QStringList CueInterpreter::ShowActions({"Set Events",
 												   "Set Looping",
-												   "Set Timing"});
+												   "Set Timing Mode"});
+
+	const QStringList CueInterpreter::ShowTimings({"Absolute",
+												   "Relative"});
 
 	const QStringList CueInterpreter::AnimationTypes({"Blink",
 													  "Cycle",
@@ -297,5 +300,19 @@ namespace PixelMaestroStudio {
 
 	void CueInterpreter::interpret_show_cue(uint8_t *cue, QString *result) {
 		result->append(ShowActions.at(cue[(uint8_t)ShowCueHandler::Byte::ActionByte]));
+
+		switch ((ShowCueHandler::Action)cue[(uint8_t)ShowCueHandler::Byte::ActionByte]) {
+			case ShowCueHandler::Action::SetLooping:
+				if ((bool)cue[(uint8_t)ShowCueHandler::Byte::OptionsByte]) {
+					result->append(", true");
+				}
+				else {
+					result->append(", false");
+				}
+				break;
+			case ShowCueHandler::Action::SetTimingMode:
+				result->append(", " + ShowTimings.at(cue[(uint8_t)ShowCueHandler::Byte::OptionsByte]));
+				break;
+		}
 	}
 }

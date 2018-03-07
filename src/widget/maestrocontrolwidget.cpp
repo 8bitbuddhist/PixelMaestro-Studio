@@ -380,11 +380,6 @@ namespace PixelMaestroStudio {
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
 			ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
-
-			int row = ui->eventListWidget->count() - 1;
-			QListWidgetItem* item = ui->eventListWidget->item(row);
-			item->setData(0, event->get_time());
-			item->setData(1, *event->get_cue());
 		}
 		show_controller_->initialize_events();
 	}
@@ -1168,13 +1163,11 @@ namespace PixelMaestroStudio {
 		if (maestro_controller_->get_running()) {
 			// Stop the Maestro
 			maestro_controller_->stop();
-			ui->showPauseButton->setText("Resume");
 			ui->showPauseButton->setToolTip("Resume the Maestro");
 		}
 		else {
 			// Start the Maestro
 			maestro_controller_->start();
-			ui->showPauseButton->setText("Pause");
 			ui->showPauseButton->setToolTip("Pause the Maestro");
 		}
 	}
@@ -1192,16 +1185,14 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the timing method in showTimingMethodComboBox.
 	 */
 	void MaestroControlWidget::on_showTimingMethodComboBox_currentIndexChanged(int index) {
-		maestro_controller_->get_maestro()->get_show()->set_timing((Show::TimingMode)index);
+		run_cue(show_handler->set_timing_mode((Show::TimingMode)index));
 
 		// Enable/disable loop controls for relative mode
 		if ((Show::TimingMode)index == Show::TimingMode::Relative) {
 			ui->loopCheckBox->setEnabled(true);
-			ui->loopLabel->setEnabled(true);
 		}
 		else {
 			ui->loopCheckBox->setEnabled(false);
-			ui->loopLabel->setEnabled(false);
 		}
 	}
 
@@ -1695,7 +1686,6 @@ namespace PixelMaestroStudio {
 		ui->currentTimeLabel->setEnabled(enabled);
 		ui->currentTimeLineEdit->setEnabled(enabled);
 		ui->toggleShowModeCheckBox->setEnabled(enabled);
-		ui->toggleShowModeLabel->setEnabled(enabled);
 		ui->showTimingMethodLabel->setEnabled(enabled);
 		ui->showTimingMethodComboBox->setEnabled(enabled);
 		ui->eventHistoryLabel->setEnabled(enabled);
@@ -1708,8 +1698,7 @@ namespace PixelMaestroStudio {
 		ui->removeEventButton->setEnabled(enabled);
 		ui->moveEventDownButton->setEnabled(enabled);
 		ui->moveEventUpButton->setEnabled(enabled);
-		ui->loopLabel->setEnabled(enabled);
-		ui->loopCheckBox->setEnabled(enabled);
+		ui->loopCheckBox->setEnabled(ui->showTimingMethodComboBox->currentIndex() != (int)Show::TimingMode::Absolute);
 		ui->relativeTimeLabel->setEnabled(enabled);
 		ui->relativeTimeLineEdit->setEnabled(enabled);
 	}

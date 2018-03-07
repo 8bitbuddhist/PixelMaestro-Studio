@@ -39,7 +39,7 @@ namespace PixelMaestroStudio {
 		events_[4].set_time(1000);
 
 		Show* show = maestro_controller_->get_maestro()->set_show(events_, 5);
-		show->set_timing(Show::TimingMode::Relative);
+		show->set_timing_mode(Show::TimingMode::Relative);
 		show->set_looping(true);
 	}
 

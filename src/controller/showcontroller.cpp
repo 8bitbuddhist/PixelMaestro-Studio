@@ -38,7 +38,12 @@ namespace PixelMaestroStudio {
 	 * Applies the current Event list to the Maestro's Show.
 	 */
 	void ShowController::initialize_events() {
-		show_->set_events(&events_[0], events_.size(), true);
+		if (events_.size() > 0) {
+			show_->set_events(&events_[0], events_.size(), true);
+		}
+		else {
+			show_->set_events(nullptr, 0, false);
+		}
 	}
 
 	/**

@@ -11,5 +11,7 @@
         <file>icon_back.png</file>
         <file>icon_draw.png</file>
         <file>icon_paint.png</file>
+        <file>icon_down.png</file>
+        <file>icon_up.png</file>
     </qresource>
 </RCC>

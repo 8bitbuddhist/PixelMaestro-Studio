@@ -153,7 +153,7 @@ namespace PixelMaestroStudio {
 			ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowHandler);
 			write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), true));
 			write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
-			write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
+			write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
 		}
 
 		// Sections

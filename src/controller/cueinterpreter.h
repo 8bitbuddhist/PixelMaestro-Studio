@@ -26,6 +26,7 @@ namespace PixelMaestroStudio {
 			static const QStringList MaestroActions;
 			static const QStringList SectionActions;
 			static const QStringList ShowActions;
+			static const QStringList ShowTimings;
 			static const QStringList AnimationTypes;
 			static const QStringList AnimationOrientations;
 			static const QStringList CanvasTypes;
