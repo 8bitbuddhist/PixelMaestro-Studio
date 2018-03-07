@@ -1784,10 +1784,10 @@ namespace PixelMaestroStudio {
 		uint last_time = (uint)maestro_controller_->get_total_elapsed_time();
 		ui->currentTimeLineEdit->setText(locale_.toString(last_time));
 
-		int current_index = maestro_controller_->get_show()->get_current_index();
+		int current_index = maestro_controller_->get_maestro()->get_show()->get_current_index();
 
 		// Get the index of the last Event that ran
-		Show* show = maestro_controller_->get_show();
+		Show* show = maestro_controller_->get_maestro()->get_show();
 		int last_index = -1;
 		if (current_index == 0) {
 			if (show->get_looping()) {

@@ -29,8 +29,6 @@ namespace PixelMaestroStudio {
 			void add_drawing_area(MaestroDrawingArea* drawing_area);
 			Maestro* get_maestro();
 			bool get_running();
-			uint8_t get_section_index(Section* section);
-			Show *get_show();
 			uint64_t get_total_elapsed_time();
 			void load_cuefile(QString filename);
 			void remove_drawing_area(MaestroDrawingArea* drawing_area);
@@ -49,7 +47,7 @@ namespace PixelMaestroStudio {
 			/// Updates the Maestro's runtime.
 			QElapsedTimer elapsed_timer_;
 
-			/// Timer until the Maestro refreshes.
+			/// Maestro refresh timer.
 			QTimer timer_;
 
 			/// Maestro controlled by this controller.
@@ -61,8 +59,8 @@ namespace PixelMaestroStudio {
 			/// Sections belonging to the Maestro.
 			Section* sections_ = nullptr;
 
-			void save_maestro_settings(QDataStream* datastream);
-			void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
+			void save_maestro_to_datastream(QDataStream* datastream);
+			void save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id);
 			void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 
 		private slots:

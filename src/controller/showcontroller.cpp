@@ -10,11 +10,11 @@ namespace PixelMaestroStudio {
 	ShowController::ShowController(MaestroController* maestro_controller) {
 		this->maestro_controller_ = maestro_controller;
 
-		if (maestro_controller_->get_show() == nullptr) {
-			this->show_ = maestro_controller_->get_maestro()->set_show(nullptr, 0);
+		if (maestro_controller_->get_maestro()->get_show() == nullptr) {
+			show_ = maestro_controller_->get_maestro()->set_show(nullptr, 0);
 		}
 		else {
-			this->show_ = maestro_controller_->get_maestro()->get_show();
+			show_ = maestro_controller_->get_maestro()->get_show();
 		}
 
 		events_.clear();
@@ -32,14 +32,6 @@ namespace PixelMaestroStudio {
 		}
 
 		return &events_[events_.size() - 1];
-	}
-
-	/**
-	 * Gets the list of Events.
-	 * @return Event list.
-	 */
-	QVector<Event> ShowController::get_events() const {
-		return events_;
 	}
 
 	/**

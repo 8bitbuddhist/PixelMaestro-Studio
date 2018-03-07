@@ -33,23 +33,26 @@ namespace PixelMaestroStudio {
 			MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroDrawingArea();
 			SectionDrawingArea* add_section_drawing_area(Section* section);
-			MaestroControlWidget* get_maestro_control_widget();
+			MaestroControlWidget* get_maestro_control_widget() const;
 			void set_maestro_control_widget(MaestroControlWidget* widget);
 
 		public slots:
-			void refresh();
+			void update();
 
 		protected:
+			/// The MaestroControlWidget controlling this DrawingArea (if applicable).
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 
 			/// The MaestroController managed by this DrawingArea.
 			MaestroController* maestro_controller_;
 
+			/// The SectionDrawingAreas managed by this DrawingArea
 			QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
 
 			QSettings settings_;
 
 		private:
+			/// Layout containing SectionDrawingAreas.
 			QHBoxLayout* section_layout_ = nullptr;
 	};
 }

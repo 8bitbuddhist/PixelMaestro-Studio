@@ -23,6 +23,11 @@ namespace PixelMaestroStudio {
 		section_layout_ = new QHBoxLayout(this);
 	}
 
+	/**
+	 * Adds a new SectionDrawingArea to the widget.
+	 * @param section Section to draw.
+	 * @return New SectionDrawingArea.
+	 */
 	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section* section) {
 		section_drawing_areas_.push_back(
 			QSharedPointer<SectionDrawingArea>(
@@ -34,18 +39,29 @@ namespace PixelMaestroStudio {
 		return static_cast<SectionDrawingArea*>(drawing_area);
 	}
 
-	MaestroControlWidget* MaestroDrawingArea::get_maestro_control_widget() {
+	/**
+	 * Returns this DrawingArea's MaestroControlWidget (if applicable).
+	 * @return DrawingArea's controlling widget.
+	 */
+	MaestroControlWidget* MaestroDrawingArea::get_maestro_control_widget() const {
 		return maestro_control_widget_;
 	}
 
-	void MaestroDrawingArea::refresh() {
+	/**
+	 * Sets the MaestroControlWidget used to control this DrawingArea.
+	 * @param widget Controlling MaestroControlWidget.
+	 */
+	void MaestroDrawingArea::set_maestro_control_widget(MaestroControlWidget *widget) {
+		this->maestro_control_widget_ = widget;
+	}
+
+	/**
+	 * Redraws the DrawingArea.
+	 */
+	void MaestroDrawingArea::update() {
 		for (uint16_t i = 0; i < section_drawing_areas_.size(); i++) {
 			section_drawing_areas_[i]->update();
 		}
-	}
-
-	void MaestroDrawingArea::set_maestro_control_widget(MaestroControlWidget *widget) {
-		this->maestro_control_widget_ = widget;
 	}
 
 	MaestroDrawingArea::~MaestroDrawingArea() {

@@ -13,6 +13,6 @@ PixelMaestro Studio is a Qt-based desktop application that lets you run the Pixe
 
 ## Credits
 
-Icons courtesy of [Openclipart](https://openclipart.org/).
+Icons from [Openclipart](https://openclipart.org/).
 
 [![Support this project on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=8547028)

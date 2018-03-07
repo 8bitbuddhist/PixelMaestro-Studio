@@ -30,7 +30,7 @@ namespace PixelMaestroStudio {
 	 * Empty constructor.
 	 */
 	MaestroController::MaestroController() : QObject(), timer_(this) {
-		// Initalize the Maestro. Add the number of Sections specified in the options.
+		// Initalize the Maestro
 		maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
 		QSettings settings;
 
@@ -44,9 +44,10 @@ namespace PixelMaestroStudio {
 
 		// Initialize timers
 		timer_.setTimerType(Qt::PreciseTimer);
+
 		/*
 		 * Set timer's refresh rate to the user's settings.
-		 * If we can't load the configured refresh rate, default to 50 (20fps)
+		 * If we can't load the configured refresh rate, default to 50ms (20fps)
 		 */
 		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
 		maestro_->set_timer(refresh);
@@ -62,7 +63,7 @@ namespace PixelMaestroStudio {
 		drawing_areas_.push_back(drawing_area);
 
 		// Refresh the DrawingArea on each timeout
-		connect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(refresh()));
+		connect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(update()));
 	}
 
 	/**
@@ -79,29 +80,6 @@ namespace PixelMaestroStudio {
 	 */
 	bool MaestroController::get_running() {
 		return timer_.isActive();
-	}
-
-	/**
-	 * Returns the index of the specified Section.
-	 * @param section Section to find.
-	 * @return Section index.
-	 */
-	uint8_t MaestroController::get_section_index(Section *section) {
-		for (uint8_t i = 0; i < maestro_->get_num_sections(); i++) {
-			if (section == &sections_[i]) {
-				return i;
-			}
-		}
-
-		return 0;
-	}
-
-	/**
-	 * Returns the Show managed in this Maestro (if applicable)
-	 * @return Show managed by this Maestro.
-	 */
-	Show *MaestroController::get_show() {
-		return maestro_->get_show();
 	}
 
 	/**
@@ -154,26 +132,21 @@ namespace PixelMaestroStudio {
 		QFile file(filename);
 		if (file.open(QFile::WriteOnly)) {
 			QDataStream datastream(&file);
-
-			save_maestro_settings(&datastream);
-			for (uint8_t i = 0; i < maestro_->get_num_sections(); i++) {
-				save_section_settings(&datastream, i, 0);
-			}
-
+			save_maestro_to_datastream(&datastream);
 			file.close();
 		}
 	}
 
 	/**
-	 * Saves Maestro-specific settings as Cues.
-	 * @param datastream Stream to save the Cues to.
+	 * Saves Maestro settings to a DataStream as Cues.
+	 * @param datastream Stream to save Cues to.
 	 */
-	void MaestroController::save_maestro_settings(QDataStream *datastream) {
+	void MaestroController::save_maestro_to_datastream(QDataStream *datastream) {
 		// Timer
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroHandler);
 		write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 
-		// Save Show settings
+		// Show
 		Show* show = maestro_->get_show();
 		if (show != nullptr) {
 			write_cue_to_stream(datastream, maestro_handler->set_show());
@@ -182,15 +155,20 @@ namespace PixelMaestroStudio {
 			write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
 			write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
 		}
+
+		// Sections
+		for (uint8_t section = 0; section < num_sections_; section++) {
+			save_section_to_datastream(datastream, section, 0);
+		}
 	}
 
 	/**
-	 * Saves Section-specific settings as Cues.
-	 * @param datastream Stream to save the Cues to.
+	 * Saves Section settings to a DataStream as Cues.
+	 * @param datastream Stream to save Cues to.
 	 * @param section_id The index of the Section to save.
 	 * @param layer_id The index of the Layer to save.
 	 */
-	void MaestroController::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
+	void MaestroController::save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id) {
 
 		Section* section = maestro_->get_section(section_id);
 
@@ -302,7 +280,7 @@ namespace PixelMaestroStudio {
 		Section::Layer* layer = section->get_layer();
 		if (layer != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_layer(section_id, layer_id, layer->mix_mode, layer->alpha));
-			save_section_settings(datastream, section_id, layer_id + 1);
+			save_section_to_datastream(datastream, section_id, layer_id + 1);
 		}
 	}
 
@@ -310,7 +288,7 @@ namespace PixelMaestroStudio {
 	 * Initializes the Maestro's Sections.
 	 * @param num_sections Number of Sections to apply.
 	 * @param dimensions The size of each Section.
-	 * @return List of new Sections.
+	 * @return Array of new Sections.
 	 */
 	Section* MaestroController::set_sections(uint8_t num_sections, Point dimensions) {
 		this->sections_ = new Section[num_sections];
