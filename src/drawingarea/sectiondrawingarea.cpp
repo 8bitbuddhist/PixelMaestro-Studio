@@ -10,8 +10,38 @@ namespace PixelMaestroStudio {
 		// Enable mouse tracking
 		this->setMouseTracking(true);
 
-		// Default to dim frame
-		this->setStyleSheet("color: #505050;");
+		// Display a frame if none is set and default to inactive.
+		if (this->frameStyle() == QFrame::Plain) {
+			this->setFrameStyle(QFrame::Box | QFrame::Plain);
+			this->draw_frame(FrameType::Inactive);
+		}
+	}
+
+	/*
+	 * If this is the active Section, highlight the frame, otherwise dim the frame.
+	 * Only applies if maestro_drawing_area_::maestro_control_widget_ is set.
+	 */
+	/**
+	 * Draws a frame around the widget.
+	 * Whether the Section is active determines the color of the frame.
+	 * @param type They type of Section and whether it's active or inactive.
+	 */
+	void SectionDrawingArea::draw_frame(FrameType type) {
+		/*
+		 * Set the frame color.
+		 * The current Section has a white frame, Layers have a light gray frame, and inactive Sections have dark frames.
+		 */
+		switch (type) {
+			case FrameType::Inactive:
+				this->setStyleSheet("color: #333333;");
+				break;
+			case FrameType::Layer:
+				this->setStyleSheet("color: #808080");
+				break;
+			case FrameType::Section:
+				this->setStyleSheet("color: #FFFFFF;");
+				break;
+		}
 	}
 
 	/**
@@ -78,16 +108,10 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the current Pixel on mouse click.
-	 * Otherwise, the Pixel would only change on click + drag.
+	 * Triggers a mouse move event on mouse press.
 	 * @param event Event parameters.
 	 */
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
-		// If there's a MaestroControlWidget and this isn't the curent active Section, activate it.
-		MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
-		if (widget != nullptr && event->buttons() == Qt::LeftButton && section_ != widget->get_active_section()) {
-			widget->set_active_section(this->section_);
-		}
 		mouseMoveEvent(event);
 	}
 
@@ -106,35 +130,6 @@ namespace PixelMaestroStudio {
 		if (last_pixel_count_ != section_->get_dimensions()->size()) {
 			resizeEvent(nullptr);
 			last_pixel_count_ = section_->get_dimensions()->size();
-		}
-
-		/*
-		 * If this is the active Section, highlight the frame, otherwise dim the frame.
-		 * Only applies if maestro_drawing_area_::maestro_control_widget_ is set.
-		 */
-		if (maestro_drawing_area_->get_maestro_control_widget() != nullptr) {
-
-			// Display a frame if none is set.
-			if (this->frameStyle() == QFrame::Plain) {
-				this->setFrameStyle(QFrame::Box | QFrame::Plain);
-			}
-
-			/*
-			 * Set the frame color.
-			 * The current Section has a white border, and other Sections have gray borders.
-			 * TODO: Highlight Layers in a different color.
-			 */
-			bool active = (this->section_ == maestro_drawing_area_->get_maestro_control_widget()->get_active_section());
-			if (active != this->is_active_) {
-				if (active) {
-					this->setStyleSheet("color: #FFFFFF;");
-					this->is_active_ = true;
-				}
-				else {
-					this->setStyleSheet("color: #505050;");
-					this->is_active_ = false;
-				}
-			}
 		}
 
 		/*

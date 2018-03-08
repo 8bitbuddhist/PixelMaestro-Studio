@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -414,7 +414,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSlider" name="pauseSlider">
+           <widget class="QSlider" name="delaySlider">
             <property name="toolTip">
              <string>The amount of time to wait before starting the next cycle</string>
             </property>
@@ -436,7 +436,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QSpinBox" name="pauseSpinBox">
+           <widget class="QSpinBox" name="delaySpinBox">
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
@@ -626,11 +626,7 @@
          <property name="title">
           <string>Advanced Settings</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_14">
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="animationExtraOptionsLayout" columnstretch="0"/>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="animationAdvancedSettingsLayout"/>
         </widget>
        </item>
       </layout>
@@ -722,7 +718,7 @@
               <item row="3" column="0">
                <widget class="QLabel" name="frameRateLabel">
                 <property name="text">
-                 <string>Frame Rate</string>
+                 <string>Frame Interval</string>
                 </property>
                </widget>
               </item>
@@ -1537,7 +1533,7 @@
                  <string>If enabled, actions will no longer update the Maestro but will still be listed in the Event History</string>
                 </property>
                 <property name="text">
-                 <string>Lock Events</string>
+                 <string>Lock Maestro</string>
                 </property>
                </widget>
               </item>

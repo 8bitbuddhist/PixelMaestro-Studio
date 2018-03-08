@@ -34,6 +34,7 @@ namespace PixelMaestroStudio {
 			~MaestroDrawingArea();
 			SectionDrawingArea* add_section_drawing_area(Section* section);
 			MaestroControlWidget* get_maestro_control_widget() const;
+			void frame_active_section(Section* section);
 			void set_maestro_control_widget(MaestroControlWidget* widget);
 
 		public slots:
@@ -54,6 +55,9 @@ namespace PixelMaestroStudio {
 		private:
 			/// Layout containing SectionDrawingAreas.
 			QHBoxLayout* section_layout_ = nullptr;
+
+			/// Tracks the active Section in order to provide highlighting.
+			Section* active_section_ = nullptr;
 	};
 }
 

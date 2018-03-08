@@ -1,5 +1,5 @@
 # PixelMaestro Studio
-PixelMaestro Studio is a Qt-based desktop application that lets you run the PixelMaestro library on a PC. PixelMaestro Studio lets you run demos, mix custom animations, save and load configurations, and control other devices running PixelMaestro over USB.
+PixelMaestro Studio is a Qt-based desktop application that lets you run the PixelMaestro library on a PC. PixelMaestro Studio lets you create custom animations, save and load Cues, view demos, and control other devices running PixelMaestro over USB.
 
 ## Build Requirements
 - QT 5 with the QtSerialPort module

@@ -141,10 +141,9 @@ namespace PixelMaestroStudio {
 			void set_layer_controls_enabled(bool enabled);
 			void set_show_controls_enabled(bool enabled);
 			void set_animation_timer();
-			void show_extra_controls(Animation* animation);
+			void set_advanced_animation_controls(Animation* animation);
 
 		private slots:
-			void on_alphaSpinBox_valueChanged(int arg1);
 			void on_animationComboBox_currentIndexChanged(int index);
 			void on_canvasComboBox_currentIndexChanged(int index);
 			void on_animationPaletteComboBox_currentIndexChanged(int index);
@@ -158,8 +157,7 @@ namespace PixelMaestroStudio {
 			void on_rowsSpinBox_editingFinished();
 			void on_animationIntervalSpinBox_editingFinished();
 			void on_enableShowCheckBox_toggled(bool checked);
-			void on_pauseSlider_valueChanged(int value);
-			void on_pauseSpinBox_valueChanged(int arg1);
+			void on_delaySlider_valueChanged(int value);
 			void on_layerComboBox_currentIndexChanged(int index);
 			void on_sectionComboBox_currentIndexChanged(int index);
 			void on_layerSpinBox_editingFinished();
@@ -197,6 +195,8 @@ namespace PixelMaestroStudio {
 			void on_canvasPlaybackNextToolButton_clicked();
 			void on_canvasPlaybackBackToolButton_clicked();
 			void on_paintToolButton_toggled(bool checked);
+			void on_alphaSpinBox_editingFinished();
+			void on_delaySpinBox_editingFinished();
 	};
 }
 

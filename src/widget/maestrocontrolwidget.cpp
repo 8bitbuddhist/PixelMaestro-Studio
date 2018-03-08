@@ -149,11 +149,32 @@ namespace PixelMaestroStudio {
 	 */
 	bool MaestroControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
-			// Handle Delete key in the Event list
+			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+			// Handle Event list keys
 			if (watched == ui->eventListWidget) {
-				QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
 				if (key_event->key() == Qt::Key_Delete) {
 					on_removeEventButton_clicked();
+					return true;
+				}
+			}
+			// Handle Show tab keys
+			else if (watched == ui->showScrollArea) {
+				if (key_event->key() == Qt::Key_Space) {
+					on_showPauseButton_clicked();
+				}
+			}
+			// Handle Canvas tab keys
+			else if (watched == ui->canvasScrollArea && active_section_->get_canvas() != nullptr) {
+				if (key_event->key() == Qt::Key_Left) {
+					on_canvasPlaybackBackToolButton_clicked();
+					return true;
+				}
+				else if (key_event->key() == Qt::Key_Right) {
+					on_canvasPlaybackNextToolButton_clicked();
+					return true;
+				}
+				else if (key_event->key() == Qt::Key_Space) {
+					ui->canvasPlaybackStartStopToolButton->setChecked(!ui->canvasPlaybackStartStopToolButton->isChecked());
 					return true;
 				}
 			}
@@ -217,7 +238,6 @@ namespace PixelMaestroStudio {
 	 * @return Section index.
 	 */
 	uint8_t MaestroControlWidget::get_section_index(Section* section) {
-
 		uint8_t index = 0;
 		Section* test_section = section;
 		Section* target_section = maestro_controller_->get_maestro()->get_section(0);
@@ -299,6 +319,7 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->blockSignals(false);
 
 		// Disable advanced controls until they're activated manually
+		ui->animationAdvancedSettingsGroupBox->setVisible(false);
 		set_canvas_controls_enabled(0);
 		set_layer_controls_enabled(false);
 		set_show_controls_enabled(false);
@@ -386,10 +407,14 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Sets the Layer's transparency level.
-	 * @param arg1 Transparency level from 0 - 255.
 	 */
-	void MaestroControlWidget::on_alphaSpinBox_valueChanged(int arg1) {
-		run_cue(section_handler->set_layer(get_section_index(), get_layer_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_layer()->mix_mode, arg1));
+	void MaestroControlWidget::on_alphaSpinBox_editingFinished() {
+		run_cue(
+			section_handler->set_layer(get_section_index(),
+				get_layer_index(active_section_->get_parent_section()),
+				active_section_->get_parent_section()->get_layer()->mix_mode,
+				ui->alphaSpinBox->value())
+		);
 	}
 
 	/**
@@ -404,7 +429,7 @@ namespace PixelMaestroStudio {
 
 		// Preserve options between animations
 		run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)index, true));
-		show_extra_controls(active_section_->get_animation());
+		set_advanced_animation_controls(active_section_->get_animation());
 	}
 
 	/**
@@ -535,9 +560,10 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_canvasPlaybackStartStopToolButton_toggled(bool checked) {
 		if (active_section_->get_canvas() == nullptr) return;
 
+		// Enables/disable the 'current frame' control
+		ui->currentFrameSpinBox->setEnabled(!checked);
+
 		if (checked) {
-			// Enables/disable the 'current frame' control
-			ui->currentFrameSpinBox->setEnabled(false);
 			on_frameRateSpinBox_editingFinished();
 		}
 		else {
@@ -999,24 +1025,23 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Sets the delay between Animation cycles.
-	 * @param value New pause interval.
 	 */
-	void MaestroControlWidget::on_pauseSlider_valueChanged(int value) {
-		ui->pauseSpinBox->blockSignals(true);
-		ui->pauseSpinBox->setValue(value);
-		ui->pauseSpinBox->blockSignals(false);
+	void MaestroControlWidget::on_delaySpinBox_editingFinished() {
+		ui->delaySlider->blockSignals(true);
+		ui->delaySlider->setValue(ui->delaySpinBox->value());
+		ui->delaySlider->blockSignals(false);
 
 		set_animation_timer();
 	}
 
 	/**
 	 * Sets the delay between Animation cycles.
-	 * @param arg1 New pause interval.
+	 * @param value New pause interval.
 	 */
-	void MaestroControlWidget::on_pauseSpinBox_valueChanged(int arg1) {
-		ui->pauseSlider->blockSignals(true);
-		ui->pauseSlider->setValue(arg1);
-		ui->pauseSlider->blockSignals(false);
+	void MaestroControlWidget::on_delaySlider_valueChanged(int value) {
+		ui->delaySpinBox->blockSignals(true);
+		ui->delaySpinBox->setValue(value);
+		ui->delaySpinBox->blockSignals(false);
 
 		set_animation_timer();
 	}
@@ -1188,12 +1213,7 @@ namespace PixelMaestroStudio {
 		run_cue(show_handler->set_timing_mode((Show::TimingMode)index));
 
 		// Enable/disable loop controls for relative mode
-		if ((Show::TimingMode)index == Show::TimingMode::Relative) {
-			ui->loopCheckBox->setEnabled(true);
-		}
-		else {
-			ui->loopCheckBox->setEnabled(false);
-		}
+		ui->loopCheckBox->setEnabled((Show::TimingMode)index == Show::TimingMode::Relative);
 	}
 
 	/**
@@ -1374,22 +1394,22 @@ namespace PixelMaestroStudio {
 		ui->fadeCheckBox->blockSignals(true);
 		ui->animationTimerSlider->blockSignals(true);
 		ui->animationIntervalSpinBox->blockSignals(true);
-		ui->pauseSlider->blockSignals(true);
-		ui->pauseSpinBox->blockSignals(true);
+		ui->delaySlider->blockSignals(true);
+		ui->delaySpinBox->blockSignals(true);
 		ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
 		ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 		ui->fadeCheckBox->setChecked(animation->get_fade());
 		ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
 		ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
-		ui->pauseSlider->setValue(animation->get_timer()->get_delay());
-		ui->pauseSpinBox->setValue(animation->get_timer()->get_delay());
+		ui->delaySlider->setValue(animation->get_timer()->get_delay());
+		ui->delaySpinBox->setValue(animation->get_timer()->get_delay());
 		ui->orientationComboBox->blockSignals(false);
 		ui->reverse_animationCheckBox->blockSignals(false);
 		ui->fadeCheckBox->blockSignals(false);
 		ui->animationTimerSlider->blockSignals(false);
 		ui->animationIntervalSpinBox->blockSignals(false);
-		ui->pauseSlider->blockSignals(false);
-		ui->pauseSpinBox->blockSignals(false);
+		ui->delaySlider->blockSignals(false);
+		ui->delaySpinBox->blockSignals(false);
 
 		// Palette not found
 		int palette_index = palette_controller_.find(animation->get_palette()->get_colors());
@@ -1413,7 +1433,7 @@ namespace PixelMaestroStudio {
 		ui->animationComboBox->blockSignals(true);
 		ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type());
 		ui->animationComboBox->blockSignals(false);
-		show_extra_controls(animation);
+		set_advanced_animation_controls(animation);
 
 		// Get Canvas
 		ui->canvasComboBox->blockSignals(true);
@@ -1663,7 +1683,7 @@ namespace PixelMaestroStudio {
 		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), (new_x < 0), (new_y < 0)));
 
 		// Enable/disable offset controls
-		ui->offsetXSpinBox->setEnabled(new_x ==0);
+		ui->offsetXSpinBox->setEnabled(new_x == 0);
 		ui->offsetYSpinBox->setEnabled(new_y == 0);
 
 		if (new_x == 0) {
@@ -1683,61 +1703,23 @@ namespace PixelMaestroStudio {
 	 * @param enabled If true, Show controls are enabled.
 	 */
 	void MaestroControlWidget::set_show_controls_enabled(bool enabled) {
-		ui->currentTimeLabel->setEnabled(enabled);
-		ui->currentTimeLineEdit->setEnabled(enabled);
+		ui->showSettingsGroupBox->setEnabled(enabled);
+		ui->eventGroupBox->setEnabled(enabled);
 		ui->toggleShowModeCheckBox->setEnabled(enabled);
-		ui->showTimingMethodLabel->setEnabled(enabled);
-		ui->showTimingMethodComboBox->setEnabled(enabled);
-		ui->eventHistoryLabel->setEnabled(enabled);
-		ui->eventHistoryWidget->setEnabled(enabled);
-		ui->eventListLabel->setEnabled(enabled);
-		ui->eventListWidget->setEnabled(enabled);
-		ui->eventTimeLabel->setEnabled(enabled);
-		ui->eventTimeSpinBox->setEnabled(enabled);
-		ui->addEventButton->setEnabled(enabled);
-		ui->removeEventButton->setEnabled(enabled);
-		ui->moveEventDownButton->setEnabled(enabled);
-		ui->moveEventUpButton->setEnabled(enabled);
-		ui->loopCheckBox->setEnabled(ui->showTimingMethodComboBox->currentIndex() != (int)Show::TimingMode::Absolute);
-		ui->relativeTimeLabel->setEnabled(enabled);
-		ui->relativeTimeLineEdit->setEnabled(enabled);
-	}
-
-	/// Sets the active Animation's timer.
-	void MaestroControlWidget::set_animation_timer() {
-		uint16_t pause = ui->pauseSpinBox->value();
-		uint16_t new_interval = ui->animationIntervalSpinBox->value();
-		AnimationTimer* timer = active_section_->get_animation()->get_timer();
-		if (new_interval != timer->get_interval() || pause != timer->get_delay()) {
-			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
-		}
 	}
 
 	/**
-	 * Sets Layer-related controls enabled.
-	 * @param visible True if you want to enable the controls.
+	 * Displays extra controls for Animations that take custom parameters.
+	 * @param animation Pointer to the Animation being displayed.
 	 */
-	void MaestroControlWidget::set_layer_controls_enabled(bool enabled) {
-		// If visible, enable Layer controls
-		ui->mixModeLabel->setEnabled(enabled);
-		ui->mix_modeComboBox->setEnabled(enabled);
-		ui->alphaLabel->setEnabled(enabled);
-		ui->alphaSpinBox->setEnabled(enabled);
-	}
-
-	/**
-	 * Displays extra controls for animations that take custom parameters.
-	 * @param index Index of the animation in the animations list.
-	 * @param animation Pointer to the animation.
-	 */
-	void MaestroControlWidget::show_extra_controls(Animation* animation) {
+	void MaestroControlWidget::set_advanced_animation_controls(Animation* animation) {
 		// First, remove any existing extra control widgets
 		if (animation_extra_control_widget_ != nullptr) {
-			this->findChild<QLayout*>("animationExtraOptionsLayout")->removeWidget(animation_extra_control_widget_.get());
+			this->findChild<QLayout*>("animationAdvancedSettingsLayout")->removeWidget(animation_extra_control_widget_.get());
 			animation_extra_control_widget_.reset();
 		}
 
-		QLayout* layout = this->findChild<QLayout*>("animationExtraOptionsLayout");
+		QLayout* layout = this->findChild<QLayout*>("animationAdvancedSettingsLayout");
 
 		switch(animation->get_type()) {
 			case AnimationType::Fire:
@@ -1761,9 +1743,33 @@ namespace PixelMaestroStudio {
 				break;
 		}
 
+		ui->animationAdvancedSettingsGroupBox->setVisible(animation_extra_control_widget_ != nullptr);
+
 		if (animation_extra_control_widget_) {
 			layout->addWidget(animation_extra_control_widget_.get());
 		}
+	}
+
+	/// Sets the active Animation's timer.
+	void MaestroControlWidget::set_animation_timer() {
+		uint16_t pause = ui->delaySpinBox->value();
+		uint16_t new_interval = ui->animationIntervalSpinBox->value();
+		AnimationTimer* timer = active_section_->get_animation()->get_timer();
+		if (new_interval != timer->get_interval() || pause != timer->get_delay()) {
+			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
+		}
+	}
+
+	/**
+	 * Sets Layer-related controls enabled.
+	 * @param visible True if you want to enable the controls.
+	 */
+	void MaestroControlWidget::set_layer_controls_enabled(bool enabled) {
+		// If visible, enable Layer controls
+		ui->mixModeLabel->setEnabled(enabled);
+		ui->mix_modeComboBox->setEnabled(enabled);
+		ui->alphaLabel->setEnabled(enabled);
+		ui->alphaSpinBox->setEnabled(enabled);
 	}
 
 	/**

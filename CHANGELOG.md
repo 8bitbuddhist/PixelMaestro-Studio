@@ -4,23 +4,24 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.20] - In Progress
+WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.
+
 ### Added
-- Added new `Palette` class for storing color palettes.
 - Animation Editor
-	- Added ability to draw directly onto a Canvas.
-	- Added support for the Fire animation.
-	- Added `skew` parameter to Merge and Wave animations.
+	- Added ability to draw directly onto a Canvas using the mouse buttons.
+	- Added fire animation.
+	- Added `skew` and `mirror` parameters to Wave animation.
 	- Added ability to reorder Show Events.
 	
 ### Changed
 - Animation Editor
-	- Minor UI changes.
+	- Several UI changes.
 	- Enabled changing the grid size while a Layer is active.
 	- Enabled changing per-axis offset values while scrolling is disabled on that axis.
 	
 ### Removed
 - Animations
-	- Merge animation is now a part of the Wave animation. Use `WaveAnimation::set_merge(boolean)` to recreate a MergeAnimation.
+	- Merge animation is now part of the Wave animation. Use `WaveAnimation::set_mirror(true)` to recreate the merge effect.
 
 ## [v0.12] - 2018-01-22
 ### Changed

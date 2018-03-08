@@ -16,8 +16,15 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
+			enum class FrameType : uint8_t {
+				Inactive,
+				Section,
+				Layer
+			};
+
 			SectionDrawingArea(QWidget* parent, Section* section);
 			~SectionDrawingArea();
+			void draw_frame(FrameType type);
 
 		protected:
 			Section* section_;
@@ -29,9 +36,6 @@ namespace PixelMaestroStudio {
 			QSize sizeHint() const override;
 
 		private:
-			/// Tracks whether this is the active Section.
-			bool is_active_ = false;
-
 			/// The location where the Section will be rendered.
 			Point cursor_;
 
