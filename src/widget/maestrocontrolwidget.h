@@ -137,6 +137,7 @@ namespace PixelMaestroStudio {
 			void set_text_controls_enabled(bool enabled);
 			void set_triangle_controls_enabled(bool enabled);
 
+			void set_canvas_frame_interval();
 			void set_scroll();
 			void set_layer_controls_enabled(bool enabled);
 			void set_show_controls_enabled(bool enabled);
@@ -167,7 +168,7 @@ namespace PixelMaestroStudio {
 			void on_addEventButton_clicked();
 			void on_frameCountSpinBox_editingFinished();
 			void on_currentFrameSpinBox_editingFinished();
-			void on_frameRateSpinBox_editingFinished();
+			void on_frameIntervalSpinBox_editingFinished();
 			void on_selectColorButton_clicked();
 			void on_loadImageButton_clicked();
 			void on_clearButton_clicked();
@@ -197,6 +198,7 @@ namespace PixelMaestroStudio {
 			void on_paintToolButton_toggled(bool checked);
 			void on_alphaSpinBox_editingFinished();
 			void on_delaySpinBox_editingFinished();
+			void on_frameIntervalSlider_valueChanged(int value);
 	};
 }
 

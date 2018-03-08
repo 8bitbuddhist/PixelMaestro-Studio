@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -343,7 +343,7 @@
           <string>Timers</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_15">
-          <item row="0" column="1">
+          <item row="0" column="2">
            <widget class="QSlider" name="animationTimerSlider">
             <property name="toolTip">
              <string>The amount of time each cycle takes to complete</string>
@@ -390,22 +390,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="animationIntervalSpinBox">
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>3000</number>
-            </property>
-            <property name="singleStep">
-             <number>10</number>
-            </property>
-            <property name="value">
-             <number>1000</number>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="pauseLabel">
             <property name="text">
@@ -413,7 +397,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="1" column="2">
            <widget class="QSlider" name="delaySlider">
             <property name="toolTip">
              <string>The amount of time to wait before starting the next cycle</string>
@@ -435,7 +419,23 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="animationIntervalSpinBox">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="maximum">
+             <number>3000</number>
+            </property>
+            <property name="singleStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>1000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
            <widget class="QSpinBox" name="delaySpinBox">
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -650,7 +650,7 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>-117</x>
             <y>0</y>
             <width>685</width>
             <height>414</height>
@@ -660,7 +660,7 @@
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
-           <item row="8" column="1" alignment="Qt::AlignLeft|Qt::AlignTop">
+           <item row="8" column="1" alignment="Qt::AlignTop">
             <widget class="QGroupBox" name="animationToolsGroupBox">
              <property name="minimumSize">
               <size>
@@ -672,10 +672,10 @@
               <string>Animation Tools</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="1" column="0">
-               <widget class="QLabel" name="frameCountLabel">
+              <item row="4" column="0">
+               <widget class="QLabel" name="frameRateLabel">
                 <property name="text">
-                 <string>Frame Count</string>
+                 <string>Frame Interval</string>
                 </property>
                </widget>
               </item>
@@ -683,22 +683,6 @@
                <widget class="QLabel" name="currentFrameLabel">
                 <property name="text">
                  <string>Current Frame</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QSpinBox" name="frameCountSpinBox">
-                <property name="toolTip">
-                 <string>The total number of drawing surfaces</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>255</number>
                 </property>
                </widget>
               </item>
@@ -715,10 +699,26 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="frameRateLabel">
+              <item row="1" column="0">
+               <widget class="QLabel" name="frameCountLabel">
                 <property name="text">
-                 <string>Frame Interval</string>
+                 <string>Frame Count</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="frameCountSpinBox">
+                <property name="toolTip">
+                 <string>The total number of drawing surfaces</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>255</number>
                 </property>
                </widget>
               </item>
@@ -741,8 +741,8 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QSpinBox" name="frameRateSpinBox">
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="frameIntervalSpinBox">
                 <property name="toolTip">
                  <string>Sets the amount of time between frames</string>
                 </property>
@@ -803,6 +803,19 @@
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item row="4" column="2">
+               <widget class="QSlider" name="frameIntervalSlider">
+                <property name="maximum">
+                 <number>1000</number>
+                </property>
+                <property name="value">
+                 <number>100</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

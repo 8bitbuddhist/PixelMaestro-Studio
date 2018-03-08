@@ -564,7 +564,7 @@ namespace PixelMaestroStudio {
 		ui->currentFrameSpinBox->setEnabled(!checked);
 
 		if (checked) {
-			on_frameRateSpinBox_editingFinished();
+			on_frameIntervalSpinBox_editingFinished();
 		}
 		else {
 			run_cue(canvas_handler->remove_frame_timer(get_section_index(), get_layer_index()));
@@ -780,10 +780,26 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the Canvas' frame rate.
+	 * Sets the interval between Canvas frames.
+	 * @param value New interval.
 	 */
-	void MaestroControlWidget::on_frameRateSpinBox_editingFinished() {
-		run_cue(canvas_handler->set_frame_timer(get_section_index(), get_layer_index(), ui->frameRateSpinBox->value()));
+	void MaestroControlWidget::on_frameIntervalSlider_valueChanged(int value) {
+		ui->frameIntervalSpinBox->blockSignals(true);
+		ui->frameIntervalSpinBox->setValue(value);
+		ui->frameIntervalSpinBox->blockSignals(false);
+
+		set_canvas_frame_interval();
+	}
+
+	/**
+	 * Sets the interval between Canvas frames.
+	 */
+	void MaestroControlWidget::on_frameIntervalSpinBox_editingFinished() {
+		ui->frameIntervalSlider->blockSignals(true);
+		ui->frameIntervalSlider->setValue(ui->frameIntervalSpinBox->value());
+		ui->frameIntervalSlider->blockSignals(false);
+
+		set_canvas_frame_interval();
 	}
 
 	/**
@@ -956,9 +972,9 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->blockSignals(false);
 
 			if (canvas->get_frame_timer() != nullptr) {
-				ui->frameRateSpinBox->blockSignals(true);
-				ui->frameRateSpinBox->setValue(canvas->get_frame_timer()->get_interval());
-				ui->frameRateSpinBox->blockSignals(false);
+				ui->frameIntervalSpinBox->blockSignals(true);
+				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
+				ui->frameIntervalSpinBox->blockSignals(false);
 			}
 
 			// Disable frame count spin box if necessary
@@ -1439,7 +1455,8 @@ namespace PixelMaestroStudio {
 		ui->canvasComboBox->blockSignals(true);
 		ui->frameCountSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->blockSignals(true);
-		ui->frameRateSpinBox->blockSignals(true);
+		ui->frameIntervalSlider->blockSignals(true);
+		ui->frameIntervalSpinBox->blockSignals(true);
 
 		Canvas* canvas = section->get_canvas();
 		if (canvas != nullptr) {
@@ -1447,7 +1464,8 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 			if (canvas->get_frame_timer() != nullptr) {
-				ui->frameRateSpinBox->setValue(canvas->get_frame_timer()->get_interval());
+				ui->frameIntervalSlider->setValue(canvas->get_frame_timer()->get_interval());
+				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 			}
 			set_canvas_controls_enabled(((uint8_t)canvas->get_type() + 1));
 
@@ -1475,13 +1493,15 @@ namespace PixelMaestroStudio {
 			ui->canvasComboBox->setCurrentIndex(0);
 			ui->frameCountSpinBox->setValue(1);
 			ui->currentFrameSpinBox->setValue(0);
-			ui->frameRateSpinBox->setValue(100);
+			ui->frameIntervalSlider->setValue(100);
+			ui->frameIntervalSpinBox->setValue(100);
 			set_canvas_controls_enabled(0);
 		}
 
 		ui->frameCountSpinBox->blockSignals(false);
 		ui->currentFrameSpinBox->blockSignals(false);
-		ui->frameRateSpinBox->blockSignals(false);
+		ui->frameIntervalSlider->blockSignals(false);
+		ui->frameIntervalSpinBox->blockSignals(false);
 		ui->canvasComboBox->blockSignals(false);
 	}
 
@@ -1758,6 +1778,11 @@ namespace PixelMaestroStudio {
 		if (new_interval != timer->get_interval() || pause != timer->get_delay()) {
 			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
 		}
+	}
+
+	/// Sets the interval between Canvas frames.
+	void MaestroControlWidget::set_canvas_frame_interval() {
+		run_cue(canvas_handler->set_frame_timer(get_section_index(), get_layer_index(), ui->frameIntervalSpinBox->value()));
 	}
 
 	/**

@@ -29,17 +29,17 @@ namespace PixelMaestroStudio {
 		animation_handler->set_palette(0, 0, new Palette(colors_black, 2, false));
 		controller->run();
 
-		animation_handler->set_timer(0, 0, 2000, 1500);
+		animation_handler->set_timer(0, 0, 1000, 1000);
 		controller->run();
 
 		// Note that this isn't true black because the Layer mixmode treats true black as transparent.
 		Colors::RGB colors_white[] = {ColorPresets::White, {0, 0, 1}};
 		section_handler->set_animation(0, 1, AnimationType::Cycle, false);
 		controller->run();
-		animation_handler->set_palette(0, 0, new Palette(colors_white, 2, false));
+		animation_handler->set_palette(0, 1, new Palette(colors_white, 2, false));
 		controller->run();
 
-		animation_handler->set_timer(0, 1, 2000, 1500);
+		animation_handler->set_timer(0, 1, 1000, 1000);
 		controller->run();
 
 		section_handler->set_canvas(0, 1, CanvasType::AnimationCanvas);

@@ -39,7 +39,8 @@ namespace PixelMaestroStudio {
 													 "Start Frame Timer",
 													 "Stop Frame Timer"});
 
-	const QStringList CueInterpreter::MaestroActions({"Set Show",
+	const QStringList CueInterpreter::MaestroActions({"Set Brightness",
+													  "Set Show",
 													  "Set Timer",
 													  "Start",
 													  "Stop"
@@ -235,6 +236,9 @@ namespace PixelMaestroStudio {
 		result->append(MaestroActions.at(cue[(uint8_t)MaestroCueHandler::Byte::ActionByte]));
 
 		switch((MaestroCueHandler::Action)cue[(uint8_t)MaestroCueHandler::Byte::ActionByte]) {
+			case MaestroCueHandler::Action::SetBrightness:
+				result->append(": "	+ cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]);
+				break;
 			case MaestroCueHandler::Action::SetShow:
 				break;
 			case MaestroCueHandler::Action::SetTimer:
