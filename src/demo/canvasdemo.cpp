@@ -2,6 +2,7 @@
  * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
 
+#include "animation/waveanimation.h"
 #include "colorpresets.h"
 #include "canvas/animationcanvas.h"
 #include "drawingarea/maestrodrawingarea.h"
@@ -14,10 +15,10 @@ namespace PixelMaestroStudio {
 	CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
-		Animation* animation = section->set_animation(AnimationType::Radial);
-		animation->set_palette(new Palette(ColorPresets::Colorwheel, 12, false));
+		Animation* animation = section->set_animation(AnimationType::Wave);
+		animation->set_palette(&ColorPresets::Colorwheel_Palette);
 		animation->set_timer(250);
-		animation->set_orientation(Animation::Orientation::Vertical);
+		static_cast<WaveAnimation*>(animation)->set_mirror(true);
 
 		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::AnimationCanvas));
 

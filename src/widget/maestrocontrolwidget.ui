@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -493,6 +493,11 @@
             </item>
             <item>
              <property name="text">
+              <string>Fire</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Lightning</string>
              </property>
             </item>
@@ -529,11 +534,6 @@
             <item>
              <property name="text">
               <string>Wave</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Fire</string>
              </property>
             </item>
            </widget>
@@ -1213,8 +1213,8 @@
          <widget class="QWidget" name="showScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>0</y>
+            <x>-60</x>
+            <y>-120</y>
             <width>693</width>
             <height>565</height>
            </rect>
@@ -1623,11 +1623,73 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>sectionComboBox</tabstop>
+  <tabstop>layerSpinBox</tabstop>
+  <tabstop>layerComboBox</tabstop>
+  <tabstop>mix_modeComboBox</tabstop>
+  <tabstop>alphaSpinBox</tabstop>
+  <tabstop>rowsSpinBox</tabstop>
+  <tabstop>columnsSpinBox</tabstop>
+  <tabstop>scrollXSpinBox</tabstop>
+  <tabstop>scrollYSpinBox</tabstop>
+  <tabstop>offsetXSpinBox</tabstop>
+  <tabstop>offsetYSpinBox</tabstop>
+  <tabstop>animationComboBox</tabstop>
+  <tabstop>reverse_animationCheckBox</tabstop>
+  <tabstop>orientationComboBox</tabstop>
+  <tabstop>fadeCheckBox</tabstop>
+  <tabstop>animationPaletteComboBox</tabstop>
+  <tabstop>paletteControlButton</tabstop>
+  <tabstop>animationIntervalSpinBox</tabstop>
+  <tabstop>animationTimerSlider</tabstop>
+  <tabstop>delaySpinBox</tabstop>
+  <tabstop>delaySlider</tabstop>
   <tabstop>canvasScrollArea</tabstop>
+  <tabstop>canvasComboBox</tabstop>
+  <tabstop>loadImageButton</tabstop>
+  <tabstop>circleToolButton</tabstop>
+  <tabstop>lineToolButton</tabstop>
+  <tabstop>triangleToolButton</tabstop>
+  <tabstop>rectToolButton</tabstop>
+  <tabstop>textToolButton</tabstop>
+  <tabstop>paintToolButton</tabstop>
+  <tabstop>originXSpinBox</tabstop>
+  <tabstop>originYSpinBox</tabstop>
+  <tabstop>targetXSpinBox</tabstop>
+  <tabstop>targetYSpinBox</tabstop>
+  <tabstop>target2XSpinBox</tabstop>
+  <tabstop>target2YSpinBox</tabstop>
+  <tabstop>fillCheckBox</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>textLineEdit</tabstop>
+  <tabstop>canvasColorPickerScrollArea</tabstop>
+  <tabstop>selectColorButton</tabstop>
+  <tabstop>canvasPaletteComboBox</tabstop>
+  <tabstop>canvasEditPaletteButton</tabstop>
+  <tabstop>drawButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>canvasPlaybackBackToolButton</tabstop>
+  <tabstop>canvasPlaybackStartStopToolButton</tabstop>
+  <tabstop>canvasPlaybackNextToolButton</tabstop>
+  <tabstop>frameCountSpinBox</tabstop>
+  <tabstop>currentFrameSpinBox</tabstop>
+  <tabstop>frameIntervalSpinBox</tabstop>
+  <tabstop>frameIntervalSlider</tabstop>
   <tabstop>showScrollArea</tabstop>
+  <tabstop>enableShowCheckBox</tabstop>
+  <tabstop>toggleShowModeCheckBox</tabstop>
+  <tabstop>showTimingMethodComboBox</tabstop>
+  <tabstop>loopCheckBox</tabstop>
+  <tabstop>eventHistoryWidget</tabstop>
   <tabstop>currentTimeLineEdit</tabstop>
   <tabstop>relativeTimeLineEdit</tabstop>
   <tabstop>eventTimeSpinBox</tabstop>
+  <tabstop>moveEventUpButton</tabstop>
+  <tabstop>removeEventButton</tabstop>
+  <tabstop>moveEventDownButton</tabstop>
+  <tabstop>addEventButton</tabstop>
+  <tabstop>showPauseButton</tabstop>
+  <tabstop>eventListWidget</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>

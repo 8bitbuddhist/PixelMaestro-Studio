@@ -65,6 +65,7 @@ namespace PixelMaestroStudio {
 
 	const QStringList CueInterpreter::AnimationTypes({"Blink",
 													  "Cycle",
+													  "Fire",
 													  "Lightning",
 													  "Mandelbrot",
 													  "Plasma",
@@ -72,8 +73,7 @@ namespace PixelMaestroStudio {
 													  "Random",
 													  "Solid",
 													  "Sparkle",
-													  "Wave",
-													  "Fire"});
+													  "Wave"});
 
 	const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
 															 "Vertical"});
@@ -270,34 +270,24 @@ namespace PixelMaestroStudio {
 				result->append(": " + AnimationTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
 				break;
 			case SectionCueHandler::Action::SetCanvas:
-				{
-					result->append(", " + CanvasTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
-					result->append(", " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])) + " frames";
-				}
+				result->append(", " + CanvasTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
+				result->append(", " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])) + " frames";
 				break;
 			case SectionCueHandler::Action::SetDimensions:
-				{
-					result->append(", " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-					result->append(" x " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])));
-				}
+				result->append(", " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result->append(" x " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])));
 				break;
 			case SectionCueHandler::Action::SetLayer:
-				{
-					result->append(", Mix Mode: " + ColorMixModes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
-					result->append(", Alpha: " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]));
-				}
+				result->append(", Mix Mode: " + ColorMixModes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
+				result->append(", Alpha: " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]));
 				break;
 			case SectionCueHandler::Action::SetOffset:
-				{
-					result->append(", (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-					result->append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
-				}
+				result->append(", (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result->append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 			case SectionCueHandler::Action::SetScroll:
-				{
-					result->append(", (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-					result->append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
-				}
+				result->append(", (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result->append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 		}
 	}
@@ -306,6 +296,9 @@ namespace PixelMaestroStudio {
 		result->append(ShowActions.at(cue[(uint8_t)ShowCueHandler::Byte::ActionByte]));
 
 		switch ((ShowCueHandler::Action)cue[(uint8_t)ShowCueHandler::Byte::ActionByte]) {
+			case ShowCueHandler::Action::SetEvents:
+				result->append(", " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)ShowCueHandler::Byte::OptionsByte])) + " events");
+				break;
 			case ShowCueHandler::Action::SetLooping:
 				if ((bool)cue[(uint8_t)ShowCueHandler::Byte::OptionsByte]) {
 					result->append(", true");

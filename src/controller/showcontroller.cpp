@@ -35,11 +35,19 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns the list of Events.
+	 * @return Event list.
+	 */
+	QVector<Event>* ShowController::get_events() {
+		return &events_;
+	}
+
+	/**
 	 * Applies the current Event list to the Maestro's Show.
 	 */
 	void ShowController::initialize_events() {
 		if (events_.size() > 0) {
-			show_->set_events(&events_[0], events_.size(), true);
+			show_->set_events(events_.data(), events_.size(), true);
 		}
 		else {
 			show_->set_events(nullptr, 0, false);

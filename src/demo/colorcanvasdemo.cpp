@@ -8,11 +8,6 @@ namespace PixelMaestroStudio {
 	ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
 		Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
-		Animation* animation = section->set_animation(AnimationType::Radial);
-		animation->set_palette(new Palette(ColorPresets::Colorwheel, 12, false));
-		animation->set_timer(250);
-		animation->set_reverse(true);
-
 		Section::Layer* layer = section->set_layer(Colors::MixMode::Overlay);
 		ColorCanvas* canvas = static_cast<ColorCanvas*>(layer->section->set_canvas(CanvasType::ColorCanvas));
 

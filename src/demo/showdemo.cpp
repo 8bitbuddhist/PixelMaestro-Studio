@@ -19,19 +19,16 @@ namespace PixelMaestroStudio {
 		CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();
 
 		SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-		AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
 		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
 
-		controller->run(section_handler->set_animation(0, 0, AnimationType::Wave, false));
-		controller->run(animation_handler->set_palette(0, 0, new Palette(ColorPresets::Colorwheel, 12, true)));
-		controller->run(animation_handler->set_timer(0, 0, 500));
-		controller->run(section_handler->set_canvas(0, 0, CanvasType::AnimationCanvas));
+		controller->run(section_handler->set_canvas(0, 0, CanvasType::PaletteCanvas));
+		controller->run(canvas_handler->set_palette(0, 0, &ColorPresets::Colorwheel_Palette));
 
 		events_ = new Event[5];
 
 		std::string text[] = {"1", "2", "3", "4"};
 		for (uint8_t i = 0; i < 4; i++) {
-			events_[i].set_cue(canvas_handler->draw_text(0, 0, i * 6, 1, Font::Type::Font5x8, text[i].c_str(), 1));
+			events_[i].set_cue(canvas_handler->draw_text(0, 0, i, i * 6, 1, Font::Type::Font5x8, text[i].c_str(), 1));
 			events_[i].set_time(1000);
 		}
 

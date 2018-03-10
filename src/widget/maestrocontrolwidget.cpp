@@ -402,7 +402,9 @@ namespace PixelMaestroStudio {
 			Event* event = show_controller_->add_event(ui->eventTimeSpinBox->value(), (uint8_t*)&event_history_.at(index.row()).at(0));
 			ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
 		}
-		show_controller_->initialize_events();
+		run_cue(
+			show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size(), true)
+		);
 	}
 
 	/**
@@ -577,7 +579,6 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the offset x value.
 	 */
-	// FIXME: Only triggers when a second editingFinished is triggered
 	void MaestroControlWidget::on_offsetXSpinBox_editingFinished() {
 		set_offset();
 	}
@@ -1070,7 +1071,9 @@ namespace PixelMaestroStudio {
 			show_controller_->remove_event(index.row());
 			ui->eventListWidget->takeItem(index.row());
 		}
-		show_controller_->initialize_events();
+		run_cue(
+			show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size(), true)
+		);
 	}
 
 	/**

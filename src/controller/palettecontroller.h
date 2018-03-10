@@ -30,6 +30,13 @@ namespace PixelMaestroStudio {
 					return match;
 				}
 
+				/**
+				 * Constructor.
+				 * Provides storage for colors (which is why we pass colors directly instead of a Palette object.)
+				 * @param new_name Palette name.
+				 * @param new_colors Palette colors.
+				 * @param num_colors Number of colors in the Palette.
+				 */
 				PaletteWrapper(QString new_name, Colors::RGB* new_colors, uint8_t num_colors) {
 					this->name = new_name;
 					for (uint8_t i = 0; i < num_colors; i++) {

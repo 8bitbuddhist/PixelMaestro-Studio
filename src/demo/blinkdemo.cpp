@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 		Section* section = maestro_controller_->set_sections(1, Point(10, 10));
 
 		Animation* animation = section->set_animation(AnimationType::Blink);
-		animation->set_palette(new Palette(ColorPresets::Colorwheel, 12, false));
+		animation->set_palette(&ColorPresets::Colorwheel_Palette);
 		animation->set_timer(1000);
 	}
 }
