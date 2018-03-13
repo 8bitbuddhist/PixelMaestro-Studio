@@ -65,6 +65,7 @@ namespace PixelMaestroStudio {
 			bool get_canvas_painting_enabled();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
+			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue);
 			void set_active_section(Section* section);
 			void set_canvas_origin(Point* coordinates);
@@ -199,6 +200,7 @@ namespace PixelMaestroStudio {
 			void on_alphaSpinBox_editingFinished();
 			void on_delaySpinBox_editingFinished();
 			void on_frameIntervalSlider_valueChanged(int value);
+			void on_resyncMaestroButton_clicked();
 	};
 }
 

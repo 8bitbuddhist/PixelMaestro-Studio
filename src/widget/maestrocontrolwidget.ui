@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -454,7 +454,7 @@
        <item row="0" column="0" colspan="3" alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="animationBaseSettingsGroupBox">
          <property name="title">
-          <string>Basic Settings</string>
+          <string>Animation Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_10">
           <item row="2" column="1">
@@ -650,7 +650,7 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>-117</x>
+            <x>0</x>
             <y>0</y>
             <width>685</width>
             <height>414</height>
@@ -1213,8 +1213,8 @@
          <widget class="QWidget" name="showScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>-60</x>
-            <y>-120</y>
+            <x>0</x>
+            <y>0</y>
             <width>693</width>
             <height>565</height>
            </rect>
@@ -1530,6 +1530,16 @@
               <string>Show Control</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="toggleShowModeCheckBox">
+                <property name="toolTip">
+                 <string>If enabled, actions will no longer update the Maestro but will still be listed in the Event History</string>
+                </property>
+                <property name="text">
+                 <string>Lock Maestro</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0">
                <widget class="QCheckBox" name="enableShowCheckBox">
                 <property name="toolTip">
@@ -1540,13 +1550,13 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="toggleShowModeCheckBox">
+              <item row="0" column="1">
+               <widget class="QPushButton" name="resyncMaestroButton">
                 <property name="toolTip">
-                 <string>If enabled, actions will no longer update the Maestro but will still be listed in the Event History</string>
+                 <string>Reinitializes the last run time of all timers</string>
                 </property>
                 <property name="text">
-                 <string>Lock Maestro</string>
+                 <string>Resync Timers</string>
                 </property>
                </widget>
               </item>

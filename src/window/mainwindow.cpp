@@ -144,7 +144,10 @@ namespace PixelMaestroStudio {
 			reset_drawing_area();
 			on_action_Open_Animation_Editor_triggered(true);
 			maestro_controller_->load_cuefile(filename);
-			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());	// Refresh the MaestroControlWidget after loading the Cue
+
+			// Refresh the Animation Editor
+			maestro_control_widget_->refresh_maestro_settings();
+			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
 		}
 	}
 

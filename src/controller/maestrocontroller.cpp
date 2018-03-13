@@ -149,9 +149,10 @@ namespace PixelMaestroStudio {
 		// Show
 		Show* show = maestro_->get_show();
 		if (show != nullptr) {
+			// FIXME: Show-enabled Cues not saving properly
 			write_cue_to_stream(datastream, maestro_handler->set_show());
 			ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowHandler);
-			write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), true));
+			write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
 			write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
 			write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
 		}

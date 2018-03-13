@@ -126,8 +126,8 @@ namespace PixelMaestroStudio {
 
 		event_history_.push_back(cue_vector);
 
-		// Remove all but the last 10 Events
-		if (event_history_.size() >= 10) {
+		// Remove all but the last 50 Events
+		if (event_history_.size() >= 50) {
 			ui->eventHistoryWidget->takeItem(0);
 			event_history_.remove(0);
 		}
@@ -1067,13 +1067,30 @@ namespace PixelMaestroStudio {
 	 * Removes the selected Event(s) from the Show.
 	 */
 	void MaestroControlWidget::on_removeEventButton_clicked() {
-		for (QModelIndex index : ui->eventListWidget->selectionModel()->selectedIndexes()) {
+
+		// Sort selected rows by index before removing them
+		QModelIndexList list = ui->eventListWidget->selectionModel()->selectedRows();
+		qSort(list.begin(), list.end(), qGreater<QModelIndex>());
+		for (QModelIndex index : list) {
 			show_controller_->remove_event(index.row());
 			ui->eventListWidget->takeItem(index.row());
 		}
+
+		// Re-initialize the Event list
 		run_cue(
 			show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size(), true)
 		);
+	}
+
+	/**
+	 * Resyncs Maestro components.
+	 */
+	void MaestroControlWidget::on_resyncMaestroButton_clicked() {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Resync Timers", "This will sync all timers (such as Animation and Canvas timers) by setting their last run time to 0. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
+		if (confirm == QMessageBox::Yes) {
+			maestro_controller_->get_maestro()->sync();
+		}
 	}
 
 	/**
@@ -1264,6 +1281,33 @@ namespace PixelMaestroStudio {
 		}
 
 		ui->layerComboBox->blockSignals(false);
+	}
+
+	/**
+	 * Updates the UI to reflect the Maestro's current settings.
+	 */
+	void MaestroControlWidget::refresh_maestro_settings() {
+		// TODO: Show
+		Show* show = maestro_controller_->get_maestro()->get_show();
+		if (show != nullptr) {
+			ui->enableShowCheckBox->setChecked(true);
+
+			ui->showTimingMethodComboBox->blockSignals(true);
+			ui->showTimingMethodComboBox->setCurrentIndex((uint8_t)show->get_timing());
+			ui->showTimingMethodComboBox->blockSignals(false);
+
+			ui->loopCheckBox->blockSignals(true);
+			ui->loopCheckBox->setChecked(show->get_looping());
+			ui->loopCheckBox->blockSignals(true);
+
+			ui->eventListWidget->blockSignals(true);
+			for (uint16_t event_index = 0; event_index < show->get_num_events(); event_index++) {
+				Event* event = &show->get_events()[event_index];
+				show_controller_->get_events()->append(*event);
+				ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
+			}
+			ui->eventListWidget->blockSignals(false);
+		}
 	}
 
 	/**
