@@ -329,29 +329,6 @@ namespace PixelMaestroStudio {
 		show_timer_.setInterval(100);
 		connect(&show_timer_, SIGNAL(timeout()), this, SLOT(update_maestro_last_time()));
 
-		// Set Show controls
-		Show* show = maestro_controller_->get_maestro()->get_show();
-		if (show != nullptr) {
-			on_enableShowCheckBox_toggled(true);
-			ui->enableShowCheckBox->setChecked(true);
-
-			for (uint16_t i = 0; i < show->get_num_events(); i++) {
-				Event* event = &show->get_events()[i];
-				show_controller_->add_event(event->get_time(), event->get_cue());
-				ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
-			}
-
-			show_controller_->initialize_events();
-
-			ui->showTimingMethodComboBox->blockSignals(true);
-			ui->showTimingMethodComboBox->setCurrentIndex((uint8_t)show->get_timing());
-			ui->showTimingMethodComboBox->blockSignals(false);
-
-			ui->loopCheckBox->blockSignals(true);
-			ui->loopCheckBox->setChecked(show->get_looping());
-			ui->loopCheckBox->blockSignals(false);
-		}
-
 		// Initialize Canvas elements
 		// Add drawing buttons to group
 		canvas_shape_type_group_.addButton(ui->circleToolButton);
@@ -505,28 +482,7 @@ namespace PixelMaestroStudio {
 		PaletteController::PaletteWrapper* palette = palette_controller_.get_palette(index);
 		run_cue(canvas_handler->set_palette(get_section_index(), get_layer_index(), &palette->palette));
 
-		// Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
-		// Delete existing color buttons
-		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
-		for (QPushButton* button : buttons) {
-			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
-			delete button;
-		}
-
-		// Create new buttons and add an event handler that triggers on_canvas_color_clicked()
-		QLayout* layout = ui->canvasColorPickerScrollArea->findChild<QLayout*>("canvasColorPickerLayout");
-		for (uint8_t color_index = 0; color_index < palette->colors.size(); color_index++) {
-			Colors::RGB color = palette->colors.at(color_index);
-			QPushButton* button = new QPushButton();
-			button->setVisible(true);
-			button->setObjectName(QString::number(color_index));
-			button->setToolTip(QString::number(color_index + 1));
-			button->setMaximumWidth(40);
-			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
-
-			layout->addWidget(button);
-			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
-		}
+		populate_palette_canvas_color_selection(palette);
 	}
 
 	/**
@@ -827,9 +783,13 @@ namespace PixelMaestroStudio {
 
 		if (current_row != ui->eventListWidget->count() - 1) {
 			show_controller_->move(current_row, current_row	+ 1);
+			run_cue(
+				show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size())
+			);
 
 			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
 			ui->eventListWidget->insertItem(current_row + 1, current_item);
+			ui->eventListWidget->setCurrentRow(current_row + 1);
 		}
 	}
 
@@ -839,9 +799,13 @@ namespace PixelMaestroStudio {
 
 		if (current_row != 0) {
 			show_controller_->move(current_row, current_row - 1);
+			run_cue(
+				show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size())
+			);
 
 			QListWidgetItem* current_item = ui->eventListWidget->takeItem(current_row);
 			ui->eventListWidget->insertItem(current_row - 1, current_item);
+			ui->eventListWidget->setCurrentRow(current_row - 1);
 		}
 	}
 
@@ -1284,13 +1248,51 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Rebuilds the Palette Canvas color selection scroll area.
+	 */
+	void MaestroControlWidget::populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette) {
+		// Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
+		// Delete existing color buttons
+		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
+		for (QPushButton* button : buttons) {
+			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
+			delete button;
+		}
+
+		// Create new buttons and add an event handler that triggers on_canvas_color_clicked()
+		QLayout* layout = ui->canvasColorPickerScrollArea->findChild<QLayout*>("canvasColorPickerLayout");
+		for (uint8_t color_index = 0; color_index < palette->colors.size(); color_index++) {
+			Colors::RGB color = palette->colors.at(color_index);
+			QPushButton* button = new QPushButton();
+			button->setVisible(true);
+			button->setObjectName(QString::number(color_index));
+			button->setToolTip(QString::number(color_index + 1));
+			button->setMaximumWidth(40);
+			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+
+			layout->addWidget(button);
+			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
+		}
+	}
+
+	/**
 	 * Updates the UI to reflect the Maestro's current settings.
 	 */
 	void MaestroControlWidget::refresh_maestro_settings() {
-		// TODO: Show
 		Show* show = maestro_controller_->get_maestro()->get_show();
 		if (show != nullptr) {
+			//on_enableShowCheckBox_toggled(true);
 			ui->enableShowCheckBox->setChecked(true);
+
+			for (uint16_t i = 0; i < show->get_num_events(); i++) {
+				Event* event = &show->get_events()[i];
+				show_controller_->add_event(event->get_time(), event->get_cue());
+				ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
+			}
+
+			run_cue(
+				show_handler->set_events(show_controller_->get_events()->data(), show_controller_->get_events()->size())
+			);
 
 			ui->showTimingMethodComboBox->blockSignals(true);
 			ui->showTimingMethodComboBox->setCurrentIndex((uint8_t)show->get_timing());
@@ -1298,15 +1300,7 @@ namespace PixelMaestroStudio {
 
 			ui->loopCheckBox->blockSignals(true);
 			ui->loopCheckBox->setChecked(show->get_looping());
-			ui->loopCheckBox->blockSignals(true);
-
-			ui->eventListWidget->blockSignals(true);
-			for (uint16_t event_index = 0; event_index < show->get_num_events(); event_index++) {
-				Event* event = &show->get_events()[event_index];
-				show_controller_->get_events()->append(*event);
-				ui->eventListWidget->addItem(locale_.toString(event->get_time()) + QString(": ") + cue_interpreter_.interpret_cue(event->get_cue()));
-			}
-			ui->eventListWidget->blockSignals(false);
+			ui->loopCheckBox->blockSignals(false);
 		}
 	}
 
@@ -1534,6 +1528,8 @@ namespace PixelMaestroStudio {
 					ui->canvasPaletteComboBox->setCurrentText(name);
 					ui->canvasPaletteComboBox->blockSignals(false);
 				}
+
+				populate_palette_canvas_color_selection(palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex()));
 			}
 		}
 		else {
@@ -1563,7 +1559,7 @@ namespace PixelMaestroStudio {
 
 		// Canvas-specific controls
 		CanvasType type = (CanvasType)(index - 1);
-		ui->selectColorButton->setEnabled(index && type  == CanvasType::ColorCanvas);
+		ui->selectColorButton->setEnabled(index && (type == CanvasType::ColorCanvas || type == CanvasType::PaletteCanvas));
 		ui->canvasPaletteComboBox->setEnabled(index && type == CanvasType::PaletteCanvas);
 		ui->canvasPaletteLabel->setEnabled(index && type == CanvasType::PaletteCanvas);
 		ui->canvasEditPaletteButton->setEnabled(index && type == CanvasType::PaletteCanvas);

@@ -127,6 +127,7 @@ namespace PixelMaestroStudio {
 			void initialize_palettes();
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
+			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette);
 			void set_canvas_controls_enabled(uint8_t index);
 			void set_offset();
 

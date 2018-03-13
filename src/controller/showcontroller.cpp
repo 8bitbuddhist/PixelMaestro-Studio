@@ -43,25 +43,12 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Applies the current Event list to the Maestro's Show.
-	 */
-	void ShowController::initialize_events() {
-		if (events_.size() > 0) {
-			show_->set_events(events_.data(), events_.size(), true);
-		}
-		else {
-			show_->set_events(nullptr, 0, false);
-		}
-	}
-
-	/**
 	 * Changes the location of an Event in the list.
 	 * @param from Event's original location.
 	 * @param to Event's final location.
 	 */
 	void ShowController::move(uint16_t from, uint16_t to) {
 		events_.move(from, to);
-		initialize_events();
 	}
 
 	/**
