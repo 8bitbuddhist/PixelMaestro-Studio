@@ -13,9 +13,9 @@ namespace PixelMaestroStudio {
 
 		CueController* controller = maestro->set_cue_controller();
 
-		SectionCueHandler *section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-		AnimationCueHandler *animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
-		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
+		SectionCueHandler *section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionCueHandler));
+		AnimationCueHandler *animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationCueHandler));
+		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasCueHandler));
 
 		section_handler->set_layer(0, 0, Colors::MixMode::Overlay, 0);
 		controller->run();

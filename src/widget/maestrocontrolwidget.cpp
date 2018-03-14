@@ -86,19 +86,19 @@ namespace PixelMaestroStudio {
 		// Initialize Cue Handlers
 		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
 		animation_handler = static_cast<AnimationCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::AnimationHandler)
+			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
 		);
 		canvas_handler = static_cast<CanvasCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::CanvasHandler)
+			cue_controller_->get_handler(CueController::Handler::CanvasCueHandler)
 		);
 		maestro_handler = static_cast<MaestroCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::MaestroHandler)
+			cue_controller_->get_handler(CueController::Handler::MaestroCueHandler)
 		);
 		section_handler = static_cast<SectionCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::SectionHandler)
+			cue_controller_->get_handler(CueController::Handler::SectionCueHandler)
 		);
 		show_handler = static_cast<ShowCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::ShowHandler)
+			cue_controller_->get_handler(CueController::Handler::ShowCueHandler)
 		);
 
 		// Check to see if we need to pause the Maestro
@@ -1317,7 +1317,7 @@ namespace PixelMaestroStudio {
 			 * Send to serial devices.
 			 * Certain actions (e.g. grid resizing) should be caught here and prevented from running.
 			 */
-			if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionHandler &&
+			if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionCueHandler &&
 				cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)SectionCueHandler::Action::SetDimensions)) {
 				for (int i = 0; i < serial_devices_.size(); i++) {
 					if (serial_devices_[i]->isOpen()) {

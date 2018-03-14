@@ -105,19 +105,19 @@ namespace PixelMaestroStudio {
 		QString result = Handlers.at(cue[(uint8_t)CueController::Byte::PayloadByte]) + QString(", ");
 		// Delegate to the correct handler
 		switch ((CueController::Handler)cue[(uint8_t)CueController::Byte::PayloadByte]) {
-			case CueController::Handler::AnimationHandler:
+			case CueController::Handler::AnimationCueHandler:
 				interpret_animation_cue(cue, &result);
 				break;
-			case CueController::Handler::CanvasHandler:
+			case CueController::Handler::CanvasCueHandler:
 				interpret_canvas_cue(cue, &result);
 				break;
-			case CueController::Handler::MaestroHandler:
+			case CueController::Handler::MaestroCueHandler:
 				interpret_maestro_cue(cue, &result);
 				break;
-			case CueController::Handler::SectionHandler:
+			case CueController::Handler::SectionCueHandler:
 				interpret_section_cue(cue, &result);
 				break;
-			case CueController::Handler::ShowHandler:
+			case CueController::Handler::ShowCueHandler:
 				interpret_show_cue(cue, &result);
 				break;
 		}

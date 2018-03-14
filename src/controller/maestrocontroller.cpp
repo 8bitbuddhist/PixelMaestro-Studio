@@ -36,11 +36,11 @@ namespace PixelMaestroStudio {
 
 		// Enable the Maestro's CueController
 		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
-		controller->enable_handler(CueController::Handler::AnimationHandler);
-		controller->enable_handler(CueController::Handler::CanvasHandler);
-		controller->enable_handler(CueController::Handler::MaestroHandler);
-		controller->enable_handler(CueController::Handler::SectionHandler);
-		controller->enable_handler(CueController::Handler::ShowHandler);
+		controller->enable_handler(CueController::Handler::AnimationCueHandler);
+		controller->enable_handler(CueController::Handler::CanvasCueHandler);
+		controller->enable_handler(CueController::Handler::MaestroCueHandler);
+		controller->enable_handler(CueController::Handler::SectionCueHandler);
+		controller->enable_handler(CueController::Handler::ShowCueHandler);
 
 		// Initialize timers
 		timer_.setTimerType(Qt::PreciseTimer);
@@ -143,15 +143,14 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream) {
 		// Timer
-		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroHandler);
+		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
 		write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 
 		// Show
 		Show* show = maestro_->get_show();
 		if (show != nullptr) {
-			// FIXME: Show-enabled Cues not saving properly
 			write_cue_to_stream(datastream, maestro_handler->set_show());
-			ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowHandler);
+			ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowCueHandler);
 			write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
 			write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
 			write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
@@ -179,7 +178,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		SectionCueHandler* section_handler = (SectionCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionHandler);
+		SectionCueHandler* section_handler = (SectionCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionCueHandler);
 
 		// Dimensions
 		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
@@ -188,7 +187,7 @@ namespace PixelMaestroStudio {
 		Animation* animation = section->get_animation();
 		write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
 
-		AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationHandler);
+		AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler);
 		write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
 		write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
@@ -247,7 +246,7 @@ namespace PixelMaestroStudio {
 		if (canvas != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_type(), canvas->get_num_frames()));
 
-			CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasHandler);
+			CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasCueHandler);
 
 			if (canvas->get_frame_timer()) {
 				write_cue_to_stream(datastream, canvas_handler->set_frame_timer(section_id, layer_id, canvas->get_frame_timer()->get_interval()));

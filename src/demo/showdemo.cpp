@@ -18,8 +18,8 @@ namespace PixelMaestroStudio {
 
 		CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();
 
-		SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
+		SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionCueHandler));
+		CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasCueHandler));
 
 		controller->run(section_handler->set_canvas(0, 0, CanvasType::PaletteCanvas));
 		controller->run(canvas_handler->set_palette(0, 0, &ColorPresets::Colorwheel_Palette));
