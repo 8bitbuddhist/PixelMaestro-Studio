@@ -1184,7 +1184,6 @@ namespace PixelMaestroStudio {
 	/**
 	 * Toggles between stopping and running the Maestro.
 	 */
-	// TODO: Remove Show tab's large scroll area
 	void MaestroControlWidget::on_showPauseButton_clicked() {
 		if (maestro_controller_->get_running()) {
 			// Stop the Maestro

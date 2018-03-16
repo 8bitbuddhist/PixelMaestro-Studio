@@ -894,7 +894,6 @@
     <addaction name="action_Open_Animation_Editor"/>
     <addaction name="actionOpen_Maestro"/>
     <addaction name="action_Save_Maestro"/>
-    <addaction name="action_Close_Workspace"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
@@ -918,7 +917,6 @@
    <addaction name="menu_Edit"/>
    <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Online_Help">
    <property name="text">
     <string>&amp;Help</string>
@@ -937,11 +935,6 @@
   <action name="action_Open_Animation_Editor">
    <property name="text">
     <string>&amp;New</string>
-   </property>
-  </action>
-  <action name="action_Close_Workspace">
-   <property name="text">
-    <string>&amp;Close</string>
    </property>
   </action>
   <action name="action_Preferences">

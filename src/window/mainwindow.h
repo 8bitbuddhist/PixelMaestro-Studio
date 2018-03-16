@@ -18,19 +18,14 @@ namespace PixelMaestroStudio {
 			~MainWindow();
 
 		private slots:
-			void on_action_Online_Help_triggered();
-			void on_action_Exit_triggered();
 			void on_action_About_triggered();
-			void on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
-			void on_action_Close_Workspace_triggered();
-
-			void on_action_Preferences_triggered();
-
-			void on_action_Save_Maestro_triggered();
-
-			void on_actionOpen_Maestro_triggered();
-
 			void on_action_Donate_triggered();
+			void on_action_Exit_triggered();
+			void on_action_Online_Help_triggered();
+			void on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
+			void on_action_Preferences_triggered();
+			void on_action_Save_Maestro_triggered();
+			void on_actionOpen_Maestro_triggered();
 
 		private:
 			MaestroController* maestro_controller_ = nullptr;
@@ -39,7 +34,7 @@ namespace PixelMaestroStudio {
 			QLayout* main_layout_ = nullptr;
 			Ui::MainWindow* ui;
 
-			void reset_drawing_area();
+			void initialize_widgets();
 	};
 }
 

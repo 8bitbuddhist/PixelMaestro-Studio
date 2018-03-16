@@ -8,17 +8,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-/*
- * TODO: Remove demos and the ability to close the Editor.
- * The Animation Editor will become the only component, and	sample Cuefiles will take the place of demos.
- * Clicking 'New' performs the same action as closing and reopening the Animation Editor.
- */
 namespace PixelMaestroStudio {
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
 		this->main_layout_ = this->findChild<QLayout*>("mainLayout");
 		setWindowTitle("PixelMaestro Studio");
-		reset_drawing_area();
+
+		// Open the Animation Editor
+		on_action_Open_Animation_Editor_triggered(false);
 	}
 
 	void MainWindow::on_action_About_triggered() {
@@ -29,31 +26,37 @@ namespace PixelMaestroStudio {
 						   QString::number(QDate::currentDate().year()));
 	}
 
+	/**
+	 * Closes the program.
+	 */
 	void MainWindow::on_action_Exit_triggered() {
 		close();
 	}
 
+	/**
+	 * Opens the documentation site in a browser.
+	 */
 	void MainWindow::on_action_Online_Help_triggered() {
 		QDesktopServices::openUrl(QUrl("https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki", QUrl::TolerantMode));
 	}
 
 	/**
-	 * Opens a new Animation Editor instance.
-	 * @param keep_current_open If true, uses the existing DrawingArea insteado of creating a new one. This is needed when reading Cuefiles.
+	 * Opens an Animation Editor instance.
+	 * @param keep_current_open If true, uses the existing DrawingArea instead of creating a new one. This is needed when loading in Cuefiles.
 	 */
 	void MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
 
 		// If Animation Editor is currently open, verify user wants to close
 		if (maestro_control_widget_ != nullptr) {
 			QMessageBox::StandardButton confirm;
-			confirm = QMessageBox::question(this, "New Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			confirm = QMessageBox::question(this, "Open new Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm != QMessageBox::Yes) {
 				return;
 			}
 		}
 
 		if (!keep_current_open) {
-			reset_drawing_area();
+			initialize_widgets();
 		}
 
 		// If the main DrawingArea is enabled as an output device, display it
@@ -77,14 +80,12 @@ namespace PixelMaestroStudio {
 		}
 		main_layout_->addWidget(maestro_control_widget_);
 
-		ui->action_Close_Workspace->setEnabled(true);
 		ui->action_Save_Maestro->setEnabled(true);
 	}
 
-	void MainWindow::on_action_Close_Workspace_triggered() {
-		reset_drawing_area();
-	}
-
+	/**
+	 * Loads a Cuefile.
+	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
 		QString filename = QFileDialog::getOpenFileName(this,
 			QString("Open Cue File"),
@@ -93,7 +94,7 @@ namespace PixelMaestroStudio {
 
 		if (!filename.isEmpty()) {
 			// Read in the CueFile, then load the Animation Editor
-			reset_drawing_area();
+			initialize_widgets();
 			on_action_Open_Animation_Editor_triggered(true);
 			maestro_controller_->load_cuefile(filename);
 
@@ -103,11 +104,17 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	/**
+	 * Opens the Preferences dialog.
+	 */
 	void MainWindow::on_action_Preferences_triggered() {
 		PreferencesDialog preferences;
 		preferences.exec();
 	}
 
+	/**
+	 * Saves the current Maestro to a Cuefile.
+	 */
 	void MainWindow::on_action_Save_Maestro_triggered() {
 		QString filename = QFileDialog::getSaveFileName(this,
 			QString("Save Cue File"),
@@ -117,12 +124,10 @@ namespace PixelMaestroStudio {
 		maestro_controller_->save_cuefile(filename);
 	}
 
-	void MainWindow::reset_drawing_area() {
-		// Remove status bar label
-		for (QLabel* label : statusBar()->findChildren<QLabel*>(QString(), Qt::FindDirectChildrenOnly)) {
-			delete label;
-		}
-
+	/**
+	 * Reinitializes all widgets.
+	 */
+	void MainWindow::initialize_widgets() {
 		main_layout_->removeWidget(maestro_drawing_area_);
 		main_layout_->removeWidget(maestro_control_widget_);
 		removeEventFilter(maestro_drawing_area_);
