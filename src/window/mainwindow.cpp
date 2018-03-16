@@ -4,15 +4,15 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QUrl>
-#include "demo/blinkdemo.h"
-#include "demo/canvasdemo.h"
-#include "demo/colorcanvasdemo.h"
-#include "demo/cuedemo.h"
-#include "demo/showdemo.h"
 #include "dialog/preferencesdialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/*
+ * TODO: Remove demos and the ability to close the Editor.
+ * The Animation Editor will become the only component, and	sample Cuefiles will take the place of demos.
+ * Clicking 'New' performs the same action as closing and reopening the Animation Editor.
+ */
 namespace PixelMaestroStudio {
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
@@ -29,48 +29,12 @@ namespace PixelMaestroStudio {
 						   QString::number(QDate::currentDate().year()));
 	}
 
-	void MainWindow::on_action_Blink_Demo_triggered() {
-		reset_drawing_area();
-
-		maestro_drawing_area_ = new BlinkDemo(main_layout_->widget(), maestro_controller_);
-		main_layout_->addWidget(maestro_drawing_area_);
-		maestro_controller_->start();
-
-		ui->action_Blink_Demo->setEnabled(false);
-		ui->action_Close_Workspace->setEnabled(true);
-		statusBar()->addWidget(new QLabel("Demonstrates a simple Blink animation"));
-	}
-
 	void MainWindow::on_action_Exit_triggered() {
 		close();
 	}
 
 	void MainWindow::on_action_Online_Help_triggered() {
 		QDesktopServices::openUrl(QUrl("https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki", QUrl::TolerantMode));
-	}
-
-	void MainWindow::on_action_Canvas_Demo_triggered() {
-		reset_drawing_area();
-
-		maestro_drawing_area_ = new CanvasDemo(main_layout_->widget(), maestro_controller_);
-		main_layout_->addWidget(maestro_drawing_area_);
-		maestro_controller_->start();
-
-		ui->action_Canvas_Demo->setEnabled(false);
-		ui->action_Close_Workspace->setEnabled(true);
-		statusBar()->addWidget(new QLabel("Demonstrates drawing shapes on a Canvas"));
-	}
-
-	void MainWindow::on_actionCommand_Demo_triggered() {
-		reset_drawing_area();
-
-		maestro_drawing_area_ = new CueDemo(main_layout_->widget(), maestro_controller_);
-		main_layout_->addWidget(maestro_drawing_area_);
-		maestro_controller_->start();
-
-		ui->actionCommand_Demo->setEnabled(false);
-		ui->action_Close_Workspace->setEnabled(true);
-		statusBar()->addWidget(new QLabel("Demonstrates using Cues to load a Maestro configuration"));
 	}
 
 	/**
@@ -121,18 +85,6 @@ namespace PixelMaestroStudio {
 		reset_drawing_area();
 	}
 
-	void MainWindow::on_action_Color_Canvas_Demo_triggered() {
-		reset_drawing_area();
-
-		maestro_drawing_area_ = new ColorCanvasDemo(main_layout_->widget(), maestro_controller_);
-		main_layout_->addWidget(maestro_drawing_area_);
-		maestro_controller_->start();
-
-		ui->action_Color_Canvas_Demo->setEnabled(false);
-		ui->action_Close_Workspace->setEnabled(true);
-		statusBar()->addWidget(new QLabel("Demonstrates a Color Canvas"));
-	}
-
 	void MainWindow::on_actionOpen_Maestro_triggered() {
 		QString filename = QFileDialog::getOpenFileName(this,
 			QString("Open Cue File"),
@@ -177,14 +129,6 @@ namespace PixelMaestroStudio {
 
 		ui->action_Save_Maestro->setEnabled(false);
 
-		ui->action_Blink_Demo->setEnabled(true);
-		ui->action_Canvas_Demo->setEnabled(true);
-		ui->action_Color_Canvas_Demo->setEnabled(true);
-		ui->actionCommand_Demo->setEnabled(true);
-		ui->action_Close_Workspace->setEnabled(false);
-		ui->action_Open_Animation_Editor->setEnabled(true);
-		ui->action_Show_Demo->setEnabled(true);
-
 		if (maestro_drawing_area_) {
 			delete maestro_drawing_area_;
 			maestro_drawing_area_ = nullptr;
@@ -203,18 +147,6 @@ namespace PixelMaestroStudio {
 
 	void MainWindow::on_action_Donate_triggered() {
 		QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=8547028", QUrl::TolerantMode));
-	}
-
-	void MainWindow::on_action_Show_Demo_triggered() {
-		reset_drawing_area();
-
-		maestro_drawing_area_ = new ShowDemo(main_layout_->widget(), maestro_controller_);
-		main_layout_->addWidget(maestro_drawing_area_);
-		maestro_controller_->start();
-
-		ui->action_Show_Demo->setEnabled(false);
-		ui->action_Close_Workspace->setEnabled(true);
-		statusBar()->addWidget(new QLabel("Demonstrates using a Show to queue actions"));
 	}
 
 	MainWindow::~MainWindow() {

@@ -46,6 +46,28 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
      </property>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="driftSpinBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>The chance that the bolt will drift down in horizontal mode or left in vertical mode</string>
+       </property>
+       <property name="minimum">
+        <number>-127</number>
+       </property>
+       <property name="maximum">
+        <number>127</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QSpinBox" name="boltCountSpinBox">
        <property name="sizePolicy">
@@ -65,33 +87,28 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QSpinBox" name="spreadDownSpinBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>The chance that the bolt will drift down in horizontal mode or left in vertical mode</string>
-       </property>
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="value">
-        <number>90</number>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Bolts</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Drift</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Fork Chance</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
+     <item row="1" column="1">
       <widget class="QSpinBox" name="forkChanceSpinBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -107,46 +124,6 @@
        </property>
        <property name="value">
         <number>4</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QSpinBox" name="spreadUpSpinBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>The chance that the bolt will drift up in horizontal mode or right in vertical mode</string>
-       </property>
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="value">
-        <number>160</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Drag (-)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Drag (+)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Bolts</string>
        </property>
       </widget>
      </item>

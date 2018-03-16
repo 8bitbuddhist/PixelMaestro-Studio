@@ -31,6 +31,12 @@ namespace PixelMaestroStudio {
 		ui->pauseOnStartCheckBox->setChecked(settings_.value(pause_on_start, false).toBool());	// Default to run on start
 
 		// Add serial devices to output selection box
+		/*
+		 * TODO: Change device selection behavior.
+		 * Users should be able to specify their own ports (including custom ports) in a text box, then manually add or remove that port.
+		 * Check to see if the port is accessible before connecting.
+		 * Might need to create	a box separate from the displays.
+		 */
 		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 		for (QSerialPortInfo port : ports) {
 			QListWidgetItem* item = new QListWidgetItem(port.systemLocation());

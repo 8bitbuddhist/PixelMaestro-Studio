@@ -22,9 +22,7 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_forkChanceSpinBox_valueChanged(int arg1);
 
-			void on_spreadDownSpinBox_valueChanged(int arg1);
-
-			void on_spreadUpSpinBox_valueChanged(int arg1);
+			void on_driftSpinBox_valueChanged(int arg1);
 
 			void on_boltCountSpinBox_valueChanged(int arg1);
 

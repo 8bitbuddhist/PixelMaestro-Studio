@@ -7,21 +7,24 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.
 
 ### Added
-- Animation Editor
-	- Added ability to draw directly onto a Canvas using the mouse buttons.
-	- Added fire animation.
-	- Added `skew` and `mirror` parameters to Wave animation.
-	- Added ability to reorder Show Events.
+- Added ability to set the Canvas cursor by clicking on a pixel.
+- Added Canvas drawing tool that lets you draw directly onto a Section.
+- Added playback buttons to the Canvas and Show tabs.
+- Added fire animation.
+- Added `skew` and `mirror` parameters to Wave animation.
+- Added ability to reorder Show Events.
+- Added a border to Sections. The active Section/Layer has a lighter border, while all other Sections have a dark border.
 	
 ### Changed
-- Animation Editor
-	- Several UI changes.
-	- Enabled changing the grid size while a Layer is active.
-	- Enabled changing per-axis offset values while scrolling is disabled on that axis.
+- _Many_ UI changes and bugfixes.
+- Fixed Maestro-level properties not updating when loading a Maestro from a Cuefile.
+- Enabled changing the grid size while a Layer is active.
+- Enabled changing per-axis offset values while scrolling is disabled on that axis.
+- Merged Lightning animation's two separate drift controls into a single control.
 	
 ### Removed
-- Animations
-	- Merge animation is now part of the Wave animation. Use `WaveAnimation::set_mirror(true)` to recreate the merge effect.
+- Removed the Merge animation. Use `WaveAnimation::set_mirror(true)` to recreate the merge effect.
+- Removed standalone demos. To see a demo, open one of the example Cuefiles from the `examples` folder.
 
 ## [v0.12] - 2018-01-22
 ### Changed

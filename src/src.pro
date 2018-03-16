@@ -15,10 +15,7 @@ DEFINES += BUILD_VERSION=\\\"v0.20\\\"
 
 SOURCES += main.cpp\
 		drawingarea/maestrodrawingarea.cpp \
-		demo/blinkdemo.cpp \
-		demo/canvasdemo.cpp \
 		controller/maestrocontroller.cpp \
-		demo/showdemo.cpp \
 		../lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
 		window/mainwindow.cpp \
 		../lib/PixelMaestro/src/animation/blinkanimation.cpp \
@@ -39,10 +36,8 @@ SOURCES += main.cpp\
 		../lib/PixelMaestro/src/animation/plasmaanimation.cpp \
 		../lib/PixelMaestro/src/animation/lightninganimation.cpp \
 		../lib/PixelMaestro/src/canvas/colorcanvas.cpp \
-		demo/colorcanvasdemo.cpp \
 		../lib/PixelMaestro/src/canvas/animationcanvas.cpp \
 		../lib/PixelMaestro/src/canvas/canvas.cpp \
-		demo/cuedemo.cpp \
 		../lib/PixelMaestro/src/cue/event.cpp \
 		../lib/PixelMaestro/src/cue/show.cpp \
 		../lib/PixelMaestro/src/cue/cuecontroller.cpp \
@@ -75,11 +70,9 @@ SOURCES += main.cpp\
 		dialog/maestrodrawingareadialog.cpp \
 		../lib/PixelMaestro/src/core/palette.cpp
 
-HEADERS += demo/blinkdemo.h \
-		demo/canvasdemo.h \
+HEADERS += \
 		drawingarea/maestrodrawingarea.h \
 		controller/maestrocontroller.h \
-		demo/showdemo.h \
 		../lib/PixelMaestro/src/canvas/fonts/font.h \
 		../lib/PixelMaestro/src/canvas/fonts/font5x8.h \
 		window/mainwindow.h \
@@ -102,11 +95,9 @@ HEADERS += demo/blinkdemo.h \
 		../lib/PixelMaestro/src/animation/plasmaanimation.h \
 		../lib/PixelMaestro/src/animation/lightninganimation.h \
 		../lib/PixelMaestro/src/canvas/colorcanvas.h \
-		demo/colorcanvasdemo.h \
 		../lib/PixelMaestro/src/canvas/canvastype.h \
 		../lib/PixelMaestro/src/canvas/animationcanvas.h \
 		../lib/PixelMaestro/src/canvas/canvas.h \
-		demo/cuedemo.h \
 		../lib/PixelMaestro/src/cue/event.h \
 		../lib/PixelMaestro/src/cue/show.h \
 		../lib/PixelMaestro/src/cue/cuecontroller.h \

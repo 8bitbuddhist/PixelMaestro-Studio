@@ -891,22 +891,11 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <widget class="QMenu" name="menuOpen_Demo">
-     <property name="title">
-      <string>&amp;Demos</string>
-     </property>
-     <addaction name="action_Blink_Demo"/>
-     <addaction name="action_Canvas_Demo"/>
-     <addaction name="action_Color_Canvas_Demo"/>
-     <addaction name="actionCommand_Demo"/>
-     <addaction name="action_Show_Demo"/>
-    </widget>
     <addaction name="action_Open_Animation_Editor"/>
     <addaction name="actionOpen_Maestro"/>
     <addaction name="action_Save_Maestro"/>
     <addaction name="action_Close_Workspace"/>
     <addaction name="separator"/>
-    <addaction name="menuOpen_Demo"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
     <addaction name="separator"/>
@@ -945,21 +934,6 @@
     <string>&amp;Exit</string>
    </property>
   </action>
-  <action name="action_Canvas_Demo">
-   <property name="text">
-    <string>&amp;Canvas Demo</string>
-   </property>
-  </action>
-  <action name="action_Blink_Demo">
-   <property name="text">
-    <string>&amp;Blink Demo</string>
-   </property>
-  </action>
-  <action name="action_Show_Demo">
-   <property name="text">
-    <string>&amp;Show Demo</string>
-   </property>
-  </action>
   <action name="action_Open_Animation_Editor">
    <property name="text">
     <string>&amp;New</string>
@@ -968,16 +942,6 @@
   <action name="action_Close_Workspace">
    <property name="text">
     <string>&amp;Close</string>
-   </property>
-  </action>
-  <action name="action_Color_Canvas_Demo">
-   <property name="text">
-    <string>C&amp;olor Canvas Demo</string>
-   </property>
-  </action>
-  <action name="actionCommand_Demo">
-   <property name="text">
-    <string>C&amp;ue Demo</string>
    </property>
   </action>
   <action name="action_Preferences">

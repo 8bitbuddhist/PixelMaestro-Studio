@@ -205,7 +205,7 @@ namespace PixelMaestroStudio {
 			case AnimationType::Lightning:
 				{
 					LightningAnimation* la = static_cast<LightningAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance()));
+					write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_drift(), la->get_fork_chance()));
 				}
 				break;
 			case AnimationType::Plasma:
