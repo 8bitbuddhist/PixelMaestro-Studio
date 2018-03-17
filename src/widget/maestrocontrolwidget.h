@@ -65,8 +65,9 @@ namespace PixelMaestroStudio {
 			bool get_canvas_painting_enabled();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
+			void load_cuefile(QString filename);
 			void refresh_maestro_settings();
-			void run_cue(uint8_t* cue);
+			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_active_section(Section* section);
 			void set_canvas_origin(Point* coordinates);
 

@@ -305,7 +305,7 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->clear();
 
 		// Set Section/Layer
-		for (uint8_t section = 1; section <= maestro_controller_->get_maestro()->get_num_sections(); section++) {
+		for (uint8_t section = 0; section <= maestro_controller_->get_maestro()->get_num_sections(); section++) {
 			ui->sectionComboBox->addItem(QString("Section ") + QString::number(section));
 		}
 		ui->sectionComboBox->setCurrentIndex(0);
@@ -365,6 +365,25 @@ namespace PixelMaestroStudio {
 
 		ui->animationPaletteComboBox->blockSignals(false);
 		ui->canvasPaletteComboBox->blockSignals(false);
+	}
+
+	/**
+	 * Loads a Cuefile into the Maestro.
+	 * @param filename Path to the Cuefile.
+	 */
+	void MaestroControlWidget::load_cuefile(QString filename) {
+		QFile file(filename);
+
+		if (file.open(QFile::ReadOnly)) {
+			QByteArray bytes = file.readAll();
+			for (int i = 0; i < bytes.size(); i++) {
+				uint8_t byte = (uint8_t)bytes.at(i);
+				if (cue_controller_->read(byte)) {
+					run_cue(cue_controller_->get_buffer(), true);
+				}
+			}
+			file.close();
+		}
 	}
 
 	/**
@@ -947,7 +966,7 @@ namespace PixelMaestroStudio {
 
 			// If PaletteCanvas, add Palette to list
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				QString name = "Section " + QString::number(get_section_index() + 1) +
+				QString name = "Section " + QString::number(get_section_index()) +
 							   " Layer " + QString::number(get_layer_index()) +
 							   " Canvas";
 				palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size());
@@ -1304,23 +1323,22 @@ namespace PixelMaestroStudio {
 	/**
 	 * Forwards the specified Cue to the drawing area and/or serial device.
 	 * @param cue Cue to perform.
+	 * @param serial_only If true, don't run the Cue on the local Maestro.
 	 */
-	void MaestroControlWidget::run_cue(uint8_t *cue) {
-		// Only render to outputs if Show Edit mode isn't enabled
-		if (!show_mode_enabled_) {
-			cue_controller_->run(cue);
+	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
+		/*
+		 * Only run the Cue if Show mode isn't enabled, or if the Cue is a Show Cue
+		 */
+		if (!show_mode_enabled_ || cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::ShowCueHandler) {
+			if (!remote_only) {
+				cue_controller_->run(cue);
+			}
 
-			/*
-			 * Send to serial devices.
-			 * Certain actions (e.g. grid resizing) should be caught here and prevented from running.
-			 */
-			if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::SectionCueHandler &&
-				cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)SectionCueHandler::Action::SetDimensions)) {
-				for (int i = 0; i < serial_devices_.size(); i++) {
-					if (serial_devices_[i]->isOpen()) {
-						int size = cue_controller_->get_cue_size(cue);
-						serial_devices_[i]->write((const char*)cue, size);
-					}
+			// Send to serial devices.
+			for (int i = 0; i < serial_devices_.size(); i++) {
+				if (serial_devices_[i]->isOpen()) {
+					int size = cue_controller_->get_cue_size(cue);
+					serial_devices_[i]->write((const char*)cue, size);
 				}
 			}
 		}
@@ -1473,7 +1491,7 @@ namespace PixelMaestroStudio {
 			ui->animationPaletteComboBox->blockSignals(false);
 		}
 		else {
-			QString name = "Section " + QString::number(get_section_index() + 1) +
+			QString name = "Section " + QString::number(get_section_index()) +
 						   " Layer " + QString::number(get_layer_index()) +
 						   " Animation";
 			palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_size());
@@ -1516,7 +1534,7 @@ namespace PixelMaestroStudio {
 					ui->canvasPaletteComboBox->blockSignals(false);
 				}
 				else {
-					QString name = "Section " + QString::number(get_section_index() + 1) +
+					QString name = "Section " + QString::number(get_section_index()) +
 								   " Layer " + QString::number(get_layer_index()) +
 								   " Canvas";
 					palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size());

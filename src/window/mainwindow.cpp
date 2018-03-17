@@ -91,7 +91,7 @@ namespace PixelMaestroStudio {
 			// Read in the CueFile, then load the Animation Editor
 			initialize_widgets();
 			on_action_Open_Animation_Editor_triggered(true);
-			maestro_controller_->load_cuefile(filename);
+			maestro_control_widget_->load_cuefile(filename);
 
 			// Refresh the Animation Editor
 			maestro_control_widget_->refresh_maestro_settings();

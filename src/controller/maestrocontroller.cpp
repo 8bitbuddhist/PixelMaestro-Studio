@@ -96,23 +96,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Loads a Cuefile into the Maestro.
-	 * @param filename The name and path of the Cuefile.
-	 */
-	void MaestroController::load_cuefile(QString filename) {
-		QFile file(filename);
-
-		if (file.open(QFile::ReadOnly)) {
-			QByteArray bytes = file.readAll();
-			for (int i = 0; i < bytes.size(); i++) {
-				uint8_t byte = (uint8_t)bytes.at(i);
-				maestro_->get_cue_controller()->read(byte);
-			}
-			file.close();
-		}
-	}
-
-	/**
 	 * Removes a DrawingArea from the controller's render list. Automatically called in the DrawingArea's destructor.
 	 * @param drawing_area DrawingArea to remove.
 	 */

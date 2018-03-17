@@ -19,7 +19,6 @@ namespace PixelMaestroStudio {
 			CueInterpreter();
 
 			// Map enums to QStrings
-			// Handlers
 			static const QStringList Handlers;
 			static const QStringList AnimationActions;
 			static const QStringList CanvasActions;
@@ -31,6 +30,7 @@ namespace PixelMaestroStudio {
 			static const QStringList AnimationOrientations;
 			static const QStringList CanvasTypes;
 			static const QStringList ColorMixModes;
+			static const QString Delimiter;
 
 			static QString interpret_cue(uint8_t* cue);
 
