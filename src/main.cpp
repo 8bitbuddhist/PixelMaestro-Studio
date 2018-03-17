@@ -6,8 +6,8 @@
 
 int main(int argc, char* argv[]) {
 	// Set application parameters for QSettings
-	QCoreApplication::setOrganizationName("pixelmaestro");
-	QCoreApplication::setApplicationName("pixelmaestro");
+	QCoreApplication::setOrganizationName("PixelMaestro");
+	QCoreApplication::setApplicationName("PixelMaestro Studio");
 
 	QApplication app(argc, argv);
 	PixelMaestroStudio::MainWindow w;

@@ -49,33 +49,30 @@ namespace PixelMaestroStudio {
 
 		QSettings settings;
 
+		// Open separate window if necessary
+		if (settings.value(PreferencesDialog::separate_window_option, false).toBool() == true) {
+			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
+			drawing_area_dialog_.get()->show();
+		}
+
 		// Open serial connections to output devices
-		int serial_count = settings.beginReadArray(PreferencesDialog::output_devices);
+		int serial_count = settings.beginReadArray(PreferencesDialog::serial_ports);
 		for (int device = 0; device < serial_count; device++) {
 			settings.setArrayIndex(device);
-			if (settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
-				// Detect and initialize the simulated serial device
-				if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::detached_window_option, Qt::CaseInsensitive) == 0) {
-					drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
-					drawing_area_dialog_.get()->show();
-				}
-				// Detect serial/USB devices
-				else {
-					// Initialize the serial device
-					QSharedPointer<QSerialPort> serial_device(new QSerialPort());
-					serial_device->setPortName(settings.value(PreferencesDialog::output_name).toString());
-					serial_device->setBaudRate(9600);
 
-					// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-					serial_device->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-					serial_device->setParity(QSerialPort::Parity::NoParity);
-					serial_device->setDataBits(QSerialPort::DataBits::Data8);
-					serial_device->setStopBits(QSerialPort::StopBits::OneStop);
+			// Initialize the serial device
+			QSharedPointer<QSerialPort> serial_device(new QSerialPort());
+			serial_device->setPortName(settings.value(PreferencesDialog::serial_port).toString());
+			serial_device->setBaudRate(9600);
 
-					if (serial_device->open(QIODevice::WriteOnly)) {
-						serial_devices_.push_back(serial_device);
-					}
-				}
+			// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
+			serial_device->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+			serial_device->setParity(QSerialPort::Parity::NoParity);
+			serial_device->setDataBits(QSerialPort::DataBits::Data8);
+			serial_device->setStopBits(QSerialPort::StopBits::OneStop);
+
+			if (serial_device->open(QIODevice::WriteOnly)) {
+				serial_devices_.push_back(serial_device);
 			}
 		}
 		settings.endArray();

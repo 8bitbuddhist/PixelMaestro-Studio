@@ -14,24 +14,30 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
+			static QString separate_window_option;
+			static QString main_window_option;
 			static QString num_sections;
+			static QString output_enabled;
 			static QString pause_on_start;
 			static QString pixel_padding;
 			static QString pixel_shape;
-			static QString output_devices;
-			static QString output_enabled;
-			static QString output_name;
 			static QString refresh_rate;
-			static QString main_window_option;
-			static QString serial_enabled;
 			static QString serial_port;
-			static QString detached_window_option;
+			static QString serial_ports;
 
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();
 
 		private slots:
 			void on_buttonBox_accepted();
+
+			void on_addSerialDevicePushButton_clicked();
+
+			void on_removeSerialDevicePushButton_clicked();
+
+			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
+
+			void on_serialOutputListWidget_currentRowChanged(int currentRow);
 
 		private:
 			QSettings settings_;

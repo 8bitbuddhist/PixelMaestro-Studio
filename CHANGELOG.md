@@ -21,6 +21,7 @@ WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefi
 - Enabled changing the grid size while a Layer is active.
 - Enabled changing per-axis offset values while scrolling is disabled on that axis.
 - Merged Lightning animation's two separate drift controls into a single control.
+- Changed Preferences dialog layout.
 	
 ### Removed
 - Removed the Merge animation. Use `WaveAnimation::set_mirror(true)` to recreate the merge effect.

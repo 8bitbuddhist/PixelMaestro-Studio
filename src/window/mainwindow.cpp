@@ -59,16 +59,11 @@ namespace PixelMaestroStudio {
 			initialize_widgets();
 		}
 
-		// If the main DrawingArea is enabled as an output device, display it
+		// If the Main DrawingArea is enabled as an output device, display it
 		QSettings settings;
-		int serial_count = settings.beginReadArray(PreferencesDialog::output_devices);
-		for (int device = 0; device < serial_count; device++) {
-			settings.setArrayIndex(device);
-			if (settings.value(PreferencesDialog::output_name).toString().compare(PreferencesDialog::main_window_option, Qt::CaseInsensitive) == 0 &&
-				settings.value(PreferencesDialog::output_enabled).toInt() > 0) {
-				maestro_drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
-				main_layout_->addWidget(maestro_drawing_area_);
-			}
+		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
+			maestro_drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
+			main_layout_->addWidget(maestro_drawing_area_);
 		}
 
 		maestro_controller_->start();
