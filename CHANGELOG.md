@@ -3,6 +3,13 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.20.1] - 2018-03-20
+
+### Changed
+- Fixed an issue where an extra non-existent Section was listed in the Animation Editor dropdown.
+- Fixed active Section identification and highlighting.
+- Fixed mirror checkbox not being checked when switching to a Section with an active Wave animation.
+
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.
 

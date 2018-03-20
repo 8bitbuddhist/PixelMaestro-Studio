@@ -201,17 +201,7 @@ namespace PixelMaestroStudio {
 	 * @return Layer index.
 	 */
 	uint8_t MaestroControlWidget::get_layer_index() {
-		/*
-		 * Find the depth of the current Section by traversing parent_section_.
-		 * Once parent_section == nullptr, we know we've hit the base Section.
-		 */
-		uint8_t level = 0;
-		Section* target_section = active_section_;
-		while (target_section->get_parent_section() != nullptr) {
-			target_section = target_section->get_parent_section();
-			level++;
-		}
-		return level;
+		return get_layer_index(active_section_);
 	}
 
 	/**
@@ -220,6 +210,10 @@ namespace PixelMaestroStudio {
 	 * @return Layer index.
 	 */
 	uint8_t MaestroControlWidget::get_layer_index(Section* section) {
+		/*
+		 * Find the depth of the current Section by traversing parent_section_.
+		 * Once parent_section == nullptr, we know we've hit the base Section.
+		 */
 		uint8_t level = 0;
 		Section* test_section = section;
 		while (test_section->get_parent_section() != nullptr) {
@@ -235,28 +229,7 @@ namespace PixelMaestroStudio {
 	 * @return Section index.
 	 */
 	uint8_t MaestroControlWidget::get_section_index(Section* section) {
-		uint8_t index = 0;
-		Section* test_section = section;
-		Section* target_section = maestro_controller_->get_maestro()->get_section(0);
-		while (index < maestro_controller_->get_maestro()->get_num_sections() && target_section != test_section) {
-			index++;
-			target_section = maestro_controller_->get_maestro()->get_section(index);
-		}
-
-		if (index < maestro_controller_->get_maestro()->get_num_sections()) {
-			return index;
-		}
-		else {
-			return 0;
-		}
-	}
-
-	/**
-	 * Returns the index of the current Section.
-	 * @return Current Section index (or -1 if not found).
-	 */
-	uint8_t MaestroControlWidget::get_section_index() {
-		Section* target_section = active_section_;
+		Section* target_section = section;
 
 		// If this is an Layer, iterate until we find the parent ID
 		while (target_section->get_parent_section() != nullptr) {
@@ -272,6 +245,14 @@ namespace PixelMaestroStudio {
 		}
 
 		return index;
+	}
+
+	/**
+	 * Returns the index of the current Section.
+	 * @return Current Section index (or 0 if not found).
+	 */
+	uint8_t MaestroControlWidget::get_section_index() {
+		return get_section_index(active_section_);
 	}
 
 	/**
@@ -305,7 +286,7 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->clear();
 
 		// Set Section/Layer
-		for (uint8_t section = 0; section <= maestro_controller_->get_maestro()->get_num_sections(); section++) {
+		for (uint8_t section = 0; section < maestro_controller_->get_maestro()->get_num_sections(); section++) {
 			ui->sectionComboBox->addItem(QString("Section ") + QString::number(section));
 		}
 		ui->sectionComboBox->setCurrentIndex(0);

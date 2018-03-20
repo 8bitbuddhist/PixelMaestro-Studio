@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Changes the active Section, which highlights the appropriate SectionDrawingArea.
-	 * @param section Active SEction.
+	 * @param section Active Section.
 	 */
 	void MaestroDrawingArea::frame_active_section(Section *section) {
 		active_section_ = section;
@@ -57,10 +57,11 @@ namespace PixelMaestroStudio {
 		if (maestro_control_widget_ == nullptr) return;
 
 		int section_id = maestro_control_widget_->get_section_index(section);
-		int layer_id = maestro_control_widget_->get_layer_index(section);
 
 		for (uint8_t i = 0; i < section_drawing_areas_.size(); i++) {
 			if (i == section_id) {
+				int layer_id = maestro_control_widget_->get_layer_index(section);
+
 				if (layer_id > 0) {
 					section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Layer);
 				}

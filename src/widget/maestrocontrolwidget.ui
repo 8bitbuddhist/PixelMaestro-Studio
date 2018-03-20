@@ -1238,7 +1238,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-21</y>
+            <y>0</y>
             <width>693</width>
             <height>473</height>
            </rect>
@@ -1515,7 +1515,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Event List</string>
+                 <string>Show Queue</string>
                 </property>
                </widget>
               </item>
