@@ -1,6 +1,7 @@
 #include "window/mainwindow.h"
 #include <QApplication>
 #include <QFormLayout>
+#include <QMessageBox>
 #include <QStyleFactory>
 #include <QVBoxLayout>
 
@@ -42,5 +43,12 @@ int main(int argc, char* argv[]) {
 	app.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
 
 	w.show();
-	return app.exec();
+
+	try {
+		return app.exec();
+	}
+	catch (std::exception& ex) {
+		QMessageBox::critical(&w, QString("Unhandled Exception"), QString("A critical error has occurred, causing the application to close unexpectedly: ") + QString::fromLatin1(ex.what()));
+		return 1;
+	}
 }

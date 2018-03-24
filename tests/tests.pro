@@ -69,7 +69,9 @@ SOURCES += \
 	../lib/PixelMaestro/tests/tests/pixeltest.cpp \
 	../lib/PixelMaestro/tests/tests/sectiontest.cpp \
 	../lib/PixelMaestro/tests/tests/showtest.cpp \
-	../lib/PixelMaestro/tests/tests/utilitytest.cpp
+	../lib/PixelMaestro/tests/tests/utilitytest.cpp \
+    ../lib/PixelMaestro/tests/tests/timertest.cpp \
+    ../lib/PixelMaestro/tests/tests/animationtimertest.cpp
 
 HEADERS += \
 		.../lib/PixelMaestro/src/canvas/fonts/font.h \

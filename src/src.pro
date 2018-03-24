@@ -11,7 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.20.1\\\"
+DEFINES += BUILD_VERSION=\\\"v0.20.2\\\"
 
 SOURCES += main.cpp\
 		drawingarea/maestrodrawingarea.cpp \
@@ -68,7 +68,8 @@ SOURCES += main.cpp\
 		widget/animation/waveanimationcontrolwidget.cpp \
 		drawingarea/sectiondrawingarea.cpp \
 		dialog/maestrodrawingareadialog.cpp \
-		../lib/PixelMaestro/src/core/palette.cpp
+		../lib/PixelMaestro/src/core/palette.cpp \
+    widget/devicecontrolwidget.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -128,7 +129,8 @@ HEADERS += \
 		widget/animation/waveanimationcontrolwidget.h \
 		drawingarea/sectiondrawingarea.h \
 		dialog/maestrodrawingareadialog.h \
-		../lib/PixelMaestro/src/core/palette.h
+		../lib/PixelMaestro/src/core/palette.h \
+    widget/devicecontrolwidget.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
@@ -140,7 +142,8 @@ FORMS	+= window/mainwindow.ui \
 		dialog/preferencesdialog.ui \
 		widget/animation/fireanimationcontrolwidget.ui \
 		widget/animation/waveanimationcontrolwidget.ui \
-		dialog/maestrodrawingareadialog.ui
+		dialog/maestrodrawingareadialog.ui \
+    widget/devicecontrolwidget.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

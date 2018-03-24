@@ -55,27 +55,9 @@ namespace PixelMaestroStudio {
 			drawing_area_dialog_.get()->show();
 		}
 
-		// Open serial connections to output devices
-		int serial_count = settings.beginReadArray(PreferencesDialog::serial_ports);
-		for (int device = 0; device < serial_count; device++) {
-			settings.setArrayIndex(device);
-
-			// Initialize the serial device
-			QSharedPointer<QSerialPort> serial_device(new QSerialPort());
-			serial_device->setPortName(settings.value(PreferencesDialog::serial_port).toString());
-			serial_device->setBaudRate(9600);
-
-			// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-			serial_device->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-			serial_device->setParity(QSerialPort::Parity::NoParity);
-			serial_device->setDataBits(QSerialPort::DataBits::Data8);
-			serial_device->setStopBits(QSerialPort::StopBits::OneStop);
-
-			if (serial_device->open(QIODevice::WriteOnly)) {
-				serial_devices_.push_back(serial_device);
-			}
-		}
-		settings.endArray();
+		// Add Device control widget
+		device_extra_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
+		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_extra_control_widget_.data());
 
 		// Set the Maestro's Sections
 		maestro_controller_->set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
@@ -221,6 +203,14 @@ namespace PixelMaestroStudio {
 			level++;
 		}
 		return level;
+	}
+
+	/**
+	 * Returns the control widget's MaestroController.
+	 * @return MaestroController.
+	 */
+	MaestroController* MaestroControlWidget::get_maestro_controller() {
+		return maestro_controller_;
 	}
 
 	/**
@@ -1315,12 +1305,9 @@ namespace PixelMaestroStudio {
 				cue_controller_->run(cue);
 			}
 
-			// Send to serial devices.
-			for (int i = 0; i < serial_devices_.size(); i++) {
-				if (serial_devices_[i]->isOpen()) {
-					int size = cue_controller_->get_cue_size(cue);
-					serial_devices_[i]->write((const char*)cue, size);
-				}
+			// Send to serial device controller.
+			if (device_extra_control_widget_ != nullptr) {
+				device_extra_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
 		}
 

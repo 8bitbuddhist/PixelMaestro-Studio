@@ -168,59 +168,67 @@ namespace PixelMaestroStudio {
 
 		// Animation & Colors
 		Animation* animation = section->get_animation();
-		write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
+		if (animation != nullptr) {
+			write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
 
-		AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler);
-		write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
-		write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
-		write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
-		write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
-		write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_delay()));
+			AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler);
+			if (animation->get_palette() != nullptr) {
+				write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
+			}
+			write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
+			write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
+			write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
 
-		// Save Animation-specific settings
-		switch(animation->get_type()) {
-			case AnimationType::Fire:
-				{
-					FireAnimation* fa = static_cast<FireAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier()));
-				}
-				break;
-			case AnimationType::Lightning:
-				{
-					LightningAnimation* la = static_cast<LightningAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_drift(), la->get_fork_chance()));
-				}
-				break;
-			case AnimationType::Plasma:
-				{
-					PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
-				}
-				break;
-			case AnimationType::Radial:
-				{
-					RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
-				}
-				break;
-			case AnimationType::Sparkle:
-				{
-					SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
-				}
-				break;
-			case AnimationType::Wave:
-				{
-					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
-					write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_mirror(), wa->get_skew()));
-				}
-			default:
-				break;
+			if (animation->get_timer() != nullptr) {
+				write_cue_to_stream(datastream, animation_handler->set_timer(section_id, layer_id, animation->get_timer()->get_interval(), animation->get_timer()->get_delay()));
+			}
+
+			// Save Animation-specific settings
+			switch(animation->get_type()) {
+				case AnimationType::Fire:
+					{
+						FireAnimation* fa = static_cast<FireAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier()));
+					}
+					break;
+				case AnimationType::Lightning:
+					{
+						LightningAnimation* la = static_cast<LightningAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_drift(), la->get_fork_chance()));
+					}
+					break;
+				case AnimationType::Plasma:
+					{
+						PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
+					}
+					break;
+				case AnimationType::Radial:
+					{
+						RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
+					}
+					break;
+				case AnimationType::Sparkle:
+					{
+						SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
+					}
+					break;
+				case AnimationType::Wave:
+					{
+						WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
+						write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_mirror(), wa->get_skew()));
+					}
+				default:
+					break;
+			}
 		}
 
 		// Scrolling and offset
 		write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
 		if (section->get_scroll()) {
+			// FIXME: What about timer_x and timer_y?
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->step_x, section->get_scroll()->step_y));
 		}
 

@@ -26,6 +26,7 @@
 #include "cue/sectioncuehandler.h"
 #include "cue/showcuehandler.h"
 #include "dialog/maestrodrawingareadialog.h"
+#include "widget/devicecontrolwidget.h"
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -34,9 +35,10 @@ namespace Ui {
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
+	class DeviceControlWidget;
 	class MaestroController;
-	class ShowController;
 	class MaestroDrawingAreaDialog;
+	class ShowController;
 	class MaestroControlWidget : public QWidget {
 		Q_OBJECT
 
@@ -63,6 +65,7 @@ namespace PixelMaestroStudio {
 			uint8_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
 			bool get_canvas_painting_enabled();
+			MaestroController* get_maestro_controller();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
 			void load_cuefile(QString filename);
@@ -94,6 +97,9 @@ namespace PixelMaestroStudio {
 
 			/// Separate Maestro DrawingArea
 			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
+
+			/// Extra serial device controls
+			QSharedPointer<DeviceControlWidget> device_extra_control_widget_;
 
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
