@@ -31,14 +31,6 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_buttonBox_accepted();
 
-			void on_addSerialDevicePushButton_clicked();
-
-			void on_removeSerialDevicePushButton_clicked();
-
-			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
-
-			void on_serialOutputListWidget_currentRowChanged(int currentRow);
-
 		private:
 			QSettings settings_;
 			Ui::PreferencesDialog *ui;

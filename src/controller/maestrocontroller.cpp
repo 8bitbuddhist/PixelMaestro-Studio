@@ -127,6 +127,7 @@ namespace PixelMaestroStudio {
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream) {
 		// Timer
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
+
 		write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 
 		// Show
@@ -226,9 +227,11 @@ namespace PixelMaestroStudio {
 		}
 
 		// Scrolling and offset
-		write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
-		if (section->get_scroll()) {
-			// FIXME: This is the scroll, not the actual interval. You can only get the interval by reversing the step or timer calculations.
+		if (section->get_offset() != nullptr) {
+			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
+		}
+		if (section->get_scroll() != nullptr) {
+			// FIXME: This is the scroll step, not the actual interval. You can only get the interval by reversing the step or timer calculations.
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->step_x, section->get_scroll()->step_y));
 		}
 

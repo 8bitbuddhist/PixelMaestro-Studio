@@ -55,7 +55,6 @@ namespace PixelMaestroStudio {
 			drawing_area_dialog_.get()->show();
 		}
 
-		// Add Device control widget
 		device_extra_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
 		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_extra_control_widget_.data());
 

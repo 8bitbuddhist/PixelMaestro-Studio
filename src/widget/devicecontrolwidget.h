@@ -42,6 +42,7 @@ namespace PixelMaestroStudio {
 			bool connect_to_serial_device(QString port_name);
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();
+			void save_device_list();
 			void write_to_devices(const char* out, int size);
 	};
 }

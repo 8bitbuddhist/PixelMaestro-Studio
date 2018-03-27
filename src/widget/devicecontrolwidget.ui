@@ -59,6 +59,20 @@
       <string>Upload Settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
+      <item row="2" column="1">
+       <widget class="QPushButton" name="sendPushButton">
+        <property name="text">
+         <string>Upload Cuefile</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="interpretCuePushButton">
+        <property name="text">
+         <string>Show Cuefile</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -73,17 +87,13 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="sendPushButton">
-        <property name="text">
-         <string>Send to Device</string>
+      <item row="3" column="1">
+       <widget class="QProgressBar" name="uploadProgressBar">
+        <property name="value">
+         <number>0</number>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="interpretCuePushButton">
-        <property name="text">
-         <string>Show Cuefile</string>
+        <property name="invertedAppearance">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
