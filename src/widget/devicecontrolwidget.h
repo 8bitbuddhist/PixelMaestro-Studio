@@ -23,11 +23,11 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_addSerialDevicePushButton_clicked();
+			void on_interpretCuePushButton_clicked();
 			void on_removeSerialDevicePushButton_clicked();
+			void on_sendPushButton_clicked();
 			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
 			void on_serialOutputListWidget_currentRowChanged(int currentRow);
-
-			void on_sendPushButton_clicked();
 
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -40,7 +40,9 @@ namespace PixelMaestroStudio {
 			QVector<QSharedPointer<QSerialPort>> serial_devices_;
 
 			bool connect_to_serial_device(QString port_name);
-			bool disconnect_serial_device(QString port_name);
+			void disconnect_serial_device(int index);
+			void populate_serial_devices();
+			void write_to_devices(const char* out, int size);
 	};
 }
 

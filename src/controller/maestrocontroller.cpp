@@ -36,11 +36,11 @@ namespace PixelMaestroStudio {
 
 		// Enable the Maestro's CueController
 		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
-		controller->enable_handler(CueController::Handler::AnimationCueHandler);
-		controller->enable_handler(CueController::Handler::CanvasCueHandler);
-		controller->enable_handler(CueController::Handler::MaestroCueHandler);
-		controller->enable_handler(CueController::Handler::SectionCueHandler);
-		controller->enable_handler(CueController::Handler::ShowCueHandler);
+		controller->enable_animation_cue_handler();
+		controller->enable_canvas_cue_handler();
+		controller->enable_maestro_cue_handler();
+		controller->enable_section_cue_handler();
+		controller->enable_show_cue_handler();
 
 		// Initialize timers
 		timer_.setTimerType(Qt::PreciseTimer);
@@ -228,7 +228,7 @@ namespace PixelMaestroStudio {
 		// Scrolling and offset
 		write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
 		if (section->get_scroll()) {
-			// FIXME: What about timer_x and timer_y?
+			// FIXME: This is the scroll, not the actual interval. You can only get the interval by reversing the step or timer calculations.
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->step_x, section->get_scroll()->step_y));
 		}
 

@@ -1,7 +1,11 @@
+#include <chrono>
+#include <exception>
 #include <QList>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QSettings>
+#include <thread>
+#include "dialog/cueinterpreterdialog.h"
 #include "dialog/preferencesdialog.h"
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
@@ -11,13 +15,8 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		this->maestro_control_widget_ = maestro_control_widget;
 
-		ui->sendPushButton->setEnabled(false);
-
 		// Add available serial devices to combo box
-		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-		for (QSerialPortInfo port : ports) {
-			ui->serialOutputComboBox->addItem(port.systemLocation());
-		}
+		populate_serial_devices();
 
 		// Add saved serial devices to output selection box.
 		QSettings settings;
@@ -56,15 +55,10 @@ namespace PixelMaestroStudio {
 		}
 	}
 
-	bool DeviceControlWidget::disconnect_serial_device(QString port_name) {
-		// Search through each connected device until we find our target device
-		for (QSharedPointer<QSerialPort> device : serial_devices_) {
-			if (device->portName() == port_name) {
-				return serial_devices_.removeAll(device);
-			}
-		}
-
-		return false;
+	void DeviceControlWidget::disconnect_serial_device(int index) {
+		serial_devices_[index]->flush();
+		serial_devices_[index]->close();
+		serial_devices_.remove(index);
 	}
 
 	void DeviceControlWidget::on_addSerialDevicePushButton_clicked() {
@@ -75,18 +69,62 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	void DeviceControlWidget::on_interpretCuePushButton_clicked() {
+		CueInterpreterDialog dialog(this, (uint8_t*)maestro_cue_.data(), maestro_cue_.size());
+		dialog.exec();
+	}
+
 	void DeviceControlWidget::on_removeSerialDevicePushButton_clicked() {
 		if (ui->serialOutputListWidget->selectedItems().count() > 0) {
-			ui->serialOutputListWidget->takeItem(ui->serialOutputListWidget->currentRow());
+			int device_index = ui->serialOutputListWidget->currentRow();
+			disconnect_serial_device(device_index);
+			ui->serialOutputListWidget->takeItem(device_index);
 		}
 	}
 
+	/**
+	 * Transmits the Maestro's Cuefile to the selected device.
+	 */
 	void DeviceControlWidget::on_sendPushButton_clicked() {
-		QByteArray out = QByteArray("PMCEEP", 6);
-		out += maestro_cue_ + QByteArray("EEPEND", 6);
-		for (QSharedPointer<QSerialPort> device : serial_devices_) {
-			device->write((const char*)out, out.size());
+		/*
+		 * This whole method sucks, but here's the deal:
+		 *
+		 * When sending a Cuefile to an Arduino, PixelMaestro Studio sends data way too fast, even with a low baud rate.
+		 * The Arduino's serial buffer overflows and it starts dropping Cues. The reason it worked before is probably because we were sending individual Cues and not entire Cuefiles.
+		 * Basically, the Cuefile gets trimmed and the entire thing fails.
+		 * As a workaround, we break up the Cuefile into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
+		 *
+		 * The final message looks like this:
+		 *	1) "ROMBEG", which signals the Arduino to start writing to EEPROM.
+		 *	2) The Cuefile itself. The entire file gets written to Serial.
+		 *	3) "ROMEND", which signals the Arduino to stop writing to EEPROM.
+		 *
+		 * Resources:
+		 * http://forum.arduino.cc/index.php?topic=124158.15
+		 * https://forum.arduino.cc/index.php?topic=234151.0
+		 *
+		 */
+
+		// TODO: Move to separate thread
+
+		// Send start flag
+		QByteArray out = QByteArray("ROMBEG", 6);
+		write_to_devices((const char*)out, out.size());
+
+		// Send Cuefile broken up into 64-bit chunks
+		int index = 0;
+		std::chrono::milliseconds sleep_period(250);	// Wait 250 milliseconds between chunks
+		do {
+			out = maestro_cue_.mid(index, 64);
+			write_to_devices((const char*)out, out.size());
+			index += 64;
+			std::this_thread::sleep_for(sleep_period);
 		}
+		while (index < maestro_cue_.size());
+
+		// Send stop flag
+		out = QByteArray("ROMEND", 6);
+		write_to_devices((const char*)out, out.size());
 	}
 
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
@@ -98,10 +136,16 @@ namespace PixelMaestroStudio {
 		ui->sendPushButton->setEnabled(currentRow > -1);
 	}
 
-	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
-		for (QSharedPointer<QSerialPort> device : serial_devices_) {
-			device->write((const char*)cue, size);
+	/// Displays all available serial devices in the serial output combobox.
+	void DeviceControlWidget::populate_serial_devices() {
+		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+		for (QSerialPortInfo port : ports) {
+			ui->serialOutputComboBox->addItem(port.systemLocation());
 		}
+	}
+
+	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
+		write_to_devices((const char*)cue, size);
 
 		// Calculate and display the size of the current Maestro configuration
 		QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
@@ -109,9 +153,16 @@ namespace PixelMaestroStudio {
 		ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 	}
 
-	DeviceControlWidget::~DeviceControlWidget() {
+	void DeviceControlWidget::write_to_devices(const char *out, int size) {
 		for (QSharedPointer<QSerialPort> device : serial_devices_) {
-			disconnect_serial_device(device->portName());
+			device->write(out, size);
+			device->flush();
+		}
+	}
+
+	DeviceControlWidget::~DeviceControlWidget() {
+		for (int i = 0; i < serial_devices_.size(); i++) {
+			disconnect_serial_device(i);
 		}
 		delete ui;
 	}
