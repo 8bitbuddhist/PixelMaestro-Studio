@@ -345,6 +345,7 @@ namespace PixelMaestroStudio {
 		QFile file(filename);
 
 		if (file.open(QFile::ReadOnly)) {
+			this->loading_cue_ = true;
 			QByteArray bytes = file.readAll();
 			for (int i = 0; i < bytes.size(); i++) {
 				uint8_t byte = (uint8_t)bytes.at(i);
@@ -353,6 +354,7 @@ namespace PixelMaestroStudio {
 				}
 			}
 			file.close();
+			this->loading_cue_ = false;
 		}
 	}
 

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Palette Editor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
@@ -136,6 +136,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>numColorsSpinBox</tabstop>
+  <tabstop>typeComboBox</tabstop>
+  <tabstop>baseColorButton</tabstop>
+  <tabstop>targetColorButton</tabstop>
+  <tabstop>reverseCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

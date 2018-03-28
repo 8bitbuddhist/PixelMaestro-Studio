@@ -5,7 +5,13 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.20.1] - 2018-03-20
 
+### Added
+- Added Device tab to Animation Editor for controlling USB devices.
+- Added ability to edit existing Palettes.
+
 ### Changed
+- Moved USB device settings from Preferences dialog to Animation Editor.
+- Fixed MaestroController not properly saving Section scroll settings.
 - Fixed an issue where an extra non-existent Section was listed in the Animation Editor dropdown.
 - Fixed active Section identification and highlighting.
 - Fixed mirror checkbox not being checked when switching to a Section with an active Wave animation.

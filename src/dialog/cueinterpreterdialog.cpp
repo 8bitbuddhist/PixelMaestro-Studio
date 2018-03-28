@@ -7,11 +7,12 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		this->cuefile_ = cuefile;
 
+		// Manually initializing Sections because doing it dynamically results in a segfault (somehow)
 		Section sections[] = {
-			Section(10, 10)
+			Section(1, 1)
 		};
 		Maestro maestro = Maestro(sections, 1);
-		CueController* controller = maestro.set_cue_controller();
+		CueController* controller = maestro.set_cue_controller(UINT16_MAX);
 		controller->enable_animation_cue_handler();
 		controller->enable_canvas_cue_handler();
 		controller->enable_maestro_cue_handler();

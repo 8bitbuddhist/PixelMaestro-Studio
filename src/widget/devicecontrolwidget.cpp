@@ -10,6 +10,7 @@
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
 
+// TODO: Allow toggling sending commands over USB in real-time
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
@@ -190,10 +191,12 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
 		write_to_devices((const char*)cue, size);
 
-		// Calculate and display the size of the current Maestro configuration
-		QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
-		maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
-		ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+		if (!maestro_control_widget_->loading_cue_) {
+			// Calculate and display the size of the current Maestro configuration
+			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
+			maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
+			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+		}
 	}
 
 	/**
