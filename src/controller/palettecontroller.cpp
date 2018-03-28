@@ -12,10 +12,12 @@ namespace PixelMaestroStudio {
 	 * @param name Palette name.
 	 * @param colors Colors in the palette.
 	 * @param num_colors Number of colors in the palette.
+	 * @param type The type of Palette.
+	 * @param mirror Whether to mirror the palette.
 	 * @return New palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors) {
-		palettes_.push_back(PaletteWrapper(name, colors, num_colors));
+	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, Colors::RGB base_color, Colors::RGB target_color, bool mirror) {
+		palettes_.push_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
 		return &palettes_[palettes_.size() - 1];
 	}
 
@@ -76,12 +78,12 @@ namespace PixelMaestroStudio {
 		palettes_.clear();
 
 		Colors::generate_scaling_color_array(colors, &ColorPresets::Red, &ColorPresets::Yellow, num_colors, true);
-		palettes_.push_back(PaletteWrapper("Fire", colors, num_colors));
+		palettes_.push_back(PaletteWrapper("Fire", colors, num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true));
 
 		Colors::generate_scaling_color_array(colors, &ColorPresets::Blue, &ColorPresets::Green, num_colors, true);
-		palettes_.push_back(PaletteWrapper("Deep Sea", colors, num_colors));
+		palettes_.push_back(PaletteWrapper("Deep Sea", colors, num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true));
 
-		palettes_.push_back(PaletteWrapper("Color Wheel", ColorPresets::Colorwheel, 12));
+		palettes_.push_back(PaletteWrapper("Color Wheel", ColorPresets::Colorwheel, 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false));
 	}
 
 	/**

@@ -70,7 +70,8 @@ SOURCES += main.cpp\
 		dialog/maestrodrawingareadialog.cpp \
 		../lib/PixelMaestro/src/core/palette.cpp \
     widget/devicecontrolwidget.cpp \
-    dialog/cueinterpreterdialog.cpp
+    dialog/cueinterpreterdialog.cpp \
+    dialog/paletteeditdialog.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -132,7 +133,8 @@ HEADERS += \
 		dialog/maestrodrawingareadialog.h \
 		../lib/PixelMaestro/src/core/palette.h \
     widget/devicecontrolwidget.h \
-    dialog/cueinterpreterdialog.h
+    dialog/cueinterpreterdialog.h \
+    dialog/paletteeditdialog.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
@@ -146,7 +148,8 @@ FORMS	+= window/mainwindow.ui \
 		widget/animation/waveanimationcontrolwidget.ui \
 		dialog/maestrodrawingareadialog.ui \
     widget/devicecontrolwidget.ui \
-    dialog/cueinterpreterdialog.ui
+    dialog/cueinterpreterdialog.ui \
+    dialog/paletteeditdialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

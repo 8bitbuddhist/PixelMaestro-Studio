@@ -939,7 +939,7 @@ namespace PixelMaestroStudio {
 				QString name = "Section " + QString::number(get_section_index()) +
 							   " Layer " + QString::number(get_layer_index()) +
 							   " Canvas";
-				palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size());
+				palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 				ui->canvasPaletteComboBox->blockSignals(true);
 				ui->canvasPaletteComboBox->addItem(name);
 				ui->canvasPaletteComboBox->blockSignals(false);
@@ -1461,7 +1461,7 @@ namespace PixelMaestroStudio {
 			QString name = "Section " + QString::number(get_section_index()) +
 						   " Layer " + QString::number(get_layer_index()) +
 						   " Animation";
-			palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_size());
+			palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_size(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->animationPaletteComboBox->blockSignals(true);
 			ui->animationPaletteComboBox->addItem(name);
 			ui->animationPaletteComboBox->setCurrentText(name);
@@ -1504,7 +1504,7 @@ namespace PixelMaestroStudio {
 					QString name = "Section " + QString::number(get_section_index()) +
 								   " Layer " + QString::number(get_layer_index()) +
 								   " Canvas";
-					palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size());
+					palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_size(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 					ui->canvasPaletteComboBox->blockSignals(true);
 					ui->canvasPaletteComboBox->addItem(name);
 					ui->canvasPaletteComboBox->setCurrentText(name);
