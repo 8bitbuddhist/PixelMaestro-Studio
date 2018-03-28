@@ -6,6 +6,7 @@
 #include "palettecontrolwidget.h"
 #include "ui_palettecontrolwidget.h"
 
+// TODO: Add Palette Edit option
 namespace PixelMaestroStudio {
 	PaletteControlWidget::PaletteControlWidget(PaletteController* controller, QString initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget) {
 		this->palette_controller_ = controller;

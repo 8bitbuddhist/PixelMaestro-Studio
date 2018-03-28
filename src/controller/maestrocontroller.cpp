@@ -231,8 +231,7 @@ namespace PixelMaestroStudio {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
 		}
 		if (section->get_scroll() != nullptr) {
-			// FIXME: This is the scroll step, not the actual interval. You can only get the interval by reversing the step or timer calculations.
-			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->step_x, section->get_scroll()->step_y));
+			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y, section->get_scroll()->reverse_x, section->get_scroll()->reverse_y));
 		}
 
 		// Save Canvas settings
