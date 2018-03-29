@@ -1,3 +1,7 @@
+/*
+ * DeviceControlWidget - Widget for managing USB/serial devices.
+ */
+
 #include <chrono>
 #include <exception>
 #include <QList>
@@ -10,14 +14,14 @@
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
 
-// TODO: Allow toggling sending commands over USB in real-time
+// TODO: Allow users to specify which Section(s) gets sent to which device(s)
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
 		this->maestro_control_widget_ = maestro_control_widget;
 
-		// Disable Upload button by default
-		ui->sendPushButton->setEnabled(false);
+		// Disable device buttons by default
+		ui->deviceSettingsGroupBox->setEnabled(false);
 
 		// Add available serial devices to combo box
 		populate_serial_devices();
@@ -28,14 +32,18 @@ namespace PixelMaestroStudio {
 		int num_serial_devices = settings.beginReadArray(PreferencesDialog::serial_ports);
 		for (int device = 0; device < num_serial_devices; device++) {
 			settings.setArrayIndex(device);
-			QString device_name = settings.value(PreferencesDialog::serial_port).toString();
+			QString device_name = settings.value(PreferencesDialog::serial_port_name).toString();
+			bool real_time_refresh_enabled = settings.value(PreferencesDialog::serial_real_time_refresh).toBool();
+
+			// Create the device
+			serial_devices_.push_back(SerialDevice(device_name, real_time_refresh_enabled));
 
 			// If the saved port is an available port, connect to it
 			for (QSerialPortInfo port : ports) {
 				if (port.systemLocation() == device_name) {
 					QListWidgetItem* item = new QListWidgetItem(device_name);
 					ui->serialOutputListWidget->addItem(item);
-					connect_to_serial_device(device_name);
+					serial_devices_.last().connect();
 					break;
 				}
 			}
@@ -44,42 +52,22 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Opens a serial connection to the specified port.
-	 * @param port_name Port to connect to.
-	 * @return True if the connection was successful.
+	 * Compares the Cuefile size to the selected device's ROM capacity, and highlights the Cuesize textbox accordingly.
 	 */
-	bool DeviceControlWidget::connect_to_serial_device(QString port_name) {
-		/*
-		 * Initialize the serial device
-		 * These settings are currently only designed for Arduinos: https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-		 */
-		QSharedPointer<QSerialPort> serial_device(new QSerialPort());
-		serial_device->setPortName(port_name);
-		serial_device->setBaudRate(9600);
-
-		// Set comm settings
-		serial_device->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-		serial_device->setParity(QSerialPort::Parity::NoParity);
-		serial_device->setDataBits(QSerialPort::DataBits::Data8);
-		serial_device->setStopBits(QSerialPort::StopBits::OneStop);
-
-		if (serial_device->open(QIODevice::WriteOnly)) {
-			serial_devices_.push_back(serial_device);
-			return true;
+	void DeviceControlWidget::check_device_rom_capacity() {
+		if (ui->serialOutputListWidget->currentRow() > -1) {
+			int capacity = serial_devices_[ui->serialOutputListWidget->currentRow()].get_capacity();
+			int capacity_75 = capacity * 0.75;
+			if (this->maestro_cue_.size() >= capacity) {
+				ui->configSizeLineEdit->setStyleSheet("border: 1px solid red");
+			}
+			else if (this->maestro_cue_.size() >= capacity_75) {
+				ui->configSizeLineEdit->setStyleSheet("border: 1px solid orange");
+			}
+			else {
+				ui->configSizeLineEdit->setStyleSheet("border: 1px solid green");
+			}
 		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Closes the connection to the specified serial device.
-	 * @param index Index of the device in the list.
-	 */
-	void DeviceControlWidget::disconnect_serial_device(int index) {
-		serial_devices_[index]->flush();
-		serial_devices_[index]->close();
-		serial_devices_.remove(index);
 	}
 
 	/**
@@ -90,7 +78,9 @@ namespace PixelMaestroStudio {
 		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputComboBox->findText(ui->serialOutputComboBox->currentText()) >= 0) {
 			QString device_name = ui->serialOutputComboBox->currentText();
 			ui->serialOutputListWidget->addItem(device_name);
-			connect_to_serial_device(device_name);
+
+			serial_devices_.push_back(SerialDevice(device_name, ui->realTimeCheckBox->isChecked()));
+			serial_devices_.last().connect();
 
 			save_device_list();
 		}
@@ -105,13 +95,22 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Toggles real-time serial updates.
+	 * @param arg1 If checked, update the device in real-time.
+	 */
+	void DeviceControlWidget::on_realTimeCheckBox_stateChanged(int arg1) {
+		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_refresh_enabled(arg1);
+		save_device_list();
+	}
+
+	/**
 	 * Disconnects from the selected device.
 	 */
 	void DeviceControlWidget::on_removeSerialDevicePushButton_clicked() {
 		if (ui->serialOutputListWidget->selectedItems().count() > 0) {
 			int device_index = ui->serialOutputListWidget->currentRow();
-			disconnect_serial_device(device_index);
 			ui->serialOutputListWidget->takeItem(device_index);
+			serial_devices_.removeAt(device_index);
 			save_device_list();
 		}
 	}
@@ -141,17 +140,20 @@ namespace PixelMaestroStudio {
 
 		// TODO: Move to separate thread
 
-		ui->uploadProgressBar->setValue(0);
+		// If the device isn't connected, connect to it first. If we fail to connect, exit.
+		SerialDevice device = serial_devices_.at(ui->serialOutputListWidget->currentRow());
+		if (!device.get_device()->isOpen() && !device.connect()) return;
+
 		// Send start flag
 		QByteArray out = QByteArray("ROMBEG", 6);
-		write_to_devices((const char*)out, out.size());
+		device.write((const char*)out, out.size());
 
 		// Send Cuefile broken up into 64-bit chunks
 		int index = 0;
 		std::chrono::milliseconds sleep_period(250);	// Wait 250 milliseconds between chunks
 		do {
 			out = maestro_cue_.mid(index, 64);
-			write_to_devices((const char*)out, out.size());
+			device.write((const char*)out, out.size());
 			index += 64;
 			std::this_thread::sleep_for(sleep_period);
 			ui->uploadProgressBar->setValue((index / (float)maestro_cue_.size()) * 100);
@@ -160,7 +162,7 @@ namespace PixelMaestroStudio {
 
 		// Send stop flag
 		out = QByteArray("ROMEND", 6);
-		write_to_devices((const char*)out, out.size());
+		device.write((const char*)out, out.size());
 		ui->uploadProgressBar->setValue(100);
 	}
 
@@ -170,8 +172,14 @@ namespace PixelMaestroStudio {
 
 	void DeviceControlWidget::on_serialOutputListWidget_currentRowChanged(int currentRow) {
 		ui->removeSerialDevicePushButton->setEnabled(currentRow > -1);
-		ui->sendPushButton->setEnabled(currentRow > -1);
+		ui->deviceSettingsGroupBox->setEnabled(currentRow > -1);
 		ui->uploadProgressBar->setValue(0);
+
+		if (currentRow > -1) {
+			ui->capacityLineEdit->setText(QString::number(serial_devices_[currentRow].get_capacity()));
+			ui->realTimeCheckBox->setChecked(serial_devices_[currentRow].get_real_time_refresh_enabled());
+			check_device_rom_capacity();
+		}
 	}
 
 	/// Displays all available serial devices in the serial output combobox.
@@ -189,13 +197,19 @@ namespace PixelMaestroStudio {
 	 * @param size The size of the Cue.
 	 */
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
-		write_to_devices((const char*)cue, size);
+		for (int i = 0; i < serial_devices_.size(); i++) {
+			SerialDevice device = serial_devices_.at(i);
+			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
+				device.write((const char*)cue, size);
+			}
+		}
 
 		if (!maestro_control_widget_->loading_cue_) {
 			// Calculate and display the size of the current Maestro configuration
 			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
 			maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
 			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+			check_device_rom_capacity();
 		}
 	}
 
@@ -208,27 +222,17 @@ namespace PixelMaestroStudio {
 		settings.beginWriteArray(PreferencesDialog::serial_ports);
 		for (int i = 0; i < ui->serialOutputListWidget->count(); i++) {
 			settings.setArrayIndex(i);
-			QListWidgetItem* item = ui->serialOutputListWidget->item(i);
-			settings.setValue(PreferencesDialog::serial_port, item->text());
+
+			SerialDevice device = serial_devices_.at(i);
+			settings.setValue(PreferencesDialog::serial_port_name, device.get_port_name());
+			settings.setValue(PreferencesDialog::serial_real_time_refresh, device.get_real_time_refresh_enabled());
 		}
 		settings.endArray();
 	}
 
-	/**
-	 * Sends data to all connected devices.
-	 * @param out The data to send.
-	 * @param size The size of the data to send.
-	 */
-	void DeviceControlWidget::write_to_devices(const char *out, int size) {
-		for (QSharedPointer<QSerialPort> device : serial_devices_) {
-			device->write(out, size);
-			device->flush();
-		}
-	}
-
 	DeviceControlWidget::~DeviceControlWidget() {
 		for (int i = 0; i < serial_devices_.size(); i++) {
-			disconnect_serial_device(i);
+			serial_devices_[i].disconnect();
 		}
 		delete ui;
 	}

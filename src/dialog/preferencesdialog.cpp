@@ -5,6 +5,7 @@
 
 namespace PixelMaestroStudio {
 
+	QString PreferencesDialog::last_cuefile_directory = QStringLiteral("File/LastCuefileDirectory");
 	QString PreferencesDialog::separate_window_option = QStringLiteral("Displays/SeparateWindow");
 	QString PreferencesDialog::main_window_option = QStringLiteral("Displays/MainWindow");
 	QString PreferencesDialog::num_sections = QStringLiteral("Maestro/NumSections");
@@ -14,7 +15,8 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::refresh_rate = QStringLiteral("Maestro/Refresh");
 	QString PreferencesDialog::serial_ports = QStringLiteral("SerialPorts");
-	QString PreferencesDialog::serial_port = QStringLiteral("Port");
+	QString PreferencesDialog::serial_port_name = QStringLiteral("Port");
+	QString PreferencesDialog::serial_real_time_refresh = QStringLiteral("RealTimeRefresh");
 
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 		ui->setupUi(this);

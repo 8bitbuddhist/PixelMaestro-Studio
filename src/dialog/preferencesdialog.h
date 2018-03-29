@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			static QString separate_window_option;
+			static QString last_cuefile_directory;
 			static QString main_window_option;
 			static QString num_sections;
 			static QString output_enabled;
@@ -22,8 +22,10 @@ namespace PixelMaestroStudio {
 			static QString pixel_padding;
 			static QString pixel_shape;
 			static QString refresh_rate;
-			static QString serial_port;
+			static QString separate_window_option;
+			static QString serial_port_name;
 			static QString serial_ports;
+			static QString serial_real_time_refresh;
 
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();

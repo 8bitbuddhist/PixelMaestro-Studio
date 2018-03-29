@@ -82,12 +82,18 @@ namespace PixelMaestroStudio {
 	 * Loads a Cuefile.
 	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
+		// Open the window in the last used directory, if possible
+		QSettings settings;
+		QString path = settings.value(PreferencesDialog::last_cuefile_directory, QDir::home().path()).toString();
 		QString filename = QFileDialog::getOpenFileName(this,
 			QString("Open Cue File"),
-			QString(),
+			path,
 			QString("PixelMaestro Cue File (*.pmc)"));
 
 		if (!filename.isEmpty()) {
+			// Store the directory that the file was saved to
+			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
+
 			// Read in the CueFile, then load the Animation Editor
 			initialize_widgets();
 			on_action_Open_Animation_Editor_triggered(true);
@@ -111,12 +117,19 @@ namespace PixelMaestroStudio {
 	 * Saves the current Maestro to a Cuefile.
 	 */
 	void MainWindow::on_action_Save_Maestro_triggered() {
+		// Open the window in the last used directory, if possible
+		QSettings settings;
+		QString path = settings.value(PreferencesDialog::last_cuefile_directory, QDir::home().path()).toString();
 		QString filename = QFileDialog::getSaveFileName(this,
 			QString("Save Cue File"),
-			QDir::home().path(),
+			path,
 			QString("PixelMaestro Cue File (*.pmc)"));
 
-		maestro_controller_->save_cuefile(filename);
+		if (!filename.isEmpty()) {
+			// Store the directory that the file was saved to
+			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
+			maestro_controller_->save_cuefile(filename);
+		}
 	}
 
 	/**

@@ -1,3 +1,7 @@
+/*
+ * DeviceControlWidget - Widget for managing USB/serial devices.
+ */
+
 #ifndef DEVICECONTROLWIDGET_H
 #define DEVICECONTROLWIDGET_H
 
@@ -5,6 +9,7 @@
 #include <QSharedPointer>
 #include <QVector>
 #include <QWidget>
+#include "utility/serialdevice.h"
 #include "widget/maestrocontrolwidget.h"
 
 namespace Ui {
@@ -24,6 +29,7 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_addSerialDevicePushButton_clicked();
 			void on_interpretCuePushButton_clicked();
+			void on_realTimeCheckBox_stateChanged(int arg1);
 			void on_removeSerialDevicePushButton_clicked();
 			void on_sendPushButton_clicked();
 			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
@@ -36,9 +42,10 @@ namespace PixelMaestroStudio {
 			/// Stores the current Maestro configuration in Cue form.
 			QByteArray maestro_cue_;
 
-			/// List of enabled USB devices.
-			QVector<QSharedPointer<QSerialPort>> serial_devices_;
+			/// List of activated USB devices.
+			QVector<SerialDevice> serial_devices_;
 
+			void check_device_rom_capacity();
 			bool connect_to_serial_device(QString port_name);
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();

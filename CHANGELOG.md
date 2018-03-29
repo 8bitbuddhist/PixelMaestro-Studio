@@ -3,18 +3,24 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.20.1] - 2018-03-20
+## [v0.21] - In Progress
 
 ### Added
-- Added Device tab to Animation Editor for controlling USB devices.
-- Added ability to edit existing Palettes.
+- Added Device tab for controlling USB devices. The Device tab lets you upload the entire Animation Editor configuration (called a Cuefile) to serial devices. It also lets you configure devices, preview Cuefiles, and toggle real-time updating of devices.
+- Added ability to edit Palettes.
+- Added dialog window for previewing Cuefiles.
 
 ### Changed
-- Moved USB device settings from Preferences dialog to Animation Editor.
+- Moved USB device settings from Preferences dialog to Devices tab in Animation Editor.
 - Fixed MaestroController not properly saving Section scroll settings.
+- File selector dialog now remembers the last directory used.
+
+## [v0.20.1] - 2018-03-20
+
+### Changed
 - Fixed an issue where an extra non-existent Section was listed in the Animation Editor dropdown.
 - Fixed active Section identification and highlighting.
-- Fixed mirror checkbox not being checked when switching to a Section with an active Wave animation.
+- Fixed mirror checkbox not being checked when switching to a Section with a mirrored Wave animation.
 
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.

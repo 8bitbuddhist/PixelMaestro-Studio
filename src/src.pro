@@ -71,7 +71,8 @@ SOURCES += main.cpp\
 		../lib/PixelMaestro/src/core/palette.cpp \
     widget/devicecontrolwidget.cpp \
     dialog/cueinterpreterdialog.cpp \
-    dialog/paletteeditdialog.cpp
+    dialog/paletteeditdialog.cpp \
+    utility/serialdevice.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -134,7 +135,8 @@ HEADERS += \
 		../lib/PixelMaestro/src/core/palette.h \
     widget/devicecontrolwidget.h \
     dialog/cueinterpreterdialog.h \
-    dialog/paletteeditdialog.h
+    dialog/paletteeditdialog.h \
+    utility/serialdevice.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
