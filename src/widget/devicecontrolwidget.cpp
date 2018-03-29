@@ -70,6 +70,10 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	QByteArray* DeviceControlWidget::get_maestro_cue() {
+		return &maestro_cue_;
+	}
+
 	/**
 	 * Connects to the selected device.
 	 */
@@ -119,51 +123,10 @@ namespace PixelMaestroStudio {
 	 * Transmits the Maestro's Cuefile to the selected device.
 	 */
 	void DeviceControlWidget::on_sendPushButton_clicked() {
-		/*
-		 * This whole method sucks, but here's the deal:
-		 *
-		 * When sending a Cuefile to an Arduino, PixelMaestro Studio sends data way too fast, even with a low baud rate.
-		 * The Arduino's serial buffer overflows and it starts dropping Cues. The reason it worked before is probably because we were sending individual Cues and not entire Cuefiles.
-		 * Basically, the Cuefile gets trimmed and the entire thing fails.
-		 * As a workaround, we break up the Cuefile into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
-		 *
-		 * The final message looks like this:
-		 *	1) "ROMBEG", which signals the Arduino to start writing to EEPROM.
-		 *	2) The Cuefile itself. The entire file gets written to Serial.
-		 *	3) "ROMEND", which signals the Arduino to stop writing to EEPROM.
-		 *
-		 * Resources:
-		 * http://forum.arduino.cc/index.php?topic=124158.15
-		 * https://forum.arduino.cc/index.php?topic=234151.0
-		 *
-		 */
-
-		// TODO: Move to separate thread
-
-		// If the device isn't connected, connect to it first. If we fail to connect, exit.
-		SerialDevice device = serial_devices_.at(ui->serialOutputListWidget->currentRow());
-		if (!device.get_device()->isOpen() && !device.connect()) return;
-
-		// Send start flag
-		QByteArray out = QByteArray("ROMBEG", 6);
-		device.write((const char*)out, out.size());
-
-		// Send Cuefile broken up into 64-bit chunks
-		int index = 0;
-		std::chrono::milliseconds sleep_period(250);	// Wait 250 milliseconds between chunks
-		do {
-			out = maestro_cue_.mid(index, 64);
-			device.write((const char*)out, out.size());
-			index += 64;
-			std::this_thread::sleep_for(sleep_period);
-			ui->uploadProgressBar->setValue((index / (float)maestro_cue_.size()) * 100);
-		}
-		while (index < maestro_cue_.size());
-
-		// Send stop flag
-		out = QByteArray("ROMEND", 6);
-		device.write((const char*)out, out.size());
-		ui->uploadProgressBar->setValue(100);
+		// Run the upload process in a separate thread
+		UploadThread* thread = new UploadThread(this, &serial_devices_[ui->serialOutputListWidget->currentRow()]);
+		connect(thread, &UploadThread::finished, thread, &QObject::deleteLater);
+		thread->start();
 	}
 
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
@@ -228,6 +191,10 @@ namespace PixelMaestroStudio {
 			settings.setValue(PreferencesDialog::serial_real_time_refresh, device.get_real_time_refresh_enabled());
 		}
 		settings.endArray();
+	}
+
+	void DeviceControlWidget::set_upload_progress_bar(int val) {
+		ui->uploadProgressBar->setValue(val);
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {
