@@ -126,6 +126,7 @@ namespace PixelMaestroStudio {
 		// Run the upload process in a separate thread
 		UploadThread* thread = new UploadThread(this, &serial_devices_[ui->serialOutputListWidget->currentRow()]);
 		connect(thread, &UploadThread::finished, thread, &QObject::deleteLater);
+		connect(thread, &UploadThread::progress_changed, this, &DeviceControlWidget::update_progress_bar);
 		thread->start();
 	}
 
@@ -193,7 +194,7 @@ namespace PixelMaestroStudio {
 		settings.endArray();
 	}
 
-	void DeviceControlWidget::set_upload_progress_bar(int val) {
+	void DeviceControlWidget::update_progress_bar(int val) {
 		ui->uploadProgressBar->setValue(val);
 	}
 

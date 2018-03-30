@@ -116,12 +116,6 @@ namespace PixelMaestroStudio {
 			/// MaestroController that this widget is controlling.
 			MaestroController* maestro_controller_ = nullptr;
 
-			/// List of enabled output devices.
-			QVector<QString> output_devices_;
-
-			/// List of enabled USB devices.
-			QVector<QSharedPointer<QSerialPort>> serial_devices_;
-
 			/// Controller for managing Shows.
 			ShowController* show_controller_ = nullptr;
 

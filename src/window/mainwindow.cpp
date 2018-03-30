@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QUrl>
 #include "dialog/preferencesdialog.h"
 #include "mainwindow.h"
@@ -55,12 +56,20 @@ namespace PixelMaestroStudio {
 			}
 		}
 
+		QSettings settings;
+
 		if (!keep_current_open) {
-			initialize_widgets();
+			// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
+			if (settings.value(PreferencesDialog::save_session).toBool() == true && QFile(session_file_path).exists()) {
+				open_cuefile(session_file_path);
+				return;
+			}
+			else {
+				initialize_widgets();
+			}
 		}
 
 		// If the Main DrawingArea is enabled as an output device, display it
-		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
 			maestro_drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
 			main_layout_->addWidget(maestro_drawing_area_);
@@ -90,19 +99,9 @@ namespace PixelMaestroStudio {
 			path,
 			QString("PixelMaestro Cue File (*.pmc)"));
 
-		if (!filename.isEmpty()) {
-			// Store the directory that the file was saved to
-			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
-
-			// Read in the CueFile, then load the Animation Editor
-			initialize_widgets();
-			on_action_Open_Animation_Editor_triggered(true);
-			maestro_control_widget_->load_cuefile(filename);
-
-			// Refresh the Animation Editor
-			maestro_control_widget_->refresh_maestro_settings();
-			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
-		}
+		// Store the directory that the file was opened from
+		settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
+		open_cuefile(filename);
 	}
 
 	/**
@@ -162,7 +161,32 @@ namespace PixelMaestroStudio {
 		QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=8547028", QUrl::TolerantMode));
 	}
 
+	/**
+	 * Loads a Cuefile into a new session.
+	 * @param filename Cuefile path.
+	 */
+	void MainWindow::open_cuefile(QString filename) {
+		if (filename.isEmpty()) return;
+
+		// Read in the CueFile, then load the Animation Editor
+		initialize_widgets();
+		on_action_Open_Animation_Editor_triggered(true);
+		maestro_control_widget_->load_cuefile(filename);
+
+		// Refresh the Animation Editor
+		maestro_control_widget_->refresh_maestro_settings();
+		maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
+	}
+
 	MainWindow::~MainWindow() {
+		QSettings settings;
+		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+			// Save Maestro config
+			if (maestro_controller_ != nullptr) {
+				maestro_controller_->save_cuefile(session_file_path);
+			}
+		}
+
 		delete ui;
 	}
 }

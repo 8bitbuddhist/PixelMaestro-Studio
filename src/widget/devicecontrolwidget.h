@@ -27,7 +27,6 @@ namespace PixelMaestroStudio {
 			~DeviceControlWidget();
 			QByteArray* get_maestro_cue();
 			void run_cue(uint8_t* cue, int size);
-			void set_upload_progress_bar(int val);
 
 		private slots:
 			void on_addSerialDevicePushButton_clicked();
@@ -37,6 +36,7 @@ namespace PixelMaestroStudio {
 			void on_sendPushButton_clicked();
 			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
 			void on_serialOutputListWidget_currentRowChanged(int currentRow);
+			void update_progress_bar(int val);
 
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -100,15 +100,18 @@ namespace PixelMaestroStudio {
 					target_device_->write((const char*)out, out.size());
 					index += 64;
 					std::this_thread::sleep_for(sleep_period);
-					parent->set_upload_progress_bar((index / (float)parent->get_maestro_cue()->size()) * 100);
+					emit progress_changed((index / (float)parent->get_maestro_cue()->size()) * 100);
 				}
 				while (index < parent->get_maestro_cue()->size());
 
 				// Send stop flag
 				out = QByteArray("ROMEND", 6);
 				target_device_->write((const char*)out, out.size());
-				parent->set_upload_progress_bar(100);
+				emit progress_changed(100);
 			}
+
+		signals:
+			void progress_changed(int progress);
 
 		private:
 			SerialDevice* target_device_;

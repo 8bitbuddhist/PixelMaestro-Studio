@@ -122,7 +122,6 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Saves Maestro settings to a DataStream as Cues.
-	 * TODO: Reduce size of generated Cuefiles by checking for and removing redundant Cues.
 	 * @param datastream Stream to save Cues to.
 	 */
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream) {
@@ -229,11 +228,11 @@ namespace PixelMaestroStudio {
 
 		// Scrolling and offset
 		Point* offset = section->get_offset();
-		if (offset != nullptr && (offset->x != 0 && offset->y != 0)) {
+		if (offset != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
 		}
 		Section::Scroll* scroll = section->get_scroll();
-		if (scroll != nullptr && (scroll->interval_x != 0 && scroll->interval_y != 0)) {
+		if (scroll != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y, section->get_scroll()->reverse_x, section->get_scroll()->reverse_y));
 		}
 

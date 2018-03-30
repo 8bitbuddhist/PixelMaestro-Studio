@@ -1727,6 +1727,7 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::set_scroll() {
 		int new_x = ui->scrollXSpinBox->value();
 		int new_y = ui->scrollYSpinBox->value();
+
 		run_cue(section_handler->set_scroll(get_section_index(), get_layer_index(), Utility::abs_int(new_x), Utility::abs_int(new_y), (new_x < 0), (new_y < 0)));
 
 		// Enable/disable offset controls
@@ -1870,13 +1871,6 @@ namespace PixelMaestroStudio {
 	 * Destructor.
 	 */
 	MaestroControlWidget::~MaestroControlWidget() {
-		// Close all open serial devices
-		for (int i = 0;	i < serial_devices_.size(); i++) {
-			if (serial_devices_[i]->isOpen()) {
-				serial_devices_[i]->close();
-			}
-		}
-
 		delete show_controller_;
 		delete ui;
 	}

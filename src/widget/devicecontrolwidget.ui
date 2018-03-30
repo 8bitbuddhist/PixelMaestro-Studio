@@ -67,16 +67,16 @@
       <item row="6" column="1">
        <layout class="QHBoxLayout" name="cuefileLayout">
         <item>
-         <widget class="QPushButton" name="interpretCuePushButton">
+         <widget class="QPushButton" name="sendPushButton">
           <property name="text">
-           <string>Preview Cuefile</string>
+           <string>Upload Cuefile</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="sendPushButton">
+         <widget class="QPushButton" name="interpretCuePushButton">
           <property name="text">
-           <string>Upload Cuefile</string>
+           <string>Preview Cuefile</string>
           </property>
          </widget>
         </item>

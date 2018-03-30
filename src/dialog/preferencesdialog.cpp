@@ -14,6 +14,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::pixel_padding = QStringLiteral("Interface/Padding");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::refresh_rate = QStringLiteral("Maestro/Refresh");
+	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
 	QString PreferencesDialog::serial_ports = QStringLiteral("SerialPorts");
 	QString PreferencesDialog::serial_port_name = QStringLiteral("Port");
 	QString PreferencesDialog::serial_real_time_refresh = QStringLiteral("RealTimeRefresh");
@@ -24,6 +25,7 @@ namespace PixelMaestroStudio {
 		// Interface settings
 		ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding, 0).toInt());		// Default to no padding
 		ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape, 1).toInt());		// Default to square pixels
+		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, false).toBool());	// Default to new session
 
 		// Maestro settings
 		ui->numSectionsSpinBox->setValue(settings_.value(num_sections, 1).toInt());				// Default to 1 Section
@@ -44,6 +46,7 @@ namespace PixelMaestroStudio {
 		// Save interface settings
 		settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
+		settings_.setValue(save_session, ui->saveSessionCheckBox->isChecked());
 
 		// Save display settings
 		settings_.setValue(separate_window_option, ui->separateWindowCheckBox->isChecked());
