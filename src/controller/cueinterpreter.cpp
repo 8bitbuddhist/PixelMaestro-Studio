@@ -233,7 +233,7 @@ namespace PixelMaestroStudio {
 			case CanvasCueHandler::Action::DrawText:
 				result->append(": \"" + QString::fromLatin1((char*)&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 6], cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 5]) + "\"");
 				break;
-			default:	// TODO: Interpret other draw actions
+			default:
 				break;
 		}
 	}

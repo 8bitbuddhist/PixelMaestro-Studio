@@ -15,8 +15,15 @@ namespace PixelMaestroStudio {
 		this->main_layout_ = this->findChild<QLayout*>("mainLayout");
 		setWindowTitle("PixelMaestro Studio");
 
-		// Open the Animation Editor
-		on_action_Open_Animation_Editor_triggered(false);
+		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
+		QSettings settings;
+		if (settings.value(PreferencesDialog::save_session).toBool() == true && QFile(session_file_path).exists()) {
+			open_cuefile(session_file_path);
+		}
+		else {
+			// Open the Animation Editor
+			on_action_Open_Animation_Editor_triggered(false);
+		}
 	}
 
 	void MainWindow::on_action_About_triggered() {
@@ -59,14 +66,7 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 
 		if (!keep_current_open) {
-			// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
-			if (settings.value(PreferencesDialog::save_session).toBool() == true && QFile(session_file_path).exists()) {
-				open_cuefile(session_file_path);
-				return;
-			}
-			else {
-				initialize_widgets();
-			}
+			initialize_widgets();
 		}
 
 		// If the Main DrawingArea is enabled as an output device, display it

@@ -38,6 +38,8 @@ namespace PixelMaestroStudio {
 			void on_serialOutputListWidget_currentRowChanged(int currentRow);
 			void update_progress_bar(int val);
 
+			void on_capacityLineEdit_editingFinished();
+
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			Ui::DeviceControlWidget *ui;
@@ -52,7 +54,7 @@ namespace PixelMaestroStudio {
 			bool connect_to_serial_device(QString port_name);
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();
-			void save_device_list();
+			void save_devices();
 			void write_to_devices(const char* out, int size);
 	};
 
@@ -94,12 +96,12 @@ namespace PixelMaestroStudio {
 
 				// Send Cuefile broken up into 64-bit chunks
 				int index = 0;
-				std::chrono::milliseconds sleep_period(250);	// Wait 250 milliseconds between chunks
+				int sleep_period = 250;	// Wait 250 milliseconds between chunks
 				do {
 					out = parent->get_maestro_cue()->mid(index, 64);
 					target_device_->write((const char*)out, out.size());
 					index += 64;
-					std::this_thread::sleep_for(sleep_period);
+					msleep(sleep_period);
 					emit progress_changed((index / (float)parent->get_maestro_cue()->size()) * 100);
 				}
 				while (index < parent->get_maestro_cue()->size());

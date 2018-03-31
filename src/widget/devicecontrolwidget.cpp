@@ -14,7 +14,6 @@
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
 
-// TODO: Allow users to specify which Section(s) gets sent to which device(s)
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
@@ -37,6 +36,7 @@ namespace PixelMaestroStudio {
 
 			// Create the device
 			serial_devices_.push_back(SerialDevice(device_name, real_time_refresh_enabled));
+			serial_devices_.last().set_capacity(settings.value(PreferencesDialog::serial_capacity).toInt());
 
 			// If the saved port is an available port, connect to it
 			for (QSerialPortInfo port : ports) {
@@ -86,8 +86,17 @@ namespace PixelMaestroStudio {
 			serial_devices_.push_back(SerialDevice(device_name, ui->realTimeCheckBox->isChecked()));
 			serial_devices_.last().connect();
 
-			save_device_list();
+			save_devices();
 		}
+	}
+
+	/**
+	 * Saves the new capacity value to settings.
+	 */
+	void DeviceControlWidget::on_capacityLineEdit_editingFinished() {
+		serial_devices_[ui->serialOutputListWidget->currentRow()].set_capacity(ui->capacityLineEdit->text().toInt());
+		save_devices();
+		check_device_rom_capacity();
 	}
 
 	/**
@@ -104,7 +113,7 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::on_realTimeCheckBox_stateChanged(int arg1) {
 		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_refresh_enabled(arg1);
-		save_device_list();
+		save_devices();
 	}
 
 	/**
@@ -115,7 +124,7 @@ namespace PixelMaestroStudio {
 			int device_index = ui->serialOutputListWidget->currentRow();
 			ui->serialOutputListWidget->takeItem(device_index);
 			serial_devices_.removeAt(device_index);
-			save_device_list();
+			save_devices();
 		}
 	}
 
@@ -180,7 +189,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Saves the device list to settings.
 	 */
-	void DeviceControlWidget::save_device_list() {
+	void DeviceControlWidget::save_devices() {
 		// Save devices
 		QSettings settings;
 		settings.beginWriteArray(PreferencesDialog::serial_ports);
@@ -188,6 +197,7 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(i);
 
 			SerialDevice device = serial_devices_.at(i);
+			settings.setValue(PreferencesDialog::serial_capacity, device.get_capacity());
 			settings.setValue(PreferencesDialog::serial_port_name, device.get_port_name());
 			settings.setValue(PreferencesDialog::serial_real_time_refresh, device.get_real_time_refresh_enabled());
 		}

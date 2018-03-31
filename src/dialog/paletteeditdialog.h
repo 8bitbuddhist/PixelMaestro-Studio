@@ -1,3 +1,7 @@
+/*
+ * PaletteDialog - Dialog for creating and editing Palettes.
+ */
+
 #ifndef PALETTEEDITDIALOG_H
 #define PALETTEEDITDIALOG_H
 
@@ -24,11 +28,13 @@ namespace PixelMaestroStudio {
 			void on_typeComboBox_currentIndexChanged(int index);
 
 		private:
+			/// The starting color when scaling.
 			Colors::RGB base_color_ = Colors::RGB(0, 0, 0);
+			/// The final color when scaling.
 			Colors::RGB target_color_ = Colors::RGB(0, 0, 0);
-
-			PaletteControlWidget* parent_ = nullptr;
+			/// The Palette that we're currently editing.
 			PaletteController::PaletteWrapper* target_palette_ = nullptr;
+
 			Ui::PaletteEditDialog *ui;
 	};
 }

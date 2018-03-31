@@ -85,6 +85,14 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Sets the device's new capacity.
+	 * @param capacity New capacity.
+	 */
+	void SerialDevice::set_capacity(int capacity) {
+		this->capacity_ = capacity;
+	}
+
+	/**
 	 * Sets whether real-time refreshing is enabled for this device.
 	 * Real-time refresh sends Cues to this device as they're performed.
 	 * @param enabled Whether real-time refresh is enabled.

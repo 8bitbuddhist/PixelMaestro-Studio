@@ -20,6 +20,7 @@ namespace PixelMaestroStudio {
 			int get_capacity() const;
 			QString get_port_name() const;
 			bool get_real_time_refresh_enabled() const;
+			void set_capacity(int capacity);
 			void set_real_time_refresh_enabled(bool enabled);
 			void write(const char* out, int size);
 

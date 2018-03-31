@@ -1,13 +1,21 @@
+/*
+ * PaletteDialog - Dialog for creating and editing Palettes.
+ */
+
 #include <QColorDialog>
 #include "paletteeditdialog.h"
 #include "ui_paletteeditdialog.h"
 #include "widget/palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
+	/**
+	 * Constructor.
+	 * Initializes the form and pre-populates fields when editing a Palette.
+	 * @param parent Parent widget.
+	 * @param target_palette Palette to edit (if applicable).
+	 */
 	PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
 		ui->setupUi(this);
-
-		this->parent_ = parent;
 
 		// If a valid Palette was passed in, pre-populate fields
 		this->target_palette_ = target_palette;
@@ -22,6 +30,8 @@ namespace PixelMaestroStudio {
 
 			this->target_color_ = target_palette->target_color;
 			parent->set_button_color(ui->targetColorButton, target_color_.r, target_color_.g, target_color_.b);
+
+			on_typeComboBox_currentIndexChanged(ui->typeComboBox->currentIndex());
 		}
 		else {
 			// Hide advanced controls by default
@@ -29,6 +39,9 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	/**
+	 * Saves changes and closes the form.
+	 */
 	void PaletteEditDialog::accept() {
 		uint8_t num_colors = ui->numColorsSpinBox->value();
 
@@ -67,30 +80,44 @@ namespace PixelMaestroStudio {
 			}
 			else {
 				// Add the new Palette
-				this->parent_->get_palette_controller()->add_palette(ui->nameLineEdit->text(), colors, num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
+				PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
+				parent->get_palette_controller()->add_palette(ui->nameLineEdit->text(), colors, num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
 			}
 
 			QDialog::accept();
 		}
 		else {
-			// Highlight name label
+			// If the name is incomplete, highlight the name field.
 			ui->nameLabel->setStyleSheet(QString("color: red;"));
 		}
 	}
 
+	/**
+	 * Opens a color picker for the base color.
+	 */
 	void PaletteEditDialog::on_baseColorButton_clicked() {
 		QColor color = QColorDialog::getColor(Qt::white, this, "Select Base Color");
-		base_color_ = {color.red(), color.green(), color.blue()};
-		this->parent_->set_button_color(ui->baseColorButton, color.red(), color.green(), color.blue());
+		base_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
+		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
+		parent->set_button_color(ui->baseColorButton, base_color_.r, base_color_.g, base_color_.b);
 	}
 
+	/**
+	 * Opens a color picker for the target color.
+	 */
 	void PaletteEditDialog::on_targetColorButton_clicked() {
 		QColor color = QColorDialog::getColor(Qt::white, this, "Select Target Color");
-		target_color_ = {color.red(), color.green(), color.blue()};
-		this->parent_->set_button_color(ui->targetColorButton, color.red(), color.green(), color.blue());
+		target_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
+		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
+		parent->set_button_color(ui->targetColorButton, target_color_.r, target_color_.g, target_color_.b);
 	}
 
+	/**
+	 * Adds or removes certain fields based on the type of Palette selected.
+	 * @param index Palette type.
+	 */
 	void PaletteEditDialog::on_typeComboBox_currentIndexChanged(int index) {
+		// SetEnabled doesn't change the appearance for some reason
 		ui->baseColorLabel->setVisible(index == 1);
 		ui->baseColorButton->setVisible(index == 1);
 		ui->targetColorLabel->setVisible(index == 1);
