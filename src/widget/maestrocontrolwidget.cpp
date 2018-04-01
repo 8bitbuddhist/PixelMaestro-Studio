@@ -1290,6 +1290,11 @@ namespace PixelMaestroStudio {
 			ui->loopCheckBox->setChecked(show->get_looping());
 			ui->loopCheckBox->blockSignals(false);
 		}
+
+		// Recalculate the Maestro Cuefile
+		if (device_extra_control_widget_ != nullptr) {
+			device_extra_control_widget_->update_cuefile_size();
+		}
 	}
 
 	/**

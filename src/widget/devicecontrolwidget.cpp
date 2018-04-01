@@ -177,13 +177,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		if (!maestro_control_widget_->loading_cue_) {
-			// Calculate and display the size of the current Maestro configuration
-			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
-			maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
-			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
-			check_device_rom_capacity();
-		}
+		update_cuefile_size();
 	}
 
 	/**
@@ -202,6 +196,19 @@ namespace PixelMaestroStudio {
 			settings.setValue(PreferencesDialog::serial_real_time_refresh, device.get_real_time_refresh_enabled());
 		}
 		settings.endArray();
+	}
+
+	/**
+	 * Regenerates the Maestro Cuefile and updates the size in the UI.
+	 */
+	void DeviceControlWidget::update_cuefile_size() {
+		if (!maestro_control_widget_->loading_cue_) {
+			// Calculate and display the size of the current Maestro configuration
+			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
+			maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
+			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+			check_device_rom_capacity();
+		}
 	}
 
 	void DeviceControlWidget::update_progress_bar(int val) {

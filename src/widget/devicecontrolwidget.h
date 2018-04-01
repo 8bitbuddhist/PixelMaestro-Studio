@@ -27,6 +27,7 @@ namespace PixelMaestroStudio {
 			~DeviceControlWidget();
 			QByteArray* get_maestro_cue();
 			void run_cue(uint8_t* cue, int size);
+			void update_cuefile_size();
 
 		private slots:
 			void on_addSerialDevicePushButton_clicked();
