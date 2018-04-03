@@ -46,7 +46,6 @@ SOURCES += main.cpp\
 		../lib/PixelMaestro/src/cue/maestrocuehandler.cpp \
 		../lib/PixelMaestro/src/cue/sectioncuehandler.cpp \
 		controller/palettecontroller.cpp \
-		controller/cueinterpreter.cpp \
 		controller/showcontroller.cpp \
 		../lib/PixelMaestro/src/colorpresets.cpp \
 		../lib/PixelMaestro/src/cue/cuehandler.cpp \
@@ -72,7 +71,8 @@ SOURCES += main.cpp\
     widget/devicecontrolwidget.cpp \
     dialog/cueinterpreterdialog.cpp \
     dialog/paletteeditdialog.cpp \
-    utility/serialdevice.cpp
+    model/serialdevice.cpp \
+    utility/cueinterpreter.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -111,7 +111,6 @@ HEADERS += \
 		../lib/PixelMaestro/src/cue/maestrocuehandler.h \
 		../lib/PixelMaestro/src/cue/sectioncuehandler.h \
 		controller/palettecontroller.h \
-		controller/cueinterpreter.h \
 		controller/showcontroller.h \
 		../lib/PixelMaestro/src/colorpresets.h \
 		utility/canvasutility.h \
@@ -136,7 +135,8 @@ HEADERS += \
     widget/devicecontrolwidget.h \
     dialog/cueinterpreterdialog.h \
     dialog/paletteeditdialog.h \
-    utility/serialdevice.h
+    model/serialdevice.h \
+    utility/cueinterpreter.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \

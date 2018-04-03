@@ -1,4 +1,4 @@
-#include "controller/cueinterpreter.h"
+#include "utility/cueinterpreter.h"
 #include "showcontroller.h"
 
 namespace PixelMaestroStudio {

@@ -2,7 +2,7 @@
 #define CUEINTERPRETERDIALOG_H
 
 #include <QDialog>
-#include "controller/cueinterpreter.h"
+#include "utility/cueinterpreter.h"
 
 namespace Ui {
 	class CueInterpreterDialog;

@@ -13,7 +13,7 @@ namespace PixelMaestroStudio {
 	class SerialDevice {
 		public:
 			SerialDevice();
-			SerialDevice(QString port_name, bool real_time_updates = false);
+			SerialDevice(QString port_name);
 			bool connect();
 			bool disconnect();
 			QSerialPort* get_device();
@@ -21,7 +21,7 @@ namespace PixelMaestroStudio {
 			QString get_port_name() const;
 			bool get_real_time_refresh_enabled() const;
 			void set_capacity(int capacity);
-			void set_real_time_refresh_enabled(bool enabled);
+			void set_real_time_update(bool enabled);
 			void write(const char* out, int size);
 
 		private:

@@ -14,7 +14,7 @@
 #include <QTimer>
 #include <QVector>
 #include <QWidget>
-#include "controller/cueinterpreter.h"
+#include "utility/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
 #include "controller/showcontroller.h"

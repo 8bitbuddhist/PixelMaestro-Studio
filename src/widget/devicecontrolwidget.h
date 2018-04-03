@@ -10,7 +10,7 @@
 #include <QThread>
 #include <QVector>
 #include <QWidget>
-#include "utility/serialdevice.h"
+#include "model/serialdevice.h"
 #include "widget/maestrocontrolwidget.h"
 
 namespace Ui {
@@ -37,9 +37,9 @@ namespace PixelMaestroStudio {
 			void on_sendPushButton_clicked();
 			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
 			void on_serialOutputListWidget_currentRowChanged(int currentRow);
-			void update_progress_bar(int val);
-
 			void on_capacityLineEdit_editingFinished();
+
+			void set_progress_bar(int val);
 
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;

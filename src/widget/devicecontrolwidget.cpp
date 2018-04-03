@@ -31,12 +31,9 @@ namespace PixelMaestroStudio {
 		int num_serial_devices = settings.beginReadArray(PreferencesDialog::serial_ports);
 		for (int device = 0; device < num_serial_devices; device++) {
 			settings.setArrayIndex(device);
-			QString device_name = settings.value(PreferencesDialog::serial_port_name).toString();
-			bool real_time_refresh_enabled = settings.value(PreferencesDialog::serial_real_time_refresh).toBool();
 
-			// Create the device
-			serial_devices_.push_back(SerialDevice(device_name, real_time_refresh_enabled));
-			serial_devices_.last().set_capacity(settings.value(PreferencesDialog::serial_capacity).toInt());
+			QString device_name = settings.value(PreferencesDialog::serial_port_name).toString();
+			serial_devices_.push_back(SerialDevice(device_name));
 
 			// If the saved port is an available port, connect to it
 			for (QSerialPortInfo port : ports) {
@@ -83,7 +80,7 @@ namespace PixelMaestroStudio {
 			QString device_name = ui->serialOutputComboBox->currentText();
 			ui->serialOutputListWidget->addItem(device_name);
 
-			serial_devices_.push_back(SerialDevice(device_name, ui->realTimeCheckBox->isChecked()));
+			serial_devices_.push_back(SerialDevice(device_name));
 			serial_devices_.last().connect();
 
 			save_devices();
@@ -112,7 +109,7 @@ namespace PixelMaestroStudio {
 	 * @param arg1 If checked, update the device in real-time.
 	 */
 	void DeviceControlWidget::on_realTimeCheckBox_stateChanged(int arg1) {
-		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_refresh_enabled(arg1);
+		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_update(arg1);
 		save_devices();
 	}
 
@@ -135,7 +132,7 @@ namespace PixelMaestroStudio {
 		// Run the upload process in a separate thread
 		UploadThread* thread = new UploadThread(this, &serial_devices_[ui->serialOutputListWidget->currentRow()]);
 		connect(thread, &UploadThread::finished, thread, &QObject::deleteLater);
-		connect(thread, &UploadThread::progress_changed, this, &DeviceControlWidget::update_progress_bar);
+		connect(thread, &UploadThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		thread->start();
 	}
 
@@ -199,6 +196,14 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Sets the state of the progress bar.
+	 * @param val Value to set the progress to.
+	 */
+	void DeviceControlWidget::set_progress_bar(int val) {
+		ui->uploadProgressBar->setValue(val);
+	}
+
+	/**
 	 * Regenerates the Maestro Cuefile and updates the size in the UI.
 	 */
 	void DeviceControlWidget::update_cuefile_size() {
@@ -209,10 +214,6 @@ namespace PixelMaestroStudio {
 			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 			check_device_rom_capacity();
 		}
-	}
-
-	void DeviceControlWidget::update_progress_bar(int val) {
-		ui->uploadProgressBar->setValue(val);
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {

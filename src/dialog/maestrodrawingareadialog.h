@@ -9,7 +9,7 @@
 #include <QLabel>
 #include <memory>
 #include "controller/maestrocontroller.h"
-#include "controller/cueinterpreter.h"
+#include "utility/cueinterpreter.h"
 #include "drawingarea/maestrodrawingarea.h"
 
 using namespace PixelMaestro;

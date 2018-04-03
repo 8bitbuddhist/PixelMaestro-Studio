@@ -13,11 +13,22 @@ namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
 	 * @param port_name The full path name to the device.
-	 * @param real_time_updates If true, send Cues to this device as they're created.
 	 */
-	SerialDevice::SerialDevice(QString port_name, bool real_time_updates) {
+	SerialDevice::SerialDevice(QString port_name) {
 		this->port_name_ = port_name;
-		this->real_time_updates_ = real_time_updates;
+
+		// Look up the device in settings
+		QSettings settings;
+		int num_devices = settings.beginReadArray(PreferencesDialog::serial_ports);
+		for (int device	= 0; device < num_devices; device++) {
+			settings.setArrayIndex(device);
+			QString comp_name = settings.value(PreferencesDialog::serial_port_name).toString();
+			if (port_name == comp_name) {
+				set_capacity(settings.value(PreferencesDialog::serial_capacity).toInt());
+				set_real_time_update(settings.value(PreferencesDialog::serial_real_time_refresh).toBool());
+				break;
+			}
+		}
 	}
 
 	/**
@@ -97,7 +108,7 @@ namespace PixelMaestroStudio {
 	 * Real-time refresh sends Cues to this device as they're performed.
 	 * @param enabled Whether real-time refresh is enabled.
 	 */
-	void SerialDevice::set_real_time_refresh_enabled(bool enabled) {
+	void SerialDevice::set_real_time_update(bool enabled) {
 		this->real_time_updates_ = enabled;
 	}
 
