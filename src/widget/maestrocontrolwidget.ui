@@ -792,8 +792,8 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../resources/images/images.qrc">
-                    <normaloff>:/icon_play.png</normaloff>
-                    <normalon>:/icon_pause.png</normalon>:/icon_play.png</iconset>
+                    <normaloff>:/icon_pause.png</normaloff>
+                    <normalon>:/icon_play.png</normalon>:/icon_pause.png</iconset>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -1443,8 +1443,8 @@
                     </property>
                     <property name="icon">
                      <iconset resource="../resources/images/images.qrc">
-                      <normaloff>:/icon_play.png</normaloff>
-                      <normalon>:/icon_pause.png</normalon>:/icon_play.png</iconset>
+                      <normaloff>:/icon_pause.png</normaloff>
+                      <normalon>:/icon_play.png</normalon>:/icon_pause.png</iconset>
                     </property>
                     <property name="checkable">
                      <bool>true</bool>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>49</height>
+    <height>47</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,31 +15,27 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Threshold</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QSpinBox" name="thresholdSpinBox">
-       <property name="toolTip">
-        <string>The chance of any given pixel being activate on each cycle</string>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>255</number>
-       </property>
-       <property name="value">
-        <number>25</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Threshold</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="thresholdSpinBox">
+     <property name="toolTip">
+      <string>The chance of any given pixel being activate on each cycle</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>25</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

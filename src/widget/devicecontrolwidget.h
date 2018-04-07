@@ -30,10 +30,10 @@ namespace PixelMaestroStudio {
 			void update_cuefile_size();
 
 		private slots:
-			void on_addSerialDevicePushButton_clicked();
+			void on_connectPushButton_clicked();
 			void on_interpretCuePushButton_clicked();
 			void on_realTimeCheckBox_stateChanged(int arg1);
-			void on_removeSerialDevicePushButton_clicked();
+			void on_disconnectPushButton_clicked();
 			void on_sendPushButton_clicked();
 			void on_serialOutputComboBox_editTextChanged(const QString &arg1);
 			void on_serialOutputListWidget_currentRowChanged(int currentRow);

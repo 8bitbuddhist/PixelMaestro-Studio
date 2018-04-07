@@ -5,6 +5,7 @@
 #include <chrono>
 #include <exception>
 #include <QList>
+#include <QMessageBox>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QSettings>
@@ -74,16 +75,22 @@ namespace PixelMaestroStudio {
 	/**
 	 * Connects to the selected device.
 	 */
-	void DeviceControlWidget::on_addSerialDevicePushButton_clicked() {
+	void DeviceControlWidget::on_connectPushButton_clicked() {
 		// Check to make sure the entry isn't blank or already in the list
-		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputComboBox->findText(ui->serialOutputComboBox->currentText()) >= 0) {
-			QString device_name = ui->serialOutputComboBox->currentText();
-			ui->serialOutputListWidget->addItem(device_name);
+		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputListWidget->findItems(ui->serialOutputComboBox->currentText(), Qt::MatchFixedString).count() >= 0) {
+			SerialDevice device(ui->serialOutputComboBox->currentText());
+			if (!device.connect()) {
+				QMessageBox::information(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + "."));
+			}
+			else {
+				ui->serialOutputListWidget->addItem(device.get_port_name());
 
-			serial_devices_.push_back(SerialDevice(device_name));
-			serial_devices_.last().connect();
-
-			save_devices();
+				serial_devices_.push_back(device);
+				save_devices();
+			}
+		}
+		else {
+			QMessageBox::information(this, "Device Already Connected", "This device is already connected.");
 		}
 	}
 
@@ -116,7 +123,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Disconnects from the selected device.
 	 */
-	void DeviceControlWidget::on_removeSerialDevicePushButton_clicked() {
+	void DeviceControlWidget::on_disconnectPushButton_clicked() {
 		if (ui->serialOutputListWidget->selectedItems().count() > 0) {
 			int device_index = ui->serialOutputListWidget->currentRow();
 			ui->serialOutputListWidget->takeItem(device_index);
@@ -137,11 +144,11 @@ namespace PixelMaestroStudio {
 	}
 
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
-		ui->addSerialDevicePushButton->setEnabled(arg1.length() > 0);
+		ui->connectPushButton->setEnabled(arg1.length() > 0);
 	}
 
 	void DeviceControlWidget::on_serialOutputListWidget_currentRowChanged(int currentRow) {
-		ui->removeSerialDevicePushButton->setEnabled(currentRow > -1);
+		ui->disconnectPushButton->setEnabled(currentRow > -1);
 		ui->deviceSettingsGroupBox->setEnabled(currentRow > -1);
 		ui->uploadProgressBar->setValue(0);
 

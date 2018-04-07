@@ -6,14 +6,19 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.21] - In Progress
 
 ### Added
-- Added Device tab for controlling USB devices. The Device tab lets you upload the entire Animation Editor configuration (called a Cuefile) to serial devices. It also lets you configure devices, preview Cuefiles, and toggle real-time updating of devices.
-- Added ability to edit Palettes.
-- Added dialog window for previewing Cuefiles.
-- Added setting to toggle session auto saving/loading when closing/opening PixelMaestro Studio.
+- Animation Editor
+	- Added Device tab for controlling USB devices. The Device tab lets you manage connections to USB and serial devices, sync changes, and upload Cues.
+	- Added ability to toggle live updating of USB devices.
+	- Added ability to edit Palettes.
+	- Added dialog window for previewing Cues.
+- Preferences
+	- Added setting to toggle session auto saving/loading when closing/opening PixelMaestro Studio.
 
 ### Changed
-- Moved USB device settings from Preferences dialog to Devices tab in Animation Editor.
-- Fixed MaestroController not properly saving Section scroll settings.
+-Preferences
+	- Moved USB device settings from Preferences dialog to Devices tab.
+- Animation Editor
+	- Fixed MaestroController not properly saving Section scroll settings.
 - File selector dialog now remembers the last directory used.
 - Code cleanup.
 
