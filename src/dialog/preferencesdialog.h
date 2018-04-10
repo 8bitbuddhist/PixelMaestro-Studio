@@ -24,10 +24,10 @@ namespace PixelMaestroStudio {
 			static QString refresh_rate;
 			static QString save_session;
 			static QString separate_window_option;
-			static QString serial_capacity;
-			static QString serial_port_name;
-			static QString serial_ports;
-			static QString serial_real_time_refresh;
+			static QString device_capacity;
+			static QString device_port;
+			static QString devices;
+			static QString device_real_time_refresh;
 
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();

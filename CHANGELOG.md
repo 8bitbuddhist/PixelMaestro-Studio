@@ -21,6 +21,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Fixed MaestroController not properly saving Section scroll settings.
 - File selector dialog now remembers the last directory used.
 - Code cleanup.
+- Lowered minimum Qt version to 5.9.1. This should make it compatible with Ubuntu 18.04.
 
 ## [v0.20.1] - 2018-03-20
 

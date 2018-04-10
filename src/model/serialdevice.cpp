@@ -19,13 +19,13 @@ namespace PixelMaestroStudio {
 
 		// Look up the device in settings
 		QSettings settings;
-		int num_devices = settings.beginReadArray(PreferencesDialog::serial_ports);
+		int num_devices = settings.beginReadArray(PreferencesDialog::devices);
 		for (int device	= 0; device < num_devices; device++) {
 			settings.setArrayIndex(device);
-			QString comp_name = settings.value(PreferencesDialog::serial_port_name).toString();
+			QString comp_name = settings.value(PreferencesDialog::device_port).toString();
 			if (port_name == comp_name) {
-				set_capacity(settings.value(PreferencesDialog::serial_capacity).toInt());
-				set_real_time_update(settings.value(PreferencesDialog::serial_real_time_refresh).toBool());
+				set_capacity(settings.value(PreferencesDialog::device_capacity).toInt());
+				set_real_time_update(settings.value(PreferencesDialog::device_real_time_refresh).toBool());
 				break;
 			}
 		}

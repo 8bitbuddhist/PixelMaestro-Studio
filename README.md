@@ -10,6 +10,18 @@ Download and run the latest version of PixelMaestro Studio from the [Releases](h
 
 For information about the library itself, refer to the [PixelMaestro Wiki](https://github.com/8bitbuddhist/PixelMaestro/wiki).
 
+## Running PixelMaestro Studio
+
+### Windows
+
+On Windows, run the `PixelMaestro_Studio.exe` file.
+
+### Linux
+
+PixelMaestro Studio requires Qt 5.9.1 or higher. The easiest way to run it is to [download and install the latest version of Qt from the Qt website](https://www.qt.io/download). Or, if you're using Ubuntu 18.04, install the latest version of Qt from the repositories:
+
+`$ sudo apt-get install qt5-default libqt5serialport5`
+
 ## Building PixelMaestro Studio
 
 ### Build Requirements

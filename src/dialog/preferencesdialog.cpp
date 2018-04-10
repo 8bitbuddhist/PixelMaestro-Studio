@@ -5,20 +5,29 @@
 
 namespace PixelMaestroStudio {
 
-	QString PreferencesDialog::last_cuefile_directory = QStringLiteral("File/LastCuefileDirectory");
+	// "Files" section
+	QString PreferencesDialog::last_cuefile_directory = QStringLiteral("Files/LastCuefileDirectory");
+
+	// "Displays" section
 	QString PreferencesDialog::separate_window_option = QStringLiteral("Displays/SeparateWindow");
 	QString PreferencesDialog::main_window_option = QStringLiteral("Displays/MainWindow");
+
+	// "Maestro" section
 	QString PreferencesDialog::num_sections = QStringLiteral("Maestro/NumSections");
+	QString PreferencesDialog::refresh_rate = QStringLiteral("Maestro/Refresh");
 	QString PreferencesDialog::output_enabled = QStringLiteral("Enabled");
+
+	// "Interface" section
 	QString PreferencesDialog::pause_on_start = QStringLiteral("Interface/PauseOnStart");
 	QString PreferencesDialog::pixel_padding = QStringLiteral("Interface/Padding");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
-	QString PreferencesDialog::refresh_rate = QStringLiteral("Maestro/Refresh");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
-	QString PreferencesDialog::serial_capacity = QStringLiteral("Capacity");
-	QString PreferencesDialog::serial_ports = QStringLiteral("SerialPorts");
-	QString PreferencesDialog::serial_port_name = QStringLiteral("Port");
-	QString PreferencesDialog::serial_real_time_refresh = QStringLiteral("RealTimeRefresh");
+
+	// "Devices" section
+	QString PreferencesDialog::devices = QStringLiteral("Devices");
+	QString PreferencesDialog::device_capacity = QStringLiteral("Capacity");
+	QString PreferencesDialog::device_port = QStringLiteral("Port");
+	QString PreferencesDialog::device_real_time_refresh = QStringLiteral("RealTimeRefresh");
 
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 		ui->setupUi(this);

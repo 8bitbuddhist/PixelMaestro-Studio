@@ -29,11 +29,11 @@ namespace PixelMaestroStudio {
 		// Add saved serial devices to output selection box.
 		QSettings settings;
 		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-		int num_serial_devices = settings.beginReadArray(PreferencesDialog::serial_ports);
+		int num_serial_devices = settings.beginReadArray(PreferencesDialog::devices);
 		for (int device = 0; device < num_serial_devices; device++) {
 			settings.setArrayIndex(device);
 
-			QString device_name = settings.value(PreferencesDialog::serial_port_name).toString();
+			QString device_name = settings.value(PreferencesDialog::device_port).toString();
 			serial_devices_.push_back(SerialDevice(device_name));
 
 			// If the saved port is an available port, connect to it
@@ -41,7 +41,12 @@ namespace PixelMaestroStudio {
 				if (port.systemLocation() == device_name) {
 					QListWidgetItem* item = new QListWidgetItem(device_name);
 					ui->serialOutputListWidget->addItem(item);
-					serial_devices_.last().connect();
+
+					bool connected = serial_devices_.last().connect();
+
+					if (!connected) {
+						QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + "."));
+					}
 					break;
 				}
 			}
@@ -78,15 +83,18 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::on_connectPushButton_clicked() {
 		// Check to make sure the entry isn't blank or already in the list
 		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputListWidget->findItems(ui->serialOutputComboBox->currentText(), Qt::MatchFixedString).count() >= 0) {
+
+			// Initialize and try connecting to the device.
 			SerialDevice device(ui->serialOutputComboBox->currentText());
-			if (!device.connect()) {
-				QMessageBox::information(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + "."));
-			}
-			else {
+			bool connected = device.connect();
+			if (connected) {
 				ui->serialOutputListWidget->addItem(device.get_port_name());
 
 				serial_devices_.push_back(device);
 				save_devices();
+			}
+			else {
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + "."));
 			}
 		}
 		else {
@@ -190,14 +198,14 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::save_devices() {
 		// Save devices
 		QSettings settings;
-		settings.beginWriteArray(PreferencesDialog::serial_ports);
+		settings.beginWriteArray(PreferencesDialog::devices);
 		for (int i = 0; i < ui->serialOutputListWidget->count(); i++) {
 			settings.setArrayIndex(i);
 
 			SerialDevice device = serial_devices_.at(i);
-			settings.setValue(PreferencesDialog::serial_capacity, device.get_capacity());
-			settings.setValue(PreferencesDialog::serial_port_name, device.get_port_name());
-			settings.setValue(PreferencesDialog::serial_real_time_refresh, device.get_real_time_refresh_enabled());
+			settings.setValue(PreferencesDialog::device_capacity, device.get_capacity());
+			settings.setValue(PreferencesDialog::device_port, device.get_port_name());
+			settings.setValue(PreferencesDialog::device_real_time_refresh, device.get_real_time_refresh_enabled());
 		}
 		settings.endArray();
 	}
