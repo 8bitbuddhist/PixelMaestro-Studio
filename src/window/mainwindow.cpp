@@ -91,6 +91,8 @@ namespace PixelMaestroStudio {
 	 * Loads a Cuefile.
 	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
+		// FIXME: Pretty significant memory leak when jumping between Cuefiles
+
 		// Open the window in the last used directory, if possible
 		QSettings settings;
 		QString path = settings.value(PreferencesDialog::last_cuefile_directory, QDir::home().path()).toString();

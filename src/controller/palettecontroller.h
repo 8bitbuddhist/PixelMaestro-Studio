@@ -27,14 +27,14 @@ namespace PixelMaestroStudio {
 				Colors::RGB target_color;
 				bool mirror;
 				QString name = "";
-				QVector<Colors::RGB> colors;
+
 				PaletteType type = PaletteType::Blank;
-				Palette palette = Palette(nullptr, 0, false);
+				Palette palette = Palette(nullptr, 0);
 
 				bool operator==(Colors::RGB* section_colors) {
 					bool match = true;
-					for (uint8_t i = 0; i < this->colors.size(); i++) {
-						if (this->colors[i] != section_colors[i]) {
+					for (uint8_t i = 0; i < this->palette.get_num_colors(); i++) {
+						if (this->palette.get_colors()[i] != section_colors[i]) {
 							match = false;
 						}
 					}
@@ -58,11 +58,8 @@ namespace PixelMaestroStudio {
 					this->mirror = mirror;
 					this->name = new_name;
 					this->type = type;
-					for (uint8_t i = 0; i < num_colors; i++) {
-						this->colors.push_back(new_colors[i]);
-					}
 
-					palette.set_colors(&colors[0], colors.size());
+					palette.set_colors(new_colors, num_colors);
 				}
 			};
 

@@ -14,21 +14,21 @@ namespace PixelMaestroStudio {
 	 * @param parent Parent widget.
 	 * @param target_palette Palette to edit (if applicable).
 	 */
-	PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
+	PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette_wrapper) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
 		ui->setupUi(this);
 
 		// If a valid Palette was passed in, pre-populate fields
-		this->target_palette_ = target_palette;
-		if (target_palette != nullptr) {
-			ui->nameLineEdit->setText(target_palette->name);
-			ui->numColorsSpinBox->setValue(target_palette->colors.size());
-			ui->typeComboBox->setCurrentIndex((uint8_t)target_palette->type);
-			ui->reverseCheckBox->setChecked(target_palette->mirror);
+		this->target_palette_ = target_palette_wrapper;
+		if (target_palette_wrapper != nullptr) {
+			ui->nameLineEdit->setText(target_palette_wrapper->name);
+			ui->numColorsSpinBox->setValue(target_palette_wrapper->palette.get_num_colors());
+			ui->typeComboBox->setCurrentIndex((uint8_t)target_palette_wrapper->type);
+			ui->reverseCheckBox->setChecked(target_palette_wrapper->mirror);
 
-			this->base_color_ = target_palette->base_color;
+			this->base_color_ = target_palette_wrapper->base_color;
 			parent->set_button_color(ui->baseColorButton, base_color_.r, base_color_.g, base_color_.b);
 
-			this->target_color_ = target_palette->target_color;
+			this->target_color_ = target_palette_wrapper->target_color;
 			parent->set_button_color(ui->targetColorButton, target_color_.r, target_color_.g, target_color_.b);
 
 			on_typeComboBox_currentIndexChanged(ui->typeComboBox->currentIndex());
@@ -69,10 +69,7 @@ namespace PixelMaestroStudio {
 			if (target_palette_ != nullptr) {
 				// Update the target Palette
 				target_palette_->name = ui->nameLineEdit->text();
-				target_palette_->colors.resize(num_colors);
-				for (int i = 0; i < num_colors; i++) {
-					target_palette_->colors[i] = colors[i];
-				}
+				target_palette_->palette.set_colors(colors, num_colors);
 				target_palette_->type = (PaletteController::PaletteType)ui->typeComboBox->currentIndex();
 				target_palette_->base_color = base_color_;
 				target_palette_->target_color = target_color_;
