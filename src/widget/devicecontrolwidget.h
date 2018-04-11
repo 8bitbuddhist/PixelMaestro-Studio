@@ -40,6 +40,7 @@ namespace PixelMaestroStudio {
 			void on_capacityLineEdit_editingFinished();
 
 			void set_progress_bar(int val);
+			void set_upload_controls_enabled(bool enabled);
 
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -70,14 +71,15 @@ namespace PixelMaestroStudio {
 				/*
 				 * This whole method sucks, but here's the deal:
 				 *
-				 * When sending a Cuefile to an Arduino, PixelMaestro Studio sends data way too fast, even with a low baud rate.
-				 * The Arduino's serial buffer overflows and it starts dropping Cues. The reason it worked before is probably because we were sending individual Cues and not entire Cuefiles.
-				 * Basically, the Cuefile gets trimmed and the entire thing fails.
+				 * When sending a Cuefile to an Arduino, Qt sends data way too fast, even with a low baud rate.
+				 * The Arduino's serial buffer overflows and it starts dropping Cues.
+				 * Basically, the Cuefile gets cut off at the 65+ byte mark and the entire thing fails.
+				 * The reason it works for live mode is probably because we're sending individual Cues (which are typically 20-30 bytes) and not entire Cuefiles (which are 200+ bytes minimum).
 				 * As a workaround, we break up the Cuefile into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
 				 *
 				 * The final message looks like this:
 				 *	1) "ROMBEG", which signals the Arduino to start writing to EEPROM.
-				 *	2) The Cuefile itself. The entire file gets written to Serial.
+				 *	2) The Cuefile itself split into 64 byte chunks.
 				 *	3) "ROMEND", which signals the Arduino to stop writing to EEPROM.
 				 *
 				 * Resources:
@@ -91,7 +93,8 @@ namespace PixelMaestroStudio {
 				// If the device isn't connected, connect to it first. If we fail to connect, exit.
 				if (!target_device_->get_device()->isOpen() && !target_device_->connect()) return;
 
-				// Send start flag
+				// Start upload process and send start flag
+				emit upload_in_progress(true);
 				QByteArray out = QByteArray("ROMBEG", 6);
 				target_device_->write((const char*)out, out.size());
 
@@ -107,14 +110,16 @@ namespace PixelMaestroStudio {
 				}
 				while (index < parent->get_maestro_cue()->size());
 
-				// Send stop flag
+				// End upload process and send stop flag
 				out = QByteArray("ROMEND", 6);
 				target_device_->write((const char*)out, out.size());
 				emit progress_changed(100);
+				emit upload_in_progress(false);
 			}
 
 		signals:
 			void progress_changed(int progress);
+			void upload_in_progress(bool in_progress);
 
 		private:
 			SerialDevice* target_device_;

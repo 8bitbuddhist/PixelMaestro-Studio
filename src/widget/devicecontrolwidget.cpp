@@ -148,6 +148,7 @@ namespace PixelMaestroStudio {
 		UploadThread* thread = new UploadThread(this, &serial_devices_[ui->serialOutputListWidget->currentRow()]);
 		connect(thread, &UploadThread::finished, thread, &QObject::deleteLater);
 		connect(thread, &UploadThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
+		connect(thread, &UploadThread::upload_in_progress, this, &DeviceControlWidget::set_upload_controls_enabled);
 		thread->start();
 	}
 
@@ -216,6 +217,14 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::set_progress_bar(int val) {
 		ui->uploadProgressBar->setValue(val);
+	}
+
+	/**
+	 * Sets whether the user can click the upload button.
+	 * @param enabled If true, button is enabled.
+	 */
+	void DeviceControlWidget::set_upload_controls_enabled(bool enabled) {
+		ui->sendPushButton->setEnabled(enabled);
 	}
 
 	/**
