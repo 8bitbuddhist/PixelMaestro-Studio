@@ -91,7 +91,7 @@ namespace PixelMaestroStudio {
 	 * Loads a Cuefile.
 	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
-		// FIXME: Pretty significant memory leak when jumping between Cuefiles
+		// FIXME: Significant memory leak when jumping between Cuefiles
 
 		// Open the window in the last used directory, if possible
 		QSettings settings;

@@ -1303,6 +1303,11 @@ namespace PixelMaestroStudio {
 	 * @param serial_only If true, don't run the Cue on the local Maestro.
 	 */
 	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
+		// Update the ShowControl's history
+		if (show_controller_ != nullptr) {
+			add_cue_to_history(cue);
+		}
+
 		/*
 		 * Only run the Cue if Show mode isn't enabled, or if the Cue is a Show Cue
 		 */
@@ -1315,11 +1320,6 @@ namespace PixelMaestroStudio {
 			if (device_extra_control_widget_ != nullptr) {
 				device_extra_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
-		}
-
-		// Update the ShowControl's history
-		if (show_controller_ != nullptr) {
-			add_cue_to_history(cue);
 		}
 	}
 
