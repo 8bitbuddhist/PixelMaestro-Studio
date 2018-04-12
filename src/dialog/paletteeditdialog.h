@@ -18,7 +18,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette = nullptr);
+			explicit PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette_wrapper = nullptr);
 			~PaletteEditDialog();
 
 		private slots:

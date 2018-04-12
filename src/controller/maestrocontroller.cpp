@@ -5,7 +5,6 @@
 #include "animation/sparkleanimation.h"
 #include "animation/waveanimation.h"
 #include "canvas/canvas.h"
-#include "canvas/palettecanvas.h"
 #include "core/maestro.h"
 #include "cue/animationcuehandler.h"
 #include "cue/canvascuehandler.h"
@@ -244,14 +243,13 @@ namespace PixelMaestroStudio {
 				write_cue_to_stream(datastream, canvas_handler->set_frame_timer(section_id, layer_id, canvas->get_frame_timer()->get_interval()));
 			}
 
-			PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(canvas);
-			if (palette_canvas->get_palette() != nullptr) {
-				write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, palette_canvas->get_palette()));
+			if (canvas->get_palette() != nullptr) {
+				write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, canvas->get_palette()));
 			}
 
 			// Draw and save each frame
 			for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-				write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<PaletteCanvas*>(canvas)->get_frame(frame)));
+				write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, canvas->get_frame(frame)));
 				if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
 					write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
 				}

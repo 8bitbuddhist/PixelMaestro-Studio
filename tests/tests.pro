@@ -56,7 +56,6 @@ SOURCES += \
 		../lib/PixelMaestro/src/colorpresets.cpp \
 		../lib/PixelMaestro/src/cue/cuehandler.cpp \
 		../lib/PixelMaestro/src/cue/showcuehandler.cpp \
-		../lib/PixelMaestro/src/canvas/palettecanvas.cpp \
 		../lib/PixelMaestro/src/animation/fireanimation.cpp \
 		../lib/PixelMaestro/src/core/timer/timer.cpp \
 		../lib/PixelMaestro/src/core/timer/animationtimer.cpp \
@@ -103,7 +102,6 @@ HEADERS += \
 		../lib/PixelMaestro/src/cue/sectioncuehandler.h \
 		../lib/PixelMaestro/src/colorpresets.h \
 		../lib/PixelMaestro/src/cue/showcuehandler.h \
-		../lib/PixelMaestro/src/canvas/palettecanvas.h \
 		../lib/PixelMaestro/src/animation/fireanimation.h \
 		../lib/PixelMaestro/src/core/timer/timer.h \
 		../lib/PixelMaestro/src/core/timer/animationtimer.h \

@@ -859,7 +859,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string>Palette</string>
+                 <string>Canvas</string>
                 </property>
                </item>
               </widget>
@@ -1045,11 +1045,14 @@
               </item>
               <item row="8" column="2">
                <widget class="QPushButton" name="selectColorButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="toolTip">
-                 <string>Sets the color used to draw shapes</string>
+                 <string>Displays the selected drawing color</string>
                 </property>
                 <property name="text">
-                 <string>Color...</string>
+                 <string>Color</string>
                 </property>
                </widget>
               </item>

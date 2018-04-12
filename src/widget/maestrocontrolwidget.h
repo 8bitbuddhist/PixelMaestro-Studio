@@ -68,9 +68,10 @@ namespace PixelMaestroStudio {
 			~MaestroControlWidget();
 			void enable_show_edit_mode(bool enable);
 			Section* get_active_section();
+			uint8_t get_canvas_color_index() const;
+			bool get_canvas_painting_enabled();
 			uint8_t get_layer_index();
 			uint8_t get_layer_index(Section* section);
-			bool get_canvas_painting_enabled();
 			MaestroController* get_maestro_controller();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
@@ -89,10 +90,7 @@ namespace PixelMaestroStudio {
 			/// Extra animation controls
 			std::unique_ptr<QWidget> animation_extra_control_widget_;
 
-			/// Temporary storage for the Canvas drawing brush.
-			QColor canvas_color_ = QColor::fromRgb(0, 0, 0);
-
-			/// Color index storage for PaletteCanvases.
+			/// Color index storage for Canvases.
 			uint8_t canvas_color_index_ = 255;
 
 			/// Conversion from canvas_color_ into PixelMaestro color.
@@ -134,7 +132,7 @@ namespace PixelMaestroStudio {
 			void initialize_palettes();
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
-			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette);
+			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper);
 			void set_canvas_controls_enabled(uint8_t index);
 			void set_offset();
 

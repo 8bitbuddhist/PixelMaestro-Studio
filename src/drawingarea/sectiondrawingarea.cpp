@@ -74,16 +74,17 @@ namespace PixelMaestroStudio {
 					if (widget->get_canvas_painting_enabled()) {
 						if (event->buttons() == Qt::LeftButton) {
 							widget->run_cue(
-								widget->canvas_handler->activate(
+								widget->canvas_handler->draw_point(
 									widget->get_section_index(),
 									widget->get_layer_index(),
+									widget->get_canvas_color_index(),
 									pixel.x,
 									pixel.y)
 							);
 						}
 						else if (event->buttons() == Qt::RightButton) {
 							widget->run_cue(
-								widget->canvas_handler->deactivate(
+								widget->canvas_handler->erase_point(
 									widget->get_section_index(),
 									widget->get_layer_index(),
 									pixel.x,
@@ -94,14 +95,6 @@ namespace PixelMaestroStudio {
 
 					// Set the cursor location in the MaestroControlWidget
 					widget->set_canvas_origin(&pixel);
-				}
-				else {
-					if (event->buttons() == Qt::LeftButton) {
-						canvas->activate(pixel.x, pixel.y);
-					}
-					else if (event->buttons() == Qt::RightButton) {
-						canvas->deactivate(pixel.x, pixel.y);
-					}
 				}
 			}
 		}

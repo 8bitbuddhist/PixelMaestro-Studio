@@ -6,7 +6,7 @@
 #include <QImage>
 #include <QImageReader>
 #include "canvasutility.h"
-#include "canvas/palettecanvas.h"
+#include "canvas/canvas.h"
 #include "core/point.h"
 
 namespace PixelMaestroStudio {

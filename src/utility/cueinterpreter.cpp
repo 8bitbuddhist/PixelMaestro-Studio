@@ -22,9 +22,7 @@ namespace PixelMaestroStudio {
 														"Start",
 														"Stop"});
 
-	const QStringList CueInterpreter::CanvasActions({"Activate",
-													 "Deactivate",
-													 "Clear",
+	const QStringList CueInterpreter::CanvasActions({"Clear",
 													 "Draw Circle",
 													 "Draw Frame",
 													 "Draw Line",
@@ -32,6 +30,7 @@ namespace PixelMaestroStudio {
 													 "Draw Rect",
 													 "Draw Text",
 													 "Draw Triangle",
+													 "Erase Point",
 													 "Next Frame",
 													 "Remove Frame Timer",
 													 "Set Colors",
@@ -209,12 +208,19 @@ namespace PixelMaestroStudio {
 		result->append(CanvasActions.at(cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]));
 
 		switch((CanvasCueHandler::Action)cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]) {
-			case CanvasCueHandler::Action::Activate:
-			case CanvasCueHandler::Action::Deactivate:
+			case CanvasCueHandler::Action::Clear:
+				break;
+			case CanvasCueHandler::Action::DrawText:
+				{
+					int start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 7;
+					int size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 6];
+					QString text = QString::fromUtf8((char*)&cue[start], size);
+					result->append(": \"" + text + "\"");
+				}
+				break;
+			case CanvasCueHandler::Action::ErasePoint:
 				result->append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])) + ", ");
 				result->append(QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 2])) + ")");
-				break;
-			case CanvasCueHandler::Action::Clear:
 				break;
 			case CanvasCueHandler::Action::NextFrame:
 				break;
@@ -228,14 +234,6 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasCueHandler::Action::SetNumFrames:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
-				break;
-			case CanvasCueHandler::Action::DrawText:
-				{
-					int start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 7;
-					int size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 6];
-					QString text = QString::fromUtf8((char*)&cue[start], size);
-					result->append(": \"" + text + "\"");
-				}
 				break;
 			default:
 				break;

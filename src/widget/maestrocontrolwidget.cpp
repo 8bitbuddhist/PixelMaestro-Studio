@@ -19,7 +19,6 @@
 #include "animation/sparkleanimationcontrolwidget.h"
 #include "animation/waveanimation.h"
 #include "animation/waveanimationcontrolwidget.h"
-#include "canvas/palettecanvas.h"
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
@@ -165,6 +164,14 @@ namespace PixelMaestroStudio {
 	 */
 	Section* MaestroControlWidget::get_active_section() {
 		return active_section_;
+	}
+
+	/**
+	 * Returns the index of the selected Canvas Palette color.
+	 * @return Canvas Palette color index.
+	 */
+	uint8_t MaestroControlWidget::get_canvas_color_index() const {
+		return canvas_color_index_;
 	}
 
 	/**
@@ -459,7 +466,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the Canvas' palette (PaletteCanvases only)
+	 * Changes the Canvas' palette.
 	 * @param index New index.
 	 */
 	void MaestroControlWidget::on_canvasPaletteComboBox_currentIndexChanged(int index) {
@@ -886,7 +893,7 @@ namespace PixelMaestroStudio {
 			QString name = "Section " + QString::number(get_section_index()) +
 						   " Layer " + QString::number(get_layer_index()) +
 						   " Canvas";
-			palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+			palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->canvasPaletteComboBox->blockSignals(true);
 			ui->canvasPaletteComboBox->addItem(name);
 			ui->canvasPaletteComboBox->blockSignals(false);
@@ -910,16 +917,17 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Sets the active drawing color when using PaletteCanvases.
+	 * Sets the active drawing color.
+	 * This gets passed to the CanvasCueHandler on each draw.
 	 */
 	void MaestroControlWidget::on_palette_canvas_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
 		canvas_color_index_ = sender->objectName().toInt();
 
+		// FIXME: Highlight the selected color
+		// Change the color of the Color button to reflect the selection
 		PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
 		Colors::RGB color = palette_wrapper->palette.get_colors()[canvas_color_index_];
-
-		// Change the color of the Color button to reflect the selection
 		ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
 		run_cue(canvas_handler->set_drawing_color(get_section_index(), get_layer_index(), canvas_color_index_));
@@ -1034,7 +1042,7 @@ namespace PixelMaestroStudio {
 			if (active_section_->get_canvas() != nullptr) {
 				Point frame_bounds(active_section_->get_dimensions()->x, active_section_->get_dimensions()->y);
 
-				PaletteCanvas* canvas = static_cast<PaletteCanvas*>(active_section_->get_canvas());
+				Canvas* canvas = active_section_->get_canvas();
 
 				uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
@@ -1388,8 +1396,8 @@ namespace PixelMaestroStudio {
 			set_canvas_controls_enabled(true);
 
 			// Find the corresponding palette in the Palette Controller.
-			if (static_cast<PaletteCanvas*>(canvas)->get_palette() != nullptr) {
-				palette_index = palette_controller_.find(static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors());
+			if (canvas->get_palette() != nullptr) {
+				palette_index = palette_controller_.find(canvas->get_palette()->get_colors());
 				if (palette_index >= 0) {
 					ui->canvasPaletteComboBox->blockSignals(true);
 					ui->canvasPaletteComboBox->setCurrentIndex(palette_index);
@@ -1399,7 +1407,7 @@ namespace PixelMaestroStudio {
 					QString name = "Section " + QString::number(get_section_index()) +
 								   " Layer " + QString::number(get_layer_index()) +
 								   " Canvas";
-					palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+					palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 					ui->canvasPaletteComboBox->blockSignals(true);
 					ui->canvasPaletteComboBox->addItem(name);
 					ui->canvasPaletteComboBox->setCurrentText(name);
@@ -1435,7 +1443,6 @@ namespace PixelMaestroStudio {
 		ui->loadImageButton->setEnabled(index);
 
 		// Canvas-specific controls
-		ui->selectColorButton->setEnabled(index);
 		ui->canvasPaletteComboBox->setEnabled(index);
 		ui->canvasPaletteLabel->setEnabled(index);
 		ui->canvasEditPaletteButton->setEnabled(index);

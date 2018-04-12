@@ -49,7 +49,6 @@ SOURCES += main.cpp\
 		../lib/PixelMaestro/src/cue/cuehandler.cpp \
 		utility/canvasutility.cpp \
 		../lib/PixelMaestro/src/cue/showcuehandler.cpp \
-		../lib/PixelMaestro/src/canvas/palettecanvas.cpp \
 		widget/maestrocontrolwidget.cpp \
 		widget/palettecontrolwidget.cpp \
 		widget/animation/lightninganimationcontrolwidget.cpp \
@@ -110,7 +109,6 @@ HEADERS += \
 		../lib/PixelMaestro/src/colorpresets.h \
 		utility/canvasutility.h \
 		../lib/PixelMaestro/src/cue/showcuehandler.h \
-		../lib/PixelMaestro/src/canvas/palettecanvas.h \
 		widget/maestrocontrolwidget.h \
 		widget/palettecontrolwidget.h \
 		widget/animation/lightninganimationcontrolwidget.h \
