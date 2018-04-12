@@ -13,5 +13,6 @@
         <file>icon_paint.png</file>
         <file>icon_down.png</file>
         <file>icon_up.png</file>
+        <file>icon_cancel.png</file>
     </qresource>
 </RCC>

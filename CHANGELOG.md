@@ -3,7 +3,8 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.21] - In Progress
+## [v0.30] - In Progress
+WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 
 ### Added
 - Animation Editor
@@ -15,13 +16,15 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added setting to toggle session auto saving/loading when closing/opening PixelMaestro Studio.
 
 ### Changed
--Preferences
+- Canvas
+	- Consolidated all three Canvas types. This "new" Canvas class is structured like a PaletteCanvas with minor changes in behavior, such as having a transparent background by default.
+- Preferences
 	- Moved USB device settings from Preferences dialog to Devices tab.
 - Animation Editor
 	- Fixed MaestroController not properly saving Section scroll settings.
 - File selector dialog now remembers the last directory used.
 - Code cleanup.
-- Lowered minimum Qt version to 5.9.1. This should make it compatible with Ubuntu 18.04.
+- Lowered minimum Qt version to 5.9.1 for compatibility with Ubuntu 18.04.
 
 ## [v0.20.1] - 2018-03-20
 

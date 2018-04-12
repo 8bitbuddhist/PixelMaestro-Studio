@@ -133,7 +133,7 @@ namespace PixelMaestroStudio {
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
 			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper);
-			void set_canvas_controls_enabled(uint8_t index);
+			void set_canvas_controls_enabled(bool enabled);
 			void set_offset();
 
 			// Canvas control handling methods
@@ -153,7 +153,6 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_animationComboBox_currentIndexChanged(int index);
-			void on_canvasComboBox_currentIndexChanged(int index);
 			void on_animationPaletteComboBox_currentIndexChanged(int index);
 			void on_columnsSpinBox_editingFinished();
 			void on_animationTimerSlider_valueChanged(int value);
@@ -187,7 +186,7 @@ namespace PixelMaestroStudio {
 
 			void update_maestro_last_time();
 
-			void on_palette_canvas_color_clicked();
+			void on_canvas_color_clicked();
 			void on_showPauseButton_clicked();
 			void on_canvasEditPaletteButton_clicked();
 			void on_canvasPaletteComboBox_currentIndexChanged(int index);
@@ -206,6 +205,7 @@ namespace PixelMaestroStudio {
 			void on_delaySpinBox_editingFinished();
 			void on_frameIntervalSlider_valueChanged(int value);
 			void on_resyncMaestroButton_clicked();
+			void on_canvasEnableCheckBox_toggled(bool checked);
 	};
 }
 

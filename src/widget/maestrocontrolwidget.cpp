@@ -313,6 +313,9 @@ namespace PixelMaestroStudio {
 		// Set Canvas defaults
 		ui->currentFrameSpinBox->setEnabled(false);
 
+		// Add an event handler to the Canvas color picker cancel button
+		connect(ui->canvasColorPickerCancelButton, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
+
 		// Finally, show the default Section
 		set_active_section(maestro_controller_->get_maestro()->get_section(0));
 		populate_layer_combobox();
@@ -414,31 +417,40 @@ namespace PixelMaestroStudio {
 		run_cue(animation_handler->set_palette(get_section_index(), get_layer_index(), &palette_wrapper->palette));
 	}
 
+	/// Opens the Palette Editor from the Canvas tab.
+	void MaestroControlWidget::on_canvasEditPaletteButton_clicked() {
+		QString palette_name = ui->canvasPaletteComboBox->currentText();
+
+		PaletteControlWidget palette_control(&palette_controller_, palette_name);
+		palette_control.exec();
+		initialize_palettes();
+		ui->canvasPaletteComboBox->setCurrentText(palette_name);
+	}
+
 	/**
-	 * Changes the current Canvas.
-	 * TODO: Convert to checkbox
-	 * @param index Index of the new Canvas type.
+	 * Activates the Canvas.
+	 * @param checked If true, Canvas is enabled.
 	 */
-	void MaestroControlWidget::on_canvasComboBox_currentIndexChanged(int index) {
+	void MaestroControlWidget::on_canvasEnableCheckBox_toggled(bool checked) {
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
-		if (index < 1 && active_section_->get_canvas() != nullptr) {
+		if (!checked && active_section_->get_canvas() != nullptr) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
 				run_cue(section_handler->remove_canvas(get_section_index(), get_layer_index()));
 			}
 			else {
-				// Return to the previous settings and exit.
-				ui->canvasComboBox->blockSignals(true);
-				ui->canvasComboBox->setCurrentIndex(1);
-				ui->canvasComboBox->blockSignals(false);
+				// Return to the previous state and exit.
+				ui->canvasEnableCheckBox->blockSignals(true);
+				ui->canvasEnableCheckBox->setChecked(true);
+				ui->canvasEnableCheckBox->blockSignals(false);
 				return;
 			}
 		}
 
 		// Display/hide controls as necessary
-		set_canvas_controls_enabled(index);
-		if (index > 0) {
+		set_canvas_controls_enabled(checked);
+		if (checked) {
 			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index()));
 
 			// Default to the circle radio button so that the controls can be refreshed
@@ -453,16 +465,6 @@ namespace PixelMaestroStudio {
 			ui->canvasPlaybackStartStopToolButton->setChecked(false);
 			on_canvasPlaybackStartStopToolButton_toggled(false);
 		}
-	}
-
-	/// Opens the Palette Editor from the Canvas tab.
-	void MaestroControlWidget::on_canvasEditPaletteButton_clicked() {
-		QString palette_name = ui->canvasPaletteComboBox->currentText();
-
-		PaletteControlWidget palette_control(&palette_controller_, palette_name);
-		palette_control.exec();
-		initialize_palettes();
-		ui->canvasPaletteComboBox->setCurrentText(palette_name);
 	}
 
 	/**
@@ -920,15 +922,22 @@ namespace PixelMaestroStudio {
 	 * Sets the active drawing color.
 	 * This gets passed to the CanvasCueHandler on each draw.
 	 */
-	void MaestroControlWidget::on_palette_canvas_color_clicked() {
+	void MaestroControlWidget::on_canvas_color_clicked() {
 		QPushButton* sender = (QPushButton*)QObject::sender();
-		canvas_color_index_ = sender->objectName().toInt();
 
-		// FIXME: Highlight the selected color
-		// Change the color of the Color button to reflect the selection
-		PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
-		Colors::RGB color = palette_wrapper->palette.get_colors()[canvas_color_index_];
-		ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+		if (sender != ui->canvasColorPickerCancelButton) {
+			canvas_color_index_ = sender->objectName().toInt();
+
+			// FIXME: Highlight the selected color
+			// Change the color of the Color button to reflect the selection
+			PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
+			Colors::RGB color = palette_wrapper->palette.get_colors()[canvas_color_index_];
+			ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+		}
+		else {
+			canvas_color_index_ = 255;
+			ui->selectColorButton->setStyleSheet(QString("background-color: transparent;"));
+		}
 
 		run_cue(canvas_handler->set_drawing_color(get_section_index(), get_layer_index(), canvas_color_index_));
 	}
@@ -1139,8 +1148,11 @@ namespace PixelMaestroStudio {
 		// Delete existing color buttons
 		QList<QPushButton*> buttons = ui->canvasColorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
 		for (QPushButton* button : buttons) {
-			disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
-			delete button;
+			// Remove all but the Cancel button
+			if (button != ui->canvasColorPickerCancelButton) {
+				disconnect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
+				delete button;
+			}
 		}
 
 		// Create new buttons and add an event handler that triggers on_canvas_color_clicked()
@@ -1155,7 +1167,7 @@ namespace PixelMaestroStudio {
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
 			layout->addWidget(button);
-			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_palette_canvas_color_clicked);
+			connect(button, &QPushButton::clicked, this, &MaestroControlWidget::on_canvas_color_clicked);
 		}
 	}
 
@@ -1378,7 +1390,7 @@ namespace PixelMaestroStudio {
 		set_advanced_animation_controls(animation);
 
 		// Get Canvas
-		ui->canvasComboBox->blockSignals(true);
+		ui->canvasEnableCheckBox->blockSignals(true);
 		ui->frameCountSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->blockSignals(true);
 		ui->frameIntervalSlider->blockSignals(true);
@@ -1386,7 +1398,7 @@ namespace PixelMaestroStudio {
 
 		Canvas* canvas = section->get_canvas();
 		if (canvas != nullptr) {
-			ui->canvasComboBox->setCurrentIndex(1);
+			ui->canvasEnableCheckBox->setChecked(true);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 			if (canvas->get_frame_timer() != nullptr) {
@@ -1418,7 +1430,7 @@ namespace PixelMaestroStudio {
 			populate_palette_canvas_color_selection(palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex()));
 		}
 		else {
-			ui->canvasComboBox->setCurrentIndex(0);
+			ui->canvasEnableCheckBox->setChecked(false);
 			ui->frameCountSpinBox->setValue(1);
 			ui->currentFrameSpinBox->setValue(0);
 			ui->frameIntervalSlider->setValue(100);
@@ -1430,23 +1442,23 @@ namespace PixelMaestroStudio {
 		ui->currentFrameSpinBox->blockSignals(false);
 		ui->frameIntervalSlider->blockSignals(false);
 		ui->frameIntervalSpinBox->blockSignals(false);
-		ui->canvasComboBox->blockSignals(false);
+		ui->canvasEnableCheckBox->blockSignals(false);
 	}
 
 	/**
 	 * Enables Canvas controls.
-	 * @param index Index of the Canvas in the drop-down list. 0 for no Canvas.
+	 * @param enabled If true, enable the controls.
 	 */
-	void MaestroControlWidget::set_canvas_controls_enabled(uint8_t index) {
-		ui->drawingToolsGroupBox->setEnabled(index);
-		ui->animationToolsGroupBox->setEnabled(index);
-		ui->loadImageButton->setEnabled(index);
+	void MaestroControlWidget::set_canvas_controls_enabled(bool enabled) {
+		ui->drawingToolsGroupBox->setEnabled(enabled);
+		ui->animationToolsGroupBox->setEnabled(enabled);
+		ui->loadImageButton->setEnabled(enabled);
 
 		// Canvas-specific controls
-		ui->canvasPaletteComboBox->setEnabled(index);
-		ui->canvasPaletteLabel->setEnabled(index);
-		ui->canvasEditPaletteButton->setEnabled(index);
-		ui->canvasColorPickerScrollArea->setVisible(index);
+		ui->canvasPaletteComboBox->setEnabled(enabled);
+		ui->canvasPaletteLabel->setEnabled(enabled);
+		ui->canvasEditPaletteButton->setEnabled(enabled);
+		ui->canvasColorPickerScrollArea->setEnabled(enabled);
 	}
 
 	/**
