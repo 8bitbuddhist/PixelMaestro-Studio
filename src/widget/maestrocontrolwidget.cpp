@@ -19,7 +19,6 @@
 #include "animation/sparkleanimationcontrolwidget.h"
 #include "animation/waveanimation.h"
 #include "animation/waveanimationcontrolwidget.h"
-#include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
@@ -410,13 +409,12 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Changes the current Canvas.
+	 * TODO: Convert to checkbox
 	 * @param index Index of the new Canvas type.
 	 */
 	void MaestroControlWidget::on_canvasComboBox_currentIndexChanged(int index) {
-		CanvasType new_canvas_type = (CanvasType)(index - 1);
-
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
-		if (active_section_->get_canvas() && active_section_->get_canvas()->get_type() != new_canvas_type) {
+		if (index < 1 && active_section_->get_canvas() != nullptr) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
@@ -425,7 +423,7 @@ namespace PixelMaestroStudio {
 			else {
 				// Return to the previous settings and exit.
 				ui->canvasComboBox->blockSignals(true);
-				ui->canvasComboBox->setCurrentIndex((int)active_section_->get_canvas()->get_type() + 1);
+				ui->canvasComboBox->setCurrentIndex(1);
 				ui->canvasComboBox->blockSignals(false);
 				return;
 			}
@@ -434,16 +432,14 @@ namespace PixelMaestroStudio {
 		// Display/hide controls as necessary
 		set_canvas_controls_enabled(index);
 		if (index > 0) {
-			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index(), new_canvas_type));
+			run_cue(section_handler->set_canvas(get_section_index(), get_layer_index()));
 
 			// Default to the circle radio button so that the controls can be refreshed
 			ui->circleToolButton->setChecked(true);
 			on_circleToolButton_toggled(true);
 
 			// Select a palette
-			if (new_canvas_type == CanvasType::PaletteCanvas) {
-				on_canvasPaletteComboBox_currentIndexChanged(0);
-			}
+			on_canvasPaletteComboBox_currentIndexChanged(0);
 		}
 		else {
 			// Disable Canvas playback
@@ -606,51 +602,23 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_drawButton_clicked() {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
-		switch ((CanvasType)(ui->canvasComboBox->currentIndex() - 1)) {
-			case CanvasType::ColorCanvas:
-				{
-					if (checked_button == ui->circleToolButton) {
-						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->lineToolButton) {
-						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-					}
-					else if (checked_button == ui->paintToolButton) {
-						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value()));
-					}
-					else if (checked_button == ui->rectToolButton) {
-						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->textToolButton) {
-						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-					}
-					else if (checked_button == ui->triangleToolButton) {
-						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-				}
-				break;
-			case CanvasType::PaletteCanvas:
-				{
-					if (checked_button == ui->circleToolButton) {
-						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->lineToolButton) {
-						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-					}
-					else if (checked_button == ui->paintToolButton) {
-						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value()));
-					}
-					else if (checked_button == ui->rectToolButton) {
-						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->textToolButton) {
-						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-					}
-					else if (checked_button == ui->triangleToolButton) {
-						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-				}
-				break;
+		if (checked_button == ui->circleToolButton) {
+			run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->lineToolButton) {
+			run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
+		}
+		else if (checked_button == ui->paintToolButton) {
+			run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value()));
+		}
+		else if (checked_button == ui->rectToolButton) {
+			run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
+		}
+		else if (checked_button == ui->textToolButton) {
+			run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
+		}
+		else if (checked_button == ui->triangleToolButton) {
+			run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), canvas_color_index_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
 		}
 	}
 
@@ -914,17 +882,15 @@ namespace PixelMaestroStudio {
 				on_canvasPlaybackStartStopToolButton_toggled(false);
 			}
 
-			// If PaletteCanvas, add Palette to list
-			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				QString name = "Section " + QString::number(get_section_index()) +
-							   " Layer " + QString::number(get_layer_index()) +
-							   " Canvas";
-				palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-				ui->canvasPaletteComboBox->blockSignals(true);
-				ui->canvasPaletteComboBox->addItem(name);
-				ui->canvasPaletteComboBox->blockSignals(false);
-				ui->canvasPaletteComboBox->setCurrentText(name);
-			}
+			// Add Palette to list
+			QString name = "Section " + QString::number(get_section_index()) +
+						   " Layer " + QString::number(get_layer_index()) +
+						   " Canvas";
+			palette_controller_.add_palette(name, static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors(), static_cast<PaletteCanvas*>(canvas)->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+			ui->canvasPaletteComboBox->blockSignals(true);
+			ui->canvasPaletteComboBox->addItem(name);
+			ui->canvasPaletteComboBox->blockSignals(false);
+			ui->canvasPaletteComboBox->setCurrentText(name);
 
 			// Start playback
 			ui->canvasPlaybackStartStopToolButton->setChecked(true);
@@ -1067,66 +1033,28 @@ namespace PixelMaestroStudio {
 			 */
 			if (active_section_->get_canvas() != nullptr) {
 				Point frame_bounds(active_section_->get_dimensions()->x, active_section_->get_dimensions()->y);
-				if (active_section_->get_canvas()->get_type() == CanvasType::ColorCanvas) {
-					ColorCanvas* canvas = static_cast<ColorCanvas*>(active_section_->get_canvas());
 
-					Colors::RGB** frames = new Colors::RGB*[canvas->get_num_frames()];
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						frames[frame] = new Colors::RGB[frame_bounds.size()];
-					}
-					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
+				PaletteCanvas* canvas = static_cast<PaletteCanvas*>(active_section_->get_canvas());
 
-					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
-
-					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
-
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						delete[] frames[frame];
-					}
-					delete[] frames;
+				uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					frames[frame] = new uint8_t[frame_bounds.size()];
 				}
-				else if (active_section_->get_canvas()->get_type() == CanvasType::PaletteCanvas) {
-					PaletteCanvas* canvas = static_cast<PaletteCanvas*>(active_section_->get_canvas());
+				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
 
-					uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						frames[frame] = new uint8_t[frame_bounds.size()];
-					}
-					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
+				run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 
-					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
+				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
 
-					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
-
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						delete[] frames[frame];
-					}
-					delete[] frames;
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					delete[] frames[frame];
 				}
+				delete[] frames;
 			}
 			else {	// No Canvas set
 				run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
 			}
 		}
-	}
-
-	/**
-	 * Sets the ColorCanvas drawing color.
-	 */
-	void MaestroControlWidget::on_selectColorButton_clicked() {
-		QColor new_color = QColorDialog::getColor(canvas_color_, this);
-
-		if (new_color != canvas_color_) {
-			canvas_color_ = new_color;
-		}
-
-		ui->selectColorButton->setStyleSheet("background-color: " + canvas_color_.name());
-
-		canvas_rgb_color_.r = canvas_color_.red();
-		canvas_rgb_color_.g = canvas_color_.green();
-		canvas_rgb_color_.b = canvas_color_.blue();
-
-		run_cue(canvas_handler->set_drawing_color(get_section_index(), get_layer_index(), canvas_rgb_color_));
 	}
 
 	/**
@@ -1450,18 +1378,18 @@ namespace PixelMaestroStudio {
 
 		Canvas* canvas = section->get_canvas();
 		if (canvas != nullptr) {
-			ui->canvasComboBox->setCurrentIndex((int)canvas->get_type() + 1);
+			ui->canvasComboBox->setCurrentIndex(1);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 			if (canvas->get_frame_timer() != nullptr) {
 				ui->frameIntervalSlider->setValue(canvas->get_frame_timer()->get_interval());
 				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 			}
-			set_canvas_controls_enabled(((uint8_t)canvas->get_type() + 1));
+			set_canvas_controls_enabled(true);
 
-			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				// Find the corresponding palette in the Palette Controller.
-				int palette_index = palette_controller_.find(static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors());
+			// Find the corresponding palette in the Palette Controller.
+			if (static_cast<PaletteCanvas*>(canvas)->get_palette() != nullptr) {
+				palette_index = palette_controller_.find(static_cast<PaletteCanvas*>(canvas)->get_palette()->get_colors());
 				if (palette_index >= 0) {
 					ui->canvasPaletteComboBox->blockSignals(true);
 					ui->canvasPaletteComboBox->setCurrentIndex(palette_index);
@@ -1477,9 +1405,9 @@ namespace PixelMaestroStudio {
 					ui->canvasPaletteComboBox->setCurrentText(name);
 					ui->canvasPaletteComboBox->blockSignals(false);
 				}
-
-				populate_palette_canvas_color_selection(palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex()));
 			}
+
+			populate_palette_canvas_color_selection(palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex()));
 		}
 		else {
 			ui->canvasComboBox->setCurrentIndex(0);
@@ -1507,12 +1435,11 @@ namespace PixelMaestroStudio {
 		ui->loadImageButton->setEnabled(index);
 
 		// Canvas-specific controls
-		CanvasType type = (CanvasType)(index - 1);
-		ui->selectColorButton->setEnabled(index && (type == CanvasType::ColorCanvas || type == CanvasType::PaletteCanvas));
-		ui->canvasPaletteComboBox->setEnabled(index && type == CanvasType::PaletteCanvas);
-		ui->canvasPaletteLabel->setEnabled(index && type == CanvasType::PaletteCanvas);
-		ui->canvasEditPaletteButton->setEnabled(index && type == CanvasType::PaletteCanvas);
-		ui->canvasColorPickerScrollArea->setVisible(index && type == CanvasType::PaletteCanvas);
+		ui->selectColorButton->setEnabled(index);
+		ui->canvasPaletteComboBox->setEnabled(index);
+		ui->canvasPaletteLabel->setEnabled(index);
+		ui->canvasEditPaletteButton->setEnabled(index);
+		ui->canvasColorPickerScrollArea->setVisible(index);
 	}
 
 	/**

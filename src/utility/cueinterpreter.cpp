@@ -81,9 +81,6 @@ namespace PixelMaestroStudio {
 	const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
 															 "Vertical"});
 
-	const QStringList CueInterpreter::CanvasTypes({"Color",
-												   "Palette"});
-
 	const QStringList CueInterpreter::ColorMixModes({"None",
 													 "Alpha",
 													 "Multiply",
@@ -208,12 +205,8 @@ namespace PixelMaestroStudio {
 	void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
 		result->append("Section " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::SectionByte]) + Delimiter);
 		result->append("Layer " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::LayerByte]) + Delimiter);
-		if (cue[(uint8_t)CanvasCueHandler::Byte::TypeByte] != 255) {
-			result->append(CanvasTypes.at(cue[(uint8_t)CanvasCueHandler::Byte::TypeByte]) + "Canvas" + Delimiter);
-		}
+		result->append("Canvas" + Delimiter);
 		result->append(CanvasActions.at(cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]));
-
-		CanvasType type = (CanvasType)cue[(uint8_t)CanvasCueHandler::Byte::TypeByte];
 
 		switch((CanvasCueHandler::Action)cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]) {
 			case CanvasCueHandler::Action::Activate:
@@ -238,18 +231,8 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasCueHandler::Action::DrawText:
 				{
-					int start = 0;
-					int size = 0;
-					switch (type) {
-						case CanvasType::ColorCanvas:
-							start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 9;
-							size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 8];
-							break;
-						case CanvasType::PaletteCanvas:
-							start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 7;
-							size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 6];
-							break;
-					}
+					int start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 7;
+					int size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 6];
 					QString text = QString::fromUtf8((char*)&cue[start], size);
 					result->append(": \"" + text + "\"");
 				}
@@ -296,8 +279,7 @@ namespace PixelMaestroStudio {
 				result->append(": " + AnimationTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
 				break;
 			case SectionCueHandler::Action::SetCanvas:
-				result->append(": " + CanvasTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
-				result->append(", " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])) + " frame(s)";
+				result->append(", " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])) + " frame(s)";
 				break;
 			case SectionCueHandler::Action::SetDimensions:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));

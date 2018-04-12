@@ -8,7 +8,6 @@
 #include <QByteArray>
 #include <QString>
 #include "canvas/canvas.h"
-#include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "core/colors.h"
 #include "widget/maestrocontrolwidget.h"

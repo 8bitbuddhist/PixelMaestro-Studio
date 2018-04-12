@@ -5,8 +5,6 @@
 #include "animation/sparkleanimation.h"
 #include "animation/waveanimation.h"
 #include "canvas/canvas.h"
-#include "canvas/canvastype.h"
-#include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "core/maestro.h"
 #include "cue/animationcuehandler.h"
@@ -238,7 +236,7 @@ namespace PixelMaestroStudio {
 		// Save Canvas settings
 		Canvas* canvas = section->get_canvas();
 		if (canvas != nullptr) {
-			write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_type(), canvas->get_num_frames()));
+			write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_num_frames()));
 
 			CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasCueHandler);
 
@@ -246,24 +244,14 @@ namespace PixelMaestroStudio {
 				write_cue_to_stream(datastream, canvas_handler->set_frame_timer(section_id, layer_id, canvas->get_frame_timer()->get_interval()));
 			}
 
-			// Save the PaletteCanvas' palette
-			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(canvas);
-
-				if (palette_canvas->get_palette() != nullptr) {
-					write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, palette_canvas->get_palette()));
-				}
+			PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(canvas);
+			if (palette_canvas->get_palette() != nullptr) {
+				write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, palette_canvas->get_palette()));
 			}
 
 			// Draw and save each frame
 			for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-				switch (canvas->get_type()) {
-					case CanvasType::ColorCanvas:
-						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
-						break;
-					case CanvasType::PaletteCanvas:
-						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<PaletteCanvas*>(canvas)->get_frame(frame)));
-				}
+				write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<PaletteCanvas*>(canvas)->get_frame(frame)));
 				if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
 					write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
 				}

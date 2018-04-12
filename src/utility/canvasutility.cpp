@@ -6,7 +6,6 @@
 #include <QImage>
 #include <QImageReader>
 #include "canvasutility.h"
-#include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "core/point.h"
 
@@ -33,32 +32,28 @@ namespace PixelMaestroStudio {
 		for (uint16_t i = 0; i < image.imageCount(); i++) {
 			QImage frame = image.read();
 
-			// For PaletteCanvases, convert the image into an 8-bit analogue
-			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				frame = frame.convertToFormat(QImage::Format_Indexed8);
-			}
+			frame = frame.convertToFormat(QImage::Format_Indexed8);
 
 			// Extract the image's color table
 			QVector<QRgb> color_table = frame.colorTable();
 
-			// For PaletteCanvases, set the Canvas' palette before continuing.
-			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-
-				// Pare down the frame's palette so it fits in the Canvas' palette.
-				while (color_table.size() >= 256) {
-					color_table.removeLast();
-				}
-
-				// Copy the color table into a temporary RGB array so we can Cue it
-				Colors::RGB color_table_rgb[color_table.size()];
-				for (uint8_t color = 0; color < color_table.size() - 1; color++) {
-					color_table_rgb[color].r = qRed(color_table.at(color));
-					color_table_rgb[color].g = qGreen(color_table.at(color));
-					color_table_rgb[color].b = qBlue(color_table.at(color));
-				}
-
-				maestro_control->run_cue(maestro_control->canvas_handler->set_palette(maestro_control->get_section_index(), maestro_control->get_layer_index(), new Palette(&color_table_rgb[0], color_table.size())));
+			/*
+			 * Set the Canvas' palette before continuing.
+			 * Pare down the frame's palette so it fits in the Canvas' palette.
+			 */
+			while (color_table.size() >= 256) {
+				color_table.removeLast();
 			}
+
+			// Copy the color table into a temporary RGB array so we can Cue it
+			Colors::RGB color_table_rgb[color_table.size()];
+			for (uint8_t color = 0; color < color_table.size() - 1; color++) {
+				color_table_rgb[color].r = qRed(color_table.at(color));
+				color_table_rgb[color].g = qGreen(color_table.at(color));
+				color_table_rgb[color].b = qBlue(color_table.at(color));
+			}
+
+			maestro_control->run_cue(maestro_control->canvas_handler->set_palette(maestro_control->get_section_index(), maestro_control->get_layer_index(), new Palette(&color_table_rgb[0], color_table.size())));
 
 			// Iterate over each pixel and the frame and re-draw it
 			for (uint16_t y = 0; y < canvas_size.height(); y++) {
@@ -66,16 +61,7 @@ namespace PixelMaestroStudio {
 					cursor.set(x, y);
 					if (canvas->in_bounds(cursor.x, cursor.y)) {
 						QColor pix_color = frame.pixelColor(x, y);
-						Colors::RGB color(pix_color.red(), pix_color.green(), pix_color.blue());
-
-						switch (canvas->get_type()) {
-							case CanvasType::ColorCanvas:
-								maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color, x, y));
-								break;
-							case CanvasType::PaletteCanvas:
-								maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color_table.indexOf(pix_color.rgb()), x, y));
-								break;
-						}
+						maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color_table.indexOf(pix_color.rgb()), x, y));
 					}
 				}
 			}

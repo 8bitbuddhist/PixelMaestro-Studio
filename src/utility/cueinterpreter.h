@@ -28,7 +28,6 @@ namespace PixelMaestroStudio {
 			static const QStringList ShowTimings;
 			static const QStringList AnimationTypes;
 			static const QStringList AnimationOrientations;
-			static const QStringList CanvasTypes;
 			static const QStringList ColorMixModes;
 			static const QString Delimiter;
 

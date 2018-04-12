@@ -178,7 +178,6 @@ namespace PixelMaestroStudio {
 			void on_frameCountSpinBox_editingFinished();
 			void on_currentFrameSpinBox_editingFinished();
 			void on_frameIntervalSpinBox_editingFinished();
-			void on_selectColorButton_clicked();
 			void on_loadImageButton_clicked();
 			void on_clearButton_clicked();
 			void on_drawButton_clicked();
