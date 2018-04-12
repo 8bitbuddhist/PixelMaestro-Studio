@@ -19,7 +19,6 @@
 #include "animation/sparkleanimationcontrolwidget.h"
 #include "animation/waveanimation.h"
 #include "animation/waveanimationcontrolwidget.h"
-#include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "colorpresets.h"
@@ -386,6 +385,7 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Changes the current animation.
+	 * TODO: Allow for no animation
 	 * @param index Index of the new animation.
 	 */
 	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
@@ -607,28 +607,6 @@ namespace PixelMaestroStudio {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
 		switch ((CanvasType)(ui->canvasComboBox->currentIndex() - 1)) {
-			case CanvasType::AnimationCanvas:
-				{
-					if (checked_button == ui->circleToolButton) {
-						run_cue(canvas_handler->draw_circle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->lineToolButton) {
-						run_cue(canvas_handler->draw_line(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value()));
-					}
-					else if (checked_button == ui->paintToolButton) {
-						run_cue(canvas_handler->draw_point(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value()));
-					}
-					else if (checked_button == ui->rectToolButton) {
-						run_cue(canvas_handler->draw_rect(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-					else if (checked_button == ui->textToolButton) {
-						run_cue(canvas_handler->draw_text(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), (Font::Type)ui->fontComboBox->currentIndex(), ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size()));
-					}
-					else if (checked_button == ui->triangleToolButton) {
-						run_cue(canvas_handler->draw_triangle(get_section_index(), get_layer_index(), ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked()));
-					}
-				}
-				break;
 			case CanvasType::ColorCanvas:
 				{
 					if (checked_button == ui->circleToolButton) {
@@ -1089,25 +1067,7 @@ namespace PixelMaestroStudio {
 			 */
 			if (active_section_->get_canvas() != nullptr) {
 				Point frame_bounds(active_section_->get_dimensions()->x, active_section_->get_dimensions()->y);
-				if (active_section_->get_canvas()->get_type() == CanvasType::AnimationCanvas) {
-					AnimationCanvas* canvas = static_cast<AnimationCanvas*>(active_section_->get_canvas());
-
-					bool** frames = new bool*[canvas->get_num_frames()];
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						frames[frame] = new bool[frame_bounds.size()];
-					}
-					CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
-
-					run_cue(section_handler->set_dimensions(get_section_index(), 0, x, y));
-
-					CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, this);
-
-					for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-						delete[] frames[frame];
-					}
-					delete[] frames;
-				}
-				else if (active_section_->get_canvas()->get_type() == CanvasType::ColorCanvas) {
+				if (active_section_->get_canvas()->get_type() == CanvasType::ColorCanvas) {
 					ColorCanvas* canvas = static_cast<ColorCanvas*>(active_section_->get_canvas());
 
 					Colors::RGB** frames = new Colors::RGB*[canvas->get_num_frames()];

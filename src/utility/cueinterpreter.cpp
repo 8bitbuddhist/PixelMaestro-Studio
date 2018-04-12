@@ -81,8 +81,7 @@ namespace PixelMaestroStudio {
 	const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
 															 "Vertical"});
 
-	const QStringList CueInterpreter::CanvasTypes({"Animation",
-												   "Color",
+	const QStringList CueInterpreter::CanvasTypes({"Color",
 												   "Palette"});
 
 	const QStringList CueInterpreter::ColorMixModes({"None",
@@ -242,10 +241,6 @@ namespace PixelMaestroStudio {
 					int start = 0;
 					int size = 0;
 					switch (type) {
-						case CanvasType::AnimationCanvas:
-							start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 6;
-							size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 5];
-							break;
 						case CanvasType::ColorCanvas:
 							start = (uint8_t)CanvasCueHandler::Byte::OptionsByte + 9;
 							size = cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 8];

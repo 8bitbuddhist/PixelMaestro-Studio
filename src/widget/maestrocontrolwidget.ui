@@ -859,11 +859,6 @@
                </item>
                <item>
                 <property name="text">
-                 <string>Animation</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
                  <string>Color</string>
                 </property>
                </item>

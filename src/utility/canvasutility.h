@@ -7,7 +7,6 @@
 
 #include <QByteArray>
 #include <QString>
-#include "canvas/animationcanvas.h"
 #include "canvas/canvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"

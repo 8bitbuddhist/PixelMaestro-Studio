@@ -36,7 +36,6 @@ SOURCES += main.cpp\
 		../lib/PixelMaestro/src/animation/plasmaanimation.cpp \
 		../lib/PixelMaestro/src/animation/lightninganimation.cpp \
 		../lib/PixelMaestro/src/canvas/colorcanvas.cpp \
-		../lib/PixelMaestro/src/canvas/animationcanvas.cpp \
 		../lib/PixelMaestro/src/canvas/canvas.cpp \
 		../lib/PixelMaestro/src/cue/event.cpp \
 		../lib/PixelMaestro/src/cue/show.cpp \
@@ -100,7 +99,6 @@ HEADERS += \
 		../lib/PixelMaestro/src/animation/lightninganimation.h \
 		../lib/PixelMaestro/src/canvas/colorcanvas.h \
 		../lib/PixelMaestro/src/canvas/canvastype.h \
-		../lib/PixelMaestro/src/canvas/animationcanvas.h \
 		../lib/PixelMaestro/src/canvas/canvas.h \
 		../lib/PixelMaestro/src/cue/event.h \
 		../lib/PixelMaestro/src/cue/show.h \

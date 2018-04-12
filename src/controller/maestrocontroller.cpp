@@ -4,7 +4,6 @@
 #include "animation/radialanimation.h"
 #include "animation/sparkleanimation.h"
 #include "animation/waveanimation.h"
-#include "canvas/animationcanvas.h"
 #include "canvas/canvas.h"
 #include "canvas/canvastype.h"
 #include "canvas/colorcanvas.h"
@@ -249,15 +248,16 @@ namespace PixelMaestroStudio {
 
 			// Save the PaletteCanvas' palette
 			if (canvas->get_type() == CanvasType::PaletteCanvas) {
-				write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, static_cast<PaletteCanvas*>(canvas)->get_palette()));
+				PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(canvas);
+
+				if (palette_canvas->get_palette() != nullptr) {
+					write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, palette_canvas->get_palette()));
+				}
 			}
 
 			// Draw and save each frame
 			for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 				switch (canvas->get_type()) {
-					case CanvasType::AnimationCanvas:
-						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame)));
-						break;
 					case CanvasType::ColorCanvas:
 						write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame)));
 						break;

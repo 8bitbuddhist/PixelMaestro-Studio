@@ -6,7 +6,6 @@
 #include <QImage>
 #include <QImageReader>
 #include "canvasutility.h"
-#include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/palettecanvas.h"
 #include "core/point.h"
@@ -70,14 +69,6 @@ namespace PixelMaestroStudio {
 						Colors::RGB color(pix_color.red(), pix_color.green(), pix_color.blue());
 
 						switch (canvas->get_type()) {
-							case CanvasType::AnimationCanvas:
-								{
-									// Only draw if the Pixel is not completely black
-									if (color != Colors::RGB {0, 0, 0}) {
-										maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), x, y));
-									}
-								}
-								break;
 							case CanvasType::ColorCanvas:
 								maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color, x, y));
 								break;
