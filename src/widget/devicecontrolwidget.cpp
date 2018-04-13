@@ -160,6 +160,7 @@ namespace PixelMaestroStudio {
 		ui->disconnectPushButton->setEnabled(currentRow > -1);
 		ui->deviceSettingsGroupBox->setEnabled(currentRow > -1);
 		ui->uploadProgressBar->setValue(0);
+		ui->sendPushButton->setEnabled(true);
 
 		if (currentRow > -1) {
 			ui->capacityLineEdit->setText(QString::number(serial_devices_[currentRow].get_capacity()));
@@ -234,7 +235,18 @@ namespace PixelMaestroStudio {
 		if (!maestro_control_widget_->loading_cue_) {
 			// Calculate and display the size of the current Maestro configuration
 			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
-			maestro_control_widget_->get_maestro_controller()->save_maestro_to_datastream(&datastream);
+
+			MaestroController* controller = maestro_control_widget_->get_maestro_controller();
+
+			// Block certain Cues from being added to the Cuefile
+			controller->block_cue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions);
+
+			// Generate the Cuefile
+			controller->save_maestro_to_datastream(&datastream);
+
+			// Reset blocked Cues
+			controller->clear_blocked_cues();
+
 			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 			check_device_rom_capacity();
 		}

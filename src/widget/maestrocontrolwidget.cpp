@@ -928,7 +928,6 @@ namespace PixelMaestroStudio {
 		if (sender != ui->canvasColorPickerCancelButton) {
 			canvas_color_index_ = sender->objectName().toInt();
 
-			// FIXME: Highlight the selected color
 			// Change the color of the Color button to reflect the selection
 			PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(ui->canvasPaletteComboBox->currentIndex());
 			Colors::RGB color = palette_wrapper->palette.get_colors()[canvas_color_index_];

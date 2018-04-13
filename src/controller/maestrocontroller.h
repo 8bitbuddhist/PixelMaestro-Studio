@@ -24,9 +24,21 @@ namespace PixelMaestroStudio {
 	class MaestroController : public QObject {
 		Q_OBJECT
 		public:
+			/**
+			 * Sets a Cue that should be blocked from serialization.
+			 */
+			struct BlockedCue {
+				/// The Handler that this Cue belongs to.
+				CueController::Handler handler;
+				/// The action being performed.
+				uint8_t action;
+			};
+
 			MaestroController();
 			~MaestroController();
 			void add_drawing_area(MaestroDrawingArea* drawing_area);
+			void block_cue(CueController::Handler handler, uint8_t action_index);
+			void clear_blocked_cues();
 			Maestro* get_maestro();
 			bool get_running();
 			uint64_t get_total_elapsed_time();
@@ -40,6 +52,9 @@ namespace PixelMaestroStudio {
 			void start();
 
 		private:
+			/// List of Cues that should be blocked from executing.
+			QVector<BlockedCue> blocked_cues_;
+
 			/// References each drawing area that the Maestro is rendering to.
 			QVector<MaestroDrawingArea*> drawing_areas_;
 

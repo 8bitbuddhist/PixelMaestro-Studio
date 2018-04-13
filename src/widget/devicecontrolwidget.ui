@@ -60,7 +60,7 @@
          <string>Updates the device as soon as the action is performed.</string>
         </property>
         <property name="text">
-         <string>Real-time updates</string>
+         <string>Live updates</string>
         </property>
        </widget>
       </item>

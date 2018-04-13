@@ -98,6 +98,11 @@ namespace PixelMaestroStudio {
 				QByteArray out = QByteArray("ROMBEG", 6);
 				target_device_->write((const char*)out, out.size());
 
+				// Send Cuefile size first
+				IntByteConvert size(parent->get_maestro_cue()->size());
+				uint8_t size_arr[] = {size.converted_0, size.converted_1};
+				target_device_->write((const char*)size_arr, 2);
+
 				// Send Cuefile broken up into 64-bit chunks
 				int index = 0;
 				int sleep_period = 250;	// Wait 250 milliseconds between chunks

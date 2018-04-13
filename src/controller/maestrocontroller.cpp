@@ -63,6 +63,21 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Adds a Cue that should be blocked from execution to the list of blocked Cues.
+	 * @param blocked_cue Cue to block.
+	 */
+	void MaestroController::block_cue(CueController::Handler handler, uint8_t action_index) {
+		blocked_cues_.append({handler, action_index});
+	}
+
+	/**
+	 * Clears the list of blocked cues.
+	 */
+	void MaestroController::clear_blocked_cues() {
+		blocked_cues_.clear();
+	}
+
+	/**
 	 * Returns the Maestro handled by this MaestroController.
 	 * @return Underlying Maestro.
 	 */
@@ -315,6 +330,29 @@ namespace PixelMaestroStudio {
 	void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
 		if (cue == nullptr) {
 			return;
+		}
+
+		// Check the Cue against the block list
+		for (BlockedCue blocked : blocked_cues_) {
+			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
+				switch (blocked.handler) {
+					case CueController::Handler::AnimationCueHandler:
+						if (cue[(uint8_t)AnimationCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::CanvasCueHandler:
+						if (cue[(uint8_t)CanvasCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::MaestroCueHandler:
+						if (cue[(uint8_t)MaestroCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::SectionCueHandler:
+						if (cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::ShowCueHandler:
+						if (cue[(uint8_t)ShowCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+				}
+			}
 		}
 		stream->writeRawData((const char*)cue, maestro_->get_cue_controller()->get_cue_size(cue));
 	}
