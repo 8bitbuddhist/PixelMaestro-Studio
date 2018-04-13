@@ -111,14 +111,4 @@ namespace PixelMaestroStudio {
 	void SerialDevice::set_real_time_update(bool enabled) {
 		this->real_time_updates_ = enabled;
 	}
-
-	/**
-	 * Writes data to the device.
-	 * @param out Data to send.
-	 * @param size Size of the data.
-	 */
-	void SerialDevice::write(const char *out, int size) {
-		serial_device_->write(out, size);
-		serial_device_->flush();
-	}
 }

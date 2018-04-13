@@ -40,7 +40,6 @@ namespace PixelMaestroStudio {
 			void on_capacityLineEdit_editingFinished();
 
 			void set_progress_bar(int val);
-			void set_upload_controls_enabled(bool enabled);
 
 		private:
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -58,76 +57,6 @@ namespace PixelMaestroStudio {
 			void populate_serial_devices();
 			void save_devices();
 			void write_to_devices(const char* out, int size);
-	};
-
-	class UploadThread : public QThread {
-		Q_OBJECT
-
-		public:
-			UploadThread(QObject* parent, SerialDevice* device) : QThread(parent) {
-				this->target_device_ = device;
-			}
-			void run() override {
-				/*
-				 * This whole method sucks, but here's the deal:
-				 *
-				 * When sending a Cuefile to an Arduino, Qt sends data way too fast, even with a low baud rate.
-				 * The Arduino's serial buffer overflows and it starts dropping Cues.
-				 * Basically, the Cuefile gets cut off at the 65+ byte mark and the entire thing fails.
-				 * The reason it works for live mode is probably because we're sending individual Cues (which are typically 20-30 bytes) and not entire Cuefiles (which are 200+ bytes minimum).
-				 * As a workaround, we break up the Cuefile into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
-				 *
-				 * The final message looks like this:
-				 *	1) "ROMBEG", which signals the Arduino to start writing to EEPROM.
-				 *	2) The Cuefile itself split into 64 byte chunks.
-				 *	3) "ROMEND", which signals the Arduino to stop writing to EEPROM.
-				 *
-				 * Resources:
-				 * http://forum.arduino.cc/index.php?topic=124158.15
-				 * https://forum.arduino.cc/index.php?topic=234151.0
-				 *
-				 */
-
-				DeviceControlWidget* parent = static_cast<DeviceControlWidget*>(this->parent());
-
-				// If the device isn't connected, connect to it first. If we fail to connect, exit.
-				if (!target_device_->get_device()->isOpen() && !target_device_->connect()) return;
-
-				// Start upload process and send start flag
-				emit upload_in_progress(true);
-				QByteArray out = QByteArray("ROMBEG", 6);
-				target_device_->write((const char*)out, out.size());
-
-				// Send Cuefile size first
-				IntByteConvert size(parent->get_maestro_cue()->size());
-				uint8_t size_arr[] = {size.converted_0, size.converted_1};
-				target_device_->write((const char*)size_arr, 2);
-
-				// Send Cuefile broken up into 64-bit chunks
-				int index = 0;
-				int sleep_period = 250;	// Wait 250 milliseconds between chunks
-				do {
-					out = parent->get_maestro_cue()->mid(index, 64);
-					target_device_->write((const char*)out, out.size());
-					index += 64;
-					msleep(sleep_period);
-					emit progress_changed((index / (float)parent->get_maestro_cue()->size()) * 100);
-				}
-				while (index < parent->get_maestro_cue()->size());
-
-				// End upload process and send stop flag
-				out = QByteArray("ROMEND", 6);
-				target_device_->write((const char*)out, out.size());
-				emit progress_changed(100);
-				emit upload_in_progress(false);
-			}
-
-		signals:
-			void progress_changed(int progress);
-			void upload_in_progress(bool in_progress);
-
-		private:
-			SerialDevice* target_device_;
 	};
 }
 

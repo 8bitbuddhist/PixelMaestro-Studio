@@ -36,6 +36,8 @@ namespace PixelMaestroStudio {
 			QString device_name = settings.value(PreferencesDialog::device_port).toString();
 			serial_devices_.push_back(SerialDevice(device_name));
 
+			// TODO: Connect to device's signals
+
 			// If the saved port is an available port, connect to it
 			for (QSerialPortInfo port : ports) {
 				if (port.systemLocation() == device_name) {
@@ -89,7 +91,6 @@ namespace PixelMaestroStudio {
 			bool connected = device.connect();
 			if (connected) {
 				ui->serialOutputListWidget->addItem(device.get_port_name());
-
 				serial_devices_.push_back(device);
 				save_devices();
 			}
@@ -144,11 +145,19 @@ namespace PixelMaestroStudio {
 	 * Transmits the Maestro's Cuefile to the selected device.
 	 */
 	void DeviceControlWidget::on_sendPushButton_clicked() {
-		// Run the upload process in a separate thread
-		UploadThread* thread = new UploadThread(this, &serial_devices_[ui->serialOutputListWidget->currentRow()]);
-		connect(thread, &UploadThread::finished, thread, &QObject::deleteLater);
-		connect(thread, &UploadThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
-		connect(thread, &UploadThread::upload_in_progress, this, &DeviceControlWidget::set_upload_controls_enabled);
+		/*
+		 * Wrap the Cuefile in flags.
+		 * "ROMBEG" indicates the start of the Cuefile.
+		 * "ROMEND" indicates the end of the Cuefile.
+		 */
+		QByteArray out = QByteArray("ROMBEG", 6) +
+						 maestro_cue_ +
+						 QByteArray("ROMEND", 6);
+
+		SerialDevice* device = &serial_devices_[ui->serialOutputListWidget->currentRow()];
+		SerialWriteThread* thread = new SerialWriteThread(device, (const char*)out, out.size());
+		connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
+		connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		thread->start();
 	}
 
@@ -187,7 +196,10 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < serial_devices_.size(); i++) {
 			SerialDevice device = serial_devices_.at(i);
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
-				device.write((const char*)cue, size);
+				SerialWriteThread* thread = new SerialWriteThread(&device, (const char*)cue, size);
+				connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
+				connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
+				thread->start();
 			}
 		}
 
@@ -218,14 +230,8 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::set_progress_bar(int val) {
 		ui->uploadProgressBar->setValue(val);
-	}
-
-	/**
-	 * Sets whether the user can click the upload button.
-	 * @param enabled If true, button is enabled.
-	 */
-	void DeviceControlWidget::set_upload_controls_enabled(bool enabled) {
-		ui->sendPushButton->setEnabled(enabled);
+		// Disable upload button while sending data
+		ui->sendPushButton->setEnabled(val > 0 && val < 100);
 	}
 
 	/**
