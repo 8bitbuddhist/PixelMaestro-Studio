@@ -398,14 +398,36 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new animation.
 	 */
 	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
-		// Only change if the animation is different
-		if (active_section_->get_animation()->get_type() == (AnimationType)index) {
-			return;
+		// If the animation is set to "None", remove the Animation
+		if (index == 0) {
+			run_cue(section_handler->remove_animation(get_section_index(), get_layer_index()));
+		}
+		else {
+
+			// If the Section already has an Animation set, check to make sure the new Animation is different
+			Animation* animation = active_section_->get_animation();
+			if (animation != nullptr) {
+				if (animation->get_type() == (AnimationType)(index - 1)) {
+					return;
+				}
+
+				// Preserve options between animations
+				run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)(index - 1), true));
+			}
+			else {	// If the Section had no prior Animation, re-apply settings shown in the UI.
+				run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)(index - 1), false));
+				on_animationPaletteComboBox_currentIndexChanged(ui->animationPaletteComboBox->currentIndex());
+				on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
+				on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
+				on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
+				on_animationIntervalSpinBox_editingFinished();
+				on_delaySpinBox_editingFinished();
+			}
+
+			set_advanced_animation_controls(active_section_->get_animation());
 		}
 
-		// Preserve options between animations
-		run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)index, true));
-		set_advanced_animation_controls(active_section_->get_animation());
+		set_animation_controls_enabled(index > 0);
 	}
 
 	/**
@@ -1384,7 +1406,7 @@ namespace PixelMaestroStudio {
 
 		// Set the animation
 		ui->animationComboBox->blockSignals(true);
-		ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type());
+		ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
 		ui->animationComboBox->blockSignals(false);
 		set_advanced_animation_controls(animation);
 
@@ -1442,6 +1464,19 @@ namespace PixelMaestroStudio {
 		ui->frameIntervalSlider->blockSignals(false);
 		ui->frameIntervalSpinBox->blockSignals(false);
 		ui->canvasEnableCheckBox->blockSignals(false);
+	}
+
+	/**
+	 * Toggles whether Animation controls are usable.
+	 * @param enabled If true, controls are enabled.
+	 */
+	void MaestroControlWidget::set_animation_controls_enabled(bool enabled) {
+		ui->orientationComboBox->setEnabled(enabled);
+		ui->reverse_animationCheckBox->setEnabled(enabled);
+		ui->animationPaletteComboBox->setEnabled(enabled);
+		ui->fadeCheckBox->setEnabled(enabled);
+		ui->animationAdvancedSettingsGroupBox->setEnabled(enabled);
+		ui->animationTimersGroupBox->setEnabled(enabled);
 	}
 
 	/**

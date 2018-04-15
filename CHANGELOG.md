@@ -11,6 +11,7 @@ WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cue
 	- Added Device tab for controlling USB devices. This replaces the Serial section of the Preferences dialog.
 	- Added ability to upload an entire Maestro configuration (a `Cuefile`) to a USB device.
 	- Added ability to toggle live updating of USB devices.
+	- Added ability to unset Animations.
 	- Added ability to edit Palettes.
 	- Added dialog window for previewing Cuefiles.
 - Preferences
@@ -18,7 +19,7 @@ WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cue
 
 ### Changed
 - Canvas
-	- Consolidated all three Canvas types into the base Canvas class. This "new" Canvas class is structured like a PaletteCanvas with the ability to use transparent colors, as well as a transparent background by default.
+	- Consolidated all three Canvas types into the base Canvas class. This new Canvas class is structured like a PaletteCanvas, but supports transparency and has a transparent background by default.
 	- Replaced the Canvas Type drop-down with a check box.
 - Preferences
 	- Moved USB device settings to Animation Editor.

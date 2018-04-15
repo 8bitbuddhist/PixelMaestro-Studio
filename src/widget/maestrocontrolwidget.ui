@@ -56,7 +56,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -493,6 +493,11 @@
               <height>0</height>
              </size>
             </property>
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
             <item>
              <property name="text">
               <string>Blink</string>
