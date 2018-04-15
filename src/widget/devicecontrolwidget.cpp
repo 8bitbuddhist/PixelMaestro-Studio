@@ -2,8 +2,6 @@
  * DeviceControlWidget - Widget for managing USB/serial devices.
  */
 
-#include <chrono>
-#include <exception>
 #include <QList>
 #include <QMessageBox>
 #include <QSerialPort>
@@ -20,6 +18,10 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		this->maestro_control_widget_ = maestro_control_widget;
 
+		// Block certain Cues from firing
+		// TODO: Add ability to set custom blocks
+		maestro_control_widget->get_maestro_controller()->block_cue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions);
+
 		// Disable device buttons by default
 		ui->deviceSettingsGroupBox->setEnabled(false);
 
@@ -35,8 +37,6 @@ namespace PixelMaestroStudio {
 
 			QString device_name = settings.value(PreferencesDialog::device_port).toString();
 			serial_devices_.push_back(SerialDevice(device_name));
-
-			// TODO: Connect to device's signals
 
 			// If the saved port is an available port, connect to it
 			for (QSerialPortInfo port : ports) {
@@ -75,6 +75,10 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	/**
+	 * Returns the Maestro Cuefile.
+	 * @return Maestro Cuefile.
+	 */
 	QByteArray* DeviceControlWidget::get_maestro_cue() {
 		return &maestro_cue_;
 	}
@@ -146,7 +150,6 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::on_sendPushButton_clicked() {
 		/*
-		 * Wrap the Cuefile in flags.
 		 * "ROMBEG" indicates the start of the Cuefile.
 		 * "ROMEND" indicates the end of the Cuefile.
 		 */
@@ -154,11 +157,7 @@ namespace PixelMaestroStudio {
 						 maestro_cue_ +
 						 QByteArray("ROMEND", 6);
 
-		SerialDevice* device = &serial_devices_[ui->serialOutputListWidget->currentRow()];
-		SerialWriteThread* thread = new SerialWriteThread(device, (const char*)out, out.size());
-		connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
-		connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
-		thread->start();
+		write_to_device(&serial_devices_[ui->serialOutputListWidget->currentRow()], (const char*)out, out.size(), true);
 	}
 
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
@@ -196,10 +195,7 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < serial_devices_.size(); i++) {
 			SerialDevice device = serial_devices_.at(i);
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
-				SerialWriteThread* thread = new SerialWriteThread(&device, (const char*)cue, size);
-				connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
-				connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
-				thread->start();
+				write_to_device(&device, (const char*)cue, size, false);
 			}
 		}
 
@@ -244,9 +240,6 @@ namespace PixelMaestroStudio {
 
 			MaestroController* controller = maestro_control_widget_->get_maestro_controller();
 
-			// Block certain Cues from being added to the Cuefile
-			controller->block_cue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions);
-
 			// Generate the Cuefile
 			controller->save_maestro_to_datastream(&datastream);
 
@@ -256,6 +249,20 @@ namespace PixelMaestroStudio {
 			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 			check_device_rom_capacity();
 		}
+	}
+
+	/**
+	 * Sends serial output to device in a separate thread.
+	 * @param device Device to send output to.
+	 * @param out Data to send.
+	 * @param size Size of data to send.
+	 */
+	void DeviceControlWidget::write_to_device(SerialDevice *device, const char *out, int size, bool progress) {
+		SerialWriteThread* thread = new SerialWriteThread(device, (const char*)out, size);
+		connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
+
+		if (progress) connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
+		thread->start();
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {

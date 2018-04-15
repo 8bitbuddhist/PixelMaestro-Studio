@@ -56,7 +56,7 @@ namespace PixelMaestroStudio {
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();
 			void save_devices();
-			void write_to_devices(const char* out, int size);
+			void write_to_device(SerialDevice* device, const char* out, int size, bool progress = false);
 	};
 }
 
