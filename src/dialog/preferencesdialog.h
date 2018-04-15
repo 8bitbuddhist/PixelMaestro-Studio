@@ -14,6 +14,18 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
+			static QString delimiter;
+			static QString sub_delimiter;
+
+			static QString palettes;
+			static QString palette_base_color;
+			static QString palette_colors;
+			static QString palette_mirror;
+			static QString palette_name;
+			static QString palette_num_colors;
+			static QString palette_target_color;
+			static QString palette_type;
+
 			static QString last_cuefile_directory;
 			static QString main_window_option;
 			static QString num_sections;

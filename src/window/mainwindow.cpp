@@ -19,7 +19,6 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 		if (settings.value(PreferencesDialog::save_session).toBool() == true && QFile(session_file_path).exists()) {
 			open_cuefile(session_file_path);
-			// TODO: Load custom palettes
 		}
 		else {
 			// Open the Animation Editor
@@ -187,8 +186,6 @@ namespace PixelMaestroStudio {
 			// Save Maestro config
 			if (maestro_controller_ != nullptr) {
 				maestro_controller_->save_cuefile(session_file_path);
-
-				// TODO: Save custom palettes
 			}
 		}
 

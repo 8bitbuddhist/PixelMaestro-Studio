@@ -64,13 +64,18 @@ namespace PixelMaestroStudio {
 			};
 
 			PaletteController();
+			~PaletteController();
 			PaletteWrapper* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, Colors::RGB base_color, Colors::RGB target_color, bool mirror = false);
+			Colors::RGB deserialize_color(QString string);
 			int find(Colors::RGB* search_palette);
 			PaletteWrapper* get_palette(uint8_t index);
 			PaletteWrapper* get_palette(QString name);
 			std::vector<PaletteWrapper>* get_palettes();
 			void initialize_palettes();
+			void load_palettes();
 			void remove_palette(uint8_t index);
+			void save_palettes();
+			QString serialize_color(Colors::RGB* color);
 
 		private:
 			std::vector<PaletteWrapper> palettes_;

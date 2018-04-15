@@ -8,23 +8,29 @@ WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cue
 
 ### Added
 - Animation Editor
-	- Added Device tab for controlling USB devices. The Device tab lets you manage connections to USB and serial devices, sync changes, and upload Cues.
+	- Added Device tab for controlling USB devices. This replaces the Serial section of the Preferences dialog.
+	- Added ability to upload an entire Maestro configuration (a `Cuefile`) to a USB device.
 	- Added ability to toggle live updating of USB devices.
 	- Added ability to edit Palettes.
-	- Added dialog window for previewing Cues.
+	- Added dialog window for previewing Cuefiles.
 - Preferences
 	- Added setting to toggle session auto saving/loading when closing/opening PixelMaestro Studio.
 
 ### Changed
 - Canvas
-	- Consolidated all three Canvas types. This "new" Canvas class is structured like a PaletteCanvas with minor changes in behavior, such as having a transparent background by default.
+	- Consolidated all three Canvas types into the base Canvas class. This "new" Canvas class is structured like a PaletteCanvas with the ability to use transparent colors, as well as a transparent background by default.
+	- Replaced the Canvas Type drop-down with a check box.
 - Preferences
-	- Moved USB device settings from Preferences dialog to Devices tab.
+	- Moved USB device settings to Animation Editor.
 - Animation Editor
 	- Fixed MaestroController not properly saving Section scroll settings.
+	- Palette list is now automatically saved and reopened when closing/opening PixelMaestro Studio.
 - File selector dialog now remembers the last directory used.
+- Lowered minimum Qt version to 5.9.1 for compatibility with Ubuntu 18.04 repository Qt version.
 - Code cleanup.
-- Lowered minimum Qt version to 5.9.1 for compatibility with Ubuntu 18.04.
+
+### Removed
+- Canvas: Removed `AnimationCanvases` and `ColorCanvases`. `PaletteCanvases` were consolidated down into the main `Canvas` class.
 
 ## [v0.20.1] - 2018-03-20
 

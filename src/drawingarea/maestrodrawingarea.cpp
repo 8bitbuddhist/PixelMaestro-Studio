@@ -3,7 +3,6 @@
 #include "dialog/preferencesdialog.h"
 #include <QElapsedTimer>
 #include <QHBoxLayout>
-#include <QSettings>
 #include <QTimer>
 
 using namespace PixelMaestro;

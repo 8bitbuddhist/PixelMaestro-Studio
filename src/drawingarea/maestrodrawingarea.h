@@ -50,8 +50,6 @@ namespace PixelMaestroStudio {
 			/// The SectionDrawingAreas managed by this DrawingArea
 			QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
 
-			QSettings settings_;
-
 		private:
 			/// Layout containing SectionDrawingAreas.
 			QHBoxLayout* section_layout_ = nullptr;
