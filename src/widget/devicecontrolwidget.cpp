@@ -24,6 +24,7 @@ namespace PixelMaestroStudio {
 
 		// Disable device buttons by default
 		ui->deviceSettingsGroupBox->setEnabled(false);
+		// TODO: Always enable Preview Cuefile button
 
 		// Add available serial devices to combo box
 		populate_serial_devices();

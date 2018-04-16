@@ -56,7 +56,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -667,7 +667,7 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>-99</x>
             <y>0</y>
             <width>685</width>
             <height>432</height>

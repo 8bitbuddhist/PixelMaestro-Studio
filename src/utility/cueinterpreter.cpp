@@ -32,12 +32,13 @@ namespace PixelMaestroStudio {
 													 "Draw Triangle",
 													 "Erase Point",
 													 "Next Frame",
+													 "Previous Frame",
 													 "Remove Frame Timer",
-													 "Set Colors",
 													 "Set Current Frame Index",
 													 "Set Drawing Color",
 													 "Set Frame Timer",
 													 "Set Num Frames",
+													 "Set Palette",
 													 "Start Frame Timer",
 													 "Stop Frame Timer"});
 

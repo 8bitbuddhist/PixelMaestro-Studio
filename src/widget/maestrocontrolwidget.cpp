@@ -394,13 +394,12 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Changes the current animation.
-	 * TODO: Allow for no animation
 	 * @param index Index of the new animation.
 	 */
 	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
 		// If the animation is set to "None", remove the Animation
 		if (index == 0) {
-			run_cue(section_handler->remove_animation(get_section_index(), get_layer_index()));
+			run_cue(section_handler->remove_animation(get_section_index(), get_layer_index(), true));
 		}
 		else {
 
@@ -534,16 +533,18 @@ namespace PixelMaestroStudio {
 		if (active_section_->get_canvas() == nullptr) return;
 
 		// Enables/disable the 'current frame' control
-		ui->currentFrameSpinBox->setEnabled(!checked);
+		ui->currentFrameSpinBox->setEnabled(checked);
 
+		// FIXME: Verify changing the frame timer interval doesn't auto-start playback
 		if (checked) {
-			on_frameIntervalSpinBox_editingFinished();
-		}
-		else {
-			run_cue(canvas_handler->remove_frame_timer(get_section_index(), get_layer_index()));
+			run_cue(canvas_handler->stop_frame_timer(get_section_index(), get_layer_index()));
 			ui->currentFrameSpinBox->blockSignals(true);
 			ui->currentFrameSpinBox->setValue(active_section_->get_canvas()->get_current_frame_index());
 			ui->currentFrameSpinBox->blockSignals(false);
+		}
+		else {
+			run_cue(canvas_handler->start_frame_timer(get_section_index(), get_layer_index()));
+			on_frameIntervalSpinBox_editingFinished();
 		}
 	}
 
@@ -690,14 +691,25 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_frameCountSpinBox_editingFinished() {
 		int new_max = ui->frameCountSpinBox->value();
 		if (new_max != active_section_->get_canvas()->get_num_frames()) {
-			if (new_max < ui->currentFrameSpinBox->value()) {
-				ui->currentFrameSpinBox->setValue(new_max);
-			}
-			ui->currentFrameSpinBox->setMaximum(new_max);
-			run_cue(canvas_handler->set_num_frames(get_section_index(), get_layer_index(), new_max));
 
-			// Set the new maximum for the current_frame spinbox
-			ui->currentFrameSpinBox->setMaximum(new_max);
+			QMessageBox::StandardButton confirm;
+			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			if (confirm == QMessageBox::Yes) {
+				if (new_max < ui->currentFrameSpinBox->value()) {
+					ui->currentFrameSpinBox->setValue(new_max);
+				}
+				ui->currentFrameSpinBox->setMaximum(new_max);
+				run_cue(canvas_handler->set_num_frames(get_section_index(), get_layer_index(), new_max));
+
+				// Set the new maximum for the current_frame spinbox
+				ui->currentFrameSpinBox->setMaximum(new_max);
+			}
+			else {
+				// Reset frame count
+				ui->frameCountSpinBox->blockSignals(true);
+				ui->frameCountSpinBox->setValue(active_section_->get_canvas()->get_num_frames());
+				ui->frameCountSpinBox->blockSignals(false);
+			}
 		}
 	}
 
@@ -1352,63 +1364,66 @@ namespace PixelMaestroStudio {
 			ui->alphaSpinBox->blockSignals(false);
 		}
 
-		// Get animation options and timer.
-		// If no animation is set, initialize one.
+		/*
+		 * Set Animation.
+		 * If the Section doesn't have an Animation, select the default of None.
+		 */
 		Animation* animation = section->get_animation();
-		if (animation == nullptr) {
-			PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette("Color Wheel");
-			run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), AnimationType::Solid));
-			run_cue(animation_handler->set_palette(get_section_index(), get_layer_index(), &palette_wrapper->palette));
-			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), 1000));
-			animation = section->get_animation();
-		}
+		if (animation != nullptr) {
+			// Animation settings
+			ui->orientationComboBox->blockSignals(true);
+			ui->reverse_animationCheckBox->blockSignals(true);
+			ui->fadeCheckBox->blockSignals(true);
+			ui->animationTimerSlider->blockSignals(true);
+			ui->animationIntervalSpinBox->blockSignals(true);
+			ui->delaySlider->blockSignals(true);
+			ui->delaySpinBox->blockSignals(true);
+			ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
+			ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
+			ui->fadeCheckBox->setChecked(animation->get_fade());
+			ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
+			ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
+			ui->delaySlider->setValue(animation->get_timer()->get_delay());
+			ui->delaySpinBox->setValue(animation->get_timer()->get_delay());
+			ui->orientationComboBox->blockSignals(false);
+			ui->reverse_animationCheckBox->blockSignals(false);
+			ui->fadeCheckBox->blockSignals(false);
+			ui->animationTimerSlider->blockSignals(false);
+			ui->animationIntervalSpinBox->blockSignals(false);
+			ui->delaySlider->blockSignals(false);
+			ui->delaySpinBox->blockSignals(false);
 
-		// Animation settings
-		ui->orientationComboBox->blockSignals(true);
-		ui->reverse_animationCheckBox->blockSignals(true);
-		ui->fadeCheckBox->blockSignals(true);
-		ui->animationTimerSlider->blockSignals(true);
-		ui->animationIntervalSpinBox->blockSignals(true);
-		ui->delaySlider->blockSignals(true);
-		ui->delaySpinBox->blockSignals(true);
-		ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
-		ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
-		ui->fadeCheckBox->setChecked(animation->get_fade());
-		ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
-		ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
-		ui->delaySlider->setValue(animation->get_timer()->get_delay());
-		ui->delaySpinBox->setValue(animation->get_timer()->get_delay());
-		ui->orientationComboBox->blockSignals(false);
-		ui->reverse_animationCheckBox->blockSignals(false);
-		ui->fadeCheckBox->blockSignals(false);
-		ui->animationTimerSlider->blockSignals(false);
-		ui->animationIntervalSpinBox->blockSignals(false);
-		ui->delaySlider->blockSignals(false);
-		ui->delaySpinBox->blockSignals(false);
+			// Palette not found
+			int palette_index = palette_controller_.find(animation->get_palette()->get_colors());
+			if (palette_index >= 0) {
+				ui->animationPaletteComboBox->blockSignals(true);
+				ui->animationPaletteComboBox->setCurrentIndex(palette_index);
+				ui->animationPaletteComboBox->blockSignals(false);
+			}
+			else {
+				QString name = "Section " + QString::number(get_section_index()) +
+							   " Layer " + QString::number(get_layer_index()) +
+							   " Animation";
+				palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+				ui->animationPaletteComboBox->blockSignals(true);
+				ui->animationPaletteComboBox->addItem(name);
+				ui->animationPaletteComboBox->setCurrentText(name);
+				ui->animationPaletteComboBox->blockSignals(false);
+			}
 
-		// Palette not found
-		int palette_index = palette_controller_.find(animation->get_palette()->get_colors());
-		if (palette_index >= 0) {
-			ui->animationPaletteComboBox->blockSignals(true);
-			ui->animationPaletteComboBox->setCurrentIndex(palette_index);
-			ui->animationPaletteComboBox->blockSignals(false);
+			// Set the animation
+			ui->animationComboBox->blockSignals(true);
+			ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
+			ui->animationComboBox->blockSignals(false);
+
+			// Enable animation controls
+			set_animation_controls_enabled(true);
+			set_advanced_animation_controls(animation);
 		}
 		else {
-			QString name = "Section " + QString::number(get_section_index()) +
-						   " Layer " + QString::number(get_layer_index()) +
-						   " Animation";
-			palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-			ui->animationPaletteComboBox->blockSignals(true);
-			ui->animationPaletteComboBox->addItem(name);
-			ui->animationPaletteComboBox->setCurrentText(name);
-			ui->animationPaletteComboBox->blockSignals(false);
+			ui->animationComboBox->setCurrentIndex(0);
+			on_animationComboBox_currentIndexChanged(0);
 		}
-
-		// Set the animation
-		ui->animationComboBox->blockSignals(true);
-		ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
-		ui->animationComboBox->blockSignals(false);
-		set_advanced_animation_controls(animation);
 
 		// Get Canvas
 		ui->canvasEnableCheckBox->blockSignals(true);
@@ -1430,7 +1445,7 @@ namespace PixelMaestroStudio {
 
 			// Find the corresponding palette in the Palette Controller.
 			if (canvas->get_palette() != nullptr) {
-				palette_index = palette_controller_.find(canvas->get_palette()->get_colors());
+				int palette_index = palette_controller_.find(canvas->get_palette()->get_colors());
 				if (palette_index >= 0) {
 					ui->canvasPaletteComboBox->blockSignals(true);
 					ui->canvasPaletteComboBox->setCurrentIndex(palette_index);
