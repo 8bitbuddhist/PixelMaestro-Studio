@@ -56,7 +56,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -364,7 +364,7 @@
              <number>10</number>
             </property>
             <property name="maximum">
-             <number>3000</number>
+             <number>6000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -415,7 +415,7 @@
              <string>The amount of time to wait before starting the next cycle</string>
             </property>
             <property name="maximum">
-             <number>3000</number>
+             <number>6000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -437,7 +437,7 @@
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
             <property name="maximum">
-             <number>3000</number>
+             <number>6000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -453,7 +453,7 @@
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
             <property name="maximum">
-             <number>3000</number>
+             <number>6000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -667,7 +667,7 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>-99</x>
             <y>0</y>
             <width>685</width>
             <height>432</height>
@@ -767,7 +767,7 @@
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                 <property name="maximum">
-                 <number>1000000</number>
+                 <number>6000</number>
                 </property>
                 <property name="value">
                  <number>100</number>
@@ -824,7 +824,7 @@
               <item row="4" column="2">
                <widget class="QSlider" name="frameIntervalSlider">
                 <property name="maximum">
-                 <number>1000</number>
+                 <number>6000</number>
                 </property>
                 <property name="value">
                  <number>100</number>
