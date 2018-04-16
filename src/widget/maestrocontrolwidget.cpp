@@ -535,7 +535,6 @@ namespace PixelMaestroStudio {
 		// Enables/disable the 'current frame' control
 		ui->currentFrameSpinBox->setEnabled(checked);
 
-		// FIXME: Verify changing the frame timer interval doesn't auto-start playback
 		if (checked) {
 			run_cue(canvas_handler->stop_frame_timer(get_section_index(), get_layer_index()));
 			ui->currentFrameSpinBox->blockSignals(true);

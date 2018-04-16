@@ -1,6 +1,9 @@
 #include "cueinterpreter.h"
+#include "dialog/preferencesdialog.h"
 
 namespace PixelMaestroStudio {
+	const QString CueInterpreter::delimiter = QString(" | ");
+
 	const QStringList CueInterpreter::Handlers({"Animation",
 												"Canvas",
 												"Maestro",
@@ -86,8 +89,6 @@ namespace PixelMaestroStudio {
 													 "Multiply",
 													 "Overlay"});
 
-	const QString CueInterpreter::Delimiter = " | ";
-
 	CueInterpreter::CueInterpreter() { }
 
 	void CueInterpreter::append_bool(bool value, QString* result) {
@@ -99,12 +100,17 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	void CueInterpreter::append_animation_timer(uint16_t interval, uint16_t delay, QString *result) {
+		append_timer(interval, result);
+		result->append(delimiter + "Delay: " + QString::number(delay));
+	}
+
+	void CueInterpreter::append_timer(uint16_t interval, QString *result) {
+		result->append(delimiter + "Interval: " + QString::number(interval));
+	}
+
 	QString CueInterpreter::interpret_cue(uint8_t* cue) {
-		/*
-		 * Don't append the handler name to the Cue for the sake of aesthetics.
-		 * We can tell what the user's doing based on the final action.
-		 */
-		//QString result = Handlers.at(cue[(uint8_t)CueController::Byte::PayloadByte]) + Delimiter;
+		//QString result = Handlers.at(cue[(uint8_t)CueController::Byte::PayloadByte]) + delimiter;
 		QString result;
 		// Delegate to the correct handler
 		switch ((CueController::Handler)cue[(uint8_t)CueController::Byte::PayloadByte]) {
@@ -129,23 +135,14 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_animation_cue(uint8_t* cue, QString* result) {
-		result->append("Section " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::SectionByte]) + Delimiter);
-		result->append("Layer " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::LayerByte]) + Delimiter);
+		result->append("Section " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::SectionByte]) + delimiter);
+		result->append("Layer " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::LayerByte]) + delimiter);
+		result->append("Animation" + delimiter);
 		result->append(AnimationActions.at(cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]));
 
 		switch((AnimationCueHandler::Action)cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]) {
 			case AnimationCueHandler::Action::SetPalette:
-				{
-					uint8_t num_colors = cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte];
-					Colors::RGB base_color(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1],
-											cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2],
-											cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]);
-					result->append(": " + QString::number(num_colors) + " colors");
-					result->append(Delimiter + "Base Color: {" +
-								   QString::number(base_color.r) + ", " +
-								   QString::number(base_color.g) + ", " +
-								   QString::number(base_color.b) + "}");
-				}
+				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]) + " colors");
 				break;
 			case AnimationCueHandler::Action::SetCycleIndex:
 				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
@@ -154,14 +151,14 @@ namespace PixelMaestroStudio {
 				append_bool((bool)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte], result);
 				break;
 			case AnimationCueHandler::Action::SetFireOptions:
-				result->append(Delimiter + "Multiplier: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+				result->append(delimiter + "Multiplier: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
 			case AnimationCueHandler::Action::SetLightningOptions:
 				{
-					result->append(Delimiter+ "Bolt Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
-					result->append(Delimiter+ "Drift: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
+					result->append(delimiter+ "Bolt Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+					result->append(delimiter+ "Drift: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
 					result->append(" " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2]));
-					result->append(Delimiter + "Fork Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]));
+					result->append(delimiter + "Fork Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]));
 				}
 				break;
 			case AnimationCueHandler::Action::SetOrientation:
@@ -169,29 +166,30 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationCueHandler::Action::SetPlasmaOptions:
 				{
-					result->append(Delimiter + "Size: " + QString::number(FloatByteConvert::byte_to_float(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte])));
-					result->append(Delimiter + "Resolution: " + QString::number(FloatByteConvert::byte_to_float(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 4])));
+					result->append(delimiter + "Size: " + QString::number(FloatByteConvert::byte_to_float(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte])));
+					result->append(delimiter + "Resolution: " + QString::number(FloatByteConvert::byte_to_float(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 4])));
 				}
 				break;
 			case AnimationCueHandler::Action::SetRadialOptions:
-				result->append(Delimiter + "Resolution: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+				result->append(delimiter + "Resolution: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
 			case AnimationCueHandler::Action::SetReverse:
 				append_bool((bool)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte], result);
 				break;
 			case AnimationCueHandler::Action::SetSparkleOptions:
-				result->append(Delimiter + "Threshold: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+				result->append(delimiter + "Threshold: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
 			case AnimationCueHandler::Action::SetTimer:
-				{
-					result->append(Delimiter + "Timing: " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte])));
-					result->append(Delimiter + "Pause: " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2])));
-				}
+				append_animation_timer(
+					IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2]),
+					result
+				);
 				break;
 			case AnimationCueHandler::Action::SetWaveOptions:
 				{
-					result->append(Delimiter + "Mirror: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
-					result->append(Delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
+					result->append(delimiter + "Mirror: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+					result->append(delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
 				}
 				break;
 			case AnimationCueHandler::Action::Start:
@@ -203,9 +201,9 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
-		result->append("Section " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::SectionByte]) + Delimiter);
-		result->append("Layer " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::LayerByte]) + Delimiter);
-		result->append("Canvas" + Delimiter);
+		result->append("Section " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::SectionByte]) + delimiter);
+		result->append("Layer " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::LayerByte]) + delimiter);
+		result->append("Canvas" + delimiter);
 		result->append(CanvasActions.at(cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]));
 
 		switch((CanvasCueHandler::Action)cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]) {
@@ -231,7 +229,7 @@ namespace PixelMaestroStudio {
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
 				break;
 			case CanvasCueHandler::Action::SetFrameTimer:
-				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
+				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte]), result);
 				break;
 			case CanvasCueHandler::Action::SetNumFrames:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
@@ -242,6 +240,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_maestro_cue(uint8_t* cue, QString* result) {
+		result->append("Maestro" + delimiter);
 		result->append(MaestroActions.at(cue[(uint8_t)MaestroCueHandler::Byte::ActionByte]));
 
 		switch((MaestroCueHandler::Action)cue[(uint8_t)MaestroCueHandler::Byte::ActionByte]) {
@@ -252,7 +251,7 @@ namespace PixelMaestroStudio {
 				break;
 			case MaestroCueHandler::Action::SetTimer:
 			case MaestroCueHandler::Action::Sync:
-				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte])));
+				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]), result);
 				break;
 			case MaestroCueHandler::Action::Start:
 				// Do nothing
@@ -263,8 +262,9 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_section_cue(uint8_t* cue, QString* result) {
-		result->append("Section " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::SectionByte]) + Delimiter);
-		result->append("Layer " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::LayerByte]) + Delimiter);
+		result->append("Section " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::SectionByte]) + delimiter);
+		result->append("Layer " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::LayerByte]) + delimiter);
+		result->append("Section" + delimiter);
 		result->append(SectionActions.at(cue[(uint8_t)SectionCueHandler::Byte::ActionByte]));
 
 		switch ((SectionCueHandler::Action)cue[(uint8_t)SectionCueHandler::Byte::ActionByte]) {
@@ -300,11 +300,12 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_show_cue(uint8_t *cue, QString *result) {
+		result->append("Show" + delimiter);
 		result->append(ShowActions.at(cue[(uint8_t)ShowCueHandler::Byte::ActionByte]));
 
 		switch ((ShowCueHandler::Action)cue[(uint8_t)ShowCueHandler::Byte::ActionByte]) {
 			case ShowCueHandler::Action::SetEvents:
-				result->append(Delimiter + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)ShowCueHandler::Byte::OptionsByte])) + " events");
+				result->append(delimiter + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)ShowCueHandler::Byte::OptionsByte])) + " events");
 				break;
 			case ShowCueHandler::Action::SetLooping:
 				append_bool((bool)cue[(uint8_t)ShowCueHandler::Byte::OptionsByte], result);

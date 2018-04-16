@@ -29,12 +29,15 @@ namespace PixelMaestroStudio {
 			static const QStringList AnimationTypes;
 			static const QStringList AnimationOrientations;
 			static const QStringList ColorMixModes;
-			static const QString Delimiter;
+
+			static const QString delimiter;
 
 			static QString interpret_cue(uint8_t* cue);
 
 		private:
 			static void append_bool(bool value, QString* result);
+			static void append_animation_timer(uint16_t interval, uint16_t delay, QString* result);
+			static void append_timer(uint16_t interval, QString* result);
 			static void interpret_animation_cue(uint8_t* cue, QString* result);
 			static void interpret_canvas_cue(uint8_t* cue, QString* result);
 			static void interpret_maestro_cue(uint8_t* cue, QString* result);
