@@ -25,6 +25,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::pixel_padding = QStringLiteral("Interface/Padding");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
+	QString PreferencesDialog::last_session = QStringLiteral("Interface/LastSession");
 
 	// "Devices" section
 	QString PreferencesDialog::devices = QStringLiteral("Devices");

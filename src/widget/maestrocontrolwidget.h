@@ -75,7 +75,7 @@ namespace PixelMaestroStudio {
 			MaestroController* get_maestro_controller();
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section* section);
-			void load_cuefile(QString filename);
+			void load_cuefile(QByteArray byte_array);
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_active_section(Section* section);

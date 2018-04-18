@@ -17,8 +17,9 @@ namespace PixelMaestroStudio {
 
 		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
 		QSettings settings;
-		if (settings.value(PreferencesDialog::save_session).toBool() == true && QFile(session_file_path).exists()) {
-			open_cuefile(session_file_path);
+		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
+		if (settings.value(PreferencesDialog::save_session).toBool() == true && !bytes.isEmpty()) {
+			open_cuefile(bytes);
 		}
 		else {
 			// Open the Animation Editor
@@ -28,10 +29,10 @@ namespace PixelMaestroStudio {
 
 	void MainWindow::on_action_About_triggered() {
 		QMessageBox::about(this, QString("PixelMaestro Studio"), QString("PixelMaestro ") +
-						   QString(BUILD_VERSION) +
-						   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
-						   QString("\n\n© ") +
-						   QString::number(QDate::currentDate().year()));
+					   QString(BUILD_VERSION) +
+					   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
+					   QString("\n\n© ") +
+					   QString::number(QDate::currentDate().year()));
 	}
 
 	/**
@@ -165,28 +166,44 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Loads a Cuefile into a new session.
-	 * @param filename Cuefile path.
+	 * @param byte_array Array containing the Cuefile.
 	 */
-	void MainWindow::open_cuefile(QString filename) {
-		if (filename.isEmpty()) return;
-
+	void MainWindow::open_cuefile(QByteArray byte_array) {
 		// Read in the CueFile, then load the Animation Editor
 		initialize_widgets();
 		on_action_Open_Animation_Editor_triggered(true);
-		maestro_control_widget_->load_cuefile(filename);
+
+		maestro_control_widget_->load_cuefile(byte_array);
 
 		// Refresh the Animation Editor
 		maestro_control_widget_->refresh_maestro_settings();
 		maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
 	}
 
+	/**
+	 * Loads a Cuefile into a new session.
+	 * @param filename Cuefile path.
+	 */
+	void MainWindow::open_cuefile(QString filename) {
+		if (filename.isEmpty()) return;
+
+		QFile file(filename);
+		if (file.open(QFile::ReadOnly)) {
+			QByteArray bytes = file.readAll();
+			open_cuefile(bytes);
+		}
+	}
+
 	MainWindow::~MainWindow() {
 		QSettings settings;
 		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
 			// Save Maestro config
+			QByteArray maestro_config;
+			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
 			if (maestro_controller_ != nullptr) {
-				maestro_controller_->save_cuefile(session_file_path);
+				maestro_controller_->save_maestro_to_datastream(&maestro_datastream);
 			}
+			settings.setValue(PreferencesDialog::last_session, maestro_config);
 		}
 
 		delete ui;

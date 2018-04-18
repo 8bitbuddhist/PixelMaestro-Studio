@@ -111,7 +111,7 @@ namespace PixelMaestroStudio {
 	 * @param drawing_area DrawingArea to remove.
 	 */
 	void MaestroController::remove_drawing_area(MaestroDrawingArea *drawing_area) {
-		disconnect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(refresh()));
+		disconnect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(update()));
 		drawing_areas_.removeOne(drawing_area);
 	}
 

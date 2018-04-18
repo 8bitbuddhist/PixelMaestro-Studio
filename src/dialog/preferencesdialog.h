@@ -27,6 +27,7 @@ namespace PixelMaestroStudio {
 			static QString palette_type;
 
 			static QString last_cuefile_directory;
+			static QString last_session;
 			static QString main_window_option;
 			static QString num_sections;
 			static QString output_enabled;

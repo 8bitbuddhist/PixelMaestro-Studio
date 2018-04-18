@@ -347,23 +347,17 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Loads a Cuefile into the Maestro.
-	 * @param filename Path to the Cuefile.
+	 * @param byte_array Byte array containing the Cuefile.
 	 */
-	void MaestroControlWidget::load_cuefile(QString filename) {
-		QFile file(filename);
-
-		if (file.open(QFile::ReadOnly)) {
-			this->loading_cue_ = true;
-			QByteArray bytes = file.readAll();
-			for (int i = 0; i < bytes.size(); i++) {
-				uint8_t byte = (uint8_t)bytes.at(i);
-				if (cue_controller_->read(byte)) {
-					run_cue(cue_controller_->get_buffer(), true);
-				}
+	void MaestroControlWidget::load_cuefile(QByteArray byte_array) {
+		this->loading_cue_ = true;
+		for (int i = 0; i < byte_array.size(); i++) {
+			uint8_t byte = (uint8_t)byte_array.at(i);
+			if (cue_controller_->read(byte)) {
+				run_cue(cue_controller_->get_buffer(), true);
 			}
-			file.close();
-			this->loading_cue_ = false;
 		}
+		this->loading_cue_ = false;
 	}
 
 	/**

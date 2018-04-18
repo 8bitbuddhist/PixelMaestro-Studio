@@ -3,6 +3,7 @@
 
 #include "../controller/maestrocontroller.h"
 #include "../widget/maestrocontrolwidget.h"
+#include <QByteArray>
 #include <QMainWindow>
 #include <QStandardPaths>
 #include <QString>
@@ -30,7 +31,6 @@ namespace PixelMaestroStudio {
 			void on_actionOpen_Maestro_triggered();
 
 		private:
-			const QString session_file_path = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + QString(" Session.pmc");
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* maestro_drawing_area_ = nullptr;
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -38,6 +38,7 @@ namespace PixelMaestroStudio {
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();
+			void open_cuefile(QByteArray byte_array);
 			void open_cuefile(QString filename);
 	};
 }
