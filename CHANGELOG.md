@@ -3,7 +3,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.30] - In Progress
+## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 
 ### Added
@@ -13,25 +13,22 @@ WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cue
 	- Added ability to toggle live updating of USB devices.
 	- Added ability to unset Animations.
 	- Added ability to edit Palettes.
+	- Palettes are now saved between sessions.
 	- Added dialog window for previewing Cuefiles.
 - Preferences
-	- Added setting to toggle session auto saving/loading when closing/opening PixelMaestro Studio.
+	- Added setting to toggle session auto save/load when closing/opening the application. This is enabled by default.
 
 ### Changed
-- Canvas
-	- Consolidated all three Canvas types into the base Canvas class. This new Canvas class is structured like a PaletteCanvas, but supports transparency and has a transparent background by default.
-	- Replaced the Canvas Type drop-down with a check box.
-- Preferences
-	- Moved USB device settings to Animation Editor.
 - Animation Editor
 	- Fixed MaestroController not properly saving Section scroll settings.
 	- Palette list is now automatically saved and reopened when closing/opening PixelMaestro Studio.
+	- Consolidated all three Canvas types into the base Canvas class. This new class works like a PaletteCanvas with support for transparency.
+	- Replaced the "Canvas Type" drop-down with a check box.
+- Preferences
+	- Moved USB device settings to Animation Editor.
 - File selector dialog now remembers the last directory used.
 - Lowered minimum Qt version to 5.9.1 for compatibility with Ubuntu 18.04 repository Qt version.
 - Code cleanup.
-
-### Removed
-- Canvas: Removed `AnimationCanvases` and `ColorCanvases`. `PaletteCanvases` were consolidated down into the main `Canvas` class.
 
 ## [v0.20.1] - 2018-03-20
 

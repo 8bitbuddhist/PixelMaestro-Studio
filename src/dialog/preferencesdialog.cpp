@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 		// Interface settings
 		ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding, 0).toInt());		// Default to no padding
 		ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape, 1).toInt());		// Default to square pixels
-		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, false).toBool());		// Default to new session
+		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, true).toBool());		// Default to old session
 
 		// Maestro settings
 		ui->numSectionsSpinBox->setValue(settings_.value(num_sections, 1).toInt());				// Default to 1 Section
