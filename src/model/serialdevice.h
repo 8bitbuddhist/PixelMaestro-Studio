@@ -44,9 +44,8 @@ namespace PixelMaestroStudio {
 
 		public:
 			SerialWriteThread(SerialDevice* device, const char* out, uint16_t size) : QThread(nullptr) {
-				this->out_ = out;
+				this->out_ = QString::fromLocal8Bit(out, size);
 				this->device_ = device;
-				this->size = size;
 			}
 
 			void run() override {
@@ -68,17 +67,22 @@ namespace PixelMaestroStudio {
 				int chunk_size = 64;	// Size of each chunk in bytes
 				int sleep_period = 250;	// Time in milliseconds between chunks
 				do {
-					const char* out_addr = &out_[current_index];
-					if (current_index + chunk_size > size) {
-						chunk_size = size - current_index;
+					if (current_index + chunk_size > out_.size()) {
+						chunk_size = out_.size() - current_index;
 					}
-					device_->get_device()->write(out_addr, chunk_size);
+					// Yep, all three steps *are* actually required for some reason!
+					QString out_str = out_.mid(current_index, chunk_size);
+					const std::string out_std_str = out_str.toStdString();
+					const char* out_chunk = out_std_str.c_str();
+
+					// FIXME: Segfault when using live updates
+					device_->get_device()->write(out_chunk, chunk_size);
 					device_->get_device()->flush();
 					current_index += chunk_size;
 					msleep(sleep_period);
-					emit progress_changed((current_index / (float)size) * 100);
+					emit progress_changed((current_index / (float)out_.size()) * 100);
 				}
-				while (current_index < size);
+				while (current_index < out_.size());
 				emit progress_changed(100);
 			}
 
@@ -87,8 +91,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			SerialDevice* device_ = nullptr;
-			const char* out_ = nullptr;
-			uint16_t size = size;
+			QString out_;
 	};
 }
 
