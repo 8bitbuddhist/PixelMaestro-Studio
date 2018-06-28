@@ -5,6 +5,7 @@
 #ifndef SERIALDEVICE_H
 #define SERIALDEVICE_H
 
+#include <QMessageBox>
 #include <QSharedPointer>
 #include <QSerialPort>
 #include <QString>
@@ -44,7 +45,7 @@ namespace PixelMaestroStudio {
 
 		public:
 			SerialWriteThread(SerialDevice* device, const char* out, uint16_t size) : QThread(nullptr) {
-				this->out_ = QString::fromLocal8Bit(out, size);
+				this->output_.append(out, size);
 				this->device_ = device;
 			}
 
@@ -66,23 +67,24 @@ namespace PixelMaestroStudio {
 				int current_index = 0;
 				int chunk_size = 64;	// Size of each chunk in bytes
 				int sleep_period = 250;	// Time in milliseconds between chunks
-				do {
-					if (current_index + chunk_size > out_.size()) {
-						chunk_size = out_.size() - current_index;
-					}
-					// Yep, all three steps *are* actually required for some reason!
-					QString out_str = out_.mid(current_index, chunk_size);
-					const std::string out_std_str = out_str.toStdString();
-					const char* out_chunk = out_std_str.c_str();
 
-					// FIXME: Segfault when using live updates
-					device_->get_device()->write(out_chunk, chunk_size);
-					device_->get_device()->flush();
-					current_index += chunk_size;
-					msleep(sleep_period);
-					emit progress_changed((current_index / (float)out_.size()) * 100);
+				try {
+					do {
+						QByteArray out_addr = output_.mid(current_index, chunk_size);	// TODO: Segfault on write when opening PMS with a saved device attached
+						if (current_index + chunk_size > output_.size()) {
+							chunk_size = output_.size() - current_index;
+						}
+						device_->get_device()->write(out_addr);
+						device_->get_device()->flush();
+						current_index += chunk_size;
+						msleep(sleep_period);
+						emit progress_changed((current_index / (float)output_.size()) * 100);
+					}
+					while (current_index < output_.size());
 				}
-				while (current_index < out_.size());
+				catch (std::exception& ex) {
+					QMessageBox::critical(nullptr, QString("Device Error"), QString("Unable to write to device: " + QString::fromLatin1(ex.what())));
+				}
 				emit progress_changed(100);
 			}
 
@@ -91,7 +93,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			SerialDevice* device_ = nullptr;
-			QString out_;
+			QByteArray output_;
 	};
 }
 

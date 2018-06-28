@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 					bool connected = serial_devices_.last().connect();
 
 					if (!connected) {
-						QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + "."));
+						QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last ().get_device ()->errorString()));
 					}
 					break;
 				}
@@ -153,9 +153,9 @@ namespace PixelMaestroStudio {
 		 * "ROMBEG" indicates the start of the Cuefile.
 		 * "ROMEND" indicates the end of the Cuefile.
 		 */
-		QByteArray out = QByteArray("ROMBEG", 6) +
+		QByteArray out = QByteArray("ROMBEG") +
 						 maestro_cue_ +
-						 QByteArray("ROMEND", 6);
+						 QByteArray("ROMEND");
 
 		write_to_device(&serial_devices_[ui->serialOutputListWidget->currentRow()], (const char*)out, out.size(), true);
 	}
