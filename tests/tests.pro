@@ -68,7 +68,8 @@ SOURCES += \
 	../lib/PixelMaestro/tests/tests/showtest.cpp \
 	../lib/PixelMaestro/tests/tests/utilitytest.cpp \
 	../lib/PixelMaestro/tests/tests/timertest.cpp \
-	../lib/PixelMaestro/tests/tests/animationtimertest.cpp
+	../lib/PixelMaestro/tests/tests/animationtimertest.cpp \
+	../lib/PixelMaestro/tests/tests/pointtest.cpp
 
 HEADERS += \
 		.../lib/PixelMaestro/src/canvas/fonts/font.h \
@@ -113,7 +114,8 @@ HEADERS += \
 	../lib/PixelMaestro/tests/tests/sectiontest.h \
 	../lib/PixelMaestro/tests/tests/showtest.h \
 	../lib/PixelMaestro/tests/tests/utilitytest.h \
-	../lib/PixelMaestro/tests/catch/include/catch.hpp
+	../lib/PixelMaestro/tests/catch/include/catch.hpp \
+	../lib/PixelMaestro/tests/tests/pointtest.h
 
 INCLUDEPATH += \
 		$$PWD/../lib/PixelMaestro/src \

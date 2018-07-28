@@ -2,25 +2,27 @@
 
 ![latest release](https://img.shields.io/github/release/8bitbuddhist/pixelmaestro-studio.svg) ![license](https://img.shields.io/github/license/8bitbuddhist/pixelmaestro-studio.svg)
 
-PixelMaestro Studio is a desktop application for controlling LED displays, built on the [PixelMaestro library](https://github.com/8bitbuddhist/PixelMaestro). Using PixelMaestro Studio, you can design and preview custom animations, save and load presets, and control devices over USB.
+PixelMaestro Studio is a desktop application for controlling LED displays using the [PixelMaestro library](https://github.com/8bitbuddhist/PixelMaestro). Using PixelMaestro Studio, you can design and preview custom animations, save and load presets, and control devices over USB.
 
 ## Usage
 
 Download and run the latest version of PixelMaestro Studio from the [Releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases) page. The [Wiki](https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki) has more information on PixelMaestro Studio's features and how to use them.
 
-For information about the library itself, refer to the [PixelMaestro Wiki](https://github.com/8bitbuddhist/PixelMaestro/wiki).
+For information about the PixelMaestro library, visit the [PixelMaestro Wiki](https://github.com/8bitbuddhist/PixelMaestro/wiki) or go straight to the [repository](https://github.com/8bitbuddhist/PixelMaestro/).
 
 ## Running PixelMaestro Studio
 
 ### Windows
 
-On Windows, run the `PixelMaestro_Studio.exe` file.
+On Windows, run `PixelMaestro_Studio.exe`.
 
 ### Linux
 
-PixelMaestro Studio requires Qt 5.9.1 or higher. The easiest way to run it is to [download and install the latest version of Qt from the Qt website](https://www.qt.io/download). Or, if you're using Ubuntu 18.04, install the latest version of Qt from the repositories:
+PixelMaestro Studio requires Qt 5.9.1 or higher. If you're using Ubuntu 18.04, you can install the latest version of Qt using apt:
 
 `$ sudo apt-get install qt5-default libqt5serialport5`
+
+If Qt 5.9.1 isn't available in your distribution, [download and install the latest version of Qt from the Qt website](https://www.qt.io/download).
 
 ## Building PixelMaestro Studio
 
