@@ -70,7 +70,7 @@ namespace PixelMaestroStudio {
 
 				try {
 					do {
-						QByteArray out_addr = output_.mid(current_index, chunk_size);	// TODO: Segfault on write when opening PMS with a saved device attached
+						QByteArray out_addr = output_.mid(current_index, chunk_size);
 						if (current_index + chunk_size > output_.size()) {
 							chunk_size = output_.size() - current_index;
 						}

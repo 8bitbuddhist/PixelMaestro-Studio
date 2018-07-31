@@ -19,7 +19,6 @@ namespace PixelMaestroStudio {
 		this->maestro_control_widget_ = maestro_control_widget;
 
 		// Block certain Cues from firing
-		// TODO: Add ability to set custom blocks
 		maestro_control_widget->get_maestro_controller()->block_cue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions);
 
 		// Disable device buttons by default

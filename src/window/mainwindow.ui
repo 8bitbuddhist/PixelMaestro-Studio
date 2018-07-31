@@ -884,7 +884,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -892,6 +892,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="action_Open_Animation_Editor"/>
+    <addaction name="action_Open"/>
     <addaction name="actionOpen_Maestro"/>
     <addaction name="action_Save_Maestro"/>
     <addaction name="separator"/>
@@ -949,12 +950,20 @@
   </action>
   <action name="actionOpen_Maestro">
    <property name="text">
-    <string>&amp;Open...</string>
+    <string>Open as &amp;Maestro...</string>
    </property>
   </action>
   <action name="action_Donate">
    <property name="text">
     <string>&amp;Donate</string>
+   </property>
+  </action>
+  <action name="action_Open">
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open as Cue</string>
    </property>
   </action>
  </widget>

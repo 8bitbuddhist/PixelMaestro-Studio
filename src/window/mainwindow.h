@@ -30,6 +30,8 @@ namespace PixelMaestroStudio {
 			void on_action_Save_Maestro_triggered();
 			void on_actionOpen_Maestro_triggered();
 
+			void on_action_Open_triggered();
+
 		private:
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* maestro_drawing_area_ = nullptr;
@@ -38,8 +40,9 @@ namespace PixelMaestroStudio {
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();
-			void open_cuefile(QByteArray byte_array);
-			void open_cuefile(QString filename);
+			void open_cuefile(QByteArray byte_array, bool new_session);
+			void open_cuefile(QString filename, bool new_session);
+			QString open_cuefile_dialog();
 	};
 }
 

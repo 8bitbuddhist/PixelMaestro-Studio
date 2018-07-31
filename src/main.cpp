@@ -1,5 +1,6 @@
 #include "window/mainwindow.h"
 #include <QApplication>
+#include <QFontDatabase>
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QStyleFactory>
@@ -15,7 +16,6 @@ int main(int argc, char* argv[]) {
 
 	// Set global color palette (https://gist.github.com/QuantumCD/6245215)
 	qApp->setStyle(QStyleFactory::create("fusion"));
-
 	QPalette palette;
 	palette.setColor(QPalette::Window, QColor(53,53,53));
 	palette.setColor(QPalette::WindowText, Qt::white);
@@ -27,10 +27,13 @@ int main(int argc, char* argv[]) {
 	palette.setColor(QPalette::Button, QColor(53,53,53));
 	palette.setColor(QPalette::ButtonText, Qt::white);
 	palette.setColor(QPalette::BrightText, Qt::red);
-
 	palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
 	palette.setColor(QPalette::HighlightedText, Qt::black);
 	qApp->setPalette(palette);
+
+	// Set application font
+	int id = QFontDatabase::addApplicationFont(":/FiraSans-Regular.ttf");
+	app.setFont(QFont(QFontDatabase::applicationFontFamilies(id).at(0), 10));
 
 	// Maximize main window
 	w.setWindowState(Qt::WindowState::WindowMaximized);

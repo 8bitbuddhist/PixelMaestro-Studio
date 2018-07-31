@@ -150,4 +150,5 @@ INCLUDEPATH += \
 		$$PWD/src \
 		$$PWD/../lib/PixelMaestro/src
 
-RESOURCES += resources/images/images.qrc
+RESOURCES += resources/images/images.qrc \
+    resources/fonts/fonts.qrc

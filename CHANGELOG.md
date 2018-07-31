@@ -5,6 +5,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.30.1] - In Progress
 
+### Added
+- Added ability to load a Cuefile into the current Maestro instead of replacing it entirely.
+
 ## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 

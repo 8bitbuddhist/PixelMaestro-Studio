@@ -42,4 +42,4 @@ Icons from [Openclipart](https://openclipart.org/).
 
 ## Donate
 
-If you find this project useful, cool, or just plain interesting, consider [making a donation](https://www.patreon.com/bePatron?c=1348704).
+If you like this project, please consider [making a donation](https://www.patreon.com/bePatron?c=1348704).
