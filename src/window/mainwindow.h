@@ -5,6 +5,7 @@
 #include "../widget/maestrocontrolwidget.h"
 #include <QByteArray>
 #include <QMainWindow>
+#include <QSplitter>
 #include <QStandardPaths>
 #include <QString>
 
@@ -36,7 +37,7 @@ namespace PixelMaestroStudio {
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* maestro_drawing_area_ = nullptr;
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
-			QLayout* main_layout_ = nullptr;
+			QSplitter* splitter_ = nullptr;
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();

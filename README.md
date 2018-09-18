@@ -39,7 +39,3 @@ If Qt 5.9.1 isn't available in your distribution, [download and install the late
 ## Credits
 
 Icons from [Openclipart](https://openclipart.org/).
-
-## Donate
-
-If you like this project, please consider [making a donation](https://www.patreon.com/bePatron?c=1348704).

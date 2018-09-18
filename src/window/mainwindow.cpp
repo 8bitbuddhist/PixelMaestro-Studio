@@ -12,8 +12,14 @@
 namespace PixelMaestroStudio {
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
-		this->main_layout_ = this->findChild<QLayout*>("mainLayout");
 		setWindowTitle(QCoreApplication::applicationName());
+
+		// Configure split view
+		QLayout* main_layout = this->findChild<QLayout*>("mainLayout");
+		this->splitter_ = new QSplitter(main_layout->widget());
+		this->splitter_->setOrientation(Qt::Orientation::Vertical);
+		main_layout->addWidget(this->splitter_);
+		// FIXME: Prevent MaestroControl from using 100% of screen space
 
 		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
 		QSettings settings;
@@ -72,16 +78,16 @@ namespace PixelMaestroStudio {
 
 		// If the Main DrawingArea is enabled as an output device, display it
 		if (settings.value(PreferencesDialog::main_window_option, true) == true && maestro_drawing_area_ == nullptr) {
-			maestro_drawing_area_ = new MaestroDrawingArea(main_layout_->widget(), maestro_controller_);
-			main_layout_->addWidget(maestro_drawing_area_);
+			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
+			splitter_->addWidget(maestro_drawing_area_);
 		}
 
 		maestro_controller_->start();
 
 		// Initialize MaestroControlWidget
 		if (maestro_control_widget_ == nullptr) {
-			maestro_control_widget_ = new MaestroControlWidget(main_layout_->widget(), maestro_controller_);
-			main_layout_->addWidget(maestro_control_widget_);
+			maestro_control_widget_ = new MaestroControlWidget(splitter_, maestro_controller_);
+			splitter_->addWidget(maestro_control_widget_);
 		}
 
 		if (maestro_drawing_area_ != nullptr) {
@@ -154,17 +160,27 @@ namespace PixelMaestroStudio {
 	 * Reinitializes all widgets.
 	 */
 	void MainWindow::initialize_widgets() {
-		main_layout_->removeWidget(maestro_drawing_area_);
-		main_layout_->removeWidget(maestro_control_widget_);
 		removeEventFilter(maestro_drawing_area_);
 
 		ui->action_Save_Maestro->setEnabled(false);
 
 		if (maestro_drawing_area_) {
+			int drawing_area_index = splitter_->indexOf(maestro_drawing_area_);
+			if (drawing_area_index >= 0) {
+				splitter_->widget(drawing_area_index)->hide();
+				splitter_->widget(drawing_area_index)->deleteLater();
+			}
+
 			delete maestro_drawing_area_;
 			maestro_drawing_area_ = nullptr;
 		}
 		if (maestro_control_widget_) {
+			int control_widget_index = splitter_->indexOf(maestro_control_widget_);
+			if (control_widget_index >= 0) {
+				splitter_->widget(control_widget_index)->hide();
+				splitter_->widget(control_widget_index)->deleteLater();
+			}
+
 			delete maestro_control_widget_;
 			maestro_control_widget_ = nullptr;
 		}
@@ -221,6 +237,8 @@ namespace PixelMaestroStudio {
 			settings.setValue(PreferencesDialog::last_session, maestro_config);
 		}
 
+		delete maestro_control_widget_;
+		delete splitter_;
 		delete ui;
 	}
 }

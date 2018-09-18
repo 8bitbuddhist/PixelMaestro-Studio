@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -667,10 +667,10 @@
          <widget class="QWidget" name="canvasScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
-            <x>-99</x>
+            <x>0</x>
             <y>0</y>
-            <width>685</width>
-            <height>432</height>
+            <width>691</width>
+            <height>435</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
@@ -937,7 +937,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>418</width>
+                   <width>424</width>
                    <height>68</height>
                   </rect>
                  </property>
@@ -1240,8 +1240,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>693</width>
-            <height>473</height>
+            <width>710</width>
+            <height>440</height>
            </rect>
           </property>
           <property name="sizePolicy">

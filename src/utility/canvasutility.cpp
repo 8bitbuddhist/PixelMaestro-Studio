@@ -21,13 +21,22 @@ namespace PixelMaestroStudio {
 		QSize canvas_size(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
 		image.setScaledSize(canvas_size);
 
-		maestro_control->run_cue(maestro_control->canvas_handler->set_num_frames(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.imageCount()));
+		maestro_control->run_cue(
+			maestro_control->canvas_handler->set_num_frames(
+					maestro_control->get_section_index(),
+					maestro_control->get_layer_index(),
+					static_cast<uint16_t>(image.imageCount())));
 
 		// For animated images, set the frame rate
 		if (image.imageCount() > 1) {
-			maestro_control->run_cue(maestro_control->canvas_handler->set_frame_timer(maestro_control->get_section_index(), maestro_control->get_layer_index(), image.nextImageDelay()));
+			maestro_control->run_cue(
+				maestro_control->canvas_handler->set_frame_timer(
+					maestro_control->get_section_index(),
+					maestro_control->get_layer_index(),
+					static_cast<uint16_t>(image.nextImageDelay())));
 		}
 
+		// Iterate over each frame
 		Point cursor(0, 0);
 		for (uint16_t i = 0; i < image.imageCount(); i++) {
 			QImage frame = image.read();
@@ -46,14 +55,19 @@ namespace PixelMaestroStudio {
 			}
 
 			// Copy the color table into a temporary RGB array so we can Cue it
-			Colors::RGB color_table_rgb[color_table.size()];
+			QVector<Colors::RGB> color_table_rgb(color_table.size());
 			for (uint8_t color = 0; color < color_table.size() - 1; color++) {
-				color_table_rgb[color].r = qRed(color_table.at(color));
-				color_table_rgb[color].g = qGreen(color_table.at(color));
-				color_table_rgb[color].b = qBlue(color_table.at(color));
+				color_table_rgb[color].r = static_cast<uint8_t>(qRed(color_table.at(color)));
+				color_table_rgb[color].g = static_cast<uint8_t>(qGreen(color_table.at(color)));
+				color_table_rgb[color].b = static_cast<uint8_t>(qBlue(color_table.at(color)));
 			}
 
-			maestro_control->run_cue(maestro_control->canvas_handler->set_palette(maestro_control->get_section_index(), maestro_control->get_layer_index(), new Palette(&color_table_rgb[0], color_table.size())));
+			Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
+			maestro_control->run_cue(
+				maestro_control->canvas_handler->set_palette(
+					maestro_control->get_section_index(),
+					maestro_control->get_layer_index(),
+					&palette));
 
 			// Iterate over each pixel and the frame and re-draw it
 			for (uint16_t y = 0; y < canvas_size.height(); y++) {
@@ -61,12 +75,21 @@ namespace PixelMaestroStudio {
 					cursor.set(x, y);
 					if (canvas->in_bounds(cursor.x, cursor.y)) {
 						QColor pix_color = frame.pixelColor(x, y);
-						maestro_control->run_cue(maestro_control->canvas_handler->draw_point(maestro_control->get_section_index(), maestro_control->get_layer_index(), color_table.indexOf(pix_color.rgb()), x, y));
+						maestro_control->run_cue(
+							maestro_control->canvas_handler->draw_point(
+								maestro_control->get_section_index(),
+								maestro_control->get_layer_index(),
+								static_cast<uint8_t>(color_table.indexOf(pix_color.rgb())),
+								x,
+								y));
 					}
 				}
 			}
 			image.jumpToNextImage();
-			maestro_control->run_cue(maestro_control->canvas_handler->next_frame(maestro_control->get_section_index(), maestro_control->get_layer_index()));
+			maestro_control->run_cue(
+				maestro_control->canvas_handler->next_frame(
+					maestro_control->get_section_index(),
+					maestro_control->get_layer_index()));
 		}
 	}
 }

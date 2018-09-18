@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 		this->maestro_control_widget_ = maestro_control_widget;
 
 		// Block certain Cues from firing
-		maestro_control_widget->get_maestro_controller()->block_cue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions);
+		maestro_control_widget->get_maestro_controller()->block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
 
 		// Disable device buttons by default
 		ui->deviceSettingsGroupBox->setEnabled(false);
@@ -61,7 +61,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::check_device_rom_capacity() {
 		if (ui->serialOutputListWidget->currentRow() > -1) {
 			int capacity = serial_devices_[ui->serialOutputListWidget->currentRow()].get_capacity();
-			int capacity_75 = capacity * 0.75;
+			int capacity_75 = static_cast<int>(capacity * 0.75);
 			if (this->maestro_cue_.size() >= capacity) {
 				ui->configSizeLineEdit->setStyleSheet("border: 1px solid red");
 			}
@@ -119,7 +119,9 @@ namespace PixelMaestroStudio {
 	 * Opens the CueInterpreter dialog for the selected device.
 	 */
 	void DeviceControlWidget::on_interpretCuePushButton_clicked() {
-		CueInterpreterDialog dialog(this, (uint8_t*)maestro_cue_.data(), maestro_cue_.size());
+		CueInterpreterDialog dialog(this,
+									reinterpret_cast<uint8_t*>(maestro_cue_.data()),
+									static_cast<uint16_t>(maestro_cue_.size()));
 		dialog.exec();
 	}
 
@@ -156,7 +158,10 @@ namespace PixelMaestroStudio {
 						 maestro_cue_ +
 						 QByteArray("ROMEND");
 
-		write_to_device(&serial_devices_[ui->serialOutputListWidget->currentRow()], (const char*)out, out.size(), true);
+		write_to_device(&serial_devices_[ui->serialOutputListWidget->currentRow()],
+				static_cast<const char*>(out),
+				out.size(),
+				true);
 	}
 
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
@@ -194,7 +199,9 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < serial_devices_.size(); i++) {
 			SerialDevice device = serial_devices_.at(i);
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
-				write_to_device(&device, (const char*)cue, size, false);
+				write_to_device(&device,
+								reinterpret_cast<const char*>(cue),
+								size, false);
 			}
 		}
 
@@ -257,7 +264,9 @@ namespace PixelMaestroStudio {
 	 * @param size Size of data to send.
 	 */
 	void DeviceControlWidget::write_to_device(SerialDevice *device, const char *out, int size, bool progress) {
-		SerialWriteThread* thread = new SerialWriteThread(device, (const char*)out, size);
+		SerialWriteThread* thread = new SerialWriteThread(device,
+														  static_cast<const char*>(out),
+														  static_cast<uint16_t>(size));
 		connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
 
 		if (progress) connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
