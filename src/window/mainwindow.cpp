@@ -19,7 +19,6 @@ namespace PixelMaestroStudio {
 		this->splitter_ = new QSplitter(main_layout->widget());
 		this->splitter_->setOrientation(Qt::Orientation::Vertical);
 		main_layout->addWidget(this->splitter_);
-		// FIXME: Prevent MaestroControl from using 100% of screen space
 
 		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
 		QSettings settings;
@@ -89,6 +88,9 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_ = new MaestroControlWidget(splitter_, maestro_controller_);
 			splitter_->addWidget(maestro_control_widget_);
 		}
+
+		// Resize split view so that it's 50/50
+		this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
 
 		if (maestro_drawing_area_ != nullptr) {
 			static_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
