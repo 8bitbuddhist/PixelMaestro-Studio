@@ -26,6 +26,10 @@ namespace PixelMaestroStudio {
 			static QString palette_target_color;
 			static QString palette_type;
 
+			static QString device_capacity;
+			static QString device_port;
+			static QString devices;
+			static QString device_real_time_refresh;
 			static QString last_cuefile_directory;
 			static QString last_session;
 			static QString main_window_option;
@@ -37,10 +41,9 @@ namespace PixelMaestroStudio {
 			static QString refresh_rate;
 			static QString save_session;
 			static QString separate_window_option;
-			static QString device_capacity;
-			static QString device_port;
-			static QString devices;
-			static QString device_real_time_refresh;
+			static QString splitter_position;
+			static QString window_geometry;
+			static QString window_state;
 
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();

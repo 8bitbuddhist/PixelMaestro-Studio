@@ -5,14 +5,21 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.30.1] - In Progress
 ### Added
-- Added ability to load a Cuefile into the current Maestro instead of replacing it entirely.
-- Added ability to resize MaestroDrawingArea.
+- Added ability to merge a Cuefile into the current Maestro instead of replacing it.
+- Added ability to resize sections of the interface.
+- Added shortcut keys for Save, New, Open, etc.
 
 ### Changed
+- Renamed several file menu options to be more clear about their actions.
+- Added tooltips to several menu options.
 - Renamed `Cue Interpreter` to `Cue Previewer`.
-- Updated Qt version to 5.11.1.
+- Updated Qt version to 5.11.2.
 - Created static build for Linux.
 - Fixed memory leak when loading images into a Canvas.
+- Fixed custom Palettes from saving and loading when session saving was disabled.
+
+### Removed
+- Removed donation link.
 
 ## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.

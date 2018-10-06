@@ -1465,7 +1465,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Event History</string>
+                 <string>History</string>
                 </property>
                </widget>
               </item>
@@ -1516,7 +1516,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Show Queue</string>
+                 <string>Queue</string>
                 </property>
                </widget>
               </item>

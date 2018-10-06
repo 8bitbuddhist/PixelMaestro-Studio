@@ -110,7 +110,7 @@ namespace PixelMaestroStudio {
 		 * Check if settings contains stored Palettes.
 		 * If not, initialize a new set of Palettes.
 		 */
-		if (!settings.childGroups().contains(PreferencesDialog::palettes)) {
+		if (!settings.childGroups().contains(PreferencesDialog::palettes) || settings.value(PreferencesDialog::save_session).toBool() == false) {
 			initialize_palettes();
 			return;
 		}
@@ -189,7 +189,10 @@ namespace PixelMaestroStudio {
 	}
 
 	PaletteController::~PaletteController() {
-		// Save palettes to settings
-		save_palettes();
+		// If the user chose to save their session, save Palettes to settings
+		QSettings settings;
+		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+			save_palettes();
+		}
 	}
 }

@@ -23,17 +23,18 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_action_About_triggered();
-			void on_action_Donate_triggered();
 			void on_action_Exit_triggered();
 			void on_action_Online_Help_triggered();
+			void on_action_Open_triggered();
 			void on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
 			void on_action_Preferences_triggered();
+			void on_action_Save_triggered();
 			void on_action_Save_Maestro_triggered();
 			void on_actionOpen_Maestro_triggered();
 
-			void on_action_Open_triggered();
-
 		private:
+			/// Path to the last opened/saved Cuefile.
+			QString active_cuefile_;
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* maestro_drawing_area_ = nullptr;
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
@@ -43,6 +44,7 @@ namespace PixelMaestroStudio {
 			void initialize_widgets();
 			void open_cuefile(QByteArray byte_array, bool new_session);
 			void open_cuefile(QString filename, bool new_session);
+			void set_active_cuefile(QString path);
 			QString open_cuefile_dialog();
 	};
 }

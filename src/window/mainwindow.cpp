@@ -10,6 +10,10 @@
 #include "ui_mainwindow.h"
 
 namespace PixelMaestroStudio {
+	/*
+	 * TODO: Add ability to add/remove Maestro preview widget and window on-demand
+	 * Look into dockable widgets: https://doc.qt.io/qt-5/qdockwidget.html
+	 */
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
 		setWindowTitle(QCoreApplication::applicationName());
@@ -23,6 +27,15 @@ namespace PixelMaestroStudio {
 		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
 		QSettings settings;
 		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
+
+		// Restore window size
+		this->restoreGeometry(settings.value(PreferencesDialog::window_geometry).toByteArray());
+		this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
+
+		// Restore splitter position
+		this->splitter_->restoreState(settings.value(PreferencesDialog::splitter_position).toByteArray());
+
+		// Restore previous Maestro session
 		if (settings.value(PreferencesDialog::save_session).toBool() == true && !bytes.isEmpty()) {
 			open_cuefile(bytes, true);
 		}
@@ -100,17 +113,19 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Loads a Cuefile into the current Maestro.
+	 * Merges a Cuefile into the current Maestro.
 	 */
 	void MainWindow::on_action_Open_triggered() {
 		open_cuefile(open_cuefile_dialog(), false);
 	}
 
 	/**
-	 * Loads a Cuefile as a full Maestro config.
+	 * Replaces the current Maestro with the loaded Cuefile.
 	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
-		open_cuefile(open_cuefile_dialog(), true);
+		QString file = open_cuefile_dialog();
+		open_cuefile(file, true);
+		set_active_cuefile(file);
 	}
 
 	/**
@@ -124,6 +139,21 @@ namespace PixelMaestroStudio {
 	/**
 	 * Saves the current Maestro to a Cuefile.
 	 */
+	void MainWindow::on_action_Save_triggered() {
+		if (this->active_cuefile_.isEmpty()) {
+			on_action_Save_Maestro_triggered();
+		}
+		else {
+			QSettings settings;
+			// Store the directory that the file was saved to
+			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(this->active_cuefile_).path());
+			maestro_controller_->save_cuefile(this->active_cuefile_);
+		}
+	}
+
+	/**
+	 * Saves the current Maestro to a new Cuefile.
+	 */
 	void MainWindow::on_action_Save_Maestro_triggered() {
 		// Open the window in the last used directory, if possible
 		QSettings settings;
@@ -134,9 +164,7 @@ namespace PixelMaestroStudio {
 			QString("PixelMaestro Cue File (*.pmc)"));
 
 		if (!filename.isEmpty()) {
-			// Store the directory that the file was saved to
-			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
-			maestro_controller_->save_cuefile(filename);
+			on_action_Save_triggered();
 		}
 	}
 
@@ -194,10 +222,6 @@ namespace PixelMaestroStudio {
 		maestro_controller_ = new MaestroController();
 	}
 
-	void MainWindow::on_action_Donate_triggered() {
-		QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=8547028", QUrl::TolerantMode));
-	}
-
 	/**
 	 * Loads a Cuefile into a new session.
 	 * @param byte_array Array containing the Cuefile.
@@ -227,8 +251,33 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	/**
+	 * Sets the current active Cuefile to the path specified.
+	 *
+	 * @param path Path to the current Cuefile.
+	 */
+	void MainWindow::set_active_cuefile(QString path) {
+		this->active_cuefile_ = path;
+
+		if (!path.isEmpty()) {
+			this->setWindowTitle("PixelMaestro Studio - " + QFileInfo(path).fileName());
+		}
+		else {
+			this->setWindowTitle("PixelMaestro Studio");
+		}
+	}
+
 	MainWindow::~MainWindow() {
 		QSettings settings;
+
+		// Save window geometry
+		settings.setValue(PreferencesDialog::window_geometry, saveGeometry());
+		settings.setValue(PreferencesDialog::window_state, saveState());
+
+		// Save splitter position
+		settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
+
+		// Save session (if enabled)
 		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
 			// Save Maestro config
 			QByteArray maestro_config;

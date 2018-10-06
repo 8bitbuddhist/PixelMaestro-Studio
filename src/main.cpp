@@ -35,9 +35,6 @@ int main(int argc, char* argv[]) {
 	int id = QFontDatabase::addApplicationFont(":/FiraSans-Regular.ttf");
 	app.setFont(QFont(QFontDatabase::applicationFontFamilies(id).at(0), 10));
 
-	// Maximize main window
-	w.setWindowState(Qt::WindowState::WindowMaximized);
-
 	// Verify main layout is present
 	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");
 	Q_ASSERT(main_layout);

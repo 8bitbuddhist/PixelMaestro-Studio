@@ -36,20 +36,20 @@ namespace PixelMaestroStudio {
 			QSize sizeHint() const override;
 
 		private:
-			/// The location where the Section will be rendered.
-			Point cursor_;
-
 			/// The Section's last recorded size. Used to determine when to resize the output.
 			uint32_t last_pixel_count_ = 0;
 
 			/// The parent MaestroDrawingArea.
 			MaestroDrawingArea* maestro_drawing_area_ = nullptr;
 
+			/// The amount of space between each Pixel. Gets initialized in resizeEvent().
+			uint8_t pad_ = 0;
+
 			/// The size of each rendered Pixel.
 			uint8_t radius_ = 20;
 
-			/// The amount of space between each Pixel. Gets initialized in resizeEvent().
-			uint8_t pad_ = 0;
+			/// The location where the Section will be rendered.
+			Point section_cursor_;
 
 			QSettings settings_;
 

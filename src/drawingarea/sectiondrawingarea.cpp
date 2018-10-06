@@ -50,8 +50,8 @@ namespace PixelMaestroStudio {
 	 * @return Pixel coordinate.
 	 */
 	Point SectionDrawingArea::map_cursor_to_pixel(const QPoint cursor) {
-		uint16_t x = (cursor.x() - cursor_.x) / radius_;
-		uint16_t y = (cursor.y() - cursor_.y) / radius_;
+		uint16_t x = (cursor.x() - section_cursor_.x) / radius_;
+		uint16_t y = (cursor.y() - section_cursor_.y) / radius_;
 		return Point(x, y);
 	}
 
@@ -65,7 +65,7 @@ namespace PixelMaestroStudio {
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
 			Canvas* canvas = section_->get_canvas();
 			if (canvas != nullptr) {
-				Point pixel = map_cursor_to_pixel(event->pos());
+				Point pixel = map_cursor_to_pixel(event->pos());		
 
 				// If there's a MaestroControlWidget, use run_cue instead of modifying the Canvas directly.
 				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
@@ -147,8 +147,11 @@ namespace PixelMaestroStudio {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				rect.setRect(cursor_.x + (column * pad_), cursor_.y + (row * pad_), radius_, radius_);
+				rect.setRect(section_cursor_.x + (column * pad_), section_cursor_.y + (row * pad_), radius_, radius_);
 				painter.setBrush(brush);
+
+				// TODO: If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
+
 				painter.setPen(Qt::PenStyle::NoPen);
 
 				/*
@@ -193,8 +196,8 @@ namespace PixelMaestroStudio {
 		pad_ = radius_;
 
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
-		cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
-		cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
+		section_cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
+		section_cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
 
 		// Calculate the actual size of each Pixel
 		switch (settings_.value(PreferencesDialog::pixel_padding).toInt()) {
