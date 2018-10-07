@@ -382,6 +382,16 @@ namespace PixelMaestroStudio {
 	}
 
 	MaestroController::~MaestroController() {
+		// If automatic session saving is enabled, save Maestro configuration
+		QSettings settings;
+		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+			QByteArray maestro_config;
+			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
+			save_maestro_to_datastream(&maestro_datastream);
+			settings.setValue(PreferencesDialog::last_session, maestro_config);
+		}
+
+
 		delete [] sections_;
 	}
 }

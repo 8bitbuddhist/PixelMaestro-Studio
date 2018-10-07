@@ -33,8 +33,8 @@ namespace PixelMaestroStudio {
 			void on_actionOpen_Maestro_triggered();
 
 		private:
-			/// Path to the last opened/saved Cuefile.
-			QString active_cuefile_;
+			/// Path to the last opened Cuefile.
+			QString loaded_cuefile_path_;
 			MaestroController* maestro_controller_ = nullptr;
 			QWidget* maestro_drawing_area_ = nullptr;
 			MaestroControlWidget* maestro_control_widget_ = nullptr;

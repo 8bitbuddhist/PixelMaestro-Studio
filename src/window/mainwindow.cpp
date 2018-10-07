@@ -24,9 +24,8 @@ namespace PixelMaestroStudio {
 		this->splitter_->setOrientation(Qt::Orientation::Vertical);
 		main_layout->addWidget(this->splitter_);
 
-		// If the user has a session saved and they chose to continue from their last session, open the session, otherwise start a new session
+		// Begin restoring saved settings
 		QSettings settings;
-		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
 
 		// Restore window size
 		this->restoreGeometry(settings.value(PreferencesDialog::window_geometry).toByteArray());
@@ -35,12 +34,12 @@ namespace PixelMaestroStudio {
 		// Restore splitter position
 		this->splitter_->restoreState(settings.value(PreferencesDialog::splitter_position).toByteArray());
 
-		// Restore previous Maestro session
+		// If the user has a session saved and session auto-saving is enabled, open the session. Otherwise, start a new session.
+		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
 		if (settings.value(PreferencesDialog::save_session).toBool() == true && !bytes.isEmpty()) {
 			open_cuefile(bytes, true);
 		}
 		else {
-			// Open the Animation Editor
 			on_action_Open_Animation_Editor_triggered(false);
 		}
 	}
@@ -82,13 +81,12 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		QSettings settings;
-
 		if (!keep_current_open) {
 			initialize_widgets();
 		}
 
-		// If the Main DrawingArea is enabled as an output device, display it
+		// If the main MaestroDrawingArea option is enabled, add it to MainWindow
+		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true && maestro_drawing_area_ == nullptr) {
 			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
 			splitter_->addWidget(maestro_drawing_area_);
@@ -96,15 +94,16 @@ namespace PixelMaestroStudio {
 
 		maestro_controller_->start();
 
-		// Initialize MaestroControlWidget
+		// Initialize the control widget and assign our newly started Maestro to it
 		if (maestro_control_widget_ == nullptr) {
 			maestro_control_widget_ = new MaestroControlWidget(splitter_, maestro_controller_);
 			splitter_->addWidget(maestro_control_widget_);
 		}
 
-		// Resize split view so that it's 50/50
+		// Resize split view so that it defaults to an even split
 		this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
 
+		// Link the MaestroControlWidget to the main DrawingArea
 		if (maestro_drawing_area_ != nullptr) {
 			static_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
 		}
@@ -140,14 +139,14 @@ namespace PixelMaestroStudio {
 	 * Saves the current Maestro to a Cuefile.
 	 */
 	void MainWindow::on_action_Save_triggered() {
-		if (this->active_cuefile_.isEmpty()) {
+		if (this->loaded_cuefile_path_.isEmpty()) {
 			on_action_Save_Maestro_triggered();
 		}
 		else {
 			QSettings settings;
 			// Store the directory that the file was saved to
-			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(this->active_cuefile_).path());
-			maestro_controller_->save_cuefile(this->active_cuefile_);
+			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(this->loaded_cuefile_path_).path());
+			maestro_controller_->save_cuefile(this->loaded_cuefile_path_);
 		}
 	}
 
@@ -257,7 +256,7 @@ namespace PixelMaestroStudio {
 	 * @param path Path to the current Cuefile.
 	 */
 	void MainWindow::set_active_cuefile(QString path) {
-		this->active_cuefile_ = path;
+		this->loaded_cuefile_path_ = path;
 
 		if (!path.isEmpty()) {
 			this->setWindowTitle("PixelMaestro Studio - " + QFileInfo(path).fileName());
@@ -276,17 +275,6 @@ namespace PixelMaestroStudio {
 
 		// Save splitter position
 		settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
-
-		// Save session (if enabled)
-		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
-			// Save Maestro config
-			QByteArray maestro_config;
-			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
-			if (maestro_controller_ != nullptr) {
-				maestro_controller_->save_maestro_to_datastream(&maestro_datastream);
-			}
-			settings.setValue(PreferencesDialog::last_session, maestro_config);
-		}
 
 		delete maestro_control_widget_;
 		delete splitter_;

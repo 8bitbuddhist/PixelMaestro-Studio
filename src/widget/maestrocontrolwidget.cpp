@@ -46,16 +46,17 @@ namespace PixelMaestroStudio {
 
 		QSettings settings;
 
-		// Open separate window if necessary
+		// Open separate window if enabled in settings
 		if (settings.value(PreferencesDialog::separate_window_option, false).toBool() == true) {
 			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
 			drawing_area_dialog_.get()->show();
 		}
 
+		// Initialize device control tab and add it to the widget
 		device_extra_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
 		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_extra_control_widget_.data());
 
-		// Set the Maestro's Sections
+		// Initialize the Maestro's Sections
 		maestro_controller_->set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
 
 		// Initialize Cue Handlers
