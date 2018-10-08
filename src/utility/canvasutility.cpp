@@ -43,7 +43,10 @@ namespace PixelMaestroStudio {
 
 			frame = frame.convertToFormat(QImage::Format_Indexed8);
 
-			// Extract the image's color table
+			/*
+			 * Extract the frame's color table.
+			 * We do this for every frame to ensure each Pixel is assigned a color index, even though we only use the first frame's color table as the Palette.
+			 */
 			QVector<QRgb> color_table = frame.colorTable();
 
 			/*
@@ -54,7 +57,7 @@ namespace PixelMaestroStudio {
 				color_table.removeLast();
 			}
 
-			// Copy the color table into a temporary RGB array so we can Cue it
+			// Copy the color table into a temporary RGB array so we can translate it into a Cue
 			QVector<Colors::RGB> color_table_rgb(color_table.size());
 			for (uint8_t color = 0; color < color_table.size() - 1; color++) {
 				color_table_rgb[color].r = static_cast<uint8_t>(qRed(color_table.at(color)));
@@ -62,12 +65,14 @@ namespace PixelMaestroStudio {
 				color_table_rgb[color].b = static_cast<uint8_t>(qBlue(color_table.at(color)));
 			}
 
-			Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
-			maestro_control->run_cue(
-				maestro_control->canvas_handler->set_palette(
-					maestro_control->get_section_index(),
-					maestro_control->get_layer_index(),
-					&palette));
+			if (image.currentImageNumber() == 0) {
+				Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
+				maestro_control->run_cue(
+							maestro_control->canvas_handler->set_palette(
+								maestro_control->get_section_index(),
+								maestro_control->get_layer_index(),
+								&palette));
+			}
 
 			// Iterate over each pixel and the frame and re-draw it
 			for (uint16_t y = 0; y < canvas_size.height(); y++) {
