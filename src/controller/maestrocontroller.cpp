@@ -148,12 +148,12 @@ namespace PixelMaestroStudio {
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
 
 		// Maestro-specific Cues
-		if (save_handlers && save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
 			write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 		}
 
 		// Show-specific Cues
-		if (save_handlers && save_handlers->contains(CueController::Handler::ShowCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::ShowCueHandler)) {
 			Show* show = maestro_->get_show();
 			if (show != nullptr) {
 				write_cue_to_stream(datastream, maestro_handler->set_show());
@@ -165,7 +165,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Call Sections
-		if (save_handlers && save_handlers->contains(CueController::Handler::ShowCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::ShowCueHandler)) {
 			for (uint8_t section = 0; section < num_sections_; section++) {
 				save_section_to_datastream(datastream, section, 0, save_handlers);
 			}
@@ -195,7 +195,7 @@ namespace PixelMaestroStudio {
 		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
 
 		// Animation & Colors
-		if (save_handlers && save_handlers->contains(CueController::Handler::AnimationCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::AnimationCueHandler)) {
 			Animation* animation = section->get_animation();
 			if (animation != nullptr) {
 				write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
@@ -267,7 +267,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Save Canvas settings
-		if (save_handlers && save_handlers->contains(CueController::Handler::CanvasCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::CanvasCueHandler)) {
 			Canvas* canvas = section->get_canvas();
 			if (canvas != nullptr) {
 				write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_num_frames()));

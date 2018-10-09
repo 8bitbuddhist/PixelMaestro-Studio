@@ -22,7 +22,6 @@ namespace PixelMaestroStudio {
 
 	// "Interface" section
 	QString PreferencesDialog::pause_on_start = QStringLiteral("Interface/PauseOnStart");
-	QString PreferencesDialog::pixel_padding = QStringLiteral("Interface/Padding");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
 	QString PreferencesDialog::last_session = QStringLiteral("Interface/LastSession");
@@ -50,7 +49,6 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 
 		// Interface settings
-		ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding, 0).toInt());		// Default to no padding
 		ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape, 1).toInt());		// Default to square pixels
 		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, true).toBool());		// Default to old session
 
@@ -71,7 +69,6 @@ namespace PixelMaestroStudio {
 		settings_.setValue(pause_on_start, ui->pauseOnStartCheckBox->isChecked());
 
 		// Save interface settings
-		settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 		settings_.setValue(save_session, ui->saveSessionCheckBox->isChecked());
 

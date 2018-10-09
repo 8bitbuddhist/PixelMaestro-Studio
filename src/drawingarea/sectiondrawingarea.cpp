@@ -206,20 +206,6 @@ namespace PixelMaestroStudio {
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
 		section_cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
 		section_cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
-
-		// Calculate the actual size of each Pixel
-		switch (settings_.value(PreferencesDialog::pixel_padding).toInt()) {
-			case 1:	// Small
-				radius_ *= 0.8;
-				break;
-			case 2:	// Medium
-				radius_ *= 0.6;
-				break;
-			case 3:	// Large
-				radius_ *= 0.4;
-				break;
-		}
-
 	}
 
 	/**

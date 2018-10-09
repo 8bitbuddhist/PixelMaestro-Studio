@@ -21,6 +21,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Removed
 - Removed donation link.
+- Removed Pixel Size option from Preferences dialog.
 
 ## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
