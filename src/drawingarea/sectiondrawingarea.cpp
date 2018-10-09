@@ -62,10 +62,12 @@ namespace PixelMaestroStudio {
 	 * @param event Event parameters.
 	 */
 	void SectionDrawingArea::mouseMoveEvent(QMouseEvent *event) {
+		cursor_pos_ = event->pos();
+
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
 			Canvas* canvas = section_->get_canvas();
 			if (canvas != nullptr) {
-				Point pixel = map_cursor_to_pixel(event->pos());		
+				Point pixel = map_cursor_to_pixel(cursor_pos_);
 
 				// If there's a MaestroControlWidget, use run_cue instead of modifying the Canvas directly.
 				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
@@ -150,9 +152,15 @@ namespace PixelMaestroStudio {
 				rect.setRect(section_cursor_.x + (column * pad_), section_cursor_.y + (row * pad_), radius_, radius_);
 				painter.setBrush(brush);
 
-				// TODO: If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
-
+				// Set Pen style.
+				// If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
 				painter.setPen(Qt::PenStyle::NoPen);
+				if (section_->get_canvas() != nullptr) {
+					Point pixel_pos = map_cursor_to_pixel(cursor_pos_);
+					if (pixel_pos.x == column && pixel_pos.y == row) {
+						painter.setPen(Qt::PenStyle::SolidLine);
+					}
+				}
 
 				/*
 				 * Determine which shape to draw.

@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QMouseEvent>
 #include <QPaintEvent>
+#include <QPoint>
 #include <QResizeEvent>
 #include <QSettings>
 #include <QWidget>
@@ -36,6 +37,9 @@ namespace PixelMaestroStudio {
 			QSize sizeHint() const override;
 
 		private:
+			/// The last location of the mouse cursor.
+			QPoint cursor_pos_;
+
 			/// The Section's last recorded size. Used to determine when to resize the output.
 			uint32_t last_pixel_count_ = 0;
 

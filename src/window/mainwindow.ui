@@ -981,7 +981,7 @@
     <string>Save the Maestro to a Cuefile</string>
    </property>
    <property name="shortcut">
-    <string/>
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

@@ -120,9 +120,6 @@ namespace PixelMaestroStudio {
 	 * @param filename Name of the Cuefile to save to.
 	 */
 	void MaestroController::save_cuefile(QString filename) {
-		if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
-			filename.append(".pmc");
-		}
 		QFile file(filename);
 		if (file.open(QFile::WriteOnly)) {
 			QDataStream datastream(&file);

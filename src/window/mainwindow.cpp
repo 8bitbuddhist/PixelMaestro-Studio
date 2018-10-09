@@ -81,6 +81,8 @@ namespace PixelMaestroStudio {
 			}
 		}
 
+		set_active_cuefile("");
+
 		if (!keep_current_open) {
 			initialize_widgets();
 		}
@@ -123,8 +125,10 @@ namespace PixelMaestroStudio {
 	 */
 	void MainWindow::on_actionOpen_Maestro_triggered() {
 		QString file = open_cuefile_dialog();
-		open_cuefile(file, true);
-		set_active_cuefile(file);
+		if (!file.isEmpty()) {
+			open_cuefile(file, true);
+			set_active_cuefile(file);
+		}
 	}
 
 	/**
@@ -162,8 +166,14 @@ namespace PixelMaestroStudio {
 			path,
 			QString("PixelMaestro Cue File (*.pmc)"));
 
-		if (!filename.isEmpty()) {
+		if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
+			filename.append(".pmc");
+		}
+
+		this->loaded_cuefile_path_ = filename;
+		if (!this->loaded_cuefile_path_.isEmpty()) {
 			on_action_Save_triggered();
+			set_active_cuefile(this->loaded_cuefile_path_);
 		}
 	}
 

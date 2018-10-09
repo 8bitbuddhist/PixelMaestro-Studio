@@ -8,6 +8,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added ability to merge a Cuefile into the current Maestro instead of replacing it.
 - Added ability to resize sections of the interface.
 - Added shortcut keys for Save, New, Open, etc.
+- Added cursor when free drawing on a Canvas.
 
 ### Changed
 - Renamed several file menu options to be more clear about their actions.
