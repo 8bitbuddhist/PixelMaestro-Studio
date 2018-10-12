@@ -245,7 +245,8 @@ namespace PixelMaestroStudio {
 
 		switch((MaestroCueHandler::Action)cue[(uint8_t)MaestroCueHandler::Byte::ActionByte]) {
 			case MaestroCueHandler::Action::SetBrightness:
-				result->append(": "	+ cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]);
+				result->append(": ");
+				result->append(cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]);
 				break;
 			case MaestroCueHandler::Action::SetShow:
 				break;

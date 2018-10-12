@@ -14,10 +14,7 @@ namespace PixelMaestroStudio {
 	 * @param maestro_controller The MaestroController rendered by this DrawingArea.
 	 */
 	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent) {
-		this->maestro_controller_ = maestro_controller;
-
-		// Let the DrawingArea be managed by the MaestroController
-		maestro_controller->add_drawing_area(this);
+		set_maestro_controller(maestro_controller);
 
 		section_layout_ = new QHBoxLayout(this);
 	}
@@ -75,11 +72,38 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Removes a Section drawing areas.
+	 * @param Section Pointer to the Section to remove. Leave blank to remove all Sections.
+	 */
+	void MaestroDrawingArea::remove_section_drawing_area(Section* section) {
+		if (section != nullptr) {
+			for (uint8_t da_index = 0; da_index < this->section_drawing_areas_.size(); da_index++) {
+				SectionDrawingArea* drawing_area = this->section_drawing_areas_.at(da_index).get();
+				if (drawing_area->get_section() == section) {
+					section_drawing_areas_.removeAt(da_index);
+					return;
+				}
+			}
+		}
+		else {
+			section_drawing_areas_.clear();
+		}
+	}
+
+	/**
 	 * Sets the MaestroControlWidget used to control this DrawingArea.
 	 * @param widget Controlling MaestroControlWidget.
 	 */
 	void MaestroDrawingArea::set_maestro_control_widget(MaestroControlWidget *widget) {
 		this->maestro_control_widget_ = widget;
+	}
+
+	/**
+	 * Sets the MaestroController that this DrawingArea will render.
+	 * @param maestro_controller New MaestroController.
+	 */
+	void MaestroDrawingArea::set_maestro_controller(MaestroController *maestro_controller) {
+		this->maestro_controller_ = maestro_controller;
 	}
 
 	/**
@@ -97,7 +121,5 @@ namespace PixelMaestroStudio {
 		}
 	}
 
-	MaestroDrawingArea::~MaestroDrawingArea() {
-		maestro_controller_->remove_drawing_area(this);
-	}
+	MaestroDrawingArea::~MaestroDrawingArea() { }
 }

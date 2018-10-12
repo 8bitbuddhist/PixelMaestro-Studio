@@ -18,21 +18,13 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		setWindowTitle(QCoreApplication::applicationName());
 
-		// Configure split view
-		QLayout* main_layout = this->findChild<QLayout*>("mainLayout");
-		this->splitter_ = new QSplitter(main_layout->widget());
-		this->splitter_->setOrientation(Qt::Orientation::Vertical);
-		main_layout->addWidget(this->splitter_);
-
-		// Begin restoring saved settings
-		QSettings settings;
+		// Initialize UI elements
+		initialize_widgets();
 
 		// Restore window size
+		QSettings settings;
 		this->restoreGeometry(settings.value(PreferencesDialog::window_geometry).toByteArray());
 		this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
-
-		// Restore splitter position
-		this->splitter_->restoreState(settings.value(PreferencesDialog::splitter_position).toByteArray());
 
 		// If the user has a session saved and session auto-saving is enabled, open the session. Otherwise, start a new session.
 		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
@@ -41,6 +33,61 @@ namespace PixelMaestroStudio {
 		}
 		else {
 			on_action_Open_Animation_Editor_triggered(false);
+		}
+
+		initialization_complete = true;
+	}
+
+	/**
+	 * Reinitializes all widgets.
+	 */
+	void MainWindow::initialize_widgets() {
+		ui->action_Save_Maestro->setEnabled(false);
+
+		// Add Splitter control
+		QLayout* main_layout = this->findChild<QLayout*>("mainLayout");
+		this->splitter_ = new QSplitter(main_layout->widget());
+		this->splitter_->setOrientation(Qt::Orientation::Vertical);
+		main_layout->addWidget(this->splitter_);
+
+		// Initialize Maestro elements
+		maestro_control_widget_ = new MaestroControlWidget(splitter_);
+		maestro_controller_ = new MaestroController(maestro_control_widget_);
+
+		// Build DrawingAreas if enabled in Preferences
+		// FIXME: Allow for dynamic adding/removing DrawingAreas
+		QSettings settings;
+		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
+			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
+			splitter_->addWidget(maestro_drawing_area_);
+			maestro_controller_->add_drawing_area(static_cast<MaestroDrawingArea*>(maestro_drawing_area_));
+			static_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
+		}
+		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
+			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
+			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
+			static_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
+			drawing_area_dialog_.get()->show();
+		}
+
+		// Add control widget to main window
+		splitter_->addWidget(maestro_control_widget_);
+
+		// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
+		QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
+		if (splitter_state.size() > 0) {
+			this->splitter_->restoreState(splitter_state);
+		}
+		else {
+			this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
+		}
+
+		/*
+		 * If "pause on start" option is checked, don't start the Maestro.
+		 * This also causes the MaestroControlWidget to automatically turn on the Show controls so users can hit the pause button.
+		 */
+		if (settings.value(PreferencesDialog::pause_on_start, false).toBool() == false) {
+			maestro_controller_->start();
 		}
 	}
 
@@ -73,43 +120,17 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
 
 		// If Animation Editor is currently open, verify user wants to close
-		if (maestro_control_widget_ != nullptr && !keep_current_open) {
+		if (!keep_current_open && initialization_complete) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Open new Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm != QMessageBox::Yes) {
 				return;
 			}
+
+			maestro_controller_->initialize_maestro();
 		}
 
 		set_active_cuefile("");
-
-		if (!keep_current_open) {
-			initialize_widgets();
-		}
-
-		// If the main MaestroDrawingArea option is enabled, add it to MainWindow
-		QSettings settings;
-		if (settings.value(PreferencesDialog::main_window_option, true) == true && maestro_drawing_area_ == nullptr) {
-			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
-			splitter_->addWidget(maestro_drawing_area_);
-		}
-
-		maestro_controller_->start();
-
-		// Initialize the control widget and assign our newly started Maestro to it
-		if (maestro_control_widget_ == nullptr) {
-			maestro_control_widget_ = new MaestroControlWidget(splitter_, maestro_controller_);
-			splitter_->addWidget(maestro_control_widget_);
-		}
-
-		// Resize split view so that it defaults to an even split
-		this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
-
-		// Link the MaestroControlWidget to the main DrawingArea
-		if (maestro_drawing_area_ != nullptr) {
-			static_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
-		}
-
 		ui->action_Save_Maestro->setEnabled(true);
 	}
 
@@ -193,42 +214,6 @@ namespace PixelMaestroStudio {
 		// Store the directory that the file was opened from
 		settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(filename).path());
 		return filename;
-	}
-
-	/**
-	 * Reinitializes all widgets.
-	 */
-	void MainWindow::initialize_widgets() {
-		removeEventFilter(maestro_drawing_area_);
-
-		ui->action_Save_Maestro->setEnabled(false);
-
-		if (maestro_drawing_area_) {
-			int drawing_area_index = splitter_->indexOf(maestro_drawing_area_);
-			if (drawing_area_index >= 0) {
-				splitter_->widget(drawing_area_index)->hide();
-				splitter_->widget(drawing_area_index)->deleteLater();
-			}
-
-			delete maestro_drawing_area_;
-			maestro_drawing_area_ = nullptr;
-		}
-		if (maestro_control_widget_) {
-			int control_widget_index = splitter_->indexOf(maestro_control_widget_);
-			if (control_widget_index >= 0) {
-				splitter_->widget(control_widget_index)->hide();
-				splitter_->widget(control_widget_index)->deleteLater();
-			}
-
-			delete maestro_control_widget_;
-			maestro_control_widget_ = nullptr;
-		}
-		if (maestro_controller_) {
-			delete maestro_controller_;
-			maestro_controller_ = nullptr;
-		}
-
-		maestro_controller_ = new MaestroController();
 	}
 
 	/**

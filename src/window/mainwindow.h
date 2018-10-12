@@ -33,10 +33,18 @@ namespace PixelMaestroStudio {
 			void on_actionOpen_Maestro_triggered();
 
 		private:
+			/// Whether the application has completed initialization.
+			bool initialization_complete = false;
+
 			/// Path to the last opened Cuefile.
 			QString loaded_cuefile_path_;
 			MaestroController* maestro_controller_ = nullptr;
+
+			/// Main rendering area.
 			QWidget* maestro_drawing_area_ = nullptr;
+
+			/// Detached rendering area.
+			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			QSplitter* splitter_ = nullptr;
 			Ui::MainWindow* ui;

@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 		this->maestro_control_widget_ = maestro_control_widget;
 
 		// Block certain Cues from firing
-		maestro_control_widget->get_maestro_controller()->block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
+		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
 
 		// Disable device buttons by default
 		ui->deviceSettingsGroupBox->setEnabled(false);
@@ -53,6 +53,15 @@ namespace PixelMaestroStudio {
 			}
 		}
 		settings.endArray();
+	}
+
+	/**
+	 * Adds a Cue that should be blocked from execution to the list of blocked Cues.
+	 * @param handler The CueHandler responsible for this Cue.
+	 * @param action The Cue's action index.
+	 */
+	void DeviceControlWidget::block_cue(CueController::Handler handler, uint8_t action) {
+		blocked_cues_.append({handler, action});
 	}
 
 	/**
@@ -196,6 +205,30 @@ namespace PixelMaestroStudio {
 	 * @param size The size of the Cue.
 	 */
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
+		// Check the Cue against the block list
+		// NOTE: This won't prevent Cues from running on the Maestro, just from running on a serial device.
+		for (BlockedCue blocked : blocked_cues_) {
+			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
+				switch (blocked.handler) {
+					case CueController::Handler::AnimationCueHandler:
+						if (cue[(uint8_t)AnimationCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::CanvasCueHandler:
+						if (cue[(uint8_t)CanvasCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::MaestroCueHandler:
+						if (cue[(uint8_t)MaestroCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::SectionCueHandler:
+						if (cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+					case CueController::Handler::ShowCueHandler:
+						if (cue[(uint8_t)ShowCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						break;
+				}
+			}
+		}
+
 		for (int i = 0; i < serial_devices_.size(); i++) {
 			SerialDevice device = serial_devices_.at(i);
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
@@ -248,9 +281,6 @@ namespace PixelMaestroStudio {
 
 			// Generate the Cuefile
 			controller->save_maestro_to_datastream(&datastream);
-
-			// Reset blocked Cues
-			controller->clear_blocked_cues();
 
 			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 			check_device_rom_capacity();

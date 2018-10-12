@@ -8,6 +8,7 @@
 #include "core/maestro.h"
 #include "core/section.h"
 #include "drawingarea/maestrodrawingarea.h"
+#include "widget/maestrocontrolwidget.h"
 #include <QDataStream>
 #include <QElapsedTimer>
 #include <QObject>
@@ -34,14 +35,13 @@ namespace PixelMaestroStudio {
 				uint8_t action;
 			};
 
-			MaestroController();
+			MaestroController(MaestroControlWidget* maestro_control_widget);
 			~MaestroController();
 			void add_drawing_area(MaestroDrawingArea* drawing_area);
-			void block_cue(CueController::Handler handler, uint8_t action_index);
-			void clear_blocked_cues();
 			Maestro* get_maestro();
 			bool get_running();
 			uint64_t get_total_elapsed_time();
+			void initialize_maestro();
 			void remove_drawing_area(MaestroDrawingArea* drawing_area);
 			void save_cuefile(QString filename);
 			void save_maestro_to_datastream(QDataStream* datastream, QVector<CueController::Handler>* save_handlers = nullptr);
@@ -52,9 +52,6 @@ namespace PixelMaestroStudio {
 			void start();
 
 		private:
-			/// List of Cues that should be blocked from executing.
-			QVector<BlockedCue> blocked_cues_;
-
 			/// References each drawing area that the Maestro is rendering to.
 			QVector<MaestroDrawingArea*> drawing_areas_;
 
@@ -69,6 +66,9 @@ namespace PixelMaestroStudio {
 
 			/// Maestro controlled by this controller.
 			QSharedPointer<Maestro> maestro_;
+
+			/// Control widget that manages this controller.
+			MaestroControlWidget* maestro_control_widget_;
 
 			/// The number of Sections in the Maestro.
 			uint8_t num_sections_;

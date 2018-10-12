@@ -45,14 +45,30 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns the underlying Section.
+	 * @return Section rendered by this DrawingArea.
+	 */
+	Section* SectionDrawingArea::get_section() const {
+		return this->section_;
+	}
+
+	/**
 	 * Translates the mouse cursor to a PixelMaestro Pixel.
 	 * @param cursor Mouse cursor coordinates.
 	 * @return Pixel coordinate.
 	 */
 	Point SectionDrawingArea::map_cursor_to_pixel(const QPoint cursor) {
-		uint16_t x = (cursor.x() - section_cursor_.x) / radius_;
-		uint16_t y = (cursor.y() - section_cursor_.y) / radius_;
-		return Point(x, y);
+		uint16_t x = cursor.x() - section_cursor_.x;
+		uint16_t y = cursor.y() - section_cursor_.y;
+
+		// FIXME: If the DrawingArea is too small, it won't render the Maestro. Find a way to fix this
+		if (radius_ > 0) {
+			return Point((x / radius_),
+						 (y / radius_));
+		}
+		else {
+			return Point(0, 0);
+		}
 	}
 
 	/**
@@ -65,7 +81,7 @@ namespace PixelMaestroStudio {
 		cursor_pos_ = event->pos();
 
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
-			Canvas* canvas = section_->get_canvas();
+			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->get_active_section()->get_canvas();
 			if (canvas != nullptr) {
 				Point pixel = map_cursor_to_pixel(cursor_pos_);
 

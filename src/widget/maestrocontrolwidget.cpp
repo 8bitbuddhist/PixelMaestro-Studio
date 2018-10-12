@@ -34,56 +34,16 @@ namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
 	 * @param parent The QWidget containing this controller.
-	 * @param maestro_controller The MaestroController being controlled.
 	 */
-	MaestroControlWidget::MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControlWidget) {
+	MaestroControlWidget::MaestroControlWidget(QWidget* parent) : QWidget(parent), ui(new Ui::MaestroControlWidget) {
 		ui->setupUi(this);
 
 		// Capture button key presses
 		qApp->installEventFilter(this);
 
-		this->maestro_controller_ = maestro_controller;
-
-		QSettings settings;
-
-		// Open separate window if enabled in settings
-		if (settings.value(PreferencesDialog::separate_window_option, false).toBool() == true) {
-			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
-			drawing_area_dialog_.get()->show();
-		}
-
 		// Initialize device control tab and add it to the widget
 		device_extra_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
 		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_extra_control_widget_.data());
-
-		// Initialize the Maestro's Sections
-		maestro_controller_->set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
-
-		// Initialize Cue Handlers
-		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
-		animation_handler = static_cast<AnimationCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
-		);
-		canvas_handler = static_cast<CanvasCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::CanvasCueHandler)
-		);
-		maestro_handler = static_cast<MaestroCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::MaestroCueHandler)
-		);
-		section_handler = static_cast<SectionCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::SectionCueHandler)
-		);
-		show_handler = static_cast<ShowCueHandler*>(
-			cue_controller_->get_handler(CueController::Handler::ShowCueHandler)
-		);
-
-		// Check to see if we need to pause the Maestro
-		if (settings.value(PreferencesDialog::pause_on_start, false).toBool()) {
-			on_showPauseButton_clicked();
-		}
-
-		// Finally, initialize the MaestroControlWidget UI
-		initialize();
 	}
 
 	/**
@@ -1667,6 +1627,43 @@ namespace PixelMaestroStudio {
 		ui->fillCheckBox->setEnabled(enabled);
 	}
 	// End Canvas-specific methods
+
+	/**
+	 * Sets the widget's target MaestroController.
+	 * @param maestro_controller New MaestroController.
+	 */
+	void MaestroControlWidget::set_maestro_controller(MaestroController *maestro_controller) {
+		this->maestro_controller_ = maestro_controller;
+
+		// Get Maestro's Cue Handlers for convenience
+		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
+		animation_handler = static_cast<AnimationCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
+		);
+		canvas_handler = static_cast<CanvasCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::CanvasCueHandler)
+		);
+		maestro_handler = static_cast<MaestroCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::MaestroCueHandler)
+		);
+		section_handler = static_cast<SectionCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::SectionCueHandler)
+		);
+		show_handler = static_cast<ShowCueHandler*>(
+			cue_controller_->get_handler(CueController::Handler::ShowCueHandler)
+		);
+
+		// Rebuild the UI
+		set_active_section(maestro_controller_->get_maestro()->get_section(0));
+		refresh_maestro_settings();
+		initialize();
+
+		// Is the Maestro paused? If so, enable Show controls
+		if (maestro_controller_->get_running() == false) {
+			ui->enableShowCheckBox->setChecked(true);
+			//on_enableShowCheckBox_toggled(true);
+		}
+	}
 
 	/**
 	 * Sets the Animation's center to the specified coordinates.

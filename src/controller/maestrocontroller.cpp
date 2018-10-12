@@ -23,31 +23,15 @@ using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
 	/**
-	 * Empty constructor.
+	 * Initializes the MaestroController.
+	 * @param maestro_control_widget The widget responsible for controlling this MaestroController.
 	 */
-	MaestroController::MaestroController() : QObject(), timer_(this) {
-		// Initalize the Maestro
-		maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
-		QSettings settings;
+	MaestroController::MaestroController(MaestroControlWidget* maestro_control_widget) : QObject(), timer_(this) {
+		this->maestro_control_widget_ = maestro_control_widget;
+		initialize_maestro();
 
-		// Enable the Maestro's CueController
-		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
-		controller->enable_animation_cue_handler();
-		controller->enable_canvas_cue_handler();
-		controller->enable_maestro_cue_handler();
-		controller->enable_section_cue_handler();
-		controller->enable_show_cue_handler();
-
-		// Initialize timers
+		// Initialize timer
 		timer_.setTimerType(Qt::PreciseTimer);
-
-		/*
-		 * Set timer's refresh rate to the user's settings.
-		 * If we can't load the configured refresh rate, default to 50ms (20fps)
-		 */
-		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
-		maestro_->set_timer(refresh);
-
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
 
@@ -58,23 +42,13 @@ namespace PixelMaestroStudio {
 	void MaestroController::add_drawing_area(MaestroDrawingArea *drawing_area) {
 		drawing_areas_.push_back(drawing_area);
 
+		// Initialize the DrawingArea's SectionDrawingAreas
+		for (uint8_t section = 0; section < this->num_sections_; section++) {
+			drawing_area->add_section_drawing_area(&sections_[section]);
+		}
+
 		// Refresh the DrawingArea on each timeout
 		connect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(update()));
-	}
-
-	/**
-	 * Adds a Cue that should be blocked from execution to the list of blocked Cues.
-	 * @param blocked_cue Cue to block.
-	 */
-	void MaestroController::block_cue(CueController::Handler handler, uint8_t action_index) {
-		blocked_cues_.append({handler, action_index});
-	}
-
-	/**
-	 * Clears the list of blocked cues.
-	 */
-	void MaestroController::clear_blocked_cues() {
-		blocked_cues_.clear();
 	}
 
 	/**
@@ -104,6 +78,38 @@ namespace PixelMaestroStudio {
 		else {
 			return last_pause_;
 		}
+	}
+
+	/**
+	 * Resets the Maestro.
+	 */
+	void MaestroController::initialize_maestro() {
+		if (!maestro_.isNull()) {
+			maestro_.reset();
+		}
+
+		// Initalize the Maestro with the specified number of Sections
+		maestro_ = QSharedPointer<Maestro>(new Maestro(nullptr, 0));
+		QSettings settings;
+		set_sections(settings.value(PreferencesDialog::num_sections, 1).toInt());
+
+		/*
+		 * Set the Maestro's refresh timer.
+		 * If the user hasn't set a custom timer, default to 50ms (20fps).
+		 */
+		int refresh = settings.value(PreferencesDialog::refresh_rate, QVariant(50)).toInt();
+		maestro_->set_timer(refresh);
+
+		// Enable the Maestro's CueController and CueHandlers
+		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
+		controller->enable_animation_cue_handler();
+		controller->enable_canvas_cue_handler();
+		controller->enable_maestro_cue_handler();
+		controller->enable_section_cue_handler();
+		controller->enable_show_cue_handler();
+
+		// (Re)Initialize the MaestroControlWidget
+		maestro_control_widget_->set_maestro_controller(this);
 	}
 
 	/**
@@ -308,6 +314,7 @@ namespace PixelMaestroStudio {
 	 * @return Array of new Sections.
 	 */
 	Section* MaestroController::set_sections(uint8_t num_sections, Point dimensions) {
+		delete [] this->sections_;
 		this->sections_ = new Section[num_sections];
 		this->num_sections_ = num_sections;
 
@@ -316,14 +323,17 @@ namespace PixelMaestroStudio {
 			sections_[section].set_dimensions(dimensions.x, dimensions.y);
 		}
 
-		// Add a SectionDrawingArea to each MaestroDrawingArea
-		for (MaestroDrawingArea* drawing_area : drawing_areas_) {
+		maestro_->set_sections(sections_, num_sections_);
+
+		// Reset each drawing area's Sections
+		for (MaestroDrawingArea* drawing_area : this->drawing_areas_) {
+			drawing_area->remove_section_drawing_area();
 			for (uint8_t section = 0; section < num_sections; section++) {
-				drawing_area->add_section_drawing_area(&sections_[section]);
+				drawing_area->add_section_drawing_area(&this->sections_[section]);
 			}
 		}
 
-		maestro_->set_sections(sections_, num_sections_);
+		// Reset the MaestroControlWidget's active section
 
 		return this->sections_;
 	}
@@ -349,33 +359,13 @@ namespace PixelMaestroStudio {
 	 * @param cue Cue to append.
 	 */
 	void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
+		// FIXME: Pass by ref to avoid nullptr check
 		if (cue == nullptr) {
 			return;
 		}
-
-		// Check the Cue against the block list
-		for (BlockedCue blocked : blocked_cues_) {
-			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
-				switch (blocked.handler) {
-					case CueController::Handler::AnimationCueHandler:
-						if (cue[(uint8_t)AnimationCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
-						break;
-					case CueController::Handler::CanvasCueHandler:
-						if (cue[(uint8_t)CanvasCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
-						break;
-					case CueController::Handler::MaestroCueHandler:
-						if (cue[(uint8_t)MaestroCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
-						break;
-					case CueController::Handler::SectionCueHandler:
-						if (cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
-						break;
-					case CueController::Handler::ShowCueHandler:
-						if (cue[(uint8_t)ShowCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
-						break;
-				}
-			}
+		else {
+			stream->writeRawData((const char*)cue, maestro_->get_cue_controller()->get_cue_size(cue));
 		}
-		stream->writeRawData((const char*)cue, maestro_->get_cue_controller()->get_cue_size(cue));
 	}
 
 	MaestroController::~MaestroController() {

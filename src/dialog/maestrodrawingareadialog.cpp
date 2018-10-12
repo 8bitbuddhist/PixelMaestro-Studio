@@ -47,6 +47,14 @@ namespace PixelMaestroStudio {
 		return QObject::eventFilter(watched, event);
 	}
 
+	/**
+	 * Returns the Dialog's drawing area.
+	 * @return Drawing area.
+	 */
+	MaestroDrawingArea* MaestroDrawingAreaDialog::get_maestro_drawing_area() const {
+		return this->drawing_area_.get();
+	}
+
 	MaestroDrawingAreaDialog::~MaestroDrawingAreaDialog() {
 		delete ui;
 	}

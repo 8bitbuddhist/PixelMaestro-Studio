@@ -35,7 +35,9 @@ namespace PixelMaestroStudio {
 			SectionDrawingArea* add_section_drawing_area(Section* section);
 			MaestroControlWidget* get_maestro_control_widget() const;
 			void frame_active_section(Section* section);
+			void remove_section_drawing_area(Section* section = nullptr);
 			void set_maestro_control_widget(MaestroControlWidget* widget);
+			void set_maestro_controller(MaestroController* maestro_controller);
 
 		public slots:
 			void update();

@@ -26,6 +26,7 @@ namespace PixelMaestroStudio {
 			SectionDrawingArea(QWidget* parent, Section* section);
 			~SectionDrawingArea();
 			void draw_frame(FrameType type);
+			Section* get_section() const;
 
 		protected:
 			Section* section_;

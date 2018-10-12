@@ -64,7 +64,7 @@ namespace PixelMaestroStudio {
 			SectionCueHandler* section_handler = nullptr;
 			ShowCueHandler* show_handler = nullptr;
 
-			explicit MaestroControlWidget(QWidget* parent, MaestroController* maestro_controller);
+			explicit MaestroControlWidget(QWidget* parent);
 			~MaestroControlWidget();
 			void enable_show_edit_mode(bool enable);
 			Section* get_active_section();
@@ -80,6 +80,7 @@ namespace PixelMaestroStudio {
 			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_active_section(Section* section);
 			void set_canvas_origin(Point* coordinates);
+			void set_maestro_controller(MaestroController* maestro_controller);
 
 		protected:
 			bool eventFilter(QObject *watched, QEvent *event);
@@ -136,6 +137,7 @@ namespace PixelMaestroStudio {
 			void set_animation_controls_enabled(bool enabled);
 			void set_canvas_controls_enabled(bool enabled);
 			void set_offset();
+			void set_show_controls_enabled(bool enabled);
 
 			// Canvas control handling methods
 			void set_circle_controls_enabled(bool enabled);
@@ -148,7 +150,6 @@ namespace PixelMaestroStudio {
 			void set_canvas_frame_interval();
 			void set_scroll();
 			void set_layer_controls_enabled(bool enabled);
-			void set_show_controls_enabled(bool enabled);
 			void set_animation_timer();
 			void set_advanced_animation_controls(Animation* animation);
 

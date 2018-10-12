@@ -23,9 +23,20 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
+			/**
+			 * Defines a Cue that should be blocked from serialization.
+			 */
+			struct BlockedCue {
+				/// The Handler that this Cue belongs to.
+				CueController::Handler handler;
+				/// The action being performed.
+				uint8_t action;
+			};
+
 			explicit DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
 			~DeviceControlWidget();
 			QByteArray* get_maestro_cue();
+			void block_cue(CueController::Handler handler, uint8_t action);
 			void run_cue(uint8_t* cue, int size);
 			void update_cuefile_size();
 
@@ -42,6 +53,9 @@ namespace PixelMaestroStudio {
 			void set_progress_bar(int val);
 
 		private:
+			/// List of Cues that should be blocked from executing.
+			QVector<BlockedCue> blocked_cues_;
+
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			Ui::DeviceControlWidget *ui;
 
