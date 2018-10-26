@@ -102,21 +102,21 @@
    <item row="0" column="0">
     <widget class="QLabel" name="nameLabel">
      <property name="text">
-      <string>New Palette Name</string>
+      <string>Name</string>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="numColorsLabel">
      <property name="text">
-      <string>New Palette Size</string>
+      <string>Color Count</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="typeLabel">
      <property name="text">
-      <string>New Palette Type</string>
+      <string>Type</string>
      </property>
     </widget>
    </item>

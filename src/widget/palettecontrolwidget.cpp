@@ -73,7 +73,6 @@ namespace PixelMaestroStudio {
 
 	/// Edits the selected Palette.
 	void PaletteControlWidget::on_editPaletteButton_clicked() {
-		// FIXME: Editing a palette changes the colors
 		PaletteEditDialog dialog(this, active_palette_);
 		dialog.exec();
 		initialize_palettes(active_palette_->name);

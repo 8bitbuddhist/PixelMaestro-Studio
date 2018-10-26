@@ -458,7 +458,7 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="numSectionsSpinBox">
         <property name="toolTip">
-         <string>Sets the number of Sections managed by the Maestro</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of Sections available for editing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -478,7 +478,7 @@
       <item row="1" column="1">
        <widget class="QCheckBox" name="pauseOnStartCheckBox">
         <property name="toolTip">
-         <string>If checked, the Maestro will be paused when the Animation Editor opens</string>
+         <string>If checked, the Maestro will be paused when the Animation Editor opens. You can restart the Maestro in the Show tab.</string>
         </property>
         <property name="text">
          <string/>
@@ -495,7 +495,7 @@
       <item row="2" column="1">
        <widget class="QCheckBox" name="saveSessionCheckBox">
         <property name="toolTip">
-         <string>If checked, your Maestro will be saved on close and opened the next time the Animation Editor is opened.</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, your current session will automatically load on next start.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
          <string/>
@@ -518,6 +518,9 @@
        <layout class="QVBoxLayout" name="displayLayout">
         <item>
          <widget class="QCheckBox" name="mainWindowCheckBox">
+          <property name="toolTip">
+           <string>Renders the Maestro in the main window.</string>
+          </property>
           <property name="text">
            <string>Main Window</string>
           </property>
@@ -525,6 +528,9 @@
         </item>
         <item>
          <widget class="QCheckBox" name="separateWindowCheckBox">
+          <property name="toolTip">
+           <string>Renders the Maestro in a detached window.</string>
+          </property>
           <property name="text">
            <string>Separate Window</string>
           </property>
@@ -535,7 +541,7 @@
       <item row="2" column="1">
        <widget class="QSpinBox" name="refreshSpinBox">
         <property name="toolTip">
-         <string>Sets the interval between Maestro updates</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the amount of time between Maestro updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="minimum">
          <number>10</number>
@@ -558,7 +564,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="pixelShapeComboBox">
         <property name="toolTip">
-         <string>Sets the shape of individual pixels rendered on screen</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the shape of individual pixels rendered to the screen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="currentText">
          <string>Circle</string>

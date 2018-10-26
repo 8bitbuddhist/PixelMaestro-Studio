@@ -35,7 +35,6 @@ namespace PixelMaestroStudio {
 			void mousePressEvent(QMouseEvent* event) override;
 			void paintEvent(QPaintEvent *event) override;
 			void resizeEvent(QResizeEvent *event) override;
-			QSize sizeHint() const override;
 
 		private:
 			/// The last location of the mouse cursor.

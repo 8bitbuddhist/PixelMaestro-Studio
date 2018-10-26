@@ -116,15 +116,16 @@ namespace PixelMaestroStudio {
 	/**
 	 * Opens an Animation Editor instance.
 	 * @param keep_current_open If true, uses the existing DrawingArea instead of creating a new one. This is needed when loading in Cuefiles.
+	 * @return True if the Animation Editor opened successfully.
 	 */
-	void MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
+	bool MainWindow::on_action_Open_Animation_Editor_triggered(bool keep_current_open) {
 
 		// If Animation Editor is currently open, verify user wants to close
 		if (!keep_current_open && initialization_complete) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Open new Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm != QMessageBox::Yes) {
-				return;
+				return false;
 			}
 
 			maestro_controller_->initialize_maestro();
@@ -132,6 +133,8 @@ namespace PixelMaestroStudio {
 
 		set_active_cuefile("");
 		ui->action_Save_Maestro->setEnabled(true);
+
+		return true;
 	}
 
 	/**
@@ -147,8 +150,9 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_actionOpen_Maestro_triggered() {
 		QString file = open_cuefile_dialog();
 		if (!file.isEmpty()) {
-			open_cuefile(file, true);
-			set_active_cuefile(file);
+			if (open_cuefile(file, true)) {
+				set_active_cuefile(file);
+			}
 		}
 	}
 
@@ -219,29 +223,35 @@ namespace PixelMaestroStudio {
 	/**
 	 * Loads a Cuefile into a new session.
 	 * @param byte_array Array containing the Cuefile.
+	 * @return True if the Cuefile was opened successfully.
 	 */
-	void MainWindow::open_cuefile(QByteArray byte_array, bool new_session) {
+	bool MainWindow::open_cuefile(QByteArray byte_array, bool new_session) {
 		// Read in the Cuefile, then load the Animation Editor
-		on_action_Open_Animation_Editor_triggered(!new_session);
+		if (on_action_Open_Animation_Editor_triggered(!new_session)) {
+			maestro_control_widget_->load_cuefile(byte_array);
 
-		maestro_control_widget_->load_cuefile(byte_array);
+			// Refresh the Animation Editor
+			maestro_control_widget_->refresh_maestro_settings();
+			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
 
-		// Refresh the Animation Editor
-		maestro_control_widget_->refresh_maestro_settings();
-		maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Loads a Cuefile into a new session.
 	 * @param filename Cuefile path.
+	 * @return True if the Cuefile was opened successfully.
 	 */
-	void MainWindow::open_cuefile(QString filename, bool new_session) {
-		if (filename.isEmpty()) return;
+	bool MainWindow::open_cuefile(QString filename, bool new_session) {
+		if (filename.isEmpty()) return false;
 
 		QFile file(filename);
 		if (file.open(QFile::ReadOnly)) {
 			QByteArray bytes = file.readAll();
-			open_cuefile(bytes, new_session);
+			return open_cuefile(bytes, new_session);
 		}
 	}
 
@@ -263,6 +273,14 @@ namespace PixelMaestroStudio {
 
 	MainWindow::~MainWindow() {
 		QSettings settings;
+
+		// If session saving on close is enabled, save the session
+		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+			QByteArray maestro_config;
+			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
+			maestro_controller_->save_maestro_to_datastream(&maestro_datastream);
+			settings.setValue(PreferencesDialog::last_session, maestro_config);
+		}
 
 		// Save window geometry
 		settings.setValue(PreferencesDialog::window_geometry, saveGeometry());

@@ -359,7 +359,6 @@ namespace PixelMaestroStudio {
 	 * @param cue Cue to append.
 	 */
 	void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
-		// FIXME: Pass by ref to avoid nullptr check
 		if (cue == nullptr) {
 			return;
 		}

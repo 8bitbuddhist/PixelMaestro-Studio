@@ -26,7 +26,7 @@ namespace PixelMaestroStudio {
 			void on_action_Exit_triggered();
 			void on_action_Online_Help_triggered();
 			void on_action_Open_triggered();
-			void on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
+			bool on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
 			void on_action_Preferences_triggered();
 			void on_action_Save_triggered();
 			void on_action_Save_Maestro_triggered();
@@ -50,8 +50,8 @@ namespace PixelMaestroStudio {
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();
-			void open_cuefile(QByteArray byte_array, bool new_session);
-			void open_cuefile(QString filename, bool new_session);
+			bool open_cuefile(QByteArray byte_array, bool new_session);
+			bool open_cuefile(QString filename, bool new_session);
 			void set_active_cuefile(QString path);
 			QString open_cuefile_dialog();
 	};

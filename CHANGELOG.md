@@ -14,10 +14,11 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Renamed several file menu options to be more clear about their actions.
 - Added tooltips to several menu options.
 - Renamed `Cue Interpreter` to `Cue Previewer`.
-- Updated Qt version to 5.11.2.
+- Updated Qt version to 5.11.2 (release versions do not require Qt pre-installed).
 - Created static build for Linux.
 - Fixed memory leak when loading images into a Canvas.
-- Fixed custom Palettes from saving and loading when session saving was disabled.
+- Fixed custom Palettes saving and loading when session saving was disabled.
+- Fixed Palette colors regenerating when changing a Palette's name.
 
 ### Removed
 - Removed donation link.

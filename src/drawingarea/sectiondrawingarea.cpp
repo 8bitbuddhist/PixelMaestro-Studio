@@ -61,7 +61,7 @@ namespace PixelMaestroStudio {
 		uint16_t x = cursor.x() - section_cursor_.x;
 		uint16_t y = cursor.y() - section_cursor_.y;
 
-		// FIXME: If the DrawingArea is too small, it won't render the Maestro. Find a way to fix this
+		// FIXME: If the DrawingArea is too small, it won't render the Maestro, causing an arithmetic exception
 		if (radius_ > 0) {
 			return Point((x / radius_),
 						 (y / radius_));
@@ -222,20 +222,6 @@ namespace PixelMaestroStudio {
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
 		section_cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
 		section_cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
-	}
-
-	/**
-	 * Sets the size of the Widget to the size of the Section output.
-	 * Used mostly for alignment.
-	 * @return Section size.
-	 */
-	QSize SectionDrawingArea::sizeHint() const {
-		/*return QSize(
-			section_->get_dimensions()->x * radius_,
-			section_->get_dimensions()->y * radius_
-		);
-		*/
-		return QFrame::sizeHint();
 	}
 
 	SectionDrawingArea::~SectionDrawingArea() {}

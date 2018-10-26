@@ -1657,12 +1657,6 @@ namespace PixelMaestroStudio {
 		set_active_section(maestro_controller_->get_maestro()->get_section(0));
 		refresh_maestro_settings();
 		initialize();
-
-		// Is the Maestro paused? If so, enable Show controls
-		if (maestro_controller_->get_running() == false) {
-			ui->enableShowCheckBox->setChecked(true);
-			//on_enableShowCheckBox_toggled(true);
-		}
 	}
 
 	/**
@@ -1783,37 +1777,39 @@ namespace PixelMaestroStudio {
 		uint last_time = (uint)maestro_controller_->get_total_elapsed_time();
 		ui->currentTimeLineEdit->setText(locale_.toString(last_time));
 
-		int current_index = maestro_controller_->get_maestro()->get_show()->get_current_index();
-
-		// Get the index of the last Event that ran
 		Show* show = maestro_controller_->get_maestro()->get_show();
-		int last_index = -1;
-		if (current_index == 0) {
-			if (show->get_looping()) {
-				last_index = show->get_num_events() - 1;
-			}
-		}
-		else {
-			last_index = show->get_current_index() - 1;
-		}
+		if (show != nullptr) {
+			int current_index = maestro_controller_->get_maestro()->get_show()->get_current_index();
 
-		// If Relative mode is enabled, calculate the time since the last Event
-		if (last_index == -1) {
-			ui->relativeTimeLineEdit->setEnabled(false);
-		}
-		else {
-			ui->relativeTimeLineEdit->setEnabled(true);
-			ui->relativeTimeLineEdit->setText(locale().toString((uint)maestro_controller_->get_total_elapsed_time() - (uint)show->get_last_time()));
-		}
-
-
-		// Visually disable events that have recently ran.
-		for (int index = 0; index < ui->eventListWidget->count(); index++) {
-			if (current_index > 0 && index < current_index) {
-				ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::darkGray);
+			// Get the index of the last Event that ran
+			Show* show = maestro_controller_->get_maestro()->get_show();
+			int last_index = -1;
+			if (current_index == 0) {
+				if (show->get_looping()) {
+					last_index = show->get_num_events() - 1;
+				}
 			}
 			else {
-				ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::white);
+				last_index = show->get_current_index() - 1;
+			}
+
+			// If Relative mode is enabled, calculate the time since the last Event
+			if (last_index == -1) {
+				ui->relativeTimeLineEdit->setEnabled(false);
+			}
+			else {
+				ui->relativeTimeLineEdit->setEnabled(true);
+				ui->relativeTimeLineEdit->setText(locale().toString((uint)maestro_controller_->get_total_elapsed_time() - (uint)show->get_last_time()));
+			}
+
+			// Visually disable events that have recently ran.
+			for (int index = 0; index < ui->eventListWidget->count(); index++) {
+				if (current_index > 0 && index < current_index) {
+					ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::darkGray);
+				}
+				else {
+					ui->eventListWidget->item(index)->setTextColor(Qt::GlobalColor::white);
+				}
 			}
 		}
 	}

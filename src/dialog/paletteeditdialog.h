@@ -27,11 +27,20 @@ namespace PixelMaestroStudio {
 			void on_targetColorButton_clicked();
 			void on_typeComboBox_currentIndexChanged(int index);
 
+			void on_numColorsSpinBox_valueChanged(int arg1);
+
+			void on_reverseCheckBox_stateChanged(int arg1);
+
 		private:
 			/// The starting color when scaling.
 			Colors::RGB base_color_ = Colors::RGB(0, 0, 0);
+
+			/// Flags whether to rebuild the color array when saving a Palette
+			bool colors_changed_ = false;
+
 			/// The final color when scaling.
 			Colors::RGB target_color_ = Colors::RGB(0, 0, 0);
+
 			/// The Palette that we're currently editing.
 			PaletteController::PaletteWrapper* target_palette_ = nullptr;
 

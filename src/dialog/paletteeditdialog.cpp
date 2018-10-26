@@ -43,10 +43,9 @@ namespace PixelMaestroStudio {
 	 * Saves changes and closes the form.
 	 */
 	void PaletteEditDialog::accept() {
-		uint8_t num_colors = ui->numColorsSpinBox->value();
-
 		// Only allow the Palette to be created if the name is set
 		if (ui->nameLineEdit->text().size() > 0) {
+			uint8_t num_colors = ui->numColorsSpinBox->value();
 			Colors::RGB colors[num_colors];
 
 			// Handle generation method
@@ -66,14 +65,20 @@ namespace PixelMaestroStudio {
 					break;
 			}
 
+			// If the target Palette already exists update it. Otherwise, create a new one.
 			if (target_palette_ != nullptr) {
-				// Update the target Palette
 				target_palette_->name = ui->nameLineEdit->text();
-				target_palette_->palette.set_colors(colors, num_colors);
-				target_palette_->type = (PaletteController::PaletteType)ui->typeComboBox->currentIndex();
-				target_palette_->base_color = base_color_;
-				target_palette_->target_color = target_color_;
-				target_palette_->mirror = ui->reverseCheckBox->isChecked();
+
+				// Check to see if we need to update the Palette's color scheme
+				if (colors_changed_) {
+					target_palette_->palette.set_colors(colors, num_colors);
+					target_palette_->type = (PaletteController::PaletteType)ui->typeComboBox->currentIndex();
+					target_palette_->base_color = base_color_;
+					target_palette_->target_color = target_color_;
+					target_palette_->mirror = ui->reverseCheckBox->isChecked();
+
+					colors_changed_ = false;
+				}
 			}
 			else {
 				// Add the new Palette
@@ -97,6 +102,22 @@ namespace PixelMaestroStudio {
 		base_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
 		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
 		parent->set_button_color(ui->baseColorButton, base_color_.r, base_color_.g, base_color_.b);
+
+		if (target_palette_ != nullptr && (base_color_ != target_palette_->target_color)) {
+			this->colors_changed_ = true;
+		}
+	}
+
+	void PaletteEditDialog::on_numColorsSpinBox_valueChanged(int arg1) {
+		if (target_palette_ != nullptr && (arg1 != target_palette_->palette.get_num_colors())) {
+			this->colors_changed_ = true;
+		}
+	}
+
+	void PaletteEditDialog::on_reverseCheckBox_stateChanged(int arg1) {
+		if (target_palette_ != nullptr && (arg1 != target_palette_->mirror)) {
+			this->colors_changed_ = true;
+		}
 	}
 
 	/**
@@ -107,6 +128,10 @@ namespace PixelMaestroStudio {
 		target_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
 		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
 		parent->set_button_color(ui->targetColorButton, target_color_.r, target_color_.g, target_color_.b);
+
+		if (target_palette_ != nullptr && (target_color_ != target_palette_->target_color)) {
+			this->colors_changed_ = true;
+		}
 	}
 
 	/**
@@ -120,6 +145,10 @@ namespace PixelMaestroStudio {
 		ui->targetColorLabel->setVisible(index == 1);
 		ui->targetColorButton->setVisible(index == 1);
 		ui->reverseCheckBox->setVisible(index == 1);
+
+		if (target_palette_ != nullptr && (index != (int)target_palette_->type)) {
+			this->colors_changed_ = true;
+		}
 	}
 
 	PaletteEditDialog::~PaletteEditDialog() {
