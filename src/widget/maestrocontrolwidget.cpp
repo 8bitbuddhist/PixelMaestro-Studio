@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QSettings>
 #include <QString>
+#include <QtConcurrent/QtConcurrentRun>
 #include "animation/fireanimation.h"
 #include "animation/fireanimationcontrolwidget.h"
 #include "animation/lightninganimation.h"
@@ -858,7 +859,14 @@ namespace PixelMaestroStudio {
 			QString("Images (*.bmp *.gif *.jpg *.png)"));
 
 		if (!filename.isEmpty()) {
-			CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
+
+			// Reset current image controls
+			ui->canvasPlaybackStartStopToolButton->setChecked(false);
+			on_canvasPlaybackStartStopToolButton_toggled(false);
+			ui->currentFrameSpinBox->setValue(0);
+			on_currentFrameSpinBox_editingFinished();
+
+			QtConcurrent::run(CanvasUtility::load_image, filename, active_section_->get_canvas(), this);
 
 			Canvas* canvas = active_section_->get_canvas();
 

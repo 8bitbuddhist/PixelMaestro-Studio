@@ -27,74 +27,82 @@ namespace PixelMaestroStudio {
 					maestro_control->get_layer_index(),
 					static_cast<uint16_t>(image.imageCount())));
 
-		// For animated images, set the frame rate
-		if (image.imageCount() > 1) {
-			maestro_control->run_cue(
-				maestro_control->canvas_handler->set_frame_timer(
-					maestro_control->get_section_index(),
-					maestro_control->get_layer_index(),
-					static_cast<uint16_t>(image.nextImageDelay())));
-		}
+		/*
+		 * Handle animated images by iterating over each frame and extracting color values.
+		 */
+		if (image.imageCount() >= 1) {
+			for (uint16_t i = 0; i < image.imageCount(); i++) {
+				QImage frame = image.read();
 
-		// Iterate over each frame
-		Point cursor(0, 0);
-		for (uint16_t i = 0; i < image.imageCount(); i++) {
-			QImage frame = image.read();
+				frame = frame.convertToFormat(QImage::Format_Indexed8);
 
-			frame = frame.convertToFormat(QImage::Format_Indexed8);
+				/*
+				 * Extract the frame's color table.
+				 * We do this for every frame to ensure each Pixel is assigned a color index, even though we only use the first frame's color table as the Palette.
+				 * We also make sure the color table is at most 255 colors to avoid transparency issues.
+				 */
+				QVector<QRgb> color_table = frame.colorTable();
+				while (color_table.size() >= 256) {
+					color_table.removeLast();
+				}
 
-			/*
-			 * Extract the frame's color table.
-			 * We do this for every frame to ensure each Pixel is assigned a color index, even though we only use the first frame's color table as the Palette.
-			 */
-			QVector<QRgb> color_table = frame.colorTable();
+				// Handle one-time actions
+				if (image.currentImageNumber() == 0) {
 
-			/*
-			 * Set the Canvas' palette before continuing.
-			 * Pare down the frame's palette so it fits in the Canvas' palette.
-			 */
-			while (color_table.size() >= 256) {
-				color_table.removeLast();
-			}
+					// Set the frame rate
+					maestro_control->run_cue(
+						maestro_control->canvas_handler->set_frame_timer(
+							maestro_control->get_section_index(),
+							maestro_control->get_layer_index(),
+							static_cast<uint16_t>(image.nextImageDelay())));
 
-			// Copy the color table into a temporary RGB array so we can translate it into a Cue
-			QVector<Colors::RGB> color_table_rgb(color_table.size());
-			for (uint8_t color = 0; color < color_table.size() - 1; color++) {
-				color_table_rgb[color].r = static_cast<uint8_t>(qRed(color_table.at(color)));
-				color_table_rgb[color].g = static_cast<uint8_t>(qGreen(color_table.at(color)));
-				color_table_rgb[color].b = static_cast<uint8_t>(qBlue(color_table.at(color)));
-			}
+					// FIXME: Optimize this section
+					// Copy the color table into a temporary RGB array so we can translate it into a Cue
+					QVector<Colors::RGB> color_table_rgb(color_table.size());
+					for (uint8_t color = 0; color < color_table.size() - 1; color++) {
+						color_table_rgb[color].r = static_cast<uint8_t>(qRed(color_table.at(color)));
+						color_table_rgb[color].g = static_cast<uint8_t>(qGreen(color_table.at(color)));
+						color_table_rgb[color].b = static_cast<uint8_t>(qBlue(color_table.at(color)));
+					}
 
-			if (image.currentImageNumber() == 0) {
-				Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
-				maestro_control->run_cue(
-							maestro_control->canvas_handler->set_palette(
-								maestro_control->get_section_index(),
-								maestro_control->get_layer_index(),
-								&palette));
-			}
+					Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
+					maestro_control->run_cue(
+								maestro_control->canvas_handler->set_palette(
+									maestro_control->get_section_index(),
+									maestro_control->get_layer_index(),
+									&palette));
+				}
 
-			// Iterate over each pixel and the frame and re-draw it
-			for (uint16_t y = 0; y < canvas_size.height(); y++) {
-				for (uint16_t x = 0; x < canvas_size.width(); x++) {
-					cursor.set(x, y);
-					if (canvas->in_bounds(cursor.x, cursor.y)) {
-						QColor pix_color = frame.pixelColor(x, y);
-						maestro_control->run_cue(
-							maestro_control->canvas_handler->draw_point(
-								maestro_control->get_section_index(),
-								maestro_control->get_layer_index(),
-								static_cast<uint8_t>(color_table.indexOf(pix_color.rgb())),
-								x,
-								y));
+				/*
+				 * Convert the frame's color table into a Canvas-supported one.
+				 * Iterate over each Pixel and add its index to a temporary frame, then draw the frame to the Canvas.
+				 */
+				uint8_t color_table_indices[canvas_size.width() * canvas_size.height()];
+				for (uint16_t y = 0; y < canvas_size.height(); y++) {
+					for (uint16_t x = 0; x < canvas_size.width(); x++) {
+						if (canvas->in_bounds(x, y)) {
+							QColor pix_color = frame.pixelColor(x, y);
+							color_table_indices[canvas->get_section()->get_dimensions()->get_inline_index(x, y)] = static_cast<uint8_t>(color_table.indexOf(pix_color.rgb()));
+						}
 					}
 				}
+
+				maestro_control->run_cue(
+					maestro_control->canvas_handler->draw_frame(
+						maestro_control->get_section_index(),
+						maestro_control->get_layer_index(),
+						canvas_size.width(),
+						canvas_size.height(),
+						&color_table_indices[0]
+					)
+				);
+
+				image.jumpToNextImage();
+				maestro_control->run_cue(
+					maestro_control->canvas_handler->next_frame(
+						maestro_control->get_section_index(),
+						maestro_control->get_layer_index()));
 			}
-			image.jumpToNextImage();
-			maestro_control->run_cue(
-				maestro_control->canvas_handler->next_frame(
-					maestro_control->get_section_index(),
-					maestro_control->get_layer_index()));
 		}
 	}
 }
