@@ -1526,7 +1526,7 @@
            <item row="1" column="0" alignment="Qt::AlignTop">
             <widget class="QGroupBox" name="groupBox">
              <property name="title">
-              <string>Show Control</string>
+              <string>Show Settings</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">
               <item row="1" column="0">

@@ -860,17 +860,17 @@ namespace PixelMaestroStudio {
 
 		if (!filename.isEmpty()) {
 
-			// Reset current image controls
-			ui->canvasPlaybackStartStopToolButton->setChecked(false);
-			on_canvasPlaybackStartStopToolButton_toggled(false);
-			ui->currentFrameSpinBox->setValue(0);
-			on_currentFrameSpinBox_editingFinished();
+			// Stop playback
+			on_canvasPlaybackStartStopToolButton_toggled(true);
 
-			QtConcurrent::run(CanvasUtility::load_image, filename, active_section_->get_canvas(), this);
+			// Clear the current Canvas
+			run_cue(canvas_handler->clear(get_section_index(), get_layer_index()));
+
+			CanvasUtility::load_image(filename, active_section_->get_canvas(), this);
 
 			Canvas* canvas = active_section_->get_canvas();
 
-			// Set frame options
+			// Update UI based on new canvas
 			ui->frameCountSpinBox->blockSignals(true);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->frameCountSpinBox->blockSignals(false);
@@ -879,12 +879,6 @@ namespace PixelMaestroStudio {
 				ui->frameIntervalSpinBox->blockSignals(true);
 				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
 				ui->frameIntervalSpinBox->blockSignals(false);
-			}
-
-			// Disable frame count spin box if necessary
-			if (ui->canvasPlaybackStartStopToolButton->isChecked()) {
-				ui->canvasPlaybackStartStopToolButton->setChecked(false);
-				on_canvasPlaybackStartStopToolButton_toggled(false);
 			}
 
 			// Add Palette to list
@@ -898,7 +892,7 @@ namespace PixelMaestroStudio {
 			ui->canvasPaletteComboBox->setCurrentText(name);
 
 			// Start playback
-			ui->canvasPlaybackStartStopToolButton->setChecked(true);
+			on_canvasPlaybackStartStopToolButton_toggled(false);
 		}
 	}
 

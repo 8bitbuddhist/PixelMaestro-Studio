@@ -31,6 +31,7 @@ namespace PixelMaestroStudio {
 		initialize_maestro();
 
 		// Initialize timer
+		// TODO: Make timer global (move to MainWindow)
 		timer_.setTimerType(Qt::PreciseTimer);
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
@@ -350,6 +351,7 @@ namespace PixelMaestroStudio {
 
 	void MaestroController::update() {
 		// Force the Maestro to update
+		// FIXME: Move to persistent thread
 		maestro_->update(get_total_elapsed_time(), true);
 	}
 
