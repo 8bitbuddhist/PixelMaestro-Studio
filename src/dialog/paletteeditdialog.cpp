@@ -3,6 +3,7 @@
  */
 
 #include <QColorDialog>
+#include <QMessageBox>
 #include "paletteeditdialog.h"
 #include "ui_paletteeditdialog.h"
 #include "widget/palettecontrolwidget.h"
@@ -43,7 +44,22 @@ namespace PixelMaestroStudio {
 	 * Saves changes and closes the form.
 	 */
 	void PaletteEditDialog::accept() {
-		// Only allow the Palette to be created if the name is set
+		// Don't allow Palettes without names.
+		if (ui->nameLineEdit->text().size() <= 0) {
+			ui->nameLabel->setStyleSheet(QString("color: red;"));
+			QMessageBox::warning(this, "Empty Name", "Palette name cannot be blank.");
+			return;
+		}
+
+		// Don't allow duplicate name Palettes, unless we're updating an existing Palette
+		PaletteController::PaletteWrapper* duplicate = static_cast<PaletteControlWidget*>(parentWidget())->get_palette_controller()->get_palette(ui->nameLineEdit->text());
+		if ((target_palette_ == nullptr && duplicate != nullptr) ||
+			(target_palette_ != nullptr && duplicate != nullptr && duplicate != target_palette_)) {
+			ui->nameLabel->setStyleSheet(QString("color: red;"));
+			QMessageBox::warning(this, "Duplicate Name", "A Palette with this name already exists.");
+			return;
+		}
+
 		if (ui->nameLineEdit->text().size() > 0) {
 			uint8_t num_colors = ui->numColorsSpinBox->value();
 			Colors::RGB colors[num_colors];
@@ -87,10 +103,6 @@ namespace PixelMaestroStudio {
 			}
 
 			QDialog::accept();
-		}
-		else {
-			// If the name is incomplete, highlight the name field.
-			ui->nameLabel->setStyleSheet(QString("color: red;"));
 		}
 	}
 

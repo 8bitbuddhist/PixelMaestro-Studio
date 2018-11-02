@@ -17,10 +17,9 @@ namespace PixelMaestroStudio {
 			~CueInterpreterDialog();
 
 		private:
-			uint8_t* cuefile_ = nullptr;
-			Ui::CueInterpreterDialog *ui;
-
 			CueInterpreter interpreter_;
+
+			Ui::CueInterpreterDialog *ui;
 	};
 }
 

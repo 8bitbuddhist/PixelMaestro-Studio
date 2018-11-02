@@ -27,6 +27,7 @@
 #include "cue/showcuehandler.h"
 #include "dialog/maestrodrawingareadialog.h"
 #include "widget/devicecontrolwidget.h"
+#include "widget/animationcontrolwidget.h"
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -35,6 +36,7 @@ namespace Ui {
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
+	class AnimationControlWidget;
 	class DeviceControlWidget;
 	class MaestroController;
 	class MaestroDrawingAreaDialog;
@@ -66,6 +68,7 @@ namespace PixelMaestroStudio {
 
 			explicit MaestroControlWidget(QWidget* parent);
 			~MaestroControlWidget();
+			void edit_palettes(QString palette);
 			void enable_show_edit_mode(bool enable);
 			Section* get_active_section();
 			uint8_t get_canvas_color_index() const;
@@ -88,9 +91,6 @@ namespace PixelMaestroStudio {
 		private:
 			Ui::MaestroControlWidget *ui;
 
-			/// Extra animation controls
-			std::unique_ptr<QWidget> animation_extra_control_widget_;
-
 			/// Color index storage for Canvases.
 			uint8_t canvas_color_index_ = 255;
 
@@ -103,8 +103,9 @@ namespace PixelMaestroStudio {
 			/// Separate Maestro DrawingArea
 			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
 
-			/// Extra serial device controls
-			QSharedPointer<DeviceControlWidget> device_extra_control_widget_;
+			// Extra control widgets
+			QSharedPointer<AnimationControlWidget> animation_control_widget_;
+			QSharedPointer<DeviceControlWidget> device_control_widget_;
 
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
@@ -134,7 +135,6 @@ namespace PixelMaestroStudio {
 			void on_section_resize(uint16_t x, uint16_t y);
 			void populate_layer_combobox();
 			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper);
-			void set_animation_controls_enabled(bool enabled);
 			void set_canvas_controls_enabled(bool enabled);
 			void set_offset();
 			void set_show_controls_enabled(bool enabled);
@@ -150,23 +150,12 @@ namespace PixelMaestroStudio {
 			void set_canvas_frame_interval();
 			void set_scroll();
 			void set_layer_controls_enabled(bool enabled);
-			void set_animation_timer();
-			void set_advanced_animation_controls(Animation* animation);
 
 		private slots:
-			void on_animationComboBox_currentIndexChanged(int index);
-			void on_animationPaletteComboBox_currentIndexChanged(int index);
 			void on_columnsSpinBox_editingFinished();
-			void on_animationTimerSlider_valueChanged(int value);
-			void on_fadeCheckBox_toggled(bool checked);
 			void on_mix_modeComboBox_currentIndexChanged(int index);
-			void on_orientationComboBox_currentIndexChanged(int index);
-			void on_paletteControlButton_clicked();
-			void on_reverse_animationCheckBox_toggled(bool checked);
 			void on_rowsSpinBox_editingFinished();
-			void on_animationIntervalSpinBox_editingFinished();
 			void on_enableShowCheckBox_toggled(bool checked);
-			void on_delaySlider_valueChanged(int value);
 			void on_layerComboBox_currentIndexChanged(int index);
 			void on_sectionComboBox_currentIndexChanged(int index);
 			void on_layerSpinBox_editingFinished();
@@ -204,7 +193,6 @@ namespace PixelMaestroStudio {
 			void on_canvasPlaybackBackToolButton_clicked();
 			void on_paintToolButton_toggled(bool checked);
 			void on_alphaSpinBox_editingFinished();
-			void on_delaySpinBox_editingFinished();
 			void on_frameIntervalSlider_valueChanged(int value);
 			void on_resyncMaestroButton_clicked();
 			void on_canvasEnableCheckBox_toggled(bool checked);

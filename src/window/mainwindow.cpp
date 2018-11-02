@@ -16,7 +16,6 @@ namespace PixelMaestroStudio {
 	 */
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
-		setWindowTitle(QCoreApplication::applicationName());
 
 		// Initialize UI elements
 		initialize_widgets();
@@ -34,6 +33,9 @@ namespace PixelMaestroStudio {
 		else {
 			on_action_Open_Animation_Editor_triggered(false);
 		}
+
+		// Set active Cuefile to nothing. This also has the effect of setting the window title.
+		set_active_cuefile("");
 
 		initialization_complete = true;
 	}
@@ -165,17 +167,19 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Saves the current Maestro to a Cuefile.
+	 * Saves the currently loaded Cuefile.
 	 */
 	void MainWindow::on_action_Save_triggered() {
 		if (this->loaded_cuefile_path_.isEmpty()) {
 			on_action_Save_Maestro_triggered();
 		}
-		else {
-			QSettings settings;
-			// Store the directory that the file was saved to
-			settings.setValue(PreferencesDialog::last_cuefile_directory, QFileInfo(this->loaded_cuefile_path_).path());
-			maestro_controller_->save_cuefile(this->loaded_cuefile_path_);
+		else {			
+			QFile file(this->loaded_cuefile_path_);
+			if (file.open(QFile::WriteOnly)) {
+				QDataStream datastream(&file);
+				this->maestro_controller_->save_maestro_to_datastream(&datastream);
+				file.close();
+			}
 		}
 	}
 
@@ -253,6 +257,8 @@ namespace PixelMaestroStudio {
 			QByteArray bytes = file.readAll();
 			return open_cuefile(bytes, new_session);
 		}
+
+		return false;
 	}
 
 	/**
@@ -263,11 +269,11 @@ namespace PixelMaestroStudio {
 	void MainWindow::set_active_cuefile(QString path) {
 		this->loaded_cuefile_path_ = path;
 
-		if (!path.isEmpty()) {
-			this->setWindowTitle("PixelMaestro Studio - " + QFileInfo(path).fileName());
+		if (path.isEmpty()) {
+			this->setWindowTitle(QCoreApplication::applicationName() + "[*]");
 		}
 		else {
-			this->setWindowTitle("PixelMaestro Studio");
+			this->setWindowTitle(QCoreApplication::applicationName() + QFileInfo(path).fileName() + "[*]");
 		}
 	}
 
@@ -290,6 +296,7 @@ namespace PixelMaestroStudio {
 		settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
 
 		delete maestro_control_widget_;
+		delete maestro_controller_;
 		delete splitter_;
 		delete ui;
 	}

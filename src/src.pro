@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     dialog/cueinterpreterdialog.cpp \
     dialog/paletteeditdialog.cpp \
     model/serialdevice.cpp \
-    utility/cueinterpreter.cpp
+    utility/cueinterpreter.cpp \
+    widget/animationcontrolwidget.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -129,7 +130,8 @@ HEADERS += \
     dialog/cueinterpreterdialog.h \
     dialog/paletteeditdialog.h \
     model/serialdevice.h \
-    utility/cueinterpreter.h
+    utility/cueinterpreter.h \
+    widget/animationcontrolwidget.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
@@ -144,7 +146,8 @@ FORMS	+= window/mainwindow.ui \
 		dialog/maestrodrawingareadialog.ui \
     widget/devicecontrolwidget.ui \
     dialog/cueinterpreterdialog.ui \
-    dialog/paletteeditdialog.ui
+    dialog/paletteeditdialog.ui \
+    widget/animationcontrolwidget.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

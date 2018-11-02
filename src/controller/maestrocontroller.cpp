@@ -13,9 +13,7 @@
 #include "cue/show.h"
 #include "cue/showcuehandler.h"
 #include "maestrocontroller.h"
-#include <memory>
 #include <QByteArray>
-#include <QFile>
 #include <QSettings>
 #include "dialog/preferencesdialog.h"
 
@@ -31,7 +29,6 @@ namespace PixelMaestroStudio {
 		initialize_maestro();
 
 		// Initialize timer
-		// TODO: Make timer global (move to MainWindow)
 		timer_.setTimerType(Qt::PreciseTimer);
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
@@ -123,33 +120,10 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Saves the Maestro to a Cuefile.
-	 * @param filename Name of the Cuefile to save to.
-	 */
-	void MaestroController::save_cuefile(QString filename) {
-		QFile file(filename);
-		if (file.open(QFile::WriteOnly)) {
-			QDataStream datastream(&file);
-
-			/*
-			 * Select which Cues to save.
-			 * This will be used (at some point) to save Cue snippets, e.g. individual Animations or Canvases.
-			 */
-			QVector<CueController::Handler> handlers_to_save;
-			handlers_to_save.append(CueController::Handler::AnimationCueHandler);
-			handlers_to_save.append(CueController::Handler::CanvasCueHandler);
-			handlers_to_save.append(CueController::Handler::MaestroCueHandler);
-			handlers_to_save.append(CueController::Handler::SectionCueHandler);
-			handlers_to_save.append(CueController::Handler::ShowCueHandler);
-			save_maestro_to_datastream(&datastream, &handlers_to_save);
-			file.close();
-		}
-	}
-
-	/**
 	 * Saves Maestro settings to a DataStream as Cues.
 	 * @param datastream Stream to save Cues to.
 	 * @param save_handlers CueHandlers that are enabled for saving.
+	 * TODO: Make threaded
 	 */
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream, QVector<CueController::Handler>* save_handlers) {
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
@@ -265,12 +239,12 @@ namespace PixelMaestroStudio {
 
 		// Scrolling and offset
 		Point* offset = section->get_offset();
-		if (offset != nullptr) {
-			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, section->get_offset()->x, section->get_offset()->y));
+		if (offset->x != 0 && offset->y != 0) {
+			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset->x, offset->y));
 		}
 		Section::Scroll* scroll = section->get_scroll();
 		if (scroll != nullptr) {
-			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, section->get_scroll()->interval_x, section->get_scroll()->interval_y, section->get_scroll()->reverse_x, section->get_scroll()->reverse_y));
+			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, scroll->interval_x, scroll->interval_y, scroll->reverse_x, scroll->reverse_y));
 		}
 
 		// Save Canvas settings

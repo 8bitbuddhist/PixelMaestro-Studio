@@ -1,26 +1,9 @@
-#include <QColorDialog>
-#include <QDataStream>
-#include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QKeyEvent>
 #include <QSettings>
 #include <QString>
-#include <QtConcurrent/QtConcurrentRun>
-#include "animation/fireanimation.h"
-#include "animation/fireanimationcontrolwidget.h"
-#include "animation/lightninganimation.h"
-#include "animation/lightninganimationcontrolwidget.h"
-#include "animation/plasmaanimation.h"
-#include "animation/plasmaanimationcontrolwidget.h"
-#include "animation/radialanimation.h"
-#include "animation/radialanimationcontrolwidget.h"
-#include "animation/sparkleanimation.h"
-#include "animation/sparkleanimationcontrolwidget.h"
-#include "animation/waveanimation.h"
-#include "animation/waveanimationcontrolwidget.h"
-#include "colorpresets.h"
 #include "controller/maestrocontroller.h"
 #include "core/section.h"
 #include "drawingarea/maestrodrawingarea.h"
@@ -31,6 +14,7 @@
 #include "utility/canvasutility.h"
 #include "utility.h"
 
+// TODO: Move Canvases and Shows to separate widgets
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
@@ -42,9 +26,12 @@ namespace PixelMaestroStudio {
 		// Capture button key presses
 		qApp->installEventFilter(this);
 
-		// Initialize device control tab and add it to the widget
-		device_extra_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
-		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_extra_control_widget_.data());
+		// Initialize and add control tabs
+		animation_control_widget_ = QSharedPointer<AnimationControlWidget>(new AnimationControlWidget(this));
+		ui->animationTab->findChild<QLayout*>("animationLayout")->addWidget(animation_control_widget_.data());
+
+		device_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this, nullptr));
+		ui->deviceTab->findChild<QLayout*>("deviceTabLayout")->addWidget(device_control_widget_.data());
 	}
 
 	/**
@@ -68,6 +55,12 @@ namespace PixelMaestroStudio {
 			ui->eventHistoryWidget->takeItem(0);
 			event_history_.remove(0);
 		}
+	}
+
+	void MaestroControlWidget::edit_palettes(QString palette) {
+		PaletteControlWidget palette_control(&palette_controller_, palette);
+		palette_control.exec();
+		initialize_palettes();
 	}
 
 	/**
@@ -253,7 +246,6 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->blockSignals(false);
 
 		// Disable advanced controls until they're activated manually
-		ui->animationAdvancedSettingsGroupBox->setVisible(false);
 		set_canvas_controls_enabled(0);
 		set_layer_controls_enabled(false);
 		set_show_controls_enabled(false);
@@ -285,26 +277,20 @@ namespace PixelMaestroStudio {
 
 	/// Reinitializes Palettes from the Palette Dialog.
 	void MaestroControlWidget::initialize_palettes() {
-		QString color_palette = ui->animationPaletteComboBox->currentText();
 		QString canvas_palette = ui->canvasPaletteComboBox->currentText();
 
 		// Repopulate color combo boxes
-		ui->animationPaletteComboBox->blockSignals(true);
 		ui->canvasPaletteComboBox->blockSignals(true);
-
-		ui->animationPaletteComboBox->clear();
 		ui->canvasPaletteComboBox->clear();
 
 		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
-			ui->animationPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 			ui->canvasPaletteComboBox->addItem(palette_controller_.get_palette(i)->name);
 		}
 
-		ui->animationPaletteComboBox->setCurrentText(color_palette);
 		ui->canvasPaletteComboBox->setCurrentText(canvas_palette);
-
-		ui->animationPaletteComboBox->blockSignals(false);
 		ui->canvasPaletteComboBox->blockSignals(false);
+
+		animation_control_widget_->refresh_palettes();
 	}
 
 	/**
@@ -346,52 +332,6 @@ namespace PixelMaestroStudio {
 				active_section_->get_parent_section()->get_layer()->mix_mode,
 				ui->alphaSpinBox->value())
 		);
-	}
-
-	/**
-	 * Changes the current animation.
-	 * @param index Index of the new animation.
-	 */
-	void MaestroControlWidget::on_animationComboBox_currentIndexChanged(int index) {
-		// If the animation is set to "None", remove the Animation
-		if (index == 0) {
-			run_cue(section_handler->remove_animation(get_section_index(), get_layer_index(), true));
-		}
-		else {
-
-			// If the Section already has an Animation set, check to make sure the new Animation is different
-			Animation* animation = active_section_->get_animation();
-			if (animation != nullptr) {
-				if (animation->get_type() == (AnimationType)(index - 1)) {
-					return;
-				}
-
-				// Preserve options between animations
-				run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)(index - 1), true));
-			}
-			else {	// If the Section had no prior Animation, re-apply settings shown in the UI.
-				run_cue(section_handler->set_animation(get_section_index(), get_layer_index(), (AnimationType)(index - 1), false));
-				on_animationPaletteComboBox_currentIndexChanged(ui->animationPaletteComboBox->currentIndex());
-				on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
-				on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
-				on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
-				on_animationIntervalSpinBox_editingFinished();
-				on_delaySpinBox_editingFinished();
-			}
-
-			set_advanced_animation_controls(active_section_->get_animation());
-		}
-
-		set_animation_controls_enabled(index > 0);
-	}
-
-	/**
-	 * Changes the Animation's Palette.
-	 * @param index Index of the new Palette.
-	 */
-	void MaestroControlWidget::on_animationPaletteComboBox_currentIndexChanged(int index) {
-		PaletteController::PaletteWrapper* palette_wrapper = palette_controller_.get_palette(index);
-		run_cue(animation_handler->set_palette(get_section_index(), get_layer_index(), &palette_wrapper->palette));
 	}
 
 	/// Opens the Palette Editor from the Canvas tab.
@@ -561,29 +501,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the animation timer.
-	 * @param value New timer.
-	 */
-	void MaestroControlWidget::on_animationTimerSlider_valueChanged(int value) {
-		ui->animationIntervalSpinBox->blockSignals(true);
-		ui->animationIntervalSpinBox->setValue(value);
-		ui->animationIntervalSpinBox->blockSignals(false);
-
-		set_animation_timer();
-	}
-
-	/**
-	 * Changes the animation timer.
-	 */
-	void MaestroControlWidget::on_animationIntervalSpinBox_editingFinished() {
-		ui->animationTimerSlider->blockSignals(true);
-		ui->animationTimerSlider->setValue(ui->animationIntervalSpinBox->value());
-		ui->animationTimerSlider->blockSignals(false);
-
-		set_animation_timer();
-	}
-
-	/**
 	 * Handles drawing onto the current Canvas frame.
 	 */
 	void MaestroControlWidget::on_drawButton_clicked() {
@@ -630,14 +547,6 @@ namespace PixelMaestroStudio {
 			}
 			show_timer_.stop();
 		}
-	}
-
-	/**
-	 * Toggles fading.
-	 * @param checked If true, fading is enabled.
-	 */
-	void MaestroControlWidget::on_fadeCheckBox_toggled(bool checked) {
-		run_cue(animation_handler->set_fade(get_section_index(), get_layer_index(), checked));
 	}
 
 	/**
@@ -761,16 +670,6 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_scrollYSpinBox_editingFinished() {
 		set_scroll();
-	}
-
-	/**
-	 * Sets the animation's orientation.
-	 * @param index New orientation.
-	 */
-	void MaestroControlWidget::on_orientationComboBox_currentIndexChanged(int index) {
-		if ((Animation::Orientation)index != active_section_->get_animation()->get_orientation()) {
-			run_cue(animation_handler->set_orientation(get_section_index(), get_layer_index(), (Animation::Orientation)index));
-		}
 	}
 
 	/**
@@ -932,40 +831,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Opens the Palette Editor.
-	 */
-	void MaestroControlWidget::on_paletteControlButton_clicked() {
-		QString palette_name = ui->animationPaletteComboBox->currentText();
-
-		PaletteControlWidget palette_control(&palette_controller_, palette_name);
-		palette_control.exec();
-		initialize_palettes();
-	}
-
-	/**
-	 * Sets the delay between Animation cycles.
-	 */
-	void MaestroControlWidget::on_delaySpinBox_editingFinished() {
-		ui->delaySlider->blockSignals(true);
-		ui->delaySlider->setValue(ui->delaySpinBox->value());
-		ui->delaySlider->blockSignals(false);
-
-		set_animation_timer();
-	}
-
-	/**
-	 * Sets the delay between Animation cycles.
-	 * @param value New pause interval.
-	 */
-	void MaestroControlWidget::on_delaySlider_valueChanged(int value) {
-		ui->delaySpinBox->blockSignals(true);
-		ui->delaySpinBox->setValue(value);
-		ui->delaySpinBox->blockSignals(false);
-
-		set_animation_timer();
-	}
-
-	/**
 	 * Removes the selected Event(s) from the Show.
 	 */
 	void MaestroControlWidget::on_removeEventButton_clicked() {
@@ -993,14 +858,6 @@ namespace PixelMaestroStudio {
 		if (confirm == QMessageBox::Yes) {
 			maestro_controller_->get_maestro()->sync();
 		}
-	}
-
-	/**
-	 * Toggles whether the color animation is shown in reverse.
-	 * @param checked If true, reverse the animation.
-	 */
-	void MaestroControlWidget::on_reverse_animationCheckBox_toggled(bool checked) {
-		run_cue(animation_handler->set_reverse(get_section_index(), get_layer_index(), checked));
 	}
 
 	/**
@@ -1144,7 +1001,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Create new buttons and add an event handler that triggers on_canvas_color_clicked()
+		// Create new buttons and connect the color picker to the pushbutton event
 		QLayout* layout = ui->canvasColorPickerScrollArea->findChild<QLayout*>("canvasColorPickerLayout");
 		for (uint8_t color_index = 0; color_index < palette_wrapper->palette.get_num_colors(); color_index++) {
 			Colors::RGB color = palette_wrapper->palette.get_colors()[color_index];
@@ -1189,8 +1046,8 @@ namespace PixelMaestroStudio {
 		}
 
 		// Recalculate the Maestro Cuefile
-		if (device_extra_control_widget_ != nullptr) {
-			device_extra_control_widget_->update_cuefile_size();
+		if (device_control_widget_ != nullptr) {
+			device_control_widget_->update_cuefile_size();
 		}
 	}
 
@@ -1200,6 +1057,8 @@ namespace PixelMaestroStudio {
 	 * @param serial_only If true, don't run the Cue on the local Maestro.
 	 */
 	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
+		// TODO: Indicate that the Cue is unsaved
+
 		// Update the ShowControl's history
 		if (show_controller_ != nullptr) {
 			add_cue_to_history(cue);
@@ -1214,8 +1073,8 @@ namespace PixelMaestroStudio {
 			}
 
 			// Send to serial device controller.
-			if (device_extra_control_widget_ != nullptr) {
-				device_extra_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
+			if (device_control_widget_ != nullptr) {
+				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
 		}
 	}
@@ -1225,9 +1084,7 @@ namespace PixelMaestroStudio {
 	 * @param section New active Section.
 	 */
 	void MaestroControlWidget::set_active_section(Section* section) {
-		if (section == nullptr) {
-			return;
-		}
+		if (section == nullptr) return;
 
 		active_section_ = section;
 
@@ -1320,68 +1177,10 @@ namespace PixelMaestroStudio {
 			ui->alphaSpinBox->blockSignals(false);
 		}
 
-		/*
-		 * Set Animation.
-		 * If the Section doesn't have an Animation, select the default of None.
-		 */
-		Animation* animation = section->get_animation();
-		if (animation != nullptr) {
-			// Animation settings
-			ui->orientationComboBox->blockSignals(true);
-			ui->reverse_animationCheckBox->blockSignals(true);
-			ui->fadeCheckBox->blockSignals(true);
-			ui->animationTimerSlider->blockSignals(true);
-			ui->animationIntervalSpinBox->blockSignals(true);
-			ui->delaySlider->blockSignals(true);
-			ui->delaySpinBox->blockSignals(true);
-			ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
-			ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
-			ui->fadeCheckBox->setChecked(animation->get_fade());
-			ui->animationTimerSlider->setValue(animation->get_timer()->get_interval());
-			ui->animationIntervalSpinBox->setValue(animation->get_timer()->get_interval());
-			ui->delaySlider->setValue(animation->get_timer()->get_delay());
-			ui->delaySpinBox->setValue(animation->get_timer()->get_delay());
-			ui->orientationComboBox->blockSignals(false);
-			ui->reverse_animationCheckBox->blockSignals(false);
-			ui->fadeCheckBox->blockSignals(false);
-			ui->animationTimerSlider->blockSignals(false);
-			ui->animationIntervalSpinBox->blockSignals(false);
-			ui->delaySlider->blockSignals(false);
-			ui->delaySpinBox->blockSignals(false);
+		// Update Animation widget
+		animation_control_widget_->refresh();
 
-			// Palette not found
-			int palette_index = palette_controller_.find(animation->get_palette()->get_colors());
-			if (palette_index >= 0) {
-				ui->animationPaletteComboBox->blockSignals(true);
-				ui->animationPaletteComboBox->setCurrentIndex(palette_index);
-				ui->animationPaletteComboBox->blockSignals(false);
-			}
-			else {
-				QString name = "Section " + QString::number(get_section_index()) +
-							   " Layer " + QString::number(get_layer_index()) +
-							   " Animation";
-				palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-				ui->animationPaletteComboBox->blockSignals(true);
-				ui->animationPaletteComboBox->addItem(name);
-				ui->animationPaletteComboBox->setCurrentText(name);
-				ui->animationPaletteComboBox->blockSignals(false);
-			}
-
-			// Set the animation
-			ui->animationComboBox->blockSignals(true);
-			ui->animationComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
-			ui->animationComboBox->blockSignals(false);
-
-			// Enable animation controls
-			set_animation_controls_enabled(true);
-			set_advanced_animation_controls(animation);
-		}
-		else {
-			ui->animationComboBox->setCurrentIndex(0);
-			on_animationComboBox_currentIndexChanged(0);
-		}
-
-		// Get Canvas
+		// Update Canvas widgets
 		ui->canvasEnableCheckBox->blockSignals(true);
 		ui->frameCountSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->blockSignals(true);
@@ -1435,19 +1234,6 @@ namespace PixelMaestroStudio {
 		ui->frameIntervalSlider->blockSignals(false);
 		ui->frameIntervalSpinBox->blockSignals(false);
 		ui->canvasEnableCheckBox->blockSignals(false);
-	}
-
-	/**
-	 * Toggles whether Animation controls are usable.
-	 * @param enabled If true, controls are enabled.
-	 */
-	void MaestroControlWidget::set_animation_controls_enabled(bool enabled) {
-		ui->orientationComboBox->setEnabled(enabled);
-		ui->reverse_animationCheckBox->setEnabled(enabled);
-		ui->animationPaletteComboBox->setEnabled(enabled);
-		ui->fadeCheckBox->setEnabled(enabled);
-		ui->animationAdvancedSettingsGroupBox->setEnabled(enabled);
-		ui->animationTimersGroupBox->setEnabled(enabled);
 	}
 
 	/**
@@ -1662,7 +1448,7 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Sets the Animation's center to the specified coordinates.
+	 * Sets the Section's center to the specified coordinates.
 	 */
 	void MaestroControlWidget::set_offset() {
 		run_cue(section_handler->set_offset(get_section_index(), get_layer_index(), ui->offsetXSpinBox->value(), ui->offsetYSpinBox->value()));
@@ -1701,58 +1487,6 @@ namespace PixelMaestroStudio {
 		ui->showSettingsGroupBox->setEnabled(enabled);
 		ui->eventGroupBox->setEnabled(enabled);
 		ui->toggleShowModeCheckBox->setEnabled(enabled);
-	}
-
-	/**
-	 * Displays extra controls for Animations that take custom parameters.
-	 * @param animation Pointer to the Animation being displayed.
-	 */
-	void MaestroControlWidget::set_advanced_animation_controls(Animation* animation) {
-		// First, remove any existing extra control widgets
-		if (animation_extra_control_widget_ != nullptr) {
-			this->findChild<QLayout*>("animationAdvancedSettingsLayout")->removeWidget(animation_extra_control_widget_.get());
-			animation_extra_control_widget_.reset();
-		}
-
-		QLayout* layout = this->findChild<QLayout*>("animationAdvancedSettingsLayout");
-
-		switch(animation->get_type()) {
-			case AnimationType::Fire:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new FireAnimationControlWidget((FireAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Lightning:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControlWidget((LightningAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Plasma:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControlWidget((PlasmaAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Radial:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControlWidget((RadialAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Sparkle:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControlWidget((SparkleAnimation*)animation, this, layout->widget()));
-				break;
-			case AnimationType::Wave:
-				animation_extra_control_widget_ = std::unique_ptr<QWidget>(new WaveAnimationControlWidget((WaveAnimation*)animation, this, layout->widget()));
-			default:
-				break;
-		}
-
-		ui->animationAdvancedSettingsGroupBox->setVisible(animation_extra_control_widget_ != nullptr);
-
-		if (animation_extra_control_widget_) {
-			layout->addWidget(animation_extra_control_widget_.get());
-		}
-	}
-
-	/// Sets the active Animation's timer.
-	void MaestroControlWidget::set_animation_timer() {
-		uint16_t pause = ui->delaySpinBox->value();
-		uint16_t new_interval = ui->animationIntervalSpinBox->value();
-		AnimationTimer* timer = active_section_->get_animation()->get_timer();
-		if (new_interval != timer->get_interval() || pause != timer->get_delay()) {
-			run_cue(animation_handler->set_timer(get_section_index(), get_layer_index(), new_interval, pause));
-		}
 	}
 
 	/// Sets the interval between Canvas frames.

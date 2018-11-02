@@ -43,7 +43,6 @@ namespace PixelMaestroStudio {
 			uint64_t get_total_elapsed_time();
 			void initialize_maestro();
 			void remove_drawing_area(MaestroDrawingArea* drawing_area);
-			void save_cuefile(QString filename);
 			void save_maestro_to_datastream(QDataStream* datastream, QVector<CueController::Handler>* save_handlers = nullptr);
 			void save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers = nullptr);
 			void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
