@@ -236,7 +236,6 @@ namespace PixelMaestroStudio {
 
 			// Refresh the Animation Editor
 			maestro_control_widget_->refresh_maestro_settings();
-			maestro_control_widget_->set_active_section(maestro_control_widget_->get_active_section());
 
 			return true;
 		}
@@ -273,7 +272,7 @@ namespace PixelMaestroStudio {
 			this->setWindowTitle(QCoreApplication::applicationName() + "[*]");
 		}
 		else {
-			this->setWindowTitle(QCoreApplication::applicationName() + QFileInfo(path).fileName() + "[*]");
+			this->setWindowTitle(QCoreApplication::applicationName() + " - " + QFileInfo(path).fileName() + "[*]");
 		}
 	}
 

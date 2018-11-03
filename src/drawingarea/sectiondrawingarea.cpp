@@ -81,7 +81,7 @@ namespace PixelMaestroStudio {
 		cursor_pos_ = event->pos();
 
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
-			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->get_active_section()->get_canvas();
+			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section()->get_canvas();
 			if (canvas != nullptr) {
 				Point pixel = map_cursor_to_pixel(cursor_pos_);
 
@@ -93,8 +93,8 @@ namespace PixelMaestroStudio {
 						if (event->buttons() == Qt::LeftButton) {
 							widget->run_cue(
 								widget->canvas_handler->draw_point(
-									widget->get_section_index(),
-									widget->get_layer_index(),
+									widget->section_control_widget_->get_section_index(),
+									widget->section_control_widget_->get_layer_index(),
 									widget->get_canvas_color_index(),
 									pixel.x,
 									pixel.y)
@@ -103,8 +103,8 @@ namespace PixelMaestroStudio {
 						else if (event->buttons() == Qt::RightButton) {
 							widget->run_cue(
 								widget->canvas_handler->erase_point(
-									widget->get_section_index(),
-									widget->get_layer_index(),
+									widget->section_control_widget_->get_section_index(),
+									widget->section_control_widget_->get_layer_index(),
 									pixel.x,
 									pixel.y)
 							);

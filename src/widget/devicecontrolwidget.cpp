@@ -14,9 +14,9 @@
 #include "ui_devicecontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	DeviceControlWidget::DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
+	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
-		this->maestro_control_widget_ = maestro_control_widget;
+		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
 
 		// Block certain Cues from firing
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));

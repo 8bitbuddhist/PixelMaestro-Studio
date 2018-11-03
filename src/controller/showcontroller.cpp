@@ -8,13 +8,11 @@ namespace PixelMaestroStudio {
 	 * @param maestro_controller Show's MaestroController.
 	 */
 	ShowController::ShowController(MaestroController* maestro_controller) {
-		this->maestro_controller_ = maestro_controller;
-
-		if (maestro_controller_->get_maestro()->get_show() == nullptr) {
-			show_ = maestro_controller_->get_maestro()->set_show(nullptr, 0);
+		if (maestro_controller->get_maestro()->get_show() == nullptr) {
+			show_ = maestro_controller->get_maestro()->set_show(nullptr, 0);
 		}
 		else {
-			show_ = maestro_controller_->get_maestro()->get_show();
+			show_ = maestro_controller->get_maestro()->get_show();
 		}
 
 		events_.clear();

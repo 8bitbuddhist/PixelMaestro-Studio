@@ -32,8 +32,8 @@ namespace PixelMaestroStudio {
 
 		maestro_control->run_cue(
 			maestro_control->canvas_handler->set_num_frames(
-					maestro_control->get_section_index(),
-					maestro_control->get_layer_index(),
+					maestro_control->section_control_widget_->get_section_index(),
+					maestro_control->section_control_widget_->get_layer_index(),
 					framecount));
 
 		// Read each frame
@@ -58,8 +58,8 @@ namespace PixelMaestroStudio {
 				if (framecount > 1) {
 					maestro_control->run_cue(
 								maestro_control->canvas_handler->set_frame_timer(
-									maestro_control->get_section_index(),
-									maestro_control->get_layer_index(),
+									maestro_control->section_control_widget_->get_section_index(),
+									maestro_control->section_control_widget_->get_layer_index(),
 									static_cast<uint16_t>(image.nextImageDelay())));
 				}
 
@@ -77,8 +77,8 @@ namespace PixelMaestroStudio {
 				Palette palette(&color_table_rgb[0], static_cast<uint8_t>(color_table.size()));
 				maestro_control->run_cue(
 							maestro_control->canvas_handler->set_palette(
-								maestro_control->get_section_index(),
-								maestro_control->get_layer_index(),
+								maestro_control->section_control_widget_->get_section_index(),
+								maestro_control->section_control_widget_->get_layer_index(),
 								&palette));
 			}
 
@@ -99,8 +99,8 @@ namespace PixelMaestroStudio {
 
 			maestro_control->run_cue(
 				maestro_control->canvas_handler->draw_frame(
-					maestro_control->get_section_index(),
-					maestro_control->get_layer_index(),
+					maestro_control->section_control_widget_->get_section_index(),
+					maestro_control->section_control_widget_->get_layer_index(),
 					canvas_size.width(),
 					canvas_size.height(),
 					&color_table_indices[0]
@@ -112,8 +112,8 @@ namespace PixelMaestroStudio {
 				image.jumpToNextImage();
 				maestro_control->run_cue(
 					maestro_control->canvas_handler->next_frame(
-						maestro_control->get_section_index(),
-						maestro_control->get_layer_index()));
+						maestro_control->section_control_widget_->get_section_index(),
+						maestro_control->section_control_widget_->get_layer_index()));
 			}
 		}
 	}

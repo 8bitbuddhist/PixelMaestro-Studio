@@ -24,7 +24,6 @@ namespace PixelMaestroStudio {
 
 		private:
 			CueInterpreter cue_interpreter_;
-			MaestroController* maestro_controller_;
 			QVector<Event> events_;
 			Show* show_;
 

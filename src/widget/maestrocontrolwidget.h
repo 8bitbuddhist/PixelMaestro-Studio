@@ -28,6 +28,8 @@
 #include "dialog/maestrodrawingareadialog.h"
 #include "widget/devicecontrolwidget.h"
 #include "widget/animationcontrolwidget.h"
+#include "widget/sectioncontrolwidget.h"
+#include "widget/showcontrolwidget.h"
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -40,14 +42,13 @@ namespace PixelMaestroStudio {
 	class DeviceControlWidget;
 	class MaestroController;
 	class MaestroDrawingAreaDialog;
+	class SectionControlWidget;
 	class ShowController;
+	class ShowControlWidget;
 	class MaestroControlWidget : public QWidget {
 		Q_OBJECT
 
 		public:
-			/// The Section currently being controlled.
-			Section* active_section_ = nullptr;
-
 			/**
 			 * Sets whether we're in the middle of loading a Cue.
 			 * Used to flag whether or not to update the total Cue size in DeviceControlWidget.
@@ -55,10 +56,10 @@ namespace PixelMaestroStudio {
 			bool loading_cue_ = false;
 
 			/// The controller for managing Palettes.
+			/// TODO: Move to MaestroController (since Palettes are Maestro-wide)
 			PaletteController palette_controller_;
 
 			// Cue components
-			CueInterpreter cue_interpreter_;
 			CueController* cue_controller_ = nullptr;
 			AnimationCueHandler* animation_handler = nullptr;
 			CanvasCueHandler* canvas_handler = nullptr;
@@ -66,19 +67,20 @@ namespace PixelMaestroStudio {
 			SectionCueHandler* section_handler = nullptr;
 			ShowCueHandler* show_handler = nullptr;
 
+			// Control subwidgets
+			QSharedPointer<AnimationControlWidget> animation_control_widget_;
+			QSharedPointer<DeviceControlWidget> device_control_widget_;
+			QSharedPointer<SectionControlWidget> section_control_widget_;
+			QSharedPointer<ShowControlWidget> show_control_widget_;
+
 			explicit MaestroControlWidget(QWidget* parent);
 			~MaestroControlWidget();
 			void edit_palettes(QString palette);
-			void enable_show_edit_mode(bool enable);
-			Section* get_active_section();
 			uint8_t get_canvas_color_index() const;
 			bool get_canvas_painting_enabled();
-			uint8_t get_layer_index();
-			uint8_t get_layer_index(Section* section);
 			MaestroController* get_maestro_controller();
-			uint8_t get_section_index();
-			uint8_t get_section_index(Section* section);
 			void load_cuefile(QByteArray byte_array);
+			void refresh();
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_active_section(Section* section);
@@ -103,41 +105,16 @@ namespace PixelMaestroStudio {
 			/// Separate Maestro DrawingArea
 			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
 
-			// Extra control widgets
-			QSharedPointer<AnimationControlWidget> animation_control_widget_;
-			QSharedPointer<DeviceControlWidget> device_control_widget_;
-
-			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
-			QVector<QVector<uint8_t>> event_history_;
-
-			/// Locale for formatting numbers (specifically the program runtime).
-			QLocale locale_ = QLocale::system();
-
 			/// MaestroController that this widget is controlling.
 			MaestroController* maestro_controller_ = nullptr;
-
-			/// Controller for managing Shows.
-			ShowController* show_controller_ = nullptr;
 
 			/// Updates the Maestro time in the Show tab.
 			QTimer show_timer_;
 
-			/**
-			 * Prevents actions from affecting the Maestro.
-			 * Used when customizing Shows.
-			 */
-			bool show_mode_enabled_ = false;
-
-			uint8_t get_num_layers(Section* section);
-			void add_cue_to_history(uint8_t* cue);
 			void initialize();
 			void initialize_palettes();
-			void on_section_resize(uint16_t x, uint16_t y);
-			void populate_layer_combobox();
 			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper);
 			void set_canvas_controls_enabled(bool enabled);
-			void set_offset();
-			void set_show_controls_enabled(bool enabled);
 
 			// Canvas control handling methods
 			void set_circle_controls_enabled(bool enabled);
@@ -146,43 +123,19 @@ namespace PixelMaestroStudio {
 			void set_rect_controls_enabled(bool enabled);
 			void set_text_controls_enabled(bool enabled);
 			void set_triangle_controls_enabled(bool enabled);
-
 			void set_canvas_frame_interval();
-			void set_scroll();
-			void set_layer_controls_enabled(bool enabled);
 
 		private slots:
-			void on_columnsSpinBox_editingFinished();
-			void on_mix_modeComboBox_currentIndexChanged(int index);
-			void on_rowsSpinBox_editingFinished();
-			void on_enableShowCheckBox_toggled(bool checked);
-			void on_layerComboBox_currentIndexChanged(int index);
-			void on_sectionComboBox_currentIndexChanged(int index);
-			void on_layerSpinBox_editingFinished();
-			void on_offsetXSpinBox_editingFinished();
-			void on_offsetYSpinBox_editingFinished();
-			void on_toggleShowModeCheckBox_clicked(bool checked);
-			void on_addEventButton_clicked();
 			void on_frameCountSpinBox_editingFinished();
 			void on_currentFrameSpinBox_editingFinished();
 			void on_frameIntervalSpinBox_editingFinished();
 			void on_loadImageButton_clicked();
 			void on_clearButton_clicked();
 			void on_drawButton_clicked();
-			void on_scrollXSpinBox_editingFinished();
-			void on_scrollYSpinBox_editingFinished();
-			void on_removeEventButton_clicked();
-			void on_showTimingMethodComboBox_currentIndexChanged(int index);
-			void on_loopCheckBox_toggled(bool checked);
-
-			void update_maestro_last_time();
 
 			void on_canvas_color_clicked();
-			void on_showPauseButton_clicked();
 			void on_canvasEditPaletteButton_clicked();
 			void on_canvasPaletteComboBox_currentIndexChanged(int index);
-			void on_moveEventUpButton_clicked();
-			void on_moveEventDownButton_clicked();
 			void on_circleToolButton_toggled(bool checked);
 			void on_lineToolButton_toggled(bool checked);
 			void on_triangleToolButton_toggled(bool checked);
@@ -192,9 +145,7 @@ namespace PixelMaestroStudio {
 			void on_canvasPlaybackNextToolButton_clicked();
 			void on_canvasPlaybackBackToolButton_clicked();
 			void on_paintToolButton_toggled(bool checked);
-			void on_alphaSpinBox_editingFinished();
 			void on_frameIntervalSlider_valueChanged(int value);
-			void on_resyncMaestroButton_clicked();
 			void on_canvasEnableCheckBox_toggled(bool checked);
 	};
 }

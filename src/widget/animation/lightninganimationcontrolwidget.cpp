@@ -17,14 +17,37 @@ namespace PixelMaestroStudio {
 	}
 
 	void LightningAnimationControlWidget::on_forkChanceSpinBox_valueChanged(int arg1) {
-		maestro_control_widget_->run_cue(maestro_control_widget_->animation_handler->set_lightning_options(maestro_control_widget_->get_section_index(), maestro_control_widget_->get_layer_index(), ui->boltCountSpinBox->value(), ui->driftSpinBox->value(), (uint8_t)arg1));
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->animation_handler->set_lightning_options(
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
+				ui->boltCountSpinBox->value(),
+				ui->driftSpinBox->value(),
+				(uint8_t)arg1)
+			);
 	}
 
 	void LightningAnimationControlWidget::on_driftSpinBox_valueChanged(int arg1) {
-		maestro_control_widget_->run_cue(maestro_control_widget_->animation_handler->set_lightning_options(maestro_control_widget_->get_section_index(), maestro_control_widget_->get_layer_index(), ui->boltCountSpinBox->value(), arg1, ui->forkChanceSpinBox->value()));
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->animation_handler->set_lightning_options(
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
+				ui->boltCountSpinBox->value(),
+				arg1,
+				ui->forkChanceSpinBox->value()
+			)
+		);
 	}
 
 	void LightningAnimationControlWidget::on_boltCountSpinBox_valueChanged(int arg1) {
-		maestro_control_widget_->run_cue(maestro_control_widget_->animation_handler->set_lightning_options(maestro_control_widget_->get_section_index(), maestro_control_widget_->get_layer_index(), arg1, ui->driftSpinBox->value(), ui->forkChanceSpinBox->value()));
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->animation_handler->set_lightning_options(
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
+				arg1,
+				ui->driftSpinBox->value(),
+				ui->forkChanceSpinBox->value()
+			)
+		);
 	}
 }

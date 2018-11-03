@@ -16,6 +16,12 @@ namespace PixelMaestroStudio {
 	}
 
 	void SparkleAnimationControlWidget::on_thresholdSpinBox_valueChanged(int arg1) {
-		maestro_control_->run_cue(maestro_control_->animation_handler->set_sparkle_options(maestro_control_->get_section_index(), maestro_control_->get_layer_index(), arg1));
+		maestro_control_->run_cue(
+			maestro_control_->animation_handler->set_sparkle_options(
+				maestro_control_->section_control_widget_->get_section_index(),
+				maestro_control_->section_control_widget_->get_layer_index(),
+				arg1
+			)
+		);
 	}
 }

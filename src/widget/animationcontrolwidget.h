@@ -18,6 +18,7 @@ namespace PixelMaestroStudio {
 			~AnimationControlWidget();
 			MaestroControlWidget* maestro_control_widget = nullptr;
 
+			void initialize();
 			void refresh();
 			void refresh_palettes();
 
@@ -36,7 +37,6 @@ namespace PixelMaestroStudio {
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			Ui::AnimationControlWidget *ui;
 
-			void initialize();
 			void set_advanced_controls(Animation* animation);
 			void set_animation_timer();
 			void set_controls_enabled(bool);

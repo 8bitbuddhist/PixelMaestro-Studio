@@ -40,8 +40,23 @@ namespace PixelMaestroStudio {
 
 			static void copy_to_canvas(Canvas* canvas, uint8_t** source, uint16_t target_x, uint16_t target_y, MaestroControlWidget* maestro_control) {
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-					maestro_control->run_cue(maestro_control->canvas_handler->set_current_frame_index(maestro_control->get_section_index(), maestro_control->get_layer_index(), frame));
-					maestro_control->run_cue(maestro_control->canvas_handler->draw_frame(maestro_control->get_section_index(), maestro_control->get_layer_index(), target_x, target_y, source[frame]));
+					maestro_control->run_cue(
+						maestro_control->canvas_handler->set_current_frame_index(
+							maestro_control->section_control_widget_->get_section_index(),
+							maestro_control->section_control_widget_->get_layer_index(),
+							frame
+						)
+					);
+
+					maestro_control->run_cue(
+						maestro_control->canvas_handler->draw_frame(
+							maestro_control->section_control_widget_->get_section_index(),
+							maestro_control->section_control_widget_->get_layer_index(),
+							target_x,
+							target_y,
+							source[frame]
+						)
+					);
 				}
 			}
 			static void load_image(QString filename, Canvas* canvas, MaestroControlWidget* maestro_control = nullptr);

@@ -17,10 +17,23 @@ namespace PixelMaestroStudio {
 	}
 
 	void PlasmaAnimationControlWidget::on_resolutionDoubleSpinBox_valueChanged(double arg1) {
-		maestro_control_->run_cue(maestro_control_->animation_handler->set_plasma_options(maestro_control_->get_section_index(), maestro_control_->get_layer_index(), ui->sizeDoubleSpinBox->value(), arg1));
+		maestro_control_->run_cue(
+			maestro_control_->animation_handler->set_plasma_options(
+				maestro_control_->section_control_widget_->get_section_index(),
+				maestro_control_->section_control_widget_->get_layer_index(),
+				ui->sizeDoubleSpinBox->value(), arg1
+			)
+		);
 	}
 
 	void PlasmaAnimationControlWidget::on_sizeDoubleSpinBox_valueChanged(double arg1) {
-		maestro_control_->run_cue(maestro_control_->animation_handler->set_plasma_options(maestro_control_->get_section_index(), maestro_control_->get_layer_index(), arg1, ui->resolutionDoubleSpinBox->value()));
+		maestro_control_->run_cue(
+			maestro_control_->animation_handler->set_plasma_options(
+				maestro_control_->section_control_widget_->get_section_index(),
+				maestro_control_->section_control_widget_->get_layer_index(),
+				arg1,
+				ui->resolutionDoubleSpinBox->value()
+			)
+		);
 	}
 }

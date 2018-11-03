@@ -20,8 +20,8 @@ namespace PixelMaestroStudio {
 	void WaveAnimationControlWidget::on_mirrorCheckBox_stateChanged(int arg1) {
 		maestro_control_widget_->run_cue(
 			maestro_control_widget_->animation_handler->set_wave_options(
-				maestro_control_widget_->get_section_index(),
-				maestro_control_widget_->get_layer_index(),
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
 				(arg1 > 0),
 				ui->skewSpinBox->value()
 			)
@@ -31,8 +31,8 @@ namespace PixelMaestroStudio {
 	void WaveAnimationControlWidget::on_skewSpinBox_editingFinished() {
 		maestro_control_widget_->run_cue(
 			maestro_control_widget_->animation_handler->set_wave_options(
-				maestro_control_widget_->get_section_index(),
-				maestro_control_widget_->get_layer_index(),
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
 				ui->mirrorCheckBox->isChecked(),
 				ui->skewSpinBox->value())
 		);

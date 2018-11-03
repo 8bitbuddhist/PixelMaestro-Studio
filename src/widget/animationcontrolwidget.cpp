@@ -10,13 +10,10 @@
 #include "widget/animation/sparkleanimationcontrolwidget.h"
 #include "widget/animation/waveanimationcontrolwidget.h"
 
-// FIXME: Finish this
 namespace PixelMaestroStudio {
 	AnimationControlWidget::AnimationControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::AnimationControlWidget) {
 		ui->setupUi(this);
 		this->maestro_control_widget = static_cast<MaestroControlWidget*>(parent);
-
-		initialize();
 	}
 
 	void AnimationControlWidget::initialize() {
@@ -33,15 +30,15 @@ namespace PixelMaestroStudio {
 		if (index == 0) {
 			maestro_control_widget->run_cue(
 				maestro_control_widget->section_handler->remove_animation(
-					maestro_control_widget->get_section_index(),
-					maestro_control_widget->get_layer_index(),
+					maestro_control_widget->section_control_widget_->get_section_index(),
+					maestro_control_widget->section_control_widget_->get_layer_index(),
 					true
 				)
 			);
 		}
 		else {
 			// If the Section has an active Animation, update it
-			Animation* animation = maestro_control_widget->get_active_section()->get_animation();
+			Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
 			if (animation != nullptr) {
 				// First, check to see if the Animation types match. If so, do nothing
 				if (animation->get_type() == (AnimationType)(index - 1)) {
@@ -51,8 +48,8 @@ namespace PixelMaestroStudio {
 				// Otherwise, replace the Animation, preserving options
 				maestro_control_widget->run_cue(
 					maestro_control_widget->section_handler->set_animation(
-						maestro_control_widget->get_section_index(),
-						maestro_control_widget->get_layer_index(),
+						maestro_control_widget->section_control_widget_->get_section_index(),
+						maestro_control_widget->section_control_widget_->get_layer_index(),
 						(AnimationType)(index - 1),
 						true
 					)
@@ -61,8 +58,8 @@ namespace PixelMaestroStudio {
 			else {	// No prior Aniamtion: set the new Animation and apply settings
 				maestro_control_widget->run_cue(
 					maestro_control_widget->section_handler->set_animation(
-						maestro_control_widget->get_section_index(),
-						maestro_control_widget->get_layer_index(),
+						maestro_control_widget->section_control_widget_->get_section_index(),
+						maestro_control_widget->section_control_widget_->get_layer_index(),
 						(AnimationType)(index - 1),
 						false
 					)
@@ -76,7 +73,7 @@ namespace PixelMaestroStudio {
 				on_delayIntervalSpinBox_editingFinished();
 			}
 
-			set_advanced_controls(maestro_control_widget->active_section_->get_animation());
+			set_advanced_controls(maestro_control_widget->section_control_widget_->get_active_section()->get_animation());
 		}
 
 		set_controls_enabled(index > 0);
@@ -111,8 +108,8 @@ namespace PixelMaestroStudio {
 	void AnimationControlWidget::on_fadeCheckBox_toggled(bool checked) {
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_fade(
-				maestro_control_widget->get_section_index(),
-				maestro_control_widget->get_layer_index(),
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
 				checked
 			)
 		);
@@ -124,12 +121,12 @@ namespace PixelMaestroStudio {
 	 */
 	void AnimationControlWidget::on_orientationComboBox_currentIndexChanged(int index) {
 		// Check to see if the new orientation is different from the old one
-		Animation* animation = maestro_control_widget->get_active_section()->get_animation();
+		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
 		if (animation && animation->get_orientation() != (Animation::Orientation)index) {
 			maestro_control_widget->run_cue(
 				maestro_control_widget->animation_handler->set_orientation(
-					maestro_control_widget->get_section_index(),
-					maestro_control_widget->get_layer_index(),
+					maestro_control_widget->section_control_widget_->get_section_index(),
+					maestro_control_widget->section_control_widget_->get_layer_index(),
 					(Animation::Orientation)index
 				)
 			);
@@ -144,8 +141,8 @@ namespace PixelMaestroStudio {
 		PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget->palette_controller_.get_palette(index);
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_palette(
-				maestro_control_widget->get_section_index(),
-				maestro_control_widget->get_layer_index(),
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
 				&palette_wrapper->palette
 			)
 		);
@@ -162,8 +159,8 @@ namespace PixelMaestroStudio {
 	void AnimationControlWidget::on_reverseCheckBox_toggled(bool checked) {
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_reverse(
-				maestro_control_widget->get_section_index(),
-				maestro_control_widget->get_layer_index(),
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
 				checked
 			)
 		);
@@ -173,7 +170,7 @@ namespace PixelMaestroStudio {
 	 * Updates the UI based on the active Section.
 	 */
 	void AnimationControlWidget::refresh() {
-		Animation* animation = maestro_control_widget->get_active_section()->get_animation();
+		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
 		if (animation == nullptr) {
 			ui->typeComboBox->setCurrentIndex(0);
 			on_typeComboBox_currentIndexChanged(0);
@@ -210,8 +207,8 @@ namespace PixelMaestroStudio {
 			ui->paletteComboBox->blockSignals(false);
 		}
 		else {	// Palette not found
-			QString name = "Section " + QString::number(maestro_control_widget->get_section_index()) +
-						   " Layer " + QString::number(maestro_control_widget->get_layer_index()) +
+			QString name = "Section " + QString::number(maestro_control_widget->section_control_widget_->get_section_index()) +
+						   " Layer " + QString::number(maestro_control_widget->section_control_widget_->get_layer_index()) +
 						   " Animation";
 			maestro_control_widget->palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->paletteComboBox->blockSignals(true);
@@ -292,7 +289,7 @@ namespace PixelMaestroStudio {
 	 * Updates the Animation's Timer.
 	 */
 	void AnimationControlWidget::set_animation_timer() {
-		Animation* animation = maestro_control_widget->get_active_section()->get_animation();
+		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
 
 		if (animation == nullptr) return;
 
@@ -303,8 +300,8 @@ namespace PixelMaestroStudio {
 		if (interval != timer->get_interval() || delay != timer->get_delay()) {
 			maestro_control_widget->run_cue(
 				maestro_control_widget->animation_handler->set_timer(
-					maestro_control_widget->get_section_index(),
-					maestro_control_widget->get_layer_index(),
+					maestro_control_widget->section_control_widget_->get_section_index(),
+					maestro_control_widget->section_control_widget_->get_layer_index(),
 					interval,
 					delay
 				)

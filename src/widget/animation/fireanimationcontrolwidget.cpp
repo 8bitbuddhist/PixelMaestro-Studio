@@ -18,6 +18,12 @@ namespace PixelMaestroStudio {
 	}
 
 	void FireAnimationControlWidget::on_multiplierSpinBox_valueChanged(int arg1) {
-		maestro_control_widget_->run_cue(maestro_control_widget_->animation_handler->set_fire_options(maestro_control_widget_->get_section_index(), maestro_control_widget_->get_layer_index(), arg1));
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->animation_handler->set_fire_options(
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index(),
+				arg1
+			)
+		);
 	}
 }

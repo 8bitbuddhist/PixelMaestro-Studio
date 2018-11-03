@@ -70,7 +70,9 @@ SOURCES += main.cpp\
     dialog/paletteeditdialog.cpp \
     model/serialdevice.cpp \
     utility/cueinterpreter.cpp \
-    widget/animationcontrolwidget.cpp
+    widget/animationcontrolwidget.cpp \
+    widget/showcontrolwidget.cpp \
+    widget/sectioncontrolwidget.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -131,7 +133,9 @@ HEADERS += \
     dialog/paletteeditdialog.h \
     model/serialdevice.h \
     utility/cueinterpreter.h \
-    widget/animationcontrolwidget.h
+    widget/animationcontrolwidget.h \
+    widget/showcontrolwidget.h \
+    widget/sectioncontrolwidget.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
@@ -147,7 +151,9 @@ FORMS	+= window/mainwindow.ui \
     widget/devicecontrolwidget.ui \
     dialog/cueinterpreterdialog.ui \
     dialog/paletteeditdialog.ui \
-    widget/animationcontrolwidget.ui
+    widget/animationcontrolwidget.ui \
+    widget/showcontrolwidget.ui \
+    widget/sectioncontrolwidget.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

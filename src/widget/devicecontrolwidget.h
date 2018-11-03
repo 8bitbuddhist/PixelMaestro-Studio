@@ -33,7 +33,7 @@ namespace PixelMaestroStudio {
 				uint8_t action;
 			};
 
-			explicit DeviceControlWidget(MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
+			explicit DeviceControlWidget(QWidget *parent = 0);
 			~DeviceControlWidget();
 			QByteArray* get_maestro_cue();
 			void block_cue(CueController::Handler handler, uint8_t action);
