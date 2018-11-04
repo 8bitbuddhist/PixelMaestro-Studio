@@ -364,14 +364,20 @@ namespace PixelMaestroStudio {
 
 		// If this is a Layer, get the MixMode and alpha
 		if (active_section_->get_parent_section() != nullptr) {
+			set_layer_controls_enabled(true);
+			Section::Layer* layer = active_section_->get_parent_section()->get_layer();
+
 			ui->mixModeComboBox->blockSignals(true);
 			ui->alphaSpinBox->blockSignals(true);
-			ui->mixModeComboBox->setCurrentIndex((uint8_t)active_section_->get_parent_section()->get_layer()->mix_mode);
-			ui->alphaSpinBox->setValue(active_section_->get_parent_section()->get_layer()->alpha);
+			ui->mixModeComboBox->setCurrentIndex((uint8_t)layer->mix_mode);
+			ui->alphaSpinBox->setValue(layer->alpha);
 			ui->alphaSpinBox->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
 			ui->alphaLabel->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
 			ui->mixModeComboBox->blockSignals(false);
 			ui->alphaSpinBox->blockSignals(false);
+		}
+		else {
+			set_layer_controls_enabled(false);
 		}
 	}
 
@@ -469,8 +475,6 @@ namespace PixelMaestroStudio {
 		Point new_dimensions(ui->gridSizeXSpinBox->value(), ui->gridSizeYSpinBox->value());
 		if (new_dimensions != *active_section_->get_dimensions()) {
 			/*
-			 * FIXME: Oh lawdy...keep this or move to CanvasControlWidget? Will probably need to keep it.
-			 *
 			 * Check for a Canvas.
 			 * The old Canvas gets deleted on resize.
 			 * If one is set, copy its contents to a temporary buffer, then copy it back once the new Canvas is created.

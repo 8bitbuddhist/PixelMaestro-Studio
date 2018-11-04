@@ -89,13 +89,13 @@ namespace PixelMaestroStudio {
 				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
 				if (widget != nullptr) {
 					// Check to see if paint mode is enabled.
-					if (widget->get_canvas_painting_enabled()) {
+					if (widget->canvas_control_widget_->get_painting_enabled()) {
 						if (event->buttons() == Qt::LeftButton) {
 							widget->run_cue(
 								widget->canvas_handler->draw_point(
 									widget->section_control_widget_->get_section_index(),
 									widget->section_control_widget_->get_layer_index(),
-									widget->get_canvas_color_index(),
+									widget->canvas_control_widget_->get_selected_color_index(),
 									pixel.x,
 									pixel.y)
 							);
@@ -112,7 +112,7 @@ namespace PixelMaestroStudio {
 					}
 
 					// Set the cursor location in the MaestroControlWidget
-					widget->set_canvas_origin(&pixel);
+					widget->canvas_control_widget_->set_canvas_origin(&pixel);
 				}
 			}
 		}

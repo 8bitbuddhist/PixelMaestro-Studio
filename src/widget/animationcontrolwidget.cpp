@@ -239,8 +239,6 @@ namespace PixelMaestroStudio {
 
 		ui->paletteComboBox->setCurrentText(palette);
 		ui->paletteComboBox->blockSignals(false);
-
-		refresh();
 	}
 
 	/**
