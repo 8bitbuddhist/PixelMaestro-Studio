@@ -58,7 +58,6 @@ namespace PixelMaestroStudio {
 			bool loading_cue_ = false;
 
 			/// The controller for managing Palettes.
-			/// TODO: Move to MaestroController (since Palettes are Maestro-wide)
 			PaletteController palette_controller_;
 
 			// Cue components
@@ -81,7 +80,7 @@ namespace PixelMaestroStudio {
 			void edit_palettes(QString palette);
 			MaestroController* get_maestro_controller();
 			void load_cuefile(QByteArray byte_array);
-			void refresh();
+			void refresh_section_settings();
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_maestro_controller(MaestroController* maestro_controller);
@@ -94,8 +93,6 @@ namespace PixelMaestroStudio {
 
 			/// MaestroController that this widget is controlling.
 			MaestroController* maestro_controller_ = nullptr;
-
-			void initialize_palettes();
 	};
 }
 

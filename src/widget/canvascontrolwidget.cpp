@@ -27,7 +27,7 @@ namespace PixelMaestroStudio {
 			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
 			if (watched == ui->canvasScrollArea && maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
 				if (key_event->key() == Qt::Key_Left) {
-					on_playbackBackToolButton_clicked();
+					on_playbackPreviousToolButton_clicked();
 					return true;
 				}
 				else if (key_event->key() == Qt::Key_Right) {
@@ -140,7 +140,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 
-		// TODO: For animated images, this doesn't reset the frame count
+		// Reset the current frame and frame count for animated images
+		ui->frameCountSpinBox->setValue(1);
+		ui->currentFrameSpinBox->setValue(0);
+		on_currentFrameSpinBox_editingFinished();
 	}
 
 	/**
@@ -258,12 +261,7 @@ namespace PixelMaestroStudio {
 
 	/// Opens the Palette Editor from the Canvas tab.
 	void CanvasControlWidget::on_editPaletteButton_clicked() {
-		QString palette_name = ui->paletteComboBox->currentText();
-
-		PaletteControlWidget palette_control(&maestro_control_widget_->palette_controller_, palette_name);
-		palette_control.exec();
-		refresh_palettes();
-		ui->paletteComboBox->setCurrentText(palette_name);
+		maestro_control_widget_->edit_palettes(ui->paletteComboBox->currentText());
 	}
 
 	/**
@@ -292,8 +290,9 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Display/hide controls as necessary
+		// Display/hide controls as necessary, and if the Canvas is animated, pause by default
 		set_controls_enabled(checked);
+		on_playbackStartStopToolButton_toggled(checked);
 		if (checked) {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->section_handler->set_canvas(
@@ -308,11 +307,6 @@ namespace PixelMaestroStudio {
 
 			// Select a palette
 			on_paletteComboBox_currentIndexChanged(0);
-		}
-		else {
-			// Disable Canvas playback
-			ui->playbackStartStopToolButton->setChecked(false);
-			on_playbackStartStopToolButton_toggled(false);
 		}
 	}
 
@@ -451,14 +445,32 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Moves the Canvas animation back a frame.
+	 */
+	void CanvasControlWidget::on_playbackPreviousToolButton_clicked() {
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->canvas_handler->previous_frame(
+				maestro_control_widget_->section_control_widget_->get_section_index(),
+				maestro_control_widget_->section_control_widget_->get_layer_index()
+			)
+		);
+
+		ui->currentFrameSpinBox->blockSignals(true);
+		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->blockSignals(false);
+	}
+
+	/**
 	 * Toggles Canvas animation playback.
-	 * @param checked If true, run the Canvas animation.
+	 * @param checked If true, pause the Canvas animation.
 	 */
 	void CanvasControlWidget::on_playbackStartStopToolButton_toggled(bool checked) {
 		if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() == nullptr) return;
 
-		// Enables/disable the 'current frame' control
+		// Enable the current frame box and frame step buttons while the animation is paused
 		ui->currentFrameSpinBox->setEnabled(checked);
+		ui->playbackNextToolButton->setEnabled(checked);
+		ui->playbackPreviousToolButton->setEnabled(checked);
 
 		if (checked) {
 			maestro_control_widget_->run_cue(
@@ -498,22 +510,6 @@ namespace PixelMaestroStudio {
 		);
 
 		populate_palette_canvas_color_selection(palette_wrapper);
-	}
-
-	/**
-	 * Moves the Canvas animation back a frame.
-	 */
-	void CanvasControlWidget::on_playbackBackToolButton_clicked() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->previous_frame(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index()
-			)
-		);
-
-		ui->currentFrameSpinBox->blockSignals(true);
-		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_current_frame_index());
-		ui->currentFrameSpinBox->blockSignals(false);
 	}
 
 	/**

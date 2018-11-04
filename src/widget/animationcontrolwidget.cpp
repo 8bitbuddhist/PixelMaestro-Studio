@@ -81,11 +81,35 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Sets the duration of each Animation cycle.
+	 * @param value Cycle duration (in ms).
+	 */
+	void AnimationControlWidget::on_cycleIntervalSlider_valueChanged(int value) {
+		ui->cycleIntervalSpinBox->blockSignals(true);
+		ui->cycleIntervalSpinBox->setValue(value);
+		ui->cycleIntervalSpinBox->blockSignals(false);
+
+		set_animation_timer();
+	}
+
+	/**
+	 * Sets the duration of each Animation cycle.
 	 */
 	void AnimationControlWidget::on_cycleIntervalSpinBox_editingFinished() {
 		ui->cycleIntervalSlider->blockSignals(true);
 		ui->cycleIntervalSlider->setValue(ui->cycleIntervalSpinBox->value());
 		ui->cycleIntervalSlider->blockSignals(false);
+
+		set_animation_timer();
+	}
+
+	/**
+	 * Sets the time between the start of each Animation cycle.
+	 * @param value Delay between cycles (in ms).
+	 */
+	void AnimationControlWidget::on_delayIntervalSlider_valueChanged(int value) {
+		ui->delayIntervalSpinBox->blockSignals(true);
+		ui->delayIntervalSpinBox->setValue(value);
+		ui->delayIntervalSpinBox->blockSignals(false);
 
 		set_animation_timer();
 	}
@@ -171,9 +195,12 @@ namespace PixelMaestroStudio {
 	 */
 	void AnimationControlWidget::refresh() {
 		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
+
+		// If there is no Animation, select 'None' and exit.
 		if (animation == nullptr) {
+			ui->typeComboBox->blockSignals(true);
 			ui->typeComboBox->setCurrentIndex(0);
-			on_typeComboBox_currentIndexChanged(0);
+			ui->typeComboBox->blockSignals(false);
 			return;
 		}
 

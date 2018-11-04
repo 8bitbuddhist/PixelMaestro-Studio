@@ -41,13 +41,18 @@ namespace PixelMaestroStudio {
 		show_control_widget_ = QSharedPointer<ShowControlWidget>(new ShowControlWidget(this));
 		ui->showTab->findChild<QLayout*>("showLayout")->addWidget(show_control_widget_.data());
 
-		initialize_palettes();
+		// Initialize Palette-containing subwidgets
+		animation_control_widget_->refresh_palettes();
+		canvas_control_widget_->refresh_palettes();
 	}
 
 	void MaestroControlWidget::edit_palettes(QString palette) {
 		PaletteControlWidget palette_control(&palette_controller_, palette);
 		palette_control.exec();
-		initialize_palettes();
+
+		// Update Palette-containing subwidgets
+		animation_control_widget_->refresh_palettes();
+		canvas_control_widget_->refresh_palettes();
 	}
 
 	/**
@@ -56,12 +61,6 @@ namespace PixelMaestroStudio {
 	 */
 	MaestroController* MaestroControlWidget::get_maestro_controller() {
 		return maestro_controller_;
-	}
-
-	/// Reinitializes Palettes from the Palette Dialog.
-	void MaestroControlWidget::initialize_palettes() {
-		animation_control_widget_->refresh_palettes();
-		canvas_control_widget_->refresh_palettes();
 	}
 
 	/**
@@ -82,7 +81,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Updates the UI to reflect a Section change.
 	 */
-	void MaestroControlWidget::refresh() {
+	void MaestroControlWidget::refresh_section_settings() {
 		animation_control_widget_->refresh();
 		canvas_control_widget_->refresh();
 		section_control_widget_->refresh();
@@ -92,13 +91,8 @@ namespace PixelMaestroStudio {
 	 * Updates the UI to reflect the Maestro's current settings.
 	 */
 	void MaestroControlWidget::refresh_maestro_settings() {
-		refresh();
 		show_control_widget_->refresh();
-
-		// Recalculate the Maestro Cuefile
-		if (device_control_widget_ != nullptr) {
-			device_control_widget_->update_cuefile_size();
-		}
+		device_control_widget_->update_cuefile_size();
 	}
 
 	/**

@@ -15,7 +15,7 @@ namespace PixelMaestroStudio {
 			show_ = maestro_controller->get_maestro()->get_show();
 		}
 
-		events_.clear();
+		event_queue_.clear();
 	}
 
 	/**
@@ -26,10 +26,10 @@ namespace PixelMaestroStudio {
 	 */
 	Event* ShowController::add_event(uint32_t time, uint8_t *cue) {
 		if (cue != nullptr) {
-			events_.push_back(Event(time, cue));
+			event_queue_.push_back(Event(time, cue));
 		}
 
-		return &events_[events_.size() - 1];
+		return &event_queue_[event_queue_.size() - 1];
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace PixelMaestroStudio {
 	 * @return Event list.
 	 */
 	QVector<Event>* ShowController::get_events() {
-		return &events_;
+		return &event_queue_;
 	}
 
 	/**
@@ -46,7 +46,7 @@ namespace PixelMaestroStudio {
 	 * @param to Event's final location.
 	 */
 	void ShowController::move(uint16_t from, uint16_t to) {
-		events_.move(from, to);
+		event_queue_.move(from, to);
 	}
 
 	/**
@@ -54,6 +54,6 @@ namespace PixelMaestroStudio {
 	 * @param index Event index.
 	 */
 	void ShowController::remove_event(uint16_t index) {
-		events_.erase(events_.begin() + index);
+		event_queue_.erase(event_queue_.begin() + index);
 	}
 }

@@ -5,6 +5,7 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
+// FIXME: Show controls are all effed up
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);

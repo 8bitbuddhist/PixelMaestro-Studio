@@ -14,56 +14,10 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
-    <widget class="QGroupBox" name="deviceSettingsGroupBox">
-     <property name="title">
-      <string>Device Settings</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="8" column="1">
-       <widget class="QProgressBar" name="uploadProgressBar">
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="invertedAppearance">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="capacityLineEdit"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Device capacity</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="realTimeCheckBox">
-        <property name="toolTip">
-         <string>Updates the device as soon as the action is performed.</string>
-        </property>
-        <property name="text">
-         <string>Live updates</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="sendPushButton">
-        <property name="text">
-         <string>Upload Cuefile</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0" rowspan="2">
+   <item row="0" column="0" rowspan="3" alignment="Qt::AlignLeft|Qt::AlignTop">
     <widget class="QGroupBox" name="deviceListGroupBox">
      <property name="title">
-      <string>Devices</string>
+      <string>Device List</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="0">
@@ -99,30 +53,80 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Cuefile</string>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Cuefile size</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1" rowspan="3" alignment="Qt::AlignLeft">
+    <widget class="QGroupBox" name="deviceSettingsGroupBox">
+     <property name="title">
+      <string>Device Management</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="configSizeLineEdit">
         <property name="readOnly">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="11" column="1">
+       <widget class="QProgressBar" name="uploadProgressBar">
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="capacityLineEdit"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Device capacity</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QPushButton" name="sendPushButton">
+        <property name="text">
+         <string>Upload Cuefile</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Cuefile size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
        <widget class="QPushButton" name="interpretCuePushButton">
         <property name="text">
          <string>Preview Cuefile</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="realTimeCheckBox">
+        <property name="toolTip">
+         <string>Updates the device as soon as the action is performed.</string>
+        </property>
+        <property name="text">
+         <string>Live updates</string>
         </property>
        </widget>
       </item>

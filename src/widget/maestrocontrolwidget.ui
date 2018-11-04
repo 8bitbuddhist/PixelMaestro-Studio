@@ -44,7 +44,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -56,31 +56,96 @@
       <attribute name="title">
        <string>Section</string>
       </attribute>
-      <layout class="QGridLayout" name="sectionLayout"/>
+      <layout class="QGridLayout" name="sectionLayout">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
+      </layout>
      </widget>
      <widget class="QWidget" name="animationTab">
       <attribute name="title">
        <string>Animation</string>
       </attribute>
-      <layout class="QGridLayout" name="animationLayout"/>
+      <layout class="QGridLayout" name="animationLayout">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
+      </layout>
      </widget>
      <widget class="QWidget" name="canvasTab">
       <attribute name="title">
        <string>Canvas</string>
       </attribute>
-      <layout class="QGridLayout" name="canvasLayout"/>
+      <layout class="QGridLayout" name="canvasLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
      <widget class="QWidget" name="showTab">
       <attribute name="title">
        <string>Show</string>
       </attribute>
-      <layout class="QGridLayout" name="showLayout"/>
+      <layout class="QGridLayout" name="showLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
      <widget class="QWidget" name="deviceTab">
       <attribute name="title">
        <string>Devices</string>
       </attribute>
-      <layout class="QGridLayout" name="deviceLayout"/>
+      <layout class="QGridLayout" name="deviceLayout">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
+      </layout>
      </widget>
     </widget>
    </item>

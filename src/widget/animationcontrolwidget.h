@@ -33,6 +33,10 @@ namespace PixelMaestroStudio {
 
 			void on_paletteEditButton_clicked();
 
+			void on_cycleIntervalSlider_valueChanged(int value);
+
+			void on_delayIntervalSlider_valueChanged(int value);
+
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			Ui::AnimationControlWidget *ui;

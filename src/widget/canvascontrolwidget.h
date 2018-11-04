@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 
 			void on_editPaletteButton_clicked();
 
-			void on_playbackBackToolButton_clicked();
+			void on_playbackPreviousToolButton_clicked();
 
 			void on_playbackStartStopToolButton_toggled(bool checked);
 

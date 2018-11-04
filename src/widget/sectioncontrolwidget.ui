@@ -14,130 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="sectionLayout">
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="sectionSettingsGroupBox">
-     <property name="title">
-      <string>Section Settings</string>
-     </property>
-     <layout class="QGridLayout" name="sectionSettingsLayout">
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="layerSpinBox">
-        <property name="toolTip">
-         <string>Sets the number of Layers belonging to this Section</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="maximum">
-         <number>255</number>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="activeSectionLabel">
-        <property name="text">
-         <string>Active Section</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="activeSectionComboBox">
-        <property name="toolTip">
-         <string>The currently selected Section</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="layerLabel">
-        <property name="text">
-         <string>Layers</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="layerGroupBox">
-     <property name="title">
-      <string>Layer Settings</string>
-     </property>
-     <layout class="QGridLayout" name="layerLayout">
-      <item row="1" column="1">
-       <widget class="QComboBox" name="mixModeComboBox">
-        <property name="toolTip">
-         <string>The method used to mix this Layer with its base Section</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Alpha</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Multiply</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Overlay</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="activeLayerComboBox">
-        <property name="toolTip">
-         <string>The currently selected Layer</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="activeLayerLabel">
-        <property name="text">
-         <string>Active Layer</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="mixModeLabel">
-        <property name="text">
-         <string>Mix Mode</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="alphaLabel">
-        <property name="text">
-         <string>Alpha</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="alphaSpinBox">
-        <property name="toolTip">
-         <string>The Layer's transparency</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="maximum">
-         <number>255</number>
-        </property>
-        <property name="singleStep">
-         <number>5</number>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="2">
+   <item row="0" column="3" alignment="Qt::AlignTop">
     <widget class="QGroupBox" name="gridSettingsGroupBox">
      <property name="title">
       <string>Grid Settings</string>
@@ -269,6 +146,129 @@
         </property>
         <property name="value">
          <number>10</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="sectionSettingsGroupBox">
+     <property name="title">
+      <string>Section Settings</string>
+     </property>
+     <layout class="QGridLayout" name="sectionSettingsLayout">
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="layerSpinBox">
+        <property name="toolTip">
+         <string>Sets the number of Layers belonging to this Section</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="activeSectionLabel">
+        <property name="text">
+         <string>Active Section</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="activeSectionComboBox">
+        <property name="toolTip">
+         <string>The currently selected Section</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="layerLabel">
+        <property name="text">
+         <string>Layers</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="layerGroupBox">
+     <property name="title">
+      <string>Layer Settings</string>
+     </property>
+     <layout class="QGridLayout" name="layerLayout">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="mixModeComboBox">
+        <property name="toolTip">
+         <string>The method used to mix this Layer with its base Section</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Alpha</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Multiply</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Overlay</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="activeLayerComboBox">
+        <property name="toolTip">
+         <string>The currently selected Layer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="activeLayerLabel">
+        <property name="text">
+         <string>Active Layer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="mixModeLabel">
+        <property name="text">
+         <string>Mix Mode</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="alphaLabel">
+        <property name="text">
+         <string>Alpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="alphaSpinBox">
+        <property name="toolTip">
+         <string>The Layer's transparency</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
         </property>
        </widget>
       </item>

@@ -20,7 +20,7 @@ namespace PixelMaestroStudio {
 			~SparkleAnimationControlWidget();
 
 		private slots:
-			void on_thresholdSpinBox_valueChanged(int arg1);
+			void on_thresholdSpinBox_editingFinished();
 
 		private:
 			SparkleAnimation* animation_;

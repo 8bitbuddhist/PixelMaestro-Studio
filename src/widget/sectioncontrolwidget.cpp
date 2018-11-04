@@ -404,7 +404,7 @@ namespace PixelMaestroStudio {
 		if (section == nullptr) return;
 		active_section_ = section;
 
-		maestro_control_widget_->refresh();
+		maestro_control_widget_->refresh_section_settings();
 	}
 
 	/**

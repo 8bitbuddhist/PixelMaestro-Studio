@@ -4,6 +4,7 @@
 
 #include <QColorDialog>
 #include <QMessageBox>
+#include <QRandomGenerator>
 #include "paletteeditdialog.h"
 #include "ui_paletteeditdialog.h"
 #include "widget/palettecontrolwidget.h"
@@ -77,7 +78,12 @@ namespace PixelMaestroStudio {
 					Colors::generate_scaling_color_array(colors, &base_color_, &target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
 					break;
 				case PaletteController::PaletteType::Random:
-					Colors::generate_random_color_array(colors, num_colors);
+					QRandomGenerator* random = QRandomGenerator::global();
+					for (uint8_t i = 0; i < num_colors; i++) {
+						colors[i].r = random->generate() % 256;
+						colors[i].g = random->generate() % 256;
+						colors[i].b = random->generate() % 256;
+					}
 					break;
 			}
 

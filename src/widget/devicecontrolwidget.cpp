@@ -22,7 +22,7 @@ namespace PixelMaestroStudio {
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
 
 		// Disable device buttons by default
-		ui->deviceSettingsGroupBox->setEnabled(false);
+		set_device_controls_enabled(false);
 
 		// Add available serial devices to combo box
 		populate_serial_devices();
@@ -179,9 +179,8 @@ namespace PixelMaestroStudio {
 
 	void DeviceControlWidget::on_serialOutputListWidget_currentRowChanged(int currentRow) {
 		ui->disconnectPushButton->setEnabled(currentRow > -1);
-		ui->deviceSettingsGroupBox->setEnabled(currentRow > -1);
+		set_device_controls_enabled(currentRow > -1);
 		ui->uploadProgressBar->setValue(0);
-		ui->sendPushButton->setEnabled(true);
 
 		if (currentRow > -1) {
 			ui->capacityLineEdit->setText(QString::number(serial_devices_[currentRow].get_capacity()));
@@ -259,6 +258,13 @@ namespace PixelMaestroStudio {
 		settings.endArray();
 	}
 
+	void DeviceControlWidget::set_device_controls_enabled(bool enabled) {
+		ui->capacityLineEdit->setEnabled(enabled);
+		ui->uploadProgressBar->setEnabled(enabled);
+		ui->realTimeCheckBox->setEnabled(enabled);
+		ui->sendPushButton->setEnabled(enabled);
+	}
+
 	/**
 	 * Sets the state of the progress bar.
 	 * @param val Value to set the progress to.
@@ -297,9 +303,9 @@ namespace PixelMaestroStudio {
 		SerialWriteThread* thread = new SerialWriteThread(device,
 														  static_cast<const char*>(out),
 														  static_cast<uint16_t>(size));
-		connect(thread, &SerialWriteThread::finished, thread, &QObject::deleteLater);
+		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
-		if (progress) connect(thread, &SerialWriteThread::progress_changed, this, &DeviceControlWidget::set_progress_bar);
+		if (progress) connect(thread, SIGNAL(progress_changed(int)), this, SLOT(set_progress_bar(int)));
 		thread->start();
 	}
 

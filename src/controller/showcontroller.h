@@ -24,7 +24,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			CueInterpreter cue_interpreter_;
-			QVector<Event> events_;
+			QVector<Event> event_queue_;
 			Show* show_;
 
 	};
