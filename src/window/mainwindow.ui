@@ -885,49 +885,49 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Open_Animation_Editor"/>
-    <addaction name="actionOpen_Maestro"/>
-    <addaction name="action_Open"/>
-    <addaction name="action_Save"/>
-    <addaction name="action_Save_Maestro"/>
+    <addaction name="newAction"/>
+    <addaction name="openAction"/>
+    <addaction name="mergeAction"/>
+    <addaction name="saveAction"/>
+    <addaction name="saveAsAction"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
-    <addaction name="action_Exit"/>
+    <addaction name="exitAction"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="action_About"/>
-    <addaction name="action_Online_Help"/>
+    <addaction name="aboutAction"/>
+    <addaction name="helpAction"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="action_Preferences"/>
+    <addaction name="preferencesAction"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
    <addaction name="menu_Help"/>
   </widget>
-  <action name="action_Online_Help">
+  <action name="helpAction">
    <property name="text">
     <string>&amp;Help</string>
    </property>
   </action>
-  <action name="action_About">
+  <action name="aboutAction">
    <property name="text">
     <string>&amp;About PixelMaestro</string>
    </property>
   </action>
-  <action name="action_Exit">
+  <action name="exitAction">
    <property name="text">
     <string>&amp;Exit</string>
    </property>
   </action>
-  <action name="action_Open_Animation_Editor">
+  <action name="newAction">
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -935,12 +935,12 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="action_Preferences">
+  <action name="preferencesAction">
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
   </action>
-  <action name="action_Save_Maestro">
+  <action name="saveAsAction">
    <property name="text">
     <string>Save &amp;As...</string>
    </property>
@@ -951,7 +951,7 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="actionOpen_Maestro">
+  <action name="openAction">
    <property name="text">
     <string>&amp;Open...</string>
    </property>
@@ -962,7 +962,7 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="action_Open">
+  <action name="mergeAction">
    <property name="text">
     <string>Open and &amp;Merge...</string>
    </property>
@@ -973,7 +973,7 @@
     <string>Ctrl+Shift+O</string>
    </property>
   </action>
-  <action name="action_Save">
+  <action name="saveAction">
    <property name="text">
     <string>&amp;Save...</string>
    </property>

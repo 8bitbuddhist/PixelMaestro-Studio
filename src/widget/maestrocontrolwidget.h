@@ -51,11 +51,6 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
-			/**
-			 * Sets whether we're in the middle of loading a Cue.
-			 * Used to flag whether or not to update the total Cue size in DeviceControlWidget.
-			 */
-			bool loading_cue_ = false;
 
 			/// The controller for managing Palettes.
 			PaletteController palette_controller_;

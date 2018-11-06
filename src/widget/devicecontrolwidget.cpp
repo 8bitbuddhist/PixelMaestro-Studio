@@ -279,18 +279,16 @@ namespace PixelMaestroStudio {
 	 * Regenerates the Maestro Cuefile and updates the size in the UI.
 	 */
 	void DeviceControlWidget::update_cuefile_size() {
-		if (!maestro_control_widget_->loading_cue_) {
-			// Calculate and display the size of the current Maestro configuration
-			QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
+		// Calculate and display the size of the current Maestro configuration
+		QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
 
-			MaestroController* controller = maestro_control_widget_->get_maestro_controller();
+		MaestroController* controller = maestro_control_widget_->get_maestro_controller();
 
-			// Generate the Cuefile
-			controller->save_maestro_to_datastream(&datastream);
+		// Generate the Cuefile
+		controller->save_maestro_to_datastream(&datastream);
 
-			ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
-			check_device_rom_capacity();
-		}
+		ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+		check_device_rom_capacity();
 	}
 
 	/**

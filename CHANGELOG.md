@@ -8,17 +8,21 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added ability to merge a Cuefile into the current Maestro instead of replacing it.
 - Added ability to resize sections of the interface.
 - Added shortcut keys for Save, New, Open, etc.
-- Added cursor when free drawing on a Canvas.
+- Added cursor when using the Canvas brush tool.
+- Added duplicate name check to Palette Editor.
 
 ### Changed
 - Renamed several file menu options to be more clear about their actions.
 - Added tooltips to several menu options.
-- Renamed `Cue Interpreter` to `Cue Previewer`.
+- Renamed `Cue Interpreter` dialog to `Cue Previewer`.
 - Updated Qt version to 5.11.2 (release versions do not require Qt pre-installed).
 - Created static build for Linux.
 - Fixed memory leak when loading images into a Canvas.
-- Fixed custom Palettes saving and loading when session saving was disabled.
+- Fixed custom Palettes saving and loading even with session saving disabled.
 - Fixed Palette colors regenerating when changing a Palette's name.
+- Changed Show control behavior. When unchecking `Enabled Show`, the Show is removed instead of just paused.
+- Removed unnecessary Cues being saved to new Cuefiles.
+- Split MaestroControlWidget into individual subwidgets for easier development.
 
 ### Removed
 - Removed donation link.

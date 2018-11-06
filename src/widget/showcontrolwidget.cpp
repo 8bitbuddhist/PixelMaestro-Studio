@@ -5,7 +5,6 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
-// FIXME: Show controls are all effed up
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);
@@ -69,10 +68,15 @@ namespace PixelMaestroStudio {
 		// Disable controls by default
 		set_show_controls_enabled(false);
 
-		// Start timer
+		// Setup timer
 		show_timer_.setTimerType(Qt::CoarseTimer);
 		show_timer_.setInterval(TIMER_INTERVAL_);
-		connect(&show_timer_, SIGNAL(timeout()), this, SLOT(timer_refresh));
+		connect(&show_timer_, SIGNAL(timeout()), this, SLOT(timer_refresh()));
+
+		// Initialize ShowController
+		if (show_controller_ == nullptr) {
+			show_controller_ = new ShowController(maestro_control_widget_->get_maestro_controller());
+		}
 	}
 
 	/**
@@ -113,12 +117,15 @@ namespace PixelMaestroStudio {
 		set_show_controls_enabled(checked);
 
 		if (checked) {
-			if (show_controller_ == nullptr) {
-				show_controller_ = new ShowController(maestro_control_widget_->get_maestro_controller());
-			}
+			maestro_control_widget_->run_cue(
+				maestro_control_widget_->maestro_handler->set_show()
+			);
 			show_timer_.start();
 		}
 		else {
+			maestro_control_widget_->run_cue(
+				maestro_control_widget_->maestro_handler->remove_show()
+			);
 			// Disable Maestro lock if necessary
 			if (maestro_locked_) {
 				on_lockMaestroCheckBox_toggled(false);
@@ -259,9 +266,9 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::refresh() {
 		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
-		if (show != nullptr) {
-			ui->enableCheckBox->setChecked(true);
+		ui->enableCheckBox->setChecked(show != nullptr);
 
+		if (show != nullptr) {
 			for (uint16_t i = 0; i < show->get_num_events(); i++) {
 				Event* event = &show->get_events()[i];
 				show_controller_->add_event(event->get_time(), event->get_cue());
@@ -287,6 +294,15 @@ namespace PixelMaestroStudio {
 			ui->loopCheckBox->setChecked(show->get_looping());
 			ui->loopCheckBox->blockSignals(false);
 		}
+		else {
+			ui->timingModeComboBox->blockSignals(true);
+			ui->timingModeComboBox->setCurrentIndex(0);
+			ui->timingModeComboBox->blockSignals(false);
+
+			ui->loopCheckBox->blockSignals(true);
+			ui->loopCheckBox->setChecked(0);
+			ui->loopCheckBox->blockSignals(false);
+		}
 	}
 
 	/**
@@ -297,36 +313,33 @@ namespace PixelMaestroStudio {
 		ui->absoluteTimeLineEdit->setText(locale_.toString(last_time));
 
 		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
-		if (show != nullptr) {
+		// Get the last event that ran
+		int last_index = -1;
+		uint16_t current_index = show->get_current_index();
+		if (current_index == 0) {
+			if (show->get_looping()) {
+				last_index = show->get_num_events() - 1;
+			}
+		}
+		else {
+			last_index = show->get_current_index() - 1;
+		}
 
-			// Get the last event that ran
-			int last_index = -1;
-			uint16_t current_index = show->get_current_index();
-			if (current_index == 0) {
-				if (show->get_looping()) {
-					last_index = show->get_num_events() - 1;
-				}
+		// If relative mode is enabled, calculate the time since the last Event
+		ui->relativeTimeLineEdit->setEnabled(last_index	>= 0);
+		if (last_index >= 0) {
+			ui->relativeTimeLineEdit->setText(locale_.toString(
+				(uint)maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - (uint)show->get_last_time()
+			));
+		}
+
+		// Darken events that have already ran
+		for (int i = 0; i < ui->eventQueueWidget->count(); i++) {
+			if (current_index > 0 && i < current_index) {
+				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::darkGray);
 			}
 			else {
-				last_index = show->get_current_index() - 1;
-			}
-
-			// If relative mode is enabled, calculate the time since the last Event
-			ui->relativeTimeLineEdit->setEnabled(last_index	>= 0);
-			if (last_index >= 0) {
-				ui->relativeTimeLineEdit->setText(locale_.toString(
-					(uint)maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - (uint)show->get_last_time()
-				));
-			}
-
-			// Darken events that have already ran
-			for (int i = 0; i < ui->eventQueueWidget->count(); i++) {
-				if (current_index > 0 && i < current_index) {
-					ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::darkGray);
-				}
-				else {
-					ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
-				}
+				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
 			}
 		}
 	}
@@ -336,7 +349,7 @@ namespace PixelMaestroStudio {
 	 * @param enabled If true, controls are enabled and usable.
 	 */
 	void ShowControlWidget::set_show_controls_enabled(bool enabled) {
-		ui->settingsGroupBox->setEnabled(enabled);
+		ui->advancedSettingsGroupBox->setEnabled(enabled);
 		ui->eventsGroupBox->setEnabled(enabled);
 		ui->lockMaestroCheckBox->setEnabled(enabled);
 	}

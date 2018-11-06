@@ -22,15 +22,15 @@ namespace PixelMaestroStudio {
 			~MainWindow();
 
 		private slots:
-			void on_action_About_triggered();
-			void on_action_Exit_triggered();
-			void on_action_Online_Help_triggered();
-			void on_action_Open_triggered();
-			bool on_action_Open_Animation_Editor_triggered(bool keep_current_open = false);
-			void on_action_Preferences_triggered();
-			void on_action_Save_triggered();
-			void on_action_Save_Maestro_triggered();
-			void on_actionOpen_Maestro_triggered();
+			void on_aboutAction_triggered();
+			void on_exitAction_triggered();
+			void on_helpAction_triggered();
+			void on_mergeAction_triggered();
+			void on_newAction_triggered();
+			void on_preferencesAction_triggered();
+			void on_saveAction_triggered();
+			void on_saveAsAction_triggered();
+			void on_openAction_triggered();
 
 		private:
 			/// Whether the application has completed initialization.
@@ -50,8 +50,8 @@ namespace PixelMaestroStudio {
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();
-			bool open_cuefile(QByteArray byte_array, bool new_session);
-			bool open_cuefile(QString filename, bool new_session);
+			bool open_cuefile(QString filename);
+			bool confirm_session_overwrite();
 			void set_active_cuefile(QString path);
 			QString open_cuefile_dialog();
 	};

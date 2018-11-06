@@ -49,8 +49,9 @@ namespace PixelMaestroStudio {
 													  "Set Show",
 													  "Set Timer",
 													  "Start",
-													  "Stop"
-													  "Sync"});
+													  "Stop",
+													  "Sync",
+													  "Remove Show"});
 
 	const QStringList CueInterpreter::SectionActions({"Remove Animation",
 													  "Remove Canvas",
@@ -256,6 +257,8 @@ namespace PixelMaestroStudio {
 			case MaestroCueHandler::Action::Start:
 				// Do nothing
 			case MaestroCueHandler::Action::Stop:
+				// Do nothing
+			case MaestroCueHandler::Action::RemoveShow:
 				// Do nothing
 				break;
 		}

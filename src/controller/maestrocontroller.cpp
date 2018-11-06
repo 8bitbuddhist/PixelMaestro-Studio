@@ -105,9 +105,6 @@ namespace PixelMaestroStudio {
 		controller->enable_maestro_cue_handler();
 		controller->enable_section_cue_handler();
 		controller->enable_show_cue_handler();
-
-		// (Re)Initialize the MaestroControlWidget
-		maestro_control_widget_->set_maestro_controller(this);
 	}
 
 	/**

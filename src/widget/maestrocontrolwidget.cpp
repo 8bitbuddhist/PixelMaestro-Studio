@@ -68,14 +68,20 @@ namespace PixelMaestroStudio {
 	 * @param byte_array Byte array containing the Cuefile.
 	 */
 	void MaestroControlWidget::load_cuefile(QByteArray byte_array) {
-		this->loading_cue_ = true;
 		for (int i = 0; i < byte_array.size(); i++) {
 			uint8_t byte = (uint8_t)byte_array.at(i);
 			if (cue_controller_->read(byte)) {
 				run_cue(cue_controller_->get_buffer(), true);
 			}
 		}
-		this->loading_cue_ = false;
+
+		// Refresh settings
+		refresh_maestro_settings();
+		refresh_section_settings();
+
+		// Refresh Palettes
+		animation_control_widget_->refresh_palettes();
+		canvas_control_widget_->refresh_palettes();
 	}
 
 	/**
@@ -153,6 +159,7 @@ namespace PixelMaestroStudio {
 		section_control_widget_->initialize();
 		animation_control_widget_->initialize();
 		canvas_control_widget_->initialize();
+		show_control_widget_->initialize();
 		refresh_maestro_settings();
 	}
 
