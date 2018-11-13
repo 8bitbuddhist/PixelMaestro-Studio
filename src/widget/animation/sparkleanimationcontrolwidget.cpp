@@ -8,7 +8,10 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		this->animation_ = animation;
 		this->maestro_control_ = controller;
-		ui->thresholdSpinBox->setValue(animation->get_threshold());
+
+		if (animation) {
+			ui->thresholdSpinBox->setValue(animation->get_threshold());
+		}
 	}
 
 	SparkleAnimationControlWidget::~SparkleAnimationControlWidget() {

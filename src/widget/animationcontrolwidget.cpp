@@ -201,56 +201,56 @@ namespace PixelMaestroStudio {
 			ui->typeComboBox->blockSignals(true);
 			ui->typeComboBox->setCurrentIndex(0);
 			ui->typeComboBox->blockSignals(false);
-			return;
 		}
+		else {
+			ui->orientationComboBox->blockSignals(true);
+			ui->reverseCheckBox->blockSignals(true);
+			ui->fadeCheckBox->blockSignals(true);
+			ui->cycleIntervalSlider->blockSignals(true);
+			ui->cycleIntervalSpinBox->blockSignals(true);
+			ui->delayIntervalSlider->blockSignals(true);
+			ui->delayIntervalSpinBox->blockSignals(true);
+			ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
+			ui->reverseCheckBox->setChecked(animation->get_reverse());
+			ui->fadeCheckBox->setChecked(animation->get_fade());
+			ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
+			ui->cycleIntervalSpinBox->setValue(animation->get_timer()->get_interval());
+			ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
+			ui->delayIntervalSpinBox->setValue(animation->get_timer()->get_delay());
+			ui->orientationComboBox->blockSignals(false);
+			ui->reverseCheckBox->blockSignals(false);
+			ui->fadeCheckBox->blockSignals(false);
+			ui->cycleIntervalSlider->blockSignals(false);
+			ui->cycleIntervalSpinBox->blockSignals(false);
+			ui->delayIntervalSlider->blockSignals(false);
+			ui->delayIntervalSpinBox->blockSignals(false);
 
-		ui->orientationComboBox->blockSignals(true);
-		ui->reverseCheckBox->blockSignals(true);
-		ui->fadeCheckBox->blockSignals(true);
-		ui->cycleIntervalSlider->blockSignals(true);
-		ui->cycleIntervalSpinBox->blockSignals(true);
-		ui->delayIntervalSlider->blockSignals(true);
-		ui->delayIntervalSpinBox->blockSignals(true);
-		ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
-		ui->reverseCheckBox->setChecked(animation->get_reverse());
-		ui->fadeCheckBox->setChecked(animation->get_fade());
-		ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
-		ui->cycleIntervalSpinBox->setValue(animation->get_timer()->get_interval());
-		ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
-		ui->delayIntervalSpinBox->setValue(animation->get_timer()->get_delay());
-		ui->orientationComboBox->blockSignals(false);
-		ui->reverseCheckBox->blockSignals(false);
-		ui->fadeCheckBox->blockSignals(false);
-		ui->cycleIntervalSlider->blockSignals(false);
-		ui->cycleIntervalSpinBox->blockSignals(false);
-		ui->delayIntervalSlider->blockSignals(false);
-		ui->delayIntervalSpinBox->blockSignals(false);
+			// Select the current Palette
+			int palette_index = maestro_control_widget->palette_controller_.find(animation->get_palette()->get_colors());
+			if (palette_index >= 0) {
+				ui->paletteComboBox->blockSignals(true);
+				ui->paletteComboBox->setCurrentIndex(palette_index);
+				ui->paletteComboBox->blockSignals(false);
+			}
+			else {	// Palette not found
+				QString name = "Section " + QString::number(maestro_control_widget->section_control_widget_->get_section_index()) +
+							   " Layer " + QString::number(maestro_control_widget->section_control_widget_->get_layer_index()) +
+							   " Animation";
+				maestro_control_widget->palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+				ui->paletteComboBox->blockSignals(true);
+				ui->paletteComboBox->addItem(name);
+				ui->paletteComboBox->setCurrentText(name);
+				ui->paletteComboBox->blockSignals(false);
+			}
 
-		// Select the current Palette
-		int palette_index = maestro_control_widget->palette_controller_.find(animation->get_palette()->get_colors());
-		if (palette_index >= 0) {
-			ui->paletteComboBox->blockSignals(true);
-			ui->paletteComboBox->setCurrentIndex(palette_index);
-			ui->paletteComboBox->blockSignals(false);
+			// Set the Animation type
+			ui->typeComboBox->blockSignals(true);
+			ui->typeComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
+			ui->typeComboBox->blockSignals(false);
 		}
-		else {	// Palette not found
-			QString name = "Section " + QString::number(maestro_control_widget->section_control_widget_->get_section_index()) +
-						   " Layer " + QString::number(maestro_control_widget->section_control_widget_->get_layer_index()) +
-						   " Animation";
-			maestro_control_widget->palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-			ui->paletteComboBox->blockSignals(true);
-			ui->paletteComboBox->addItem(name);
-			ui->paletteComboBox->setCurrentText(name);
-			ui->paletteComboBox->blockSignals(false);
-		}
-
-		// Set the Animation type
-		ui->typeComboBox->blockSignals(true);
-		ui->typeComboBox->setCurrentIndex((uint8_t)animation->get_type() + 1);
-		ui->typeComboBox->blockSignals(false);
 
 		// Enable controls
-		set_controls_enabled(true);
+		set_controls_enabled(animation != nullptr);
 		set_advanced_controls(animation);
 	}
 
@@ -280,8 +280,15 @@ namespace PixelMaestroStudio {
 		}
 
 		QLayout* layout = this->findChild<QLayout*>("advancedSettingsLayout");
+		AnimationType type;
+		if (animation) {
+			type = animation->get_type();
+		}
+		else {
+			type = static_cast<AnimationType>(ui->typeComboBox->currentIndex() - 1);
+		}
 
-		switch(animation->get_type()) {
+		switch(type) {
 			case AnimationType::Fire:
 				advanced_controls_widget_ = QSharedPointer<QWidget>(new FireAnimationControlWidget((FireAnimation*)animation, this->maestro_control_widget, layout->widget()));
 				break;

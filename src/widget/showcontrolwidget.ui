@@ -38,7 +38,7 @@
           <item row="0" column="1">
            <widget class="QPushButton" name="resyncMaestroButton">
             <property name="toolTip">
-             <string>Reinitializes the last run time of all timers</string>
+             <string>Resets the last run time for all timers</string>
             </property>
             <property name="text">
              <string>Resync Timers</string>
@@ -48,7 +48,7 @@
           <item row="0" column="0">
            <widget class="QCheckBox" name="enableCheckBox">
             <property name="toolTip">
-             <string>Enables support for queuing actions</string>
+             <string>Toggles the ability to schedule events</string>
             </property>
             <property name="text">
              <string>Enable Show</string>
@@ -58,7 +58,7 @@
           <item row="1" column="0">
            <widget class="QCheckBox" name="lockMaestroCheckBox">
             <property name="toolTip">
-             <string>If enabled, actions will no longer update the Maestro but will still be listed in the Event History</string>
+             <string>Lets you create events without changing the Maestro</string>
             </property>
             <property name="text">
              <string>Lock Maestro</string>
@@ -104,7 +104,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>The Maestro's total runtime</string>
+               <string>Total runtime</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -142,7 +142,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>The amount of time since the last event</string>
+               <string>Runtime since the last event</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -177,7 +177,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>The time that the Event will run</string>
+               <string>Time to run the next event</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -256,6 +256,9 @@
               </item>
               <item row="1" column="1">
                <widget class="QPushButton" name="playPauseButton">
+                <property name="toolTip">
+                 <string>Start or stop the Maestro</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -295,7 +298,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>The most recent actions performed in the Animation Editor</string>
+             <string>List of changes performed in PixelMaestro Studio</string>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -314,7 +317,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Lists all of the Show's events</string>
+             <string>List of scheduled events</string>
             </property>
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustIgnored</enum>
@@ -349,7 +352,7 @@
           <item row="1" column="1">
            <widget class="QCheckBox" name="loopCheckBox">
             <property name="toolTip">
-             <string>Repeats the Show after the last Event (Relative timing only)</string>
+             <string>If true, the Show repeats after the last event</string>
             </property>
             <property name="text">
              <string>Loop Events</string>
@@ -381,7 +384,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Sets the timing method. Absolute tracks from the current time, while Relative tracks from the last Event time</string>
+             <string>Sets the method for timing events</string>
             </property>
             <item>
              <property name="text">
@@ -393,6 +396,34 @@
               <string>Relative</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="advancedLockedLabel">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../resources/images/images.qrc">:/icon_lock.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -417,6 +448,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>enableCheckBox</tabstop>
+  <tabstop>lockMaestroCheckBox</tabstop>
+  <tabstop>resyncMaestroButton</tabstop>
+  <tabstop>timingModeComboBox</tabstop>
+  <tabstop>loopCheckBox</tabstop>
+  <tabstop>eventHistoryWidget</tabstop>
+  <tabstop>absoluteTimeLineEdit</tabstop>
+  <tabstop>relativeTimeLineEdit</tabstop>
+  <tabstop>eventTimeSpinBox</tabstop>
+  <tabstop>moveEventUpButton</tabstop>
+  <tabstop>removeEventButton</tabstop>
+  <tabstop>playPauseButton</tabstop>
+  <tabstop>addEventButton</tabstop>
+  <tabstop>moveEventDownButton</tabstop>
+  <tabstop>eventQueueWidget</tabstop>
+ </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>
  </resources>

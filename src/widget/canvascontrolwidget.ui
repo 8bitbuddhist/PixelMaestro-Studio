@@ -53,7 +53,7 @@
          <item>
           <widget class="QCheckBox" name="enableCheckBox">
            <property name="toolTip">
-            <string>Activates the Section's Canvas</string>
+            <string>Adds a Canvas to the Section</string>
            </property>
            <property name="text">
             <string>Enable Canvas</string>
@@ -407,7 +407,7 @@
           <item row="1" column="1">
            <widget class="QSpinBox" name="frameCountSpinBox">
             <property name="toolTip">
-             <string>The total number of drawing surfaces</string>
+             <string>Number of editable frames</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -423,7 +423,7 @@
           <item row="2" column="1">
            <widget class="QSpinBox" name="currentFrameSpinBox">
             <property name="toolTip">
-             <string>The current drawing surface</string>
+             <string>Currently displayed frame</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -442,7 +442,7 @@
           <item row="4" column="1">
            <widget class="QSpinBox" name="frameIntervalSpinBox">
             <property name="toolTip">
-             <string>Sets the amount of time between frames</string>
+             <string>Amount of time between frames</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -572,6 +572,40 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>canvasScrollArea</tabstop>
+  <tabstop>enableCheckBox</tabstop>
+  <tabstop>loadImageButton</tabstop>
+  <tabstop>circleToolButton</tabstop>
+  <tabstop>lineToolButton</tabstop>
+  <tabstop>triangleToolButton</tabstop>
+  <tabstop>rectToolButton</tabstop>
+  <tabstop>textToolButton</tabstop>
+  <tabstop>brushToolButton</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>fillCheckBox</tabstop>
+  <tabstop>selectColorButton</tabstop>
+  <tabstop>originXSpinBox</tabstop>
+  <tabstop>originYSpinBox</tabstop>
+  <tabstop>targetXSpinBox</tabstop>
+  <tabstop>targetYSpinBox</tabstop>
+  <tabstop>target2XSpinBox</tabstop>
+  <tabstop>target2YSpinBox</tabstop>
+  <tabstop>textLineEdit</tabstop>
+  <tabstop>paletteComboBox</tabstop>
+  <tabstop>editPaletteButton</tabstop>
+  <tabstop>colorPickerScrollArea</tabstop>
+  <tabstop>colorPickerCancelButton</tabstop>
+  <tabstop>drawButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>playbackPreviousToolButton</tabstop>
+  <tabstop>playbackStartStopToolButton</tabstop>
+  <tabstop>playbackNextToolButton</tabstop>
+  <tabstop>frameCountSpinBox</tabstop>
+  <tabstop>currentFrameSpinBox</tabstop>
+  <tabstop>frameIntervalSpinBox</tabstop>
+  <tabstop>frameIntervalSlider</tabstop>
+ </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>
  </resources>

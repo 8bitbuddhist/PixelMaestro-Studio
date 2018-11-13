@@ -7,9 +7,12 @@ namespace PixelMaestroStudio {
 
 		this->animation_ = animation;
 		this->maestro_control_widget_ = maestro_control_widget;
-		ui->boltCountSpinBox->setValue(animation->get_bolt_count());
-		ui->forkChanceSpinBox->setValue(animation->get_fork_chance());
-		ui->driftSpinBox->setValue(animation->get_drift());
+
+		if (animation) {
+			ui->boltCountSpinBox->setValue(animation->get_bolt_count());
+			ui->forkChanceSpinBox->setValue(animation->get_fork_chance());
+			ui->driftSpinBox->setValue(animation->get_drift());
+		}
 	}
 
 	LightningAnimationControlWidget::~LightningAnimationControlWidget() {

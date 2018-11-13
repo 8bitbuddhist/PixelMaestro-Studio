@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QModelIndex>
+#include <QRegExp>
 #include "showcontrolwidget.h"
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
@@ -67,6 +68,7 @@ namespace PixelMaestroStudio {
 	void ShowControlWidget::initialize() {
 		// Disable controls by default
 		set_show_controls_enabled(false);
+		ui->advancedLockedLabel->setVisible(false);
 
 		// Setup timer
 		show_timer_.setTimerType(Qt::CoarseTimer);
@@ -140,6 +142,28 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::on_lockMaestroCheckBox_toggled(bool checked) {
 		maestro_locked_ = checked;
+
+		/*
+		 * Toggle the lock icon displayed in each Tab.
+		 * Display it for all Tabs except for the Show and Device Tabs.
+		 * Also display it for the Advanced Settings Group Box.
+		 */
+		QTabWidget* tabWidget = static_cast<QTabWidget*>(parentWidget()->parentWidget()->parentWidget());
+		QList<QWidget*> tabs = tabWidget->findChildren<QWidget*>(QRegExp("^((?!show)(?!device).)*Tab$"));
+		ui->advancedLockedLabel->setVisible(checked);
+
+		if (checked) {
+			for(QWidget* tab : tabs) {
+				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_lock.png"));
+			}
+		}
+		else { // Refresh Maestro settings when unlocked
+			for(QWidget* tab : tabs) {
+				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon());
+			}
+			maestro_control_widget_->refresh_maestro_settings();
+			maestro_control_widget_->refresh_section_settings();
+		}
 	}
 
 	/**

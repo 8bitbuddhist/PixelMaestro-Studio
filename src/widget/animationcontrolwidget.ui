@@ -173,7 +173,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="orientationComboBox">
         <property name="toolTip">
-         <string>The animation's orientation</string>
+         <string>The direction of the animation</string>
         </property>
         <item>
          <property name="text">
@@ -200,7 +200,7 @@
       <item row="1" column="2">
        <widget class="QCheckBox" name="fadeCheckBox">
         <property name="toolTip">
-         <string/>
+         <string>Smoothes animations</string>
         </property>
         <property name="text">
          <string>Fade</string>
@@ -234,7 +234,7 @@
       <item row="0" column="2">
        <widget class="QSlider" name="cycleIntervalSlider">
         <property name="toolTip">
-         <string>The amount of time each cycle takes to complete</string>
+         <string>The amount of time between animation steps</string>
         </property>
         <property name="minimum">
          <number>10</number>
@@ -288,7 +288,7 @@
       <item row="1" column="2">
        <widget class="QSlider" name="delayIntervalSlider">
         <property name="toolTip">
-         <string>The amount of time to wait before starting the next cycle</string>
+         <string>The delay before starting the next animation cycle</string>
         </property>
         <property name="maximum">
          <number>6000</number>
@@ -309,6 +309,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QSpinBox" name="cycleIntervalSpinBox">
+        <property name="toolTip">
+         <string>The amount of time between animation steps</string>
+        </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
@@ -325,6 +328,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="delayIntervalSpinBox">
+        <property name="toolTip">
+         <string>The delay before starting the next animation cycle</string>
+        </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
@@ -341,6 +347,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>typeComboBox</tabstop>
+  <tabstop>reverseCheckBox</tabstop>
+  <tabstop>orientationComboBox</tabstop>
+  <tabstop>fadeCheckBox</tabstop>
+  <tabstop>paletteComboBox</tabstop>
+  <tabstop>paletteEditButton</tabstop>
+  <tabstop>cycleIntervalSpinBox</tabstop>
+  <tabstop>cycleIntervalSlider</tabstop>
+  <tabstop>delayIntervalSpinBox</tabstop>
+  <tabstop>delayIntervalSlider</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

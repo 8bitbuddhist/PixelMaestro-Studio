@@ -8,13 +8,15 @@ namespace PixelMaestroStudio {
 		this->animation_ = animation;
 		this->maestro_control_widget_ = maestro_control_widget;
 
-		ui->mirrorCheckBox->blockSignals(true);
-		ui->mirrorCheckBox->setChecked(animation->get_mirror());
-		ui->mirrorCheckBox->blockSignals(false);
+		if (animation) {
+			ui->mirrorCheckBox->blockSignals(true);
+			ui->mirrorCheckBox->setChecked(animation->get_mirror());
+			ui->mirrorCheckBox->blockSignals(false);
 
-		ui->skewSpinBox->blockSignals(true);
-		ui->skewSpinBox->setValue(animation->get_skew());
-		ui->skewSpinBox->blockSignals(false);
+			ui->skewSpinBox->blockSignals(true);
+			ui->skewSpinBox->setValue(animation->get_skew());
+			ui->skewSpinBox->blockSignals(false);
+		}
 	}
 
 	void WaveAnimationControlWidget::on_mirrorCheckBox_stateChanged(int arg1) {

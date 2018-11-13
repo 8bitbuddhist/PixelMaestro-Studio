@@ -45,7 +45,10 @@ namespace PixelMaestroStudio {
 
 			/// Detached rendering area.
 			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
+
+			/// The widget responsible for modifying the Maestro.
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
+
 			QSplitter* splitter_ = nullptr;
 			Ui::MainWindow* ui;
 

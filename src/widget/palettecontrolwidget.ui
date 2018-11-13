@@ -501,7 +501,7 @@
            <x>0</x>
            <y>0</y>
            <width>358</width>
-           <height>68</height>
+           <height>77</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -527,6 +527,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>paletteComboBox</tabstop>
+  <tabstop>createPaletteButton</tabstop>
+  <tabstop>editPaletteButton</tabstop>
+  <tabstop>removeButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -536,8 +543,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -552,8 +559,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

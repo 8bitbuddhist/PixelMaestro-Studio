@@ -14,5 +14,6 @@
         <file>icon_down.png</file>
         <file>icon_up.png</file>
         <file>icon_cancel.png</file>
+        <file>icon_lock.png</file>
     </qresource>
 </RCC>

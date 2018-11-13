@@ -135,6 +135,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>serialOutputComboBox</tabstop>
+  <tabstop>connectPushButton</tabstop>
+  <tabstop>serialOutputListWidget</tabstop>
+  <tabstop>disconnectPushButton</tabstop>
+  <tabstop>realTimeCheckBox</tabstop>
+  <tabstop>configSizeLineEdit</tabstop>
+  <tabstop>capacityLineEdit</tabstop>
+  <tabstop>interpretCuePushButton</tabstop>
+  <tabstop>sendPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

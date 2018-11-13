@@ -8,9 +8,11 @@ namespace PixelMaestroStudio {
 		this->animation_ = animation;
 		this->maestro_control_widget_ = maestro_control_widget;
 
-		ui->multiplierSpinBox->blockSignals(true);
-		ui->multiplierSpinBox->setValue(animation->get_multiplier());
-		ui->multiplierSpinBox->blockSignals(false);
+		if (animation) {
+			ui->multiplierSpinBox->blockSignals(true);
+			ui->multiplierSpinBox->setValue(animation->get_multiplier());
+			ui->multiplierSpinBox->blockSignals(false);
+		}
 	}
 
 	FireAnimationControlWidget::~FireAnimationControlWidget() {

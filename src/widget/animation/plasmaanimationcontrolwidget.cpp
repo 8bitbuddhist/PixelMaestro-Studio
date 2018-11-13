@@ -8,8 +8,11 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 		this->animation_ = animation;
 		this->maestro_control_ = controller;
-		ui->resolutionDoubleSpinBox->setValue(animation->get_resolution());
-		ui->sizeDoubleSpinBox->setValue(animation->get_size());
+
+		if (animation) {
+			ui->resolutionDoubleSpinBox->setValue(animation->get_resolution());
+			ui->sizeDoubleSpinBox->setValue(animation->get_size());
+		}
 	}
 
 	PlasmaAnimationControlWidget::~PlasmaAnimationControlWidget() {

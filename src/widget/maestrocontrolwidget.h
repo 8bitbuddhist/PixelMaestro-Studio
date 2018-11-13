@@ -81,6 +81,12 @@ namespace PixelMaestroStudio {
 			void set_maestro_controller(MaestroController* maestro_controller);
 
 		private:
+			/**
+			 * If true, we're currently loading a Cuefile.
+			 * This is used to detect manual edits, e.g. when the session is unsaved.
+			 */
+			bool loading_cuefile_ = false;
+
 			Ui::MaestroControlWidget *ui;
 
 			/// Separate Maestro DrawingArea

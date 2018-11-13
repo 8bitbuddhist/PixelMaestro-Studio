@@ -13,6 +13,7 @@
 #include "ui_maestrocontrolwidget.h"
 #include "utility/canvasutility.h"
 #include "utility.h"
+#include "window/mainwindow.h"
 
 namespace PixelMaestroStudio {
 	/**
@@ -68,6 +69,7 @@ namespace PixelMaestroStudio {
 	 * @param byte_array Byte array containing the Cuefile.
 	 */
 	void MaestroControlWidget::load_cuefile(QByteArray byte_array) {
+		this->loading_cuefile_ = true;
 		for (int i = 0; i < byte_array.size(); i++) {
 			uint8_t byte = (uint8_t)byte_array.at(i);
 			if (cue_controller_->read(byte)) {
@@ -82,6 +84,7 @@ namespace PixelMaestroStudio {
 		// Refresh Palettes
 		animation_control_widget_->refresh_palettes();
 		canvas_control_widget_->refresh_palettes();
+		this->loading_cuefile_ = false;
 	}
 
 	/**
@@ -107,7 +110,7 @@ namespace PixelMaestroStudio {
 	 * @param serial_only If true, don't run the Cue on the local Maestro.
 	 */
 	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
-		// TODO: Indicate that the Cue is unsaved
+		// TODO: Reflect unsaved changes
 
 		show_control_widget_->add_event_to_history(cue);
 

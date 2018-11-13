@@ -30,7 +30,7 @@
       <item row="1" column="1">
        <widget class="QSpinBox" name="scrollXSpinBox">
         <property name="toolTip">
-         <string>Sets the scroll rate/direction along the x-axis</string>
+         <string>Horizontal scroll rate</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -52,7 +52,7 @@
       <item row="1" column="2">
        <widget class="QSpinBox" name="scrollYSpinBox">
         <property name="toolTip">
-         <string>Sets the scroll rate/direction along the y-axis</string>
+         <string>Vertical scroll rate</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -78,7 +78,7 @@
       <item row="2" column="1">
        <widget class="QSpinBox" name="offsetXSpinBox">
         <property name="toolTip">
-         <string>Sets the offset along the x axis</string>
+         <string>Horizontal offset</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -88,7 +88,7 @@
       <item row="2" column="2">
        <widget class="QSpinBox" name="offsetYSpinBox">
         <property name="toolTip">
-         <string>Sets the offset along the y axis</string>
+         <string>Vertical offset</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -105,7 +105,7 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="gridSizeXSpinBox">
         <property name="toolTip">
-         <string>Sets the width of the Pixel grid (select Base Section to edit)</string>
+         <string>The Section's width</string>
         </property>
         <property name="frame">
          <bool>true</bool>
@@ -130,7 +130,7 @@
       <item row="0" column="2">
        <widget class="QSpinBox" name="gridSizeYSpinBox">
         <property name="toolTip">
-         <string>Sets the height of the Pixel grid (select Base Section to edit)</string>
+         <string>The Section's height</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -161,7 +161,7 @@
       <item row="1" column="1">
        <widget class="QSpinBox" name="layerSpinBox">
         <property name="toolTip">
-         <string>Sets the number of Layers belonging to this Section</string>
+         <string>The number of Layers belonging to this Section</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -181,7 +181,7 @@
       <item row="0" column="1">
        <widget class="QComboBox" name="activeSectionComboBox">
         <property name="toolTip">
-         <string>The currently selected Section</string>
+         <string>The Section currently being edited</string>
         </property>
        </widget>
       </item>
@@ -204,7 +204,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="mixModeComboBox">
         <property name="toolTip">
-         <string>The method used to mix this Layer with its base Section</string>
+         <string>How the Layer is rendered onto the previous Layer</string>
         </property>
         <item>
          <property name="text">
@@ -231,7 +231,7 @@
       <item row="0" column="1">
        <widget class="QComboBox" name="activeLayerComboBox">
         <property name="toolTip">
-         <string>The currently selected Layer</string>
+         <string>The Layer currently being edited</string>
         </property>
        </widget>
       </item>
@@ -259,7 +259,7 @@
       <item row="2" column="1">
        <widget class="QSpinBox" name="alphaSpinBox">
         <property name="toolTip">
-         <string>The Layer's transparency</string>
+         <string>The Layer's transparency level</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -277,6 +277,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>activeSectionComboBox</tabstop>
+  <tabstop>layerSpinBox</tabstop>
+  <tabstop>activeLayerComboBox</tabstop>
+  <tabstop>mixModeComboBox</tabstop>
+  <tabstop>alphaSpinBox</tabstop>
+  <tabstop>gridSizeXSpinBox</tabstop>
+  <tabstop>gridSizeYSpinBox</tabstop>
+  <tabstop>scrollXSpinBox</tabstop>
+  <tabstop>scrollYSpinBox</tabstop>
+  <tabstop>offsetXSpinBox</tabstop>
+  <tabstop>offsetYSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

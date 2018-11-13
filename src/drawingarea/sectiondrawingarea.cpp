@@ -61,7 +61,6 @@ namespace PixelMaestroStudio {
 		uint16_t x = cursor.x() - section_cursor_.x;
 		uint16_t y = cursor.y() - section_cursor_.y;
 
-		// FIXME: If the DrawingArea is too small, it won't render the Maestro, causing an arithmetic exception
 		if (radius_ > 0) {
 			return Point((x / radius_),
 						 (y / radius_));
