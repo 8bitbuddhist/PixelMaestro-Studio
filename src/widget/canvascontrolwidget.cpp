@@ -1,5 +1,6 @@
 #include <QFileDialog>
 #include <QKeyEvent>
+#include <QMessageBox>
 #include <QPushButton>
 #include "canvascontrolwidget.h"
 #include "ui_canvascontrolwidget.h"
@@ -388,7 +389,7 @@ namespace PixelMaestroStudio {
 		if (!filename.isEmpty()) {
 
 			// Stop playback
-			on_playbackStartStopToolButton_toggled(true);
+			ui->playbackStartStopToolButton->toggled(true);
 
 			// Clear the current Canvas
 			maestro_control_widget_->run_cue(
@@ -424,7 +425,7 @@ namespace PixelMaestroStudio {
 			ui->paletteComboBox->setCurrentText(name);
 
 			// Start playback
-			on_playbackStartStopToolButton_toggled(false);
+			ui->playbackStartStopToolButton->toggled(false);
 		}
 	}
 

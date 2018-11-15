@@ -73,7 +73,8 @@ SOURCES += main.cpp\
     widget/animationcontrolwidget.cpp \
     widget/showcontrolwidget.cpp \
     widget/sectioncontrolwidget.cpp \
-    widget/canvascontrolwidget.cpp
+    widget/canvascontrolwidget.cpp \
+    model/serialdevicethread.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -137,7 +138,8 @@ HEADERS += \
     widget/animationcontrolwidget.h \
     widget/showcontrolwidget.h \
     widget/sectioncontrolwidget.h \
-    widget/canvascontrolwidget.h
+    widget/canvascontrolwidget.h \
+    model/serialdevicethread.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \

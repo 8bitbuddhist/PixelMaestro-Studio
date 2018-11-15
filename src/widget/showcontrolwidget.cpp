@@ -14,6 +14,8 @@ namespace PixelMaestroStudio {
 		qApp->installEventFilter(this);
 
 		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
+
+		show_timer_.start();
 	}
 
 	/**
@@ -55,11 +57,6 @@ namespace PixelMaestroStudio {
 					return true;
 				}
 			}
-
-			// Pressing space anywhere starts/stops the Maestro
-			if (key_event->key() == Qt::Key_Space) {
-				on_playPauseButton_toggled(ui->playPauseButton->isChecked());
-			}
 		}
 
 		return QObject::eventFilter(watched, event);
@@ -79,6 +76,12 @@ namespace PixelMaestroStudio {
 		if (show_controller_ == nullptr) {
 			show_controller_ = new ShowController(maestro_control_widget_->get_maestro_controller());
 		}
+		else {
+			show_controller_->clear();
+		}
+
+		on_clearHistoryButton_clicked();
+		on_clearQueueButton_clicked();
 	}
 
 	/**
@@ -115,6 +118,29 @@ namespace PixelMaestroStudio {
 		);
 	}
 
+	/**
+	 * Clears the Event History.
+	 */
+	void ShowControlWidget::on_clearHistoryButton_clicked() {
+		ui->eventHistoryWidget->clear();
+		event_history_.clear();
+	}
+
+	/**
+	 * Removes all Events from the Show's queue.
+	 */
+	void ShowControlWidget::on_clearQueueButton_clicked() {
+		ui->eventQueueWidget->clear();
+		show_controller_->get_events()->clear();
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->show_handler->set_events(
+				nullptr,
+				0,
+				false
+			)
+		);
+	}
+
 	void ShowControlWidget::on_enableCheckBox_toggled(bool checked) {
 		set_show_controls_enabled(checked);
 
@@ -122,47 +148,11 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->maestro_handler->set_show()
 			);
-			show_timer_.start();
 		}
 		else {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->maestro_handler->remove_show()
 			);
-			// Disable Maestro lock if necessary
-			if (maestro_locked_) {
-				on_lockMaestroCheckBox_toggled(false);
-			}
-			show_timer_.stop();
-		}
-	}
-
-	/**
-	 * Toggles the Maestro lock, which prevents actions from modifying the Maestro.
-	 * @param checked If true, Maestro is locked for editing.
-	 */
-	void ShowControlWidget::on_lockMaestroCheckBox_toggled(bool checked) {
-		maestro_locked_ = checked;
-
-		/*
-		 * Toggle the lock icon displayed in each Tab.
-		 * Display it for all Tabs except for the Show and Device Tabs.
-		 * Also display it for the Advanced Settings Group Box.
-		 */
-		QTabWidget* tabWidget = static_cast<QTabWidget*>(parentWidget()->parentWidget()->parentWidget());
-		QList<QWidget*> tabs = tabWidget->findChildren<QWidget*>(QRegExp("^((?!show)(?!device).)*Tab$"));
-		ui->advancedLockedLabel->setVisible(checked);
-
-		if (checked) {
-			for(QWidget* tab : tabs) {
-				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_lock.png"));
-			}
-		}
-		else { // Refresh Maestro settings when unlocked
-			for(QWidget* tab : tabs) {
-				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon());
-			}
-			maestro_control_widget_->refresh_maestro_settings();
-			maestro_control_widget_->refresh_section_settings();
 		}
 	}
 
@@ -215,29 +205,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Toggles the Maestro's running state.
-	 * @param checked If true, Maestro is paused.
-	 */
-	void ShowControlWidget::on_playPauseButton_toggled(bool checked) {
-		if (checked) { // Stop the Maestro
-			maestro_control_widget_->get_maestro_controller()->stop();
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->maestro_handler->stop()
-			);
-
-			ui->playPauseButton->setToolTip("Start the Maestro");
-		}
-		else {
-			maestro_control_widget_->get_maestro_controller()->start();
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->maestro_handler->start()
-			);
-
-			ui->playPauseButton->setToolTip("Stop the Maestro");
-		}
-	}
-
-	/**
 	 * Removes the selected Event(s) from the Show.
 	 */
 	void ShowControlWidget::on_removeEventButton_clicked() {
@@ -260,17 +227,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Resets the timers on all Maestro components.
-	 */
-	void ShowControlWidget::on_resyncMaestroButton_clicked() {
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Resync Timers", "This will set the timers on ALL components to the current absolute time. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
-		if (confirm == QMessageBox::Yes) {
-			maestro_control_widget_->get_maestro_controller()->get_maestro()->sync(maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time());
-		}
-	}
-
-	/**
 	 * Changes the Show's timing mode.
 	 * @param index New timing mode.
 	 */
@@ -290,25 +246,25 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::refresh() {
 		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
+		ui->enableCheckBox->blockSignals(true);
 		ui->enableCheckBox->setChecked(show != nullptr);
+		set_show_controls_enabled(show != nullptr);
+		ui->enableCheckBox->blockSignals(false);
 
 		if (show != nullptr) {
 			for (uint16_t i = 0; i < show->get_num_events(); i++) {
 				Event* event = &show->get_events()[i];
-				show_controller_->add_event(event->get_time(), event->get_cue());
-				ui->eventQueueWidget->addItem(
-					locale_.toString(event->get_time()) +
-							QString(": ") +
-							cue_interpreter_.interpret_cue(event->get_cue())
-				);
-			}
 
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->show_handler->set_events(
-					show_controller_->get_events()->data(),
-					show_controller_->get_events()->size()
-				)
-			);
+				// Check for Events before adding them to prevent duplicates
+				if (show_controller_->get_event_index(event) < 0) {
+					show_controller_->add_event(event->get_time(), event->get_cue());
+					ui->eventQueueWidget->addItem(
+						locale_.toString(event->get_time()) +
+								QString(": ") +
+								cue_interpreter_.interpret_cue(event->get_cue())
+					);
+				}
+			}
 
 			ui->timingModeComboBox->blockSignals(true);
 			ui->timingModeComboBox->setCurrentIndex((uint8_t)show->get_timing());
@@ -330,6 +286,15 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Sets whether the Maestro is locked for editing.
+	 * @param locked If true, Cues won't change the Maestro.
+	 */
+	void ShowControlWidget::set_maestro_locked(bool locked) {
+		this->maestro_locked_ = locked;
+		ui->advancedLockedLabel->setVisible(locked);
+	}
+
+	/**
 	 * Updates fields in the widget when the timer fires.
 	 */
 	void ShowControlWidget::timer_refresh() {
@@ -337,6 +302,9 @@ namespace PixelMaestroStudio {
 		ui->absoluteTimeLineEdit->setText(locale_.toString(last_time));
 
 		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
+
+		if (show == nullptr) return;
+
 		// Get the last event that ran
 		int last_index = -1;
 		uint16_t current_index = show->get_current_index();
@@ -366,6 +334,16 @@ namespace PixelMaestroStudio {
 				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
 			}
 		}
+
+		/*
+		 * If the last event is different from the one on record, that means an Event ran.
+		 * We refresh the UI to account for any Maestro changes.
+		 */
+		if (last_index != this->last_index_) {
+			// FIXME: The constant refreshes make it impossible to use this. Might be able to fix by adding checks before updating each field.
+			//maestro_control_widget_->refresh_section_settings();
+			this->last_index_ = last_index;
+		}
 	}
 
 	/**
@@ -375,7 +353,6 @@ namespace PixelMaestroStudio {
 	void ShowControlWidget::set_show_controls_enabled(bool enabled) {
 		ui->advancedSettingsGroupBox->setEnabled(enabled);
 		ui->eventsGroupBox->setEnabled(enabled);
-		ui->lockMaestroCheckBox->setEnabled(enabled);
 	}
 
 	ShowControlWidget::~ShowControlWidget() {

@@ -5,13 +5,20 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.30.1] - In Progress
 ### Added
-- Added ability to merge a Cuefile into the current Maestro instead of replacing it.
+- Added File > Merge, which loads a Cuefile on top of the current Maestro instead of replacing it.
+- Added File > Queue, which loads a Cuefile into the Event History without affecting the running Maestro.
 - Added ability to resize sections of the interface.
 - Added shortcut keys for Save, New, Open, etc.
 - Added cursor when using the Canvas brush tool.
 - Added duplicate name check to Palette Editor.
+- Added lock icon to tabs when `Lock Maestro` is checked in the Show tab.
+- Added check to prevent segfaults when editing certain animations while `Lock Maestro` is enabled in the Show tab.
+- Added buttons to clear the Event History and Event Queue in the Show tab.
+- Added confirmation prompt when there are unsaved changes.
 
 ### Changed
+- Show timer now runs continuously instead of only when the Show is running.
+- Moved Maestro play/pause and lock controls from Show tab to the center of the window.
 - Renamed several file menu options to be more clear about their actions.
 - Added tooltips to several menu options.
 - Renamed `Cue Interpreter` dialog to `Cue Previewer`.
@@ -23,6 +30,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Changed Show control behavior. When unchecking `Enabled Show`, the Show is removed instead of just paused.
 - Removed unnecessary Cues being saved to new Cuefiles.
 - Split MaestroControlWidget into individual subwidgets for easier development.
+- Fixed issue where Cues executed twice while loading.
+- Increased Event History to 200 events.
 
 ### Removed
 - Removed donation link.

@@ -16,7 +16,9 @@ namespace PixelMaestroStudio {
 	class ShowController {
 		public:
 			explicit ShowController(MaestroController* maestro_controller);
-			Event* add_event(uint32_t time, uint8_t *cue);
+			Event* add_event(uint32_t time, uint8_t* cue);
+			void clear();
+			int get_event_index(Event* event);
 			QString get_event_description(uint16_t index);
 			QVector<Event>* get_events();
 			void move(uint16_t from, uint16_t to);

@@ -25,55 +25,61 @@
         <x>0</x>
         <y>0</y>
         <width>546</width>
-        <height>440</height>
+        <height>470</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignTop">
-        <widget class="QGroupBox" name="settingsGroupBox">
-         <property name="title">
-          <string>Show Settings</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_18">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="resyncMaestroButton">
-            <property name="toolTip">
-             <string>Resets the last run time for all timers</string>
-            </property>
-            <property name="text">
-             <string>Resync Timers</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="enableCheckBox">
-            <property name="toolTip">
-             <string>Toggles the ability to schedule events</string>
-            </property>
-            <property name="text">
-             <string>Enable Show</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="lockMaestroCheckBox">
-            <property name="toolTip">
-             <string>Lets you create events without changing the Maestro</string>
-            </property>
-            <property name="text">
-             <string>Lock Maestro</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="4">
+       <item row="2" column="1" colspan="5">
         <widget class="QGroupBox" name="eventsGroupBox">
          <property name="title">
           <string>Events</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="0">
+           <widget class="QLabel" name="eventHistoryLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>History</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="eventListLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Queue</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QListWidget" name="eventQueueWidget">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>List of scheduled events</string>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustIgnored</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
            <layout class="QVBoxLayout" name="eventControlLayout">
             <property name="sizeConstraint">
@@ -192,27 +198,7 @@
             </item>
             <item>
              <layout class="QGridLayout" name="eventEditGridLayout">
-              <item row="1" column="2">
-               <widget class="QPushButton" name="addEventButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="toolTip">
-                 <string>Adds the selected Event(s) to the Event List</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../resources/images/images.qrc">
-                  <normaloff>:/icon_next.png</normaloff>:/icon_next.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
+              <item row="1" column="1">
                <widget class="QPushButton" name="removeEventButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -232,18 +218,27 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="moveEventUpButton">
+              <item row="1" column="3">
+               <widget class="QPushButton" name="addEventButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>Adds the selected Event(s) to the Event List</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
                 <property name="icon">
                  <iconset resource="../resources/images/images.qrc">
-                  <normaloff>:/icon_up.png</normaloff>:/icon_up.png</iconset>
+                  <normaloff>:/icon_next.png</normaloff>:/icon_next.png</iconset>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="2" column="2">
                <widget class="QPushButton" name="moveEventDownButton">
                 <property name="text">
                  <string/>
@@ -254,40 +249,48 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="playPauseButton">
+              <item row="0" column="2">
+               <widget class="QPushButton" name="moveEventUpButton">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../resources/images/images.qrc">
+                  <normaloff>:/icon_up.png</normaloff>:/icon_up.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QPushButton" name="clearQueueButton">
                 <property name="toolTip">
-                 <string>Start or stop the Maestro</string>
+                 <string>Clears the Event queue</string>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
                 <property name="icon">
                  <iconset resource="../resources/images/images.qrc">
-                  <normaloff>:/icon_pause.png</normaloff>
-                  <normalon>:/icon_play.png</normalon>:/icon_pause.png</iconset>
+                  <normaloff>:/icon_cancel.png</normaloff>:/icon_cancel.png</iconset>
                 </property>
-                <property name="checkable">
-                 <bool>true</bool>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="clearHistoryButton">
+                <property name="toolTip">
+                 <string>Clears the Event history</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../resources/images/images.qrc">
+                  <normaloff>:/icon_cancel.png</normaloff>:/icon_cancel.png</iconset>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
            </layout>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="eventHistoryLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>History</string>
-            </property>
-           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QListWidget" name="eventHistoryWidget">
@@ -308,57 +311,25 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QListWidget" name="eventQueueWidget">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>List of scheduled events</string>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QAbstractScrollArea::AdjustIgnored</enum>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::ExtendedSelection</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="eventListLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Queue</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
        <item row="0" column="2">
+        <widget class="QCheckBox" name="enableCheckBox">
+         <property name="toolTip">
+          <string>Toggles the ability to schedule events</string>
+         </property>
+         <property name="text">
+          <string>Enable Show</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
         <widget class="QGroupBox" name="advancedSettingsGroupBox">
          <property name="title">
-          <string>Advanced Settings</string>
+          <string>Show Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_16">
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="loopCheckBox">
-            <property name="toolTip">
-             <string>If true, the Show repeats after the last event</string>
-            </property>
-            <property name="text">
-             <string>Loop Events</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="timingModeLabel">
             <property name="sizePolicy">
@@ -372,6 +343,16 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="loopCheckBox">
+            <property name="toolTip">
+             <string>If true, the Show repeats after the last event</string>
+            </property>
+            <property name="text">
+             <string>Loop Events</string>
             </property>
            </widget>
           </item>
@@ -429,7 +410,7 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item row="0" column="4">
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -450,9 +431,6 @@
  </widget>
  <tabstops>
   <tabstop>scrollArea</tabstop>
-  <tabstop>enableCheckBox</tabstop>
-  <tabstop>lockMaestroCheckBox</tabstop>
-  <tabstop>resyncMaestroButton</tabstop>
   <tabstop>timingModeComboBox</tabstop>
   <tabstop>loopCheckBox</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
@@ -461,7 +439,6 @@
   <tabstop>eventTimeSpinBox</tabstop>
   <tabstop>moveEventUpButton</tabstop>
   <tabstop>removeEventButton</tabstop>
-  <tabstop>playPauseButton</tabstop>
   <tabstop>addEventButton</tabstop>
   <tabstop>moveEventDownButton</tabstop>
   <tabstop>eventQueueWidget</tabstop>

@@ -41,9 +41,9 @@ namespace PixelMaestroStudio {
 	 * Prompts the user to replace their current session with a new one.
 	 * @return If true, user wants to replace the session.
 	 */
-	bool MainWindow::confirm_session_overwrite() {
+	bool MainWindow::confirm_unsaved_changes() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Open new Maestro", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
 			return true;
 		}
@@ -66,7 +66,7 @@ namespace PixelMaestroStudio {
 		maestro_controller_ = new MaestroController(maestro_control_widget_);
 
 		// Build DrawingAreas if enabled in Preferences
-		// FIXME: Allow for dynamic adding/removing DrawingAreas
+		// TODO: Allow for dynamic adding/removing DrawingAreas
 		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
 			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
@@ -114,6 +114,9 @@ namespace PixelMaestroStudio {
 	 * Closes the program.
 	 */
 	void MainWindow::on_exitAction_triggered() {
+		if (maestro_control_widget_->get_maestro_modified() && !confirm_unsaved_changes()) {
+			return;
+		}
 		close();
 	}
 
@@ -140,7 +143,7 @@ namespace PixelMaestroStudio {
 		// If Animation Editor is currently open, verify user wants to close
 		if (initialization_complete) {
 			// If the user chooses not to continue, exit
-			if (!confirm_session_overwrite()) {
+			if (maestro_control_widget_->get_maestro_modified() && !confirm_unsaved_changes()) {
 				return;
 			}
 		}
@@ -161,6 +164,7 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_openAction_triggered() {
 		QString file = open_cuefile_dialog();
 		if (!file.isEmpty()) {
+			on_newAction_triggered();
 			if (open_cuefile(file)) {
 				set_active_cuefile(file);
 			}
@@ -176,6 +180,18 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Opens a Cuefile and appends each Cue to the Event History.
+	 */
+	void MainWindow::on_queueAction_triggered() {
+		QString file = open_cuefile_dialog();
+		if (!file.isEmpty()) {
+			maestro_control_widget_->show_control_widget_->set_maestro_locked(true);
+			open_cuefile(file);
+			maestro_control_widget_->show_control_widget_->set_maestro_locked(false);
+		}
+	}
+
+	/**
 	 * Saves the currently loaded Cuefile.
 	 */
 	void MainWindow::on_saveAction_triggered() {
@@ -188,6 +204,7 @@ namespace PixelMaestroStudio {
 				QDataStream datastream(&file);
 				this->maestro_controller_->save_maestro_to_datastream(&datastream);
 				file.close();
+				setWindowModified(false);
 			}
 		}
 	}
@@ -245,6 +262,7 @@ namespace PixelMaestroStudio {
 		if (file.open(QFile::ReadOnly)) {
 			QByteArray bytes = file.readAll();
 			maestro_control_widget_->load_cuefile(bytes);
+			setWindowModified(false);
 			return true;
 		}
 

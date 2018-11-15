@@ -886,8 +886,10 @@
      <string>&amp;File</string>
     </property>
     <addaction name="newAction"/>
+    <addaction name="separator"/>
     <addaction name="openAction"/>
     <addaction name="mergeAction"/>
+    <addaction name="queueAction"/>
     <addaction name="saveAction"/>
     <addaction name="saveAsAction"/>
     <addaction name="separator"/>
@@ -925,6 +927,9 @@
   <action name="exitAction">
    <property name="text">
     <string>&amp;Exit</string>
+   </property>
+   <property name="toolTip">
+    <string>Close PixelMaestro Studio</string>
    </property>
   </action>
   <action name="newAction">
@@ -982,6 +987,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="queueAction">
+   <property name="text">
+    <string>&amp;Queue...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens a Cuefile and adds its Cues to the Event History</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>

@@ -26,6 +26,29 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Deletes all events.
+	 */
+	void ShowController::clear() {
+		event_queue_.clear();
+	}
+
+	/**
+	 * Returns the index of the specified Event.
+	 * @param event The Event to test.
+	 * @return Event index (or -1 if not found)
+	 */
+	int ShowController::get_event_index(Event* event) {
+		for (int i = 0; i < event_queue_.size(); i++) {
+			Event test_event = event_queue_.at(i);
+			if (test_event == *event) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	/**
 	 * Returns the list of Events.
 	 * @return Event list.
 	 */

@@ -65,15 +65,29 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Returns whether the Maestro has been modified.
+	 * @return If true, the Maestro has been modified.
+	 */
+	bool MaestroControlWidget::get_maestro_modified() const {
+		return modified_;
+	}
+
+	/**
 	 * Loads a Cuefile into the Maestro.
 	 * @param byte_array Byte array containing the Cuefile.
 	 */
 	void MaestroControlWidget::load_cuefile(QByteArray byte_array) {
-		this->loading_cuefile_ = true;
+		/*
+		 * To test the Cuefile, we read each byte into a virtual Maestro.
+		 * If it runs, we then pass it to the actual Maestro.
+		 */
+		Maestro virtual_maestro(nullptr, 0);
+		virtual_maestro.set_cue_controller(UINT16_MAX);
 		for (int i = 0; i < byte_array.size(); i++) {
 			uint8_t byte = (uint8_t)byte_array.at(i);
-			if (cue_controller_->read(byte)) {
-				run_cue(cue_controller_->get_buffer(), true);
+
+			if (virtual_maestro.get_cue_controller()->read(byte)) {
+				run_cue(virtual_maestro.get_cue_controller()->get_buffer(), false);
 			}
 		}
 
@@ -84,7 +98,67 @@ namespace PixelMaestroStudio {
 		// Refresh Palettes
 		animation_control_widget_->refresh_palettes();
 		canvas_control_widget_->refresh_palettes();
-		this->loading_cuefile_ = false;
+
+		set_maestro_modified(false);
+	}
+
+	/**
+	 * Toggles the Maestro lock.
+	 * @param checked If true, the Maestro is locked.
+	 */
+	void MaestroControlWidget::on_lockButton_toggled(bool checked) {
+		show_control_widget_->set_maestro_locked(checked);
+
+		/*
+		 * Toggle the lock icon displayed in each Tab.
+		 * Display it for all Tabs except for the Show and Device Tabs.
+		 * Also display it for the Advanced Settings Group Box.
+		 */
+		QList<QWidget*> tabs = ui->tabWidget->findChildren<QWidget*>(QRegExp("^((?!show)(?!device).)*Tab$"));
+
+		if (checked) {
+			for(QWidget* tab : tabs) {
+				ui->tabWidget->setTabIcon(ui->tabWidget->indexOf(tab), QIcon(":/icon_lock.png"));
+			}
+		}
+		else { // Refresh Maestro settings when unlocked
+			for(QWidget* tab : tabs) {
+				ui->tabWidget->setTabIcon(ui->tabWidget->indexOf(tab), QIcon());
+			}
+			refresh_maestro_settings();
+			refresh_section_settings();
+		}
+	}
+
+	/**
+	 * Toggles whether the Maestro is running or paused.
+	 * @param checked If true, the Maestro is paused.
+	 */
+	void MaestroControlWidget::on_playPauseButton_toggled(bool checked) {
+		if (checked) { // Stop the Maestro
+			maestro_controller_->stop();
+			run_cue(
+				maestro_handler->stop()
+			);
+
+			ui->playPauseButton->setToolTip("Start playback");
+		}
+		else {
+			maestro_controller_->start();
+			run_cue(
+				maestro_handler->start()
+			);
+
+			ui->playPauseButton->setToolTip("Stop playback");
+		}
+	}
+
+	void MaestroControlWidget::on_syncButton_clicked() {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Sync Timers", "This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
+		if (confirm == QMessageBox::Yes) {
+			maestro_controller_->get_maestro()->sync(maestro_controller_->get_total_elapsed_time());
+		}
 	}
 
 	/**
@@ -110,8 +184,6 @@ namespace PixelMaestroStudio {
 	 * @param serial_only If true, don't run the Cue on the local Maestro.
 	 */
 	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
-		// TODO: Reflect unsaved changes
-
 		show_control_widget_->add_event_to_history(cue);
 
 		/*
@@ -123,12 +195,11 @@ namespace PixelMaestroStudio {
 			(show_control_widget_->get_maestro_locked() && cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::ShowCueHandler)) {
 			if (!remote_only) {
 				cue_controller_->run(cue);
+				set_maestro_modified(true);
 			}
 
-			// Send to serial device controller.
-			if (device_control_widget_ != nullptr) {
-				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
-			}
+			// Send to serial device controller
+			device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 		}
 	}
 
@@ -157,6 +228,11 @@ namespace PixelMaestroStudio {
 			cue_controller_->get_handler(CueController::Handler::ShowCueHandler)
 		);
 
+		// Check whether the Maestro is currently running. If not, trigger pause button
+		if (maestro_controller->get_running() == false) {
+			ui->playPauseButton->setChecked(true);
+		}
+
 		// Initialize UI components and controllers
 		section_control_widget_->set_active_section(maestro_controller_->get_maestro()->get_section(0));
 		section_control_widget_->initialize();
@@ -164,6 +240,19 @@ namespace PixelMaestroStudio {
 		canvas_control_widget_->initialize();
 		show_control_widget_->initialize();
 		refresh_maestro_settings();
+
+		set_maestro_modified(false);
+	}
+
+	/**
+	 * Sets whether the Maestro has been modified.
+	 * @param modified If true, Maestro has been modified.
+	 */
+	void MaestroControlWidget::set_maestro_modified(bool modified) {
+		this->modified_ = modified;
+
+		// Update MainWindow title
+		this->parentWidget()->parentWidget()->parentWidget()->setWindowModified(modified);
 	}
 
 	MaestroControlWidget::~MaestroControlWidget() {

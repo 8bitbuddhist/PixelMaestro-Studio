@@ -426,7 +426,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>PixelMaestro Studio - Separate Window</string>
+   <string>PixelMaestro Studio</string>
   </property>
   <layout class="QGridLayout" name="maestroLayout">
    <property name="leftMargin">

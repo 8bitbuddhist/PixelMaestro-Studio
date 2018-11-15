@@ -26,14 +26,13 @@ namespace PixelMaestroStudio {
 			bool get_maestro_locked() const;
 			void initialize();
 			void refresh();
+			void set_maestro_locked(bool locked);
 
 		protected:
 			bool eventFilter(QObject *watched, QEvent *event);
 
 		private slots:
 			void on_enableCheckBox_toggled(bool checked);
-			void on_lockMaestroCheckBox_toggled(bool checked);
-			void on_resyncMaestroButton_clicked();
 			void on_timingModeComboBox_currentIndexChanged(int index);
 			void on_loopCheckBox_toggled(bool checked);
 			void timer_refresh();
@@ -42,7 +41,10 @@ namespace PixelMaestroStudio {
 			void on_removeEventButton_clicked();
 			void on_moveEventUpButton_clicked();
 			void on_moveEventDownButton_clicked();
-			void on_playPauseButton_toggled(bool checked);
+
+			void on_clearQueueButton_clicked();
+
+			void on_clearHistoryButton_clicked();
 
 		private:
 			/// Translates Cues into human-readable strings.
@@ -52,7 +54,10 @@ namespace PixelMaestroStudio {
 			QVector<QVector<uint8_t>> event_history_;
 
 			/// Maximum number of events to retain.
-			const int event_history_max_ = 50;
+			const int event_history_max_ = 200;
+
+			/// The index of the last event that ran.
+			int last_index_ = -1;
 
 			/// Locale for formatting numbers (specifically for displaying times).
 			QLocale locale_ = QLocale::system();

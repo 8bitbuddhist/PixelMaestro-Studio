@@ -27,25 +27,15 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_activeSectionComboBox_currentIndexChanged(int index);
-
 			void on_gridSizeXSpinBox_editingFinished();
-
 			void on_gridSizeYSpinBox_editingFinished();
-
 			void on_scrollXSpinBox_editingFinished();
-
 			void on_activeLayerComboBox_currentIndexChanged(int index);
-
 			void on_mixModeComboBox_currentIndexChanged(int index);
-
 			void on_scrollYSpinBox_editingFinished();
-
 			void on_alphaSpinBox_editingFinished();
-
 			void on_offsetXSpinBox_editingFinished();
-
 			void on_offsetYSpinBox_editingFinished();
-
 			void on_layerSpinBox_editingFinished();
 
 		private:

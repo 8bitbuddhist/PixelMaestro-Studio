@@ -47,8 +47,8 @@ namespace PixelMaestroStudio {
 			void save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers = nullptr);
 			void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
 			Section* set_sections(uint8_t num_sections, Point dimensions = Point(10, 10));
-			void stop();
 			void start();
+			void stop();
 
 		private:
 			/// References each drawing area that the Maestro is rendering to.

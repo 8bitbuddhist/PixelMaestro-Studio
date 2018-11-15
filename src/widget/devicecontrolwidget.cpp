@@ -12,7 +12,16 @@
 #include "dialog/preferencesdialog.h"
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
+#include "model/serialdevicethread.h"
 
+/*
+ * TODO: Power calculator for different LED types
+ *	Watts = Amps * Voltage (direct current)
+ *	Roughly 20mA per LED channel
+ *	Run in thread, update periodically (maybe on a timed interval of 1-5 seconds?)
+ *	https://www.audectra.com/guides/power-consumption-of-rgb-led-strips/
+ *	https://learn.adafruit.com/rgb-led-strips/current-draw
+ */
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
@@ -205,7 +214,6 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
 		// Check the Cue against the block list
-		// NOTE: This won't prevent Cues from running on the Maestro, just from running on a serial device.
 		for (BlockedCue blocked : blocked_cues_) {
 			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
 				switch (blocked.handler) {
@@ -298,7 +306,7 @@ namespace PixelMaestroStudio {
 	 * @param size Size of data to send.
 	 */
 	void DeviceControlWidget::write_to_device(SerialDevice *device, const char *out, int size, bool progress) {
-		SerialWriteThread* thread = new SerialWriteThread(device,
+		SerialDeviceThread* thread = new SerialDeviceThread(device,
 														  static_cast<const char*>(out),
 														  static_cast<uint16_t>(size));
 		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));

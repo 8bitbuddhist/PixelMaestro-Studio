@@ -28,7 +28,7 @@ namespace PixelMaestroStudio {
 		this->maestro_control_widget_ = maestro_control_widget;
 		initialize_maestro();
 
-		// Initialize timer
+		// Initialize timers
 		timer_.setTimerType(Qt::PreciseTimer);
 		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
@@ -120,7 +120,6 @@ namespace PixelMaestroStudio {
 	 * Saves Maestro settings to a DataStream as Cues.
 	 * @param datastream Stream to save Cues to.
 	 * @param save_handlers CueHandlers that are enabled for saving.
-	 * TODO: Make threaded
 	 */
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream, QVector<CueController::Handler>* save_handlers) {
 		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
@@ -136,7 +135,9 @@ namespace PixelMaestroStudio {
 			if (show != nullptr) {
 				write_cue_to_stream(datastream, maestro_handler->set_show());
 				ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowCueHandler);
-				write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
+				if (show->get_events() != nullptr) {
+					write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
+				}
 				write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
 				write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
 			}
@@ -321,9 +322,8 @@ namespace PixelMaestroStudio {
 	}
 
 	void MaestroController::update() {
-		// Force the Maestro to update
-		// FIXME: Move to persistent thread
-		maestro_->update(get_total_elapsed_time(), true);
+		maestro_->update(get_total_elapsed_time(), false);
+		// TODO: Emit MaestroChanged as signal. DrawingAreas can connect to this to refresh whenever the maestro changes
 	}
 
 	/**

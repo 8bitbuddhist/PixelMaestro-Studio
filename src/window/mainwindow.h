@@ -32,6 +32,8 @@ namespace PixelMaestroStudio {
 			void on_saveAsAction_triggered();
 			void on_openAction_triggered();
 
+			void on_queueAction_triggered();
+
 		private:
 			/// Whether the application has completed initialization.
 			bool initialization_complete = false;
@@ -54,7 +56,7 @@ namespace PixelMaestroStudio {
 
 			void initialize_widgets();
 			bool open_cuefile(QString filename);
-			bool confirm_session_overwrite();
+			bool confirm_unsaved_changes();
 			void set_active_cuefile(QString path);
 			QString open_cuefile_dialog();
 	};

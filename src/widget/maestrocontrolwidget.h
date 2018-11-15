@@ -72,6 +72,7 @@ namespace PixelMaestroStudio {
 
 			explicit MaestroControlWidget(QWidget* parent);
 			~MaestroControlWidget();
+			bool get_maestro_modified() const;
 			void edit_palettes(QString palette);
 			MaestroController* get_maestro_controller();
 			void load_cuefile(QByteArray byte_array);
@@ -79,21 +80,25 @@ namespace PixelMaestroStudio {
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, bool remote_only = false);
 			void set_maestro_controller(MaestroController* maestro_controller);
+			void set_maestro_modified(bool modified);
+
+		private slots:
+			void on_playPauseButton_toggled(bool checked);
+
+			void on_syncButton_clicked();
+
+			void on_lockButton_toggled(bool checked);
 
 		private:
-			/**
-			 * If true, we're currently loading a Cuefile.
-			 * This is used to detect manual edits, e.g. when the session is unsaved.
-			 */
-			bool loading_cuefile_ = false;
-
 			Ui::MaestroControlWidget *ui;
-
-			/// Separate Maestro DrawingArea
-			std::unique_ptr<MaestroDrawingAreaDialog> drawing_area_dialog_;
 
 			/// MaestroController that this widget is controlling.
 			MaestroController* maestro_controller_ = nullptr;
+
+			/// Tracks whether the Maestro is currently modified.
+			bool modified_ = false;
+
+			// TODO: Add undo/redo functionality, which basically stores two separate Cuefiles: a "last action" Cuefile and a "most recent" Cuefile
 	};
 }
 
