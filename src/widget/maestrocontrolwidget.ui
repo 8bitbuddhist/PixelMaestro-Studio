@@ -168,26 +168,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="syncButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>Syncs all timer-based components to the Maestro</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/images/images.qrc">
-         <normaloff>:/icon_refresh.png</normaloff>:/icon_refresh.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QToolButton" name="lockButton">
        <property name="toolTip">
         <string>Prevents actions from changing the Maestro</string>
@@ -231,6 +211,26 @@
        </property>
        <property name="checked">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="syncButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Syncs all timer-based components to the Maestro</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/images/images.qrc">
+         <normaloff>:/icon_refresh.png</normaloff>:/icon_refresh.png</iconset>
        </property>
       </widget>
      </item>

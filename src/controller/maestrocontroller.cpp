@@ -323,7 +323,6 @@ namespace PixelMaestroStudio {
 
 	void MaestroController::update() {
 		maestro_->update(get_total_elapsed_time(), false);
-		// TODO: Emit MaestroChanged as signal. DrawingAreas can connect to this to refresh whenever the maestro changes
 	}
 
 	/**

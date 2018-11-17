@@ -7,6 +7,8 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QSettings>
+#include <QTabWidget>
+#include <QWidget>
 #include <thread>
 #include "dialog/cueinterpreterdialog.h"
 #include "dialog/preferencesdialog.h"
@@ -114,6 +116,12 @@ namespace PixelMaestroStudio {
 				ui->serialOutputListWidget->addItem(device.get_port_name());
 				serial_devices_.push_back(device);
 				save_devices();
+
+				// Update tab icon
+				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->findChild<QWidget*>("tabWidget"));
+				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
+				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_connected.png"));
+
 			}
 			else {
 				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + "."));
@@ -161,6 +169,13 @@ namespace PixelMaestroStudio {
 			ui->serialOutputListWidget->takeItem(device_index);
 			serial_devices_.removeAt(device_index);
 			save_devices();
+
+			// If no devices are connected, hide the tab icon
+			if (ui->serialOutputListWidget->count() == 0) {
+				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->findChild<QWidget*>("tabWidget"));
+				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
+				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(""));
+			}
 		}
 	}
 

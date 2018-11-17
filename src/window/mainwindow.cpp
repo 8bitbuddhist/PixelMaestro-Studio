@@ -30,6 +30,7 @@ namespace PixelMaestroStudio {
 		on_newAction_triggered();
 		if (settings.value(PreferencesDialog::save_session).toBool() == true && !bytes.isEmpty()) {	
 			maestro_control_widget_->load_cuefile(bytes);
+			maestro_control_widget_->set_maestro_modified(true);
 		}
 
 		set_active_cuefile("");
@@ -139,7 +140,6 @@ namespace PixelMaestroStudio {
 	 * @return True if the Animation Editor opened successfully.
 	 */
 	void MainWindow::on_newAction_triggered() {
-
 		// If Animation Editor is currently open, verify user wants to close
 		if (initialization_complete) {
 			// If the user chooses not to continue, exit
@@ -162,6 +162,10 @@ namespace PixelMaestroStudio {
 	 * Replaces the current Maestro with the loaded Cuefile.
 	 */
 	void MainWindow::on_openAction_triggered() {
+		if (maestro_control_widget_->get_maestro_modified() && !confirm_unsaved_changes()) {
+			return;
+		}
+
 		QString file = open_cuefile_dialog();
 		if (!file.isEmpty()) {
 			on_newAction_triggered();

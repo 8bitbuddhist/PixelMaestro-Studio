@@ -15,6 +15,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added check to prevent segfaults when editing certain animations while `Lock Maestro` is enabled in the Show tab.
 - Added buttons to clear the Event History and Event Queue in the Show tab.
 - Added confirmation prompt when there are unsaved changes.
+- Added ability to click on a Section to make it the Active Section.
 
 ### Changed
 - Show timer now runs continuously instead of only when the Show is running.
