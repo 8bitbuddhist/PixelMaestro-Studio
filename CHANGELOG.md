@@ -16,6 +16,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added buttons to clear the Event History and Event Queue in the Show tab.
 - Added confirmation prompt when there are unsaved changes.
 - Added ability to click on a Section to make it the Active Section.
+- Added "replace" tool for Canvases, which replaces a single color with another color.
 
 ### Changed
 - Show timer now runs continuously instead of only when the Show is running.
@@ -33,6 +34,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Split MaestroControlWidget into individual subwidgets for easier development.
 - Fixed issue where Cues executed twice while loading.
 - Increased Event History to 200 events.
+- Fixed issue where cancelling the Palette Editor dialog saved a new color anyway.
 
 ### Removed
 - Removed donation link.

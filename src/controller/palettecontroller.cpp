@@ -18,7 +18,7 @@ namespace PixelMaestroStudio {
 	 * @param mirror Whether to mirror the palette.
 	 * @return New palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, Colors::RGB base_color, Colors::RGB target_color, bool mirror) {
+	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
 		palettes_.push_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
 		return &palettes_[palettes_.size() - 1];
 	}
@@ -110,7 +110,7 @@ namespace PixelMaestroStudio {
 		 * Check if settings contains stored Palettes.
 		 * If not, initialize a new set of Palettes.
 		 */
-		if (!settings.childGroups().contains(PreferencesDialog::palettes) || settings.value(PreferencesDialog::save_session).toBool() == false) {
+		if (!settings.childGroups().contains(PreferencesDialog::palettes) || settings.value(PreferencesDialog::save_session) == false) {
 			initialize_palettes();
 			return;
 		}
@@ -191,7 +191,7 @@ namespace PixelMaestroStudio {
 	PaletteController::~PaletteController() {
 		// If the user chose to save their session, save Palettes to settings
 		QSettings settings;
-		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+		if (settings.value(PreferencesDialog::save_session) == true) {
 			save_palettes();
 		}
 	}

@@ -65,7 +65,7 @@ namespace PixelMaestroStudio {
 
 			PaletteController();
 			~PaletteController();
-			PaletteWrapper* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, Colors::RGB base_color, Colors::RGB target_color, bool mirror = false);
+			PaletteWrapper* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false);
 			Colors::RGB deserialize_color(QString string);
 			int find(Colors::RGB* search_palette);
 			PaletteWrapper* get_palette(uint8_t index);

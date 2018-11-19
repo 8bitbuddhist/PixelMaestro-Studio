@@ -18,5 +18,6 @@
         <file>icon_back_double.png</file>
         <file>icon_refresh.png</file>
         <file>icon_connected.png</file>
+        <file>icon_replace.png</file>
     </qresource>
 </RCC>

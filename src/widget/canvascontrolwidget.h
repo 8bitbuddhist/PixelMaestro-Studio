@@ -69,9 +69,11 @@ namespace PixelMaestroStudio {
 
 			void on_brushToolButton_toggled(bool checked);
 
+			void on_replaceToolButton_toggled(bool checked);
+
 		private:
 			/// Color index storage for Canvases.
-			uint8_t canvas_color_index_ = 255;
+			uint8_t selected_color_index_ = 255;
 
 			/// Conversion from canvas_color_ into PixelMaestro color.
 			Colors::RGB canvas_rgb_color_;
@@ -87,6 +89,7 @@ namespace PixelMaestroStudio {
 			void set_controls_enabled(bool enabled);
 			void set_frame_interval();
 			void set_circle_controls_enabled(bool enabled);
+			void set_replace_controls_enabled(bool enabled);
 			void set_line_controls_enabled(bool enabled);
 			void set_brush_controls_enabled(bool enabled);
 			void set_rect_controls_enabled(bool enabled);

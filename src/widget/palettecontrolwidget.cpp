@@ -55,10 +55,12 @@ namespace PixelMaestroStudio {
 		QPushButton* sender = (QPushButton*)QObject::sender();
 		Colors::RGB* source_color = &active_palette_->palette.get_colors()[sender->objectName().toInt()];
 		QColor new_color = QColorDialog::getColor(QColor(source_color->r, source_color->g, source_color->b), this, "Select Color");
-		source_color->r = new_color.red();
-		source_color->g = new_color.green();
-		source_color->b = new_color.blue();
-		set_button_color(sender, source_color->r, source_color->g, source_color->b);
+		if (new_color.isValid()) {
+			source_color->r = new_color.red();
+			source_color->g = new_color.green();
+			source_color->b = new_color.blue();
+			set_button_color(sender, source_color->r, source_color->g, source_color->b);
+		}
 	}
 
 	/// Creates a new Palette.

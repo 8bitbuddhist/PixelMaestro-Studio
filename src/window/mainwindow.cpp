@@ -10,10 +10,7 @@
 #include "ui_mainwindow.h"
 
 namespace PixelMaestroStudio {
-	/*
-	 * TODO: Add ability to add/remove Maestro preview widget and window on-demand
-	 * Look into dockable widgets: https://doc.qt.io/qt-5/qdockwidget.html
-	 */
+
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 		ui->setupUi(this);
 
@@ -67,7 +64,7 @@ namespace PixelMaestroStudio {
 		maestro_controller_ = new MaestroController(maestro_control_widget_);
 
 		// Build DrawingAreas if enabled in Preferences
-		// TODO: Allow for dynamic adding/removing DrawingAreas
+		// TODO: Allow for dynamic adding/removing DrawingAreas. Look into dockable widgets: https://doc.qt.io/qt-5/qdockwidget.html
 		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
 			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);

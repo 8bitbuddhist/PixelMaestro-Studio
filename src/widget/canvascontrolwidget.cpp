@@ -7,6 +7,7 @@
 #include "utility/canvasutility.h"
 #include "widget/palettecontrolwidget.h"
 
+// TODO: Live video streaming/conversion
 namespace PixelMaestroStudio {
 	CanvasControlWidget::CanvasControlWidget(QWidget *parent) :	QWidget(parent), ui(new Ui::CanvasControlWidget) {
 		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
@@ -55,6 +56,7 @@ namespace PixelMaestroStudio {
 		canvas_shape_type_group_.addButton(ui->lineToolButton);
 		canvas_shape_type_group_.addButton(ui->brushToolButton);
 		canvas_shape_type_group_.addButton(ui->rectToolButton);
+		canvas_shape_type_group_.addButton(ui->replaceToolButton);
 		canvas_shape_type_group_.addButton(ui->textToolButton);
 		canvas_shape_type_group_.addButton(ui->triangleToolButton);
 
@@ -78,7 +80,7 @@ namespace PixelMaestroStudio {
 	 * @return Canvas Palette color index.
 	 */
 	uint8_t CanvasControlWidget::get_selected_color_index() const {
-		return canvas_color_index_;
+		return selected_color_index_;
 	}
 
 	/**
@@ -105,15 +107,15 @@ namespace PixelMaestroStudio {
 		QPushButton* sender = (QPushButton*)QObject::sender();
 
 		if (sender != ui->colorPickerCancelButton) {
-			canvas_color_index_ = sender->objectName().toInt();
+			selected_color_index_ = sender->objectName().toInt();
 
 			// Change the color of the Color button to reflect the selection
 			PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget_->palette_controller_.get_palette(ui->paletteComboBox->currentIndex());
-			Colors::RGB color = palette_wrapper->palette.get_colors()[canvas_color_index_];
+			Colors::RGB color = palette_wrapper->palette.get_colors()[selected_color_index_];
 			ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 		}
 		else {
-			canvas_color_index_ = 255;
+			selected_color_index_ = 255;
 			ui->selectColorButton->setStyleSheet(QString("background-color: transparent;"));
 		}
 
@@ -121,7 +123,7 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->canvas_handler->set_drawing_color(
 				maestro_control_widget_->section_control_widget_->get_section_index(),
 				maestro_control_widget_->section_control_widget_->get_layer_index(),
-				canvas_color_index_
+				selected_color_index_
 			)
 		);
 	}
@@ -182,7 +184,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_circle(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
 					ui->targetXSpinBox->value(),
@@ -195,7 +197,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_line(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
 					ui->targetXSpinBox->value(),
@@ -208,7 +210,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_point(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value()
 				)
@@ -219,7 +221,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_rect(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
 					ui->targetXSpinBox->value(),
@@ -228,12 +230,41 @@ namespace PixelMaestroStudio {
 				)
 			);
 		}
+		else if (checked_button == ui->replaceToolButton) {
+			// Replace all instances of the selected color index in the current frame with the new color index.
+			Section* active_section = maestro_control_widget_->section_control_widget_->get_active_section();
+			Point* dimensions = active_section->get_dimensions();
+
+			uint8_t* frame = active_section->get_canvas()->get_frame(active_section->get_canvas()->get_current_frame_index());
+			uint32_t target_point = dimensions->get_inline_index(ui->originXSpinBox->value(), ui->originYSpinBox->value());
+			uint8_t target_index = frame[target_point];
+
+			for (uint16_t row = 0; row < dimensions->y; row++) {
+				for (uint16_t column = 0; column < dimensions->x; column++) {
+					uint32_t frame_index = dimensions->get_inline_index(column, row);
+
+					if (frame[frame_index] == target_index) {
+						frame[frame_index] = selected_color_index_;
+					}
+				}
+			}
+
+			maestro_control_widget_->run_cue(
+				maestro_control_widget_->canvas_handler->draw_frame(
+					maestro_control_widget_->section_control_widget_->get_section_index(),
+					maestro_control_widget_->section_control_widget_->get_layer_index(),
+					dimensions->x,
+					dimensions->y,
+					frame
+				)
+			);
+		}
 		else if (checked_button == ui->textToolButton) {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->canvas_handler->draw_text(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
 					(Font::Type)ui->fontComboBox->currentIndex(),
@@ -247,7 +278,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_triangle(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					canvas_color_index_,
+					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
 					ui->targetXSpinBox->value(),
@@ -521,6 +552,10 @@ namespace PixelMaestroStudio {
 		set_rect_controls_enabled(checked);
 	}
 
+	void CanvasControlWidget::on_replaceToolButton_toggled(bool checked) {
+		set_replace_controls_enabled(checked);
+	}
+
 	/**
 	 * Selects text for the next Canvas shape.
 	 * @param checked If true, the next shape will be text.
@@ -654,6 +689,7 @@ namespace PixelMaestroStudio {
 		set_circle_controls_enabled(false);
 		set_line_controls_enabled(false);
 		set_rect_controls_enabled(false);
+		set_replace_controls_enabled(false);
 		set_text_controls_enabled(false);
 		set_triangle_controls_enabled(false);
 
@@ -698,6 +734,7 @@ namespace PixelMaestroStudio {
 		if (enabled) {
 			set_line_controls_enabled(false);
 			set_rect_controls_enabled(false);
+			set_replace_controls_enabled(false);
 			set_text_controls_enabled(false);
 			set_triangle_controls_enabled(false);
 
@@ -734,6 +771,7 @@ namespace PixelMaestroStudio {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_rect_controls_enabled(false);
+			set_replace_controls_enabled(false);
 			set_text_controls_enabled(false);
 			set_triangle_controls_enabled(false);
 			ui->fillCheckBox->setEnabled(false);
@@ -756,6 +794,7 @@ namespace PixelMaestroStudio {
 		if (enabled) {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
+			set_replace_controls_enabled(false);
 			set_text_controls_enabled(false);
 			set_triangle_controls_enabled(false);
 			ui->targetLabel->setText("Size");
@@ -775,6 +814,21 @@ namespace PixelMaestroStudio {
 		ui->fillCheckBox->setEnabled(enabled);
 	}
 
+	void CanvasControlWidget::set_replace_controls_enabled(bool enabled) {
+		if (enabled) {
+			set_brush_controls_enabled(false);
+			set_circle_controls_enabled(false);
+			set_rect_controls_enabled(false);
+			set_text_controls_enabled(false);
+			set_triangle_controls_enabled(false);
+			ui->fillCheckBox->setEnabled(false);
+		}
+
+		ui->originLabel->setEnabled(enabled);
+		ui->originXSpinBox->setEnabled(enabled);
+		ui->originYSpinBox->setEnabled(enabled);
+	}
+
 	/**
 	 * Enables Canvas text controls.
 	 * @param enabled If true, text controls are enabled.
@@ -784,6 +838,7 @@ namespace PixelMaestroStudio {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
 			set_rect_controls_enabled(false);
+			set_replace_controls_enabled(false);
 			set_triangle_controls_enabled(false);
 			ui->fillCheckBox->setEnabled(false);
 		}
@@ -808,6 +863,8 @@ namespace PixelMaestroStudio {
 			set_circle_controls_enabled(false);
 			set_line_controls_enabled(false);
 			set_rect_controls_enabled(false);
+			set_replace_controls_enabled(false);
+			set_replace_controls_enabled(false);
 			set_text_controls_enabled(false);
 
 			ui->originLabel->setText("Point A");

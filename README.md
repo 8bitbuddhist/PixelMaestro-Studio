@@ -14,27 +14,23 @@ For information about the PixelMaestro library, visit the [PixelMaestro Wiki](ht
 
 ### Windows
 
-On Windows, run `PixelMaestro_Studio.exe`.
+Download and run `PixelMaestro_Studio.exe`.
 
 ### Linux
 
-PixelMaestro Studio requires Qt 5.9.1 or higher. If you're using Ubuntu 18.04, you can install the latest version of Qt using apt:
-
-`$ sudo apt-get install qt5-default libqt5serialport5`
-
-If Qt 5.9.1 isn't available in your distribution, [download and install the latest version of Qt from the Qt website](https://www.qt.io/download).
+Download and run `PixelMaestro_Studio`.
 
 ## Building PixelMaestro Studio
 
 ### Build Requirements
-- QT 5 with the QtSerialPort module
+- QT 5.11.2 or higher with the QtSerialPort module
 - [PixelMaestro core library](https://github.com/8bitbuddhist/PixelMaestro) (included as a submodule)
 
 ### Build Instructions (Linux)
-1. Install Qt 5 with the QtSerialPort module
-2. Clone the repository to a folder on your computer
-3. Navigate to the newly created repository folder and use `git submodule init` and `git submodule update` to fetch the PixelMaestro core library.
-4. Open the `PixelMaestro_Studio.pro` file in Qt Creator, or use Qmake to build the project.
+1. [Download and install Qt 5.11.2 or higher](https://www.qt.io/download). Include the QtSerialPort module
+2. Clone the GitHub repository to a folder on your computer by running `git clone https://github.com/8bitbuddhist/PixelMaestro-Studio.git`
+3. Navigate to the newly created repository folder and run `git submodule init` and `git submodule update` to download the PixelMaestro core library.
+4. Launch the Qt Creator application and open the `PixelMaestro_Studio.pro` file, or use Qmake to build the project directly.
 
 ## Credits
 

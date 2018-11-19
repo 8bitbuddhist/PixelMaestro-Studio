@@ -340,7 +340,12 @@ namespace PixelMaestroStudio {
 		 * We refresh the UI to account for any Maestro changes.
 		 */
 		if (last_index != this->last_index_) {
-			// FIXME: The constant refreshes make it impossible to use this. Might be able to fix by adding checks before updating each field.
+			/*
+			 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
+			 * This makes it impossible to use the editor with Shows that update frequently.
+			 * Look into alternate solutions.
+			 */
+
 			//maestro_control_widget_->refresh_section_settings();
 			this->last_index_ = last_index;
 		}

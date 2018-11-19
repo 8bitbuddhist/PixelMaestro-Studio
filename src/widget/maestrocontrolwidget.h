@@ -97,8 +97,6 @@ namespace PixelMaestroStudio {
 
 			/// Tracks whether the Maestro is currently modified.
 			bool modified_ = false;
-
-			// TODO: Add undo/redo functionality, which basically stores two separate Cuefiles: a "last action" Cuefile and a "most recent" Cuefile
 	};
 }
 

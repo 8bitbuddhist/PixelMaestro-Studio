@@ -23,6 +23,9 @@
  *	Run in thread, update periodically (maybe on a timed interval of 1-5 seconds?)
  *	https://www.audectra.com/guides/power-consumption-of-rgb-led-strips/
  *	https://learn.adafruit.com/rgb-led-strips/current-draw
+ *
+ * TODO: Per-device Section mapping
+ *	Map a Section # on the PMS side to a Section # on the device side
  */
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
