@@ -52,6 +52,8 @@ namespace PixelMaestroStudio {
 
 			void set_progress_bar(int val);
 
+			void on_refreshButton_clicked();
+
 		private:
 			/// List of Cues that should be blocked from executing.
 			QVector<BlockedCue> blocked_cues_;

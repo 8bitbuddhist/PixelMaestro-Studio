@@ -159,13 +159,16 @@ namespace PixelMaestroStudio {
 	 * Replaces the current Maestro with the loaded Cuefile.
 	 */
 	void MainWindow::on_openAction_triggered() {
-		if (maestro_control_widget_->get_maestro_modified() && !confirm_unsaved_changes()) {
-			return;
-		}
-
 		QString file = open_cuefile_dialog();
 		if (!file.isEmpty()) {
 			on_newAction_triggered();
+			if (maestro_control_widget_->get_maestro_modified()) {
+				/*
+				 * If the user cancels out of newAction, the Maestro remains modified and so we know to cancel here.
+				 * Otherwise, the Maestro is replaced and therefore unmodified and so we can continue.
+				 */
+				return;
+			}
 			if (open_cuefile(file)) {
 				set_active_cuefile(file);
 			}

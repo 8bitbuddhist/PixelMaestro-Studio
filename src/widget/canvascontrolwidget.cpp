@@ -7,7 +7,6 @@
 #include "utility/canvasutility.h"
 #include "widget/palettecontrolwidget.h"
 
-// TODO: Live video streaming/conversion
 namespace PixelMaestroStudio {
 	CanvasControlWidget::CanvasControlWidget(QWidget *parent) :	QWidget(parent), ui(new Ui::CanvasControlWidget) {
 		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
@@ -27,17 +26,13 @@ namespace PixelMaestroStudio {
 	bool CanvasControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
 			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
-			if (watched == ui->canvasScrollArea && maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
+			if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
 				if (key_event->key() == Qt::Key_Left) {
 					on_playbackPreviousToolButton_clicked();
 					return true;
 				}
 				else if (key_event->key() == Qt::Key_Right) {
 					on_playbackNextToolButton_clicked();
-					return true;
-				}
-				else if (key_event->key() == Qt::Key_Space) {
-					ui->playbackStartStopToolButton->setChecked(!ui->playbackStartStopToolButton->isChecked());
 					return true;
 				}
 			}
@@ -89,6 +84,14 @@ namespace PixelMaestroStudio {
 	 */
 	bool CanvasControlWidget::get_painting_enabled() const {
 		return (ui->brushToolButton->isEnabled() && ui->brushToolButton->isChecked());
+	}
+
+	/**
+	 * Returns whether the Canvas replace tool button is active.
+	 * @return True if the replaceToolButton is active.
+	 */
+	bool CanvasControlWidget::get_replace_enabled() const {
+		return (ui->replaceToolButton->isEnabled() && ui->replaceToolButton->isChecked());
 	}
 
 	/**
@@ -338,7 +341,7 @@ namespace PixelMaestroStudio {
 			on_circleToolButton_toggled(true);
 
 			// Select a palette
-			on_paletteComboBox_currentIndexChanged(0);
+			on_paletteComboBox_activated(0);
 		}
 	}
 
@@ -449,6 +452,7 @@ namespace PixelMaestroStudio {
 			QString name = "Section " + QString::number(maestro_control_widget_->section_control_widget_->get_section_index()) +
 						   " Layer " + QString::number(maestro_control_widget_->section_control_widget_->get_layer_index()) +
 						   " Canvas";
+			name = maestro_control_widget_->palette_controller_.check_palette_name(name);
 			maestro_control_widget_->palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->paletteComboBox->blockSignals(true);
 			ui->paletteComboBox->addItem(name);
@@ -531,7 +535,7 @@ namespace PixelMaestroStudio {
 	 * Changes the Canvas' palette.
 	 * @param index New index.
 	 */
-	void CanvasControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
+	void PixelMaestroStudio::CanvasControlWidget::on_paletteComboBox_activated(int index) {
 		PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget_->palette_controller_.get_palette(index);
 		maestro_control_widget_->run_cue(
 			maestro_control_widget_->canvas_handler->set_palette(

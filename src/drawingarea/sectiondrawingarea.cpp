@@ -110,6 +110,12 @@ namespace PixelMaestroStudio {
 						}
 					}
 
+					if (widget->canvas_control_widget_->get_replace_enabled()) {
+						if (event->buttons() == Qt::LeftButton) {
+							widget->canvas_control_widget_->on_drawButton_clicked();
+						}
+					}
+
 					// Set the cursor location in the MaestroControlWidget
 					widget->canvas_control_widget_->set_canvas_origin(&pixel);
 				}

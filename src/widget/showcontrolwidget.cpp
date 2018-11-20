@@ -338,17 +338,17 @@ namespace PixelMaestroStudio {
 		/*
 		 * If the last event is different from the one on record, that means an Event ran.
 		 * We refresh the UI to account for any Maestro changes.
+		 *
+		 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
+		 * This makes it impossible to use the editor with Shows that update frequently.
+		 * Look into alternate solutions.
 		 */
+		/*
 		if (last_index != this->last_index_) {
-			/*
-			 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
-			 * This makes it impossible to use the editor with Shows that update frequently.
-			 * Look into alternate solutions.
-			 */
-
 			//maestro_control_widget_->refresh_section_settings();
 			this->last_index_ = last_index;
 		}
+		*/
 	}
 
 	/**

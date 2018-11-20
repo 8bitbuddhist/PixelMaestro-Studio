@@ -17,12 +17,6 @@
 #include "model/serialdevicethread.h"
 
 /*
- * TODO: Power calculator for different LED types
- *	Watts = Amps * Voltage (direct current)
- *	Roughly 20mA per LED channel
- *	Run in thread, update periodically (maybe on a timed interval of 1-5 seconds?)
- *	https://www.audectra.com/guides/power-consumption-of-rgb-led-strips/
- *	https://learn.adafruit.com/rgb-led-strips/current-draw
  *
  * TODO: Per-device Section mapping
  *	Map a Section # on the PMS side to a Section # on the device side
@@ -121,7 +115,7 @@ namespace PixelMaestroStudio {
 				save_devices();
 
 				// Update tab icon
-				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->findChild<QWidget*>("tabWidget"));
+				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
 				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
 				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_connected.png"));
 
@@ -175,11 +169,15 @@ namespace PixelMaestroStudio {
 
 			// If no devices are connected, hide the tab icon
 			if (ui->serialOutputListWidget->count() == 0) {
-				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->findChild<QWidget*>("tabWidget"));
+				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
 				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
 				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(""));
 			}
 		}
+	}
+
+	void DeviceControlWidget::on_refreshButton_clicked() {
+		populate_serial_devices();
 	}
 
 	/**

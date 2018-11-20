@@ -24,7 +24,6 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_typeComboBox_currentIndexChanged(int index);
-			void on_paletteComboBox_currentIndexChanged(int index);
 			void on_fadeCheckBox_toggled(bool checked);
 			void on_reverseCheckBox_toggled(bool checked);
 			void on_orientationComboBox_currentIndexChanged(int index);
@@ -36,6 +35,8 @@ namespace PixelMaestroStudio {
 			void on_cycleIntervalSlider_valueChanged(int value);
 
 			void on_delayIntervalSlider_valueChanged(int value);
+
+			void on_paletteComboBox_activated(int index);
 
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;

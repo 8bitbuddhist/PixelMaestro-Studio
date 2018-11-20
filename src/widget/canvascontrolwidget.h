@@ -21,10 +21,14 @@ namespace PixelMaestroStudio {
 
 			uint8_t get_selected_color_index() const;
 			bool get_painting_enabled() const;
+			bool get_replace_enabled() const;
 			void initialize();
 			void refresh();
 			void refresh_palettes();
 			void set_canvas_origin(Point* coordinates);
+
+		public slots:
+			void on_drawButton_clicked();
 
 		protected:
 			bool eventFilter(QObject *watched, QEvent *event);
@@ -63,13 +67,11 @@ namespace PixelMaestroStudio {
 
 			void on_clearButton_clicked();
 
-			void on_drawButton_clicked();
-
-			void on_paletteComboBox_currentIndexChanged(int index);
-
 			void on_brushToolButton_toggled(bool checked);
 
 			void on_replaceToolButton_toggled(bool checked);
+
+			void on_paletteComboBox_activated(int index);
 
 		private:
 			/// Color index storage for Canvases.

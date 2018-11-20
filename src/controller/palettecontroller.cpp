@@ -24,6 +24,27 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Checks the given string against the existing list of Palettes.
+	 * If a Palette is already using the name, a number is appended to the end of the name.
+	 * @param name Name to test.
+	 * @return Same name if the name is unused, or a new name if it's in use.
+	 */
+	QString PaletteController::check_palette_name(QString name) {
+		int iteration = 0;
+		while (get_palette(name) != nullptr) {
+			if (iteration == 0) {
+				name = name.append(" #" + (iteration + 2));
+			}
+			else {
+				name = name.replace(name.length() - 1, 1, (iteration + 2));
+			}
+			iteration++;
+		}
+
+		return name;
+	}
+
+	/**
 	 * Converts a serialized color into an RGB object.
 	 * @param string Serialized color.
 	 * @return Deserialized color.

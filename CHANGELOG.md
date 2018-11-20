@@ -3,7 +3,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.30.1] - In Progress
+## [v0.40] - In Progress
 ### Added
 - Added File > Merge, which loads a Cuefile on top of the current Maestro instead of replacing it.
 - Added File > Queue, which loads a Cuefile into the Event History without affecting the running Maestro.
@@ -17,6 +17,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Added confirmation prompt when there are unsaved changes.
 - Added ability to click on a Section to make it the Active Section.
 - Added "replace" tool for Canvases, which replaces a single color with another color.
+- Added refresh button to Device tab.
+- Added ability to re-select a Palette from the Palette drop-down. This lets you reapply a Palette after making changes.
 
 ### Changed
 - Show timer now runs continuously instead of only when the Show is running.

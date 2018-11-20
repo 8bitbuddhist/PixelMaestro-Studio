@@ -65,7 +65,7 @@ namespace PixelMaestroStudio {
 					)
 				);
 
-				on_paletteComboBox_currentIndexChanged(ui->paletteComboBox->currentIndex());
+				on_paletteComboBox_activated(ui->paletteComboBox->currentIndex());
 				on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
 				on_reverseCheckBox_toggled(ui->reverseCheckBox->isChecked());
 				on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
@@ -130,6 +130,10 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, fade between animation cycles.
 	 */
 	void AnimationControlWidget::on_fadeCheckBox_toggled(bool checked) {
+		ui->delayIntervalLabel->setEnabled(!checked);
+		ui->delayIntervalSlider->setEnabled(!checked);
+		ui->delayIntervalSpinBox->setEnabled(!checked);
+
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_fade(
 				maestro_control_widget->section_control_widget_->get_section_index(),
@@ -158,10 +162,10 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the Animation's Palette.
+	 * Changes the Animation's palette.
 	 * @param index New Palette index.
 	 */
-	void AnimationControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
+	void AnimationControlWidget::on_paletteComboBox_activated(int index) {
 		PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget->palette_controller_.get_palette(index);
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_palette(
@@ -236,6 +240,10 @@ namespace PixelMaestroStudio {
 				QString name = "Section " + QString::number(maestro_control_widget->section_control_widget_->get_section_index()) +
 							   " Layer " + QString::number(maestro_control_widget->section_control_widget_->get_layer_index()) +
 							   " Animation";
+
+				// Check to make sure the Palette name isn't already in use. If it is, append a number to the end of it.
+				name = maestro_control_widget->palette_controller_.check_palette_name(name);
+
 				maestro_control_widget->palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 				ui->paletteComboBox->blockSignals(true);
 				ui->paletteComboBox->addItem(name);
