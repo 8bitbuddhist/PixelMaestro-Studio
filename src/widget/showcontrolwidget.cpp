@@ -13,7 +13,7 @@ namespace PixelMaestroStudio {
 		// Capture key presses
 		qApp->installEventFilter(this);
 
-		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
+		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 
 		show_timer_.start();
 	}
@@ -23,7 +23,7 @@ namespace PixelMaestroStudio {
 	 * @param cue Cue to add.
 	 */
 	void ShowControlWidget::add_event_to_history(uint8_t *cue) {
-		ui->eventHistoryWidget->addItem(cue_interpreter_.interpret_cue(cue));
+		ui->eventHistoryWidget->addItem(CueInterpreter::interpret_cue(cue));
 
 		// Convert the Cue into an actual byte array, which we'll store in the Event History for later use.
 		uint16_t cue_size = maestro_control_widget_->cue_controller_->get_cue_size(cue);
@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool ShowControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
-			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+			QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
 			// Delete queued events only when when Event queue has focus
 			if (watched == ui->eventQueueWidget) {
 				if (key_event->key() == Qt::Key_Delete) {
@@ -74,7 +74,7 @@ namespace PixelMaestroStudio {
 
 		// Initialize ShowController
 		if (show_controller_ == nullptr) {
-			show_controller_ = new ShowController(maestro_control_widget_->get_maestro_controller());
+			show_controller_ = new ShowController();
 		}
 		else {
 			show_controller_->clear();
@@ -105,7 +105,7 @@ namespace PixelMaestroStudio {
 			ui->eventQueueWidget->addItem(
 				locale_.toString(event->get_time()) +
 				QString(": ") +
-				cue_interpreter_.interpret_cue(event->get_cue())
+				CueInterpreter::interpret_cue(event->get_cue())
 			);
 		}
 
@@ -261,7 +261,7 @@ namespace PixelMaestroStudio {
 					ui->eventQueueWidget->addItem(
 						locale_.toString(event->get_time()) +
 								QString(": ") +
-								cue_interpreter_.interpret_cue(event->get_cue())
+								CueInterpreter::interpret_cue(event->get_cue())
 					);
 				}
 			}
@@ -280,7 +280,7 @@ namespace PixelMaestroStudio {
 			ui->timingModeComboBox->blockSignals(false);
 
 			ui->loopCheckBox->blockSignals(true);
-			ui->loopCheckBox->setChecked(0);
+			ui->loopCheckBox->setChecked(false);
 			ui->loopCheckBox->blockSignals(false);
 		}
 	}
@@ -361,6 +361,7 @@ namespace PixelMaestroStudio {
 	}
 
 	ShowControlWidget::~ShowControlWidget() {
+		delete show_controller_;
 		delete ui;
 	}
 }

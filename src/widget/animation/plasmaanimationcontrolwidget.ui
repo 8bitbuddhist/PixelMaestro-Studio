@@ -29,7 +29,7 @@
    <item row="1" column="1">
     <widget class="QDoubleSpinBox" name="resolutionDoubleSpinBox">
      <property name="toolTip">
-      <string>The detail of each plasma orb</string>
+      <string>Level of detail in each plasma orb</string>
      </property>
      <property name="decimals">
       <number>1</number>
@@ -48,7 +48,7 @@
    <item row="0" column="1">
     <widget class="QDoubleSpinBox" name="sizeDoubleSpinBox">
      <property name="toolTip">
-      <string>The size of each plasma orb</string>
+      <string>Size of each plasma orb</string>
      </property>
      <property name="decimals">
       <number>1</number>

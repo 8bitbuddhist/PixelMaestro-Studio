@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 		return this->palette_controller_;
 	}
 
-	void PaletteControlWidget::initialize_palettes(QString initial_palette) {
+	void PaletteControlWidget::initialize_palettes(const QString& initial_palette) {
 		// Initialize palette list
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
@@ -52,7 +52,7 @@ namespace PixelMaestroStudio {
 
 	/// Updates the target color.
 	void PaletteControlWidget::on_color_clicked() {
-		QPushButton* sender = (QPushButton*)QObject::sender();
+		QPushButton* sender = dynamic_cast<QPushButton*>(QObject::sender());
 		Colors::RGB* source_color = &active_palette_->palette.get_colors()[sender->objectName().toInt()];
 		QColor new_color = QColorDialog::getColor(QColor(source_color->r, source_color->g, source_color->b), this, "Select Color");
 		if (new_color.isValid()) {

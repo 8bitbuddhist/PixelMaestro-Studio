@@ -33,7 +33,7 @@ namespace PixelMaestroStudio {
 			PaletteController::PaletteWrapper* active_palette_ = nullptr;
 			PaletteController* palette_controller_ = nullptr;
 
-			void initialize_palettes(QString initial_palette);
+			void initialize_palettes(const QString& initial_palette);
 	};
 }
 

@@ -4,7 +4,7 @@
 
 namespace PixelMaestroStudio {
 	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section) : QFrame(parent) {
-		this->maestro_drawing_area_ = static_cast<MaestroDrawingArea*>(parent);
+		this->maestro_drawing_area_ = dynamic_cast<MaestroDrawingArea*>(parent);
 		this->section_ = section;
 
 		// Enable mouse tracking

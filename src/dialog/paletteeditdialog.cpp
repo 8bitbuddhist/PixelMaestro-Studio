@@ -53,7 +53,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Don't allow duplicate name Palettes, unless we're updating an existing Palette
-		PaletteController::PaletteWrapper* duplicate = static_cast<PaletteControlWidget*>(parentWidget())->get_palette_controller()->get_palette(ui->nameLineEdit->text());
+		PaletteController::PaletteWrapper* duplicate = dynamic_cast<PaletteControlWidget*>(parentWidget())->get_palette_controller()->get_palette(ui->nameLineEdit->text());
 		if ((target_palette_ == nullptr && duplicate != nullptr) ||
 			(target_palette_ != nullptr && duplicate != nullptr && duplicate != target_palette_)) {
 			ui->nameLabel->setStyleSheet(QString("color: red;"));
@@ -75,7 +75,7 @@ namespace PixelMaestroStudio {
 					}
 					break;
 				case PaletteController::PaletteType::Scaling:
-					Colors::generate_scaling_color_array(colors, &base_color_, &target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
+					Colors::generate_scaling_color_array(&colors[0], &base_color_, &target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
 					break;
 				case PaletteController::PaletteType::Random:
 					QRandomGenerator* random = QRandomGenerator::global();
@@ -93,7 +93,7 @@ namespace PixelMaestroStudio {
 
 				// Check to see if we need to update the Palette's color scheme
 				if (colors_changed_) {
-					target_palette_->palette.set_colors(colors, num_colors);
+					target_palette_->palette.set_colors(&colors[0], num_colors);
 					target_palette_->type = (PaletteController::PaletteType)ui->typeComboBox->currentIndex();
 					target_palette_->base_color = base_color_;
 					target_palette_->target_color = target_color_;
@@ -104,8 +104,8 @@ namespace PixelMaestroStudio {
 			}
 			else {
 				// Add the new Palette
-				PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
-				parent->get_palette_controller()->add_palette(ui->nameLineEdit->text(), colors, num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
+				PaletteControlWidget* parent = dynamic_cast<PaletteControlWidget*>(parentWidget());
+				parent->get_palette_controller()->add_palette(ui->nameLineEdit->text(), &colors[0], num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
 			}
 
 			QDialog::accept();
@@ -118,7 +118,7 @@ namespace PixelMaestroStudio {
 	void PaletteEditDialog::on_baseColorButton_clicked() {
 		QColor color = QColorDialog::getColor(Qt::white, this, "Select Base Color");
 		base_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
-		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
+		PaletteControlWidget* parent = dynamic_cast<PaletteControlWidget*>(parentWidget());
 		parent->set_button_color(ui->baseColorButton, base_color_.r, base_color_.g, base_color_.b);
 
 		if (target_palette_ != nullptr && (base_color_ != target_palette_->target_color)) {
@@ -144,7 +144,7 @@ namespace PixelMaestroStudio {
 	void PaletteEditDialog::on_targetColorButton_clicked() {
 		QColor color = QColorDialog::getColor(Qt::white, this, "Select Target Color");
 		target_color_ = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue()};
-		PaletteControlWidget* parent = static_cast<PaletteControlWidget*>(parentWidget());
+		PaletteControlWidget* parent = dynamic_cast<PaletteControlWidget*>(parentWidget());
 		parent->set_button_color(ui->targetColorButton, target_color_.r, target_color_.g, target_color_.b);
 
 		if (target_palette_ != nullptr && (target_color_ != target_palette_->target_color)) {

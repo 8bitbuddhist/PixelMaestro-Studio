@@ -1,6 +1,7 @@
 #include "cueinterpreterdialog.h"
 #include "ui_cueinterpreterdialog.h"
 #include "core/maestro.h"
+#include "utility/cueinterpreter.h"
 
 namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint16_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog) {
@@ -20,7 +21,7 @@ namespace PixelMaestroStudio {
 
 		for (int i = 0; i < size; i++) {
 			if (controller->read(cuefile[i])) {
-				ui->interpretedCuePlainTextEdit->appendPlainText(interpreter_.interpret_cue(controller->get_buffer()));
+				ui->interpretedCuePlainTextEdit->appendPlainText(CueInterpreter::interpret_cue(controller->get_buffer()));
 			}
 		}
 	}

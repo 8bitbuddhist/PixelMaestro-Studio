@@ -15,7 +15,7 @@ namespace PixelMaestroStudio {
 
 	class ShowController {
 		public:
-			explicit ShowController(MaestroController* maestro_controller);
+			explicit ShowController();
 			Event* add_event(uint32_t time, uint8_t* cue);
 			void clear();
 			int get_event_index(Event* event);
@@ -25,9 +25,8 @@ namespace PixelMaestroStudio {
 			void remove_event(uint16_t index);
 
 		private:
-			CueInterpreter cue_interpreter_;
 			QVector<Event> event_queue_;
-			Show* show_;
+			Show* show_ = nullptr;
 
 	};
 }

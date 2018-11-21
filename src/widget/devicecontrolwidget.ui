@@ -45,6 +45,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QComboBox" name="serialOutputComboBox">
+        <property name="toolTip">
+         <string>Available devices</string>
+        </property>
         <property name="editable">
          <bool>true</bool>
         </property>
@@ -88,6 +91,9 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="3" column="1">
        <widget class="QLineEdit" name="configSizeLineEdit">
+        <property name="toolTip">
+         <string>Size of the current Maestro configuration</string>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
@@ -104,7 +110,11 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="capacityLineEdit"/>
+       <widget class="QLineEdit" name="capacityLineEdit">
+        <property name="toolTip">
+         <string>Total device capacity for storing Cuefiles</string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_2">
@@ -115,6 +125,9 @@
       </item>
       <item row="7" column="1">
        <widget class="QPushButton" name="sendPushButton">
+        <property name="toolTip">
+         <string>Send the Cuefile to the device</string>
+        </property>
         <property name="text">
          <string>Upload Cuefile</string>
         </property>
@@ -137,7 +150,7 @@
       <item row="0" column="1">
        <widget class="QCheckBox" name="realTimeCheckBox">
         <property name="toolTip">
-         <string>Updates the device as soon as the action is performed.</string>
+         <string>Updates the device in real-time</string>
         </property>
         <property name="text">
          <string>Live updates</string>

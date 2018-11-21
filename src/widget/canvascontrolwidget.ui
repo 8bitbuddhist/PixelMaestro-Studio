@@ -53,7 +53,7 @@
          <item>
           <widget class="QCheckBox" name="enableCheckBox">
            <property name="toolTip">
-            <string>Adds a Canvas to the Section</string>
+            <string>Create a drawing surface on the Section</string>
            </property>
            <property name="text">
             <string>Enable Canvas</string>
@@ -62,6 +62,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="loadImageButton">
+           <property name="toolTip">
+            <string>Load an image into the Canvas</string>
+           </property>
            <property name="text">
             <string>Load Image...</string>
            </property>
@@ -91,7 +94,7 @@
           <item row="6" column="4" colspan="2">
            <widget class="QLineEdit" name="textLineEdit">
             <property name="toolTip">
-             <string/>
+             <string>Text to draw</string>
             </property>
            </widget>
           </item>
@@ -185,7 +188,11 @@
            </widget>
           </item>
           <item row="8" column="4">
-           <widget class="QComboBox" name="paletteComboBox"/>
+           <widget class="QComboBox" name="paletteComboBox">
+            <property name="toolTip">
+             <string>Palette for drawing</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="5">
            <widget class="QSpinBox" name="originYSpinBox">
@@ -202,6 +209,9 @@
           </item>
           <item row="10" column="5">
            <widget class="QPushButton" name="clearButton">
+            <property name="toolTip">
+             <string>Clear the Canvas</string>
+            </property>
             <property name="text">
              <string>Clear...</string>
             </property>
@@ -220,7 +230,7 @@
              <bool>false</bool>
             </property>
             <property name="toolTip">
-             <string>Displays the selected drawing color</string>
+             <string>Selected drawing color</string>
             </property>
             <property name="text">
              <string>Color</string>
@@ -442,7 +452,7 @@
           <item row="1" column="1">
            <widget class="QSpinBox" name="frameCountSpinBox">
             <property name="toolTip">
-             <string>Number of editable frames</string>
+             <string>Number of frames</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -494,6 +504,9 @@
            <layout class="QHBoxLayout" name="playbackLayout">
             <item>
              <widget class="QToolButton" name="playbackPreviousToolButton">
+              <property name="toolTip">
+               <string>Step backwards one frame</string>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -508,6 +521,9 @@
             </item>
             <item>
              <widget class="QToolButton" name="playbackStartStopToolButton">
+              <property name="toolTip">
+               <string>Play or pause the animation</string>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -523,6 +539,9 @@
             </item>
             <item>
              <widget class="QToolButton" name="playbackNextToolButton">
+              <property name="toolTip">
+               <string>Step forward one frame</string>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -539,6 +558,9 @@
           </item>
           <item row="4" column="2">
            <widget class="QSlider" name="frameIntervalSlider">
+            <property name="toolTip">
+             <string>Amount of time between frames</string>
+            </property>
             <property name="maximum">
              <number>6000</number>
             </property>

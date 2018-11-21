@@ -52,6 +52,9 @@
           <height>0</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Color scheme used in the animation</string>
+        </property>
         <property name="currentText">
          <string/>
         </property>
@@ -67,6 +70,9 @@
           <width>102</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Type of animation to display</string>
         </property>
         <item>
          <property name="text">
@@ -173,7 +179,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="orientationComboBox">
         <property name="toolTip">
-         <string>The direction of the animation</string>
+         <string>Direction that the animation displays in</string>
         </property>
         <item>
          <property name="text">
@@ -190,7 +196,7 @@
       <item row="0" column="2">
        <widget class="QCheckBox" name="reverseCheckBox">
         <property name="toolTip">
-         <string>Reverses the steps in the animation</string>
+         <string>Play the animation in reverse</string>
         </property>
         <property name="text">
          <string>Reverse</string>
@@ -200,7 +206,7 @@
       <item row="1" column="2">
        <widget class="QCheckBox" name="fadeCheckBox">
         <property name="toolTip">
-         <string>Smoothes animations</string>
+         <string>Smoothes the animation</string>
         </property>
         <property name="text">
          <string>Fade</string>
@@ -234,7 +240,7 @@
       <item row="0" column="2">
        <widget class="QSlider" name="cycleIntervalSlider">
         <property name="toolTip">
-         <string>The amount of time between animation steps</string>
+         <string>Amount of time between animation steps</string>
         </property>
         <property name="minimum">
          <number>10</number>
@@ -310,7 +316,7 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="cycleIntervalSpinBox">
         <property name="toolTip">
-         <string>The amount of time between animation steps</string>
+         <string>Amount of time between animation steps</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

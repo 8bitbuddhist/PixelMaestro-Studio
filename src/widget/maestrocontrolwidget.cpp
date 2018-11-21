@@ -76,15 +76,15 @@ namespace PixelMaestroStudio {
 	 * Loads a Cuefile into the Maestro.
 	 * @param byte_array Byte array containing the Cuefile.
 	 */
-	void MaestroControlWidget::load_cuefile(QByteArray byte_array) {
+	void MaestroControlWidget::load_cuefile(const QByteArray& byte_array) {
 		/*
 		 * To test the Cuefile, we read each byte into a virtual Maestro.
 		 * If it runs, we then pass it to the actual Maestro.
 		 */
 		Maestro virtual_maestro(nullptr, 0);
 		virtual_maestro.set_cue_controller(UINT16_MAX);
-		for (int i = 0; i < byte_array.size(); i++) {
-			uint8_t byte = (uint8_t)byte_array.at(i);
+		for (char byte_char : byte_array) {
+			uint8_t byte = static_cast<uint8_t>(byte_char);
 
 			if (virtual_maestro.get_cue_controller()->read(byte)) {
 				run_cue(virtual_maestro.get_cue_controller()->get_buffer(), false);
@@ -212,24 +212,24 @@ namespace PixelMaestroStudio {
 
 		// Get Maestro's Cue Handlers for convenience
 		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
-		animation_handler = static_cast<AnimationCueHandler*>(
+		animation_handler = dynamic_cast<AnimationCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
 		);
-		canvas_handler = static_cast<CanvasCueHandler*>(
+		canvas_handler = dynamic_cast<CanvasCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::CanvasCueHandler)
 		);
-		maestro_handler = static_cast<MaestroCueHandler*>(
+		maestro_handler = dynamic_cast<MaestroCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::MaestroCueHandler)
 		);
-		section_handler = static_cast<SectionCueHandler*>(
+		section_handler = dynamic_cast<SectionCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::SectionCueHandler)
 		);
-		show_handler = static_cast<ShowCueHandler*>(
+		show_handler = dynamic_cast<ShowCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::ShowCueHandler)
 		);
 
 		// Check whether the Maestro is currently running. If not, trigger pause button
-		if (maestro_controller->get_running() == false) {
+		if (!maestro_controller->get_running()) {
 			ui->playPauseButton->setChecked(true);
 		}
 

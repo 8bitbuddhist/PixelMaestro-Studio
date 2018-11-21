@@ -75,7 +75,7 @@ namespace PixelMaestroStudio {
 			bool get_maestro_modified() const;
 			void edit_palettes(QString palette);
 			MaestroController* get_maestro_controller();
-			void load_cuefile(QByteArray byte_array);
+			void load_cuefile(const QByteArray& byte_array);
 			void refresh_section_settings();
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, bool remote_only = false);

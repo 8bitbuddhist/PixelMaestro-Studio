@@ -59,7 +59,7 @@ namespace PixelMaestroStudio {
 					);
 				}
 			}
-			static void load_image(QString filename, Canvas* canvas, MaestroControlWidget* maestro_control = nullptr);
+			static void load_image(const QString& filename, Canvas* canvas, MaestroControlWidget* maestro_control = nullptr);
 	};
 }
 

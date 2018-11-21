@@ -70,7 +70,7 @@ namespace PixelMaestroStudio {
 			MaestroControlWidget* maestro_control_widget_;
 
 			/// The number of Sections in the Maestro.
-			uint8_t num_sections_;
+			uint8_t num_sections_ = 0;
 
 			/// Sections belonging to the Maestro.
 			Section* sections_ = nullptr;

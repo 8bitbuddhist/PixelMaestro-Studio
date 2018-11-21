@@ -55,9 +55,9 @@ namespace PixelMaestroStudio {
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();
-			bool open_cuefile(QString filename);
+			bool open_cuefile(const QString& filename);
 			bool confirm_unsaved_changes();
-			void set_active_cuefile(QString path);
+			void set_active_cuefile(const QString& path);
 			QString open_cuefile_dialog();
 	};
 }

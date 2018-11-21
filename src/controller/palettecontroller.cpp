@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 	 * @return New palette.
 	 */
 	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
-		palettes_.push_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
+		palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
 		return &palettes_[palettes_.size() - 1];
 	}
 
@@ -33,10 +33,10 @@ namespace PixelMaestroStudio {
 		int iteration = 0;
 		while (get_palette(name) != nullptr) {
 			if (iteration == 0) {
-				name = name.append(" #" + (iteration + 2));
+				name = name.append(" #" + QString::number(iteration + 2));
 			}
 			else {
-				name = name.replace(name.length() - 1, 1, (iteration + 2));
+				name = name.replace(name.length() - 1, 1, QString::number(iteration + 2));
 			}
 			iteration++;
 		}
@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 	 * @param string Serialized color.
 	 * @return Deserialized color.
 	 */
-	Colors::RGB PaletteController::deserialize_color(QString string) {
+	Colors::RGB PaletteController::deserialize_color(const QString& string) {
 		QStringList values = string.split(PreferencesDialog::sub_delimiter);
 
 		if (values.size() < 3) return ColorPresets::Black;
@@ -86,7 +86,7 @@ namespace PixelMaestroStudio {
 	 * @param name Palette name.
 	 * @return Palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::get_palette(QString name) {
+	PaletteController::PaletteWrapper* PaletteController::get_palette(const QString& name) {
 		for (uint8_t i = 0; i < palettes_.size(); i++) {
 			if (palettes_[i].name == name) {
 				return &palettes_[i];
@@ -112,13 +112,13 @@ namespace PixelMaestroStudio {
 
 		palettes_.clear();
 
-		Colors::generate_scaling_color_array(colors, &ColorPresets::Red, &ColorPresets::Yellow, num_colors, true);
-		palettes_.push_back(PaletteWrapper("Fire", colors, num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true));
+		Colors::generate_scaling_color_array(&colors[0], &ColorPresets::Red, &ColorPresets::Yellow, num_colors, true);
+		palettes_.emplace_back(PaletteWrapper("Fire", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true));
 
-		Colors::generate_scaling_color_array(colors, &ColorPresets::Blue, &ColorPresets::Green, num_colors, true);
-		palettes_.push_back(PaletteWrapper("Deep Sea", colors, num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true));
+		Colors::generate_scaling_color_array(&colors[0], &ColorPresets::Blue, &ColorPresets::Green, num_colors, true);
+		palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true));
 
-		palettes_.push_back(PaletteWrapper("Color Wheel", ColorPresets::Colorwheel, 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false));
+		palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false));
 	}
 
 	/**
@@ -151,11 +151,11 @@ namespace PixelMaestroStudio {
 			QString color_string = settings.value(PreferencesDialog::palette_colors).toString();
 			QVector<Colors::RGB> color_array;
 			QStringList color_string_list = color_string.split(PreferencesDialog::delimiter);
-			for (QString color_string : color_string_list) {
+			for (const QString& color_string : color_string_list) {
 				color_array.push_back(deserialize_color(color_string));
 			}
 
-			palettes_.push_back(PaletteWrapper(name, color_array.data(), num_colors, type, base_color, target_color, mirror));
+			palettes_.emplace_back(PaletteWrapper(name, color_array.data(), num_colors, type, base_color, target_color, mirror));
 		}
 		settings.endArray();
 	}

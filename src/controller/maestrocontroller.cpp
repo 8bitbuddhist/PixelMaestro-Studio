@@ -24,7 +24,7 @@ namespace PixelMaestroStudio {
 	 * Initializes the MaestroController.
 	 * @param maestro_control_widget The widget responsible for controlling this MaestroController.
 	 */
-	MaestroController::MaestroController(MaestroControlWidget* maestro_control_widget) : QObject(), timer_(this) {
+	MaestroController::MaestroController(MaestroControlWidget* maestro_control_widget) : timer_(this) {
 		this->maestro_control_widget_ = maestro_control_widget;
 		initialize_maestro();
 
@@ -70,12 +70,13 @@ namespace PixelMaestroStudio {
 	 * @return Total elapsed time.
 	 */
 	uint64_t MaestroController::get_total_elapsed_time() {
+		uint64_t elapsed = last_pause_;
+
 		if (get_running()) {
-			return last_pause_ + elapsed_timer_.elapsed();
+			elapsed += elapsed_timer_.elapsed();
 		}
-		else {
-			return last_pause_;
-		}
+
+		return elapsed;
 	}
 
 	/**
@@ -122,7 +123,7 @@ namespace PixelMaestroStudio {
 	 * @param save_handlers CueHandlers that are enabled for saving.
 	 */
 	void MaestroController::save_maestro_to_datastream(QDataStream *datastream, QVector<CueController::Handler>* save_handlers) {
-		MaestroCueHandler* maestro_handler = (MaestroCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler);
+		MaestroCueHandler* maestro_handler = dynamic_cast<MaestroCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::MaestroCueHandler));
 
 		// Maestro-specific Cues
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
@@ -134,7 +135,7 @@ namespace PixelMaestroStudio {
 			Show* show = maestro_->get_show();
 			if (show != nullptr) {
 				write_cue_to_stream(datastream, maestro_handler->set_show());
-				ShowCueHandler* show_handler = (ShowCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowCueHandler);
+				ShowCueHandler* show_handler = dynamic_cast<ShowCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::ShowCueHandler));
 				if (show->get_events() != nullptr) {
 					write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
 				}
@@ -168,7 +169,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		SectionCueHandler* section_handler = (SectionCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionCueHandler);
+		SectionCueHandler* section_handler = dynamic_cast<SectionCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionCueHandler));
 
 		// Dimensions
 		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
@@ -179,7 +180,7 @@ namespace PixelMaestroStudio {
 			if (animation != nullptr) {
 				write_cue_to_stream(datastream, section_handler->set_animation(section_id, layer_id, animation->get_type()));
 
-				AnimationCueHandler* animation_handler = (AnimationCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler);
+				AnimationCueHandler* animation_handler = dynamic_cast<AnimationCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler));
 				if (animation->get_palette() != nullptr) {
 					write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
 				}
@@ -195,37 +196,37 @@ namespace PixelMaestroStudio {
 				switch(animation->get_type()) {
 					case AnimationType::Fire:
 						{
-							FireAnimation* fa = static_cast<FireAnimation*>(animation);
+							FireAnimation* fa = dynamic_cast<FireAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_fire_options(section_id, layer_id, fa->get_multiplier()));
 						}
 						break;
 					case AnimationType::Lightning:
 						{
-							LightningAnimation* la = static_cast<LightningAnimation*>(animation);
+							LightningAnimation* la = dynamic_cast<LightningAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_lightning_options(section_id, layer_id, la->get_bolt_count(), la->get_drift(), la->get_fork_chance()));
 						}
 						break;
 					case AnimationType::Plasma:
 						{
-							PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
+							PlasmaAnimation* pa = dynamic_cast<PlasmaAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_plasma_options(section_id, layer_id, pa->get_size(), pa->get_resolution()));
 						}
 						break;
 					case AnimationType::Radial:
 						{
-							RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
+							RadialAnimation* ra = dynamic_cast<RadialAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_radial_options(section_id, layer_id, ra->get_resolution()));
 						}
 						break;
 					case AnimationType::Sparkle:
 						{
-							SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
+							SparkleAnimation* sa = dynamic_cast<SparkleAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_sparkle_options(section_id, layer_id, sa->get_threshold()));
 						}
 						break;
 					case AnimationType::Wave:
 						{
-							WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
+							WaveAnimation* wa = dynamic_cast<WaveAnimation*>(animation);
 							write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_mirror(), wa->get_skew()));
 						}
 						break;
@@ -251,7 +252,7 @@ namespace PixelMaestroStudio {
 			if (canvas != nullptr) {
 				write_cue_to_stream(datastream, section_handler->set_canvas(section_id, layer_id, canvas->get_num_frames()));
 
-				CanvasCueHandler* canvas_handler = (CanvasCueHandler*)maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasCueHandler);
+				CanvasCueHandler* canvas_handler = dynamic_cast<CanvasCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::CanvasCueHandler));
 
 				if (canvas->get_frame_timer()) {
 					write_cue_to_stream(datastream, canvas_handler->set_frame_timer(section_id, layer_id, canvas->get_frame_timer()->get_interval()));
@@ -331,10 +332,7 @@ namespace PixelMaestroStudio {
 	 * @param cue Cue to append.
 	 */
 	void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
-		if (cue == nullptr) {
-			return;
-		}
-		else {
+		if (cue != nullptr) {
 			stream->writeRawData((const char*)cue, maestro_->get_cue_controller()->get_cue_size(cue));
 		}
 	}
@@ -342,7 +340,7 @@ namespace PixelMaestroStudio {
 	MaestroController::~MaestroController() {
 		// If automatic session saving is enabled, save Maestro configuration
 		QSettings settings;
-		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+		if (settings.value(PreferencesDialog::save_session).toBool()) {
 			QByteArray maestro_config;
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
 			save_maestro_to_datastream(&maestro_datastream);

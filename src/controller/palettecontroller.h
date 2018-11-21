@@ -67,10 +67,10 @@ namespace PixelMaestroStudio {
 			~PaletteController();
 			PaletteWrapper* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false);
 			QString check_palette_name(QString name);
-			Colors::RGB deserialize_color(QString string);
+			Colors::RGB deserialize_color(const QString& string);
 			int find(Colors::RGB* search_palette);
 			PaletteWrapper* get_palette(uint8_t index);
-			PaletteWrapper* get_palette(QString name);
+			PaletteWrapper* get_palette(const QString& name);
 			std::vector<PaletteWrapper>* get_palettes();
 			void initialize_palettes();
 			void load_palettes();
@@ -79,7 +79,7 @@ namespace PixelMaestroStudio {
 			QString serialize_color(Colors::RGB* color);
 
 		private:
-			std::vector<PaletteWrapper> palettes_;
+			std::vector<PaletteWrapper> palettes_;	// Deliberately kept as std::vector
 	};
 }
 

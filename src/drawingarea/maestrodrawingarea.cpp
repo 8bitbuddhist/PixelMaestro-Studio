@@ -32,7 +32,7 @@ namespace PixelMaestroStudio {
 		);
 		QWidget* drawing_area = section_drawing_areas_.last().data();
 		section_layout_->addWidget(drawing_area);
-		return static_cast<SectionDrawingArea*>(drawing_area);
+		return dynamic_cast<SectionDrawingArea*>(drawing_area);
 	}
 
 	/**
@@ -115,7 +115,7 @@ namespace PixelMaestroStudio {
 			frame_active_section(maestro_control_widget_->section_control_widget_->get_active_section());
 		}
 
-		// Updates all DrawingAreas
+		// Update all DrawingAreas
 		for (uint16_t i = 0; i < section_drawing_areas_.size(); i++) {
 			section_drawing_areas_[i]->update();
 		}

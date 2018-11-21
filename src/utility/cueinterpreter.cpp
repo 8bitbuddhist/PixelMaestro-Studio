@@ -10,62 +10,62 @@ namespace PixelMaestroStudio {
 												"Section",
 												"Show"});
 
-	const QStringList CueInterpreter::AnimationActions({"Set Cycle Index",
-														"Set Fade",
-														"Set Fire Options",
-														"Set Lightning Options",
-														"Set Orientation",
-														"Set Palette",
-														"Set Plasma Options",
-														"Set Radial Options",
-														"Set Reverse",
-														"Set Sparkle Options",
-														"Set Timer",
-														"Set Wave Options",
+	const QStringList CueInterpreter::AnimationActions({"Set cycle index",
+														"Set fade",
+														"Set fire options",
+														"Set lightning options",
+														"Set orientation",
+														"Set palette",
+														"Set plasma options",
+														"Set radial options",
+														"Set reverse",
+														"Set sparkle options",
+														"Set timer",
+														"Set wave options",
 														"Start",
 														"Stop"});
 
 	const QStringList CueInterpreter::CanvasActions({"Clear",
-													 "Draw Circle",
-													 "Draw Frame",
-													 "Draw Line",
-													 "Draw Point",
-													 "Draw Rect",
-													 "Draw Text",
-													 "Draw Triangle",
-													 "Erase Point",
-													 "Next Frame",
-													 "Previous Frame",
-													 "Remove Frame Timer",
-													 "Set Current Frame Index",
-													 "Set Drawing Color",
-													 "Set Frame Timer",
-													 "Set Num Frames",
-													 "Set Palette",
-													 "Start Frame Timer",
-													 "Stop Frame Timer"});
+													 "Draw circle",
+													 "Draw frame",
+													 "Draw line",
+													 "Draw point",
+													 "Draw rect",
+													 "Draw text",
+													 "Draw triangle",
+													 "Erase point",
+													 "Next frame",
+													 "Previous frame",
+													 "Remove frame timer",
+													 "Set current frame index",
+													 "Set drawing color",
+													 "Set frame timer",
+													 "Set num frames",
+													 "Set palette",
+													 "Start frame timer",
+													 "Stop frame timer"});
 
-	const QStringList CueInterpreter::MaestroActions({"Set Brightness",
-													  "Set Show",
-													  "Set Timer",
+	const QStringList CueInterpreter::MaestroActions({"Set brightness",
+													  "Set show",
+													  "Set timer",
 													  "Start",
 													  "Stop",
 													  "Sync",
-													  "Remove Show"});
+													  "Remove show"});
 
-	const QStringList CueInterpreter::SectionActions({"Remove Animation",
-													  "Remove Canvas",
-													  "Remove Layer",
-													  "Set Animation",
-													  "Set Canvas",
-													  "Set Dimensions",
-													  "Set Layer",
-													  "Set Offset",
-													  "Set Scroll"});
+	const QStringList CueInterpreter::SectionActions({"Remove animation",
+													  "Remove canvas",
+													  "Remove layer",
+													  "Set animation",
+													  "Set canvas",
+													  "Set dimensions",
+													  "Set layer",
+													  "Set offset",
+													  "Set scroll"});
 
-	const QStringList CueInterpreter::ShowActions({"Set Events",
-												   "Set Looping",
-												   "Set Timing Mode"});
+	const QStringList CueInterpreter::ShowActions({"Set events",
+												   "Set looping",
+												   "Set timing mode"});
 
 	const QStringList CueInterpreter::ShowTimings({"Absolute",
 												   "Relative"});
@@ -141,9 +141,6 @@ namespace PixelMaestroStudio {
 		result->append(AnimationActions.at(cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]));
 
 		switch((AnimationCueHandler::Action)cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]) {
-			case AnimationCueHandler::Action::SetPalette:
-				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]) + " colors");
-				break;
 			case AnimationCueHandler::Action::SetCycleIndex:
 				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
@@ -155,14 +152,17 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationCueHandler::Action::SetLightningOptions:
 				{
-					result->append(delimiter+ "Bolt Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+					result->append(delimiter+ "Bolt chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 					result->append(delimiter+ "Drift: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
 					result->append(" " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2]));
-					result->append(delimiter + "Fork Chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]));
+					result->append(delimiter + "Fork chance: " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 3]));
 				}
 				break;
 			case AnimationCueHandler::Action::SetOrientation:
 				result->append(": " + AnimationOrientations.at(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
+				break;
+			case AnimationCueHandler::Action::SetPalette:
+				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]) + " colors");
 				break;
 			case AnimationCueHandler::Action::SetPlasmaOptions:
 				{
@@ -201,12 +201,13 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueInterpreter::interpret_canvas_cue(uint8_t* cue, QString* result) {
-		result->append("Section " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::SectionByte]) + delimiter);
-		result->append("Layer " + QString::number(cue[(uint8_t)CanvasCueHandler::Byte::LayerByte]) + delimiter);
+		result->append("Section " + QString::number(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::SectionByte)]) + delimiter);
+		result->append("Layer " + QString::number(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::LayerByte)]) + delimiter);
 		result->append("Canvas" + delimiter);
-		result->append(CanvasActions.at(cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]));
+		result->append(CanvasActions.at(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::ActionByte)]));
 
-		switch((CanvasCueHandler::Action)cue[(uint8_t)CanvasCueHandler::Byte::ActionByte]) {
+		// TODO: Add remaining Cues
+		switch(static_cast<CanvasCueHandler::Action>(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::ActionByte)])) {
 			case CanvasCueHandler::Action::Clear:
 				break;
 			case CanvasCueHandler::Action::DrawText:
@@ -228,11 +229,17 @@ namespace PixelMaestroStudio {
 			case CanvasCueHandler::Action::SetCurrentFrameIndex:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
 				break;
+			case CanvasCueHandler::Action::SetDrawingColor:
+				result->append(": Index " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
+				break;
 			case CanvasCueHandler::Action::SetFrameTimer:
 				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte]), result);
 				break;
 			case CanvasCueHandler::Action::SetNumFrames:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
+				break;
+			case CanvasCueHandler::Action::SetPalette:
+				result->append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]) + " colors");
 				break;
 			default:
 				break;
@@ -281,7 +288,7 @@ namespace PixelMaestroStudio {
 				result->append(": " + AnimationTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
 				break;
 			case SectionCueHandler::Action::SetCanvas:
-				result->append(", " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])) + " frame(s)";
+				result->append(": " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) + " frame(s)");
 				break;
 			case SectionCueHandler::Action::SetDimensions:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));

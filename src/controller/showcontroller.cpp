@@ -5,9 +5,8 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Constructor.
-	 * @param maestro_controller Show's MaestroController.
 	 */
-	ShowController::ShowController(MaestroController* maestro_controller) {
+	ShowController::ShowController() {
 		event_queue_.clear();
 	}
 

@@ -5,7 +5,7 @@
 namespace PixelMaestroStudio {
 	SectionControlWidget::SectionControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SectionControlWidget) {
 		ui->setupUi(this);
-		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
+		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 	}
 
 

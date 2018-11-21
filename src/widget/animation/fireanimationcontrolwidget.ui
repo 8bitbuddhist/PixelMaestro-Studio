@@ -36,7 +36,7 @@
    <item>
     <widget class="QSpinBox" name="multiplierSpinBox">
      <property name="toolTip">
-      <string>Sets the scale of the flames rising through the grid</string>
+      <string>Scale of the flames</string>
      </property>
      <property name="maximum">
       <number>255</number>

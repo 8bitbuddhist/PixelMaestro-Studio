@@ -16,9 +16,9 @@ namespace PixelMaestroStudio {
 
 		this->maestro_controller_ = maestro_controller;
 		QLayout* layout = this->findChild<QLayout*>("maestroLayout");
-		drawing_area_ = std::unique_ptr<MaestroDrawingArea>(new MaestroDrawingArea(layout->widget(), maestro_controller_));
-		drawing_area_->set_maestro_control_widget(static_cast<MaestroControlWidget*>(parent));
-		layout->addWidget(drawing_area_.get());
+		drawing_area_ = QSharedPointer<MaestroDrawingArea>(new MaestroDrawingArea(layout->widget(), maestro_controller_));
+		drawing_area_->set_maestro_control_widget(dynamic_cast<MaestroControlWidget*>(parent));
+		layout->addWidget(drawing_area_.data());
 
 		this->setWindowFlags(Qt::Window);
 	}
@@ -31,16 +31,15 @@ namespace PixelMaestroStudio {
 	 */
 	bool MaestroDrawingAreaDialog::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
-			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+			QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
 			if (key_event->key() == Qt::Key_F11) {
 				if (this->isFullScreen()) {
 					this->showNormal();
-					return true;
 				}
 				else {
 					this->showFullScreen();
-					return true;
 				}
+				return true;
 			}
 		}
 
@@ -51,7 +50,7 @@ namespace PixelMaestroStudio {
 	 * Returns the Dialog's drawing area.
 	 * @return Drawing area.
 	 */
-	MaestroDrawingArea* MaestroDrawingAreaDialog::get_maestro_drawing_area() const {
+	MaestroDrawingArea* MaestroDrawingAreaDialog::get_maestro_drawing_area() {
 		return this->drawing_area_.get();
 	}
 

@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 	 * Constructor.
 	 * @param port_name The full path name to the device.
 	 */
-	SerialDevice::SerialDevice(QString port_name) {
+	SerialDevice::SerialDevice(const QString& port_name) {
 		this->port_name_ = port_name;
 
 		// Look up the device in settings

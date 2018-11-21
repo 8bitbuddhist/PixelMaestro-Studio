@@ -25,7 +25,7 @@ namespace PixelMaestroStudio {
 		// If the user has a session saved and session auto-saving is enabled, load it into the new session.
 		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
 		on_newAction_triggered();
-		if (settings.value(PreferencesDialog::save_session).toBool() == true && !bytes.isEmpty()) {	
+		if (settings.value(PreferencesDialog::save_session).toBool() && !bytes.isEmpty()) {
 			maestro_control_widget_->load_cuefile(bytes);
 			maestro_control_widget_->set_maestro_modified(true);
 		}
@@ -69,14 +69,14 @@ namespace PixelMaestroStudio {
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
 			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
 			splitter_->addWidget(maestro_drawing_area_);
-			maestro_controller_->add_drawing_area(static_cast<MaestroDrawingArea*>(maestro_drawing_area_));
-			static_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
+			maestro_controller_->add_drawing_area(dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
+			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
 		}
 		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
 			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
 			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
-			static_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
-			drawing_area_dialog_.get()->show();
+			dynamic_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
+			drawing_area_dialog_->show();
 		}
 
 		// Add control widget to main window
@@ -95,7 +95,7 @@ namespace PixelMaestroStudio {
 		 * If "pause on start" option is checked, don't start the Maestro.
 		 * This also causes the MaestroControlWidget to automatically turn on the Show controls so users can hit the pause button.
 		 */
-		if (settings.value(PreferencesDialog::pause_on_start, false).toBool() == false) {
+		if (!settings.value(PreferencesDialog::pause_on_start, false).toBool()) {
 			maestro_controller_->start();
 		}
 	}
@@ -259,7 +259,7 @@ namespace PixelMaestroStudio {
 	 * @param filename Cuefile path.
 	 * @return True if the Cuefile was opened successfully.
 	 */
-	bool MainWindow::open_cuefile(QString filename) {
+	bool MainWindow::open_cuefile(const QString& filename) {
 		if (filename.isEmpty()) return false;
 
 		QFile file(filename);
@@ -278,7 +278,7 @@ namespace PixelMaestroStudio {
 	 *
 	 * @param path Path to the current Cuefile.
 	 */
-	void MainWindow::set_active_cuefile(QString path) {
+	void MainWindow::set_active_cuefile(const QString& path) {
 		this->loaded_cuefile_path_ = path;
 
 		if (path.isEmpty()) {
@@ -293,7 +293,7 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 
 		// If session saving on close is enabled, save the session
-		if (settings.value(PreferencesDialog::save_session).toBool() == true) {
+		if (settings.value(PreferencesDialog::save_session).toBool()) {
 			QByteArray maestro_config;
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
 			maestro_controller_->save_maestro_to_datastream(&maestro_datastream);

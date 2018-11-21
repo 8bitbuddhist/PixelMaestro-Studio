@@ -2,7 +2,6 @@
 #define CUEINTERPRETERDIALOG_H
 
 #include <QDialog>
-#include "utility/cueinterpreter.h"
 
 namespace Ui {
 	class CueInterpreterDialog;
@@ -17,8 +16,6 @@ namespace PixelMaestroStudio {
 			~CueInterpreterDialog();
 
 		private:
-			CueInterpreter interpreter_;
-
 			Ui::CueInterpreterDialog *ui;
 	};
 }

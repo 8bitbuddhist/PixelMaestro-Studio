@@ -9,7 +9,7 @@
 
 namespace PixelMaestroStudio {
 	CanvasControlWidget::CanvasControlWidget(QWidget *parent) :	QWidget(parent), ui(new Ui::CanvasControlWidget) {
-		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
+		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 		ui->setupUi(this);
 		// Capture button key presses
 		qApp->installEventFilter(this);
@@ -25,16 +25,16 @@ namespace PixelMaestroStudio {
 	 */
 	bool CanvasControlWidget::eventFilter(QObject *watched, QEvent *event) {
 		if (event->type() == QEvent::KeyPress) {
-			QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+			QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
 			if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
 				if (key_event->key() == Qt::Key_Left) {
 					on_playbackPreviousToolButton_clicked();
-					return true;
 				}
 				else if (key_event->key() == Qt::Key_Right) {
 					on_playbackNextToolButton_clicked();
-					return true;
 				}
+
+				return true;
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace PixelMaestroStudio {
 
 	void CanvasControlWidget::initialize() {
 		// Disable advanced controls until they're activated manually
-		set_controls_enabled(0);
+		set_controls_enabled(false);
 
 		// Initialize Canvas elements
 		// Add drawing buttons to group
@@ -107,7 +107,7 @@ namespace PixelMaestroStudio {
 	 * This gets passed to the CanvasCueHandler on each draw.
 	 */
 	void CanvasControlWidget::on_canvas_color_clicked() {
-		QPushButton* sender = (QPushButton*)QObject::sender();
+		QPushButton* sender = dynamic_cast<QPushButton*>(QObject::sender());
 
 		if (sender != ui->colorPickerCancelButton) {
 			selected_color_index_ = sender->objectName().toInt();
@@ -658,7 +658,7 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->setValue(0);
 			ui->frameIntervalSlider->setValue(100);
 			ui->frameIntervalSpinBox->setValue(100);
-			set_controls_enabled(0);
+			set_controls_enabled(false);
 		}
 
 		ui->frameCountSpinBox->blockSignals(false);

@@ -13,7 +13,7 @@
 namespace PixelMaestroStudio {
 	AnimationControlWidget::AnimationControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::AnimationControlWidget) {
 		ui->setupUi(this);
-		this->maestro_control_widget = static_cast<MaestroControlWidget*>(parent);
+		this->maestro_control_widget = dynamic_cast<MaestroControlWidget*>(parent);
 	}
 
 	void AnimationControlWidget::initialize() {
@@ -298,22 +298,22 @@ namespace PixelMaestroStudio {
 
 		switch(type) {
 			case AnimationType::Fire:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new FireAnimationControlWidget((FireAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new FireAnimationControlWidget(dynamic_cast<FireAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Lightning:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new LightningAnimationControlWidget((LightningAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new LightningAnimationControlWidget(dynamic_cast<LightningAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Plasma:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new PlasmaAnimationControlWidget((PlasmaAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new PlasmaAnimationControlWidget(dynamic_cast<PlasmaAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Radial:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new RadialAnimationControlWidget((RadialAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new RadialAnimationControlWidget(dynamic_cast<RadialAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Sparkle:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new SparkleAnimationControlWidget((SparkleAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new SparkleAnimationControlWidget(dynamic_cast<SparkleAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Wave:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new WaveAnimationControlWidget((WaveAnimation*)animation, this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new WaveAnimationControlWidget(dynamic_cast<WaveAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 			default:
 				break;
 		}

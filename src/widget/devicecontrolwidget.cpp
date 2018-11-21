@@ -24,7 +24,7 @@
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
-		this->maestro_control_widget_ = static_cast<MaestroControlWidget*>(parent);
+		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 
 		// Block certain Cues from firing
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
@@ -46,7 +46,7 @@ namespace PixelMaestroStudio {
 			serial_devices_.push_back(SerialDevice(device_name));
 
 			// If the saved port is an available port, connect to it
-			for (QSerialPortInfo port : ports) {
+			for (const QSerialPortInfo& port : ports) {
 				if (port.systemLocation() == device_name) {
 					QListWidgetItem* item = new QListWidgetItem(device_name);
 					ui->serialOutputListWidget->addItem(item);
@@ -115,7 +115,7 @@ namespace PixelMaestroStudio {
 				save_devices();
 
 				// Update tab icon
-				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
+				QTabWidget* tabWidget = dynamic_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
 				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
 				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_connected.png"));
 
@@ -169,7 +169,7 @@ namespace PixelMaestroStudio {
 
 			// If no devices are connected, hide the tab icon
 			if (ui->serialOutputListWidget->count() == 0) {
-				QTabWidget* tabWidget = static_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
+				QTabWidget* tabWidget = dynamic_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
 				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
 				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(""));
 			}
@@ -254,7 +254,7 @@ namespace PixelMaestroStudio {
 
 		for (int i = 0; i < serial_devices_.size(); i++) {
 			SerialDevice device = serial_devices_.at(i);
-			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled() == true) {
+			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
 				write_to_device(&device,
 								reinterpret_cast<const char*>(cue),
 								size, false);

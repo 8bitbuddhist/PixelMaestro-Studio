@@ -70,10 +70,13 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>List of scheduled events</string>
+             <string/>
             </property>
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustIgnored</enum>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -148,7 +151,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>Runtime since the last event</string>
+               <string>Time since the last event</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -207,7 +210,7 @@
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string>Removes the selected Event(s) from the Event List</string>
+                 <string>Remove the selected Event(s) from the Queue</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -227,7 +230,7 @@
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string>Adds the selected Event(s) to the Event List</string>
+                 <string>Add the selected Event(s) to the Queue</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -240,6 +243,9 @@
               </item>
               <item row="2" column="2">
                <widget class="QPushButton" name="moveEventDownButton">
+                <property name="toolTip">
+                 <string>Move the selected Event(s) down in the Queue</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -251,6 +257,9 @@
               </item>
               <item row="0" column="2">
                <widget class="QPushButton" name="moveEventUpButton">
+                <property name="toolTip">
+                 <string>Move the selected Event(s) up in the Queue</string>
+                </property>
                 <property name="text">
                  <string/>
                 </property>
@@ -263,7 +272,7 @@
               <item row="3" column="3">
                <widget class="QPushButton" name="clearQueueButton">
                 <property name="toolTip">
-                 <string>Clears the Event queue</string>
+                 <string>Clear the Event queue</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -277,7 +286,7 @@
               <item row="3" column="1">
                <widget class="QPushButton" name="clearHistoryButton">
                 <property name="toolTip">
-                 <string>Clears the Event history</string>
+                 <string>Clear the Event History</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -301,7 +310,10 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>List of changes performed in PixelMaestro Studio</string>
+             <string/>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -317,7 +329,7 @@
        <item row="0" column="2">
         <widget class="QCheckBox" name="enableCheckBox">
          <property name="toolTip">
-          <string>Toggles the ability to schedule events</string>
+          <string>Enable event scheduling</string>
          </property>
          <property name="text">
           <string>Enable Show</string>
@@ -365,7 +377,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Sets the method for timing events</string>
+             <string>Method for tracking event time</string>
             </property>
             <item>
              <property name="text">

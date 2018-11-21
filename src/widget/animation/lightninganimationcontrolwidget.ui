@@ -47,7 +47,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>The likelihood that the bolt will generate off-shoots</string>
+      <string>Chance that a bolt will create off-shoots</string>
      </property>
      <property name="maximum">
       <number>255</number>
@@ -66,7 +66,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>The number of bolts rendered in each cycle</string>
+      <string>Number of bolts displayed</string>
      </property>
      <property name="minimum">
       <number>1</number>
@@ -99,7 +99,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>The chance that the bolt will drift down in horizontal mode or left in vertical mode</string>
+      <string>Rate that a bolt will drift sideways (or down in vertical mode)</string>
      </property>
      <property name="minimum">
       <number>-127</number>

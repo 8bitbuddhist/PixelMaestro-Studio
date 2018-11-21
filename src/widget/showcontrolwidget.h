@@ -47,9 +47,6 @@ namespace PixelMaestroStudio {
 			void on_clearHistoryButton_clicked();
 
 		private:
-			/// Translates Cues into human-readable strings.
-			CueInterpreter cue_interpreter_;
-
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
 

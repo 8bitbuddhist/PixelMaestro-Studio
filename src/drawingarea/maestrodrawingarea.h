@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 
 			/// The MaestroController managed by this DrawingArea.
-			MaestroController* maestro_controller_;
+			MaestroController* maestro_controller_ = nullptr;
 
 			/// The SectionDrawingAreas managed by this DrawingArea
 			QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
