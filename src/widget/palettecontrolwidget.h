@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit PaletteControlWidget(PaletteController* controller, QString initial_palette = "", QWidget *parent = 0);
+			explicit PaletteControlWidget(PaletteController* controller, const QString& initial_palette = "", QWidget *parent = 0);
 			~PaletteControlWidget();
 			PaletteController* get_palette_controller() const;
 			void set_button_color(QPushButton* button, uint8_t red, uint8_t green, uint8_t blue);

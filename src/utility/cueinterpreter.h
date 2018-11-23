@@ -16,8 +16,6 @@
 namespace PixelMaestroStudio {
 	class CueInterpreter {
 		public:
-			CueInterpreter();
-
 			// Map enums to QStrings
 			static const QStringList Handlers;
 			static const QStringList AnimationActions;

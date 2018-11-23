@@ -120,6 +120,4 @@ namespace PixelMaestroStudio {
 			section_drawing_areas_[i]->update();
 		}
 	}
-
-	MaestroDrawingArea::~MaestroDrawingArea() { }
 }

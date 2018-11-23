@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QSettings>
 #include "sectiondrawingarea.h"
 #include "dialog/preferencesdialog.h"
 
@@ -15,6 +16,9 @@ namespace PixelMaestroStudio {
 			this->setFrameStyle(QFrame::Box | QFrame::Plain);
 			this->draw_frame(FrameType::Inactive);
 		}
+
+		QSettings settings;
+		this->pixel_shape_ = settings.value(PreferencesDialog::pixel_shape, 1).toInt();
 	}
 
 	/*
@@ -178,7 +182,7 @@ namespace PixelMaestroStudio {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				rect.setRect(section_cursor_.x + (column * pad_), section_cursor_.y + (row * pad_), radius_, radius_);
+				rect.setRect(section_cursor_.x + (column * radius_), section_cursor_.y + (row * radius_), radius_, radius_);
 				painter.setBrush(brush);
 
 				// Set Pen style.
@@ -195,7 +199,7 @@ namespace PixelMaestroStudio {
 				 * Determine which shape to draw.
 				 * If none is set, default to "Square"
 				 */
-				switch (settings_.value(PreferencesDialog::pixel_shape, 1).toInt()) {
+				switch (pixel_shape_) {
 					case 0:	// Circle
 						painter.drawEllipse(rect);
 						break;
@@ -230,12 +234,8 @@ namespace PixelMaestroStudio {
 			radius_ = max_pixel_height;
 		}
 
-		pad_ = radius_;
-
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
 		section_cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
 		section_cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
 	}
-
-	SectionDrawingArea::~SectionDrawingArea() {}
 }

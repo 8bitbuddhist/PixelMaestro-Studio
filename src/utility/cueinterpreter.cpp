@@ -90,8 +90,6 @@ namespace PixelMaestroStudio {
 													 "Multiply",
 													 "Overlay"});
 
-	CueInterpreter::CueInterpreter() { }
-
 	void CueInterpreter::append_bool(bool value, QString* result) {
 		if (value) {
 			result->append(": On");

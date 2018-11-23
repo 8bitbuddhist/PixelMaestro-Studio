@@ -6,7 +6,6 @@
 #include <QPaintEvent>
 #include <QPoint>
 #include <QResizeEvent>
-#include <QSettings>
 #include <QWidget>
 #include "core/section.h"
 #include "drawingarea/maestrodrawingarea.h"
@@ -24,7 +23,7 @@ namespace PixelMaestroStudio {
 			};
 
 			SectionDrawingArea(QWidget* parent, Section* section);
-			~SectionDrawingArea();
+			~SectionDrawingArea() = default;
 			void draw_frame(FrameType type);
 			Section* get_section() const;
 
@@ -46,16 +45,14 @@ namespace PixelMaestroStudio {
 			/// The parent MaestroDrawingArea.
 			MaestroDrawingArea* maestro_drawing_area_ = nullptr;
 
-			/// The amount of space between each Pixel. Gets initialized in resizeEvent().
-			uint8_t pad_ = 0;
+			/// The shape that each Pixel is drawn in. Defaults to square.
+			int pixel_shape_ = 1;
 
 			/// The size of each rendered Pixel.
 			uint8_t radius_ = 20;
 
 			/// The location where the Section will be rendered.
 			Point section_cursor_;
-
-			QSettings settings_;
 
 			Point map_cursor_to_pixel(const QPoint cursor);
 	};

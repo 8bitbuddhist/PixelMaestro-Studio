@@ -55,6 +55,7 @@ namespace PixelMaestroStudio {
 	}
 
 	MaestroDrawingAreaDialog::~MaestroDrawingAreaDialog() {
+		qApp->removeEventFilter(this);
 		delete ui;
 	}
 }

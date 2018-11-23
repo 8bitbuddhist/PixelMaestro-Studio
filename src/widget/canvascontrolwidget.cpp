@@ -897,6 +897,7 @@ namespace PixelMaestroStudio {
 	}
 
 	CanvasControlWidget::~CanvasControlWidget() {
+		qApp->removeEventFilter(this);
 		delete ui;
 	}
 }

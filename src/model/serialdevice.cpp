@@ -8,8 +8,6 @@
 #include "serialdevice.h"
 
 namespace PixelMaestroStudio {
-	SerialDevice::SerialDevice() { }
-
 	/**
 	 * Constructor.
 	 * @param port_name The full path name to the device.
@@ -53,12 +51,7 @@ namespace PixelMaestroStudio {
 		serial_device_->setDataBits(QSerialPort::DataBits::Data8);
 		serial_device_->setStopBits(QSerialPort::StopBits::OneStop);
 
-		if (serial_device_->open(QIODevice::WriteOnly)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (serial_device_->open(QIODevice::WriteOnly));
 	}
 
 	/**

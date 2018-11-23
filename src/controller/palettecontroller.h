@@ -5,7 +5,6 @@
 #include "core/palette.h"
 #include <QString>
 #include <QVector>
-#include <vector>
 
 using namespace PixelMaestro;
 

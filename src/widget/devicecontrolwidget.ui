@@ -13,8 +13,8 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" rowspan="3" alignment="Qt::AlignLeft|Qt::AlignTop">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
     <widget class="QGroupBox" name="deviceListGroupBox">
      <property name="title">
       <string>Device List</string>
@@ -70,27 +70,20 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="1" rowspan="3" alignment="Qt::AlignLeft">
+   <item alignment="Qt::AlignTop">
     <widget class="QGroupBox" name="deviceSettingsGroupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Device Management</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="3" column="1">
-       <widget class="QLineEdit" name="configSizeLineEdit">
+       <widget class="QLineEdit" name="fileSizeLineEdit">
         <property name="toolTip">
          <string>Size of the current Maestro configuration</string>
         </property>
@@ -124,26 +117,26 @@
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="QPushButton" name="sendPushButton">
+       <widget class="QPushButton" name="uploadButton">
         <property name="toolTip">
          <string>Send the Cuefile to the device</string>
         </property>
         <property name="text">
-         <string>Upload Cuefile</string>
+         <string>Upload</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Cuefile size</string>
+         <string>File size</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QPushButton" name="interpretCuePushButton">
+       <widget class="QPushButton" name="previewButton">
         <property name="text">
-         <string>Preview Cuefile</string>
+         <string>Preview</string>
         </property>
        </widget>
       </item>
@@ -160,6 +153,19 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -168,10 +174,10 @@
   <tabstop>serialOutputListWidget</tabstop>
   <tabstop>disconnectPushButton</tabstop>
   <tabstop>realTimeCheckBox</tabstop>
-  <tabstop>configSizeLineEdit</tabstop>
+  <tabstop>fileSizeLineEdit</tabstop>
   <tabstop>capacityLineEdit</tabstop>
-  <tabstop>interpretCuePushButton</tabstop>
-  <tabstop>sendPushButton</tabstop>
+  <tabstop>previewButton</tabstop>
+  <tabstop>uploadButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>

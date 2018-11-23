@@ -256,6 +256,7 @@ namespace PixelMaestroStudio {
 	}
 
 	MaestroControlWidget::~MaestroControlWidget() {
+		qApp->removeEventFilter(this);
 		delete ui;
 	}
 }

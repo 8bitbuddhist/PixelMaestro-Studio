@@ -80,13 +80,13 @@ namespace PixelMaestroStudio {
 			int capacity = serial_devices_[ui->serialOutputListWidget->currentRow()].get_capacity();
 			int capacity_75 = static_cast<int>(capacity * 0.75);
 			if (this->maestro_cue_.size() >= capacity) {
-				ui->configSizeLineEdit->setStyleSheet("border: 1px solid red");
+				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid red");
 			}
 			else if (this->maestro_cue_.size() >= capacity_75) {
-				ui->configSizeLineEdit->setStyleSheet("border: 1px solid orange");
+				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid orange");
 			}
 			else {
-				ui->configSizeLineEdit->setStyleSheet("border: 1px solid green");
+				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid green");
 			}
 		}
 	}
@@ -141,7 +141,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Opens the CueInterpreter dialog for the selected device.
 	 */
-	void DeviceControlWidget::on_interpretCuePushButton_clicked() {
+	void DeviceControlWidget::on_previewButton_clicked() {
 		CueInterpreterDialog dialog(this,
 									reinterpret_cast<uint8_t*>(maestro_cue_.data()),
 									static_cast<uint16_t>(maestro_cue_.size()));
@@ -183,7 +183,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Transmits the Maestro's Cuefile to the selected device.
 	 */
-	void DeviceControlWidget::on_sendPushButton_clicked() {
+	void DeviceControlWidget::on_uploadButton_clicked() {
 		/*
 		 * "ROMBEG" indicates the start of the Cuefile.
 		 * "ROMEND" indicates the end of the Cuefile.
@@ -217,7 +217,7 @@ namespace PixelMaestroStudio {
 	/// Displays all available serial devices in the serial output combobox.
 	void DeviceControlWidget::populate_serial_devices() {
 		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-		for (QSerialPortInfo port : ports) {
+		for (const QSerialPortInfo& port : ports) {
 			ui->serialOutputComboBox->addItem(port.systemLocation());
 		}
 	}
@@ -252,8 +252,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		for (int i = 0; i < serial_devices_.size(); i++) {
-			SerialDevice device = serial_devices_.at(i);
+		for (SerialDevice device :serial_devices_) {
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
 				write_to_device(&device,
 								reinterpret_cast<const char*>(cue),
@@ -286,7 +285,7 @@ namespace PixelMaestroStudio {
 		ui->capacityLineEdit->setEnabled(enabled);
 		ui->uploadProgressBar->setEnabled(enabled);
 		ui->realTimeCheckBox->setEnabled(enabled);
-		ui->sendPushButton->setEnabled(enabled);
+		ui->uploadButton->setEnabled(enabled);
 	}
 
 	/**
@@ -296,7 +295,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::set_progress_bar(int val) {
 		ui->uploadProgressBar->setValue(val);
 		// Disable upload button while sending data
-		ui->sendPushButton->setEnabled(val > 0 && val < 100);
+		ui->uploadButton->setEnabled(val > 0 && val < 100);
 	}
 
 	/**
@@ -311,7 +310,7 @@ namespace PixelMaestroStudio {
 		// Generate the Cuefile
 		controller->save_maestro_to_datastream(&datastream);
 
-		ui->configSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+		ui->fileSizeLineEdit->setText(QString::number(maestro_cue_.size()));
 		check_device_rom_capacity();
 	}
 
@@ -327,13 +326,16 @@ namespace PixelMaestroStudio {
 														  static_cast<uint16_t>(size));
 		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
-		if (progress) connect(thread, SIGNAL(progress_changed(int)), this, SLOT(set_progress_bar(int)));
+		if (progress) {
+			connect(thread, SIGNAL(progress_changed(int)), this, SLOT(set_progress_bar(int)));
+		}
+
 		thread->start();
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {
-		for (int i = 0; i < serial_devices_.size(); i++) {
-			serial_devices_[i].disconnect();
+		for (SerialDevice& device : serial_devices_) {
+			device.disconnect();
 		}
 		delete ui;
 	}

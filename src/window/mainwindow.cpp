@@ -42,11 +42,7 @@ namespace PixelMaestroStudio {
 	bool MainWindow::confirm_unsaved_changes() {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
-		if (confirm == QMessageBox::Yes) {
-			return true;
-		}
-
-		return false;
+		return (confirm == QMessageBox::Yes);
 	}
 
 	/**
@@ -64,7 +60,6 @@ namespace PixelMaestroStudio {
 		maestro_controller_ = new MaestroController(maestro_control_widget_);
 
 		// Build DrawingAreas if enabled in Preferences
-		// TODO: Allow for dynamic adding/removing DrawingAreas. Look into dockable widgets: https://doc.qt.io/qt-5/qdockwidget.html
 		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
 			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
@@ -73,7 +68,7 @@ namespace PixelMaestroStudio {
 			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
 		}
 		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
-			drawing_area_dialog_ = std::unique_ptr<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
+			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
 			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
 			dynamic_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
 			drawing_area_dialog_->show();

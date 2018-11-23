@@ -361,6 +361,7 @@ namespace PixelMaestroStudio {
 	}
 
 	ShowControlWidget::~ShowControlWidget() {
+		qApp->removeEventFilter(this);
 		delete show_controller_;
 		delete ui;
 	}

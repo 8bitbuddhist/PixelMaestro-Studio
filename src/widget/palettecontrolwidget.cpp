@@ -8,7 +8,7 @@
 #include "ui_palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	PaletteControlWidget::PaletteControlWidget(PaletteController* controller, QString initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget) {
+	PaletteControlWidget::PaletteControlWidget(PaletteController* controller, const QString& initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget) {
 		this->palette_controller_ = controller;
 		ui->setupUi(this);
 

@@ -12,7 +12,7 @@
 namespace PixelMaestroStudio {
 	class SerialDevice {
 		public:
-			SerialDevice();
+			SerialDevice() = default;
 			explicit SerialDevice(const QString& port_name);
 			bool connect();
 			bool disconnect();
