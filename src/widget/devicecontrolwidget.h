@@ -10,7 +10,7 @@
 #include <QThread>
 #include <QVector>
 #include <QWidget>
-#include "model/serialdevice.h"
+#include "controller/serialdevicecontroller.h"
 #include "widget/maestrocontrolwidget.h"
 
 namespace Ui {
@@ -38,6 +38,7 @@ namespace PixelMaestroStudio {
 			QByteArray* get_maestro_cue();
 			void block_cue(CueController::Handler handler, uint8_t action);
 			void run_cue(uint8_t* cue, int size);
+			void save_devices();
 			void update_cuefile_size();
 
 		private slots:
@@ -54,6 +55,8 @@ namespace PixelMaestroStudio {
 
 			void on_refreshButton_clicked();
 
+			void on_sectionMapButton_clicked();
+
 		private:
 			/// List of Cues that should be blocked from executing.
 			QVector<BlockedCue> blocked_cues_;
@@ -65,15 +68,14 @@ namespace PixelMaestroStudio {
 			QByteArray maestro_cue_;
 
 			/// List of activated USB devices.
-			QVector<SerialDevice> serial_devices_;
+			QVector<SerialDeviceController> serial_devices_;
 
 			void check_device_rom_capacity();
 			bool connect_to_serial_device(QString port_name);
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();
-			void save_devices();
 			void set_device_controls_enabled(bool enabled);
-			void write_to_device(SerialDevice* device, const char* out, int size, bool progress = false);
+			void write_to_device(SerialDeviceController* device, const char* out, int size, bool progress = false);
 	};
 }
 

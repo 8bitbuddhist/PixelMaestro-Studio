@@ -5,38 +5,45 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.40] - In Progress
 ### Added
-- Added File > Merge, which loads a Cuefile on top of the current Maestro instead of replacing it.
-- Added File > Queue, which loads a Cuefile into the Event History without affecting the running Maestro.
-- Added ability to resize sections of the interface.
-- Added shortcut keys for Save, New, Open, etc.
-- Added cursor when using the Canvas brush tool.
-- Added duplicate name check to Palette Editor.
-- Added lock icon to tabs when `Lock Maestro` is checked in the Show tab.
-- Added check to prevent segfaults when editing certain animations while `Lock Maestro` is enabled in the Show tab.
-- Added buttons to clear the Event History and Event Queue in the Show tab.
-- Added confirmation prompt when there are unsaved changes.
-- Added ability to click on a Section to make it the Active Section.
-- Added "replace" tool for Canvases, which replaces a single color with another color.
-- Added refresh button to Device tab.
-- Added ability to re-select a Palette from the Palette drop-down. This lets you reapply a Palette after making changes.
+- Main Window
+	- Added File > Merge, which loads a Cuefile on top of the current Maestro instead of replacing it.
+	- Added File > Queue, which loads a Cuefile into the Event History without affecting the running Maestro.
+	- Added ability to resize sections of the interface.
+	- Added shortcut keys for Save, New, Open, etc.
+	- Added confirmation prompt when there are unsaved changes.
+- Animation Editor
+	- Added cursor when using the Canvas brush tool.
+	- Added duplicate name check to Palette Editor.
+	- Added lock icon to tabs when `Lock Maestro` is checked in the Show tab.
+	- Added check to prevent segfaults when editing certain animations while `Lock Maestro` is enabled in the Show tab.
+	- Added buttons to clear the Event History and Event Queue in the Show tab.
+	- Added ability to click on a Section to make it the Active Section.
+	- Added "replace" tool for Canvases, which replaces a single color with another color.
+	- Added ability to re-select a Palette from the Palette drop-down. This lets you reapply a Palette after making changes.
+	- Added refresh button to Device tab.
+	- Added ability to map Sections on the Maestro to Sections on a device based on index.
 
 ### Changed
-- Show timer now runs continuously instead of only when the Show is running.
-- Moved Maestro play/pause and lock controls from Show tab to the center of the window.
-- Renamed several file menu options to be more clear about their actions.
-- Added tooltips to several menu options.
-- Renamed `Cue Interpreter` dialog to `Cue Previewer`.
-- Updated Qt version to 5.11.2 (release versions do not require Qt pre-installed).
-- Created static build for Linux.
-- Fixed memory leak when loading images into a Canvas.
-- Fixed custom Palettes saving and loading even with session saving disabled.
-- Fixed Palette colors regenerating when changing a Palette's name.
-- Changed Show control behavior. When unchecking `Enabled Show`, the Show is removed instead of just paused.
-- Removed unnecessary Cues being saved to new Cuefiles.
-- Split MaestroControlWidget into individual subwidgets for easier development.
-- Fixed issue where Cues executed twice while loading.
-- Increased Event History to 200 events.
-- Fixed issue where cancelling the Palette Editor dialog saved a new color anyway.
+- Main Window
+	- Added tooltips to several menu options.
+	- Renamed several file menu options to be more clear about their actions.
+	- Removed unnecessary Cues being saved to new Cuefiles.
+- Animation Editor
+	- Moved Maestro play/pause and lock controls from Show tab to the center of the window.
+	- Split MaestroControlWidget into individual subwidgets.
+	- Show timer now runs continuously instead of only when the Show is running.
+	- Renamed `Cue Interpreter` dialog to `Cue Previewer`.
+	- Fixed memory leak when loading images into a Canvas.
+	- Fixed issue where Cues executed twice while loading.
+	- Fixed custom Palettes saving and loading even with session saving disabled.
+	- Fixed Palette colors regenerating when changing a Palette's name.
+	- `Enabled Show` now initializes and deletes the Show instead of pausing it.
+	- Increased Event History to 200 events.
+	- Fixed issue where cancelling the Palette Editor dialog regenerated the color scheme anyway.
+	- Saved devices will now try to auto-connect even if they weren't auto-detected.
+- Other
+	- Updated Qt version to 5.11.2.
+	- Created static build for Linux. Linux users do not need to preinstall Qt.
 
 ### Removed
 - Removed donation link.

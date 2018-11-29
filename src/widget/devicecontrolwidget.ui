@@ -82,7 +82,7 @@
       <string>Device Management</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QLineEdit" name="fileSizeLineEdit">
         <property name="toolTip">
          <string>Size of the current Maestro configuration</string>
@@ -92,7 +92,7 @@
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
+      <item row="12" column="1">
        <widget class="QProgressBar" name="uploadProgressBar">
         <property name="value">
          <number>0</number>
@@ -102,21 +102,21 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="QLineEdit" name="capacityLineEdit">
         <property name="toolTip">
          <string>Total device capacity for storing Cuefiles</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Device capacity</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
+      <item row="8" column="1">
        <widget class="QPushButton" name="uploadButton">
         <property name="toolTip">
          <string>Send the Cuefile to the device</string>
@@ -126,14 +126,14 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>File size</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QPushButton" name="previewButton">
         <property name="text">
          <string>Preview</string>
@@ -147,6 +147,13 @@
         </property>
         <property name="text">
          <string>Live updates</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="sectionMapButton">
+        <property name="text">
+         <string>Map Sections...</string>
         </property>
        </widget>
       </item>

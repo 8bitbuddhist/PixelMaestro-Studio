@@ -3,21 +3,21 @@
 
 #include <QByteArray>
 #include <QThread>
-#include "serialdevice.h"
+#include "serialdevicecontroller.h"
 
 namespace PixelMaestroStudio {
-	class SerialDeviceThread : public QThread {
+	class SerialDeviceThreadController : public QThread {
 		Q_OBJECT
 
 		public:
-			SerialDeviceThread(SerialDevice* serial_device, const char* out, uint16_t size);
+			SerialDeviceThreadController(SerialDeviceController* serial_device, const char* out, uint16_t size);
 			void run() override;
 
 		signals:
 			void progress_changed(int progress);
 
 		private:
-			SerialDevice* serial_device_ = nullptr;
+			SerialDeviceController* serial_device_ = nullptr;
 			QByteArray output_;
 	};
 }

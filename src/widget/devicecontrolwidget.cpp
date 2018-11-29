@@ -7,20 +7,20 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QSettings>
+#include <QStandardItemModel>
+#include <QStringList>
 #include <QTabWidget>
 #include <QWidget>
 #include <thread>
 #include "dialog/cueinterpreterdialog.h"
 #include "dialog/preferencesdialog.h"
+#include "dialog/sectionmapdialog.h"
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
-#include "model/serialdevicethread.h"
+#include "controller/serialdevicecontroller.h"
+#include "controller/serialdevicethreadcontroller.h"
 
-/*
- *
- * TODO: Per-device Section mapping
- *	Map a Section # on the PMS side to a Section # on the device side
- */
+// TODO: Per-device brightness (or Maestro-level brightness?)
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
@@ -37,27 +37,20 @@ namespace PixelMaestroStudio {
 
 		// Add saved serial devices to output selection box.
 		QSettings settings;
-		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 		int num_serial_devices = settings.beginReadArray(PreferencesDialog::devices);
 		for (int device = 0; device < num_serial_devices; device++) {
 			settings.setArrayIndex(device);
 
 			QString device_name = settings.value(PreferencesDialog::device_port).toString();
-			serial_devices_.push_back(SerialDevice(device_name));
+			serial_devices_.push_back(SerialDeviceController(device_name));
 
-			// If the saved port is an available port, connect to it
-			for (const QSerialPortInfo& port : ports) {
-				if (port.systemLocation() == device_name) {
-					QListWidgetItem* item = new QListWidgetItem(device_name);
-					ui->serialOutputListWidget->addItem(item);
-
-					bool connected = serial_devices_.last().connect();
-
-					if (!connected) {
-						QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last ().get_device ()->errorString()));
-					}
-					break;
-				}
+			// If the saved port is available, try connecting to it
+			if (serial_devices_.last().connect()) {
+				QListWidgetItem* item = new QListWidgetItem(device_name);
+				ui->serialOutputListWidget->addItem(item);
+			}
+			else {
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last ().get_device ()->errorString()));
 			}
 		}
 		settings.endArray();
@@ -107,7 +100,7 @@ namespace PixelMaestroStudio {
 		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputListWidget->findItems(ui->serialOutputComboBox->currentText(), Qt::MatchFixedString).count() >= 0) {
 
 			// Initialize and try connecting to the device.
-			SerialDevice device(ui->serialOutputComboBox->currentText());
+			SerialDeviceController device(ui->serialOutputComboBox->currentText());
 			bool connected = device.connect();
 			if (connected) {
 				ui->serialOutputListWidget->addItem(device.get_port_name());
@@ -198,6 +191,15 @@ namespace PixelMaestroStudio {
 				true);
 	}
 
+	void DeviceControlWidget::on_sectionMapButton_clicked() {
+		SerialDeviceController* device = &serial_devices_[ui->serialOutputListWidget->currentRow()];
+		SectionMapDialog dialog(
+			device,
+			this
+		);
+		dialog.exec();
+	}
+
 	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
 		ui->connectPushButton->setEnabled(arg1.length() > 0);
 	}
@@ -252,7 +254,31 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		for (SerialDevice device :serial_devices_) {
+		for (SerialDeviceController device : serial_devices_) {
+			// TODO: Check the Cue against the SectionMapModel and change Section #s if necessary. Untested: no idea if this works.
+			// FIXME: In order to map to multiple Sections, we'd need to run the Cue multiple times. Either remove that ability or generate new Cues
+			SectionMapModel* model = device.section_map_model;
+			if (model) {
+				if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::MaestroCueHandler) ||
+					cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::ShowCueHandler))) {
+
+					// Although we use SectionCueHandler, it's the same for all Section-related handlers
+					uint8_t* target_section = &cue[(uint8_t)SectionCueHandler::Byte::SectionByte];
+					QModelIndex model_index = QModelIndex();
+					for (int row = 0; row < model->rowCount(model_index); row++) {
+						QStandardItem* item = model->item(row, 0);
+						if (item->text().toUInt() == *target_section) {
+							// We found the Section, now let's get the column
+							for (int column = 1; column < model->columnCount(model_index); column++) {
+								if (model->item(row, column)->checkState() == Qt::Checked) {
+									*target_section = column - 1;
+								}
+							}
+						}
+					}
+				}
+			}
+
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
 				write_to_device(&device,
 								reinterpret_cast<const char*>(cue),
@@ -273,10 +299,36 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < ui->serialOutputListWidget->count(); i++) {
 			settings.setArrayIndex(i);
 
-			SerialDevice device = serial_devices_.at(i);
-			settings.setValue(PreferencesDialog::device_capacity, device.get_capacity());
-			settings.setValue(PreferencesDialog::device_port, device.get_port_name());
-			settings.setValue(PreferencesDialog::device_real_time_refresh, device.get_real_time_refresh_enabled());
+			SerialDeviceController* device = &serial_devices_[i];
+			settings.setValue(PreferencesDialog::device_capacity, device->get_capacity());
+			settings.setValue(PreferencesDialog::device_port, device->get_port_name());
+			settings.setValue(PreferencesDialog::device_real_time_refresh, device->get_real_time_refresh_enabled());
+
+			/*
+			 * Save the device's model.
+			 * List each Section as a separate group, then list each map to that Section underneath it.
+			 */
+			SectionMapModel* model = device->section_map_model;
+			if (model != nullptr) {
+
+				QModelIndex parent = QModelIndex();
+
+				settings.beginWriteArray(PreferencesDialog::section_map);
+				for (int row = 0; row < model->rowCount(parent); row++) {
+					settings.setArrayIndex(row);
+
+					QStandardItem* section_item = model->item(row, 0);
+					settings.setValue(PreferencesDialog::section_map_section, section_item->text());
+
+					QStringList mapped;
+					for (int column = 1; column < model->columnCount(parent); column++) {
+						QStandardItem* item = model->item(row, column);
+						mapped.append(QString::number(item->checkState()));
+					}
+					settings.setValue(PreferencesDialog::section_map_mapped_sections, mapped.join(PreferencesDialog::delimiter));
+				}
+				settings.endArray();
+			}
 		}
 		settings.endArray();
 	}
@@ -320,8 +372,8 @@ namespace PixelMaestroStudio {
 	 * @param out Data to send.
 	 * @param size Size of data to send.
 	 */
-	void DeviceControlWidget::write_to_device(SerialDevice *device, const char *out, int size, bool progress) {
-		SerialDeviceThread* thread = new SerialDeviceThread(device,
+	void DeviceControlWidget::write_to_device(SerialDeviceController *device, const char *out, int size, bool progress) {
+		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
 														  static_cast<const char*>(out),
 														  static_cast<uint16_t>(size));
 		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
@@ -334,7 +386,7 @@ namespace PixelMaestroStudio {
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {
-		for (SerialDevice& device : serial_devices_) {
+		for (SerialDeviceController& device : serial_devices_) {
 			device.disconnect();
 		}
 		delete ui;

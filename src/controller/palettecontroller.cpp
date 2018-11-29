@@ -1,4 +1,5 @@
 #include <QSettings>
+#include <QStringList>
 #include "colorpresets.h"
 #include "core/colors.h"
 #include "dialog/preferencesdialog.h"
@@ -180,13 +181,12 @@ namespace PixelMaestroStudio {
 			PaletteWrapper* palette_wrapper = &palettes_.at(i);
 
 			// Set color array
-			QString color_string;
+			QStringList color_list;
 			Colors::RGB* colors = palette_wrapper->palette.get_colors();
 			for (int color_index = 0; color_index < palette_wrapper->palette.get_num_colors(); color_index++) {
-				color_string.append(serialize_color(&colors[color_index]));
-				color_string.append(PreferencesDialog::delimiter);
+				color_list.append(serialize_color(&colors[color_index]));
 			};
-			settings.setValue(PreferencesDialog::palette_colors, color_string);
+			settings.setValue(PreferencesDialog::palette_colors, color_list.join(PreferencesDialog::delimiter));
 
 			settings.setValue(PreferencesDialog::palette_base_color, serialize_color(&palette_wrapper->base_color));
 			settings.setValue(PreferencesDialog::palette_mirror, palette_wrapper->mirror);

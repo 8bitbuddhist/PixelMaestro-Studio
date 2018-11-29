@@ -8,12 +8,13 @@
 #include <QSharedPointer>
 #include <QSerialPort>
 #include <QString>
+#include "model/sectionmapmodel.h"
 
 namespace PixelMaestroStudio {
-	class SerialDevice {
+	class SerialDeviceController {
 		public:
-			SerialDevice() = default;
-			explicit SerialDevice(const QString& port_name);
+			SerialDeviceController() = default;
+			explicit SerialDeviceController(const QString& port_name);
 			bool connect();
 			bool disconnect();
 			QSerialPort* get_device();
@@ -22,6 +23,9 @@ namespace PixelMaestroStudio {
 			bool get_real_time_refresh_enabled() const;
 			void set_capacity(int capacity);
 			void set_real_time_update(bool enabled);
+
+			/// Custom mapping of local Sections to remote Sections. Made public because of weird pointer issues. Fix later.
+			SectionMapModel* section_map_model = nullptr;
 
 		private:
 			/// The maximum number of bytes the device's ROM can hold.
