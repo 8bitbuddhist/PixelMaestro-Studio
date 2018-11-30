@@ -50,7 +50,7 @@ namespace PixelMaestroStudio {
 				ui->serialOutputListWidget->addItem(item);
 			}
 			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last ().get_device ()->errorString()));
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last().get_device ()->errorString()));
 			}
 		}
 		settings.endArray();
@@ -114,7 +114,7 @@ namespace PixelMaestroStudio {
 
 			}
 			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + "."));
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
 			}
 		}
 		else {
@@ -254,26 +254,35 @@ namespace PixelMaestroStudio {
 			}
 		}
 
+		CueController* controller = this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+
 		for (SerialDeviceController device : serial_devices_) {
-			// TODO: Check the Cue against the SectionMapModel and change Section #s if necessary. Untested: no idea if this works.
-			// FIXME: In order to map to multiple Sections, we'd need to run the Cue multiple times. Either remove that ability or generate new Cues
+
+			// If the device has a Section map saved, apply it to the Cue
 			SectionMapModel* model = device.section_map_model;
-			if (model) {
+			if (model) {				
+				// Only check Section-based Cues
 				if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::MaestroCueHandler) ||
 					cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::ShowCueHandler))) {
 
-					// Although we use SectionCueHandler, it's the same for all Section-related handlers
-					uint8_t* target_section = &cue[(uint8_t)SectionCueHandler::Byte::SectionByte];
-					QModelIndex model_index = QModelIndex();
-					for (int row = 0; row < model->rowCount(model_index); row++) {
-						QStandardItem* item = model->item(row, 0);
-						if (item->text().toUInt() == *target_section) {
-							// We found the Section, now let's get the column
-							for (int column = 1; column < model->columnCount(model_index); column++) {
-								if (model->item(row, column)->checkState() == Qt::Checked) {
-									*target_section = column - 1;
-								}
-							}
+					/*
+					 * Grab the local section ID from the buffer.
+					 * Then, grab the remote section ID from the map.
+					 * If they're different, replace the local with the remote ID in the buffer.
+					 */
+
+					// SectionByte is the same location for all Section-related handlers (as of v0.30)
+					uint8_t target_section_id = cue[(uint8_t)SectionCueHandler::Byte::SectionByte];
+
+					// Make sure the cell actually exists in the model before swapping.
+					QStandardItem* cell = model->item(target_section_id, 1);
+					if (cell != nullptr) {
+						int remote_section_id = cell->text().toInt();
+						if (remote_section_id != target_section_id) {
+							// We have a match. Swap the values and reassmble the Cue.
+							// NOTE: This will change the Section for all future Cues, but in this case, I don't think there's any way around it.
+							cue[(uint8_t)SectionCueHandler::Byte::SectionByte] = remote_section_id;
+							controller->assemble(size);
 						}
 					}
 				}
@@ -281,8 +290,9 @@ namespace PixelMaestroStudio {
 
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
 				write_to_device(&device,
-								reinterpret_cast<const char*>(cue),
-								size, false);
+								reinterpret_cast<char*>(cue),
+								size,
+								false);
 			}
 		}
 
@@ -304,28 +314,20 @@ namespace PixelMaestroStudio {
 			settings.setValue(PreferencesDialog::device_port, device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, device->get_real_time_refresh_enabled());
 
-			/*
-			 * Save the device's model.
-			 * List each Section as a separate group, then list each map to that Section underneath it.
-			 */
+			// Save the device's model.
 			SectionMapModel* model = device->section_map_model;
 			if (model != nullptr) {
+				settings.beginWriteArray(PreferencesDialog::section_map);
 
 				QModelIndex parent = QModelIndex();
-
-				settings.beginWriteArray(PreferencesDialog::section_map);
 				for (int row = 0; row < model->rowCount(parent); row++) {
 					settings.setArrayIndex(row);
 
-					QStandardItem* section_item = model->item(row, 0);
-					settings.setValue(PreferencesDialog::section_map_section, section_item->text());
+					QStandardItem* local_section = model->item(row, 0);
+					settings.setValue(PreferencesDialog::section_map_local, local_section->text().toInt());
 
-					QStringList mapped;
-					for (int column = 1; column < model->columnCount(parent); column++) {
-						QStandardItem* item = model->item(row, column);
-						mapped.append(QString::number(item->checkState()));
-					}
-					settings.setValue(PreferencesDialog::section_map_mapped_sections, mapped.join(PreferencesDialog::delimiter));
+					QStandardItem* remote_section = model->item(row, 1);
+					settings.setValue(PreferencesDialog::section_map_remote, remote_section->text().toInt());
 				}
 				settings.endArray();
 			}
@@ -338,6 +340,7 @@ namespace PixelMaestroStudio {
 		ui->uploadProgressBar->setEnabled(enabled);
 		ui->realTimeCheckBox->setEnabled(enabled);
 		ui->uploadButton->setEnabled(enabled);
+		ui->sectionMapButton->setEnabled(enabled);
 	}
 
 	/**
@@ -374,8 +377,8 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::write_to_device(SerialDeviceController *device, const char *out, int size, bool progress) {
 		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
-														  static_cast<const char*>(out),
-														  static_cast<uint16_t>(size));
+														  out,
+														  size);
 		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
 		if (progress) {

@@ -10,7 +10,7 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
-			SerialDeviceThreadController(SerialDeviceController* serial_device, const char* out, uint16_t size);
+			SerialDeviceThreadController(SerialDeviceController* serial_device, const char* out, int size);
 			void run() override;
 
 		signals:

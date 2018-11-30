@@ -36,9 +36,9 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::device_real_time_refresh = QStringLiteral("RealTimeRefresh");
 
 	// Device section map
-	QString PreferencesDialog::section_map_mapped_sections = QStringLiteral("MappedSections");
 	QString PreferencesDialog::section_map = QStringLiteral("SectionMap");
-	QString PreferencesDialog::section_map_section = QStringLiteral("Section");
+	QString PreferencesDialog::section_map_local = QStringLiteral("Local");
+	QString PreferencesDialog::section_map_remote = QStringLiteral("Remote");
 
 	// "Palettes" section
 	QString PreferencesDialog::palettes = QStringLiteral("Palettes");

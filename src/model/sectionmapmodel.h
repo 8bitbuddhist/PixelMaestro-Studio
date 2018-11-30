@@ -12,13 +12,6 @@ namespace PixelMaestroStudio {
 			SectionMapModel(Maestro* maestro);
 			~SectionMapModel() = default;
 			void add_section();
-			void remove_section();
-
-		private:
-			Maestro* maestro_ = nullptr;
-
-			/// Index of the highest remote Section.
-			int current_index_ = -1;
 	};
 }
 

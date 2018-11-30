@@ -1,6 +1,7 @@
 #ifndef SECTIONMAPDIALOG_H
 #define SECTIONMAPDIALOG_H
 
+#include <QAbstractButton>
 #include <QDialog>
 #include "controller/serialdevicecontroller.h"
 #include "core/maestro.h"
@@ -18,15 +19,13 @@ namespace PixelMaestroStudio {
 			~SectionMapDialog();
 
 		private slots:
-			void on_addSectionButton_clicked();
-
-			void on_removeSectionButton_clicked();
-
-			void on_buttonBox_accepted();
+			void on_buttonBox_clicked(QAbstractButton *button);
 
 		private:
-			SectionMapModel* model_ = nullptr;
+			SerialDeviceController* device_ = nullptr;
 			Ui::SectionMapDialog *ui;
+
+			void initialize();
 	};
 }
 

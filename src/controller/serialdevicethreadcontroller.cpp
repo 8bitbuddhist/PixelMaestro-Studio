@@ -3,7 +3,7 @@
 #include "serialdevicethreadcontroller.h"
 
 namespace PixelMaestroStudio {
-	SerialDeviceThreadController::SerialDeviceThreadController(SerialDeviceController *serial_device, const char *out, uint16_t size) : QThread(nullptr) {
+	SerialDeviceThreadController::SerialDeviceThreadController(SerialDeviceController *serial_device, const char *out, int size) : QThread(nullptr) {
 		this->output_.append(out, size);
 		this->serial_device_ = serial_device;
 	}

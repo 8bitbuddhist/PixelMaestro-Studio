@@ -1,52 +1,38 @@
 #include "sectionmapmodel.h"
-#include <QCheckBox>
+#include <QList>
 #include <QStandardItemModel>
-#include <QStringList>
 
 namespace PixelMaestroStudio {
 	SectionMapModel::SectionMapModel(Maestro* maestro) : QStandardItemModel() {
-		this->maestro_ = maestro;
-
-		// Build header. Column count is based on the number of Maestro Sections.
-		QStringList header_labels("Remote Section #");
-		for (uint8_t i; i < maestro->get_num_sections(); i++) {
-			header_labels.append("Section "	+ QString::number(i));
-		}
+		// Build header. Row count is based on the number of Maestro Sections.
+		QStringList header_labels;
+		header_labels.append("Local Section");
+		header_labels.append("Remote Section");
 		setHorizontalHeaderLabels(header_labels);
 
-		// Add one default Section
-		add_section();
+		// Add Sections
+		for (uint8_t sections = 0; sections < maestro->get_num_sections(); sections++) {
+			add_section();
+		}
 	}
 
 	/**
 	 * Adds a Section to the model.
 	 */
 	void SectionMapModel::add_section() {
-		current_index_++;
+		int current_index = rowCount(QModelIndex());
 
 		QList<QStandardItem*> items;
-		QStandardItem* section_num = new QStandardItem(QString::number(current_index_));
-		section_num->setEnabled(false);
-		section_num->setTextAlignment(Qt::AlignCenter);
-		items.append(section_num);
 
-		// Add a checkbox for each Section in the Maestro.
-		for (uint8_t index = 0; index < maestro_->get_num_sections(); index++) {
-			QStandardItem* checkbox = new QStandardItem();
-			checkbox->setTextAlignment(Qt::AlignCenter);
-			checkbox->setEditable(false);
-			checkbox->setCheckable(true);
-			items.append(checkbox);
-		}
+		QStandardItem* local_section_num = new QStandardItem(QString::number(current_index));
+		local_section_num->setEnabled(false);
+		local_section_num->setTextAlignment(Qt::AlignCenter);
+		items.append(local_section_num);
 
-		insertRow(current_index_, items);
-	}
+		QStandardItem* remote_section_num = new QStandardItem(QString::number(current_index));
+		remote_section_num->setTextAlignment(Qt::AlignCenter);
+		items.append(remote_section_num);
 
-	/**
-	 * Removes the last Section from the model.
-	 */
-	void SectionMapModel::remove_section() {
-		removeRow(current_index_);
-		current_index_--;
+		insertRow(current_index, items);
 	}
 }

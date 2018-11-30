@@ -45,9 +45,9 @@ namespace PixelMaestroStudio {
 			static QString window_geometry;
 			static QString window_state;
 
-			static QString section_map_mapped_sections;
 			static QString section_map;
-			static QString section_map_section;
+			static QString section_map_local;
+			static QString section_map_remote;
 
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();
