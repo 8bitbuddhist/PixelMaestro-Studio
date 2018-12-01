@@ -20,7 +20,6 @@
 #include "controller/serialdevicecontroller.h"
 #include "controller/serialdevicethreadcontroller.h"
 
-// TODO: Per-device brightness (or Maestro-level brightness?)
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
 		ui->setupUi(this);
@@ -48,9 +47,6 @@ namespace PixelMaestroStudio {
 			if (serial_devices_.last().connect()) {
 				QListWidgetItem* item = new QListWidgetItem(device_name);
 				ui->serialOutputListWidget->addItem(item);
-			}
-			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + serial_devices_.last().get_port_name() + ": " + serial_devices_.last().get_device ()->errorString()));
 			}
 		}
 		settings.endArray();
@@ -147,6 +143,7 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceControlWidget::on_realTimeCheckBox_stateChanged(int arg1) {
 		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_update(arg1);
+		ui->sectionMapButton->setEnabled(arg1);
 		save_devices();
 	}
 
@@ -258,9 +255,12 @@ namespace PixelMaestroStudio {
 
 		for (SerialDeviceController device : serial_devices_) {
 
-			// If the device has a Section map saved, apply it to the Cue
+			/*
+			 * If the device has a Section map saved, apply it to the Cue.
+			 * This only applies to real-time updates, not Cuefiles.
+			 */
 			SectionMapModel* model = device.section_map_model;
-			if (model) {				
+			if (model && device.get_real_time_refresh_enabled()) {
 				// Only check Section-based Cues
 				if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::MaestroCueHandler) ||
 					cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::ShowCueHandler))) {
@@ -340,7 +340,7 @@ namespace PixelMaestroStudio {
 		ui->uploadProgressBar->setEnabled(enabled);
 		ui->realTimeCheckBox->setEnabled(enabled);
 		ui->uploadButton->setEnabled(enabled);
-		ui->sectionMapButton->setEnabled(enabled);
+		ui->sectionMapButton->setEnabled(enabled && ui->realTimeCheckBox->isChecked());
 	}
 
 	/**
@@ -375,7 +375,7 @@ namespace PixelMaestroStudio {
 	 * @param out Data to send.
 	 * @param size Size of data to send.
 	 */
-	void DeviceControlWidget::write_to_device(SerialDeviceController *device, const char *out, int size, bool progress) {
+	void DeviceControlWidget::write_to_device(SerialDeviceController *device, const char *out, const int size, bool progress) {
 		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
 														  out,
 														  size);

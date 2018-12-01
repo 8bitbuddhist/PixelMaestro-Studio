@@ -32,7 +32,7 @@ namespace PixelMaestroStudio {
 		public:
 			MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
 			~MaestroDrawingArea() = default;
-			SectionDrawingArea* add_section_drawing_area(Section* section);
+			SectionDrawingArea* add_section_drawing_area(Section* section, const uint8_t section_id);
 			MaestroControlWidget* get_maestro_control_widget() const;
 			void frame_active_section(Section* section);
 			void remove_section_drawing_area(Section* section = nullptr);

@@ -24,10 +24,10 @@ namespace PixelMaestroStudio {
 	 * @param section Section to draw.
 	 * @return New SectionDrawingArea.
 	 */
-	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section* section) {
+	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section* section, const uint8_t section_id) {
 		section_drawing_areas_.push_back(
 			QSharedPointer<SectionDrawingArea>(
-				new SectionDrawingArea(this, section)
+				new SectionDrawingArea(this, section, section_id)
 			)
 		);
 		QWidget* drawing_area = section_drawing_areas_.last().data();

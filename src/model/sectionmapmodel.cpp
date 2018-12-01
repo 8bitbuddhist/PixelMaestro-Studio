@@ -4,7 +4,6 @@
 
 namespace PixelMaestroStudio {
 	SectionMapModel::SectionMapModel(Maestro* maestro) : QStandardItemModel() {
-		// Build header. Row count is based on the number of Maestro Sections.
 		QStringList header_labels;
 		header_labels.append("Local Section");
 		header_labels.append("Remote Section");

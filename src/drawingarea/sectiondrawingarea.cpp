@@ -4,9 +4,10 @@
 #include "dialog/preferencesdialog.h"
 
 namespace PixelMaestroStudio {
-	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section) : QFrame(parent) {
+	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section, uint8_t section_id) : QFrame(parent) {
 		this->maestro_drawing_area_ = dynamic_cast<MaestroDrawingArea*>(parent);
 		this->section_ = section;
+		this->section_id_ = section_id;
 
 		// Enable mouse tracking
 		this->setMouseTracking(true);
@@ -167,7 +168,7 @@ namespace PixelMaestroStudio {
 		 */
 		for (uint16_t row = 0; row < section_->get_dimensions()->y; row++) {
 			for (uint16_t column = 0; column < section_->get_dimensions()->x; column++) {
-				Colors::RGB rgb = section_->get_pixel_color(column, row);
+				Colors::RGB rgb = section_->get_maestro()->get_pixel_color(section_id_, column, row);
 				QColor qcolor;
 				QBrush brush;
 				QRect rect;

@@ -102,6 +102,27 @@ namespace PixelMaestroStudio {
 		set_maestro_modified(false);
 	}
 
+	void MaestroControlWidget::on_brightnessSlider_valueChanged(int value) {
+		ui->brightnessSpinBox->blockSignals(true);
+		ui->brightnessSpinBox->setValue(value);
+		ui->brightnessSpinBox->blockSignals(false);
+
+		run_cue(
+			maestro_handler->set_brightness(value)
+		);
+	}
+
+	void MaestroControlWidget::on_brightnessSpinBox_editingFinished() {
+		uint8_t brightness = ui->brightnessSpinBox->value();
+		ui->brightnessSlider->blockSignals(true);
+		ui->brightnessSlider->setValue(brightness);
+		ui->brightnessSlider->blockSignals(false);
+
+		run_cue(
+			maestro_handler->set_brightness(brightness)
+		);
+	}
+
 	/**
 	 * Toggles the Maestro lock.
 	 * @param checked If true, the Maestro is locked.
@@ -176,6 +197,14 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::refresh_maestro_settings() {
 		show_control_widget_->refresh();
 		device_control_widget_->update_cuefile_size();
+
+		uint8_t brightness = maestro_controller_->get_maestro()->get_brightness();
+		ui->brightnessSlider->blockSignals(true);
+		ui->brightnessSpinBox->blockSignals(true);
+		ui->brightnessSlider->setValue(brightness);
+		ui->brightnessSpinBox->setValue(brightness);
+		ui->brightnessSlider->blockSignals(false);
+		ui->brightnessSpinBox->blockSignals(false);
 	}
 
 	/**

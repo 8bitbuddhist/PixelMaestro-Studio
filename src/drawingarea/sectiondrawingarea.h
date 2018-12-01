@@ -22,7 +22,7 @@ namespace PixelMaestroStudio {
 				Layer
 			};
 
-			SectionDrawingArea(QWidget* parent, Section* section);
+			SectionDrawingArea(QWidget* parent, Section* section, uint8_t section_id);
 			~SectionDrawingArea() = default;
 			void draw_frame(FrameType type);
 			Section* get_section() const;
@@ -53,6 +53,9 @@ namespace PixelMaestroStudio {
 
 			/// The location where the Section will be rendered.
 			Point section_cursor_;
+
+			/// Index of the Section in the Maestro.
+			uint8_t section_id_;
 
 			Point map_cursor_to_pixel(const QPoint cursor);
 	};

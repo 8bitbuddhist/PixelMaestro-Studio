@@ -22,12 +22,14 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added ability to re-select a Palette from the Palette drop-down. This lets you reapply a Palette after making changes.
 	- Added refresh button to Device tab.
 	- Added ability to map Sections on the Maestro to Sections on a device based on index.
+	- Added Maestro brightness slider.
 
 ### Changed
 - Main Window
 	- Added tooltips to several menu options.
 	- Renamed several file menu options to be more clear about their actions.
 	- Removed unnecessary Cues being saved to new Cuefiles.
+	- Renders now reflect changes to Maestro brightness.
 - Animation Editor
 	- Moved Maestro play/pause and lock controls from Show tab to the center of the window.
 	- Split MaestroControlWidget into individual subwidgets.

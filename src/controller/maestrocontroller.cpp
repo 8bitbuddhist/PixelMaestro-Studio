@@ -42,7 +42,7 @@ namespace PixelMaestroStudio {
 
 		// Initialize the DrawingArea's SectionDrawingAreas
 		for (uint8_t section = 0; section < this->num_sections_; section++) {
-			drawing_area->add_section_drawing_area(&sections_[section]);
+			drawing_area->add_section_drawing_area(&sections_[section], section);
 		}
 
 		// Refresh the DrawingArea on each timeout
@@ -127,6 +127,7 @@ namespace PixelMaestroStudio {
 
 		// Maestro-specific Cues
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
+			write_cue_to_stream(datastream, maestro_handler->set_brightness(maestro_->get_brightness()));
 			write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 		}
 
@@ -303,7 +304,7 @@ namespace PixelMaestroStudio {
 		for (MaestroDrawingArea* drawing_area : this->drawing_areas_) {
 			drawing_area->remove_section_drawing_area();
 			for (uint8_t section = 0; section < num_sections; section++) {
-				drawing_area->add_section_drawing_area(&this->sections_[section]);
+				drawing_area->add_section_drawing_area(&this->sections_[section], section);
 			}
 		}
 
