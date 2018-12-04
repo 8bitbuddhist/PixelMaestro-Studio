@@ -29,12 +29,12 @@ namespace PixelMaestroStudio {
 			if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
 				if (key_event->key() == Qt::Key_Left) {
 					on_playbackPreviousToolButton_clicked();
+					return true;
 				}
 				else if (key_event->key() == Qt::Key_Right) {
 					on_playbackNextToolButton_clicked();
+					return true;
 				}
-
-				return true;
 			}
 		}
 

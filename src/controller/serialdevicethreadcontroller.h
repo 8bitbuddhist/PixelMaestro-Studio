@@ -17,6 +17,12 @@ namespace PixelMaestroStudio {
 			void progress_changed(int progress);
 
 		private:
+			/// Size of each chunk in bytes
+			const uint8_t CHUNK_SIZE = 64;
+
+			/// Time in milliseconds between chunks. Default is 250.
+			const uint8_t SLEEP_INTERVAL = 100;
+
 			SerialDeviceController* serial_device_ = nullptr;
 			QByteArray output_;
 	};

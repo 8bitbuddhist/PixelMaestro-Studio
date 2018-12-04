@@ -162,6 +162,35 @@ namespace PixelMaestroStudio {
 		);
 	}
 
+	void SectionControlWidget::on_brightnessSlider_valueChanged(int value) {
+		ui->brightnessSpinBox->blockSignals(true);
+		ui->brightnessSpinBox->setValue(value);
+		ui->brightnessSpinBox->blockSignals(false);
+
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->section_handler->set_brightness(
+				get_section_index(),
+				get_layer_index(),
+				static_cast<uint8_t>(value)
+			)
+		);
+	}
+
+	void SectionControlWidget::on_brightnessSpinBox_editingFinished() {
+		uint8_t brightness = ui->brightnessSpinBox->value();
+		ui->brightnessSlider->blockSignals(true);
+		ui->brightnessSlider->setValue(brightness);
+		ui->brightnessSlider->blockSignals(false);
+
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->section_handler->set_brightness(
+				get_section_index(),
+				get_layer_index(),
+				static_cast<uint8_t>(brightness)
+			)
+		);
+	}
+
 	/**
 	 * Sets the number of columns in the grid.
 	 */
@@ -361,6 +390,15 @@ namespace PixelMaestroStudio {
 
 		ui->scrollXSpinBox->blockSignals(false);
 		ui->scrollYSpinBox->blockSignals(false);
+
+		// Update brightness
+		uint8_t brightness = active_section_->get_brightness();
+		ui->brightnessSlider->blockSignals(true);
+		ui->brightnessSpinBox->blockSignals(true);
+		ui->brightnessSlider->setValue(brightness);
+		ui->brightnessSpinBox->setValue(brightness);
+		ui->brightnessSlider->blockSignals(false);
+		ui->brightnessSpinBox->blockSignals(false);
 
 		// If this is a Layer, get the MixMode and alpha
 		if (active_section_->get_parent_section() != nullptr) {

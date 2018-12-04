@@ -1,9 +1,9 @@
 #include <QAbstractButton>
 #include <QMessageBox>
-#include <QSettings>
 #include "sectionmapdialog.h"
 #include "ui_sectionmapdialog.h"
 #include "widget/devicecontrolwidget.h"
+#include "widget/maestrocontrolwidget.h"
 
 namespace PixelMaestroStudio {
 	SectionMapDialog::SectionMapDialog(SerialDeviceController* device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog) {

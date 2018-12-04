@@ -21,6 +21,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::output_enabled = QStringLiteral("Enabled");
 
 	// "Interface" section
+	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");
 	QString PreferencesDialog::pause_on_start = QStringLiteral("Interface/PauseOnStart");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
@@ -54,6 +55,7 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 
 		// Interface settings
+		ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt());
 		ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape, 1).toInt());		// Default to square pixels
 		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, true).toBool());		// Default to old session
 
@@ -74,6 +76,7 @@ namespace PixelMaestroStudio {
 		settings_.setValue(pause_on_start, ui->pauseOnStartCheckBox->isChecked());
 
 		// Save interface settings
+		settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 		settings_.setValue(save_session, ui->saveSessionCheckBox->isChecked());
 

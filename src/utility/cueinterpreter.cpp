@@ -61,7 +61,8 @@ namespace PixelMaestroStudio {
 													  "Set dimensions",
 													  "Set layer",
 													  "Set offset",
-													  "Set scroll"});
+													  "Set scroll",
+													  "Set brightness"});
 
 	const QStringList CueInterpreter::ShowActions({"Set events",
 												   "Set looping",
@@ -220,8 +221,6 @@ namespace PixelMaestroStudio {
 				result->append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])) + ", ");
 				result->append(QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
-			case CanvasCueHandler::Action::NextFrame:
-				break;
 			case CanvasCueHandler::Action::RemoveFrameTimer:
 				break;
 			case CanvasCueHandler::Action::SetCurrentFrameIndex:
@@ -284,6 +283,9 @@ namespace PixelMaestroStudio {
 				break;
 			case SectionCueHandler::Action::SetAnimation:
 				result->append(": " + AnimationTypes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
+				break;
+			case SectionCueHandler::Action::SetBrightness:
+				result->append(": " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
 				break;
 			case SectionCueHandler::Action::SetCanvas:
 				result->append(": " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) + " frame(s)");

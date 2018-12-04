@@ -14,8 +14,137 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="sectionLayout">
-   <item row="0" column="3" alignment="Qt::AlignTop">
+   <item row="0" column="0" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="sectionSettingsGroupBox">
+     <property name="title">
+      <string>Section Settings</string>
+     </property>
+     <layout class="QGridLayout" name="sectionSettingsLayout">
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="layerSpinBox">
+        <property name="toolTip">
+         <string>The number of Layers belonging to this Section</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="activeSectionLabel">
+        <property name="text">
+         <string>Active Section</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="activeSectionComboBox">
+        <property name="toolTip">
+         <string>The Section currently being edited</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="layerLabel">
+        <property name="text">
+         <string>Layers</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="layerGroupBox">
+     <property name="title">
+      <string>Layer Settings</string>
+     </property>
+     <layout class="QGridLayout" name="layerLayout">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="mixModeComboBox">
+        <property name="toolTip">
+         <string>How the Layer is rendered onto the previous Layer</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Alpha</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Multiply</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Overlay</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="activeLayerComboBox">
+        <property name="toolTip">
+         <string>The Layer currently being edited</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="activeLayerLabel">
+        <property name="text">
+         <string>Active Layer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="mixModeLabel">
+        <property name="text">
+         <string>Mix Mode</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="alphaLabel">
+        <property name="text">
+         <string>Alpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="alphaSpinBox">
+        <property name="toolTip">
+         <string>The Layer's transparency level</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="2">
     <widget class="QGroupBox" name="gridSettingsGroupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Grid Settings</string>
      </property>
@@ -152,123 +281,48 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0" alignment="Qt::AlignTop">
-    <widget class="QGroupBox" name="sectionSettingsGroupBox">
+   <item row="1" column="0" colspan="3">
+    <widget class="QGroupBox" name="brightnessGroupBox">
      <property name="title">
-      <string>Section Settings</string>
+      <string/>
      </property>
-     <layout class="QGridLayout" name="sectionSettingsLayout">
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="layerSpinBox">
-        <property name="toolTip">
-         <string>The number of Layers belonging to this Section</string>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="brightnessLabel">
+        <property name="text">
+         <string>Brightness</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="brightnessSpinBox">
         <property name="maximum">
          <number>255</number>
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="activeSectionLabel">
-        <property name="text">
-         <string>Active Section</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="activeSectionComboBox">
+      <item>
+       <widget class="QSlider" name="brightnessSlider">
         <property name="toolTip">
-         <string>The Section currently being edited</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="layerLabel">
-        <property name="text">
-         <string>Layers</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="1" alignment="Qt::AlignTop">
-    <widget class="QGroupBox" name="layerGroupBox">
-     <property name="title">
-      <string>Layer Settings</string>
-     </property>
-     <layout class="QGridLayout" name="layerLayout">
-      <item row="1" column="1">
-       <widget class="QComboBox" name="mixModeComboBox">
-        <property name="toolTip">
-         <string>How the Layer is rendered onto the previous Layer</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Alpha</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Multiply</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Overlay</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="activeLayerComboBox">
-        <property name="toolTip">
-         <string>The Layer currently being edited</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="activeLayerLabel">
-        <property name="text">
-         <string>Active Layer</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="mixModeLabel">
-        <property name="text">
-         <string>Mix Mode</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="alphaLabel">
-        <property name="text">
-         <string>Alpha</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="alphaSpinBox">
-        <property name="toolTip">
-         <string>The Layer's transparency level</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>How bright the Section is (255 indicates full brightness)</string>
         </property>
         <property name="maximum">
          <number>255</number>
         </property>
-        <property name="singleStep">
-         <number>5</number>
+        <property name="value">
+         <number>255</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
+        </property>
+        <property name="tickInterval">
+         <number>15</number>
         </property>
        </widget>
       </item>

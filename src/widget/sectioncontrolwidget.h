@@ -38,6 +38,10 @@ namespace PixelMaestroStudio {
 			void on_offsetYSpinBox_editingFinished();
 			void on_layerSpinBox_editingFinished();
 
+			void on_brightnessSlider_valueChanged(int value);
+
+			void on_brightnessSpinBox_editingFinished();
+
 		private:
 			/// The Section currently being controlled.
 			Section* active_section_ = nullptr;

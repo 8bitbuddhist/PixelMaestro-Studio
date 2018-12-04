@@ -50,9 +50,6 @@ namespace PixelMaestroStudio {
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
 
-			/// Maximum number of events to retain.
-			const int event_history_max_ = 200;
-
 			/// The index of the last event that ran.
 			int last_index_ = -1;
 

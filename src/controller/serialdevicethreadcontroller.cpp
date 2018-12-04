@@ -24,19 +24,17 @@ namespace PixelMaestroStudio {
 
 		emit progress_changed(0);
 		int current_index = 0;
-		int chunk_size = 64;	// Size of each chunk in bytes
-		int sleep_period = 250;	// Time in milliseconds between chunks
-
+		int chunk_index = CHUNK_SIZE;
 		try {
 			do {
-				QByteArray out_addr = output_.mid(current_index, chunk_size);
-				if (current_index + chunk_size > output_.size()) {
-					chunk_size = output_.size() - current_index;
+				QByteArray out_addr = output_.mid(current_index, chunk_index);
+				if (current_index + chunk_index > output_.size()) {
+					chunk_index = output_.size() - current_index;
 				}
 				serial_device_->get_device()->write(out_addr);
 				serial_device_->get_device()->flush();
-				current_index += chunk_size;
-				msleep(sleep_period);
+				current_index += chunk_index;
+				msleep(SLEEP_INTERVAL);
 				emit progress_changed((current_index / (float)output_.size()) * 100);
 			}
 			while (current_index < output_.size());

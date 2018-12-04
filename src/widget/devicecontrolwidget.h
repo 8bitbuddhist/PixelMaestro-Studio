@@ -7,7 +7,6 @@
 
 #include <QBuffer>
 #include <QSharedPointer>
-#include <QThread>
 #include <QVector>
 #include <QWidget>
 #include "controller/serialdevicecontroller.h"

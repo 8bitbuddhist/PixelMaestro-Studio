@@ -89,10 +89,6 @@ namespace PixelMaestroStudio {
 
 			void on_lockButton_toggled(bool checked);
 
-			void on_brightnessSpinBox_editingFinished();
-
-			void on_brightnessSlider_valueChanged(int value);
-
 		private:
 			Ui::MaestroControlWidget *ui;
 

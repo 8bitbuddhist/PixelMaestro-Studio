@@ -1,5 +1,6 @@
 #include "sectionmapmodel.h"
 #include <QList>
+#include <QStandardItem>
 #include <QStandardItemModel>
 
 namespace PixelMaestroStudio {

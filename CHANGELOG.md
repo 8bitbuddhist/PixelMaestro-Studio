@@ -3,11 +3,11 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.40] - In Progress
+## [v0.40] - 2018-12-03
 ### Added
 - Main Window
-	- Added File > Merge, which loads a Cuefile on top of the current Maestro instead of replacing it.
-	- Added File > Queue, which loads a Cuefile into the Event History without affecting the running Maestro.
+	- Added `File > Open and Merge...`, which loads a Cuefile on top of the current Maestro instead of replacing it.
+	- Added `File > Open to Event History...`, which loads a Cuefile into the Event History without affecting the running Maestro.
 	- Added ability to resize sections of the interface.
 	- Added shortcut keys for Save, New, Open, etc.
 	- Added confirmation prompt when there are unsaved changes.
@@ -20,26 +20,28 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added ability to click on a Section to make it the Active Section.
 	- Added "replace" tool for Canvases, which replaces a single color with another color.
 	- Added ability to re-select a Palette from the Palette drop-down. This lets you reapply a Palette after making changes.
-	- Added refresh button to Device tab.
-	- Added ability to map Sections on the Maestro to Sections on a device based on index.
-	- Added Maestro brightness slider.
+	- Added refresh button to Device tab, which scans for connected devices.
+	- Added ability to map Sections between the PC and a device to "translate" live updates to different Sections.
+	- Added Section brightness slider (brightness moved from Maestro-level to Section-level).
+- Preferences
+	- Added ability to customize the max number of events stored in the Event History.
 
 ### Changed
 - Main Window
 	- Added tooltips to several menu options.
 	- Renamed several file menu options to be more clear about their actions.
 	- Removed unnecessary Cues being saved to new Cuefiles.
-	- Renders now reflect changes to Maestro brightness.
+	- Viewport now reflects changes to Maestro brightness.
 - Animation Editor
-	- Moved Maestro play/pause and lock controls from Show tab to the center of the window.
-	- Split MaestroControlWidget into individual subwidgets.
+	- Moved Maestro play/pause and lock controls from Show tab to the main window.
+	- Split MaestroControlWidget into subwidgets.
 	- Show timer now runs continuously instead of only when the Show is running.
-	- Renamed `Cue Interpreter` dialog to `Cue Previewer`.
+	- Renamed `Cue Interpreter` dialog to `Cue Preview`.
 	- Fixed memory leak when loading images into a Canvas.
 	- Fixed issue where Cues executed twice while loading.
 	- Fixed custom Palettes saving and loading even with session saving disabled.
 	- Fixed Palette colors regenerating when changing a Palette's name.
-	- `Enabled Show` now initializes and deletes the Show instead of pausing it.
+	- `Enable Show` now initializes and deletes the Show instead of just pausing it.
 	- Increased Event History to 200 events.
 	- Fixed issue where cancelling the Palette Editor dialog regenerated the color scheme anyway.
 	- Saved devices will now try to auto-connect even if they weren't auto-detected.

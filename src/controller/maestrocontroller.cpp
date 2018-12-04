@@ -127,7 +127,6 @@ namespace PixelMaestroStudio {
 
 		// Maestro-specific Cues
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
-			write_cue_to_stream(datastream, maestro_handler->set_brightness(maestro_->get_brightness()));
 			write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer()->get_interval()));
 		}
 
@@ -172,7 +171,8 @@ namespace PixelMaestroStudio {
 
 		SectionCueHandler* section_handler = dynamic_cast<SectionCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::SectionCueHandler));
 
-		// Dimensions
+		// Global Section settings
+		write_cue_to_stream(datastream, section_handler->set_brightness(section_id, layer_id, section->get_brightness()));
 		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y));
 
 		// Animation & Colors

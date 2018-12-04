@@ -2,6 +2,8 @@
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QRegExp>
+#include <QSettings>
+#include "dialog/preferencesdialog.h"
 #include "showcontrolwidget.h"
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
@@ -35,7 +37,8 @@ namespace PixelMaestroStudio {
 		event_history_.push_back(cue_vector);
 
 		// Remove all but the last XX events
-		if (event_history_.size() >= event_history_max_) {
+		QSettings settings;
+		if (event_history_.size() >= settings.value(PreferencesDialog::event_history_max).toInt()) {
 			ui->eventHistoryWidget->takeItem(0);
 			event_history_.remove(0);
 		}

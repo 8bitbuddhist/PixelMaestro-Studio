@@ -8,13 +8,11 @@ PixelMaestro Studio is a desktop application for controlling LED displays using 
 
 ## Features
 
-- Design custom animations and patterns using a fully interactive, real-time, visual editing tool
+- Design rich, full color animations using interactive real-time visual editing tools
 - Control up to 256 independent, multi-layered drawing surfaces simultaneously
-- Create beautiful, 24-bit color palettes with support for over 250 colors per palette
-- Use powerful image editing tools to design your own still images and animations
+- Upload your changes in real-time to Arduino and other devices over USB
+- Save, load, and share your custom animations and configurations
 - Set dynamic time-based animations and transitions using a powerful yet intuitive event scheduling system
-- Upload your changes in real-time to devices connected via USB or serial port
-- Save, load, and share your custom animations to and from your computer and other devices
 
 ## Usage
 
@@ -24,13 +22,15 @@ To learn more about the PixelMaestro library itself, [visit the repository](http
 
 ## Running PixelMaestro Studio
 
+Download the latest version of PixelMaestro Studio from the [releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/) page.
+
 ### Windows
 
 Download and run `PixelMaestro_Studio.exe`.
 
 ### Linux
 
-Download `PixelMaestro_Studio`, mark it as executable, then run it.
+Download `PixelMaestro_Studio`, make it executable, then run it.
 
 ```bash
 $ wget https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/download/{version tag}/PixelMaestro_Studio
@@ -54,7 +54,7 @@ $ ./PixelMaestro_Studio
 	$ git submodule init
 	$ git submodule update
 	```
-4. Use `qmake` to build the project, or if you have the Qt Creator application installed, open the `PixelMaestro_Studio.pro` file.
+4. Use `qmake` to build the project, or if you have Qt Creator installed, open the `PixelMaestro_Studio.pro` file.
 	```bash
 	qmake PixelMaestro-Studio.pro && make qmake_all
 	```
