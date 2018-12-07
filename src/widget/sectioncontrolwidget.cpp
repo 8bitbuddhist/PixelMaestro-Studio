@@ -340,9 +340,8 @@ namespace PixelMaestroStudio {
 		// Set dimensions
 		ui->gridSizeXSpinBox->blockSignals(true);
 		ui->gridSizeYSpinBox->blockSignals(true);
-		// Yes, these are reversed. No, I don't know why it works.
-		ui->gridSizeXSpinBox->setValue(active_section_->get_dimensions()->y);
-		ui->gridSizeYSpinBox->setValue(active_section_->get_dimensions()->x);
+		ui->gridSizeXSpinBox->setValue(active_section_->get_dimensions()->x);
+		ui->gridSizeYSpinBox->setValue(active_section_->get_dimensions()->y);
 		ui->gridSizeXSpinBox->blockSignals(false);
 		ui->gridSizeYSpinBox->blockSignals(false);
 

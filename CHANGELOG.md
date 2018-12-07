@@ -3,6 +3,10 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.40.1] - 2018-12-06
+### Changed
+- Fixed issue with populating Grid Size when switching Sections/Layers.
+
 ## [v0.40] - 2018-12-03
 ### Added
 - Main Window
