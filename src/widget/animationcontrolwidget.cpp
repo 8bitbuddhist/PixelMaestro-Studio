@@ -148,17 +148,13 @@ namespace PixelMaestroStudio {
 	 * @param index New orientation
 	 */
 	void AnimationControlWidget::on_orientationComboBox_currentIndexChanged(int index) {
-		// Check to see if the new orientation is different from the old one
-		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
-		if (animation && animation->get_orientation() != (Animation::Orientation)index) {
-			maestro_control_widget->run_cue(
-				maestro_control_widget->animation_handler->set_orientation(
-					maestro_control_widget->section_control_widget_->get_section_index(),
-					maestro_control_widget->section_control_widget_->get_layer_index(),
-					(Animation::Orientation)index
-				)
-			);
-		}
+		maestro_control_widget->run_cue(
+			maestro_control_widget->animation_handler->set_orientation(
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
+				(Animation::Orientation)index
+			)
+		);
 	}
 
 	/**
@@ -329,24 +325,14 @@ namespace PixelMaestroStudio {
 	 * Updates the Animation's Timer.
 	 */
 	void AnimationControlWidget::set_animation_timer() {
-		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
-
-		if (animation == nullptr) return;
-
-		uint16_t interval = ui->cycleIntervalSpinBox->value();
-		uint16_t delay = ui->delayIntervalSpinBox->value();
-
-		AnimationTimer* timer = animation->get_timer();
-		if (interval != timer->get_interval() || delay != timer->get_delay()) {
-			maestro_control_widget->run_cue(
-				maestro_control_widget->animation_handler->set_timer(
-					maestro_control_widget->section_control_widget_->get_section_index(),
-					maestro_control_widget->section_control_widget_->get_layer_index(),
-					interval,
-					delay
-				)
-			);
-		}
+		maestro_control_widget->run_cue(
+			maestro_control_widget->animation_handler->set_timer(
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
+				ui->cycleIntervalSpinBox->value(),
+				ui->delayIntervalSpinBox->value()
+			)
+		);
 	}
 
 	void AnimationControlWidget::set_controls_enabled(bool enabled) {

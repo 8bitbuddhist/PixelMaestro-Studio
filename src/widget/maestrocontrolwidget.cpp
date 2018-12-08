@@ -15,6 +15,7 @@
 #include "utility.h"
 #include "window/mainwindow.h"
 
+// FIXME: Actions with strict conditions (e.g. nullptr checks) aren't generating Cues while the Maestro's locked
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
@@ -158,6 +159,7 @@ namespace PixelMaestroStudio {
 		confirm = QMessageBox::question(this, "Sync Timers", "This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
 			maestro_controller_->get_maestro()->sync(maestro_controller_->get_total_elapsed_time());
+			maestro_controller_->get_maestro()->update(0);
 		}
 	}
 

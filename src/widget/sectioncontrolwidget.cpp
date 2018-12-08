@@ -263,6 +263,28 @@ namespace PixelMaestroStudio {
 		populate_layer_combobox();
 	}
 
+	void SectionControlWidget::on_mirrorXCheckBox_toggled(bool checked) {
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->section_handler->set_mirror(
+				get_section_index(),
+				get_layer_index(),
+				checked,
+				ui->mirrorYCheckBox->isChecked()
+			)
+		);
+	}
+
+	void SectionControlWidget::on_mirrorYCheckBox_toggled(bool checked) {
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->section_handler->set_mirror(
+				get_section_index(),
+				get_layer_index(),
+				ui->mirrorXCheckBox->isChecked(),
+				checked
+			)
+		);
+	}
+
 	/**
 	 * Changes the Layer's mix mode.
 	 * @param index Index of new mix mode.

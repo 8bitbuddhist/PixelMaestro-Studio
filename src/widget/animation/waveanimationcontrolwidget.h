@@ -20,8 +20,6 @@ namespace PixelMaestroStudio {
 		private slots:
 			void on_skewSpinBox_editingFinished();
 
-			void on_mirrorCheckBox_stateChanged(int arg1);
-
 		private:
 			WaveAnimation* animation_;
 			MaestroControlWidget* maestro_control_widget_;

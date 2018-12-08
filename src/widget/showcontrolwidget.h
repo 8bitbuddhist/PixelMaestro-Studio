@@ -70,6 +70,7 @@ namespace PixelMaestroStudio {
 			QTimer show_timer_;
 			Ui::ShowControlWidget *ui;
 
+			void move_event(int current_index, int target_index);
 			void set_show_controls_enabled(bool enabled);
 	};
 }

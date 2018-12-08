@@ -228,7 +228,7 @@ namespace PixelMaestroStudio {
 					case AnimationType::Wave:
 						{
 							WaveAnimation* wa = dynamic_cast<WaveAnimation*>(animation);
-							write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_mirror(), wa->get_skew()));
+							write_cue_to_stream(datastream, animation_handler->set_wave_options(section_id, layer_id, wa->get_skew()));
 						}
 						break;
 					default:
@@ -237,7 +237,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Scrolling and offset
+		// Scrolling, offset, and mirroring
 		Point* offset = section->get_offset();
 		if (offset->x != 0 && offset->y != 0) {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset->x, offset->y));
@@ -246,6 +246,7 @@ namespace PixelMaestroStudio {
 		if (scroll != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, scroll->interval_x, scroll->interval_y, scroll->reverse_x, scroll->reverse_y));
 		}
+		write_cue_to_stream(datastream, section_handler->set_mirror(section_id, layer_id, section->get_mirror_x(), section->get_mirror_y()));
 
 		// Save Canvas settings
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::CanvasCueHandler)) {

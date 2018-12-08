@@ -3,6 +3,15 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.40.2] - In Progress
+WARNING: This update removes the mirror option for Wave animations. Cuefiles with Wave animation mirroring enabled will load, but the setting won't apply.
+
+### Added
+- Section mirroring
+
+### Removed
+- Wave animation mirror option.
+
 ## [v0.40.1] - 2018-12-06
 ### Changed
 - Fixed issue with populating Grid Size when switching Sections/Layers.

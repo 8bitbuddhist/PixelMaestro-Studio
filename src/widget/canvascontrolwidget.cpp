@@ -501,8 +501,6 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, pause the Canvas animation.
 	 */
 	void CanvasControlWidget::on_playbackStartStopToolButton_toggled(bool checked) {
-		if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() == nullptr) return;
-
 		// Enable the current frame box and frame step buttons while the animation is paused
 		ui->currentFrameSpinBox->setEnabled(checked);
 		ui->playbackNextToolButton->setEnabled(checked);

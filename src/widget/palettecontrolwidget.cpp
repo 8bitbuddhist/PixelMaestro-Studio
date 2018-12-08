@@ -1,7 +1,5 @@
 #include <QAbstractButton>
-#include <QApplication>
 #include <QColorDialog>
-#include <QDesktopWidget>
 #include <QMessageBox>
 #include "dialog/paletteeditdialog.h"
 #include "palettecontrolwidget.h"

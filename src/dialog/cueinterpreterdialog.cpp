@@ -3,6 +3,7 @@
 #include "core/maestro.h"
 #include "utility/cueinterpreter.h"
 
+// TODO: Add Cue editing controls
 namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint16_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog) {
 		ui->setupUi(this);

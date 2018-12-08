@@ -42,6 +42,10 @@ namespace PixelMaestroStudio {
 
 			void on_brightnessSpinBox_editingFinished();
 
+			void on_mirrorXCheckBox_toggled(bool checked);
+
+			void on_mirrorYCheckBox_toggled(bool checked);
+
 		private:
 			/// The Section currently being controlled.
 			Section* active_section_ = nullptr;

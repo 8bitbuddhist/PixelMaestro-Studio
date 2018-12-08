@@ -7,7 +7,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QSettings>
-#include <QStandardItemModel>
+#include <QStandardItem>
 #include <QStringList>
 #include <QTabWidget>
 #include <QWidget>

@@ -62,7 +62,8 @@ namespace PixelMaestroStudio {
 													  "Set layer",
 													  "Set offset",
 													  "Set scroll",
-													  "Set brightness"});
+													  "Set brightness",
+													  "Set mirror"});
 
 	const QStringList CueInterpreter::ShowActions({"Set events",
 												   "Set looping",
@@ -186,10 +187,7 @@ namespace PixelMaestroStudio {
 				);
 				break;
 			case AnimationCueHandler::Action::SetWaveOptions:
-				{
-					result->append(delimiter + "Mirror: " +  QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
-					result->append(delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
-				}
+				result->append(delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
 				break;
 			case AnimationCueHandler::Action::Start:
 				// Do nothing
@@ -297,6 +295,14 @@ namespace PixelMaestroStudio {
 			case SectionCueHandler::Action::SetLayer:
 				result->append(": " + ColorMixModes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) + " Mix Mode, ");
 				result->append("Alpha = " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]));
+				break;
+			case SectionCueHandler::Action::SetMirror:
+				if (cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) {
+					result->append(" X");
+				}
+				if (cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]) {
+					result->append(" Y");
+				}
 				break;
 			case SectionCueHandler::Action::SetOffset:
 				result->append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));

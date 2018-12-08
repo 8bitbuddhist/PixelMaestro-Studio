@@ -1,4 +1,5 @@
 #include <QKeyEvent>
+#include <QListIterator>
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QRegExp>
@@ -8,6 +9,7 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
+// FIXME: Add drag-drop support
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);
@@ -95,6 +97,14 @@ namespace PixelMaestroStudio {
 		return maestro_locked_;
 	}
 
+	void ShowControlWidget::move_event(int current_index, int target_index) {
+		QListWidgetItem* item = ui->eventQueueWidget->takeItem(current_index);
+
+		show_controller_->move(current_index, target_index);
+		ui->eventQueueWidget->insertItem(target_index, item);
+		ui->eventQueueWidget->setCurrentRow(target_index);
+	}
+
 	/**
 	 * Adds the selected Event(s) to the Show's Event queue.
 	 */
@@ -169,42 +179,41 @@ namespace PixelMaestroStudio {
 		);
 	}
 
-	/// Moves the selected Show Event down one spot.
+	/// Moves the selected Event(s) down one spot.
 	void ShowControlWidget::on_moveEventDownButton_clicked() {
-		int current_row = ui->eventQueueWidget->currentRow();
-
-		if (current_row != ui->eventQueueWidget->count() - 1) {
-			show_controller_->move(current_row, current_row	+ 1);
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->show_handler->set_events(
-					show_controller_->get_events()->data(),
-					show_controller_->get_events()->size()
-				)
-			);
-
-			QListWidgetItem* current_item = ui->eventQueueWidget->takeItem(current_row);
-			ui->eventQueueWidget->insertItem(current_row + 1, current_item);
-			ui->eventQueueWidget->setCurrentRow(current_row + 1);
+		// FIXME: Breaks when triggered multiple times sequentially with multi-select enabled
+		QModelIndexList list = ui->eventQueueWidget->selectionModel()->selectedIndexes();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			int current_index = list.at(i).row();
+			if (current_index != ui->eventQueueWidget->count() - 1) {
+				move_event(current_index, current_index + 1);
+			}
 		}
+
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->show_handler->set_events(
+				show_controller_->get_events()->data(),
+				show_controller_->get_events()->size()
+			)
+		);
 	}
 
-	/// Moves the selected Show Event up one spot.
+	/// Moves the selected Event(s) up one spot.
 	void ShowControlWidget::on_moveEventUpButton_clicked() {
-		int current_row = ui->eventQueueWidget->currentRow();
-
-		if (current_row != 0) {
-			show_controller_->move(current_row, current_row - 1);
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->show_handler->set_events(
-					show_controller_->get_events()->data(),
-					show_controller_->get_events()->size()
-				)
-			);
-
-			QListWidgetItem* current_item = ui->eventQueueWidget->takeItem(current_row);
-			ui->eventQueueWidget->insertItem(current_row - 1, current_item);
-			ui->eventQueueWidget->setCurrentRow(current_row - 1);
+		QModelIndexList list = ui->eventQueueWidget->selectionModel()->selectedIndexes();
+		for (int i = 0; i < list.size(); i++) {
+			int current_index = list.at(i).row();
+			if (current_index != 0) {
+				move_event(current_index, current_index - 1);
+			}
 		}
+
+		maestro_control_widget_->run_cue(
+			maestro_control_widget_->show_handler->set_events(
+				show_controller_->get_events()->data(),
+				show_controller_->get_events()->size()
+			)
+		);
 	}
 
 	/**
