@@ -15,7 +15,7 @@
 #include "utility.h"
 #include "window/mainwindow.h"
 
-// FIXME: Actions with strict conditions (e.g. nullptr checks) aren't generating Cues while the Maestro's locked
+// FIXME: Actions with strict conditions (e.g. nullptr checks) won't generate Cues while the Maestro's locked
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
@@ -152,6 +152,14 @@ namespace PixelMaestroStudio {
 
 			ui->playPauseButton->setToolTip("Stop playback");
 		}
+	}
+
+	/**
+	 * Refreshes the UI.
+	 */
+	void MaestroControlWidget::on_refreshButton_clicked() {
+		refresh_maestro_settings();
+		refresh_section_settings();
 	}
 
 	void MaestroControlWidget::on_syncButton_clicked() {

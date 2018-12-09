@@ -281,9 +281,9 @@ namespace PixelMaestroStudio {
 						if (remote_section_id != target_section_id) {
 							/*
 							 * We have a match. Swap the values and reassmble the Cue.
-							 * NOTE: This will change the entire Cue for every device, but I don't think there's any way around it.
-							 *	Fortunately, we'll perform this check again for each device, so it will get replaced if it doesn't match.
-							 *	This assumes the device has a map, though.
+							 *	Although this changes the original Cue,	we perform this check again for each device.
+							 *	This way, we don't have to worry about a wrong mapping.
+							 *	...Assuming each device has a map.
 							 */
 							cue[(uint8_t)SectionCueHandler::Byte::SectionByte] = remote_section_id;
 							controller->assemble(size);

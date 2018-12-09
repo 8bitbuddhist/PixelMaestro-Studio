@@ -121,14 +121,6 @@ namespace PixelMaestroStudio {
 			selected_color_index_ = 255;
 			ui->selectColorButton->setStyleSheet(QString("background-color: transparent;"));
 		}
-
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->set_drawing_color(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index(),
-				selected_color_index_
-			)
-		);
 	}
 
 	/**

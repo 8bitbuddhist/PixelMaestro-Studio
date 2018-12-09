@@ -89,6 +89,8 @@ namespace PixelMaestroStudio {
 
 			void on_lockButton_toggled(bool checked);
 
+			void on_refreshButton_clicked();
+
 		private:
 			Ui::MaestroControlWidget *ui;
 

@@ -38,7 +38,7 @@ namespace PixelMaestroStudio {
 													 "Previous frame",
 													 "Remove frame timer",
 													 "Set current frame index",
-													 "Set drawing color",
+													 "OBSOLETE - Set drawing color",
 													 "Set frame timer",
 													 "Set num frames",
 													 "Set palette",
@@ -187,7 +187,7 @@ namespace PixelMaestroStudio {
 				);
 				break;
 			case AnimationCueHandler::Action::SetWaveOptions:
-				result->append(delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 1]));
+				result->append(delimiter + "Skew: " + QString::number((int8_t)cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
 			case AnimationCueHandler::Action::Start:
 				// Do nothing
@@ -223,9 +223,6 @@ namespace PixelMaestroStudio {
 				break;
 			case CanvasCueHandler::Action::SetCurrentFrameIndex:
 				result->append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
-				break;
-			case CanvasCueHandler::Action::SetDrawingColor:
-				result->append(": Index " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
 				break;
 			case CanvasCueHandler::Action::SetFrameTimer:
 				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte]), result);

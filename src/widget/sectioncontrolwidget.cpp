@@ -367,7 +367,7 @@ namespace PixelMaestroStudio {
 		ui->gridSizeXSpinBox->blockSignals(false);
 		ui->gridSizeYSpinBox->blockSignals(false);
 
-		// Set offset and scroll
+		// Set offset
 		ui->offsetXSpinBox->blockSignals(true);
 		ui->offsetYSpinBox->blockSignals(true);
 		ui->offsetXSpinBox->setValue(active_section_->get_offset()->x);
@@ -375,6 +375,7 @@ namespace PixelMaestroStudio {
 		ui->offsetXSpinBox->blockSignals(false);
 		ui->offsetYSpinBox->blockSignals(false);
 
+		// Set scroll
 		ui->scrollXSpinBox->blockSignals(true);
 		ui->scrollYSpinBox->blockSignals(true);
 		int32_t interval_x = 0;
@@ -408,9 +409,16 @@ namespace PixelMaestroStudio {
 		}
 		ui->scrollXSpinBox->setValue(interval_x);
 		ui->scrollYSpinBox->setValue(interval_y);
-
 		ui->scrollXSpinBox->blockSignals(false);
 		ui->scrollYSpinBox->blockSignals(false);
+
+		// Set mirror
+		ui->mirrorXCheckBox->blockSignals(true);
+		ui->mirrorYCheckBox->blockSignals(true);
+		ui->mirrorXCheckBox->setChecked(active_section_->get_mirror()->x);
+		ui->mirrorYCheckBox->setChecked(active_section_->get_mirror()->y);
+		ui->mirrorXCheckBox->blockSignals(false);
+		ui->mirrorYCheckBox->blockSignals(false);
 
 		// Update brightness
 		uint8_t brightness = active_section_->get_brightness();

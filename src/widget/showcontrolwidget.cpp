@@ -9,7 +9,7 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
-// FIXME: Add drag-drop support
+// TODO: Add drag-drop support
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);

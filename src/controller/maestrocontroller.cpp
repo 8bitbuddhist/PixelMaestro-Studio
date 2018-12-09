@@ -246,7 +246,10 @@ namespace PixelMaestroStudio {
 		if (scroll != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_scroll(section_id, layer_id, scroll->interval_x, scroll->interval_y, scroll->reverse_x, scroll->reverse_y));
 		}
-		write_cue_to_stream(datastream, section_handler->set_mirror(section_id, layer_id, section->get_mirror_x(), section->get_mirror_y()));
+		Section::Mirror* mirror = section->get_mirror();
+		if (mirror != nullptr) {
+			write_cue_to_stream(datastream, section_handler->set_mirror(section_id, layer_id, mirror->x, mirror->y));
+		}
 
 		// Save Canvas settings
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::CanvasCueHandler)) {

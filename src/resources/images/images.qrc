@@ -19,5 +19,6 @@
         <file>icon_refresh.png</file>
         <file>icon_connected.png</file>
         <file>icon_replace.png</file>
+        <file>icon_clock.png</file>
     </qresource>
 </RCC>
