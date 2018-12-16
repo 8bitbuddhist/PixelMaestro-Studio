@@ -24,17 +24,16 @@ namespace PixelMaestroStudio {
 	 * @return True on success.
 	 */
 	bool CanvasControlWidget::eventFilter(QObject *watched, QEvent *event) {
-		if (event->type() == QEvent::KeyPress) {
+		// Handle keypress events when the Canvas is paused
+		if (event->type() == QEvent::KeyPress && ui->playbackStartStopToolButton->isChecked()) {
 			QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
-			if (maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
-				if (key_event->key() == Qt::Key_Left) {
-					on_playbackPreviousToolButton_clicked();
-					return true;
-				}
-				else if (key_event->key() == Qt::Key_Right) {
-					on_playbackNextToolButton_clicked();
-					return true;
-				}
+			if (key_event->key() == Qt::Key_Left) {
+				on_playbackPreviousToolButton_clicked();
+				return true;
+			}
+			else if (key_event->key() == Qt::Key_Right) {
+				on_playbackNextToolButton_clicked();
+				return true;
 			}
 		}
 
@@ -317,9 +316,6 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Display/hide controls as necessary, and if the Canvas is animated, pause by default
-		set_controls_enabled(checked);
-		on_playbackStartStopToolButton_toggled(checked);
 		if (checked) {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->section_handler->set_canvas(
@@ -335,6 +331,10 @@ namespace PixelMaestroStudio {
 			// Select a palette
 			on_paletteComboBox_activated(0);
 		}
+
+		// Display/hide controls as necessary, and if the Canvas is animated, pause by default
+		set_controls_enabled(checked);
+		on_playbackStartStopToolButton_toggled(checked);
 	}
 
 	/**

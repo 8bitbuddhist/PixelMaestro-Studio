@@ -1,6 +1,6 @@
 #include <QKeyEvent>
 #include <QListIterator>
-#include <QMessageBox>
+#include <QListWidget>
 #include <QModelIndex>
 #include <QRegExp>
 #include <QSettings>
@@ -9,7 +9,6 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
-// TODO: Add drag-drop support
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);
@@ -20,6 +19,8 @@ namespace PixelMaestroStudio {
 		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 
 		show_timer_.start();
+
+		connect(ui->eventQueueWidget->model(), &QAbstractItemModel::rowsMoved, this, &ShowControlWidget::on_eventQueueWidget_rowsMoved);
 	}
 
 	/**
@@ -166,6 +167,30 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->maestro_handler->remove_show()
 			);
+		}
+	}
+
+	void ShowControlWidget::on_eventQueueWidget_rowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
+		if (parent == destination) {
+			for	(int i = start; i < end; i++) {
+				int dest_row = row;
+				if (dest_row >= show_controller_->get_events()->size()) {
+					dest_row = show_controller_->get_events()->size() - 1;
+				}
+				show_controller_->move(start, dest_row);
+			}
+
+			maestro_control_widget_->run_cue(
+				maestro_control_widget_->show_handler->set_events(
+					show_controller_->get_events()->data(),
+					show_controller_->get_events()->size()
+				)
+			);
+		}
+		// Add events from Event History.
+		// TODO: Verify that it's coming from the event history by checking the parent. Otherwise, literally anything could get dragged here
+		else {
+			on_addEventButton_clicked();
 		}
 	}
 
@@ -346,6 +371,8 @@ namespace PixelMaestroStudio {
 				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
 			}
 		}
+
+		// TODO: Add ability to run the last Event as a Cue on connected devices. This lets you run the Show on PC and trigger events on devices without running the Show on the device itself
 
 		/*
 		 * If the last event is different from the one on record, that means an Event ran.

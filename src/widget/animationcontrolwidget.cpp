@@ -130,9 +130,9 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, fade between animation cycles.
 	 */
 	void AnimationControlWidget::on_fadeCheckBox_toggled(bool checked) {
-		ui->delayIntervalLabel->setEnabled(!checked);
-		ui->delayIntervalSlider->setEnabled(!checked);
-		ui->delayIntervalSpinBox->setEnabled(!checked);
+		ui->delayIntervalLabel->setEnabled(checked);
+		ui->delayIntervalSlider->setEnabled(checked);
+		ui->delayIntervalSpinBox->setEnabled(checked);
 
 		maestro_control_widget->run_cue(
 			maestro_control_widget->animation_handler->set_fade(

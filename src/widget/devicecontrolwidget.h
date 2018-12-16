@@ -6,6 +6,7 @@
 #define DEVICECONTROLWIDGET_H
 
 #include <QBuffer>
+#include <QLocale>
 #include <QSharedPointer>
 #include <QVector>
 #include <QWidget>
@@ -62,6 +63,8 @@ namespace PixelMaestroStudio {
 
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			Ui::DeviceControlWidget *ui;
+
+			QLocale locale_ = QLocale::system();
 
 			/// Stores the current Maestro configuration in Cue form.
 			QByteArray maestro_cue_;

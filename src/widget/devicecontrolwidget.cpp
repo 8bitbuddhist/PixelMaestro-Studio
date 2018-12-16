@@ -207,7 +207,7 @@ namespace PixelMaestroStudio {
 		ui->uploadProgressBar->setValue(0);
 
 		if (currentRow > -1) {
-			ui->capacityLineEdit->setText(QString::number(serial_devices_[currentRow].get_capacity()));
+			ui->capacityLineEdit->setText(locale_.toString(serial_devices_[currentRow].get_capacity()));
 			ui->realTimeCheckBox->setChecked(serial_devices_[currentRow].get_real_time_refresh_enabled());
 			check_device_rom_capacity();
 		}
@@ -215,6 +215,7 @@ namespace PixelMaestroStudio {
 
 	/// Displays all available serial devices in the serial output combobox.
 	void DeviceControlWidget::populate_serial_devices() {
+		ui->serialOutputComboBox->clear();
 		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 		for (const QSerialPortInfo& port : ports) {
 			ui->serialOutputComboBox->addItem(port.systemLocation());
@@ -254,6 +255,7 @@ namespace PixelMaestroStudio {
 		CueController* controller = this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
 
 		for (SerialDeviceController device : serial_devices_) {
+			// TODO: Move to thread
 
 			/*
 			 * If the device has a Section map saved, apply it to the Cue.
@@ -369,7 +371,7 @@ namespace PixelMaestroStudio {
 		// Generate the Cuefile
 		controller->save_maestro_to_datastream(&datastream);
 
-		ui->fileSizeLineEdit->setText(QString::number(maestro_cue_.size()));
+		ui->fileSizeLineEdit->setText(locale_.toString(maestro_cue_.size()));
 		check_device_rom_capacity();
 	}
 
@@ -383,13 +385,18 @@ namespace PixelMaestroStudio {
 		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
 														  out,
 														  size);
-		connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+		connect(thread, &SerialDeviceThreadController::finished, thread, &SerialDeviceThreadController::deleteLater);
 
 		if (progress) {
-			connect(thread, SIGNAL(progress_changed(int)), this, SLOT(set_progress_bar(int)));
+			connect(thread, &SerialDeviceThreadController::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		}
 
-		thread->start();
+		moveToThread(thread);
+
+		// FIXME: Using start(), the device pointer magically becomes invalid when executing the thread. But when using run(), the thread becomes blocking
+		//thread->start();
+		thread->run();
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {

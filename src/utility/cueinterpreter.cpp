@@ -294,6 +294,7 @@ namespace PixelMaestroStudio {
 				result->append("Alpha = " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]));
 				break;
 			case SectionCueHandler::Action::SetMirror:
+				result->append(": ");
 				if (cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) {
 					result->append(" X");
 				}

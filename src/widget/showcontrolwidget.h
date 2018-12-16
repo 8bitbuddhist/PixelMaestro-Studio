@@ -1,6 +1,7 @@
 #ifndef SHOWCONTROLWIDGET_H
 #define SHOWCONTROLWIDGET_H
 
+#include <QDropEvent>
 #include <QLocale>
 #include <QTimer>
 #include <QVector>
@@ -41,17 +42,13 @@ namespace PixelMaestroStudio {
 			void on_removeEventButton_clicked();
 			void on_moveEventUpButton_clicked();
 			void on_moveEventDownButton_clicked();
-
 			void on_clearQueueButton_clicked();
-
 			void on_clearHistoryButton_clicked();
+			void on_eventQueueWidget_rowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
 
 		private:
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
-
-			/// The index of the last event that ran.
-			int last_index_ = -1;
 
 			/// Locale for formatting numbers (specifically for displaying times).
 			QLocale locale_ = QLocale::system();

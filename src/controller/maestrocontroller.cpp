@@ -269,10 +269,8 @@ namespace PixelMaestroStudio {
 
 				// Draw and save each frame
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, frame));
 					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, canvas->get_frame(frame)));
-					if (canvas->get_current_frame_index() != canvas->get_num_frames() - 1) {
-						write_cue_to_stream(datastream, canvas_handler->next_frame(section_id, layer_id));
-					}
 				}
 				write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, 0));
 			}

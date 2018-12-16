@@ -415,8 +415,14 @@ namespace PixelMaestroStudio {
 		// Set mirror
 		ui->mirrorXCheckBox->blockSignals(true);
 		ui->mirrorYCheckBox->blockSignals(true);
-		ui->mirrorXCheckBox->setChecked(active_section_->get_mirror()->x);
-		ui->mirrorYCheckBox->setChecked(active_section_->get_mirror()->y);
+		if (active_section_->get_mirror()) {
+			ui->mirrorXCheckBox->setChecked(active_section_->get_mirror()->x);
+			ui->mirrorYCheckBox->setChecked(active_section_->get_mirror()->y);
+		}
+		else {
+			ui->mirrorXCheckBox->setChecked(false);
+			ui->mirrorYCheckBox->setChecked(false);
+		}
 		ui->mirrorXCheckBox->blockSignals(false);
 		ui->mirrorYCheckBox->blockSignals(false);
 

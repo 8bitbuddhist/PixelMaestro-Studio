@@ -4,10 +4,16 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.40.2] - In Progress
-WARNING: This update removes the mirror option for Wave animations. Cuefiles with Wave animation mirroring enabled will load, but the setting won't apply.
+WARNING: The following Cues have been removed/changed. You will need to regenerate any Cuefiles using these Cues.
+	- `AnimationCueHandler::set_wave_options`: removed mirror option
+	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
-- Section mirroring
+- Section mirroring.
+- Event dragging and dropping in the Show tab's Event Queue. Currently limited to rearranging events.
+
+### Changed
+- Fixed Delay getting disabled when fading is enabled.
 
 ### Removed
 - Wave animation mirror option.

@@ -1,5 +1,4 @@
-#include <QMessageBox>
-#include <QString>
+#include <QByteArray>
 #include "serialdevicethreadcontroller.h"
 
 namespace PixelMaestroStudio {
@@ -23,25 +22,23 @@ namespace PixelMaestroStudio {
 		 */
 
 		emit progress_changed(0);
+
 		int current_index = 0;
 		int chunk_index = CHUNK_SIZE;
-		try {
-			do {
-				QByteArray out_addr = output_.mid(current_index, chunk_index);
-				if (current_index + chunk_index > output_.size()) {
-					chunk_index = output_.size() - current_index;
-				}
-				serial_device_->get_device()->write(out_addr);
-				serial_device_->get_device()->flush();
-				current_index += chunk_index;
-				msleep(SLEEP_INTERVAL);
-				emit progress_changed((current_index / (float)output_.size()) * 100);
+
+		do {
+			QByteArray out_addr = output_.mid(current_index, chunk_index);
+			if (current_index + chunk_index > output_.size()) {
+				chunk_index = output_.size() - current_index;
 			}
-			while (current_index < output_.size());
+			serial_device_->get_device()->write(out_addr);
+			serial_device_->get_device()->flush();
+			current_index += chunk_index;
+			msleep(SLEEP_INTERVAL);
+			emit progress_changed((current_index / (float)output_.size()) * 100);
 		}
-		catch (std::exception& ex) {
-			QMessageBox::critical(nullptr, QString("Device Error"), QString("Unable to write to device: " + QString::fromLatin1(ex.what())));
-		}
+		while (current_index < output_.size());
+
 		emit progress_changed(100);
 	}
 }
