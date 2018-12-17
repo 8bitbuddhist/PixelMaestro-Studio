@@ -11,9 +11,11 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 ### Added
 - Section mirroring.
 - Event dragging and dropping in the Show tab's Event Queue. Currently limited to rearranging events.
+- Option to allow Show Events to trigger live device updates. This lets you control devices using a Show running in PixelMaestro Studio, without having to run Shows on the devices themselves.
 
 ### Changed
 - Fixed Delay getting disabled when fading is enabled.
+- Bumped to Qt 5.12.0.
 
 ### Removed
 - Wave animation mirror option.

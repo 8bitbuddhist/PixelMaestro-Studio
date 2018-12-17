@@ -50,6 +50,9 @@ namespace PixelMaestroStudio {
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
 
+			/// Time that the last Event ran.
+			uint32_t last_event_time_ = 0;
+
 			/// Locale for formatting numbers (specifically for displaying times).
 			QLocale locale_ = QLocale::system();
 

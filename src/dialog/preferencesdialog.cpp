@@ -21,7 +21,6 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::output_enabled = QStringLiteral("Enabled");
 
 	// "Interface" section
-	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");
 	QString PreferencesDialog::pause_on_start = QStringLiteral("Interface/PauseOnStart");
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
@@ -51,11 +50,14 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::palette_target_color = QStringLiteral("TargetColor");
 	QString PreferencesDialog::palette_type = QStringLiteral("Type");
 
+	// "Show" section
+	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");
+	QString PreferencesDialog::events_trigger_device_updates = QStringLiteral("Interface/EventsTriggerDeviceUpdates");
+
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 		ui->setupUi(this);
 
 		// Interface settings
-		ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt());
 		ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape, 1).toInt());		// Default to square pixels
 		ui->saveSessionCheckBox->setChecked(settings_.value(save_session, true).toBool());		// Default to old session
 
@@ -64,9 +66,13 @@ namespace PixelMaestroStudio {
 		ui->refreshSpinBox->setValue(settings_.value(refresh_rate, 50).toInt());				// Default to 50 ms
 		ui->pauseOnStartCheckBox->setChecked(settings_.value(pause_on_start, false).toBool());	// Default to run on start
 
-		// Check off activated displays
+		// Display settings
 		ui->separateWindowCheckBox->setChecked(settings_.value(separate_window_option, false).toBool());
 		ui->mainWindowCheckBox->setChecked(settings_.value(main_window_option, true).toBool());
+
+		// Show settings
+		ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt());	// Default to 200
+		ui->eventsTriggerDeviceUpdateCheckBox->setChecked(settings_.value(events_trigger_device_updates, false).toBool());	// Default to false
 	}
 
 	void PreferencesDialog::on_buttonBox_accepted() {
@@ -76,13 +82,16 @@ namespace PixelMaestroStudio {
 		settings_.setValue(pause_on_start, ui->pauseOnStartCheckBox->isChecked());
 
 		// Save interface settings
-		settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 		settings_.setValue(save_session, ui->saveSessionCheckBox->isChecked());
 
 		// Save display settings
 		settings_.setValue(separate_window_option, ui->separateWindowCheckBox->isChecked());
 		settings_.setValue(main_window_option, ui->mainWindowCheckBox->isChecked());
+
+		// Save Show settings
+		settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
+		settings_.setValue(events_trigger_device_updates, ui->eventsTriggerDeviceUpdateCheckBox->isChecked());
 	}
 
 	PreferencesDialog::~PreferencesDialog() {

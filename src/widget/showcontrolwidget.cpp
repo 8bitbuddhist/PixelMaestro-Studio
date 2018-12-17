@@ -335,59 +335,53 @@ namespace PixelMaestroStudio {
 	 * Updates fields in the widget when the timer fires.
 	 */
 	void ShowControlWidget::timer_refresh() {
+		// Update 'Absolute Time' text box
 		uint last_time = (uint)maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time();
 		ui->absoluteTimeLineEdit->setText(locale_.toString(last_time));
 
 		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
-
 		if (show == nullptr) return;
 
-		// Get the last event that ran
-		int last_index = -1;
-		uint16_t current_index = show->get_current_index();
-		if (current_index == 0) {
-			if (show->get_looping()) {
-				last_index = show->get_num_events() - 1;
-			}
-		}
-		else {
-			last_index = show->get_current_index() - 1;
-		}
-
 		// If relative mode is enabled, calculate the time since the last Event
-		ui->relativeTimeLineEdit->setEnabled(last_index	>= 0);
-		if (last_index >= 0) {
-			ui->relativeTimeLineEdit->setText(locale_.toString(
-				(uint)maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - (uint)show->get_last_time()
-			));
+		bool relative_time_enabled = show->get_timing() == Show::TimingMode::Relative;
+		ui->relativeTimeLineEdit->setEnabled(relative_time_enabled);
+		if (relative_time_enabled) {
+			uint relative_time = maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - show->get_last_time();
+			ui->relativeTimeLineEdit->setText(locale_.toString(relative_time));
 		}
 
-		// Darken events that have already ran
-		for (int i = 0; i < ui->eventQueueWidget->count(); i++) {
-			if (current_index > 0 && i < current_index) {
-				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::darkGray);
+		// Get the last event that ran, and if it differs from the Show's current index, update the Event Queue
+		if (last_event_time_ != show->get_last_time()) {
+			last_event_time_ = show->get_last_time();
+
+			// Darken events that have already ran
+			for (int i = 0; i < ui->eventQueueWidget->count(); i++) {
+				if (i < show->get_current_index()) {
+					ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::darkGray);
+				}
+				else {
+					ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
+				}
 			}
-			else {
-				ui->eventQueueWidget->item(i)->setTextColor(Qt::GlobalColor::white);
+
+			// If live update triggers are enabled, send the last Event's queue to the DeviceControlWidget to be sent to remote devices
+			QSettings settings;
+			if (settings.value(PreferencesDialog::events_trigger_device_updates, false).toBool()) {
+				Event* event = &show->get_events()[show->get_current_index()];
+				CueController* cue_controller = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+				maestro_control_widget_->device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
 			}
-		}
 
-		// TODO: Add ability to run the last Event as a Cue on connected devices. This lets you run the Show on PC and trigger events on devices without running the Show on the device itself
-
-		/*
-		 * If the last event is different from the one on record, that means an Event ran.
-		 * We refresh the UI to account for any Maestro changes.
-		 *
-		 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
-		 * This makes it impossible to use the editor with Shows that update frequently.
-		 * Look into alternate solutions.
-		 */
-		/*
-		if (last_index != this->last_index_) {
-			//maestro_control_widget_->refresh_section_settings();
-			this->last_index_ = last_index;
+			/*
+			 * Refresh the UI to reflect changes to the Maestro.
+			 *
+			 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
+			 * This makes it impossible to use the editor with Shows that update frequently.
+			 * Look into alternate solutions.
+			 *
+			 * maestro_control_widget_->refresh_section_settings();
+			 */
 		}
-		*/
 	}
 
 	/**

@@ -11,12 +11,10 @@ namespace PixelMaestroStudio {
 
 		public:
 			SerialDeviceThreadController(SerialDeviceController* serial_device, const char* out, int size);
+			void run() override;
 
 		signals:
 			void progress_changed(int progress);
-
-		protected:
-			void run() override;
 
 		private:
 			/// Size of each chunk in bytes

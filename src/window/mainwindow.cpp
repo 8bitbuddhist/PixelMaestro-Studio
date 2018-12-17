@@ -41,7 +41,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool MainWindow::confirm_unsaved_changes() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current settings will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current changes may be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		return (confirm == QMessageBox::Yes);
 	}
 
@@ -97,18 +97,23 @@ namespace PixelMaestroStudio {
 
 	void MainWindow::on_aboutAction_triggered() {
 		QMessageBox::about(this, QString(QCoreApplication::applicationName()),
-					   QString("Build ") + QString(BUILD_VERSION) +
+					   QString("PixelMaestro Studio version ") + QString(BUILD_VERSION) +
 					   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
-					   QString("\n\n© ") +
-					   QString::number(QDate::currentDate().year()));
+					   QString("\n\n© 2017 − ") + QString::number(QDate::currentDate().year()) + QString(", the PixelMaestro contributors"));
 	}
 
 	/**
 	 * Closes the program.
 	 */
 	void MainWindow::on_exitAction_triggered() {
-		if (maestro_control_widget_->get_maestro_modified() && !confirm_unsaved_changes()) {
-			return;
+		// See if we need to prompt the user
+		if (maestro_control_widget_->get_maestro_modified()) {
+			QSettings settings;
+			if (settings.value(PreferencesDialog::save_session, false) == false) {
+				if (!confirm_unsaved_changes()) {
+					return;
+				}
+			}
 		}
 		close();
 	}
