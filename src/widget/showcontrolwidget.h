@@ -2,6 +2,7 @@
 #define SHOWCONTROLWIDGET_H
 
 #include <QDropEvent>
+#include <QListWidgetItem>
 #include <QLocale>
 #include <QTimer>
 #include <QVector>
@@ -45,6 +46,8 @@ namespace PixelMaestroStudio {
 			void on_clearQueueButton_clicked();
 			void on_clearHistoryButton_clicked();
 			void on_eventQueueWidget_rowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
+
+			void on_eventQueueWidget_itemDoubleClicked(QListWidgetItem *item);
 
 		private:
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.

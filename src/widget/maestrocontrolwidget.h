@@ -78,7 +78,7 @@ namespace PixelMaestroStudio {
 			void load_cuefile(const QByteArray& byte_array);
 			void refresh_section_settings();
 			void refresh_maestro_settings();
-			void run_cue(uint8_t* cue, bool remote_only = false);
+			void run_cue(uint8_t* cue, int run_targets = (RunTarget::Local | RunTarget::Remote));
 			void set_maestro_controller(MaestroController* maestro_controller);
 			void set_maestro_modified(bool modified);
 
@@ -92,6 +92,11 @@ namespace PixelMaestroStudio {
 			void on_refreshButton_clicked();
 
 		private:
+			enum RunTarget {
+				Local = 1,
+				Remote = 2
+			};
+
 			Ui::MaestroControlWidget *ui;
 
 			/// MaestroController that this widget is controlling.

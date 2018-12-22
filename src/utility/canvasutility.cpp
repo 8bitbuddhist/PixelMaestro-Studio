@@ -90,7 +90,7 @@ namespace PixelMaestroStudio {
 			uint8_t color_table_indices[canvas_size.width() * canvas_size.height()];
 			for (uint16_t y = 0; y < canvas_size.height(); y++) {
 				for (uint16_t x = 0; x < canvas_size.width(); x++) {
-					if (canvas->in_bounds(x, y)) {
+					if (canvas->get_section()->get_dimensions()->in_bounds(x, y)) {
 						QColor pix_color = frame.pixelColor(x, y);
 						color_table_indices[canvas->get_section()->get_dimensions()->get_inline_index(x, y)] = static_cast<uint8_t>(color_table.indexOf(pix_color.rgb()));
 					}

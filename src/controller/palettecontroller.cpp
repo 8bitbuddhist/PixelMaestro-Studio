@@ -1,4 +1,3 @@
-#include <QRegularExpression>
 #include <QSettings>
 #include <QStringList>
 #include "colorpresets.h"
@@ -34,13 +33,12 @@ namespace PixelMaestroStudio {
 	QString PaletteController::check_palette_name(QString name) {
 		int iteration = 0;
 		while (get_palette(name) != nullptr) {
-			QString number_str = QString::number(iteration + 2);
-			int repl_index = name.indexOf(QRegularExpression("#\\d*$"));
+			int trail = iteration + 2;
 			if (iteration == 0) {
-				name = name.append(" #" + number_str);
+				name = name.append(" #" + QString::number(trail));
 			}
 			else {
-				name = name.replace(repl_index, name.size(), number_str);
+				name = name.replace(name.length() - 1, 1, QString::number(trail));
 			}
 			iteration++;
 		}

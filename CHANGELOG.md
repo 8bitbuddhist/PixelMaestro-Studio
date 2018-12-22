@@ -4,17 +4,22 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.40.2] - In Progress
-WARNING: The following Cues have been removed/changed. You will need to regenerate any Cuefiles using these Cues.
+WARNING: The following Cues have been modified and will no longer work using older Cuefiles:
 	- `AnimationCueHandler::set_wave_options`: removed mirror option
 	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
 - Section mirroring.
 - Event dragging and dropping in the Show tab's Event Queue. Currently limited to rearranging events.
-- Option to allow Show Events to trigger live device updates. This lets you control devices using a Show running in PixelMaestro Studio, without having to run Shows on the devices themselves.
+- Event editing dialog. Double-click an Event in the Event Queue to change its run time.
+- Option to allow Show Events to trigger live device updates. This lets you manage a Show using PixelMaestro Studio and run Events on connected devices.
 
 ### Changed
+- Fixed Device Section Map not updating the correct Cue.
+- Fixed Canvases not drawing frames larger than 255x255 pixels.
 - Fixed Delay getting disabled when fading is enabled.
+- Fixed Canvas actions performed on a SectionDrawingArea not updating the cursor before performing the action.
+- Reverted broken duplicate Palette name check.
 - Bumped to Qt 5.12.0.
 
 ### Removed

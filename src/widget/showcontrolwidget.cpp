@@ -5,10 +5,12 @@
 #include <QRegExp>
 #include <QSettings>
 #include "dialog/preferencesdialog.h"
+#include "dialog/editeventdialog.h"
 #include "showcontrolwidget.h"
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
+// FIXME: Add EditEventDialog
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);
@@ -170,6 +172,29 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	void ShowControlWidget::on_eventQueueWidget_itemDoubleClicked(QListWidgetItem *item) {
+		int row = ui->eventQueueWidget->row(item);
+
+		// Make sure the row is in the bounds of the Event queue
+		if (row > -1 && row < show_controller_->get_events()->size()) {
+			Event* event = &show_controller_->get_events()->data()[row];
+			EditEventDialog dialog(event, this);
+			if (dialog.exec() == QDialog::Accepted) {
+				// Update the UI and actual Show Event
+				item->setText(locale_.toString(event->get_time()) +
+							  QString(": ") +
+							  CueInterpreter::interpret_cue(event->get_cue()));
+
+				maestro_control_widget_->run_cue(
+					maestro_control_widget_->show_handler->set_events(
+						show_controller_->get_events()->data(),
+						show_controller_->get_events()->size()
+					)
+				);
+			}
+		}
+	}
+
 	void ShowControlWidget::on_eventQueueWidget_rowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
 		if (parent == destination) {
 			for	(int i = start; i < end; i++) {
@@ -186,11 +211,6 @@ namespace PixelMaestroStudio {
 					show_controller_->get_events()->size()
 				)
 			);
-		}
-		// Add events from Event History.
-		// TODO: Verify that it's coming from the event history by checking the parent. Otherwise, literally anything could get dragged here
-		else {
-			on_addEventButton_clicked();
 		}
 	}
 
@@ -276,6 +296,7 @@ namespace PixelMaestroStudio {
 
 		// Enable loop checkbox if we're in relative mode
 		ui->loopCheckBox->setEnabled((Show::TimingMode)index == Show::TimingMode::Relative);
+		ui->relativeTimeLineEdit->setEnabled((Show::TimingMode)index == Show::TimingMode::Relative);
 	}
 
 	/**
@@ -310,6 +331,10 @@ namespace PixelMaestroStudio {
 			ui->loopCheckBox->blockSignals(true);
 			ui->loopCheckBox->setChecked(show->get_looping());
 			ui->loopCheckBox->blockSignals(false);
+
+			ui->relativeTimeLineEdit->blockSignals(true);
+			ui->relativeTimeLineEdit->setEnabled(show->get_timing() == Show::TimingMode::Relative);
+			ui->relativeTimeLineEdit->blockSignals(false);
 		}
 		else {
 			ui->timingModeComboBox->blockSignals(true);
@@ -319,6 +344,10 @@ namespace PixelMaestroStudio {
 			ui->loopCheckBox->blockSignals(true);
 			ui->loopCheckBox->setChecked(false);
 			ui->loopCheckBox->blockSignals(false);
+
+			ui->relativeTimeLineEdit->blockSignals(true);
+			ui->relativeTimeLineEdit->setEnabled(false);
+			ui->relativeTimeLineEdit->blockSignals(false);
 		}
 	}
 
@@ -344,7 +373,6 @@ namespace PixelMaestroStudio {
 
 		// If relative mode is enabled, calculate the time since the last Event
 		bool relative_time_enabled = show->get_timing() == Show::TimingMode::Relative;
-		ui->relativeTimeLineEdit->setEnabled(relative_time_enabled);
 		if (relative_time_enabled) {
 			uint relative_time = maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - show->get_last_time();
 			ui->relativeTimeLineEdit->setText(locale_.toString(relative_time));

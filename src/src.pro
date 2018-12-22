@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     dialog/sectionmapdialog.cpp \
     controller/serialdevicecontroller.cpp \
     controller/serialdevicethreadcontroller.cpp \
-    model/sectionmapmodel.cpp
+    model/sectionmapmodel.cpp \
+    dialog/editeventdialog.cpp
 
 HEADERS += \
 		drawingarea/maestrodrawingarea.h \
@@ -143,7 +144,8 @@ HEADERS += \
     dialog/sectionmapdialog.h \
     controller/serialdevicecontroller.h \
     controller/serialdevicethreadcontroller.h \
-    model/sectionmapmodel.h
+    model/sectionmapmodel.h \
+    dialog/editeventdialog.h
 
 FORMS	+= window/mainwindow.ui \
 		widget/maestrocontrolwidget.ui \
@@ -163,7 +165,8 @@ FORMS	+= window/mainwindow.ui \
     widget/showcontrolwidget.ui \
     widget/sectioncontrolwidget.ui \
     widget/canvascontrolwidget.ui \
-    dialog/sectionmapdialog.ui
+    dialog/sectionmapdialog.ui \
+    dialog/editeventdialog.ui
 
 INCLUDEPATH += \
 		$$PWD/src \

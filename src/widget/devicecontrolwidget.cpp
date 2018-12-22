@@ -232,23 +232,26 @@ namespace PixelMaestroStudio {
 		// Check the Cue against the block list
 		for (BlockedCue blocked : blocked_cues_) {
 			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
+				int action_byte_index = -1;
 				switch (blocked.handler) {
 					case CueController::Handler::AnimationCueHandler:
-						if (cue[(uint8_t)AnimationCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						action_byte_index = (uint8_t)AnimationCueHandler::Byte::ActionByte;
 						break;
 					case CueController::Handler::CanvasCueHandler:
-						if (cue[(uint8_t)CanvasCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						action_byte_index = (uint8_t)CanvasCueHandler::Byte::ActionByte;
 						break;
 					case CueController::Handler::MaestroCueHandler:
-						if (cue[(uint8_t)MaestroCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						action_byte_index = (uint8_t)MaestroCueHandler::Byte::ActionByte;
 						break;
 					case CueController::Handler::SectionCueHandler:
-						if (cue[(uint8_t)SectionCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						action_byte_index = (uint8_t)SectionCueHandler::Byte::ActionByte;
 						break;
 					case CueController::Handler::ShowCueHandler:
-						if (cue[(uint8_t)ShowCueHandler::Byte::ActionByte] == (uint8_t)blocked.action) return;
+						action_byte_index = (uint8_t)ShowCueHandler::Byte::ActionByte;
 						break;
 				}
+
+				if (action_byte_index == blocked.action) return;
 			}
 		}
 
@@ -278,7 +281,7 @@ namespace PixelMaestroStudio {
 
 					// Make sure the cell actually exists in the model before swapping.
 					QStandardItem* cell = model->item(target_section_id, 1);
-					if (cell != nullptr) {
+					if (!cell->text().isEmpty()) {
 						int remote_section_id = cell->text().toInt();
 						if (remote_section_id != target_section_id) {
 							/*
@@ -288,7 +291,7 @@ namespace PixelMaestroStudio {
 							 *	...Assuming each device has a map.
 							 */
 							cue[(uint8_t)SectionCueHandler::Byte::SectionByte] = remote_section_id;
-							controller->assemble(size);
+							cue[(uint8_t)CueController::Byte::ChecksumByte] = controller->checksum(cue, size);
 						}
 					}
 				}

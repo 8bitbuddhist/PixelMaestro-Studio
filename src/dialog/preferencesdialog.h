@@ -2,7 +2,6 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
-#include <QListWidgetItem>
 #include <QSettings>
 
 namespace Ui {

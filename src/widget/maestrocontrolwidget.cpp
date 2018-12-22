@@ -88,7 +88,7 @@ namespace PixelMaestroStudio {
 			uint8_t byte = static_cast<uint8_t>(byte_char);
 
 			if (virtual_maestro.get_cue_controller()->read(byte)) {
-				run_cue(virtual_maestro.get_cue_controller()->get_buffer(), false);
+				run_cue(virtual_maestro.get_cue_controller()->get_buffer(), RunTarget::Local);
 			}
 		}
 
@@ -191,9 +191,9 @@ namespace PixelMaestroStudio {
 	/**
 	 * Forwards the specified Cue to the drawing area and/or serial device.
 	 * @param cue Cue to perform.
-	 * @param serial_only If true, don't run the Cue on the local Maestro.
+	 * @param run_targets Bitmask of RunTargets specifying where to run the Cue.
 	 */
-	void MaestroControlWidget::run_cue(uint8_t *cue, bool remote_only) {
+	void MaestroControlWidget::run_cue(uint8_t *cue, int run_targets) {
 		show_control_widget_->add_event_to_history(cue);
 
 		/*
@@ -203,13 +203,15 @@ namespace PixelMaestroStudio {
 		 */
 		if (!show_control_widget_->get_maestro_locked() ||
 			(show_control_widget_->get_maestro_locked() && cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::ShowCueHandler)) {
-			if (!remote_only) {
+			if ((run_targets & RunTarget::Local) == RunTarget::Local) {
 				cue_controller_->run(cue);
 				set_maestro_modified(true);
 			}
 
-			// Send to serial device controller
-			device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
+			if ((run_targets & RunTarget::Remote) == RunTarget::Remote) {
+				// Send to serial device controller
+				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
+			}
 		}
 	}
 
