@@ -81,6 +81,7 @@ namespace PixelMaestroStudio {
 			void run_cue(uint8_t* cue, int run_targets = (RunTarget::Local | RunTarget::Remote));
 			void set_maestro_controller(MaestroController* maestro_controller);
 			void set_maestro_modified(bool modified);
+			void set_refresh_needed(bool refresh_needed);
 
 		private slots:
 			void on_playPauseButton_toggled(bool checked);
@@ -92,6 +93,7 @@ namespace PixelMaestroStudio {
 			void on_refreshButton_clicked();
 
 		private:
+			/// Bitmask determining where Cues are sent and executed.
 			enum RunTarget {
 				Local = 1,
 				Remote = 2

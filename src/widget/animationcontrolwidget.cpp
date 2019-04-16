@@ -79,6 +79,22 @@ namespace PixelMaestroStudio {
 		set_controls_enabled(index > 0);
 	}
 
+	void AnimationControlWidget::on_currentCycleSpinBox_editingFinished() {
+		maestro_control_widget->run_cue(
+			maestro_control_widget->animation_handler->set_cycle_index(
+				maestro_control_widget->section_control_widget_->get_section_index(),
+				maestro_control_widget->section_control_widget_->get_layer_index(),
+				ui->currentCycleSpinBox->value()
+			)
+		);
+
+		// Refresh box in case the cycle was adjusted
+		uint8_t cycle = maestro_control_widget->section_control_widget_->get_active_section()->get_animation()->get_cycle_index();
+		if (cycle != ui->currentCycleSpinBox->value()) {
+			ui->currentCycleSpinBox->setValue(cycle);
+		}
+	}
+
 	/**
 	 * Sets the duration of each Animation cycle.
 	 * @param value Cycle duration (in ms).
@@ -167,13 +183,37 @@ namespace PixelMaestroStudio {
 			maestro_control_widget->animation_handler->set_palette(
 				maestro_control_widget->section_control_widget_->get_section_index(),
 				maestro_control_widget->section_control_widget_->get_layer_index(),
-				&palette_wrapper->palette
+				palette_wrapper->palette
 			)
 		);
 	}
 
 	void AnimationControlWidget::on_paletteEditButton_clicked() {
 		maestro_control_widget->edit_palettes(ui->paletteComboBox->currentText());
+	}
+
+	void AnimationControlWidget::on_playbackStartStopToolButton_toggled(bool checked) {
+		if (checked) {	// Pause the Animation
+			maestro_control_widget->run_cue(
+				maestro_control_widget->animation_handler->stop(
+					maestro_control_widget->section_control_widget_->get_section_index(),
+					maestro_control_widget->section_control_widget_->get_layer_index()
+				)
+			);
+
+			uint8_t current_cycle = maestro_control_widget->section_control_widget_->get_active_section()->get_animation()->get_cycle_index();
+			ui->currentCycleSpinBox->setValue(current_cycle);
+		}
+		else {
+			maestro_control_widget->run_cue(
+				maestro_control_widget->animation_handler->start(
+					maestro_control_widget->section_control_widget_->get_section_index(),
+					maestro_control_widget->section_control_widget_->get_layer_index()
+				)
+			);
+		}
+
+		ui->currentCycleSpinBox->setEnabled(checked);
 	}
 
 	/**

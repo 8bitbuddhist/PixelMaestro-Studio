@@ -10,7 +10,6 @@
 #include "ui_showcontrolwidget.h"
 #include "controller/showcontroller.h"
 
-// FIXME: Add EditEventDialog
 namespace PixelMaestroStudio {
 	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
 		ui->setupUi(this);
@@ -311,16 +310,17 @@ namespace PixelMaestroStudio {
 
 		if (show != nullptr) {
 			for (uint16_t i = 0; i < show->get_num_events(); i++) {
-				Event* event = &show->get_events()[i];
-
-				// Check for Events before adding them to prevent duplicates
-				if (show_controller_->get_event_index(event) < 0) {
-					show_controller_->add_event(event->get_time(), event->get_cue());
-					ui->eventQueueWidget->addItem(
-						locale_.toString(event->get_time()) +
-								QString(": ") +
-								CueInterpreter::interpret_cue(event->get_cue())
-					);
+				Event* event = show->get_event_at_index(i);
+				if (event != nullptr) {
+					// Check for Events before adding them to prevent duplicates
+					if (show_controller_->get_event_index(event) < 0) {
+						show_controller_->add_event(event->get_time(), event->get_cue());
+						ui->eventQueueWidget->addItem(
+							locale_.toString(event->get_time()) +
+									QString(": ") +
+									CueInterpreter::interpret_cue(event->get_cue())
+						);
+					}
 				}
 			}
 
@@ -395,20 +395,14 @@ namespace PixelMaestroStudio {
 			// If live update triggers are enabled, send the last Event's queue to the DeviceControlWidget to be sent to remote devices
 			QSettings settings;
 			if (settings.value(PreferencesDialog::events_trigger_device_updates, false).toBool()) {
-				Event* event = &show->get_events()[show->get_current_index()];
-				CueController* cue_controller = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
-				maestro_control_widget_->device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
+				Event* event = show->get_event_at_index(show->get_current_index());
+				if (event != nullptr) {
+					CueController* cue_controller = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+					maestro_control_widget_->device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
+				}
 			}
 
-			/*
-			 * Refresh the UI to reflect changes to the Maestro.
-			 *
-			 * WARNING: Whenever the UI refreshes, any widgets that are actively in use are reset.
-			 * This makes it impossible to use the editor with Shows that update frequently.
-			 * Look into alternate solutions.
-			 *
-			 * maestro_control_widget_->refresh_section_settings();
-			 */
+			maestro_control_widget_->set_refresh_needed(true);
 		}
 	}
 

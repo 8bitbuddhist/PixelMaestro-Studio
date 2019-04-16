@@ -258,7 +258,7 @@ namespace PixelMaestroStudio {
 		CueController* controller = this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
 
 		for (SerialDeviceController device : serial_devices_) {
-			// TODO: Move to thread
+			// TODO: Move to separate thread
 
 			/*
 			 * If the device has a Section map saved, apply it to the Cue.
@@ -395,9 +395,9 @@ namespace PixelMaestroStudio {
 			connect(thread, &SerialDeviceThreadController::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		}
 
-		moveToThread(thread);
-
 		// FIXME: Using start(), the device pointer magically becomes invalid when executing the thread. But when using run(), the thread becomes blocking
+		// Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
+
 		//thread->start();
 		thread->run();
 	}

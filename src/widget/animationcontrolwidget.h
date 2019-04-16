@@ -38,6 +38,10 @@ namespace PixelMaestroStudio {
 
 			void on_paletteComboBox_activated(int index);
 
+			void on_playbackStartStopToolButton_toggled(bool checked);
+
+			void on_currentCycleSpinBox_editingFinished();
+
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			Ui::AnimationControlWidget *ui;

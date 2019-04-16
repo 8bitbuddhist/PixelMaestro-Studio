@@ -114,11 +114,11 @@ namespace PixelMaestroStudio {
 			// Change the color of the Color button to reflect the selection
 			PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget_->palette_controller_.get_palette(ui->paletteComboBox->currentIndex());
 			Colors::RGB color = palette_wrapper->palette.get_colors()[selected_color_index_];
-			ui->selectColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
+			ui->selectedColorLabel->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 		}
 		else {
 			selected_color_index_ = 255;
-			ui->selectColorButton->setStyleSheet(QString("background-color: transparent;"));
+			ui->selectedColorLabel->setStyleSheet(QString());
 		}
 	}
 
@@ -414,9 +414,6 @@ namespace PixelMaestroStudio {
 
 		if (!filename.isEmpty()) {
 
-			// Stop playback
-			ui->playbackStartStopToolButton->toggled(true);
-
 			// Clear the current Canvas
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->canvas_handler->clear(
@@ -450,9 +447,6 @@ namespace PixelMaestroStudio {
 			ui->paletteComboBox->addItem(name);
 			ui->paletteComboBox->blockSignals(false);
 			ui->paletteComboBox->setCurrentText(name);
-
-			// Start playback
-			ui->playbackStartStopToolButton->toggled(false);
 		}
 	}
 
@@ -531,7 +525,7 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->canvas_handler->set_palette(
 				maestro_control_widget_->section_control_widget_->get_section_index(),
 				maestro_control_widget_->section_control_widget_->get_layer_index(),
-				&palette_wrapper->palette
+				palette_wrapper->palette
 			)
 		);
 

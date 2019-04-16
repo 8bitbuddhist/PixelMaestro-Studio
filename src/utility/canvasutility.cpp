@@ -79,7 +79,7 @@ namespace PixelMaestroStudio {
 							maestro_control->canvas_handler->set_palette(
 								maestro_control->section_control_widget_->get_section_index(),
 								maestro_control->section_control_widget_->get_layer_index(),
-								&palette));
+								palette));
 			}
 
 			/*

@@ -237,7 +237,7 @@
      <item>
       <widget class="QPushButton" name="refreshButton">
        <property name="toolTip">
-        <string>Refresh the UI with the Maestro's settings</string>
+        <string>Refresh the UI with the Maestro's changes</string>
        </property>
        <property name="text">
         <string/>

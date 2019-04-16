@@ -15,6 +15,7 @@ namespace PixelMaestroStudio {
 		 * The Arduino's serial buffer overflows, causing data loss.
 		 * This tends to happen at the 64 byte mark.
 		 * As a workaround, we break up the output into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
+		 * TODO: Might be a serial timeout issue. Read https://stackoverflow.com/questions/32429327/slow-serial-communication-with-arduino-latency-of-almost-1-sec
 		 *
 		 * Resources:
 		 * http://forum.arduino.cc/index.php?topic=124158.15

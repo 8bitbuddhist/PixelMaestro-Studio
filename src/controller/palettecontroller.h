@@ -28,7 +28,7 @@ namespace PixelMaestroStudio {
 				QString name = "";
 
 				PaletteType type = PaletteType::Blank;
-				Palette palette = Palette(nullptr, 0);
+				Palette palette;
 
 				bool operator==(Colors::RGB* section_colors) {
 					bool match = true;
@@ -51,20 +51,18 @@ namespace PixelMaestroStudio {
 				 * @param target_color The Palette's target color.
 				 * @param mirror For scaling Palettes, whether to mirror the colors.
 				 */
-				PaletteWrapper(QString new_name, Colors::RGB* new_colors, uint8_t num_colors, PaletteType type, Colors::RGB base_color, Colors::RGB target_color, bool mirror) {
+				PaletteWrapper(QString new_name, Colors::RGB new_colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) : palette(new_colors, num_colors) {
 					this->base_color = base_color;
 					this->target_color = target_color;
 					this->mirror = mirror;
 					this->name = new_name;
 					this->type = type;
-
-					palette.set_colors(new_colors, num_colors);
 				}
 			};
 
 			PaletteController();
 			~PaletteController();
-			PaletteWrapper* add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false);
+			PaletteWrapper* add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false);
 			QString check_palette_name(QString name);
 			Colors::RGB deserialize_color(const QString& string);
 			int find(Colors::RGB* search_palette);

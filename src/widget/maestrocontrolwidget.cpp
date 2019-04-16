@@ -15,7 +15,6 @@
 #include "utility.h"
 #include "window/mainwindow.h"
 
-// FIXME: Actions with strict conditions (e.g. nullptr checks) won't generate Cues while the Maestro's locked
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.
@@ -160,6 +159,8 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_refreshButton_clicked() {
 		refresh_maestro_settings();
 		refresh_section_settings();
+
+		set_refresh_needed(false);
 	}
 
 	void MaestroControlWidget::on_syncButton_clicked() {
@@ -196,13 +197,8 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::run_cue(uint8_t *cue, int run_targets) {
 		show_control_widget_->add_event_to_history(cue);
 
-		/*
-		 * Only run the Cue if:
-		 *	1) The Maestro isn't locked
-		 *	2) The Maestro is locked, but the Cue is a Show Cue
-		 */
-		if (!show_control_widget_->get_maestro_locked() ||
-			(show_control_widget_->get_maestro_locked() && cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::ShowCueHandler)) {
+		// Only run the Cue if the Maestro isn't locked, or the Cue is a Show Cue.
+		if (!show_control_widget_->get_maestro_locked() || cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)CueController::Handler::ShowCueHandler) {
 			if ((run_targets & RunTarget::Local) == RunTarget::Local) {
 				cue_controller_->run(cue);
 				set_maestro_modified(true);
@@ -265,6 +261,20 @@ namespace PixelMaestroStudio {
 
 		// Update MainWindow title
 		this->parentWidget()->parentWidget()->parentWidget()->setWindowModified(modified);
+	}
+
+	/**
+	 * Sets whether the Maestro has been modified by an actor other than the user (e.g. by a Show)
+	 * @param refresh_needed If true, highlight the refresh button
+	 */
+	void MaestroControlWidget::set_refresh_needed(bool refresh_needed) {
+		if (refresh_needed) {
+			QColor highlight_color = qApp->palette().highlight().color();
+			ui->refreshButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
+		}
+		else {
+			ui->refreshButton->setStyleSheet(QString());
+		}
 	}
 
 	MaestroControlWidget::~MaestroControlWidget() {

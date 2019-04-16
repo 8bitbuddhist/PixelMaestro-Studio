@@ -3,24 +3,28 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.40.2] - In Progress
+## [v0.50] - In Progress
 WARNING: The following Cues have been modified and will no longer work using older Cuefiles:
 	- `AnimationCueHandler::set_wave_options`: removed mirror option
 	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
 - Section mirroring.
+- Notification icon for when a background action (e.g. a Show) modifies the Maestro.
 - Event dragging and dropping in the Show tab's Event Queue. Currently limited to rearranging events.
 - Event editing dialog. Double-click an Event in the Event Queue to change its run time.
 - Option to allow Show Events to trigger live device updates. This lets you manage a Show using PixelMaestro Studio and run Events on connected devices.
+- Play/pause button and cycle selector for Animations.
 
 ### Changed
+- Fixed `MaestroController::save_section_to_datastream()` not saving the frame count.
 - Fixed Device Section Map not updating the correct Cue.
 - Fixed Canvases not drawing frames larger than 255x255 pixels.
 - Fixed Delay getting disabled when fading is enabled.
 - Fixed Canvas actions performed on a SectionDrawingArea not updating the cursor before performing the action.
 - Reverted broken duplicate Palette name check.
-- Bumped to Qt 5.12.0.
+- Increased minimum window width.
+- Bumped Qt version to 5.12.0.
 
 ### Removed
 - Wave animation mirror option.

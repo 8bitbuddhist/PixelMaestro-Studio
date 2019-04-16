@@ -100,12 +100,12 @@ namespace PixelMaestroStudio {
 		maestro_->set_timer(refresh);
 
 		// Enable the Maestro's CueController and CueHandlers
-		CueController* controller = maestro_->set_cue_controller(UINT16_MAX);
-		controller->enable_animation_cue_handler();
-		controller->enable_canvas_cue_handler();
-		controller->enable_maestro_cue_handler();
-		controller->enable_section_cue_handler();
-		controller->enable_show_cue_handler();
+		CueController& controller = maestro_->set_cue_controller(UINT16_MAX);
+		controller.enable_animation_cue_handler();
+		controller.enable_canvas_cue_handler();
+		controller.enable_maestro_cue_handler();
+		controller.enable_section_cue_handler();
+		controller.enable_show_cue_handler();
 	}
 
 	/**
@@ -183,7 +183,7 @@ namespace PixelMaestroStudio {
 
 				AnimationCueHandler* animation_handler = dynamic_cast<AnimationCueHandler*>(maestro_->get_cue_controller()->get_handler(CueController::Handler::AnimationCueHandler));
 				if (animation->get_palette() != nullptr) {
-					write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, animation->get_palette()));
+					write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, *animation->get_palette()));
 				}
 				write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 				write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
@@ -264,10 +264,11 @@ namespace PixelMaestroStudio {
 				}
 
 				if (canvas->get_palette() != nullptr) {
-					write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, canvas->get_palette()));
+					write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, *canvas->get_palette()));
 				}
 
 				// Draw and save each frame
+				write_cue_to_stream(datastream, canvas_handler->set_num_frames(section_id, layer_id, canvas->get_num_frames()));
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, frame));
 					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, section->get_dimensions()->x, section->get_dimensions()->y, canvas->get_frame(frame)));

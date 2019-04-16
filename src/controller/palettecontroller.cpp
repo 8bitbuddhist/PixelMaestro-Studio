@@ -19,7 +19,7 @@ namespace PixelMaestroStudio {
 	 * @param mirror Whether to mirror the palette.
 	 * @return New palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB* colors, uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
+	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
 		palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
 		return &palettes_[palettes_.size() - 1];
 	}
