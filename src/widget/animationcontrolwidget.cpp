@@ -38,7 +38,7 @@ namespace PixelMaestroStudio {
 		}
 		else {
 			// If the Section has an active Animation, update it
-			Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
+			Animation* animation = maestro_control_widget->section_control_widget_->get_active_section().get_animation();
 			if (animation != nullptr) {
 				// First, check to see if the Animation types match. If so, do nothing
 				if (animation->get_type() == (AnimationType)(index - 1)) {
@@ -73,7 +73,7 @@ namespace PixelMaestroStudio {
 				on_delayIntervalSpinBox_editingFinished();
 			}
 
-			set_advanced_controls(maestro_control_widget->section_control_widget_->get_active_section()->get_animation());
+			set_advanced_controls(maestro_control_widget->section_control_widget_->get_active_section().get_animation());
 		}
 
 		set_controls_enabled(index > 0);
@@ -89,7 +89,7 @@ namespace PixelMaestroStudio {
 		);
 
 		// Refresh box in case the cycle was adjusted
-		uint8_t cycle = maestro_control_widget->section_control_widget_->get_active_section()->get_animation()->get_cycle_index();
+		uint8_t cycle = maestro_control_widget->section_control_widget_->get_active_section().get_animation()->get_cycle_index();
 		if (cycle != ui->currentCycleSpinBox->value()) {
 			ui->currentCycleSpinBox->setValue(cycle);
 		}
@@ -201,7 +201,7 @@ namespace PixelMaestroStudio {
 				)
 			);
 
-			uint8_t current_cycle = maestro_control_widget->section_control_widget_->get_active_section()->get_animation()->get_cycle_index();
+			uint8_t current_cycle = maestro_control_widget->section_control_widget_->get_active_section().get_animation()->get_cycle_index();
 			ui->currentCycleSpinBox->setValue(current_cycle);
 		}
 		else {
@@ -234,7 +234,7 @@ namespace PixelMaestroStudio {
 	 * Updates the UI based on the active Section.
 	 */
 	void AnimationControlWidget::refresh() {
-		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section()->get_animation();
+		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section().get_animation();
 
 		// If there is no Animation, select 'None' and exit.
 		if (animation == nullptr) {

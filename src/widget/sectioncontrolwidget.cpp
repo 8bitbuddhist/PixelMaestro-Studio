@@ -13,8 +13,8 @@ namespace PixelMaestroStudio {
 	 * Returns the Section currently being edited.
 	 * @return Selected Section.
 	 */
-	Section* SectionControlWidget::get_active_section() {
-		return active_section_;
+	Section& SectionControlWidget::get_active_section() {
+		return *active_section_;
 	}
 
 	/**
@@ -22,7 +22,7 @@ namespace PixelMaestroStudio {
 	 * @return Layer index.
 	 */
 	uint8_t SectionControlWidget::get_layer_index() {
-		return get_layer_index(active_section_);
+		return get_layer_index(*active_section_);
 	}
 
 	/**
@@ -30,13 +30,13 @@ namespace PixelMaestroStudio {
 	 * @param section Section belonging to the Layer.
 	 * @return Layer index.
 	 */
-	uint8_t SectionControlWidget::get_layer_index(Section* section) {
+	uint8_t SectionControlWidget::get_layer_index(Section& section) {
 		/*
 		 * Find the depth of the current Section by traversing parent_section_.
 		 * Once parent_section == nullptr, we know we've hit the base Section.
 		 */
 		uint8_t level = 0;
-		Section* test_section = section;
+		Section* test_section = &section;
 		while (test_section->get_parent_section() != nullptr) {
 			test_section = test_section->get_parent_section();
 			level++;
@@ -49,9 +49,9 @@ namespace PixelMaestroStudio {
 	 * @param section Section to scan.
 	 * @return Number of Layers.
 	 */
-	uint8_t SectionControlWidget::get_num_layers(Section *section) {
+	uint8_t SectionControlWidget::get_num_layers(Section& section) {
 		uint8_t count = 0;
-		Section::Layer* layer = section->get_layer();
+		Section::Layer* layer = section.get_layer();
 		while (layer != nullptr) {
 			layer = layer->section->get_layer();
 			count++;
@@ -64,7 +64,7 @@ namespace PixelMaestroStudio {
 	 * @return Current Section index (or 0 if not found).
 	 */
 	uint8_t SectionControlWidget::get_section_index() {
-		return get_section_index(active_section_);
+		return get_section_index(*active_section_);
 	}
 
 	/**
@@ -72,8 +72,8 @@ namespace PixelMaestroStudio {
 	 * @param section Section to ID.
 	 * @return Section index.
 	 */
-	uint8_t SectionControlWidget::get_section_index(Section* section) {
-		Section* target_section = section;
+	uint8_t SectionControlWidget::get_section_index(Section& section) {
+		Section* target_section = &section;
 
 		// If this is an Layer, iterate until we find the parent ID
 		while (target_section->get_parent_section() != nullptr) {
@@ -82,10 +82,10 @@ namespace PixelMaestroStudio {
 
 		// Iterate until we find the Section that active_section_ points to
 		uint8_t index = 0;
-		Section* test_section = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(0);
+		Section* test_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(0);
 		while (test_section != target_section) {
 			index++;
-			test_section = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index);
+			test_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index);
 		}
 
 		return index;
@@ -124,7 +124,7 @@ namespace PixelMaestroStudio {
 		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 		 * If we selected 'None', use the base Section as the active Section.
 		 */
-		Section* layer_section = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
+		Section* layer_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
 		for (int i = 0; i < index; i++) {
 			layer_section = layer_section->get_layer()->section;
 		}
@@ -133,7 +133,7 @@ namespace PixelMaestroStudio {
 		set_layer_controls_enabled(index > 0);
 
 		// Set active Section to Layer Section
-		set_active_section(layer_section);
+		set_active_section(*layer_section);
 	}
 
 	/**
@@ -143,9 +143,7 @@ namespace PixelMaestroStudio {
 	void SectionControlWidget::on_activeSectionComboBox_currentIndexChanged(int index) {
 		set_layer_controls_enabled(false);
 
-		Section* section = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index);
-
-		set_active_section(section);
+		set_active_section(maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index));
 	}
 
 	/**
@@ -155,7 +153,7 @@ namespace PixelMaestroStudio {
 		maestro_control_widget_->run_cue(
 			maestro_control_widget_->section_handler->set_layer(
 				get_section_index(),
-				get_layer_index(active_section_->get_parent_section()),
+				get_layer_index(*active_section_->get_parent_section()),
 				active_section_->get_parent_section()->get_layer()->mix_mode,
 				ui->alphaSpinBox->value()
 			)
@@ -209,7 +207,7 @@ namespace PixelMaestroStudio {
 	* Sets the number of Layers for the Section.
 	 */
 	void SectionControlWidget::on_layerSpinBox_editingFinished() {
-		Section* base_section = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
+		Section* base_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
 		Section* last_section = base_section;
 
 		// Get the number of Layers (and the index of the last Layer) in the Section
@@ -255,7 +253,7 @@ namespace PixelMaestroStudio {
 
 			// If the active Layer no longer exists, jump to the last available Layer
 			if (ui->layerSpinBox->value() >= last_layer_index) {
-				set_active_section(last_section);
+				set_active_section(*last_section);
 			}
 		}
 
@@ -297,7 +295,7 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_->run_cue(
 				maestro_control_widget_->section_handler->set_layer(
 					get_section_index(),
-					get_layer_index(active_section_->get_parent_section()),
+					get_layer_index(*active_section_->get_parent_section()),
 					(Colors::MixMode)index,
 					ui->alphaSpinBox->value()
 				)
@@ -346,7 +344,7 @@ namespace PixelMaestroStudio {
 		if (layer_index == 0) {
 			// Set Layer count
 			ui->layerSpinBox->blockSignals(true);
-			ui->layerSpinBox->setValue(get_num_layers(active_section_));
+			ui->layerSpinBox->setValue(get_num_layers(*active_section_));
 			ui->layerSpinBox->blockSignals(false);
 
 			populate_layer_combobox();
@@ -362,8 +360,8 @@ namespace PixelMaestroStudio {
 		// Set dimensions
 		ui->gridSizeXSpinBox->blockSignals(true);
 		ui->gridSizeYSpinBox->blockSignals(true);
-		ui->gridSizeXSpinBox->setValue(active_section_->get_dimensions()->x);
-		ui->gridSizeYSpinBox->setValue(active_section_->get_dimensions()->y);
+		ui->gridSizeXSpinBox->setValue(active_section_->get_dimensions().x);
+		ui->gridSizeYSpinBox->setValue(active_section_->get_dimensions().y);
 		ui->gridSizeXSpinBox->blockSignals(false);
 		ui->gridSizeYSpinBox->blockSignals(false);
 
@@ -382,15 +380,15 @@ namespace PixelMaestroStudio {
 		int32_t interval_y = 0;
 		if (active_section_->get_scroll() != nullptr) {
 			Section::Scroll* scroll = active_section_->get_scroll();
-			uint16_t refresh = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_timer()->get_interval();
+			uint16_t refresh = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_timer().get_interval();
 			// x axis
 			if (scroll->timer_x != nullptr) {
 				float x = refresh / (float)scroll->timer_x->get_interval();
-				interval_x = (active_section_->get_dimensions()->x * refresh) / x;
+				interval_x = (active_section_->get_dimensions().x * refresh) / x;
 			}
 			else {
 				if (scroll->step_x > 0) {
-					interval_x = (active_section_->get_dimensions()->x * refresh) / (float)scroll->step_x;
+					interval_x = (active_section_->get_dimensions().x * refresh) / (float)scroll->step_x;
 				}
 			}
 			if (scroll->reverse_x) interval_x *= -1;
@@ -398,11 +396,11 @@ namespace PixelMaestroStudio {
 			// y axis
 			if (scroll->timer_y != nullptr) {
 				float y = refresh / (float)scroll->timer_y->get_interval();
-				interval_y = (active_section_->get_dimensions()->y * refresh) / y;
+				interval_y = (active_section_->get_dimensions().y * refresh) / y;
 			}
 			else {
 				if (scroll->step_y > 0) {
-					interval_y = (active_section_->get_dimensions()->y * refresh) / (float)scroll->step_y;
+					interval_y = (active_section_->get_dimensions().y * refresh) / (float)scroll->step_y;
 				}
 			}
 			if (scroll->reverse_y) interval_y *= -1;
@@ -473,9 +471,8 @@ namespace PixelMaestroStudio {
 	 * Changes the active Section.
 	 * @param section New active Section.
 	 */
-	void SectionControlWidget::set_active_section(Section *section) {
-		if (section == nullptr) return;
-		active_section_ = section;
+	void SectionControlWidget::set_active_section(Section& section) {
+		active_section_ = &section;
 
 		maestro_control_widget_->refresh_section_settings();
 	}
@@ -546,7 +543,7 @@ namespace PixelMaestroStudio {
 	void SectionControlWidget::set_section_size() {
 		// Only resize if the dimensions are different
 		Point new_dimensions(ui->gridSizeXSpinBox->value(), ui->gridSizeYSpinBox->value());
-		if (new_dimensions != *active_section_->get_dimensions()) {
+		if (new_dimensions != active_section_->get_dimensions()) {
 			/*
 			 * Check for a Canvas.
 			 * The old Canvas gets deleted on resize.
@@ -554,7 +551,7 @@ namespace PixelMaestroStudio {
 			 */
 			Canvas* canvas = active_section_->get_canvas();
 			if (canvas != nullptr) {
-				Point frame_bounds(active_section_->get_dimensions()->x, active_section_->get_dimensions()->y);
+				Point frame_bounds(active_section_->get_dimensions().x, active_section_->get_dimensions().y);
 
 				uint8_t** frames = new uint8_t*[canvas->get_num_frames()];
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {

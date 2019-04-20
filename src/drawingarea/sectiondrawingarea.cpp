@@ -82,10 +82,11 @@ namespace PixelMaestroStudio {
 	 * @param event Event parameters.
 	 */
 	void SectionDrawingArea::mouseMoveEvent(QMouseEvent *event) {
+		// Store the cursor position for Canvas editing
 		cursor_pos_ = event->pos();
 
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
-			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section()->get_canvas();
+			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section().get_canvas();
 			if (canvas != nullptr) {
 				Point pixel = map_cursor_to_pixel(cursor_pos_);
 
@@ -135,9 +136,9 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
 		// Sets the current Section as the active Section on left click
 		if (event->buttons() == Qt::LeftButton) {
-			Section* active_section = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section();
-			if (active_section != this->section_) {
-				maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->set_active_section(this->section_);
+			Section& active_section = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section();
+			if (&active_section != this->section_) {
+				maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->set_active_section(*this->section_);
 			}
 		}
 
@@ -156,9 +157,9 @@ namespace PixelMaestroStudio {
 		 * Check to see if the Section's changed sizes.
 		 * If so, recalculate the drawing area's dimensions.
 		 */
-		if (last_pixel_count_ != section_->get_dimensions()->size()) {
+		if (last_pixel_count_ != section_->get_dimensions().size()) {
 			resizeEvent(nullptr);
-			last_pixel_count_ = section_->get_dimensions()->size();
+			last_pixel_count_ = section_->get_dimensions().size();
 		}
 
 		/*
@@ -166,9 +167,9 @@ namespace PixelMaestroStudio {
 		 * For each Pixel, translate it's RGB color into a QColor.
 		 * Then, depending on the user's preferenes, draw it as either a circle or a square.
 		 */
-		for (uint16_t row = 0; row < section_->get_dimensions()->y; row++) {
-			for (uint16_t column = 0; column < section_->get_dimensions()->x; column++) {
-				Colors::RGB rgb = section_->get_maestro()->get_pixel_color(section_id_, column, row);
+		for (uint16_t row = 0; row < section_->get_dimensions().y; row++) {
+			for (uint16_t column = 0; column < section_->get_dimensions().x; column++) {
+				Colors::RGB rgb = section_->get_pixel_color(column, row);
 				QColor qcolor;
 				QBrush brush;
 				QRect rect;
@@ -224,8 +225,8 @@ namespace PixelMaestroStudio {
 		QSize widget_size = this->size();
 
 		// Next, get the max size of each Pixel via the window size.
-		uint16_t max_pixel_width = widget_size.width() / section_->get_dimensions()->x;
-		uint16_t max_pixel_height = widget_size.height() / section_->get_dimensions()->y;
+		uint16_t max_pixel_width = widget_size.width() / section_->get_dimensions().x;
+		uint16_t max_pixel_height = widget_size.height() / section_->get_dimensions().y;
 
 		// Find the smaller dimension
 		if (max_pixel_width < max_pixel_height) {
@@ -236,7 +237,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
-		section_cursor_.x = (widget_size.width() - (section_->get_dimensions()->x * radius_)) / 2;
-		section_cursor_.y = (widget_size.height() - (section_->get_dimensions()->y * radius_)) / 2;
+		section_cursor_.x = (widget_size.width() - (section_->get_dimensions().x * radius_)) / 2;
+		section_cursor_.y = (widget_size.height() - (section_->get_dimensions().y * radius_)) / 2;
 	}
 }

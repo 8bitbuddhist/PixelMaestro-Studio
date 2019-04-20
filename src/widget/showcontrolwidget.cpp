@@ -397,7 +397,7 @@ namespace PixelMaestroStudio {
 			if (settings.value(PreferencesDialog::events_trigger_device_updates, false).toBool()) {
 				Event* event = show->get_event_at_index(show->get_current_index());
 				if (event != nullptr) {
-					CueController* cue_controller = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+					CueController* cue_controller = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
 					maestro_control_widget_->device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
 				}
 			}

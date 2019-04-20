@@ -60,7 +60,6 @@ SOURCES += main.cpp\
 		widget/animation/fireanimationcontrolwidget.cpp \
 		../lib/PixelMaestro/src/core/timer/timer.cpp \
 		../lib/PixelMaestro/src/core/timer/animationtimer.cpp \
-		../lib/PixelMaestro/src/animation/mappedanimation.cpp \
 		widget/animation/waveanimationcontrolwidget.cpp \
 		drawingarea/sectiondrawingarea.cpp \
 		dialog/maestrodrawingareadialog.cpp \
@@ -128,7 +127,6 @@ HEADERS += \
 		widget/animation/fireanimationcontrolwidget.h \
 		../lib/PixelMaestro/src/core/timer/timer.h \
 		../lib/PixelMaestro/src/core/timer/animationtimer.h \
-		../lib/PixelMaestro/src/animation/mappedanimation.h \
 		widget/animation/waveanimationcontrolwidget.h \
 		drawingarea/sectiondrawingarea.h \
 		dialog/maestrodrawingareadialog.h \

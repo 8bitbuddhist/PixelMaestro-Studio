@@ -47,8 +47,8 @@ namespace PixelMaestroStudio {
 	 * Changes the active Section, which highlights the appropriate SectionDrawingArea.
 	 * @param section Active Section.
 	 */
-	void MaestroDrawingArea::frame_active_section(Section *section) {
-		active_section_ = section;
+	void MaestroDrawingArea::frame_active_section(Section& section) {
+		active_section_ = &section;
 
 		if (maestro_control_widget_ == nullptr) return;
 
@@ -111,7 +111,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroDrawingArea::update() {
 		// Checks to see if the active Section is currently highlighted.
-		if (maestro_control_widget_ != nullptr && maestro_control_widget_->section_control_widget_->get_active_section() != active_section_) {
+		if (maestro_control_widget_ != nullptr && &maestro_control_widget_->section_control_widget_->get_active_section() != active_section_) {
 			frame_active_section(maestro_control_widget_->section_control_widget_->get_active_section());
 		}
 

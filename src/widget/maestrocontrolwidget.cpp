@@ -86,8 +86,8 @@ namespace PixelMaestroStudio {
 		for (char byte_char : byte_array) {
 			uint8_t byte = static_cast<uint8_t>(byte_char);
 
-			if (virtual_maestro.get_cue_controller()->read(byte)) {
-				run_cue(virtual_maestro.get_cue_controller()->get_buffer(), RunTarget::Local);
+			if (virtual_maestro.get_cue_controller().read(byte)) {
+				run_cue(virtual_maestro.get_cue_controller().get_buffer(), RunTarget::Local);
 			}
 		}
 
@@ -219,7 +219,7 @@ namespace PixelMaestroStudio {
 		this->maestro_controller_ = maestro_controller;
 
 		// Get Maestro's Cue Handlers for convenience
-		cue_controller_ = maestro_controller_->get_maestro()->get_cue_controller();
+		this->cue_controller_ = &maestro_controller->get_maestro()->get_cue_controller();
 		animation_handler = dynamic_cast<AnimationCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
 		);

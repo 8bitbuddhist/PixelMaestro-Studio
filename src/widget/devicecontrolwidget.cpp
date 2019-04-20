@@ -255,7 +255,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		CueController* controller = this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+		CueController* controller = &this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
 
 		for (SerialDeviceController device : serial_devices_) {
 			// TODO: Move to separate thread

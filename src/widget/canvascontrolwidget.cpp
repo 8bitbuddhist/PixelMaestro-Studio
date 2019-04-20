@@ -150,7 +150,7 @@ namespace PixelMaestroStudio {
 		int frame = ui->currentFrameSpinBox->value();
 
 		// If the selected frame exceeds the number of frames, set to the number of frames.
-		int num_frames = maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_num_frames();
+		int num_frames = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames();
 		if (frame >= num_frames) {
 			frame = num_frames - 1;
 			ui->currentFrameSpinBox->blockSignals(true);
@@ -226,16 +226,16 @@ namespace PixelMaestroStudio {
 		}
 		else if (checked_button == ui->replaceToolButton) {
 			// Replace all instances of the selected color index in the current frame with the new color index.
-			Section* active_section = maestro_control_widget_->section_control_widget_->get_active_section();
-			Point* dimensions = active_section->get_dimensions();
+			Section& active_section = maestro_control_widget_->section_control_widget_->get_active_section();
+			Point& dimensions = active_section.get_dimensions();
 
-			uint8_t* frame = active_section->get_canvas()->get_frame(active_section->get_canvas()->get_current_frame_index());
-			uint32_t target_point = dimensions->get_inline_index(ui->originXSpinBox->value(), ui->originYSpinBox->value());
+			uint8_t* frame = active_section.get_canvas()->get_frame(active_section.get_canvas()->get_current_frame_index());
+			uint32_t target_point = dimensions.get_inline_index(ui->originXSpinBox->value(), ui->originYSpinBox->value());
 			uint8_t target_index = frame[target_point];
 
-			for (uint16_t row = 0; row < dimensions->y; row++) {
-				for (uint16_t column = 0; column < dimensions->x; column++) {
-					uint32_t frame_index = dimensions->get_inline_index(column, row);
+			for (uint16_t row = 0; row < dimensions.y; row++) {
+				for (uint16_t column = 0; column < dimensions.x; column++) {
+					uint32_t frame_index = dimensions.get_inline_index(column, row);
 
 					if (frame[frame_index] == target_index) {
 						frame[frame_index] = selected_color_index_;
@@ -247,8 +247,8 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_->canvas_handler->draw_frame(
 					maestro_control_widget_->section_control_widget_->get_section_index(),
 					maestro_control_widget_->section_control_widget_->get_layer_index(),
-					dimensions->x,
-					dimensions->y,
+					dimensions.x,
+					dimensions.y,
 					frame
 				)
 			);
@@ -296,7 +296,7 @@ namespace PixelMaestroStudio {
 	 */
 	void CanvasControlWidget::on_enableCheckBox_toggled(bool checked) {
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
-		if (!checked && maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas() != nullptr) {
+		if (!checked && maestro_control_widget_->section_control_widget_->get_active_section().get_canvas() != nullptr) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
@@ -342,7 +342,7 @@ namespace PixelMaestroStudio {
 	 */
 	void CanvasControlWidget::on_frameCountSpinBox_editingFinished() {
 		int new_max = ui->frameCountSpinBox->value();
-		if (new_max != maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_num_frames()) {
+		if (new_max != maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames()) {
 
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
@@ -365,7 +365,7 @@ namespace PixelMaestroStudio {
 			else {
 				// Reset frame count
 				ui->frameCountSpinBox->blockSignals(true);
-				ui->frameCountSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_num_frames());
+				ui->frameCountSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames());
 				ui->frameCountSpinBox->blockSignals(false);
 			}
 		}
@@ -422,9 +422,9 @@ namespace PixelMaestroStudio {
 				)
 			);
 
-			CanvasUtility::load_image(filename, maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas(), maestro_control_widget_);
+			CanvasUtility::load_image(filename, maestro_control_widget_->section_control_widget_->get_active_section().get_canvas(), maestro_control_widget_);
 
-			Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas();
+			Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas();
 
 			// Update UI based on new canvas
 			ui->frameCountSpinBox->blockSignals(true);
@@ -462,7 +462,7 @@ namespace PixelMaestroStudio {
 		);
 
 		ui->currentFrameSpinBox->blockSignals(true);
-		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 		ui->currentFrameSpinBox->blockSignals(false);
 	}
 
@@ -478,7 +478,7 @@ namespace PixelMaestroStudio {
 		);
 
 		ui->currentFrameSpinBox->blockSignals(true);
-		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 		ui->currentFrameSpinBox->blockSignals(false);
 	}
 
@@ -500,7 +500,7 @@ namespace PixelMaestroStudio {
 				)
 			);
 			ui->currentFrameSpinBox->blockSignals(true);
-			ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas()->get_current_frame_index());
+			ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 			ui->currentFrameSpinBox->blockSignals(false);
 		}
 		else {
@@ -603,7 +603,7 @@ namespace PixelMaestroStudio {
 		ui->frameIntervalSlider->blockSignals(true);
 		ui->frameIntervalSpinBox->blockSignals(true);
 
-		Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section()->get_canvas();
+		Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas();
 		if (canvas != nullptr) {
 			ui->enableCheckBox->setChecked(true);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());

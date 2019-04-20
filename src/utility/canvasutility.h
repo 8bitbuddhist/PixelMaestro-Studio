@@ -25,7 +25,7 @@ namespace PixelMaestroStudio {
 			 */
 			static void copy_from_canvas(Canvas* canvas, uint8_t** target, uint16_t target_x, uint16_t target_y) {
 				Point target_bounds(target_x, target_y);
-				Point canvas_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+				Point canvas_bounds(canvas->get_section()->get_dimensions().x, canvas->get_section()->get_dimensions().y);
 
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					for (uint16_t y = 0; y < canvas_bounds.y; y++) {

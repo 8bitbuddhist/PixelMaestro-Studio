@@ -17,13 +17,13 @@ namespace PixelMaestroStudio {
 			~SectionControlWidget();
 
 			void refresh();
-			Section* get_active_section();
+			Section& get_active_section();
 			uint8_t get_layer_index();
-			uint8_t get_layer_index(Section* section);
+			uint8_t get_layer_index(Section& section);
 			uint8_t get_section_index();
-			uint8_t get_section_index(Section* section);
+			uint8_t get_section_index(Section& section);
 			void initialize();
-			void set_active_section(Section* section);
+			void set_active_section(Section& section);
 
 		private slots:
 			void on_activeSectionComboBox_currentIndexChanged(int index);
@@ -54,7 +54,7 @@ namespace PixelMaestroStudio {
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 			Ui::SectionControlWidget *ui;
 
-			uint8_t get_num_layers(Section* section);
+			uint8_t get_num_layers(Section& section);
 			void populate_layer_combobox();
 			void set_offset();
 			void set_scroll();
