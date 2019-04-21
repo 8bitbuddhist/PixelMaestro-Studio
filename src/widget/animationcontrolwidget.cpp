@@ -11,9 +11,11 @@
 #include "widget/animation/waveanimationcontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	AnimationControlWidget::AnimationControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::AnimationControlWidget) {
+	AnimationControlWidget::AnimationControlWidget(QWidget *parent) :
+			QWidget(parent),
+			ui(new Ui::AnimationControlWidget),
+			maestro_control_widget(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
-		this->maestro_control_widget = dynamic_cast<MaestroControlWidget*>(parent);
 	}
 
 	void AnimationControlWidget::initialize() {
@@ -28,17 +30,17 @@ namespace PixelMaestroStudio {
 	void AnimationControlWidget::on_typeComboBox_currentIndexChanged(int index) {
 		// If the animation is set to "None", remove it
 		if (index == 0) {
-			maestro_control_widget->run_cue(
-				maestro_control_widget->section_handler->remove_animation(
-					maestro_control_widget->section_control_widget_->get_section_index(),
-					maestro_control_widget->section_control_widget_->get_layer_index(),
+			maestro_control_widget.run_cue(
+				maestro_control_widget.section_handler->remove_animation(
+					maestro_control_widget.section_control_widget_->get_section_index(),
+					maestro_control_widget.section_control_widget_->get_layer_index(),
 					true
 				)
 			);
 		}
 		else {
 			// If the Section has an active Animation, update it
-			Animation* animation = maestro_control_widget->section_control_widget_->get_active_section().get_animation();
+			Animation* animation = maestro_control_widget.section_control_widget_->get_active_section().get_animation();
 			if (animation != nullptr) {
 				// First, check to see if the Animation types match. If so, do nothing
 				if (animation->get_type() == (AnimationType)(index - 1)) {
@@ -46,20 +48,20 @@ namespace PixelMaestroStudio {
 				}
 
 				// Otherwise, replace the Animation, preserving options
-				maestro_control_widget->run_cue(
-					maestro_control_widget->section_handler->set_animation(
-						maestro_control_widget->section_control_widget_->get_section_index(),
-						maestro_control_widget->section_control_widget_->get_layer_index(),
+				maestro_control_widget.run_cue(
+					maestro_control_widget.section_handler->set_animation(
+						maestro_control_widget.section_control_widget_->get_section_index(),
+						maestro_control_widget.section_control_widget_->get_layer_index(),
 						(AnimationType)(index - 1),
 						true
 					)
 				);
 			}
 			else {	// No prior Aniamtion: set the new Animation and apply settings
-				maestro_control_widget->run_cue(
-					maestro_control_widget->section_handler->set_animation(
-						maestro_control_widget->section_control_widget_->get_section_index(),
-						maestro_control_widget->section_control_widget_->get_layer_index(),
+				maestro_control_widget.run_cue(
+					maestro_control_widget.section_handler->set_animation(
+						maestro_control_widget.section_control_widget_->get_section_index(),
+						maestro_control_widget.section_control_widget_->get_layer_index(),
 						(AnimationType)(index - 1),
 						false
 					)
@@ -73,23 +75,23 @@ namespace PixelMaestroStudio {
 				on_delayIntervalSpinBox_editingFinished();
 			}
 
-			set_advanced_controls(maestro_control_widget->section_control_widget_->get_active_section().get_animation());
+			set_advanced_controls(maestro_control_widget.section_control_widget_->get_active_section().get_animation());
 		}
 
 		set_controls_enabled(index > 0);
 	}
 
 	void AnimationControlWidget::on_currentCycleSpinBox_editingFinished() {
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_cycle_index(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_cycle_index(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
 				ui->currentCycleSpinBox->value()
 			)
 		);
 
 		// Refresh box in case the cycle was adjusted
-		uint8_t cycle = maestro_control_widget->section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+		uint8_t cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
 		if (cycle != ui->currentCycleSpinBox->value()) {
 			ui->currentCycleSpinBox->setValue(cycle);
 		}
@@ -150,10 +152,10 @@ namespace PixelMaestroStudio {
 		ui->delayIntervalSlider->setEnabled(checked);
 		ui->delayIntervalSpinBox->setEnabled(checked);
 
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_fade(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_fade(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
 				checked
 			)
 		);
@@ -164,10 +166,10 @@ namespace PixelMaestroStudio {
 	 * @param index New orientation
 	 */
 	void AnimationControlWidget::on_orientationComboBox_currentIndexChanged(int index) {
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_orientation(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_orientation(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
 				(Animation::Orientation)index
 			)
 		);
@@ -178,37 +180,37 @@ namespace PixelMaestroStudio {
 	 * @param index New Palette index.
 	 */
 	void AnimationControlWidget::on_paletteComboBox_activated(int index) {
-		PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget->palette_controller_.get_palette(index);
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_palette(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
-				palette_wrapper->palette
+		PaletteController::PaletteWrapper& palette_wrapper = maestro_control_widget.palette_controller_.get_palette(index);
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_palette(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
+				palette_wrapper.palette
 			)
 		);
 	}
 
 	void AnimationControlWidget::on_paletteEditButton_clicked() {
-		maestro_control_widget->edit_palettes(ui->paletteComboBox->currentText());
+		maestro_control_widget.edit_palettes(ui->paletteComboBox->currentText());
 	}
 
 	void AnimationControlWidget::on_playbackStartStopToolButton_toggled(bool checked) {
 		if (checked) {	// Pause the Animation
-			maestro_control_widget->run_cue(
-				maestro_control_widget->animation_handler->stop(
-					maestro_control_widget->section_control_widget_->get_section_index(),
-					maestro_control_widget->section_control_widget_->get_layer_index()
+			maestro_control_widget.run_cue(
+				maestro_control_widget.animation_handler->stop(
+					maestro_control_widget.section_control_widget_->get_section_index(),
+					maestro_control_widget.section_control_widget_->get_layer_index()
 				)
 			);
 
-			uint8_t current_cycle = maestro_control_widget->section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+			uint8_t current_cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
 			ui->currentCycleSpinBox->setValue(current_cycle);
 		}
 		else {
-			maestro_control_widget->run_cue(
-				maestro_control_widget->animation_handler->start(
-					maestro_control_widget->section_control_widget_->get_section_index(),
-					maestro_control_widget->section_control_widget_->get_layer_index()
+			maestro_control_widget.run_cue(
+				maestro_control_widget.animation_handler->start(
+					maestro_control_widget.section_control_widget_->get_section_index(),
+					maestro_control_widget.section_control_widget_->get_layer_index()
 				)
 			);
 		}
@@ -221,10 +223,10 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, run the Animation in reverse.
 	 */
 	void AnimationControlWidget::on_reverseCheckBox_toggled(bool checked) {
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_reverse(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_reverse(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
 				checked
 			)
 		);
@@ -234,7 +236,7 @@ namespace PixelMaestroStudio {
 	 * Updates the UI based on the active Section.
 	 */
 	void AnimationControlWidget::refresh() {
-		Animation* animation = maestro_control_widget->section_control_widget_->get_active_section().get_animation();
+		Animation* animation = maestro_control_widget.section_control_widget_->get_active_section().get_animation();
 
 		// If there is no Animation, select 'None' and exit.
 		if (animation == nullptr) {
@@ -266,21 +268,21 @@ namespace PixelMaestroStudio {
 			ui->delayIntervalSpinBox->blockSignals(false);
 
 			// Select the current Palette
-			int palette_index = maestro_control_widget->palette_controller_.find(animation->get_palette()->get_colors());
+			int palette_index = maestro_control_widget.palette_controller_.find(animation->get_palette()->get_colors());
 			if (palette_index >= 0) {
 				ui->paletteComboBox->blockSignals(true);
 				ui->paletteComboBox->setCurrentIndex(palette_index);
 				ui->paletteComboBox->blockSignals(false);
 			}
 			else {	// Palette not found
-				QString name = "Section " + QString::number(maestro_control_widget->section_control_widget_->get_section_index()) +
-							   " Layer " + QString::number(maestro_control_widget->section_control_widget_->get_layer_index()) +
+				QString name = "Section " + QString::number(maestro_control_widget.section_control_widget_->get_section_index()) +
+							   " Layer " + QString::number(maestro_control_widget.section_control_widget_->get_layer_index()) +
 							   " Animation";
 
 				// Check to make sure the Palette name isn't already in use. If it is, append a number to the end of it.
-				name = maestro_control_widget->palette_controller_.check_palette_name(name);
+				name = maestro_control_widget.palette_controller_.check_palette_name(name);
 
-				maestro_control_widget->palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+				maestro_control_widget.palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 				ui->paletteComboBox->blockSignals(true);
 				ui->paletteComboBox->addItem(name);
 				ui->paletteComboBox->setCurrentText(name);
@@ -304,8 +306,8 @@ namespace PixelMaestroStudio {
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
 
-		for (uint16_t i = 0; i < maestro_control_widget->palette_controller_.get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(maestro_control_widget->palette_controller_.get_palette(i)->name);
+		for (uint16_t i = 0; i < maestro_control_widget.palette_controller_.get_palettes()->size(); i++) {
+			ui->paletteComboBox->addItem(maestro_control_widget.palette_controller_.get_palette(i).name);
 		}
 
 		ui->paletteComboBox->setCurrentText(palette);
@@ -334,22 +336,22 @@ namespace PixelMaestroStudio {
 
 		switch(type) {
 			case AnimationType::Fire:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new FireAnimationControlWidget(dynamic_cast<FireAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new FireAnimationControlWidget(*dynamic_cast<FireAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Lightning:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new LightningAnimationControlWidget(dynamic_cast<LightningAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new LightningAnimationControlWidget(*dynamic_cast<LightningAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Plasma:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new PlasmaAnimationControlWidget(dynamic_cast<PlasmaAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new PlasmaAnimationControlWidget(*dynamic_cast<PlasmaAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Radial:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new RadialAnimationControlWidget(dynamic_cast<RadialAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new RadialAnimationControlWidget(*dynamic_cast<RadialAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Sparkle:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new SparkleAnimationControlWidget(dynamic_cast<SparkleAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new SparkleAnimationControlWidget(*dynamic_cast<SparkleAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 				break;
 			case AnimationType::Wave:
-				advanced_controls_widget_ = QSharedPointer<QWidget>(new WaveAnimationControlWidget(dynamic_cast<WaveAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				advanced_controls_widget_ = QSharedPointer<QWidget>(new WaveAnimationControlWidget(*dynamic_cast<WaveAnimation*>(animation), this->maestro_control_widget, layout->widget()));
 			default:
 				break;
 		}
@@ -365,10 +367,10 @@ namespace PixelMaestroStudio {
 	 * Updates the Animation's Timer.
 	 */
 	void AnimationControlWidget::set_animation_timer() {
-		maestro_control_widget->run_cue(
-			maestro_control_widget->animation_handler->set_timer(
-				maestro_control_widget->section_control_widget_->get_section_index(),
-				maestro_control_widget->section_control_widget_->get_layer_index(),
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_timer(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
 				ui->cycleIntervalSpinBox->value(),
 				ui->delayIntervalSpinBox->value()
 			)

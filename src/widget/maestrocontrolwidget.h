@@ -79,7 +79,7 @@ namespace PixelMaestroStudio {
 			void refresh_section_settings();
 			void refresh_maestro_settings();
 			void run_cue(uint8_t* cue, int run_targets = (RunTarget::Local | RunTarget::Remote));
-			void set_maestro_controller(MaestroController* maestro_controller);
+			void set_maestro_controller(MaestroController& maestro_controller);
 			void set_maestro_modified(bool modified);
 			void set_refresh_needed(bool refresh_needed);
 

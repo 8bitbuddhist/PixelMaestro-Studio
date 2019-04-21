@@ -19,9 +19,9 @@ namespace PixelMaestroStudio {
 	 * @param mirror Whether to mirror the palette.
 	 * @return New palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
+	PaletteController::PaletteWrapper& PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
 		palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
-		return &palettes_[palettes_.size() - 1];
+		return palettes_[palettes_.size() - 1];
 	}
 
 	/**
@@ -79,8 +79,8 @@ namespace PixelMaestroStudio {
 	 * @param index Palette index.
 	 * @return Palette.
 	 */
-	PaletteController::PaletteWrapper* PaletteController::get_palette(uint8_t index) {
-		return &palettes_[index];
+	PaletteController::PaletteWrapper& PaletteController::get_palette(uint8_t index) {
+		return palettes_[index];
 	}
 
 	/**
@@ -185,15 +185,15 @@ namespace PixelMaestroStudio {
 			QStringList color_list;
 			Colors::RGB* colors = palette_wrapper->palette.get_colors();
 			for (int color_index = 0; color_index < palette_wrapper->palette.get_num_colors(); color_index++) {
-				color_list.append(serialize_color(&colors[color_index]));
+				color_list.append(serialize_color(colors[color_index]));
 			};
 			settings.setValue(PreferencesDialog::palette_colors, color_list.join(PreferencesDialog::delimiter));
 
-			settings.setValue(PreferencesDialog::palette_base_color, serialize_color(&palette_wrapper->base_color));
+			settings.setValue(PreferencesDialog::palette_base_color, serialize_color(palette_wrapper->base_color));
 			settings.setValue(PreferencesDialog::palette_mirror, palette_wrapper->mirror);
 			settings.setValue(PreferencesDialog::palette_name, palette_wrapper->name);
 			settings.setValue(PreferencesDialog::palette_num_colors, palette_wrapper->palette.get_num_colors());
-			settings.setValue(PreferencesDialog::palette_target_color, serialize_color(&palette_wrapper->target_color));
+			settings.setValue(PreferencesDialog::palette_target_color, serialize_color(palette_wrapper->target_color));
 			settings.setValue(PreferencesDialog::palette_type, (uint8_t)palette_wrapper->type);
 		}
 		settings.endArray();
@@ -204,10 +204,10 @@ namespace PixelMaestroStudio {
 	 * @param color Color to serialize.
 	 * @return Serialized string.
 	 */
-	QString PaletteController::serialize_color(Colors::RGB *color) {
-		return QString::number(color->r) + PreferencesDialog::sub_delimiter +
-				QString::number(color->g) + PreferencesDialog::sub_delimiter +
-				QString::number(color->b);
+	QString PaletteController::serialize_color(Colors::RGB& color) {
+		return QString::number(color.r) + PreferencesDialog::sub_delimiter +
+				QString::number(color.g) + PreferencesDialog::sub_delimiter +
+				QString::number(color.b);
 	}
 
 	PaletteController::~PaletteController() {

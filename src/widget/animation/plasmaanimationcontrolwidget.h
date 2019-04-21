@@ -16,7 +16,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit PlasmaAnimationControlWidget(PlasmaAnimation* animation, MaestroControlWidget* controller, QWidget *parent = 0);
+			explicit PlasmaAnimationControlWidget(PlasmaAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
 			~PlasmaAnimationControlWidget();
 
 		private slots:
@@ -25,8 +25,8 @@ namespace PixelMaestroStudio {
 			void on_resolutionDoubleSpinBox_valueChanged(double arg1);
 
 		private:
-			PlasmaAnimation* animation_;
-			MaestroControlWidget* maestro_control_;
+			PlasmaAnimation& animation_;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::PlasmaAnimationControlWidget *ui;
 	};
 }

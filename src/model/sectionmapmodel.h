@@ -9,7 +9,7 @@ using namespace PixelMaestro;
 namespace PixelMaestroStudio {
 	class SectionMapModel : public QStandardItemModel {
 		public:
-			SectionMapModel(Maestro* maestro);
+			SectionMapModel(Maestro& maestro);
 			~SectionMapModel() = default;
 			void add_section();
 	};

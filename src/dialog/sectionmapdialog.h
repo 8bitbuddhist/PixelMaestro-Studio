@@ -15,14 +15,14 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit SectionMapDialog(SerialDeviceController* device, QWidget *parent = nullptr);
+			explicit SectionMapDialog(SerialDeviceController& device, QWidget *parent = nullptr);
 			~SectionMapDialog();
 
 		private slots:
 			void on_buttonBox_clicked(QAbstractButton *button);
 
 		private:
-			SerialDeviceController* device_ = nullptr;
+			SerialDeviceController& device_;
 			Ui::SectionMapDialog *ui;
 
 			void initialize();

@@ -14,15 +14,15 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit FireAnimationControlWidget(FireAnimation* animation, MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
+			explicit FireAnimationControlWidget(FireAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
 			~FireAnimationControlWidget();
 
 		private slots:
 			void on_multiplierSpinBox_valueChanged(int arg1);
 
 		private:
-			FireAnimation* animation_;
-			MaestroControlWidget* maestro_control_widget_;
+			FireAnimation& animation_;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::FireAnimationControlWidget *ui;
 	};
 }

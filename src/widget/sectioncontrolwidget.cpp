@@ -3,9 +3,11 @@
 #include "utility/canvasutility.h"
 
 namespace PixelMaestroStudio {
-	SectionControlWidget::SectionControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SectionControlWidget) {
+	SectionControlWidget::SectionControlWidget(QWidget *parent) :
+			QWidget(parent),
+			ui(new Ui::SectionControlWidget),
+			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
-		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 	}
 
 
@@ -82,10 +84,10 @@ namespace PixelMaestroStudio {
 
 		// Iterate until we find the Section that active_section_ points to
 		uint8_t index = 0;
-		Section* test_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(0);
+		Section* test_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0);
 		while (test_section != target_section) {
 			index++;
-			test_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index);
+			test_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index);
 		}
 
 		return index;
@@ -101,7 +103,7 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->clear();
 
 		// Set Section/Layer
-		for (uint8_t section = 0; section < maestro_control_widget_->get_maestro_controller()->get_maestro()->get_num_sections(); section++) {
+		for (uint8_t section = 0; section < maestro_control_widget_.get_maestro_controller()->get_maestro().get_num_sections(); section++) {
 			ui->activeSectionComboBox->addItem(QString("Section ") + QString::number(section));
 		}
 		ui->activeSectionComboBox->setCurrentIndex(0);
@@ -111,7 +113,7 @@ namespace PixelMaestroStudio {
 		ui->activeLayerComboBox->blockSignals(false);
 		ui->alphaSpinBox->blockSignals(false);
 
-		set_active_section(maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(0));
+		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0));
 		populate_layer_combobox();
 	}
 
@@ -124,7 +126,7 @@ namespace PixelMaestroStudio {
 		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 		 * If we selected 'None', use the base Section as the active Section.
 		 */
-		Section* layer_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
+		Section* layer_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
 		for (int i = 0; i < index; i++) {
 			layer_section = layer_section->get_layer()->section;
 		}
@@ -143,15 +145,15 @@ namespace PixelMaestroStudio {
 	void SectionControlWidget::on_activeSectionComboBox_currentIndexChanged(int index) {
 		set_layer_controls_enabled(false);
 
-		set_active_section(maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(index));
+		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index));
 	}
 
 	/**
 	 * Sets the Layer's transparency level.
 	 */
 	void SectionControlWidget::on_alphaSpinBox_editingFinished() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_layer(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_layer(
 				get_section_index(),
 				get_layer_index(*active_section_->get_parent_section()),
 				active_section_->get_parent_section()->get_layer()->mix_mode,
@@ -165,8 +167,8 @@ namespace PixelMaestroStudio {
 		ui->brightnessSpinBox->setValue(value);
 		ui->brightnessSpinBox->blockSignals(false);
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_brightness(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_brightness(
 				get_section_index(),
 				get_layer_index(),
 				static_cast<uint8_t>(value)
@@ -180,8 +182,8 @@ namespace PixelMaestroStudio {
 		ui->brightnessSlider->setValue(brightness);
 		ui->brightnessSlider->blockSignals(false);
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_brightness(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_brightness(
 				get_section_index(),
 				get_layer_index(),
 				static_cast<uint8_t>(brightness)
@@ -207,7 +209,7 @@ namespace PixelMaestroStudio {
 	* Sets the number of Layers for the Section.
 	 */
 	void SectionControlWidget::on_layerSpinBox_editingFinished() {
-		Section* base_section = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index());
+		Section* base_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
 		Section* last_section = base_section;
 
 		// Get the number of Layers (and the index of the last Layer) in the Section
@@ -225,8 +227,8 @@ namespace PixelMaestroStudio {
 		int diff = ui->layerSpinBox->value() - num_layers;
 		if (diff > 0) {
 			while (diff > 0) {
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->section_handler->set_layer(
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.section_handler->set_layer(
 						get_section_index(),
 						last_layer_index,
 						Colors::MixMode::None,
@@ -241,8 +243,8 @@ namespace PixelMaestroStudio {
 		else if (diff < 0) {
 			while (diff < 0) {
 				last_section = last_section->get_parent_section();
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->section_handler->remove_layer(
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.section_handler->remove_layer(
 						get_section_index(),
 						last_layer_index - 1
 					)
@@ -262,8 +264,8 @@ namespace PixelMaestroStudio {
 	}
 
 	void SectionControlWidget::on_mirrorXCheckBox_toggled(bool checked) {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_mirror(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_mirror(
 				get_section_index(),
 				get_layer_index(),
 				checked,
@@ -273,8 +275,8 @@ namespace PixelMaestroStudio {
 	}
 
 	void SectionControlWidget::on_mirrorYCheckBox_toggled(bool checked) {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_mirror(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_mirror(
 				get_section_index(),
 				get_layer_index(),
 				ui->mirrorXCheckBox->isChecked(),
@@ -292,8 +294,8 @@ namespace PixelMaestroStudio {
 		if (get_layer_index() == 0) return ;
 
 		if ((Colors::MixMode)index != active_section_->get_parent_section()->get_layer()->mix_mode) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->section_handler->set_layer(
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.section_handler->set_layer(
 					get_section_index(),
 					get_layer_index(*active_section_->get_parent_section()),
 					(Colors::MixMode)index,
@@ -380,7 +382,7 @@ namespace PixelMaestroStudio {
 		int32_t interval_y = 0;
 		if (active_section_->get_scroll() != nullptr) {
 			Section::Scroll* scroll = active_section_->get_scroll();
-			uint16_t refresh = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_timer().get_interval();
+			uint16_t refresh = maestro_control_widget_.get_maestro_controller()->get_maestro().get_timer().get_interval();
 			// x axis
 			if (scroll->timer_x != nullptr) {
 				float x = refresh / (float)scroll->timer_x->get_interval();
@@ -460,7 +462,7 @@ namespace PixelMaestroStudio {
 		ui->activeLayerComboBox->clear();
 		ui->activeLayerComboBox->addItem("Base Section");
 
-		for (uint8_t layer = 0; layer < get_num_layers(maestro_control_widget_->get_maestro_controller()->get_maestro()->get_section(get_section_index())); layer++) {
+		for (uint8_t layer = 0; layer < get_num_layers(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
 			ui->activeLayerComboBox->addItem(QString("Layer ") + QString::number(layer + 1));
 		}
 
@@ -474,7 +476,7 @@ namespace PixelMaestroStudio {
 	void SectionControlWidget::set_active_section(Section& section) {
 		active_section_ = &section;
 
-		maestro_control_widget_->refresh_section_settings();
+		maestro_control_widget_.refresh_section_settings();
 	}
 
 	/**
@@ -493,8 +495,8 @@ namespace PixelMaestroStudio {
 	 * Note that this is disabled while scrolling is enabled.
 	 */
 	void SectionControlWidget::set_offset() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_offset(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_offset(
 				get_section_index(),
 				get_layer_index(),
 				ui->offsetXSpinBox->value(),
@@ -510,8 +512,8 @@ namespace PixelMaestroStudio {
 		int new_x = ui->scrollXSpinBox->value();
 		int new_y = ui->scrollYSpinBox->value();
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->section_handler->set_scroll(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_scroll(
 				get_section_index(),
 				get_layer_index(),
 				Utility::abs_int(new_x),
@@ -557,10 +559,10 @@ namespace PixelMaestroStudio {
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					frames[frame] = new uint8_t[frame_bounds.size()];
 				}
-				CanvasUtility::copy_from_canvas(canvas, frames, frame_bounds.x, frame_bounds.y);
+				CanvasUtility::copy_from_canvas(*canvas, frames, frame_bounds.x, frame_bounds.y);
 
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->section_handler->set_dimensions(
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.section_handler->set_dimensions(
 						get_section_index(),
 						0,
 						new_dimensions.x,
@@ -568,7 +570,7 @@ namespace PixelMaestroStudio {
 					)
 				);
 
-				CanvasUtility::copy_to_canvas(canvas, frames, frame_bounds.x, frame_bounds.y, maestro_control_widget_);
+				CanvasUtility::copy_to_canvas(*canvas, frames, frame_bounds.x, frame_bounds.y, maestro_control_widget_);
 
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
@@ -576,8 +578,8 @@ namespace PixelMaestroStudio {
 				delete[] frames;
 			}
 			else {	// No Canvas set
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->section_handler->set_dimensions(
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.section_handler->set_dimensions(
 						get_section_index(),
 						0,
 						new_dimensions.x,

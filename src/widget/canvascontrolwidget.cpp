@@ -8,8 +8,10 @@
 #include "widget/palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	CanvasControlWidget::CanvasControlWidget(QWidget *parent) :	QWidget(parent), ui(new Ui::CanvasControlWidget) {
-		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
+	CanvasControlWidget::CanvasControlWidget(QWidget *parent) :
+			QWidget(parent),
+			ui(new Ui::CanvasControlWidget),
+			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
 		// Capture button key presses
 		qApp->installEventFilter(this);
@@ -112,8 +114,8 @@ namespace PixelMaestroStudio {
 			selected_color_index_ = sender->objectName().toInt();
 
 			// Change the color of the Color button to reflect the selection
-			PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget_->palette_controller_.get_palette(ui->paletteComboBox->currentIndex());
-			Colors::RGB color = palette_wrapper->palette.get_colors()[selected_color_index_];
+			PaletteController::PaletteWrapper& palette_wrapper = maestro_control_widget_.palette_controller_.get_palette(ui->paletteComboBox->currentIndex());
+			Colors::RGB color = palette_wrapper.palette.get_colors()[selected_color_index_];
 			ui->selectedColorLabel->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 		}
 		else {
@@ -129,10 +131,10 @@ namespace PixelMaestroStudio {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->clear(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->clear(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index()
 				)
 			);
 		}
@@ -150,7 +152,7 @@ namespace PixelMaestroStudio {
 		int frame = ui->currentFrameSpinBox->value();
 
 		// If the selected frame exceeds the number of frames, set to the number of frames.
-		int num_frames = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames();
+		int num_frames = maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_num_frames();
 		if (frame >= num_frames) {
 			frame = num_frames - 1;
 			ui->currentFrameSpinBox->blockSignals(true);
@@ -158,10 +160,10 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->blockSignals(false);
 		}
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->set_current_frame_index(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index(),
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.canvas_handler->set_current_frame_index(
+				maestro_control_widget_.section_control_widget_->get_section_index(),
+				maestro_control_widget_.section_control_widget_->get_layer_index(),
 				frame
 			)
 		);
@@ -174,10 +176,10 @@ namespace PixelMaestroStudio {
 		QAbstractButton* checked_button = canvas_shape_type_group_.checkedButton();
 
 		if (checked_button == ui->circleToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_circle(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_circle(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -187,10 +189,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 		else if (checked_button == ui->lineToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_line(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_line(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -200,10 +202,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 		else if (checked_button == ui->brushToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_point(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_point(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value()
@@ -211,10 +213,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 		else if (checked_button == ui->rectToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_rect(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_rect(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -226,7 +228,7 @@ namespace PixelMaestroStudio {
 		}
 		else if (checked_button == ui->replaceToolButton) {
 			// Replace all instances of the selected color index in the current frame with the new color index.
-			Section& active_section = maestro_control_widget_->section_control_widget_->get_active_section();
+			Section& active_section = maestro_control_widget_.section_control_widget_->get_active_section();
 			Point& dimensions = active_section.get_dimensions();
 
 			uint8_t* frame = active_section.get_canvas()->get_frame(active_section.get_canvas()->get_current_frame_index());
@@ -243,10 +245,10 @@ namespace PixelMaestroStudio {
 				}
 			}
 
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_frame(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_frame(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					dimensions.x,
 					dimensions.y,
 					frame
@@ -254,10 +256,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 		else if (checked_button == ui->textToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_text(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_text(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -268,10 +270,10 @@ namespace PixelMaestroStudio {
 			);
 		}
 		else if (checked_button == ui->triangleToolButton) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->draw_triangle(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index(),
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->draw_triangle(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -287,7 +289,7 @@ namespace PixelMaestroStudio {
 
 	/// Opens the Palette Editor from the Canvas tab.
 	void CanvasControlWidget::on_editPaletteButton_clicked() {
-		maestro_control_widget_->edit_palettes(ui->paletteComboBox->currentText());
+		maestro_control_widget_.edit_palettes(ui->paletteComboBox->currentText());
 	}
 
 	/**
@@ -296,14 +298,14 @@ namespace PixelMaestroStudio {
 	 */
 	void CanvasControlWidget::on_enableCheckBox_toggled(bool checked) {
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
-		if (!checked && maestro_control_widget_->section_control_widget_->get_active_section().get_canvas() != nullptr) {
+		if (!checked && maestro_control_widget_.section_control_widget_->get_active_section().get_canvas() != nullptr) {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->section_handler->remove_canvas(
-						maestro_control_widget_->section_control_widget_->get_section_index(),
-						maestro_control_widget_->section_control_widget_->get_layer_index()
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.section_handler->remove_canvas(
+						maestro_control_widget_.section_control_widget_->get_section_index(),
+						maestro_control_widget_.section_control_widget_->get_layer_index()
 					)
 				);
 			}
@@ -317,10 +319,10 @@ namespace PixelMaestroStudio {
 		}
 
 		if (checked) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->section_handler->set_canvas(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.section_handler->set_canvas(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index()
 				)
 			);
 
@@ -342,7 +344,7 @@ namespace PixelMaestroStudio {
 	 */
 	void CanvasControlWidget::on_frameCountSpinBox_editingFinished() {
 		int new_max = ui->frameCountSpinBox->value();
-		if (new_max != maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames()) {
+		if (new_max != maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_num_frames()) {
 
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
@@ -351,10 +353,10 @@ namespace PixelMaestroStudio {
 					ui->currentFrameSpinBox->setValue(new_max);
 				}
 				ui->currentFrameSpinBox->setMaximum(new_max);
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->canvas_handler->set_num_frames(
-						maestro_control_widget_->section_control_widget_->get_section_index(),
-						maestro_control_widget_->section_control_widget_->get_layer_index(),
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.canvas_handler->set_num_frames(
+						maestro_control_widget_.section_control_widget_->get_section_index(),
+						maestro_control_widget_.section_control_widget_->get_layer_index(),
 						new_max
 					)
 				);
@@ -365,7 +367,7 @@ namespace PixelMaestroStudio {
 			else {
 				// Reset frame count
 				ui->frameCountSpinBox->blockSignals(true);
-				ui->frameCountSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_num_frames());
+				ui->frameCountSpinBox->setValue(maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_num_frames());
 				ui->frameCountSpinBox->blockSignals(false);
 			}
 		}
@@ -415,16 +417,15 @@ namespace PixelMaestroStudio {
 		if (!filename.isEmpty()) {
 
 			// Clear the current Canvas
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->clear(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->clear(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index()
 				)
 			);
 
-			CanvasUtility::load_image(filename, maestro_control_widget_->section_control_widget_->get_active_section().get_canvas(), maestro_control_widget_);
-
-			Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas();
+			Canvas* canvas = maestro_control_widget_.section_control_widget_->get_active_section().get_canvas();
+			CanvasUtility::load_image(filename, *canvas, &maestro_control_widget_);
 
 			// Update UI based on new canvas
 			ui->frameCountSpinBox->blockSignals(true);
@@ -438,11 +439,11 @@ namespace PixelMaestroStudio {
 			}
 
 			// Add Palette to list
-			QString name = "Section " + QString::number(maestro_control_widget_->section_control_widget_->get_section_index()) +
-						   " Layer " + QString::number(maestro_control_widget_->section_control_widget_->get_layer_index()) +
+			QString name = "Section " + QString::number(maestro_control_widget_.section_control_widget_->get_section_index()) +
+						   " Layer " + QString::number(maestro_control_widget_.section_control_widget_->get_layer_index()) +
 						   " Canvas";
-			name = maestro_control_widget_->palette_controller_.check_palette_name(name);
-			maestro_control_widget_->palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+			name = maestro_control_widget_.palette_controller_.check_palette_name(name);
+			maestro_control_widget_.palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->paletteComboBox->blockSignals(true);
 			ui->paletteComboBox->addItem(name);
 			ui->paletteComboBox->blockSignals(false);
@@ -454,15 +455,15 @@ namespace PixelMaestroStudio {
 	 * Advances the Canvas by a single frame.
 	 */
 	void CanvasControlWidget::on_playbackNextToolButton_clicked() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->next_frame(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index()
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.canvas_handler->next_frame(
+				maestro_control_widget_.section_control_widget_->get_section_index(),
+				maestro_control_widget_.section_control_widget_->get_layer_index()
 			)
 		);
 
 		ui->currentFrameSpinBox->blockSignals(true);
-		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->setValue(maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 		ui->currentFrameSpinBox->blockSignals(false);
 	}
 
@@ -470,15 +471,15 @@ namespace PixelMaestroStudio {
 	 * Moves the Canvas animation back a frame.
 	 */
 	void CanvasControlWidget::on_playbackPreviousToolButton_clicked() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->previous_frame(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index()
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.canvas_handler->previous_frame(
+				maestro_control_widget_.section_control_widget_->get_section_index(),
+				maestro_control_widget_.section_control_widget_->get_layer_index()
 			)
 		);
 
 		ui->currentFrameSpinBox->blockSignals(true);
-		ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
+		ui->currentFrameSpinBox->setValue(maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 		ui->currentFrameSpinBox->blockSignals(false);
 	}
 
@@ -493,21 +494,21 @@ namespace PixelMaestroStudio {
 		ui->playbackPreviousToolButton->setEnabled(checked);
 
 		if (checked) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->stop_frame_timer(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->stop_frame_timer(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index()
 				)
 			);
 			ui->currentFrameSpinBox->blockSignals(true);
-			ui->currentFrameSpinBox->setValue(maestro_control_widget_->section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
+			ui->currentFrameSpinBox->setValue(maestro_control_widget_.section_control_widget_->get_active_section().get_canvas()->get_current_frame_index());
 			ui->currentFrameSpinBox->blockSignals(false);
 		}
 		else {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->canvas_handler->start_frame_timer(
-					maestro_control_widget_->section_control_widget_->get_section_index(),
-					maestro_control_widget_->section_control_widget_->get_layer_index()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.canvas_handler->start_frame_timer(
+					maestro_control_widget_.section_control_widget_->get_section_index(),
+					maestro_control_widget_.section_control_widget_->get_layer_index()
 				)
 			);
 
@@ -520,12 +521,12 @@ namespace PixelMaestroStudio {
 	 * @param index New index.
 	 */
 	void PixelMaestroStudio::CanvasControlWidget::on_paletteComboBox_activated(int index) {
-		PaletteController::PaletteWrapper* palette_wrapper = maestro_control_widget_->palette_controller_.get_palette(index);
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->set_palette(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index(),
-				palette_wrapper->palette
+		PaletteController::PaletteWrapper& palette_wrapper = maestro_control_widget_.palette_controller_.get_palette(index);
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.canvas_handler->set_palette(
+				maestro_control_widget_.section_control_widget_->get_section_index(),
+				maestro_control_widget_.section_control_widget_->get_layer_index(),
+				palette_wrapper.palette
 			)
 		);
 
@@ -563,7 +564,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Rebuilds the Palette Canvas color selection scroll area.
 	 */
-	void CanvasControlWidget::populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper) {
+	void CanvasControlWidget::populate_palette_canvas_color_selection(PaletteController::PaletteWrapper& palette_wrapper) {
 		/*
 		 * Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
 		 * Start by deleting existing color buttons.
@@ -579,8 +580,8 @@ namespace PixelMaestroStudio {
 
 		// Create new buttons and connect the color picker to the pushbutton event
 		QLayout* layout = ui->colorPickerScrollArea->findChild<QLayout*>("colorPickerLayout");
-		for (uint8_t color_index = 0; color_index < palette_wrapper->palette.get_num_colors(); color_index++) {
-			Colors::RGB color = palette_wrapper->palette.get_colors()[color_index];
+		for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
+			Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
 			QPushButton* button = new QPushButton();
 			button->setVisible(true);
 			button->setObjectName(QString::number(color_index));
@@ -603,7 +604,7 @@ namespace PixelMaestroStudio {
 		ui->frameIntervalSlider->blockSignals(true);
 		ui->frameIntervalSpinBox->blockSignals(true);
 
-		Canvas* canvas = maestro_control_widget_->section_control_widget_->get_active_section().get_canvas();
+		Canvas* canvas = maestro_control_widget_.section_control_widget_->get_active_section().get_canvas();
 		if (canvas != nullptr) {
 			ui->enableCheckBox->setChecked(true);
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
@@ -616,17 +617,17 @@ namespace PixelMaestroStudio {
 
 			// Find the corresponding palette in the Palette Controller.
 			if (canvas->get_palette() != nullptr) {
-				int palette_index = maestro_control_widget_->palette_controller_.find(canvas->get_palette()->get_colors());
+				int palette_index = maestro_control_widget_.palette_controller_.find(canvas->get_palette()->get_colors());
 				if (palette_index >= 0) {
 					ui->paletteComboBox->blockSignals(true);
 					ui->paletteComboBox->setCurrentIndex(palette_index);
 					ui->paletteComboBox->blockSignals(false);
 				}
 				else {
-					QString name = "Section " + QString::number(maestro_control_widget_->section_control_widget_->get_section_index()) +
-								   " Layer " + QString::number(maestro_control_widget_->section_control_widget_->get_layer_index()) +
+					QString name = "Section " + QString::number(maestro_control_widget_.section_control_widget_->get_section_index()) +
+								   " Layer " + QString::number(maestro_control_widget_.section_control_widget_->get_layer_index()) +
 								   " Canvas";
-					maestro_control_widget_->palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+					maestro_control_widget_.palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 					ui->paletteComboBox->blockSignals(true);
 					ui->paletteComboBox->addItem(name);
 					ui->paletteComboBox->setCurrentText(name);
@@ -634,7 +635,7 @@ namespace PixelMaestroStudio {
 				}
 			}
 
-			populate_palette_canvas_color_selection(maestro_control_widget_->palette_controller_.get_palette(ui->paletteComboBox->currentIndex()));
+			populate_palette_canvas_color_selection(maestro_control_widget_.palette_controller_.get_palette(ui->paletteComboBox->currentIndex()));
 		}
 		else {
 			ui->enableCheckBox->setChecked(false);
@@ -661,8 +662,8 @@ namespace PixelMaestroStudio {
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
 
-		for (uint16_t i = 0; i < maestro_control_widget_->palette_controller_.get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(maestro_control_widget_->palette_controller_.get_palette(i)->name);
+		for (uint16_t i = 0; i < maestro_control_widget_.palette_controller_.get_palettes()->size(); i++) {
+			ui->paletteComboBox->addItem(maestro_control_widget_.palette_controller_.get_palette(i).name);
 		}
 
 		ui->paletteComboBox->setCurrentText(palette);
@@ -705,11 +706,11 @@ namespace PixelMaestroStudio {
 	 * Sets the Canvas' origin to the specified coordinates.
 	 * @param coordinates New coordinates.
 	 */
-	void CanvasControlWidget::set_canvas_origin(Point* coordinates) {
+	void CanvasControlWidget::set_canvas_origin(Point& coordinates) {
 		ui->originXSpinBox->blockSignals(true);
 		ui->originYSpinBox->blockSignals(true);
-		ui->originXSpinBox->setValue(coordinates->x);
-		ui->originYSpinBox->setValue(coordinates->y);
+		ui->originXSpinBox->setValue(coordinates.x);
+		ui->originYSpinBox->setValue(coordinates.y);
 		ui->originXSpinBox->blockSignals(false);
 		ui->originYSpinBox->blockSignals(false);
 	}
@@ -742,10 +743,10 @@ namespace PixelMaestroStudio {
 
 	/// Sets the interval between Canvas frames.
 	void CanvasControlWidget::set_frame_interval() {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->canvas_handler->set_frame_timer(
-				maestro_control_widget_->section_control_widget_->get_section_index(),
-				maestro_control_widget_->section_control_widget_->get_layer_index(),
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.canvas_handler->set_frame_timer(
+				maestro_control_widget_.section_control_widget_->get_section_index(),
+				maestro_control_widget_.section_control_widget_->get_layer_index(),
 				ui->frameIntervalSpinBox->value()
 			)
 		);

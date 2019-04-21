@@ -24,8 +24,7 @@ namespace PixelMaestroStudio {
 	 * Initializes the MaestroController.
 	 * @param maestro_control_widget The widget responsible for controlling this MaestroController.
 	 */
-	MaestroController::MaestroController(MaestroControlWidget* maestro_control_widget) : timer_(this) {
-		this->maestro_control_widget_ = maestro_control_widget;
+	MaestroController::MaestroController(MaestroControlWidget& maestro_control_widget) : timer_(this), maestro_control_widget_(maestro_control_widget) {
 		initialize_maestro();
 
 		// Initialize timers
@@ -37,24 +36,24 @@ namespace PixelMaestroStudio {
 	 * Adds a DrawingArea to the list of DrawingAreas that the MaestroController renders to.
 	 * @param drawing_area New DrawingArea.
 	 */
-	void MaestroController::add_drawing_area(MaestroDrawingArea *drawing_area) {
-		drawing_areas_.push_back(drawing_area);
+	void MaestroController::add_drawing_area(MaestroDrawingArea& drawing_area) {
+		drawing_areas_.push_back(&drawing_area);
 
 		// Initialize the DrawingArea's SectionDrawingAreas
 		for (uint8_t section = 0; section < this->num_sections_; section++) {
-			drawing_area->add_section_drawing_area(&sections_[section], section);
+			drawing_area.add_section_drawing_area(sections_[section], section);
 		}
 
 		// Refresh the DrawingArea on each timeout
-		connect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(update()));
+		connect(&timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
 	}
 
 	/**
 	 * Returns the Maestro handled by this MaestroController.
 	 * @return Underlying Maestro.
 	 */
-	Maestro* MaestroController::get_maestro() {
-		return maestro_.data();
+	Maestro& MaestroController::get_maestro() {
+		return *maestro_.data();
 	}
 
 	/**
@@ -112,9 +111,9 @@ namespace PixelMaestroStudio {
 	 * Removes a DrawingArea from the controller's render list. Automatically called in the DrawingArea's destructor.
 	 * @param drawing_area DrawingArea to remove.
 	 */
-	void MaestroController::remove_drawing_area(MaestroDrawingArea *drawing_area) {
-		disconnect(&timer_, SIGNAL(timeout()), drawing_area, SLOT(update()));
-		drawing_areas_.removeOne(drawing_area);
+	void MaestroController::remove_drawing_area(MaestroDrawingArea& drawing_area) {
+		disconnect(&timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
+		drawing_areas_.removeOne(&drawing_area);
 	}
 
 	/**
@@ -122,7 +121,7 @@ namespace PixelMaestroStudio {
 	 * @param datastream Stream to save Cues to.
 	 * @param save_handlers CueHandlers that are enabled for saving.
 	 */
-	void MaestroController::save_maestro_to_datastream(QDataStream *datastream, QVector<CueController::Handler>* save_handlers) {
+	void MaestroController::save_maestro_to_datastream(QDataStream& datastream, QVector<CueController::Handler>* save_handlers) {
 		MaestroCueHandler* maestro_handler = dynamic_cast<MaestroCueHandler*>(maestro_->get_cue_controller().get_handler(CueController::Handler::MaestroCueHandler));
 
 		// Maestro-specific Cues
@@ -159,7 +158,7 @@ namespace PixelMaestroStudio {
 	 * @param layer_id The index of the Layer to save.
 	 * @param save_handlers CueHandlers that are enabled for saving. If null, save all Cues
 	 */
-	void MaestroController::save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers) {
+	void MaestroController::save_section_to_datastream(QDataStream& datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers) {
 
 		Section* section = &maestro_->get_section(section_id);
 
@@ -305,9 +304,9 @@ namespace PixelMaestroStudio {
 
 		// Reset each drawing area's Sections
 		for (MaestroDrawingArea* drawing_area : this->drawing_areas_) {
-			drawing_area->remove_section_drawing_area();
+			drawing_area->remove_section_drawing_areas();
 			for (uint8_t section = 0; section < num_sections; section++) {
-				drawing_area->add_section_drawing_area(&this->sections_[section], section);
+				drawing_area->add_section_drawing_area(this->sections_[section], section);
 			}
 		}
 
@@ -335,9 +334,9 @@ namespace PixelMaestroStudio {
 	 * @param stream Stream to append to.
 	 * @param cue Cue to append.
 	 */
-	void MaestroController::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
+	void MaestroController::write_cue_to_stream(QDataStream& stream, uint8_t* cue) {
 		if (cue != nullptr) {
-			stream->writeRawData((const char*)cue, maestro_->get_cue_controller().get_cue_size(cue));
+			stream.writeRawData((const char*)cue, maestro_->get_cue_controller().get_cue_size(cue));
 		}
 	}
 
@@ -347,7 +346,7 @@ namespace PixelMaestroStudio {
 		if (settings.value(PreferencesDialog::save_session).toBool()) {
 			QByteArray maestro_config;
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
-			save_maestro_to_datastream(&maestro_datastream);
+			save_maestro_to_datastream(maestro_datastream);
 			settings.setValue(PreferencesDialog::last_session, maestro_config);
 		}
 

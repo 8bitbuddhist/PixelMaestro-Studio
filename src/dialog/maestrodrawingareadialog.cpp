@@ -6,15 +6,15 @@
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
-	MaestroDrawingAreaDialog::MaestroDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller) :
+	MaestroDrawingAreaDialog::MaestroDrawingAreaDialog(QWidget *parent, MaestroController& maestro_controller) :
 		QDialog(parent),
-		ui(new Ui::MaestroDrawingAreaDialog) {
+		ui(new Ui::MaestroDrawingAreaDialog),
+		maestro_controller_(maestro_controller) {
 		// Capture button key presses
 		qApp->installEventFilter(this);
 
 		ui->setupUi(this);
 
-		this->maestro_controller_ = maestro_controller;
 		QLayout* layout = this->findChild<QLayout*>("maestroLayout");
 		drawing_area_ = QSharedPointer<MaestroDrawingArea>(new MaestroDrawingArea(layout->widget(), maestro_controller_));
 		drawing_area_->set_maestro_control_widget(dynamic_cast<MaestroControlWidget*>(parent));

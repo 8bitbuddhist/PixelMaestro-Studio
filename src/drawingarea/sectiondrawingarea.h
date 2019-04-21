@@ -22,13 +22,13 @@ namespace PixelMaestroStudio {
 				Layer
 			};
 
-			SectionDrawingArea(QWidget* parent, Section* section, uint8_t section_id);
+			SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id);
 			~SectionDrawingArea() = default;
 			void draw_frame(FrameType type);
-			Section* get_section() const;
+			Section& get_section() const;
 
 		protected:
-			Section* section_;
+			Section& section_;
 
 			void mouseMoveEvent(QMouseEvent* event) override;
 			void mousePressEvent(QMouseEvent* event) override;
@@ -43,7 +43,7 @@ namespace PixelMaestroStudio {
 			uint32_t last_pixel_count_ = 0;
 
 			/// The parent MaestroDrawingArea.
-			MaestroDrawingArea* maestro_drawing_area_ = nullptr;
+			MaestroDrawingArea& maestro_drawing_area_;
 
 			/// The shape that each Pixel is drawn in. Defaults to square.
 			int pixel_shape_ = 1;

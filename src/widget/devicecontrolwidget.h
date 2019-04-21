@@ -61,7 +61,7 @@ namespace PixelMaestroStudio {
 			/// List of Cues that should be blocked from executing.
 			QVector<BlockedCue> blocked_cues_;
 
-			MaestroControlWidget* maestro_control_widget_ = nullptr;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::DeviceControlWidget *ui;
 
 			QLocale locale_ = QLocale::system();
@@ -77,7 +77,7 @@ namespace PixelMaestroStudio {
 			void disconnect_serial_device(int index);
 			void populate_serial_devices();
 			void set_device_controls_enabled(bool enabled);
-			void write_to_device(SerialDeviceController* device, const char* out, const int size, bool progress = false);
+			void write_to_device(SerialDeviceController& device, const char* out, const int size, bool progress = false);
 	};
 }
 

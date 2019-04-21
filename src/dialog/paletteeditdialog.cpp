@@ -53,7 +53,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Don't allow duplicate name Palettes, unless we're updating an existing Palette
-		PaletteController::PaletteWrapper* duplicate = dynamic_cast<PaletteControlWidget*>(parentWidget())->get_palette_controller()->get_palette(ui->nameLineEdit->text());
+		PaletteController::PaletteWrapper* duplicate = dynamic_cast<PaletteControlWidget*>(parentWidget())->get_palette_controller().get_palette(ui->nameLineEdit->text());
 		if ((target_palette_ == nullptr && duplicate != nullptr) ||
 			(target_palette_ != nullptr && duplicate != nullptr && duplicate != target_palette_)) {
 			ui->nameLabel->setStyleSheet(QString("color: red;"));
@@ -105,7 +105,7 @@ namespace PixelMaestroStudio {
 			else {
 				// Add the new Palette
 				PaletteControlWidget* parent = dynamic_cast<PaletteControlWidget*>(parentWidget());
-				parent->get_palette_controller()->add_palette(ui->nameLineEdit->text(), &colors[0], num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
+				parent->get_palette_controller().add_palette(ui->nameLineEdit->text(), &colors[0], num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
 			}
 
 			QDialog::accept();

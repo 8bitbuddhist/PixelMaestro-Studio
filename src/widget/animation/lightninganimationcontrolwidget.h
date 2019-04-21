@@ -16,7 +16,7 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
-			explicit LightningAnimationControlWidget(LightningAnimation* animation, MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
+			explicit LightningAnimationControlWidget(LightningAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
 			~LightningAnimationControlWidget();
 
 		private slots:
@@ -27,8 +27,8 @@ namespace PixelMaestroStudio {
 			void on_boltCountSpinBox_valueChanged(int arg1);
 
 		private:
-			LightningAnimation* animation_;
-			MaestroControlWidget* maestro_control_widget_;
+			LightningAnimation& animation_;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::LightningAnimationControlWidget *ui;
 	};
 }

@@ -6,14 +6,13 @@
 #include "ui_palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	PaletteControlWidget::PaletteControlWidget(PaletteController* controller, const QString& initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget) {
-		this->palette_controller_ = controller;
+	PaletteControlWidget::PaletteControlWidget(PaletteController& controller, const QString& initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget), palette_controller_(controller) {
 		ui->setupUi(this);
 
 		initialize_palettes(initial_palette);
 	}
 
-	PaletteController* PaletteControlWidget::get_palette_controller() const {
+	PaletteController& PaletteControlWidget::get_palette_controller() const {
 		return this->palette_controller_;
 	}
 
@@ -21,8 +20,8 @@ namespace PixelMaestroStudio {
 		// Initialize palette list
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
-		for (uint16_t i = 0; i < palette_controller_->get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(palette_controller_->get_palette(i)->name);
+		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
+			ui->paletteComboBox->addItem(palette_controller_.get_palette(i).name);
 		}
 		ui->paletteComboBox->blockSignals(false);
 
@@ -42,7 +41,7 @@ namespace PixelMaestroStudio {
 			QMessageBox::StandardButton confirm;
 			confirm = QMessageBox::question(this, "Reset Palettes", "This will reset all Palettes to their default settings. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
-				palette_controller_->initialize_palettes();
+				palette_controller_.initialize_palettes();
 				initialize_palettes("");
 			}
 		}
@@ -65,10 +64,10 @@ namespace PixelMaestroStudio {
 	void PaletteControlWidget::on_createPaletteButton_clicked() {
 		PaletteEditDialog dialog(this, nullptr);
 		dialog.exec();
-		initialize_palettes(palette_controller_->get_palette(palette_controller_->get_palettes()->size() - 1)->name);
+		initialize_palettes(palette_controller_.get_palette(palette_controller_.get_palettes()->size() - 1).name);
 
 		// If there's more than one Palette, enable the delete button
-		ui->removeButton->setEnabled(palette_controller_->get_palettes()->size() > 1);
+		ui->removeButton->setEnabled(palette_controller_.get_palettes()->size() > 1);
 	}
 
 	/// Edits the selected Palette.
@@ -83,7 +82,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Palette.
 	 */
 	void PaletteControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
-		active_palette_ = palette_controller_->get_palette(index);
+		active_palette_ = &palette_controller_.get_palette(index);
 
 		// Delete existing color buttons
 		QList<QPushButton*> buttons = ui->colorsGroupBox->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
@@ -114,12 +113,12 @@ namespace PixelMaestroStudio {
 		confirm = QMessageBox::question(this, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
 			uint16_t current_index = ui->paletteComboBox->currentIndex();
-			palette_controller_->remove_palette(current_index);
+			palette_controller_.remove_palette(current_index);
 			ui->paletteComboBox->removeItem(current_index);
 		}
 
 		// If there's only one Palette remaining, disable the delete button
-		ui->removeButton->setEnabled(palette_controller_->get_palettes()->size() > 1);
+		ui->removeButton->setEnabled(palette_controller_.get_palettes()->size() > 1);
 	}
 
 	/**

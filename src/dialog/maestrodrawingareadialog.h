@@ -25,7 +25,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit MaestroDrawingAreaDialog(QWidget *parent, MaestroController* maestro_controller);
+			explicit MaestroDrawingAreaDialog(QWidget *parent, MaestroController& maestro_controller);
 			MaestroDrawingArea* get_maestro_drawing_area();
 			~MaestroDrawingAreaDialog();
 
@@ -34,7 +34,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			Ui::MaestroDrawingAreaDialog *ui;
-			MaestroController* maestro_controller_;
+			MaestroController& maestro_controller_;
 			QSharedPointer<MaestroDrawingArea> drawing_area_;
 	};
 }

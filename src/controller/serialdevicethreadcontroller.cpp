@@ -2,9 +2,8 @@
 #include "serialdevicethreadcontroller.h"
 
 namespace PixelMaestroStudio {
-	SerialDeviceThreadController::SerialDeviceThreadController(SerialDeviceController *serial_device, const char *out, int size) : QThread(nullptr) {
+	SerialDeviceThreadController::SerialDeviceThreadController(SerialDeviceController& serial_device, const char *out, int size) : QThread(nullptr), serial_device_(serial_device) {
 		this->output_.append(out, size);
-		this->serial_device_ = serial_device;
 	}
 
 	void SerialDeviceThreadController::run() {
@@ -36,8 +35,8 @@ namespace PixelMaestroStudio {
 			if (current_index + chunk_index > output_.size()) {
 				chunk_index = output_.size() - current_index;
 			}
-			serial_device_->get_device()->write(out_addr);
-			serial_device_->get_device()->flush();			
+			serial_device_.get_device()->write(out_addr);
+			serial_device_.get_device()->flush();
 			current_index += chunk_index;
 			emit progress_changed((current_index / (float)output_.size()) * 100);
 		}

@@ -10,7 +10,7 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
-			SerialDeviceThreadController(SerialDeviceController* serial_device, const char* out, int size);
+			SerialDeviceThreadController(SerialDeviceController& serial_device, const char* out, int size);
 			void run() override;
 
 		signals:
@@ -23,7 +23,7 @@ namespace PixelMaestroStudio {
 			/// Time in milliseconds between chunks. Default is 250.
 			const uint8_t SLEEP_INTERVAL = 250;
 
-			SerialDeviceController* serial_device_ = nullptr;
+			SerialDeviceController& serial_device_;
 			QByteArray output_;
 	};
 }

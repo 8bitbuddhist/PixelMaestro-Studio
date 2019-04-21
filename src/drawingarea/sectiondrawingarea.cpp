@@ -4,9 +4,7 @@
 #include "dialog/preferencesdialog.h"
 
 namespace PixelMaestroStudio {
-	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section* section, uint8_t section_id) : QFrame(parent) {
-		this->maestro_drawing_area_ = dynamic_cast<MaestroDrawingArea*>(parent);
-		this->section_ = section;
+	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id) : QFrame(parent), maestro_drawing_area_(*dynamic_cast<MaestroDrawingArea*>(parent)), section_(section) {
 		this->section_id_ = section_id;
 
 		// Enable mouse tracking
@@ -53,7 +51,7 @@ namespace PixelMaestroStudio {
 	 * Returns the underlying Section.
 	 * @return Section rendered by this DrawingArea.
 	 */
-	Section* SectionDrawingArea::get_section() const {
+	Section& SectionDrawingArea::get_section() const {
 		return this->section_;
 	}
 
@@ -86,15 +84,15 @@ namespace PixelMaestroStudio {
 		cursor_pos_ = event->pos();
 
 		if (event->buttons() == Qt::LeftButton || event->buttons() == Qt::RightButton) {
-			Canvas* canvas = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section().get_canvas();
+			Canvas* canvas = section_.get_canvas();
 			if (canvas != nullptr) {
 				Point pixel = map_cursor_to_pixel(cursor_pos_);
 
 				// If there's a MaestroControlWidget, use run_cue instead of modifying the Canvas directly.
-				MaestroControlWidget* widget = maestro_drawing_area_->get_maestro_control_widget();
+				MaestroControlWidget* widget = maestro_drawing_area_.get_maestro_control_widget();
 				if (widget != nullptr) {
 					// Set the cursor location in the MaestroControlWidget
-					widget->canvas_control_widget_->set_canvas_origin(&pixel);
+					widget->canvas_control_widget_->set_canvas_origin(pixel);
 
 					// Check to see if paint mode is enabled.
 					if (widget->canvas_control_widget_->get_painting_enabled()) {
@@ -136,9 +134,9 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::mousePressEvent(QMouseEvent *event) {
 		// Sets the current Section as the active Section on left click
 		if (event->buttons() == Qt::LeftButton) {
-			Section& active_section = maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->get_active_section();
-			if (&active_section != this->section_) {
-				maestro_drawing_area_->get_maestro_control_widget()->section_control_widget_->set_active_section(*this->section_);
+			Section& active_section = maestro_drawing_area_.get_maestro_control_widget()->section_control_widget_->get_active_section();
+			if (&active_section != &this->section_) {
+				maestro_drawing_area_.get_maestro_control_widget()->section_control_widget_->set_active_section(this->section_);
 			}
 		}
 
@@ -157,9 +155,9 @@ namespace PixelMaestroStudio {
 		 * Check to see if the Section's changed sizes.
 		 * If so, recalculate the drawing area's dimensions.
 		 */
-		if (last_pixel_count_ != section_->get_dimensions().size()) {
+		if (last_pixel_count_ != section_.get_dimensions().size()) {
 			resizeEvent(nullptr);
-			last_pixel_count_ = section_->get_dimensions().size();
+			last_pixel_count_ = section_.get_dimensions().size();
 		}
 
 		/*
@@ -167,9 +165,9 @@ namespace PixelMaestroStudio {
 		 * For each Pixel, translate it's RGB color into a QColor.
 		 * Then, depending on the user's preferenes, draw it as either a circle or a square.
 		 */
-		for (uint16_t row = 0; row < section_->get_dimensions().y; row++) {
-			for (uint16_t column = 0; column < section_->get_dimensions().x; column++) {
-				Colors::RGB rgb = section_->get_pixel_color(column, row);
+		for (uint16_t row = 0; row < section_.get_dimensions().y; row++) {
+			for (uint16_t column = 0; column < section_.get_dimensions().x; column++) {
+				Colors::RGB rgb = section_.get_pixel_color(column, row);
 				QColor qcolor;
 				QBrush brush;
 				QRect rect;
@@ -190,7 +188,7 @@ namespace PixelMaestroStudio {
 				// Set Pen style.
 				// If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
 				painter.setPen(Qt::PenStyle::NoPen);
-				if (section_->get_canvas() != nullptr) {
+				if (section_.get_canvas() != nullptr) {
 					Point pixel_pos = map_cursor_to_pixel(cursor_pos_);
 					if (pixel_pos.x == column && pixel_pos.y == row) {
 						painter.setPen(Qt::PenStyle::SolidLine);
@@ -225,8 +223,8 @@ namespace PixelMaestroStudio {
 		QSize widget_size = this->size();
 
 		// Next, get the max size of each Pixel via the window size.
-		uint16_t max_pixel_width = widget_size.width() / section_->get_dimensions().x;
-		uint16_t max_pixel_height = widget_size.height() / section_->get_dimensions().y;
+		uint16_t max_pixel_width = widget_size.width() / section_.get_dimensions().x;
+		uint16_t max_pixel_height = widget_size.height() / section_.get_dimensions().y;
 
 		// Find the smaller dimension
 		if (max_pixel_width < max_pixel_height) {
@@ -237,7 +235,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Sets the Section's starting point so that it's aligned horizontally and vertically.
-		section_cursor_.x = (widget_size.width() - (section_->get_dimensions().x * radius_)) / 2;
-		section_cursor_.y = (widget_size.height() - (section_->get_dimensions().y * radius_)) / 2;
+		section_cursor_.x = (widget_size.width() - (section_.get_dimensions().x * radius_)) / 2;
+		section_cursor_.y = (widget_size.height() - (section_.get_dimensions().y * radius_)) / 2;
 	}
 }

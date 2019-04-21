@@ -57,19 +57,19 @@ namespace PixelMaestroStudio {
 
 		// Initialize Maestro elements
 		maestro_control_widget_ = new MaestroControlWidget(splitter_);
-		maestro_controller_ = new MaestroController(maestro_control_widget_);
+		maestro_controller_ = new MaestroController(*maestro_control_widget_);
 
 		// Build DrawingAreas if enabled in Preferences
 		QSettings settings;
 		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
-			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, maestro_controller_);
+			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, *maestro_controller_);
 			splitter_->addWidget(maestro_drawing_area_);
-			maestro_controller_->add_drawing_area(dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
+			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
 			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
 		}
 		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
-			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, this->maestro_controller_));
-			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
+			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, *this->maestro_controller_));
+			maestro_controller_->add_drawing_area(*drawing_area_dialog_->get_maestro_drawing_area());
 			dynamic_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
 			drawing_area_dialog_->show();
 		}
@@ -147,7 +147,7 @@ namespace PixelMaestroStudio {
 
 		// Initialize and set the MaestroControlWidget
 		maestro_controller_->initialize_maestro();
-		maestro_control_widget_->set_maestro_controller(maestro_controller_);
+		maestro_control_widget_->set_maestro_controller(*maestro_controller_);
 
 		maestro_control_widget_->refresh_maestro_settings();
 		maestro_control_widget_->refresh_section_settings();
@@ -202,11 +202,11 @@ namespace PixelMaestroStudio {
 		if (this->loaded_cuefile_path_.isEmpty()) {
 			on_saveAsAction_triggered();
 		}
-		else {			
+		else {
 			QFile file(this->loaded_cuefile_path_);
 			if (file.open(QFile::WriteOnly)) {
 				QDataStream datastream(&file);
-				this->maestro_controller_->save_maestro_to_datastream(&datastream);
+				this->maestro_controller_->save_maestro_to_datastream(datastream);
 				file.close();
 				setWindowModified(false);
 			}
@@ -296,7 +296,7 @@ namespace PixelMaestroStudio {
 		if (settings.value(PreferencesDialog::save_session).toBool()) {
 			QByteArray maestro_config;
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
-			maestro_controller_->save_maestro_to_datastream(&maestro_datastream);
+			maestro_controller_->save_maestro_to_datastream(maestro_datastream);
 			settings.setValue(PreferencesDialog::last_session, maestro_config);
 		}
 

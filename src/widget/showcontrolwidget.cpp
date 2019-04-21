@@ -11,13 +11,14 @@
 #include "controller/showcontroller.h"
 
 namespace PixelMaestroStudio {
-	ShowControlWidget::ShowControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ShowControlWidget) {
+	ShowControlWidget::ShowControlWidget(QWidget *parent) :
+			QWidget(parent),
+			ui(new Ui::ShowControlWidget),
+			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
 
 		// Capture key presses
 		qApp->installEventFilter(this);
-
-		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 
 		show_timer_.start();
 
@@ -32,7 +33,7 @@ namespace PixelMaestroStudio {
 		ui->eventHistoryWidget->addItem(CueInterpreter::interpret_cue(cue));
 
 		// Convert the Cue into an actual byte array, which we'll store in the Event History for later use.
-		uint16_t cue_size = maestro_control_widget_->cue_controller_->get_cue_size(cue);
+		uint16_t cue_size = maestro_control_widget_.cue_controller_->get_cue_size(cue);
 		QVector<uint8_t> cue_vector(cue_size);
 		for (uint16_t byte = 0; byte < cue_size; byte++) {
 			cue_vector[byte] = cue[byte];
@@ -124,8 +125,8 @@ namespace PixelMaestroStudio {
 			);
 		}
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_events(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_events(
 				show_controller_->get_events()->data(),
 				show_controller_->get_events()->size(),
 				true
@@ -147,8 +148,8 @@ namespace PixelMaestroStudio {
 	void ShowControlWidget::on_clearQueueButton_clicked() {
 		ui->eventQueueWidget->clear();
 		show_controller_->get_events()->clear();
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_events(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_events(
 				nullptr,
 				0,
 				false
@@ -160,13 +161,13 @@ namespace PixelMaestroStudio {
 		set_show_controls_enabled(checked);
 
 		if (checked) {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->maestro_handler->set_show()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.maestro_handler->set_show()
 			);
 		}
 		else {
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->maestro_handler->remove_show()
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.maestro_handler->remove_show()
 			);
 		}
 	}
@@ -177,15 +178,15 @@ namespace PixelMaestroStudio {
 		// Make sure the row is in the bounds of the Event queue
 		if (row > -1 && row < show_controller_->get_events()->size()) {
 			Event* event = &show_controller_->get_events()->data()[row];
-			EditEventDialog dialog(event, this);
+			EditEventDialog dialog(*event, this);
 			if (dialog.exec() == QDialog::Accepted) {
 				// Update the UI and actual Show Event
 				item->setText(locale_.toString(event->get_time()) +
 							  QString(": ") +
 							  CueInterpreter::interpret_cue(event->get_cue()));
 
-				maestro_control_widget_->run_cue(
-					maestro_control_widget_->show_handler->set_events(
+				maestro_control_widget_.run_cue(
+					maestro_control_widget_.show_handler->set_events(
 						show_controller_->get_events()->data(),
 						show_controller_->get_events()->size()
 					)
@@ -204,8 +205,8 @@ namespace PixelMaestroStudio {
 				show_controller_->move(start, dest_row);
 			}
 
-			maestro_control_widget_->run_cue(
-				maestro_control_widget_->show_handler->set_events(
+			maestro_control_widget_.run_cue(
+				maestro_control_widget_.show_handler->set_events(
 					show_controller_->get_events()->data(),
 					show_controller_->get_events()->size()
 				)
@@ -218,8 +219,8 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, events will loop after the Show ends.
 	 */
 	void ShowControlWidget::on_loopCheckBox_toggled(bool checked) {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_looping(checked)
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_looping(checked)
 		);
 	}
 
@@ -234,8 +235,8 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_events(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_events(
 				show_controller_->get_events()->data(),
 				show_controller_->get_events()->size()
 			)
@@ -252,8 +253,8 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_events(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_events(
 				show_controller_->get_events()->data(),
 				show_controller_->get_events()->size()
 			)
@@ -273,8 +274,8 @@ namespace PixelMaestroStudio {
 		}
 
 		// Re-initialize the Event list
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_events(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_events(
 				show_controller_->get_events()->data(),
 				show_controller_->get_events()->size(),
 				true
@@ -287,8 +288,8 @@ namespace PixelMaestroStudio {
 	 * @param index New timing mode.
 	 */
 	void ShowControlWidget::on_timingModeComboBox_currentIndexChanged(int index) {
-		maestro_control_widget_->run_cue(
-			maestro_control_widget_->show_handler->set_timing_mode(
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.show_handler->set_timing_mode(
 				(Show::TimingMode)index
 			)
 		);
@@ -302,7 +303,7 @@ namespace PixelMaestroStudio {
 	 * Updates the UI in the event of a Maestro change.
 	 */
 	void ShowControlWidget::refresh() {
-		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
+		Show* show = maestro_control_widget_.get_maestro_controller()->get_maestro().get_show();
 		ui->enableCheckBox->blockSignals(true);
 		ui->enableCheckBox->setChecked(show != nullptr);
 		set_show_controls_enabled(show != nullptr);
@@ -365,16 +366,16 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::timer_refresh() {
 		// Update 'Absolute Time' text box
-		uint last_time = (uint)maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time();
+		uint last_time = (uint)maestro_control_widget_.get_maestro_controller()->get_total_elapsed_time();
 		ui->absoluteTimeLineEdit->setText(locale_.toString(last_time));
 
-		Show* show = maestro_control_widget_->get_maestro_controller()->get_maestro()->get_show();
+		Show* show = maestro_control_widget_.get_maestro_controller()->get_maestro().get_show();
 		if (show == nullptr) return;
 
 		// If relative mode is enabled, calculate the time since the last Event
 		bool relative_time_enabled = show->get_timing() == Show::TimingMode::Relative;
 		if (relative_time_enabled) {
-			uint relative_time = maestro_control_widget_->get_maestro_controller()->get_total_elapsed_time() - show->get_last_time();
+			uint relative_time = maestro_control_widget_.get_maestro_controller()->get_total_elapsed_time() - show->get_last_time();
 			ui->relativeTimeLineEdit->setText(locale_.toString(relative_time));
 		}
 
@@ -397,12 +398,12 @@ namespace PixelMaestroStudio {
 			if (settings.value(PreferencesDialog::events_trigger_device_updates, false).toBool()) {
 				Event* event = show->get_event_at_index(show->get_current_index());
 				if (event != nullptr) {
-					CueController* cue_controller = &maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
-					maestro_control_widget_->device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
+					CueController* cue_controller = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
+					maestro_control_widget_.device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
 				}
 			}
 
-			maestro_control_widget_->set_refresh_needed(true);
+			maestro_control_widget_.set_refresh_needed(true);
 		}
 	}
 

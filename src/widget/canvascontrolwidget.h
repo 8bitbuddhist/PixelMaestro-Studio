@@ -25,7 +25,7 @@ namespace PixelMaestroStudio {
 			void initialize();
 			void refresh();
 			void refresh_palettes();
-			void set_canvas_origin(Point* coordinates);
+			void set_canvas_origin(Point& coordinates);
 
 		public slots:
 			void on_drawButton_clicked();
@@ -84,10 +84,10 @@ namespace PixelMaestroStudio {
 			QButtonGroup canvas_shape_type_group_;
 
 			/// The parent controller widget.
-			MaestroControlWidget* maestro_control_widget_ = nullptr;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::CanvasControlWidget *ui;
 
-			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper* palette_wrapper);
+			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper& palette_wrapper);
 			void set_controls_enabled(bool enabled);
 			void set_frame_interval();
 			void set_circle_controls_enabled(bool enabled);

@@ -51,7 +51,7 @@ namespace PixelMaestroStudio {
 			Section* active_section_ = nullptr;
 
 			/// The parent controller widget.
-			MaestroControlWidget* maestro_control_widget_ = nullptr;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::SectionControlWidget *ui;
 
 			uint8_t get_num_layers(Section& section);

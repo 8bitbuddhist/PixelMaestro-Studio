@@ -14,15 +14,15 @@ namespace PixelMaestroStudio {
 		Q_OBJECT
 
 		public:
-			explicit WaveAnimationControlWidget(WaveAnimation* animation, MaestroControlWidget* maestro_control_widget, QWidget *parent = 0);
+			explicit WaveAnimationControlWidget(WaveAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
 			~WaveAnimationControlWidget();
 
 		private slots:
 			void on_skewSpinBox_editingFinished();
 
 		private:
-			WaveAnimation* animation_;
-			MaestroControlWidget* maestro_control_widget_;
+			WaveAnimation& animation_;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::WaveAnimationControlWidget *ui;
 	};
 }

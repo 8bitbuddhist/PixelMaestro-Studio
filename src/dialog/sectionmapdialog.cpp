@@ -6,23 +6,21 @@
 #include "widget/maestrocontrolwidget.h"
 
 namespace PixelMaestroStudio {
-	SectionMapDialog::SectionMapDialog(SerialDeviceController* device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog) {
+	SectionMapDialog::SectionMapDialog(SerialDeviceController& device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog), device_(device) {
 		ui->setupUi(this);
 
-		this->device_ = device;
-
 		// If the model hasn't been initialized, initialize it
-		if (device->section_map_model == nullptr) {
+		if (device.section_map_model == nullptr) {
 			MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parent->parentWidget()->parentWidget()->parentWidget()->parentWidget());
-			Maestro* maestro = mcw->get_maestro_controller()->get_maestro();
-			device->section_map_model = new SectionMapModel(maestro);
+			Maestro& maestro = mcw->get_maestro_controller()->get_maestro();
+			device.section_map_model = new SectionMapModel(maestro);
 		}
 
 		initialize();
 	}
 
 	void SectionMapDialog::initialize() {
-		ui->mapTableView->setModel(device_->section_map_model);
+		ui->mapTableView->setModel(device_.section_map_model);
 		ui->mapTableView->resizeColumnsToContents();
 		ui->mapTableView->resizeRowsToContents();
 		ui->mapTableView->show();
@@ -38,10 +36,10 @@ namespace PixelMaestroStudio {
 			confirm = QMessageBox::question(this, "Clear Section Mappings", "Are you sure you want to clear your mappings and revert back to the defaults?", QMessageBox::Yes|QMessageBox::No);
 			if (confirm == QMessageBox::Yes) {
 				// Reinitialize the Section's model and reset the table view
-				delete device_->section_map_model;
+				delete device_.section_map_model;
 				MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
-				Maestro* maestro = mcw->get_maestro_controller()->get_maestro();
-				device_->section_map_model = new SectionMapModel(maestro);
+				Maestro& maestro = mcw->get_maestro_controller()->get_maestro();
+				device_.section_map_model = new SectionMapModel(maestro);
 				initialize();
 			}
 		}

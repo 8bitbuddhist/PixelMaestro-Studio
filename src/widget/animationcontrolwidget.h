@@ -16,7 +16,7 @@ namespace PixelMaestroStudio {
 		public:
 			explicit AnimationControlWidget(QWidget *parent = nullptr);
 			~AnimationControlWidget();
-			MaestroControlWidget* maestro_control_widget = nullptr;
+			MaestroControlWidget& maestro_control_widget;
 
 			void initialize();
 			void refresh();

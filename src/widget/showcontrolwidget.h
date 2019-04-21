@@ -60,7 +60,7 @@ namespace PixelMaestroStudio {
 			QLocale locale_ = QLocale::system();
 
 			/// The parent controller widget.
-			MaestroControlWidget* maestro_control_widget_ = nullptr;
+			MaestroControlWidget& maestro_control_widget_;
 
 			/// If true, no actions will modify the Maestro.
 			bool maestro_locked_ = false;

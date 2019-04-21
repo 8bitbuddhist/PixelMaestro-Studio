@@ -35,17 +35,17 @@ namespace PixelMaestroStudio {
 				uint8_t action;
 			};
 
-			MaestroController(MaestroControlWidget* maestro_control_widget);
+			MaestroController(MaestroControlWidget& maestro_control_widget);
 			~MaestroController();
-			void add_drawing_area(MaestroDrawingArea* drawing_area);
-			Maestro* get_maestro();
+			void add_drawing_area(MaestroDrawingArea& drawing_area);
+			Maestro& get_maestro();
 			bool get_running();
 			uint64_t get_total_elapsed_time();
 			void initialize_maestro();
-			void remove_drawing_area(MaestroDrawingArea* drawing_area);
-			void save_maestro_to_datastream(QDataStream* datastream, QVector<CueController::Handler>* save_handlers = nullptr);
-			void save_section_to_datastream(QDataStream* datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers = nullptr);
-			void write_cue_to_stream(QDataStream* stream, uint8_t* cue);
+			void remove_drawing_area(MaestroDrawingArea& drawing_area);
+			void save_maestro_to_datastream(QDataStream& datastream, QVector<CueController::Handler>* save_handlers = nullptr);
+			void save_section_to_datastream(QDataStream& datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers = nullptr);
+			void write_cue_to_stream(QDataStream& stream, uint8_t* cue);
 			Section* set_sections(uint8_t num_sections, Point dimensions = Point(10, 10));
 			void start();
 			void stop();
@@ -67,7 +67,7 @@ namespace PixelMaestroStudio {
 			QSharedPointer<Maestro> maestro_;
 
 			/// Control widget that manages this controller.
-			MaestroControlWidget* maestro_control_widget_;
+			MaestroControlWidget& maestro_control_widget_;
 
 			/// The number of Sections in the Maestro.
 			uint8_t num_sections_ = 0;

@@ -21,9 +21,11 @@
 #include "controller/serialdevicethreadcontroller.h"
 
 namespace PixelMaestroStudio {
-	DeviceControlWidget::DeviceControlWidget(QWidget *parent) : QWidget(parent), ui(new Ui::DeviceControlWidget) {
+	DeviceControlWidget::DeviceControlWidget(QWidget *parent) :
+			QWidget(parent),
+			ui(new Ui::DeviceControlWidget),
+			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
-		this->maestro_control_widget_ = dynamic_cast<MaestroControlWidget*>(parent);
 
 		// Block certain Cues from firing
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
@@ -182,16 +184,15 @@ namespace PixelMaestroStudio {
 						 maestro_cue_ +
 						 QByteArray("ROMEND");
 
-		write_to_device(&serial_devices_[ui->serialOutputListWidget->currentRow()],
+		write_to_device(serial_devices_[ui->serialOutputListWidget->currentRow()],
 				static_cast<const char*>(out),
 				out.size(),
 				true);
 	}
 
 	void DeviceControlWidget::on_sectionMapButton_clicked() {
-		SerialDeviceController* device = &serial_devices_[ui->serialOutputListWidget->currentRow()];
 		SectionMapDialog dialog(
-			device,
+			serial_devices_[ui->serialOutputListWidget->currentRow()],
 			this
 		);
 		dialog.exec();
@@ -255,7 +256,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		CueController* controller = &this->maestro_control_widget_->get_maestro_controller()->get_maestro()->get_cue_controller();
+		CueController* controller = &this->maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
 
 		for (SerialDeviceController device : serial_devices_) {
 			// TODO: Move to separate thread
@@ -298,7 +299,7 @@ namespace PixelMaestroStudio {
 			}
 
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
-				write_to_device(&device,
+				write_to_device(device,
 								reinterpret_cast<char*>(cue),
 								size,
 								false);
@@ -369,10 +370,10 @@ namespace PixelMaestroStudio {
 		// Calculate and display the size of the current Maestro configuration
 		QDataStream datastream(&maestro_cue_, QIODevice::Truncate);
 
-		MaestroController* controller = maestro_control_widget_->get_maestro_controller();
+		MaestroController* controller = maestro_control_widget_.get_maestro_controller();
 
 		// Generate the Cuefile
-		controller->save_maestro_to_datastream(&datastream);
+		controller->save_maestro_to_datastream(datastream);
 
 		ui->fileSizeLineEdit->setText(locale_.toString(maestro_cue_.size()));
 		check_device_rom_capacity();
@@ -384,7 +385,7 @@ namespace PixelMaestroStudio {
 	 * @param out Data to send.
 	 * @param size Size of data to send.
 	 */
-	void DeviceControlWidget::write_to_device(SerialDeviceController *device, const char *out, const int size, bool progress) {
+	void DeviceControlWidget::write_to_device(SerialDeviceController& device, const char *out, const int size, bool progress) {
 		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
 														  out,
 														  size);

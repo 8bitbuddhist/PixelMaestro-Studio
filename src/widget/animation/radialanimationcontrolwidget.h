@@ -16,15 +16,15 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit RadialAnimationControlWidget(RadialAnimation* animation, MaestroControlWidget* maestro_control, QWidget *parent = 0);
+			explicit RadialAnimationControlWidget(RadialAnimation& animation, MaestroControlWidget& maestro_control, QWidget *parent = 0);
 			~RadialAnimationControlWidget();
 
 		private slots:
 			void on_resolutionSpinBox_valueChanged(int arg1);
 
 		private:
-			RadialAnimation* animation_;
-			MaestroControlWidget* maestro_control_;
+			RadialAnimation& animation_;
+			MaestroControlWidget& maestro_control_widget_;
 			Ui::RadialAnimationControlWidget *ui;
 	};
 }

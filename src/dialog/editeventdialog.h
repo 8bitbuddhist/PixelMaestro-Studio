@@ -15,14 +15,14 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit EditEventDialog(Event* event, QWidget *parent = nullptr);
+			explicit EditEventDialog(Event& event, QWidget *parent = nullptr);
 			~EditEventDialog();
 
 		private slots:
 			void on_buttonBox_accepted();
 
 		private:
-			Event* event_ = nullptr;
+			Event& event_;
 			Ui::EditEventDialog *ui;
 	};
 }

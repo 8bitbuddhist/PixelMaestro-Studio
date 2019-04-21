@@ -13,9 +13,7 @@ namespace PixelMaestroStudio {
 	 * @param parent The parent QWidget.
 	 * @param maestro_controller The MaestroController rendered by this DrawingArea.
 	 */
-	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent) {
-		set_maestro_controller(maestro_controller);
-
+	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QWidget(parent), maestro_controller_(maestro_controller) {
 		section_layout_ = new QHBoxLayout(this);
 	}
 
@@ -24,7 +22,7 @@ namespace PixelMaestroStudio {
 	 * @param section Section to draw.
 	 * @return New SectionDrawingArea.
 	 */
-	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section* section, const uint8_t section_id) {
+	SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section& section, const uint8_t section_id) {
 		section_drawing_areas_.push_back(
 			QSharedPointer<SectionDrawingArea>(
 				new SectionDrawingArea(this, section, section_id)
@@ -75,19 +73,8 @@ namespace PixelMaestroStudio {
 	 * Removes a Section drawing areas.
 	 * @param Section Pointer to the Section to remove. Leave blank to remove all Sections.
 	 */
-	void MaestroDrawingArea::remove_section_drawing_area(Section* section) {
-		if (section != nullptr) {
-			for (uint8_t da_index = 0; da_index < this->section_drawing_areas_.size(); da_index++) {
-				SectionDrawingArea* drawing_area = this->section_drawing_areas_.at(da_index).get();
-				if (drawing_area->get_section() == section) {
-					section_drawing_areas_.removeAt(da_index);
-					return;
-				}
-			}
-		}
-		else {
-			section_drawing_areas_.clear();
-		}
+	void MaestroDrawingArea::remove_section_drawing_areas() {
+		section_drawing_areas_.clear();
 	}
 
 	/**
@@ -96,14 +83,6 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroDrawingArea::set_maestro_control_widget(MaestroControlWidget *widget) {
 		this->maestro_control_widget_ = widget;
-	}
-
-	/**
-	 * Sets the MaestroController that this DrawingArea will render.
-	 * @param maestro_controller New MaestroController.
-	 */
-	void MaestroDrawingArea::set_maestro_controller(MaestroController *maestro_controller) {
-		this->maestro_controller_ = maestro_controller;
 	}
 
 	/**

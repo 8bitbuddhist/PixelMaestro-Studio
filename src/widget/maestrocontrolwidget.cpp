@@ -48,7 +48,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void MaestroControlWidget::edit_palettes(QString palette) {
-		PaletteControlWidget palette_control(&palette_controller_, palette);
+		PaletteControlWidget palette_control(palette_controller_, palette);
 		palette_control.exec();
 
 		// Update Palette-containing subwidgets
@@ -167,8 +167,8 @@ namespace PixelMaestroStudio {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Sync Timers", "This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
-			maestro_controller_->get_maestro()->sync(maestro_controller_->get_total_elapsed_time());
-			maestro_controller_->get_maestro()->update(0);
+			maestro_controller_->get_maestro().sync(maestro_controller_->get_total_elapsed_time());
+			maestro_controller_->get_maestro().update(0);
 		}
 	}
 
@@ -215,11 +215,11 @@ namespace PixelMaestroStudio {
 	 * Sets the widget's target MaestroController.
 	 * @param maestro_controller New MaestroController.
 	 */
-	void MaestroControlWidget::set_maestro_controller(MaestroController *maestro_controller) {
-		this->maestro_controller_ = maestro_controller;
+	void MaestroControlWidget::set_maestro_controller(MaestroController& maestro_controller) {
+		this->maestro_controller_ = &maestro_controller;
 
 		// Get Maestro's Cue Handlers for convenience
-		this->cue_controller_ = &maestro_controller->get_maestro()->get_cue_controller();
+		this->cue_controller_ = &maestro_controller.get_maestro().get_cue_controller();
 		animation_handler = dynamic_cast<AnimationCueHandler*>(
 			cue_controller_->get_handler(CueController::Handler::AnimationCueHandler)
 		);
@@ -237,12 +237,12 @@ namespace PixelMaestroStudio {
 		);
 
 		// Check whether the Maestro is currently running. If not, trigger pause button
-		if (!maestro_controller->get_running()) {
+		if (!maestro_controller.get_running()) {
 			ui->playPauseButton->setChecked(true);
 		}
 
 		// Initialize UI components and controllers
-		section_control_widget_->set_active_section(maestro_controller_->get_maestro()->get_section(0));
+		section_control_widget_->set_active_section(maestro_controller_->get_maestro().get_section(0));
 		section_control_widget_->initialize();
 		animation_control_widget_->initialize();
 		canvas_control_widget_->initialize();
