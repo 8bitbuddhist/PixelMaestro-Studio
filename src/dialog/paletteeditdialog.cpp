@@ -75,7 +75,7 @@ namespace PixelMaestroStudio {
 					}
 					break;
 				case PaletteController::PaletteType::Scaling:
-					Colors::generate_scaling_color_array(&colors[0], &base_color_, &target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
+					Colors::generate_scaling_color_array(&colors[0], base_color_, target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
 					break;
 				case PaletteController::PaletteType::Random:
 					QRandomGenerator* random = QRandomGenerator::global();

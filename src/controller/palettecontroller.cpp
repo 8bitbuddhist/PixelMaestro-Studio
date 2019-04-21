@@ -114,10 +114,10 @@ namespace PixelMaestroStudio {
 
 		palettes_.clear();
 
-		Colors::generate_scaling_color_array(&colors[0], &ColorPresets::Red, &ColorPresets::Yellow, num_colors, true);
+		Colors::generate_scaling_color_array(&colors[0], ColorPresets::Red, ColorPresets::Yellow, num_colors, true);
 		palettes_.emplace_back(PaletteWrapper("Fire", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true));
 
-		Colors::generate_scaling_color_array(&colors[0], &ColorPresets::Blue, &ColorPresets::Green, num_colors, true);
+		Colors::generate_scaling_color_array(&colors[0], ColorPresets::Blue, ColorPresets::Green, num_colors, true);
 		palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true));
 
 		palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false));
