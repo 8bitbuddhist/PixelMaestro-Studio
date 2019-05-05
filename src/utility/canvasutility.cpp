@@ -38,7 +38,7 @@ namespace PixelMaestroStudio {
 					framecount));
 
 		// Read each frame
-		for (uint16_t i = 0; i < framecount; i++) {
+		for (uint16_t frame_index = 0; frame_index < framecount; frame_index++) {
 			QImage frame = image.read();
 
 			frame = frame.convertToFormat(QImage::Format_Indexed8);
@@ -102,6 +102,7 @@ namespace PixelMaestroStudio {
 				maestro_control->canvas_handler->draw_frame(
 					maestro_control->section_control_widget_->get_section_index(),
 					maestro_control->section_control_widget_->get_layer_index(),
+					frame_index,
 					canvas_size.width(),
 					canvas_size.height(),
 					&color_table_indices[0]
@@ -109,12 +110,8 @@ namespace PixelMaestroStudio {
 			);
 
 			// If this is an animated image, move to the next frame.
-			if (i < (framecount - 1)) {
+			if (frame_index < (framecount - 1)) {
 				image.jumpToNextImage();
-				maestro_control->run_cue(
-					maestro_control->canvas_handler->next_frame(
-						maestro_control->section_control_widget_->get_section_index(),
-						maestro_control->section_control_widget_->get_layer_index()));
 			}
 		}
 	}

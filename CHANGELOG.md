@@ -4,7 +4,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.50] - In Progress
-WARNING: The following Cues have been modified and will no longer work using older Cuefiles:
+IMPORTANT: All Canvas-related Cues have been modified. In addition, the following Cues have been modified. Any Cuefiles containing these Cues will need to be regenerated:
 	- `AnimationCueHandler::set_wave_options`: removed mirror option
 	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 

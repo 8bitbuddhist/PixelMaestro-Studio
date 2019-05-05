@@ -101,6 +101,7 @@ namespace PixelMaestroStudio {
 								widget->canvas_handler->draw_point(
 									widget->section_control_widget_->get_section_index(),
 									widget->section_control_widget_->get_layer_index(),
+									canvas->get_current_frame_index(),
 									widget->canvas_control_widget_->get_selected_color_index(),
 									pixel.x,
 									pixel.y)
@@ -111,6 +112,7 @@ namespace PixelMaestroStudio {
 								widget->canvas_handler->erase_point(
 									widget->section_control_widget_->get_section_index(),
 									widget->section_control_widget_->get_layer_index(),
+									canvas->get_current_frame_index(),
 									pixel.x,
 									pixel.y)
 							);

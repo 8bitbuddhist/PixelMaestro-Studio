@@ -180,6 +180,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_circle(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -193,6 +194,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_line(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -206,6 +208,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_point(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value()
@@ -217,6 +220,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_rect(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -249,6 +253,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_frame(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					dimensions.x,
 					dimensions.y,
 					frame
@@ -260,6 +265,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_text(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -274,6 +280,7 @@ namespace PixelMaestroStudio {
 				maestro_control_widget_.canvas_handler->draw_triangle(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
 					maestro_control_widget_.section_control_widget_->get_layer_index(),
+					ui->currentFrameSpinBox->value(),
 					selected_color_index_,
 					ui->originXSpinBox->value(),
 					ui->originYSpinBox->value(),
@@ -352,7 +359,7 @@ namespace PixelMaestroStudio {
 				if (new_max < ui->currentFrameSpinBox->value()) {
 					ui->currentFrameSpinBox->setValue(new_max);
 				}
-				ui->currentFrameSpinBox->setMaximum(new_max);
+
 				maestro_control_widget_.run_cue(
 					maestro_control_widget_.canvas_handler->set_num_frames(
 						maestro_control_widget_.section_control_widget_->get_section_index(),
@@ -361,7 +368,8 @@ namespace PixelMaestroStudio {
 					)
 				);
 
-				// Set the new maximum for the current_frame spinbox
+				// Set the new maximum for the frame spinboxes
+				ui->currentFrameSpinBox->setMaximum(new_max);
 				ui->currentFrameSpinBox->setMaximum(new_max);
 			}
 			else {

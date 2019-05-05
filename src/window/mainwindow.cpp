@@ -69,8 +69,8 @@ namespace PixelMaestroStudio {
 		}
 		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
 			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, *this->maestro_controller_));
-			maestro_controller_->add_drawing_area(*drawing_area_dialog_->get_maestro_drawing_area());
-			dynamic_cast<MaestroDrawingArea*>(drawing_area_dialog_->get_maestro_drawing_area())->set_maestro_control_widget(maestro_control_widget_);
+			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
+			dynamic_cast<MaestroDrawingArea&>(drawing_area_dialog_->get_maestro_drawing_area()).set_maestro_control_widget(maestro_control_widget_);
 			drawing_area_dialog_->show();
 		}
 

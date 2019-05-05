@@ -50,8 +50,8 @@ namespace PixelMaestroStudio {
 	 * Returns the Dialog's drawing area.
 	 * @return Drawing area.
 	 */
-	MaestroDrawingArea* MaestroDrawingAreaDialog::get_maestro_drawing_area() {
-		return this->drawing_area_.get();
+	MaestroDrawingArea& MaestroDrawingAreaDialog::get_maestro_drawing_area() {
+		return *this->drawing_area_.get();
 	}
 
 	MaestroDrawingAreaDialog::~MaestroDrawingAreaDialog() {
