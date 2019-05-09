@@ -440,6 +440,8 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->setValue(canvas->get_num_frames());
 			ui->frameCountSpinBox->blockSignals(false);
 
+			ui->currentFrameSpinBox->setEnabled(false);
+
 			if (canvas->get_frame_timer() != nullptr) {
 				ui->frameIntervalSpinBox->blockSignals(true);
 				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());

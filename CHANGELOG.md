@@ -4,20 +4,27 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.50] - In Progress
-IMPORTANT: All Canvas-related Cues have been modified. In addition, the following Cues have been modified. Any Cuefiles containing these Cues will need to be regenerated:
-	- `AnimationCueHandler::set_wave_options`: removed mirror option
-	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
+
+### Important Changes
+
+#### Cue Changes
+
+All Canvas-related Cues have been changed. You will need to recreate any Cuefiles containing Canvas Cues.
+
+In addition, the following Cues have been modified and will also need to be recreated:
+- `AnimationCueHandler::set_wave_options`: removed mirror option
+- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
-- Section mirroring.
-- Notification icon for when a background action (e.g. a Show) modifies the Maestro.
-- Event dragging and dropping in the Show tab's Event Queue. Currently limited to rearranging events.
-- Event editing dialog. Double-click an Event in the Event Queue to change its run time.
-- Option to allow Show Events to trigger live device updates. This lets you manage a Show using PixelMaestro Studio and run Events on connected devices.
-- Play/pause button and cycle selector for Animations.
+- Option to mirror Sections across the x and/or y axes.
+- Added Notification icon for when a background action (e.g. a Show) modifies the Maestro.
+- Added the ability to drag and drop Events in the Show tab's Event Queue.
+- Added a dialog for editing Events. Double-click an Event in the Event Queue to change its settings.
+- Added option to allow Show Events to trigger live device updates. This allows you to trigger commands on a connected device without having to run the Show on the device.
+- Added a play/pause button and cycle selector for Animations.
 
 ### Changed
-- Fixed `MaestroController::save_section_to_datastream()` not saving the frame count.
+- Fixed `MaestroController::save_section_to_datastream()` not saving the Canvas frame count.
 - Fixed Device Section Map not updating the correct Cue.
 - Fixed Canvases not drawing frames larger than 255x255 pixels.
 - Fixed Delay getting disabled when fading is enabled.

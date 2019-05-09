@@ -384,6 +384,7 @@ namespace PixelMaestroStudio {
 		ui->fadeCheckBox->setEnabled(enabled);
 		ui->advancedSettingsGroupBox->setEnabled(enabled);
 		ui->timersGroupBox->setEnabled(enabled);
+		ui->controlGroupBox->setEnabled(enabled);
 	}
 
 	AnimationControlWidget::~AnimationControlWidget() {
