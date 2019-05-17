@@ -18,6 +18,31 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 	}
 
+	/**
+	 * Checks a Palette against the Palette list, and adds it if needed.
+	 * @param palette Palette to check.
+	 */
+	void AnimationControlWidget::add_palette_to_selection(const Palette &palette) {
+		// Check if Palette exists, and if not, add it
+		int palette_index = maestro_control_widget.palette_controller_.find(palette.get_colors(), palette.get_num_colors());
+		if (palette_index >= 0) {
+			ui->paletteComboBox->blockSignals(true);
+			ui->paletteComboBox->setCurrentIndex(palette_index);
+			ui->paletteComboBox->blockSignals(false);
+		}
+		else {
+			QString name = "Section " + QString::number(maestro_control_widget.section_control_widget_->get_section_index()) +
+						   " Layer " + QString::number(maestro_control_widget.section_control_widget_->get_layer_index()) +
+						   " Canvas";
+			name = maestro_control_widget.palette_controller_.check_palette_name(name);
+			maestro_control_widget.palette_controller_.add_palette(name, palette.get_colors(), palette.get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+			ui->paletteComboBox->blockSignals(true);
+			ui->paletteComboBox->addItem(name);
+			ui->paletteComboBox->blockSignals(false);
+			ui->paletteComboBox->setCurrentText(name);
+		}
+	}
+
 	void AnimationControlWidget::initialize() {
 		// Disable advanced settings by default
 		ui->advancedSettingsGroupBox->setVisible(false);
@@ -268,25 +293,8 @@ namespace PixelMaestroStudio {
 			ui->delayIntervalSpinBox->blockSignals(false);
 
 			// Select the current Palette
-			int palette_index = maestro_control_widget.palette_controller_.find(animation->get_palette()->get_colors());
-			if (palette_index >= 0) {
-				ui->paletteComboBox->blockSignals(true);
-				ui->paletteComboBox->setCurrentIndex(palette_index);
-				ui->paletteComboBox->blockSignals(false);
-			}
-			else {	// Palette not found
-				QString name = "Section " + QString::number(maestro_control_widget.section_control_widget_->get_section_index()) +
-							   " Layer " + QString::number(maestro_control_widget.section_control_widget_->get_layer_index()) +
-							   " Animation";
-
-				// Check to make sure the Palette name isn't already in use. If it is, append a number to the end of it.
-				name = maestro_control_widget.palette_controller_.check_palette_name(name);
-
-				maestro_control_widget.palette_controller_.add_palette(name, animation->get_palette()->get_colors(), animation->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-				ui->paletteComboBox->blockSignals(true);
-				ui->paletteComboBox->addItem(name);
-				ui->paletteComboBox->setCurrentText(name);
-				ui->paletteComboBox->blockSignals(false);
+			if (animation->get_palette() != nullptr) {
+				add_palette_to_selection(*animation->get_palette());
 			}
 
 			// Set the Animation type

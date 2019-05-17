@@ -87,6 +87,7 @@ namespace PixelMaestroStudio {
 			MaestroControlWidget& maestro_control_widget_;
 			Ui::CanvasControlWidget *ui;
 
+			void add_palette_to_selection(const Palette& palette);
 			void populate_palette_canvas_color_selection(PaletteController::PaletteWrapper& palette_wrapper);
 			void set_controls_enabled(bool enabled);
 			void set_frame_interval();

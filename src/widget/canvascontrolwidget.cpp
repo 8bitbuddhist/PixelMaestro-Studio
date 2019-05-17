@@ -20,6 +20,31 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Checks a Palette against the Palette list, and adds it if needed.
+	 * @param palette Palette to check.
+	 */
+	void CanvasControlWidget::add_palette_to_selection(const Palette &palette) {
+		// Check if Palette exists, and if not, add it
+		int palette_index = maestro_control_widget_.palette_controller_.find(palette.get_colors(), palette.get_num_colors());
+		if (palette_index >= 0) {
+			ui->paletteComboBox->blockSignals(true);
+			ui->paletteComboBox->setCurrentIndex(palette_index);
+			ui->paletteComboBox->blockSignals(false);
+		}
+		else {
+			QString name = "Section " + QString::number(maestro_control_widget_.section_control_widget_->get_section_index()) +
+						   " Layer " + QString::number(maestro_control_widget_.section_control_widget_->get_layer_index()) +
+						   " Canvas";
+			name = maestro_control_widget_.palette_controller_.check_palette_name(name);
+			maestro_control_widget_.palette_controller_.add_palette(name, palette.get_colors(), palette.get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
+			ui->paletteComboBox->blockSignals(true);
+			ui->paletteComboBox->addItem(name);
+			ui->paletteComboBox->blockSignals(false);
+			ui->paletteComboBox->setCurrentText(name);
+		}
+	}
+
+	/**
 	 * Handle keypress events.
 	 * @param watched Object that the keypress occurred in.
 	 * @param event Keypress event.
@@ -448,16 +473,7 @@ namespace PixelMaestroStudio {
 				ui->frameIntervalSpinBox->blockSignals(false);
 			}
 
-			// Add Palette to list
-			QString name = "Section " + QString::number(maestro_control_widget_.section_control_widget_->get_section_index()) +
-						   " Layer " + QString::number(maestro_control_widget_.section_control_widget_->get_layer_index()) +
-						   " Canvas";
-			name = maestro_control_widget_.palette_controller_.check_palette_name(name);
-			maestro_control_widget_.palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-			ui->paletteComboBox->blockSignals(true);
-			ui->paletteComboBox->addItem(name);
-			ui->paletteComboBox->blockSignals(false);
-			ui->paletteComboBox->setCurrentText(name);
+			add_palette_to_selection(*canvas->get_palette());
 		}
 	}
 
@@ -625,24 +641,8 @@ namespace PixelMaestroStudio {
 			}
 			set_controls_enabled(true);
 
-			// Find the corresponding palette in the Palette Controller.
 			if (canvas->get_palette() != nullptr) {
-				int palette_index = maestro_control_widget_.palette_controller_.find(canvas->get_palette()->get_colors());
-				if (palette_index >= 0) {
-					ui->paletteComboBox->blockSignals(true);
-					ui->paletteComboBox->setCurrentIndex(palette_index);
-					ui->paletteComboBox->blockSignals(false);
-				}
-				else {
-					QString name = "Section " + QString::number(maestro_control_widget_.section_control_widget_->get_section_index()) +
-								   " Layer " + QString::number(maestro_control_widget_.section_control_widget_->get_layer_index()) +
-								   " Canvas";
-					maestro_control_widget_.palette_controller_.add_palette(name, canvas->get_palette()->get_colors(), canvas->get_palette()->get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
-					ui->paletteComboBox->blockSignals(true);
-					ui->paletteComboBox->addItem(name);
-					ui->paletteComboBox->setCurrentText(name);
-					ui->paletteComboBox->blockSignals(false);
-				}
+				add_palette_to_selection(*canvas->get_palette());
 			}
 
 			populate_palette_canvas_color_selection(maestro_control_widget_.palette_controller_.get_palette(ui->paletteComboBox->currentIndex()));

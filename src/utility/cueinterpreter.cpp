@@ -203,7 +203,19 @@ namespace PixelMaestroStudio {
 		result.append("Canvas" + delimiter);
 		result.append(CanvasActions.at(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::ActionByte)]));
 
-		// TODO: Add remaining Cues
+		// Print frame number
+		switch(static_cast<CanvasCueHandler::Action>(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::ActionByte)])) {
+			case CanvasCueHandler::Action::DrawCircle:
+			case CanvasCueHandler::Action::DrawFrame:
+			case CanvasCueHandler::Action::DrawLine:
+			case CanvasCueHandler::Action::DrawPoint:
+			case CanvasCueHandler::Action::DrawRect:
+			case CanvasCueHandler::Action::DrawText:
+			case CanvasCueHandler::Action::DrawTriangle:
+				result.append(": Frame " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::FrameByte1])));
+		}
+
+		// Handle other Cue actions
 		switch(static_cast<CanvasCueHandler::Action>(cue[static_cast<uint8_t>(CanvasCueHandler::Byte::ActionByte)])) {
 			case CanvasCueHandler::Action::Clear:
 				break;
@@ -214,6 +226,10 @@ namespace PixelMaestroStudio {
 					QString text = QString::fromUtf8((char*)&cue[start], size);
 					result.append(": \"" + text + "\"");
 				}
+				break;
+			case CanvasCueHandler::Action::DrawPoint:
+				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 1])) + ", ");
+				result.append(QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 3])) + ")");
 				break;
 			case CanvasCueHandler::Action::ErasePoint:
 				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])) + ", ");

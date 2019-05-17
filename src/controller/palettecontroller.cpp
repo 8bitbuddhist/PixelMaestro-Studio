@@ -59,14 +59,22 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Searches for the palette in the PaletteControl.
-	 * @param palette Palette to search for.
-	 * @return Index of the palette, or -1 if not found.
+	 * Searches for a Palette with the given colors.
+	 * @param colors Color array to match.
+	 * @param num_colors Number of colors in the array.
+	 * @return Index of the Palette, or -1 if not found.
 	 */
-	int PaletteController::find(Colors::RGB *search_palette) {
+	int PaletteController::find(Colors::RGB* colors, int num_colors) {
 		for (uint16_t i = 0; i < palettes_.size(); i++) {
-			PaletteController::PaletteWrapper* palette = &palettes_.at(i);
-			if (*palette == search_palette) {
+			int match = 0;
+			Colors::RGB* palette_colors = palettes_[i].palette.get_colors();
+			for (uint8_t color = 0; color < num_colors; color++) {
+				if (palette_colors[color] == colors[color]) {
+					++match;
+				}
+			}
+
+			if (match == num_colors) {
 				return i;
 			}
 		}

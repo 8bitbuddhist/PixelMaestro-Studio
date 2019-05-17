@@ -46,6 +46,7 @@ namespace PixelMaestroStudio {
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			Ui::AnimationControlWidget *ui;
 
+			void add_palette_to_selection(const Palette &palette);
 			void set_advanced_controls(Animation* animation);
 			void set_animation_timer();
 			void set_controls_enabled(bool);
