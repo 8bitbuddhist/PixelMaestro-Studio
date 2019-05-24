@@ -293,7 +293,7 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 
 		// If session saving on close is enabled, save the session
-		if (settings.value(PreferencesDialog::save_session).toBool()) {
+		if (settings.value(PreferencesDialog::save_session, true).toBool()) {
 			QByteArray maestro_config;
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
 			maestro_controller_->save_maestro_to_datastream(maestro_datastream);

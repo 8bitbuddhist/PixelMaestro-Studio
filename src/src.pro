@@ -8,7 +8,7 @@ QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
-QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter -Wno-reorder
+QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter -Wno-reorder -Wno-switch
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
 DEFINES += BUILD_VERSION=\\\"v0.40.2\\\"

@@ -370,8 +370,8 @@ namespace PixelMaestroStudio {
 		// Set offset
 		ui->offsetXSpinBox->blockSignals(true);
 		ui->offsetYSpinBox->blockSignals(true);
-		ui->offsetXSpinBox->setValue(active_section_->get_offset()->x);
-		ui->offsetYSpinBox->setValue(active_section_->get_offset()->y);
+		ui->offsetXSpinBox->setValue(active_section_->get_offset().x);
+		ui->offsetYSpinBox->setValue(active_section_->get_offset().y);
 		ui->offsetXSpinBox->blockSignals(false);
 		ui->offsetYSpinBox->blockSignals(false);
 
@@ -529,12 +529,12 @@ namespace PixelMaestroStudio {
 
 		if (new_x == 0) {
 			ui->offsetXSpinBox->blockSignals(true);
-			ui->offsetXSpinBox->setValue(active_section_->get_offset()->x);
+			ui->offsetXSpinBox->setValue(active_section_->get_offset().x);
 			ui->offsetYSpinBox->blockSignals(false);
 		}
 		if (new_y == 0) {
 			ui->offsetYSpinBox->blockSignals(true);
-			ui->offsetYSpinBox->setValue(active_section_->get_offset()->y);
+			ui->offsetYSpinBox->setValue(active_section_->get_offset().y);
 			ui->offsetYSpinBox->blockSignals(false);
 		}
 	}

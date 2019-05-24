@@ -237,9 +237,9 @@ namespace PixelMaestroStudio {
 		}
 
 		// Scrolling, offset, and mirroring
-		Point* offset = section->get_offset();
-		if (offset->x != 0 && offset->y != 0) {
-			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset->x, offset->y));
+		Point& offset = section->get_offset();
+		if (offset.x != 0 && offset.y != 0) {
+			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset.x, offset.y));
 		}
 		Section::Scroll* scroll = section->get_scroll();
 		if (scroll != nullptr) {

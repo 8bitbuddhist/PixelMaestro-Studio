@@ -365,6 +365,8 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Regenerates the Maestro Cuefile and updates the size in the UI.
+	 *
+	 * TODO: Move to separate thread
 	 */
 	void DeviceControlWidget::update_cuefile_size() {
 		// Calculate and display the size of the current Maestro configuration
@@ -396,8 +398,12 @@ namespace PixelMaestroStudio {
 			connect(thread, &SerialDeviceThreadController::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		}
 
-		// FIXME: Using start(), the device pointer magically becomes invalid when executing the thread. But when using run(), the thread becomes blocking
-		// Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
+		/*
+		 * FIXME: Using start(), the device pointer magically becomes invalid when executing the thread. But when using run(), the thread becomes blocking.
+		 *		Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
+		 *
+		 * TODO: Try overriding start() and pass the device and cue in through there https://doc.qt.io/qt-5/qthread.html
+		 */
 
 		//thread->start();
 		thread->run();
