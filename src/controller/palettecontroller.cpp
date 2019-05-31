@@ -183,6 +183,7 @@ namespace PixelMaestroStudio {
 	 */
 	void PaletteController::save_palettes() {
 		QSettings settings;
+		settings.remove(PreferencesDialog::palettes);
 		settings.beginWriteArray(PreferencesDialog::palettes);
 		for (uint16_t i = 0; i < palettes_.size(); i++) {
 			settings.setArrayIndex(i);

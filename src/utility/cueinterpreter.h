@@ -30,6 +30,7 @@ namespace PixelMaestroStudio {
 
 			static const QString delimiter;
 
+			static QString convert_cue_to_byte_array_string(uint8_t* cue, uint16_t size);
 			static QString interpret_cue(uint8_t* cue);
 
 		private:

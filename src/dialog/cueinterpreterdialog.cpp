@@ -2,23 +2,35 @@
 #include "ui_cueinterpreterdialog.h"
 #include "core/maestro.h"
 #include "utility/cueinterpreter.h"
+#include <QClipboard>
 
 namespace PixelMaestroStudio {
-	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint16_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog) {
+	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint16_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
 		ui->setupUi(this);
 
-		/*
-		 * Create a dummy Maestro to run the Cuefile.
-		 * We use the Maestro's CueController to read valid cues, which we then forward to the interpreter.
-		 */
-		Maestro virtual_maestro = Maestro(nullptr, 0);
-		CueController& cue_controller = virtual_maestro.set_cue_controller(UINT16_MAX);
+		// TODO: Clean up UI
+		ui->interpretedCueTableView->setModel(&model_);
+		ui->interpretedCueTableView->resizeColumnToContents(0);
+		ui->interpretedCueTableView->setTextElideMode(Qt::ElideRight);
+		ui->interpretedCueTableView->horizontalHeader()->setStretchLastSection(true);
 
-		for (int i = 0; i < size; i++) {
-			if (cue_controller.read(cuefile[i])) {
-				ui->interpretedCuePlainTextEdit->appendPlainText(CueInterpreter::interpret_cue(cue_controller.get_buffer()));
-			}
+		ui->interpretedCueTableView->show();
+	}
+
+	/**
+	 * Copies the string representation of the Cue to clipboard.
+	 */
+	void CueInterpreterDialog::on_copyButton_clicked() {
+		QClipboard* clipboard = QApplication::clipboard();
+
+		// Copy selected cells to clipboard. It's important that we preserve the order of selected Cues
+		QString text("");
+		QModelIndexList list = ui->interpretedCueTableView->selectionModel()->selectedIndexes();
+		for (int i = 0; i < list.size(); i++) {
+			QModelIndex item = list.at(i);
+			text.append(item.data().toString()).append("\n");
 		}
+		clipboard->setText(text);
 	}
 
 	CueInterpreterDialog::~CueInterpreterDialog() {

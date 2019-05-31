@@ -13,11 +13,14 @@
   <property name="windowTitle">
    <string>PixelMaestro Studio - Cuefile</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QPlainTextEdit" name="interpretedCuePlainTextEdit">
-     <property name="readOnly">
-      <bool>true</bool>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTableView" name="interpretedCueTableView"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="copyButton">
+     <property name="text">
+      <string>Copy to Clipboard</string>
      </property>
     </widget>
    </item>

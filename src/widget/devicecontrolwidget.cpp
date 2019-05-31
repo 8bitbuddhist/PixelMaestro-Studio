@@ -99,8 +99,7 @@ namespace PixelMaestroStudio {
 
 			// Initialize and try connecting to the device.
 			SerialDeviceController device(ui->serialOutputComboBox->currentText());
-			bool connected = device.connect();
-			if (connected) {
+			if (device.connect()) {
 				ui->serialOutputListWidget->addItem(device.get_port_name());
 				serial_devices_.push_back(device);
 				save_devices();
@@ -252,7 +251,9 @@ namespace PixelMaestroStudio {
 						break;
 				}
 
-				if (action_byte_index == blocked.action) return;
+				if (cue[action_byte_index] == blocked.action) {
+					return;
+				}
 			}
 		}
 
@@ -315,6 +316,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::save_devices() {
 		// Save devices
 		QSettings settings;
+		settings.remove(PreferencesDialog::devices);
 		settings.beginWriteArray(PreferencesDialog::devices);
 		for (int i = 0; i < ui->serialOutputListWidget->count(); i++) {
 			settings.setArrayIndex(i);

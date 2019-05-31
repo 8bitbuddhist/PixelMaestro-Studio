@@ -110,6 +110,20 @@ namespace PixelMaestroStudio {
 		result.append(delimiter + "Interval: " + QString::number(interval));
 	}
 
+	QString CueInterpreter::convert_cue_to_byte_array_string(uint8_t* cue, uint16_t size) {
+		if (size < 1) return QString();
+
+		QString string = "{";
+		string.append(QString::number(cue[0]));
+		for (int i = 1; i <= size; i++) {
+			string.append(",");
+			string.append(QString::number(cue[i]));
+		}
+		string.append("}");
+
+		return string;
+	}
+
 	QString CueInterpreter::interpret_cue(uint8_t* cue) {
 		QString result;
 		// Delegate to the correct handler

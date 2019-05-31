@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     controller/serialdevicecontroller.cpp \
     controller/serialdevicethreadcontroller.cpp \
     model/sectionmapmodel.cpp \
-    dialog/editeventdialog.cpp
+    dialog/editeventdialog.cpp \
+    model/cuemodel.cpp
 
 HEADERS += \
         drawingarea/maestrodrawingarea.h \
@@ -143,7 +144,8 @@ HEADERS += \
     controller/serialdevicecontroller.h \
     controller/serialdevicethreadcontroller.h \
     model/sectionmapmodel.h \
-    dialog/editeventdialog.h
+    dialog/editeventdialog.h \
+    model/cuemodel.h
 
 FORMS	+= window/mainwindow.ui \
         widget/maestrocontrolwidget.ui \

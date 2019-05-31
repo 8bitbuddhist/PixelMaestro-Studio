@@ -2,6 +2,7 @@
 #define CUEINTERPRETERDIALOG_H
 
 #include <QDialog>
+#include "model/cuemodel.h"
 
 namespace Ui {
 	class CueInterpreterDialog;
@@ -15,8 +16,12 @@ namespace PixelMaestroStudio {
 			explicit CueInterpreterDialog(QWidget *parent = 0, uint8_t* cuefile = nullptr, uint16_t size = 0);
 			~CueInterpreterDialog();
 
+		private slots:
+			void on_copyButton_clicked();
+
 		private:
 			Ui::CueInterpreterDialog *ui;
+			CueModel model_;
 	};
 }
 
