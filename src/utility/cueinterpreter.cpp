@@ -195,8 +195,8 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationCueHandler::Action::SetTimer:
 				append_animation_timer(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte + 2]),
 					result
 				);
 				break;
@@ -226,7 +226,7 @@ namespace PixelMaestroStudio {
 			case CanvasCueHandler::Action::DrawRect:
 			case CanvasCueHandler::Action::DrawText:
 			case CanvasCueHandler::Action::DrawTriangle:
-				result.append(": Frame " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::FrameByte1])));
+				result.append(": Frame " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::FrameByte1])));
 		}
 
 		// Handle other Cue actions
@@ -242,23 +242,23 @@ namespace PixelMaestroStudio {
 				}
 				break;
 			case CanvasCueHandler::Action::DrawPoint:
-				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 1])) + ", ");
-				result.append(QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 3])) + ")");
+				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 1])) + ", ");
+				result.append(QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 3])) + ")");
 				break;
 			case CanvasCueHandler::Action::ErasePoint:
-				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])) + ", ");
-				result.append(QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 2])) + ")");
+				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])) + ", ");
+				result.append(QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 			case CanvasCueHandler::Action::RemoveFrameTimer:
 				break;
 			case CanvasCueHandler::Action::SetCurrentFrameIndex:
-				result.append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
+				result.append(": " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
 				break;
 			case CanvasCueHandler::Action::SetFrameTimer:
-				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte]), result);
+				append_timer(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte]), result);
 				break;
 			case CanvasCueHandler::Action::SetNumFrames:
-				result.append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
+				result.append(": " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)CanvasCueHandler::Byte::OptionsByte])));
 				break;
 			case CanvasCueHandler::Action::SetPalette:
 				result.append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]) + " colors");
@@ -281,7 +281,7 @@ namespace PixelMaestroStudio {
 				break;
 			case MaestroCueHandler::Action::SetTimer:
 			case MaestroCueHandler::Action::Sync:
-				append_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]), result);
+				append_timer(IntByteConvert::byte_to_uint16(&cue[(uint8_t)MaestroCueHandler::Byte::OptionsByte]), result);
 				break;
 			case MaestroCueHandler::Action::Start:
 				// Do nothing
@@ -316,8 +316,8 @@ namespace PixelMaestroStudio {
 				result.append(": " + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) + " frame(s)");
 				break;
 			case SectionCueHandler::Action::SetDimensions:
-				result.append(": " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-				result.append(" x " + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])));
+				result.append(": " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result.append(" x " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])));
 				break;
 			case SectionCueHandler::Action::SetLayer:
 				result.append(": " + ColorMixModes.at(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]) + " Mix Mode, ");
@@ -333,12 +333,12 @@ namespace PixelMaestroStudio {
 				}
 				break;
 			case SectionCueHandler::Action::SetOffset:
-				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-				result.append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
+				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 			case SectionCueHandler::Action::SetScroll:
-				result.append(": (" + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-				result.append("," + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
+				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 		}
 	}
@@ -349,7 +349,7 @@ namespace PixelMaestroStudio {
 
 		switch ((ShowCueHandler::Action)cue[(uint8_t)ShowCueHandler::Byte::ActionByte]) {
 			case ShowCueHandler::Action::SetEvents:
-				result.append(delimiter + QString::number(IntByteConvert::byte_to_int(&cue[(uint8_t)ShowCueHandler::Byte::OptionsByte])) + " events");
+				result.append(delimiter + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)ShowCueHandler::Byte::OptionsByte])) + " events");
 				break;
 			case ShowCueHandler::Action::SetLooping:
 				append_bool((bool)cue[(uint8_t)ShowCueHandler::Byte::OptionsByte], result);

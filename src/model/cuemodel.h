@@ -12,10 +12,10 @@
 namespace PixelMaestroStudio {
 	class CueModel : public QStandardItemModel {
 		public:
-			CueModel(uint8_t* cue, uint16_t size);
+			CueModel(uint8_t* cue, uint32_t size);
 
 		private:
-			int add_cue(uint8_t* cue, uint16_t size);
+			int add_cue(uint8_t* cue, uint32_t size);
 	};
 }
 

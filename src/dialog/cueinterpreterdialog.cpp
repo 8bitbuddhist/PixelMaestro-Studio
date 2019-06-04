@@ -8,14 +8,20 @@ namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint16_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
 		ui->setupUi(this);
 
-		// TODO: Clean up UI
 		ui->interpretedCueTableView->setModel(&model_);
 		ui->interpretedCueTableView->resizeColumnToContents(0);
 		ui->interpretedCueTableView->setTextElideMode(Qt::ElideRight);
 		ui->interpretedCueTableView->horizontalHeader()->setStretchLastSection(true);
+		ui->interpretedCueTableView->setWordWrap(false);
+		ui->interpretedCueTableView->resizeRowsToContents();
 
 		ui->interpretedCueTableView->show();
 	}
+
+	void CueInterpreterDialog::on_closeButton_clicked() {
+		this->close();
+	}
+
 
 	/**
 	 * Copies the string representation of the Cue to clipboard.

@@ -18,6 +18,7 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_copyButton_clicked();
+			void on_closeButton_clicked();
 
 		private:
 			Ui::CueInterpreterDialog *ui;

@@ -66,16 +66,18 @@ namespace PixelMaestroStudio {
 	 */
 	int PaletteController::find(Colors::RGB* colors, int num_colors) {
 		for (uint16_t i = 0; i < palettes_.size(); i++) {
-			int match = 0;
-			Colors::RGB* palette_colors = palettes_[i].palette.get_colors();
-			for (uint8_t color = 0; color < num_colors; color++) {
-				if (palette_colors[color] == colors[color]) {
-					++match;
+			if (num_colors == palettes_[i].palette.get_num_colors()) {
+				int matches = 0;
+				Colors::RGB* palette_colors = palettes_[i].palette.get_colors();
+				for (uint8_t color = 0; color < num_colors; color++) {
+					if (palette_colors[color] == colors[color]) {
+						++matches;
+					}
 				}
-			}
 
-			if (match == num_colors) {
-				return i;
+				if (matches == num_colors - 1) {
+					return i;
+				}
 			}
 		}
 

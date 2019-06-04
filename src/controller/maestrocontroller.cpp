@@ -144,7 +144,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Call Sections
-		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::ShowCueHandler)) {
+		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::SectionCueHandler)) {
 			for (uint8_t section = 0; section < num_sections_; section++) {
 				save_section_to_datastream(datastream, section, 0, save_handlers);
 			}

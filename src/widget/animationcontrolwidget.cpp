@@ -33,7 +33,7 @@ namespace PixelMaestroStudio {
 		else {
 			QString name = "Section " + QString::number(maestro_control_widget.section_control_widget_->get_section_index()) +
 						   " Layer " + QString::number(maestro_control_widget.section_control_widget_->get_layer_index()) +
-						   " Canvas";
+						   " Animation";
 			name = maestro_control_widget.palette_controller_.check_palette_name(name);
 			maestro_control_widget.palette_controller_.add_palette(name, palette.get_colors(), palette.get_num_colors(), PaletteController::PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false);
 			ui->paletteComboBox->blockSignals(true);

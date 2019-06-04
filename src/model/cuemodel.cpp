@@ -12,38 +12,38 @@
 using namespace PixelMaestro;
 
 namespace PixelMaestroStudio {
-	CueModel::CueModel(uint8_t* cue, uint16_t size) : QStandardItemModel() {
+	CueModel::CueModel(uint8_t* cue, uint32_t size) : QStandardItemModel() {
 		QStringList header_labels;
 		header_labels.append("Text");
-		header_labels.append("Declaration");
+		header_labels.append("Code (C++)");
 		setHorizontalHeaderLabels(header_labels);
 
 		// Interpret Cue by creating a dummy Maestro to run it, then pass valid Cues to a CueInterpreter.
 		Maestro virtual_maestro = Maestro(nullptr, 0);
 		CueController& cue_controller = virtual_maestro.set_cue_controller(UINT16_MAX);
 
-		for (int i = 0; i < size; i++) {
+		for (uint32_t i = 0; i < size; i++) {
 			if (cue_controller.read(cue[i])) {
 				add_cue(cue_controller.get_buffer(), cue_controller.get_cue_size());
 			}
 		}
 	}
 
-	int CueModel::add_cue(uint8_t *cue, uint16_t size) {
+	int CueModel::add_cue(uint8_t *cue, uint32_t size) {
 		QList<QStandardItem*> items;
 
 		QStandardItem* interpreted_text_item = new QStandardItem(CueInterpreter::interpret_cue(cue));
-		interpreted_text_item->setEnabled(false);
 		interpreted_text_item->setTextAlignment(Qt::AlignLeft);
 		items.append(interpreted_text_item);
 
-		QString byte_string_prefix = QString("uint8_t cue[") + QString::number(size) + QString("] = ");
-		QStandardItem* byte_array_item = new QStandardItem(byte_string_prefix + CueInterpreter::convert_cue_to_byte_array_string(cue, size));
+		int current_row = rowCount(QModelIndex());
+		QString cue_num = QString("cue") + QString::number(current_row);
+		QString byte_string_prefix = QString("uint8_t " + cue_num + "[") + QString::number(size) + QString("] = ");
+		QStandardItem* byte_array_item = new QStandardItem(byte_string_prefix + CueInterpreter::convert_cue_to_byte_array_string(cue, size) + ";");
 		byte_array_item->setTextAlignment(Qt::AlignLeft);
 
 		items.append(byte_array_item);
 
-		int current_row = rowCount(QModelIndex());
 		insertRow(current_row, items);
 
 		return current_row;

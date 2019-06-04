@@ -33,7 +33,7 @@ namespace PixelMaestroStudio {
 		ui->eventHistoryWidget->addItem(CueInterpreter::interpret_cue(cue));
 
 		// Convert the Cue into an actual byte array, which we'll store in the Event History for later use.
-		uint16_t cue_size = maestro_control_widget_.cue_controller_->get_cue_size(cue);
+		uint32_t cue_size = maestro_control_widget_.cue_controller_->get_cue_size(cue);
 		QVector<uint8_t> cue_vector(cue_size);
 		for (uint16_t byte = 0; byte < cue_size; byte++) {
 			cue_vector[byte] = cue[byte];
