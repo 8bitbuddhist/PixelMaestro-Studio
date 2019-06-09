@@ -6,6 +6,7 @@
 #include <QSettings>
 #include "dialog/preferencesdialog.h"
 #include "serialdevicecontroller.h"
+#include "widget/maestrocontrolwidget.h"
 
 namespace PixelMaestroStudio {
 	/**
@@ -22,13 +23,13 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(device);
 			QString comp_name = settings.value(PreferencesDialog::device_port).toString();
 			if (port_name == comp_name) {
-				set_capacity(settings.value(PreferencesDialog::device_capacity).toInt());
 				set_real_time_update(settings.value(PreferencesDialog::device_real_time_refresh).toBool());
+				set_autoconnect(settings.value(PreferencesDialog::device_autoconnect).toBool());
 
 				// Load Section Map model (if it exists)
 				int num_maps = settings.beginReadArray(PreferencesDialog::section_map);
-				if (num_maps > 0 && section_map_model != nullptr) {
-					section_map_model->clear();
+				if (num_maps > 0) {
+					section_map_model = new SectionMapModel();
 					for (int row = 0; row < num_maps; row++) {
 						settings.setArrayIndex(row);
 						section_map_model->add_section();
@@ -37,19 +38,12 @@ namespace PixelMaestroStudio {
 						section_map_model->item(row, 1)->setText(remote_section);
 					}
 				}
+
 				settings.endArray();
 				break;
 			}
 		}
 		settings.endArray();
-	}
-
-	/**
-	 * Returns the total capacity of the device's ROM.
-	 * @return ROM capacity in bytes.
-	 */
-	int SerialDeviceController::get_capacity() const {
-		return capacity_;
 	}
 
 	/**
@@ -79,6 +73,10 @@ namespace PixelMaestroStudio {
 		return flushed;
 	}
 
+	bool SerialDeviceController::get_autoconnect() const {
+		return autoconnect_;
+	}
+
 	/**
 	 * Returns the device.
 	 * @return Device object.
@@ -103,12 +101,12 @@ namespace PixelMaestroStudio {
 		return real_time_updates_;
 	}
 
-	/**
-	 * Sets the device's new capacity.
-	 * @param capacity New capacity.
-	 */
-	void SerialDeviceController::set_capacity(int capacity) {
-		this->capacity_ = capacity;
+	void SerialDeviceController::set_autoconnect(bool autoconnect) {
+		this->autoconnect_ = autoconnect;
+	}
+
+	void SerialDeviceController::set_port_name(const QString &port_name) {
+		this->port_name_ = port_name;
 	}
 
 	/**

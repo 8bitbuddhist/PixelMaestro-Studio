@@ -20,14 +20,20 @@ namespace PixelMaestroStudio {
 			QSerialPort* get_device();
 			int get_capacity() const;
 			QString get_port_name() const;
+			bool get_autoconnect() const;
 			bool get_real_time_refresh_enabled() const;
-			void set_capacity(int capacity);
-			void set_real_time_update(bool enabled);
+			void set_autoconnect(const bool autoconnect);
+			void set_capacity(const int capacity);
+			void set_port_name(const QString &port_name);
+			void set_real_time_update(const bool enabled);
 
 			/// Custom mapping of local Sections to remote Sections. Made public because of weird pointer issues. Fix later.
 			SectionMapModel* section_map_model = nullptr;
 
 		private:
+			/// Whether to connect to the device on startup.
+			bool autoconnect_ = false;
+
 			/// The maximum number of bytes the device's ROM can hold.
 			int capacity_ = 1024;
 

@@ -4,16 +4,11 @@
 #include <QStandardItemModel>
 
 namespace PixelMaestroStudio {
-	SectionMapModel::SectionMapModel(Maestro& maestro) : QStandardItemModel() {
+	SectionMapModel::SectionMapModel() : QStandardItemModel() {
 		QStringList header_labels;
 		header_labels.append("Local Section");
 		header_labels.append("Remote Section");
 		setHorizontalHeaderLabels(header_labels);
-
-		// Add Sections
-		for (uint8_t sections = 0; sections < maestro.get_num_sections(); sections++) {
-			add_section();
-		}
 	}
 
 	/**

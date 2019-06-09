@@ -12,6 +12,7 @@
 #include <QTabWidget>
 #include <QWidget>
 #include <thread>
+#include "dialog/adddevicedialog.h"
 #include "dialog/cueinterpreterdialog.h"
 #include "dialog/preferencesdialog.h"
 #include "dialog/sectionmapdialog.h"
@@ -28,15 +29,13 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 
 		// Block certain Cues from firing
+		// TODO: Customizable and per-device blocks
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
+		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetBrightness));
+		//block_cue(CueController::Handler::MaestroCueHandler, static_cast<uint8_t>(MaestroCueHandler::Action::SetShow));
+		//block_cue(CueController::Handler::ShowCueHandler, static_cast<uint8_t>(ShowCueHandler::Action::SetEvents));
 
-		// Disable device buttons by default
-		set_device_controls_enabled(false);
-
-		// Add available serial devices to combo box
-		populate_serial_devices();
-
-		// Add saved serial devices to output selection box.
+		// Add saved serial devices to device list.
 		QSettings settings;
 		int num_serial_devices = settings.beginReadArray(PreferencesDialog::devices);
 		for (int device = 0; device < num_serial_devices; device++) {
@@ -45,13 +44,16 @@ namespace PixelMaestroStudio {
 			QString device_name = settings.value(PreferencesDialog::device_port).toString();
 			serial_devices_.push_back(SerialDeviceController(device_name));
 
-			// If the saved port is available, try connecting to it
-			if (serial_devices_.last().connect()) {
-				QListWidgetItem* item = new QListWidgetItem(device_name);
-				ui->serialOutputListWidget->addItem(item);
+			// If the device is set to auto-connect, try connecting
+			SerialDeviceController& serial_device = serial_devices_.last();
+			if (serial_device.get_autoconnect()) {
+				serial_device.connect();
 			}
+
 		}
 		settings.endArray();
+
+		refresh_device_list();
 	}
 
 	/**
@@ -64,25 +66,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Compares the Cuefile size to the selected device's ROM capacity, and highlights the Cuesize textbox accordingly.
-	 */
-	void DeviceControlWidget::check_device_rom_capacity() {
-		if (ui->serialOutputListWidget->currentRow() > -1) {
-			int capacity = serial_devices_[ui->serialOutputListWidget->currentRow()].get_capacity();
-			int capacity_75 = static_cast<int>(capacity * 0.75);
-			if (this->maestro_cue_.size() >= capacity) {
-				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid red");
-			}
-			else if (this->maestro_cue_.size() >= capacity_75) {
-				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid orange");
-			}
-			else {
-				ui->fileSizeLineEdit->setStyleSheet("border: 1px solid green");
-			}
-		}
-	}
-
-	/**
 	 * Returns the Maestro Cuefile.
 	 * @return Maestro Cuefile.
 	 */
@@ -90,25 +73,37 @@ namespace PixelMaestroStudio {
 		return &maestro_cue_;
 	}
 
+	void DeviceControlWidget::on_addDeviceButton_clicked() {
+		AddDeviceDialog dialog(&serial_devices_, nullptr, this);
+		dialog.exec();
+
+		refresh_device_list();
+	}
+
+	void DeviceControlWidget::on_editDeviceButton_clicked() {
+		SerialDeviceController* device = nullptr;
+		int selected_device = ui->serialOutputListWidget->currentRow();
+		if (selected_device >= 0) {
+			device = &serial_devices_[selected_device];
+		}
+
+		AddDeviceDialog dialog(&serial_devices_, device, this);
+		dialog.exec();
+
+		refresh_device_list();
+	}
+
 	/**
 	 * Connects to the selected device.
 	 */
 	void DeviceControlWidget::on_connectPushButton_clicked() {
-		// Check to make sure the entry isn't blank or already in the list
-		if (!ui->serialOutputComboBox->currentText().isEmpty() && ui->serialOutputListWidget->findItems(ui->serialOutputComboBox->currentText(), Qt::MatchFixedString).count() >= 0) {
+		int selected = ui->serialOutputListWidget->currentRow();
+		if (selected < 0) return;
 
-			// Initialize and try connecting to the device.
-			SerialDeviceController device(ui->serialOutputComboBox->currentText());
+		SerialDeviceController device = serial_devices_.at(selected);
+		if (!device.get_device()->isOpen()) {
 			if (device.connect()) {
-				ui->serialOutputListWidget->addItem(device.get_port_name());
-				serial_devices_.push_back(device);
-				save_devices();
-
-				// Update tab icon
-				QTabWidget* tabWidget = dynamic_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
-				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
-				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(":/icon_connected.png"));
-
+				refresh_device_list();
 			}
 			else {
 				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
@@ -119,14 +114,6 @@ namespace PixelMaestroStudio {
 		}
 	}
 
-	/**
-	 * Saves the new capacity value to settings.
-	 */
-	void DeviceControlWidget::on_capacityLineEdit_editingFinished() {
-		serial_devices_[ui->serialOutputListWidget->currentRow()].set_capacity(ui->capacityLineEdit->text().toInt());
-		save_devices();
-		check_device_rom_capacity();
-	}
 
 	/**
 	 * Opens the CueInterpreter dialog for the selected device.
@@ -139,36 +126,32 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Toggles real-time serial updates.
-	 * @param arg1 If checked, update the device in real-time.
-	 */
-	void DeviceControlWidget::on_realTimeCheckBox_stateChanged(int arg1) {
-		serial_devices_[ui->serialOutputListWidget->currentRow()].set_real_time_update(arg1);
-		ui->sectionMapButton->setEnabled(arg1);
-		save_devices();
-	}
-
-	/**
 	 * Disconnects from the selected device.
 	 */
 	void DeviceControlWidget::on_disconnectPushButton_clicked() {
-		if (ui->serialOutputListWidget->selectedItems().count() > 0) {
-			int device_index = ui->serialOutputListWidget->currentRow();
-			ui->serialOutputListWidget->takeItem(device_index);
-			serial_devices_.removeAt(device_index);
-			save_devices();
+		int selected_index = ui->serialOutputListWidget->currentRow();
+		if (selected_index < 0) return;
 
-			// If no devices are connected, hide the tab icon
-			if (ui->serialOutputListWidget->count() == 0) {
-				QTabWidget* tabWidget = dynamic_cast<QTabWidget*>(this->parentWidget()->parentWidget()->parentWidget());
-				QWidget* tab = tabWidget->findChild<QWidget*>("deviceTab");
-				tabWidget->setTabIcon(tabWidget->indexOf(tab), QIcon(""));
-			}
+		SerialDeviceController device = serial_devices_.at(selected_index);
+
+		if (device.disconnect()) {
+			refresh_device_list();
+		}
+		else {
+			QMessageBox::warning(this, "Unable to Disconnect", QString("Unable to disconnect device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
 		}
 	}
 
-	void DeviceControlWidget::on_refreshButton_clicked() {
-		populate_serial_devices();
+	void DeviceControlWidget::on_removeDeviceButton_clicked() {
+		int selected = ui->serialOutputListWidget->currentRow();
+		if (selected < 0) return;
+
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Remove Device", "Are you sure you want to remove this device from your saved devices?", QMessageBox::Yes | QMessageBox::No);
+		if (confirm == QMessageBox::Yes) {
+			serial_devices_.removeAt(selected);
+			refresh_device_list();
+		}
 	}
 
 	/**
@@ -189,36 +172,40 @@ namespace PixelMaestroStudio {
 				true);
 	}
 
-	void DeviceControlWidget::on_sectionMapButton_clicked() {
-		SectionMapDialog dialog(
-			serial_devices_[ui->serialOutputListWidget->currentRow()],
-			this
-		);
-		dialog.exec();
-	}
-
-	void DeviceControlWidget::on_serialOutputComboBox_editTextChanged(const QString &arg1) {
-		ui->connectPushButton->setEnabled(arg1.length() > 0);
-	}
-
 	void DeviceControlWidget::on_serialOutputListWidget_currentRowChanged(int currentRow) {
-		ui->disconnectPushButton->setEnabled(currentRow > -1);
-		set_device_controls_enabled(currentRow > -1);
-		ui->uploadProgressBar->setValue(0);
+		if (currentRow < 0) return;
 
-		if (currentRow > -1) {
-			ui->capacityLineEdit->setText(locale_.toString(serial_devices_[currentRow].get_capacity()));
-			ui->realTimeCheckBox->setChecked(serial_devices_[currentRow].get_real_time_refresh_enabled());
-			check_device_rom_capacity();
-		}
+		SerialDeviceController device = serial_devices_.at(currentRow);
+
+		bool connected = device.get_device()->isOpen();
+
+		ui->connectPushButton->setEnabled(!connected);
+		ui->disconnectPushButton->setEnabled(connected);
+		ui->uploadButton->setEnabled(connected);
+		ui->uploadProgressBar->setValue(0);
 	}
 
-	/// Displays all available serial devices in the serial output combobox.
-	void DeviceControlWidget::populate_serial_devices() {
-		ui->serialOutputComboBox->clear();
-		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-		for (const QSerialPortInfo& port : ports) {
-			ui->serialOutputComboBox->addItem(port.systemLocation());
+	void DeviceControlWidget::refresh_device_list() {
+		ui->serialOutputListWidget->clear();
+		for (SerialDeviceController device : serial_devices_) {
+			QListWidgetItem* item = new QListWidgetItem(device.get_port_name());
+			if (device.get_device()->isOpen()) {
+				item->setTextColor(Qt::white);
+			}
+			else {
+				item->setTextColor(Qt::gray);
+			}
+			ui->serialOutputListWidget->addItem(item);
+		}
+
+		int selected = ui->serialOutputListWidget->currentRow();
+		if (selected >= 0) {
+			ui->uploadButton->setEnabled(serial_devices_[selected].get_device()->isOpen());
+		}
+		else {
+			ui->uploadButton->setEnabled(false);
+			ui->connectPushButton->setEnabled(false);
+			ui->disconnectPushButton->setEnabled(false);
 		}
 	}
 
@@ -231,7 +218,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
 		// Check the Cue against the block list
 		for (BlockedCue blocked : blocked_cues_) {
-			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (uint8_t)blocked.handler) {
+			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (char)blocked.handler) {
 				int action_byte_index = -1;
 				switch (blocked.handler) {
 					case CueController::Handler::AnimationCueHandler:
@@ -251,7 +238,7 @@ namespace PixelMaestroStudio {
 						break;
 				}
 
-				if (cue[action_byte_index] == blocked.action) {
+				if (cue[action_byte_index] == (char)blocked.action) {
 					return;
 				}
 			}
@@ -262,15 +249,19 @@ namespace PixelMaestroStudio {
 		for (SerialDeviceController device : serial_devices_) {
 			// TODO: Move to separate thread
 
+			// Copy the Cue for each device
+			QByteArray out = QByteArray(reinterpret_cast<const char*>(cue), size);
+
 			/*
 			 * If the device has a Section map saved, apply it to the Cue.
 			 * This only applies to real-time updates, not Cuefiles.
 			 */
 			SectionMapModel* model = device.section_map_model;
-			if (model && device.get_real_time_refresh_enabled()) {
+			if (model != nullptr && device.get_real_time_refresh_enabled()) {
+
 				// Only check Section-based Cues
-				if (!(cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::MaestroCueHandler) ||
-					cue[(uint8_t)CueController::Byte::PayloadByte] == static_cast<uint8_t>(CueController::Handler::ShowCueHandler))) {
+				if (!(out[(uint8_t)CueController::Byte::PayloadByte] == static_cast<char>(CueController::Handler::MaestroCueHandler) ||
+					out[(uint8_t)CueController::Byte::PayloadByte] == static_cast<char>(CueController::Handler::ShowCueHandler))) {
 
 					/*
 					 * Grab the local section ID from the buffer.
@@ -279,21 +270,18 @@ namespace PixelMaestroStudio {
 					 */
 
 					// SectionByte is the same location for all Section-related handlers (as of v0.30)
-					uint8_t target_section_id = cue[(uint8_t)SectionCueHandler::Byte::SectionByte];
+					uint8_t local_section_id = out[(uint8_t)SectionCueHandler::Byte::SectionByte];
 
 					// Make sure the cell actually exists in the model before swapping.
-					QStandardItem* cell = model->item(target_section_id, 1);
+					QStandardItem* cell = model->item(local_section_id, 1);
 					if (!cell->text().isEmpty()) {
+						// If the remote section number is negative, exit immediately
 						int remote_section_id = cell->text().toInt();
-						if (remote_section_id != target_section_id) {
-							/*
-							 * We have a match. Swap the values and reassmble the Cue.
-							 *	Although this changes the original Cue,	we perform this check again for each device.
-							 *	This way, we don't have to worry about a wrong mapping.
-							 *	...Assuming each device has a map.
-							 */
-							cue[(uint8_t)SectionCueHandler::Byte::SectionByte] = remote_section_id;
-							cue[(uint8_t)CueController::Byte::ChecksumByte] = controller->checksum(cue, size);
+						if (remote_section_id < 0) return;
+						if (remote_section_id != local_section_id) {
+							// We have a match. Swap the values and reassmble the Cue.
+							out[(uint8_t)SectionCueHandler::Byte::SectionByte] = remote_section_id;
+							out[(uint8_t)CueController::Byte::ChecksumByte] = controller->checksum(reinterpret_cast<uint8_t*>(out.data()), out.size());
 						}
 					}
 				}
@@ -301,8 +289,8 @@ namespace PixelMaestroStudio {
 
 			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
 				write_to_device(device,
-								reinterpret_cast<char*>(cue),
-								size,
+								out.data(),
+								out.size(),
 								false);
 			}
 		}
@@ -322,11 +310,10 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(i);
 
 			SerialDeviceController* device = &serial_devices_[i];
-			settings.setValue(PreferencesDialog::device_capacity, device->get_capacity());
 			settings.setValue(PreferencesDialog::device_port, device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, device->get_real_time_refresh_enabled());
 
-			// Save the device's model.
+			// Save the device's model
 			SectionMapModel* model = device->section_map_model;
 			if (model != nullptr) {
 				settings.beginWriteArray(PreferencesDialog::section_map);
@@ -345,14 +332,6 @@ namespace PixelMaestroStudio {
 			}
 		}
 		settings.endArray();
-	}
-
-	void DeviceControlWidget::set_device_controls_enabled(bool enabled) {
-		ui->capacityLineEdit->setEnabled(enabled);
-		ui->uploadProgressBar->setEnabled(enabled);
-		ui->realTimeCheckBox->setEnabled(enabled);
-		ui->uploadButton->setEnabled(enabled);
-		ui->sectionMapButton->setEnabled(enabled && ui->realTimeCheckBox->isChecked());
 	}
 
 	/**
@@ -380,7 +359,6 @@ namespace PixelMaestroStudio {
 		controller->save_maestro_to_datastream(datastream);
 
 		ui->fileSizeLineEdit->setText(locale_.toString(maestro_cue_.size()));
-		check_device_rom_capacity();
 	}
 
 	/**
@@ -401,10 +379,11 @@ namespace PixelMaestroStudio {
 		}
 
 		/*
-		 * FIXME: Using start(), the device pointer magically becomes invalid when executing the thread. But when using run(), the thread becomes blocking.
+		 * FIXME: Device pointer becomes invalid when using Thread::run(), likely due to invalid memory access.
+		 *		Need to make the DeviceThreadController and output thread-safe before sending it to a separate thread.
+		 *
 		 *		Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
 		 *
-		 * TODO: Try overriding start() and pass the device and cue in through there https://doc.qt.io/qt-5/qthread.html
 		 */
 
 		//thread->start();

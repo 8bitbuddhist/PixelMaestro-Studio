@@ -11,7 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter -Wno-reorder -Wno-switch
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.40.2\\\"
+DEFINES += BUILD_VERSION=\\\"v0.40.2\\\" PIXEL_ENABLE_FADING PIXEL_ENABLE_ACCURATE_FADING
 
 SOURCES += main.cpp\
         drawingarea/maestrodrawingarea.cpp \
@@ -77,7 +77,8 @@ SOURCES += main.cpp\
     controller/serialdevicethreadcontroller.cpp \
     model/sectionmapmodel.cpp \
     dialog/editeventdialog.cpp \
-    model/cuemodel.cpp
+    model/cuemodel.cpp \
+    dialog/adddevicedialog.cpp
 
 HEADERS += \
         drawingarea/maestrodrawingarea.h \
@@ -145,7 +146,8 @@ HEADERS += \
     controller/serialdevicethreadcontroller.h \
     model/sectionmapmodel.h \
     dialog/editeventdialog.h \
-    model/cuemodel.h
+    model/cuemodel.h \
+    dialog/adddevicedialog.h
 
 FORMS	+= window/mainwindow.ui \
         widget/maestrocontrolwidget.ui \
@@ -166,7 +168,8 @@ FORMS	+= window/mainwindow.ui \
     widget/sectioncontrolwidget.ui \
     widget/canvascontrolwidget.ui \
     dialog/sectionmapdialog.ui \
-    dialog/editeventdialog.ui
+    dialog/editeventdialog.ui \
+    dialog/adddevicedialog.ui
 
 INCLUDEPATH += \
         $$PWD/src \
