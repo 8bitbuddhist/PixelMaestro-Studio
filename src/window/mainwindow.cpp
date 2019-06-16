@@ -17,17 +17,21 @@ namespace PixelMaestroStudio {
 		// Initialize UI elements
 		initialize_widgets();
 
-		// Restore window size
-		QSettings settings;
-		this->restoreGeometry(settings.value(PreferencesDialog::window_geometry).toByteArray());
-		this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
-
 		// If the user has a session saved and session auto-saving is enabled, load it into the new session.
+		QSettings settings;
 		QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
 		on_newAction_triggered();
 		if (settings.value(PreferencesDialog::save_session).toBool() && !bytes.isEmpty()) {
 			maestro_control_widget_->load_cuefile(bytes);
 			maestro_control_widget_->set_maestro_modified(true);
+
+			// Restore output screens
+			ui->action_Main_Window->setChecked(settings.value(PreferencesDialog::main_window_option, true).toBool());
+			ui->action_Secondary_Window->setChecked(settings.value(PreferencesDialog::separate_window_option, false).toBool());
+
+			// Restore window size
+			this->restoreGeometry(settings.value(PreferencesDialog::window_geometry).toByteArray());
+			this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
 		}
 
 		set_active_cuefile("");
@@ -61,30 +65,15 @@ namespace PixelMaestroStudio {
 
 		// Build DrawingAreas if enabled in Preferences
 		QSettings settings;
-		if (settings.value(PreferencesDialog::main_window_option, true) == true) {
-			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, *maestro_controller_);
-			splitter_->addWidget(maestro_drawing_area_);
-			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
-			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
+		if (settings.value(PreferencesDialog::main_window_option, true) == true && !ui->action_Main_Window->isChecked()) {
+			ui->action_Main_Window->setChecked(true);
 		}
-		if (settings.value(PreferencesDialog::separate_window_option, false) == true) {
-			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, *this->maestro_controller_));
-			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
-			dynamic_cast<MaestroDrawingArea&>(drawing_area_dialog_->get_maestro_drawing_area()).set_maestro_control_widget(maestro_control_widget_);
-			drawing_area_dialog_->show();
+		if (settings.value(PreferencesDialog::separate_window_option, false) == true && !ui->action_Secondary_Window->isChecked()) {
+			ui->action_Secondary_Window->setChecked(true);
 		}
 
 		// Add control widget to main window
 		splitter_->addWidget(maestro_control_widget_);
-
-		// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
-		QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
-		if (splitter_state.size() > 0) {
-			this->splitter_->restoreState(splitter_state);
-		}
-		else {
-			this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
-		}
 
 		/*
 		 * If "pause on start" option is checked, don't start the Maestro.
@@ -123,6 +112,32 @@ namespace PixelMaestroStudio {
 	 */
 	void MainWindow::on_helpAction_triggered() {
 		QDesktopServices::openUrl(QUrl("https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki", QUrl::TolerantMode));
+	}
+
+	void MainWindow::on_action_Main_Window_toggled(bool arg1) {
+		if (arg1) {
+			// Checked: create new DrawingArea
+			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, *maestro_controller_);
+			splitter_->insertWidget(0, maestro_drawing_area_);
+			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
+			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
+
+			// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
+			QSettings settings;
+			QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
+			if (splitter_state.size() > 0) {
+				this->splitter_->restoreState(splitter_state);
+			}
+			else {
+				this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
+			}
+		}
+		else {
+			// Unchecked
+			MaestroDrawingArea* drawing_area = splitter_->findChild<MaestroDrawingArea*>();
+			maestro_controller_->remove_drawing_area(*drawing_area);
+			delete drawing_area;
+		}
 	}
 
 	/**
@@ -236,6 +251,22 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	void MainWindow::on_action_Secondary_Window_toggled(bool arg1) {
+		if (arg1) {
+			// Checked: create new DrawingArea
+			drawing_area_dialog_ = QSharedPointer<MaestroDrawingAreaDialog>(new MaestroDrawingAreaDialog(this, *this->maestro_controller_));
+			maestro_controller_->add_drawing_area(drawing_area_dialog_->get_maestro_drawing_area());
+			dynamic_cast<MaestroDrawingArea&>(drawing_area_dialog_->get_maestro_drawing_area()).set_maestro_control_widget(maestro_control_widget_);
+			drawing_area_dialog_->show();
+		}
+		else {
+			// Unchecked
+			MaestroDrawingArea& drawing_area = drawing_area_dialog_->get_maestro_drawing_area();
+			maestro_controller_->remove_drawing_area(drawing_area);
+			drawing_area_dialog_.clear();
+		}
+	}
+
 	/**
 	 * Prompts the user to select a Cuefile.
 	 * @return Cuefile filename.
@@ -298,6 +329,8 @@ namespace PixelMaestroStudio {
 			QDataStream maestro_datastream(&maestro_config, QIODevice::Truncate);
 			maestro_controller_->save_maestro_to_datastream(maestro_datastream);
 			settings.setValue(PreferencesDialog::last_session, maestro_config);
+			settings.setValue(PreferencesDialog::separate_window_option, ui->action_Secondary_Window->isChecked());
+			settings.setValue(PreferencesDialog::main_window_option, ui->action_Main_Window->isChecked());
 		}
 
 		// Save window geometry

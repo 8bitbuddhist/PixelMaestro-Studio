@@ -16,14 +16,16 @@ In addition, the following Cues have been modified and will also need to be recr
 - `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
-- Option to mirror Sections across the x and/or y axes.
-- Added Notification icon for when a background action (e.g. a Show) modifies the Maestro.
+- Added option to mirror Sections across the x and/or y axes.
+- Added notification icon for when a background action (e.g. a Show) modifies the Maestro.
 - Added the ability to drag and drop Events in the Show tab's Event Queue.
 - Added a dialog for editing Events. Double-click an Event in the Event Queue to change its settings.
 - Added option to allow Show Events to trigger live device updates. This allows you to trigger commands on a connected device without having to run the Show on the device.
 - Added a play/pause button and cycle selector for Animations.
 
 ### Changed
+- Enabling Maestro outputs has been moved from the Preferences dialog to the Window menu item.
+- Redesigned Device Tab.
 - Fixed `MaestroController::save_section_to_datastream()` not saving the Canvas frame count.
 - Fixed Device Section Map not updating the correct Cue.
 - Fixed Canvases not drawing frames larger than 255x255 pixels.
@@ -31,7 +33,7 @@ In addition, the following Cues have been modified and will also need to be recr
 - Fixed Canvas actions performed on a SectionDrawingArea not updating the cursor before performing the action.
 - Reverted broken duplicate Palette name check.
 - Increased minimum window width.
-- Bumped Qt version to 5.12.0.
+- Bumped Qt version to 5.12.3.
 
 ### Removed
 - Wave animation mirror option.

@@ -32,6 +32,8 @@ namespace PixelMaestroStudio {
 		// TODO: Customizable and per-device blocks
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
 		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetBrightness));
+		block_cue(CueController::Handler::CanvasCueHandler,
+static_cast<uint8_t>(CanvasCueHandler::Action::DrawText));
 		//block_cue(CueController::Handler::MaestroCueHandler, static_cast<uint8_t>(MaestroCueHandler::Action::SetShow));
 		//block_cue(CueController::Handler::ShowCueHandler, static_cast<uint8_t>(ShowCueHandler::Action::SetEvents));
 
@@ -274,7 +276,7 @@ namespace PixelMaestroStudio {
 
 					// Make sure the cell actually exists in the model before swapping.
 					QStandardItem* cell = model->item(local_section_id, 1);
-					if (!cell->text().isEmpty()) {
+					if (cell && !cell->text().isEmpty()) {
 						// If the remote section number is negative, exit immediately
 						int remote_section_id = cell->text().toInt();
 						if (remote_section_id < 0) return;

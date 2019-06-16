@@ -34,6 +34,10 @@ namespace PixelMaestroStudio {
 
 			void on_queueAction_triggered();
 
+			void on_action_Main_Window_toggled(bool arg1);
+
+			void on_action_Secondary_Window_toggled(bool arg1);
+
 		private:
 			/// Whether the application has completed initialization.
 			bool initialization_complete = false;

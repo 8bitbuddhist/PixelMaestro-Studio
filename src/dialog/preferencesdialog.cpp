@@ -67,10 +67,6 @@ namespace PixelMaestroStudio {
 		ui->refreshSpinBox->setValue(settings_.value(refresh_rate, 50).toInt());				// Default to 50 ms
 		ui->pauseOnStartCheckBox->setChecked(settings_.value(pause_on_start, false).toBool());	// Default to run on start
 
-		// Display settings
-		ui->separateWindowCheckBox->setChecked(settings_.value(separate_window_option, false).toBool());
-		ui->mainWindowCheckBox->setChecked(settings_.value(main_window_option, true).toBool());
-
 		// Show settings
 		ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt());	// Default to 200
 		ui->eventsTriggerDeviceUpdateCheckBox->setChecked(settings_.value(events_trigger_device_updates, false).toBool());	// Default to false
@@ -85,10 +81,6 @@ namespace PixelMaestroStudio {
 		// Save interface settings
 		settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 		settings_.setValue(save_session, ui->saveSessionCheckBox->isChecked());
-
-		// Save display settings
-		settings_.setValue(separate_window_option, ui->separateWindowCheckBox->isChecked());
-		settings_.setValue(main_window_option, ui->mainWindowCheckBox->isChecked());
 
 		// Save Show settings
 		settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
