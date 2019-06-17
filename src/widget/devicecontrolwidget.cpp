@@ -28,15 +28,6 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
 
-		// Block certain Cues from firing
-		// TODO: Customizable and per-device blocks
-		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetDimensions));
-		block_cue(CueController::Handler::SectionCueHandler, static_cast<uint8_t>(SectionCueHandler::Action::SetBrightness));
-		block_cue(CueController::Handler::CanvasCueHandler,
-static_cast<uint8_t>(CanvasCueHandler::Action::DrawText));
-		//block_cue(CueController::Handler::MaestroCueHandler, static_cast<uint8_t>(MaestroCueHandler::Action::SetShow));
-		//block_cue(CueController::Handler::ShowCueHandler, static_cast<uint8_t>(ShowCueHandler::Action::SetEvents));
-
 		// Add saved serial devices to device list.
 		QSettings settings;
 		int num_serial_devices = settings.beginReadArray(PreferencesDialog::devices);
@@ -56,15 +47,6 @@ static_cast<uint8_t>(CanvasCueHandler::Action::DrawText));
 		settings.endArray();
 
 		refresh_device_list();
-	}
-
-	/**
-	 * Adds a Cue that should be blocked from execution to the list of blocked Cues.
-	 * @param handler The CueHandler responsible for this Cue.
-	 * @param action The Cue's action index.
-	 */
-	void DeviceControlWidget::block_cue(CueController::Handler handler, uint8_t action) {
-		blocked_cues_.append({handler, action});
 	}
 
 	/**
@@ -218,34 +200,6 @@ static_cast<uint8_t>(CanvasCueHandler::Action::DrawText));
 	 * @param size The size of the Cue.
 	 */
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
-		// Check the Cue against the block list
-		for (BlockedCue blocked : blocked_cues_) {
-			if (cue[(uint8_t)CueController::Byte::PayloadByte] == (char)blocked.handler) {
-				int action_byte_index = -1;
-				switch (blocked.handler) {
-					case CueController::Handler::AnimationCueHandler:
-						action_byte_index = (uint8_t)AnimationCueHandler::Byte::ActionByte;
-						break;
-					case CueController::Handler::CanvasCueHandler:
-						action_byte_index = (uint8_t)CanvasCueHandler::Byte::ActionByte;
-						break;
-					case CueController::Handler::MaestroCueHandler:
-						action_byte_index = (uint8_t)MaestroCueHandler::Byte::ActionByte;
-						break;
-					case CueController::Handler::SectionCueHandler:
-						action_byte_index = (uint8_t)SectionCueHandler::Byte::ActionByte;
-						break;
-					case CueController::Handler::ShowCueHandler:
-						action_byte_index = (uint8_t)ShowCueHandler::Byte::ActionByte;
-						break;
-				}
-
-				if (cue[action_byte_index] == (char)blocked.action) {
-					return;
-				}
-			}
-		}
-
 		CueController* controller = &this->maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
 
 		for (SerialDeviceController device : serial_devices_) {

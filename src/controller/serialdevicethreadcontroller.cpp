@@ -15,7 +15,6 @@ namespace PixelMaestroStudio {
 		 * This tends to happen at the 64 byte mark.
 		 * As a workaround, we break up the output into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
 		 *
-		 * FIXME: Works inconsistently. Canvas Cues crash on Unos.
 		 *	Might be a serial timeout issue: https://stackoverflow.com/questions/32429327/slow-serial-communication-with-arduino-latency-of-almost-1-sec
 		 *	Could also be an interrupt issue: https://www.reddit.com/r/arduino/comments/bmltcr/ws2812_not_responding_to_input_received_from/
 		 *
