@@ -191,6 +191,16 @@
           <string>Vertical</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Horizontal (Flipped)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vertical (Flipped)</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="0" column="2">

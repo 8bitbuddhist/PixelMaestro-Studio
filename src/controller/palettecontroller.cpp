@@ -75,7 +75,8 @@ namespace PixelMaestroStudio {
 					}
 				}
 
-				if (matches == num_colors - 1) {
+				// FIXME: Sometimes the Palettes don't exactly match up even if they're identical
+				if (matches == num_colors || matches == num_colors - 1) {
 					return i;
 				}
 			}

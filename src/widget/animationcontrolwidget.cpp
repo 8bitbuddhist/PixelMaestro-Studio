@@ -360,6 +360,7 @@ namespace PixelMaestroStudio {
 				break;
 			case AnimationType::Wave:
 				advanced_controls_widget_ = QSharedPointer<QWidget>(new WaveAnimationControlWidget(*dynamic_cast<WaveAnimation*>(animation), this->maestro_control_widget, layout->widget()));
+				break;
 			default:
 				break;
 		}
@@ -374,6 +375,7 @@ namespace PixelMaestroStudio {
 	/**
 	 * Updates the Animation's Timer.
 	 */
+	// TODO: Add an option for showing timer sliders as cycles per minute? Do the same for Canvas timers
 	void AnimationControlWidget::set_animation_timer() {
 		maestro_control_widget.run_cue(
 			maestro_control_widget.animation_handler->set_timer(

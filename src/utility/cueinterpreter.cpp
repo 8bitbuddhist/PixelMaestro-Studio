@@ -85,7 +85,9 @@ namespace PixelMaestroStudio {
 													  "Wave"});
 
 	const QStringList CueInterpreter::AnimationOrientations({"Horizontal",
-															 "Vertical"});
+															 "Vertical",
+															 "Horizontal (Flipped)",
+															 "Vertical (Flipped)"});
 
 	const QStringList CueInterpreter::ColorMixModes({"None",
 													 "Alpha",
