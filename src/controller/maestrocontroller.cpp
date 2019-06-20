@@ -160,7 +160,8 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroController::save_section_to_datastream(QDataStream& datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers) {
 
-		Section* section = &maestro_->get_section(section_id);
+		Section* section = maestro_->get_section(section_id);
+		if (section == nullptr) return;
 
 		if (layer_id > 0) {
 			for (uint8_t i = 0; i < layer_id; i++) {
@@ -238,7 +239,7 @@ namespace PixelMaestroStudio {
 
 		// Scrolling, offset, and mirroring
 		Point& offset = section->get_offset();
-		if (offset.x != 0 && offset.y != 0) {
+		if (offset.x != 0 || offset.y != 0) {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset.x, offset.y));
 		}
 		Section::Scroll* scroll = section->get_scroll();

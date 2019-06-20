@@ -11,7 +11,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter -Wno-reorder -Wno-switch
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.40.2\\\" PIXEL_ENABLE_ACCURATE_FADING
+DEFINES += BUILD_VERSION=\\\"v0.50\\\" PIXEL_ENABLE_ACCURATE_FADING
 
 SOURCES += main.cpp\
 drawingarea/maestrodrawingarea.cpp \

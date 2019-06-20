@@ -138,7 +138,7 @@ namespace PixelMaestroStudio {
 		if (event->buttons() == Qt::LeftButton) {
 			Section& active_section = maestro_drawing_area_.get_maestro_control_widget()->section_control_widget_->get_active_section();
 			if (&active_section != &this->section_) {
-				maestro_drawing_area_.get_maestro_control_widget()->section_control_widget_->set_active_section(this->section_);
+				maestro_drawing_area_.get_maestro_control_widget()->section_control_widget_->set_active_section(&this->section_);
 			}
 		}
 

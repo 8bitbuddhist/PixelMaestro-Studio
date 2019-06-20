@@ -84,10 +84,10 @@ namespace PixelMaestroStudio {
 
 		// Iterate until we find the Section that active_section_ points to
 		uint8_t index = 0;
-		Section* test_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0);
+		Section* test_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0);
 		while (test_section != target_section) {
 			index++;
-			test_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index);
+			test_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index);
 		}
 
 		return index;
@@ -126,7 +126,7 @@ namespace PixelMaestroStudio {
 		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 		 * If we selected 'None', use the base Section as the active Section.
 		 */
-		Section* layer_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
+		Section* layer_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
 		for (int i = 0; i < index; i++) {
 			layer_section = layer_section->get_layer()->section;
 		}
@@ -135,7 +135,7 @@ namespace PixelMaestroStudio {
 		set_layer_controls_enabled(index > 0);
 
 		// Set active Section to Layer Section
-		set_active_section(*layer_section);
+		set_active_section(layer_section);
 	}
 
 	/**
@@ -209,7 +209,7 @@ namespace PixelMaestroStudio {
 	* Sets the number of Layers for the Section.
 	 */
 	void SectionControlWidget::on_layerSpinBox_editingFinished() {
-		Section* base_section = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
+		Section* base_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
 		Section* last_section = base_section;
 
 		// Get the number of Layers (and the index of the last Layer) in the Section
@@ -255,7 +255,7 @@ namespace PixelMaestroStudio {
 
 			// If the active Layer no longer exists, jump to the last available Layer
 			if (ui->layerSpinBox->value() >= last_layer_index) {
-				set_active_section(*last_section);
+				set_active_section(last_section);
 			}
 		}
 
@@ -462,7 +462,7 @@ namespace PixelMaestroStudio {
 		ui->activeLayerComboBox->clear();
 		ui->activeLayerComboBox->addItem("Base Section");
 
-		for (uint8_t layer = 0; layer < get_num_layers(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
+		for (uint8_t layer = 0; layer < get_num_layers(*maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
 			ui->activeLayerComboBox->addItem(QString("Layer ") + QString::number(layer + 1));
 		}
 
@@ -473,8 +473,8 @@ namespace PixelMaestroStudio {
 	 * Changes the active Section.
 	 * @param section New active Section.
 	 */
-	void SectionControlWidget::set_active_section(Section& section) {
-		active_section_ = &section;
+	void SectionControlWidget::set_active_section(Section* section) {
+		active_section_ = section;
 
 		maestro_control_widget_.refresh_section_settings();
 	}

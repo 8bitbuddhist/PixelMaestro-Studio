@@ -60,7 +60,7 @@ namespace PixelMaestroStudio {
 		serial_device_->setDataBits(QSerialPort::DataBits::Data8);
 		serial_device_->setStopBits(QSerialPort::StopBits::OneStop);
 
-		return (serial_device_->open(QIODevice::ReadWrite));
+		return (serial_device_->open(QIODevice::WriteOnly));
 	}
 
 	/**

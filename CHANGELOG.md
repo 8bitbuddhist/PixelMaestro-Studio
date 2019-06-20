@@ -3,21 +3,18 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.50] - In Progress
+## [v0.50] - 2019-06-19
 
 ### Important Changes
 
 #### Cue Changes
 
-All Canvas-related Cues have been changed. You will need to recreate any Cuefiles containing Canvas Cues.
-
-In addition, the following Cues have been modified and will also need to be recreated:
-- `AnimationCueHandler::set_wave_options`: removed mirror option
-- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
+Due to changes in how Cues are formatted, Cuefiles created in earlier versions can no longer be opened in this version.
 
 ### Added
 - Added option to mirror Sections across the x and/or y axes.
 - Added notification icon for when a background action (e.g. a Show) modifies the Maestro.
+- Added notification icon for when a device is connected.
 - Added the ability to drag and drop Events in the Show tab's Event Queue.
 - Added a dialog for editing Events. Double-click an Event in the Event Queue to change its settings.
 - Added option to allow Show Events to trigger live device updates. This allows you to trigger commands on a connected device without having to run the Show on the device.

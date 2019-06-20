@@ -171,10 +171,12 @@ namespace PixelMaestroStudio {
 
 	void DeviceControlWidget::refresh_device_list() {
 		ui->serialOutputListWidget->clear();
+		bool connected_devices = false;
 		for (SerialDeviceController device : serial_devices_) {
 			QListWidgetItem* item = new QListWidgetItem(device.get_port_name());
 			if (device.get_device()->isOpen()) {
 				item->setTextColor(Qt::white);
+				connected_devices = true;
 			}
 			else {
 				item->setTextColor(Qt::gray);
@@ -182,9 +184,21 @@ namespace PixelMaestroStudio {
 			ui->serialOutputListWidget->addItem(item);
 		}
 
+		// Display icon in tab
+		MaestroControlWidget* parent_widget = static_cast<MaestroControlWidget*>(parentWidget()->parentWidget()->parentWidget()->parentWidget());
+		QTabWidget* tab_widget = parent_widget->findChild<QTabWidget*>("tabWidget");
+		QWidget* tab = tab_widget->findChild<QWidget*>("deviceTab");
+		if (connected_devices) {
+			tab_widget->setTabIcon(tab_widget->indexOf(tab), QIcon(":/icon_connected.png"));
+		}
+		else {
+			tab_widget->setTabIcon(tab_widget->indexOf(tab), QIcon());
+		}
+
 		int selected = ui->serialOutputListWidget->currentRow();
 		if (selected >= 0) {
 			ui->uploadButton->setEnabled(serial_devices_[selected].get_device()->isOpen());
+			ui->serialOutputListWidget->setCurrentRow(selected);
 		}
 		else {
 			ui->uploadButton->setEnabled(false);

@@ -23,7 +23,7 @@ namespace PixelMaestroStudio {
 			uint8_t get_section_index();
 			uint8_t get_section_index(Section& section);
 			void initialize();
-			void set_active_section(Section& section);
+			void set_active_section(Section* section);
 
 		private slots:
 			void on_activeSectionComboBox_currentIndexChanged(int index);

@@ -34,6 +34,7 @@ namespace PixelMaestroStudio {
 			}
 
 			QByteArray out_addr = output_.mid(current_index, chunk_index);
+
 			if (current_index + chunk_index > output_.size()) {
 				chunk_index = output_.size() - current_index;
 			}

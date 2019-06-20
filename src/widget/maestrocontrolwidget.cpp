@@ -167,8 +167,11 @@ namespace PixelMaestroStudio {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Sync Timers", "This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {
-			maestro_controller_->get_maestro().sync(maestro_controller_->get_total_elapsed_time());
-			maestro_controller_->get_maestro().update(0);
+			run_cue(
+				maestro_handler->sync(maestro_controller_->get_total_elapsed_time())
+			);
+			//maestro_controller_->get_maestro().sync(maestro_controller_->get_total_elapsed_time());
+			//maestro_controller_->get_maestro().update(0);
 		}
 	}
 
