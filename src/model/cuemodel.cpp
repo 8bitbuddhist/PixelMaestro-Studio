@@ -48,7 +48,7 @@ namespace PixelMaestroStudio {
 		// Add C++ Code
 		int current_row = rowCount(QModelIndex());
 		QString cue_num = QString("cue") + QString::number(current_row);
-		QString byte_string_prefix = QString("uint8_t " + cue_num + "[") + QString::number(size) + QString("] = ");
+		QString byte_string_prefix = QString("uint8_t " + cue_num + "[") + QString::number(size + 1) + QString("] = ");
 		QStandardItem* byte_array_item = new QStandardItem(byte_string_prefix + CueInterpreter::convert_cue_to_byte_array_string(cue, size) + ";");
 		byte_array_item->setTextAlignment(Qt::AlignLeft);
 		items.append(byte_array_item);

@@ -20,8 +20,8 @@ namespace PixelMaestroStudio {
 			/// Size of each chunk in bytes
 			const uint8_t CHUNK_SIZE = 64;
 
-			/// Time in milliseconds between chunks. Default is 250.
-			const uint8_t SLEEP_INTERVAL = 250;
+			/// Time in milliseconds between chunks. Disabled by default.
+			const uint8_t SLEEP_INTERVAL = 0;
 
 			SerialDeviceController& serial_device_;
 			QByteArray output_;

@@ -52,7 +52,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool SerialDeviceController::connect() {
 		serial_device_->setPortName(port_name_);
-		serial_device_->setBaudRate(9600);
+		serial_device_->setBaudRate(baud_rate_);
 
 		// Set comm settings
 		serial_device_->setFlowControl(QSerialPort::FlowControl::NoFlowControl);

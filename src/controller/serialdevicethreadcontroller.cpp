@@ -10,17 +10,10 @@ namespace PixelMaestroStudio {
 		/*
 		 * How this works:
 		 *
-		 * When sending data to an Arduino, the Arduino fails to process large chunks even when using a low baud rate.
-		 * The Arduino's serial buffer overflows, causing data loss.
+		 * When sending data to an Arduino, the Arduino might fail to process large chunks even at a low baud rate.
 		 * This tends to happen at the 64 byte mark.
-		 * As a workaround, we break up the output into 64 byte chunks and give the Arduino a few milliseconds between each chunk to catch up.
+		 * As a workaround, we break up the output into 64 byte chunks and give the Arduino some time between chunks to catch up.
 		 *
-		 *	Might be a serial timeout issue: https://stackoverflow.com/questions/32429327/slow-serial-communication-with-arduino-latency-of-almost-1-sec
-		 *	Could also be an interrupt issue: https://www.reddit.com/r/arduino/comments/bmltcr/ws2812_not_responding_to_input_received_from/
-		 *
-		 * Resources:
-		 * http://forum.arduino.cc/index.php?topic=124158.15
-		 * https://forum.arduino.cc/index.php?topic=234151.0
 		 */
 
 		emit progress_changed(0);

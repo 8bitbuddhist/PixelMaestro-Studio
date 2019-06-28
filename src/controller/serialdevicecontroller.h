@@ -34,6 +34,9 @@ namespace PixelMaestroStudio {
 			/// Whether to connect to the device on startup.
 			bool autoconnect_ = false;
 
+			/// The baud rate.
+			const int baud_rate_ = 9600;
+
 			/// The maximum number of bytes the device's ROM can hold.
 			int capacity_ = 1024;
 
