@@ -19,8 +19,8 @@ namespace PixelMaestroStudio {
 	 * @param mirror Whether to mirror the palette.
 	 * @return New palette.
 	 */
-	PaletteController::PaletteWrapper& PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) {
-		palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror));
+	PaletteController::PaletteWrapper& PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror, uint8_t start, uint8_t length) {
+		palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror, start, length));
 		return palettes_[palettes_.size() - 1];
 	}
 
@@ -126,12 +126,12 @@ namespace PixelMaestroStudio {
 		palettes_.clear();
 
 		Colors::generate_scaling_color_array(&colors[0], ColorPresets::Red, ColorPresets::Yellow, num_colors, true);
-		palettes_.emplace_back(PaletteWrapper("Fire", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true));
+		palettes_.emplace_back(PaletteWrapper("Fire", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true, 0, 0));
 
 		Colors::generate_scaling_color_array(&colors[0], ColorPresets::Blue, ColorPresets::Green, num_colors, true);
-		palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true));
+		palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true, 0, 0));
 
-		palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false));
+		palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false, 0, 0));
 	}
 
 	/**
@@ -159,6 +159,8 @@ namespace PixelMaestroStudio {
 			int num_colors = settings.value(PreferencesDialog::palette_num_colors, 0).toInt();
 			Colors::RGB target_color = deserialize_color(settings.value(PreferencesDialog::palette_target_color).toString());
 			PaletteType type = (PaletteType)settings.value(PreferencesDialog::palette_type, 0).toInt();
+			uint8_t start = settings.value(PreferencesDialog::palette_start, 0).toUInt();
+			uint8_t length = settings.value(PreferencesDialog::palette_length, 0).toUInt();
 
 			// Build color array
 			QString color_string = settings.value(PreferencesDialog::palette_colors).toString();
@@ -168,7 +170,7 @@ namespace PixelMaestroStudio {
 				color_array.push_back(deserialize_color(color_string));
 			}
 
-			palettes_.emplace_back(PaletteWrapper(name, color_array.data(), num_colors, type, base_color, target_color, mirror));
+			palettes_.emplace_back(PaletteWrapper(name, color_array.data(), num_colors, type, base_color, target_color, mirror, start, length));
 		}
 		settings.endArray();
 	}
@@ -207,6 +209,8 @@ namespace PixelMaestroStudio {
 			settings.setValue(PreferencesDialog::palette_num_colors, palette_wrapper->palette.get_num_colors());
 			settings.setValue(PreferencesDialog::palette_target_color, serialize_color(palette_wrapper->target_color));
 			settings.setValue(PreferencesDialog::palette_type, (uint8_t)palette_wrapper->type);
+			settings.setValue(PreferencesDialog::palette_start, palette_wrapper->start);
+			settings.setValue(PreferencesDialog::palette_length, palette_wrapper->length);
 		}
 		settings.endArray();
 	}

@@ -24,6 +24,8 @@ namespace PixelMaestroStudio {
 			static QString palette_num_colors;
 			static QString palette_target_color;
 			static QString palette_type;
+			static QString palette_start;
+			static QString palette_length;
 
 			static QString device_capacity;
 			static QString device_port;

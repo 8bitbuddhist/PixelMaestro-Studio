@@ -142,6 +142,8 @@ namespace PixelMaestroStudio {
 	 * Transmits the Maestro's Cuefile to the selected device.
 	 */
 	void DeviceControlWidget::on_uploadButton_clicked() {
+		// "ROMEND" flags to the Arduino that we're done transmitting the Cuefile
+		QByteArray out = maestro_cue_.append("ROMEND");
 		write_to_device(serial_devices_[ui->serialOutputListWidget->currentRow()],
 				static_cast<const char*>(maestro_cue_),
 				maestro_cue_.size(),

@@ -26,6 +26,8 @@ namespace PixelMaestroStudio {
 			ui->numColorsSpinBox->setValue(target_palette_wrapper->palette.get_num_colors());
 			ui->typeComboBox->setCurrentIndex((uint8_t)target_palette_wrapper->type);
 			ui->reverseCheckBox->setChecked(target_palette_wrapper->mirror);
+			ui->startSpinBox->setValue(target_palette_wrapper->start);
+			ui->lengthSpinBox->setValue(target_palette_wrapper->length);
 
 			this->base_color_ = target_palette_wrapper->base_color;
 			parent->set_button_color(ui->baseColorButton, base_color_.r, base_color_.g, base_color_.b);
@@ -74,6 +76,9 @@ namespace PixelMaestroStudio {
 						}
 					}
 					break;
+				case PaletteController::PaletteType::Comet:
+					Colors::generate_comet(&colors[0], num_colors, base_color_, target_color_, ui->startSpinBox->value(), ui->lengthSpinBox->value());
+					break;
 				case PaletteController::PaletteType::Scaling:
 					Colors::generate_scaling_color_array(&colors[0], base_color_, target_color_, num_colors, (bool)ui->reverseCheckBox->isChecked());
 					break;
@@ -98,6 +103,8 @@ namespace PixelMaestroStudio {
 					target_palette_->base_color = base_color_;
 					target_palette_->target_color = target_color_;
 					target_palette_->mirror = ui->reverseCheckBox->isChecked();
+					target_palette_->start = ui->startSpinBox->value();
+					target_palette_->length = ui->lengthSpinBox->value();
 
 					colors_changed_ = false;
 				}
@@ -105,7 +112,7 @@ namespace PixelMaestroStudio {
 			else {
 				// Add the new Palette
 				PaletteControlWidget* parent = dynamic_cast<PaletteControlWidget*>(parentWidget());
-				parent->get_palette_controller().add_palette(ui->nameLineEdit->text(), &colors[0], num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked());
+				parent->get_palette_controller().add_palette(ui->nameLineEdit->text(), &colors[0], num_colors, (PaletteController::PaletteType)ui->typeComboBox->currentIndex(), base_color_, target_color_, ui->reverseCheckBox->isChecked(), ui->startSpinBox->value(), ui->lengthSpinBox->value());
 			}
 
 			QDialog::accept();
@@ -157,12 +164,18 @@ namespace PixelMaestroStudio {
 	 * @param index Palette type.
 	 */
 	void PaletteEditDialog::on_typeComboBox_currentIndexChanged(int index) {
-		// SetEnabled doesn't change the appearance for some reason
-		ui->baseColorLabel->setVisible(index == 1);
-		ui->baseColorButton->setVisible(index == 1);
-		ui->targetColorLabel->setVisible(index == 1);
-		ui->targetColorButton->setVisible(index == 1);
-		ui->reverseCheckBox->setVisible(index == 1);
+		// SetEnabled doesn't visually change widgets, so we use setVisible instead
+		bool color_pickers = (index == (int)PaletteController::PaletteType::Comet || index == (int)PaletteController::PaletteType::Scaling);
+
+		ui->baseColorLabel->setVisible(color_pickers);
+		ui->baseColorButton->setVisible(color_pickers);
+		ui->targetColorLabel->setVisible(color_pickers);
+		ui->targetColorButton->setVisible(color_pickers);
+		ui->reverseCheckBox->setVisible(index == (int)PaletteController::PaletteType::Scaling);
+		ui->lengthLabel->setVisible(index == (int)PaletteController::PaletteType::Comet);
+		ui->lengthSpinBox->setVisible(index == (int)PaletteController::PaletteType::Comet);
+		ui->startLabel->setVisible(index == (int)PaletteController::PaletteType::Comet);
+		ui->startSpinBox->setVisible(index == (int)PaletteController::PaletteType::Comet);
 
 		if (target_palette_ != nullptr && (index != (int)target_palette_->type)) {
 			this->colors_changed_ = true;

@@ -15,7 +15,8 @@ namespace PixelMaestroStudio {
 			enum class PaletteType : uint8_t {
 				Blank,
 				Scaling,
-				Random
+				Random,
+				Comet
 			};
 
 			/**
@@ -26,6 +27,8 @@ namespace PixelMaestroStudio {
 				Colors::RGB target_color;
 				bool mirror;
 				QString name = "";
+				uint8_t start = 0;
+				uint8_t length = 0;
 
 				PaletteType type = PaletteType::Blank;
 				Palette palette;
@@ -50,19 +53,23 @@ namespace PixelMaestroStudio {
 				 * @param base_color The Palette's initial color.
 				 * @param target_color The Palette's target color.
 				 * @param mirror For scaling Palettes, whether to mirror the colors.
+				 * @param start For comets, where the body of the comet starts.
+				 * @param length For comets, where the tail of the comet ends.
 				 */
-				PaletteWrapper(QString new_name, Colors::RGB new_colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror) : palette(new_colors, num_colors) {
+				PaletteWrapper(QString new_name, Colors::RGB new_colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror, uint8_t start, uint8_t length) : palette(new_colors, num_colors) {
 					this->base_color = base_color;
 					this->target_color = target_color;
 					this->mirror = mirror;
 					this->name = new_name;
 					this->type = type;
+					this->start = start;
+					this->length = length;
 				}
 			};
 
 			PaletteController();
 			~PaletteController();
-			PaletteWrapper& add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false);
+			PaletteWrapper& add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror = false, uint8_t start = 0, uint8_t length = 0);
 			QString check_palette_name(QString name);
 			Colors::RGB deserialize_color(const QString& string);
 			int find(Colors::RGB* colors, int num_colors);

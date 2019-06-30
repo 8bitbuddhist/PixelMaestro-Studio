@@ -50,6 +50,8 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::palette_num_colors = QStringLiteral("ColorCount");
 	QString PreferencesDialog::palette_target_color = QStringLiteral("TargetColor");
 	QString PreferencesDialog::palette_type = QStringLiteral("Type");
+	QString PreferencesDialog::palette_start = QStringLiteral("Start");
+	QString PreferencesDialog::palette_length = QStringLiteral("Length");
 
 	// "Show" section
 	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");
