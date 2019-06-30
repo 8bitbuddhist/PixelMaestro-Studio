@@ -29,7 +29,7 @@ Download and run `PixelMaestro_Studio.exe`.
 
 ### Linux
 
-Download `PixelMaestro_Studio`, make it executable, then run it.
+Install Qt 5.12.3 or higher along wih the QtSerialPort module. Then, download `PixelMaestro_Studio`, mark it executable, and run it:
 
 ```bash
 $ wget https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/download/{version tag}/PixelMaestro_Studio

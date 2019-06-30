@@ -3,6 +3,14 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.50.1] - 2019-06-30
+
+### Added
+- Added support for generating "comet-style" palettes.
+
+### Changed
+- Device tab: readded flag when uploading Cues to EEPROM.
+
 ## [v0.50] - 2019-06-19
 
 ### Important Changes
