@@ -105,7 +105,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::on_previewButton_clicked() {
 		CueInterpreterDialog dialog(this,
 									reinterpret_cast<uint8_t*>(maestro_cue_.data()),
-									static_cast<uint16_t>(maestro_cue_.size()));
+									static_cast<uint32_t>(maestro_cue_.size()));
 		dialog.exec();
 	}
 

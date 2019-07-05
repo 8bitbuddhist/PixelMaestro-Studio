@@ -29,7 +29,7 @@ Download and run `PixelMaestro_Studio.exe`.
 
 ### Linux
 
-Install Qt 5.12.3 or higher along wih the QtSerialPort module. Then, download `PixelMaestro_Studio`, mark it executable, and run it:
+Download and run `PixelMaestro_Studio`:
 
 ```bash
 $ wget https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/download/{version tag}/PixelMaestro_Studio
@@ -40,7 +40,7 @@ $ ./PixelMaestro_Studio
 ## Building PixelMaestro Studio
 
 ### Build Requirements
-- QT 5.12 or higher with the QtSerialPort module
+- QT 5.12.3 or higher with the QtSerialPort module
 - [PixelMaestro core library](https://github.com/8bitbuddhist/PixelMaestro) (included as a submodule)
 
 ### Build Instructions (Linux)

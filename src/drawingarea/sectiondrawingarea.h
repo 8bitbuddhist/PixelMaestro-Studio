@@ -49,7 +49,7 @@ namespace PixelMaestroStudio {
 			int pixel_shape_ = 1;
 
 			/// The size of each rendered Pixel.
-			uint8_t radius_ = 20;
+			uint16_t radius_ = 20;
 
 			/// The location where the Section will be rendered.
 			Point section_cursor_;

@@ -225,8 +225,8 @@ namespace PixelMaestroStudio {
 		QSize widget_size = this->size();
 
 		// Next, get the max size of each Pixel via the window size.
-		uint16_t max_pixel_width = widget_size.width() / section_.get_dimensions().x;
-		uint16_t max_pixel_height = widget_size.height() / section_.get_dimensions().y;
+		uint16_t max_pixel_width = static_cast<uint16_t>(widget_size.width() / section_.get_dimensions().x);
+		uint16_t max_pixel_height = static_cast<uint16_t>(widget_size.height() / section_.get_dimensions().y);
 
 		// Find the smaller dimension
 		if (max_pixel_width < max_pixel_height) {

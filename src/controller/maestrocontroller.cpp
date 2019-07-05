@@ -126,7 +126,11 @@ namespace PixelMaestroStudio {
 
 		// Maestro-specific Cues
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::MaestroCueHandler)) {
-			write_cue_to_stream(datastream, maestro_handler->set_timer(maestro_->get_timer().get_interval()));
+			QSettings settings;
+			uint16_t interval = static_cast<uint16_t>(settings.value(PreferencesDialog::refresh_rate, 50).toUInt());
+			if (maestro_->get_timer().get_interval() != interval) {
+				write_cue_to_stream(datastream, maestro_handler->set_timer(interval));
+			}
 		}
 
 		// Show-specific Cues
@@ -172,7 +176,9 @@ namespace PixelMaestroStudio {
 		SectionCueHandler* section_handler = dynamic_cast<SectionCueHandler*>(maestro_->get_cue_controller().get_handler(CueController::Handler::SectionCueHandler));
 
 		// Global Section settings
-		write_cue_to_stream(datastream, section_handler->set_brightness(section_id, layer_id, section->get_brightness()));
+		if (section->get_brightness() != 255) {
+			write_cue_to_stream(datastream, section_handler->set_brightness(section_id, layer_id, section->get_brightness()));
+		}
 		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions().x, section->get_dimensions().y));
 
 		// Animation & Colors
@@ -270,10 +276,9 @@ namespace PixelMaestroStudio {
 				// Draw and save each frame
 				write_cue_to_stream(datastream, canvas_handler->set_num_frames(section_id, layer_id, canvas->get_num_frames()));
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
-					write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, frame));
 					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, frame, section->get_dimensions().x, section->get_dimensions().y, canvas->get_frame(frame)));
 				}
-				write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, 0));
+				write_cue_to_stream(datastream, canvas_handler->set_current_frame_index(section_id, layer_id, canvas->get_current_frame_index()));
 			}
 		}
 
