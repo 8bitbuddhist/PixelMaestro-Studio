@@ -32,14 +32,18 @@ namespace PixelMaestroStudio {
 			static QString devices;
 			static QString device_autoconnect;
 			static QString device_real_time_refresh;
+
 			static QString event_history_max;
 			static QString events_trigger_device_updates;
+
 			static QString last_cuefile_directory;
 			static QString last_session;
 			static QString main_window_option;
 			static QString num_sections;
 			static QString output_enabled;
 			static QString pause_on_start;
+			static QString show_cue_code;
+
 			static QString pixel_padding;
 			static QString pixel_shape;
 			static QString refresh_rate;

@@ -65,8 +65,16 @@ namespace PixelMaestroStudio {
 		uint16_t y = cursor.y() - section_cursor_.y;
 
 		if (radius_ > 0) {
-			return Point((x / radius_),
-						 (y / radius_));
+			x /= radius_;
+			y /= radius_;
+			if (x >= section_.get_dimensions().x) {
+				x = section_.get_dimensions().x - 1;
+			}
+			if (y >= section_.get_dimensions().y) {
+				y = section_.get_dimensions().y - 1;
+			}
+
+			return Point(x, y);
 		}
 		else {
 			return Point(0, 0);

@@ -25,6 +25,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::pixel_shape = QStringLiteral("Interface/Shape");
 	QString PreferencesDialog::save_session = QStringLiteral("Interface/SaveSessionOnClose");
 	QString PreferencesDialog::last_session = QStringLiteral("Interface/LastSession");
+	QString PreferencesDialog::show_cue_code = QStringLiteral("Interface/ShowCueCode");
 	QString PreferencesDialog::splitter_position = QStringLiteral("Interface/SplitterPosition");
 	QString PreferencesDialog::window_geometry = QStringLiteral("Interface/WindowGeometry");
 	QString PreferencesDialog::window_state = QStringLiteral("Interface/WindowState");

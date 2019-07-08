@@ -20,6 +20,8 @@ namespace PixelMaestroStudio {
 			void on_copyButton_clicked();
 			void on_closeButton_clicked();
 
+			void on_showCueCodeCheckBox_toggled(bool checked);
+
 		private:
 			Ui::CueInterpreterDialog *ui;
 			CueModel model_;

@@ -12,7 +12,6 @@
 
 using namespace PixelMaestro;
 
-// TODO: Too much c++ code can cause performance issues. Maybe hide by default and allow user to show in preferences.
 namespace PixelMaestroStudio {
 	CueModel::CueModel(uint8_t* cue, uint32_t size) : QStandardItemModel() {
 		QStringList header_labels;

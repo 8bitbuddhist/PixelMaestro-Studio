@@ -1,8 +1,10 @@
 #include "cueinterpreterdialog.h"
 #include "ui_cueinterpreterdialog.h"
 #include "core/maestro.h"
+#include "dialog/preferencesdialog.h"
 #include "utility/cueinterpreter.h"
 #include <QClipboard>
+#include <QSettings>
 
 namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint32_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
@@ -14,6 +16,14 @@ namespace PixelMaestroStudio {
 		ui->interpretedCueTableView->horizontalHeader()->setStretchLastSection(true);
 		ui->interpretedCueTableView->setWordWrap(false);
 		ui->interpretedCueTableView->resizeRowsToContents();
+
+		// Show or hide C++ code column, depending on user's settings
+		QSettings settings;
+		bool show_code = settings.value(PreferencesDialog::show_cue_code, false).toBool();
+		ui->showCueCodeCheckBox->setChecked(show_code);
+		if (!show_code) {
+			ui->interpretedCueTableView->hideColumn(2);
+		}
 
 		ui->interpretedCueTableView->show();
 	}
@@ -39,7 +49,18 @@ namespace PixelMaestroStudio {
 		clipboard->setText(text);
 	}
 
+	void CueInterpreterDialog::on_showCueCodeCheckBox_toggled(bool checked) {
+		if (checked) {
+			ui->interpretedCueTableView->showColumn(2);
+		}
+		else {
+			ui->interpretedCueTableView->hideColumn(2);
+		}
+	}
+
 	CueInterpreterDialog::~CueInterpreterDialog() {
+		QSettings settings;
+		settings.setValue(PreferencesDialog::show_cue_code, ui->showCueCodeCheckBox->isChecked());
 		delete ui;
 	}
 }

@@ -3,6 +3,14 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.50.2] - In Progress
+
+### Added
+- Added checkbox for toggling "Code" column in Cue Preview dialog.
+
+### Changed
+- Fixed cursor positioning in SectionDrawingArea.
+
 ## [v0.50.1] - 2019-06-30
 
 ### Added
