@@ -44,6 +44,33 @@
       <string>Animation Settings</string>
      </property>
      <layout class="QGridLayout" name="baseSettingsLayout">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="orientationComboBox">
+        <property name="toolTip">
+         <string>Direction that the animation displays in</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Horizontal</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vertical</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Horizontal (Flipped)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vertical (Flipped)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
       <item row="2" column="1">
        <widget class="QComboBox" name="paletteComboBox">
         <property name="minimumSize">
@@ -60,6 +87,46 @@
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="fadeCheckBox">
+        <property name="toolTip">
+         <string>Smoothes the animation</string>
+        </property>
+        <property name="text">
+         <string>Fade</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="colorLabel">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Color Palette</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="paletteEditButton">
+        <property name="text">
+         <string>Edit Palettes...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="orientationLabel">
+        <property name="text">
+         <string>Orientation</string>
         </property>
        </widget>
       </item>
@@ -149,60 +216,6 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="colorLabel">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Color Palette</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="paletteEditButton">
-        <property name="text">
-         <string>Edit Palettes...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="orientationLabel">
-        <property name="text">
-         <string>Orientation</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="orientationComboBox">
-        <property name="toolTip">
-         <string>Direction that the animation displays in</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>Horizontal</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Vertical</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Horizontal (Flipped)</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Vertical (Flipped)</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="0" column="2">
        <widget class="QCheckBox" name="reverseCheckBox">
         <property name="toolTip">
@@ -213,18 +226,30 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QCheckBox" name="fadeCheckBox">
-        <property name="toolTip">
-         <string>Smoothes the animation</string>
-        </property>
+      <item row="3" column="0">
+       <widget class="QLabel" name="centerLabel">
         <property name="text">
-         <string>Fade</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Center</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="centerLayout">
+        <item>
+         <widget class="QSpinBox" name="centerXSpinBox">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="centerYSpinBox">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

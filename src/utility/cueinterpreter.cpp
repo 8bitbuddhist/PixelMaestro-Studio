@@ -23,7 +23,8 @@ namespace PixelMaestroStudio {
 														"Set timer",
 														"Set wave options",
 														"Start",
-														"Stop"});
+														"Stop",
+														"Set Center"});
 
 	const QStringList CueInterpreter::CanvasActions({"Clear",
 													 "Draw circle",
@@ -157,6 +158,10 @@ namespace PixelMaestroStudio {
 		result.append(AnimationActions.at(cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]));
 
 		switch((AnimationCueHandler::Action)cue[(uint8_t)AnimationCueHandler::Byte::ActionByte]) {
+			case AnimationCueHandler::Action::SetCenter:
+				result.append(": " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result.append(" x " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])));
+				break;
 			case AnimationCueHandler::Action::SetCycleIndex:
 				result.append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;

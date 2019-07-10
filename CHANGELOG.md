@@ -3,10 +3,11 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.50.2] - In Progress
+## [v0.50.2] - 2019-07-09
 
 ### Added
 - Added checkbox for toggling "Code" column in Cue Preview dialog.
+- Add ability to set an Animation's center.
 
 ### Changed
 - Fixed cursor positioning in SectionDrawingArea.

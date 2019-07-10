@@ -100,10 +100,31 @@ namespace PixelMaestroStudio {
 				on_delayIntervalSpinBox_editingFinished();
 			}
 
+			// Set center
+			animation = maestro_control_widget.section_control_widget_->get_active_section().get_animation();
+			ui->centerXSpinBox->setValue(animation->get_center().x);
+			ui->centerYSpinBox->setValue(animation->get_center().y);
+			on_centerXSpinBox_editingFinished();
+
 			set_advanced_controls(maestro_control_widget.section_control_widget_->get_active_section().get_animation());
 		}
 
 		set_controls_enabled(index > 0);
+	}
+
+	void AnimationControlWidget::on_centerXSpinBox_editingFinished() {
+		maestro_control_widget.run_cue(
+			maestro_control_widget.animation_handler->set_center(
+				maestro_control_widget.section_control_widget_->get_section_index(),
+				maestro_control_widget.section_control_widget_->get_layer_index(),
+				ui->centerXSpinBox->value(),
+				ui->centerYSpinBox->value()
+			)
+		);
+	}
+
+	void AnimationControlWidget::on_centerYSpinBox_editingFinished() {
+		on_centerXSpinBox_editingFinished();
 	}
 
 	void AnimationControlWidget::on_currentCycleSpinBox_editingFinished() {
@@ -277,6 +298,8 @@ namespace PixelMaestroStudio {
 			ui->cycleIntervalSpinBox->blockSignals(true);
 			ui->delayIntervalSlider->blockSignals(true);
 			ui->delayIntervalSpinBox->blockSignals(true);
+			ui->centerXSpinBox->blockSignals(true);
+			ui->centerYSpinBox->blockSignals(true);
 			ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
 			ui->reverseCheckBox->setChecked(animation->get_reverse());
 			ui->fadeCheckBox->setChecked(animation->get_fade());
@@ -284,6 +307,8 @@ namespace PixelMaestroStudio {
 			ui->cycleIntervalSpinBox->setValue(animation->get_timer()->get_interval());
 			ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
 			ui->delayIntervalSpinBox->setValue(animation->get_timer()->get_delay());
+			ui->centerXSpinBox->setValue(animation->get_center().x);
+			ui->centerYSpinBox->setValue(animation->get_center().y);
 			ui->orientationComboBox->blockSignals(false);
 			ui->reverseCheckBox->blockSignals(false);
 			ui->fadeCheckBox->blockSignals(false);
@@ -291,6 +316,8 @@ namespace PixelMaestroStudio {
 			ui->cycleIntervalSpinBox->blockSignals(false);
 			ui->delayIntervalSlider->blockSignals(false);
 			ui->delayIntervalSpinBox->blockSignals(false);
+			ui->centerXSpinBox->blockSignals(false);
+			ui->centerYSpinBox->blockSignals(false);
 
 			// Select the current Palette
 			if (animation->get_palette() != nullptr) {
@@ -387,14 +414,24 @@ namespace PixelMaestroStudio {
 		);
 	}
 
+	void AnimationControlWidget::set_center_controls_enabled(bool enabled) {
+		ui->centerLabel->setEnabled(enabled);
+		ui->centerLayout->setEnabled(enabled);
+	}
+
 	void AnimationControlWidget::set_controls_enabled(bool enabled) {
+		ui->orientationLabel->setEnabled(enabled);
 		ui->orientationComboBox->setEnabled(enabled);
 		ui->reverseCheckBox->setEnabled(enabled);
+		ui->colorLabel->setEnabled(enabled);
 		ui->paletteComboBox->setEnabled(enabled);
 		ui->fadeCheckBox->setEnabled(enabled);
 		ui->advancedSettingsGroupBox->setEnabled(enabled);
 		ui->timersGroupBox->setEnabled(enabled);
 		ui->controlGroupBox->setEnabled(enabled);
+		ui->centerLabel->setEnabled(enabled);
+		ui->centerXSpinBox->setEnabled(enabled);
+		ui->centerYSpinBox->setEnabled(enabled);
 	}
 
 	AnimationControlWidget::~AnimationControlWidget() {

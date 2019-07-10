@@ -42,6 +42,10 @@ namespace PixelMaestroStudio {
 
 			void on_currentCycleSpinBox_editingFinished();
 
+			void on_centerXSpinBox_editingFinished();
+
+			void on_centerYSpinBox_editingFinished();
+
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			Ui::AnimationControlWidget *ui;
@@ -49,6 +53,7 @@ namespace PixelMaestroStudio {
 			void add_palette_to_selection(const Palette &palette);
 			void set_advanced_controls(Animation* animation);
 			void set_animation_timer();
+			void set_center_controls_enabled(bool);
 			void set_controls_enabled(bool);
 	};
 }

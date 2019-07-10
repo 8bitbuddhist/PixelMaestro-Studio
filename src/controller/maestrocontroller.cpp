@@ -191,6 +191,7 @@ namespace PixelMaestroStudio {
 				if (animation->get_palette() != nullptr) {
 					write_cue_to_stream(datastream, animation_handler->set_palette(section_id, layer_id, *animation->get_palette()));
 				}
+				write_cue_to_stream(datastream, animation_handler->set_center(section_id, layer_id, animation->get_center().x, animation->get_center().y));
 				write_cue_to_stream(datastream, animation_handler->set_orientation(section_id, layer_id, animation->get_orientation()));
 				write_cue_to_stream(datastream, animation_handler->set_reverse(section_id, layer_id, animation->get_reverse()));
 				write_cue_to_stream(datastream, animation_handler->set_fade(section_id, layer_id, animation->get_fade()));
