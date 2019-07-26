@@ -15,9 +15,9 @@ PixelMaestro Studio is a desktop application for controlling LED displays using 
 
 ## Usage
 
-Download the latest version of PixelMaestro Studio from the [Releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases) page. The [Wiki](https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki) contains information on how to use PixelMaestro Studio and its various features.
+Download the latest version of PixelMaestro Studio from the [Releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases) page. The [documentation](https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/docs) explains how to use PixelMaestro Studio and its various features.
 
-To learn more about the PixelMaestro library itself, [visit the repository](https://github.com/8bitbuddhist/PixelMaestro/) or check out the [official Wiki](https://github.com/8bitbuddhist/PixelMaestro/wiki).
+To learn more about the PixelMaestro library itself, [visit the repository](https://github.com/8bitbuddhist/PixelMaestro/) or check out the [documentation](https://github.com/8bitbuddhist/PixelMaestro/tree/master/docs).
 
 ## Running PixelMaestro Studio
 

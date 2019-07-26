@@ -1,2 +1,5 @@
 build*/
 PixelMaestro_Studio.pro.user
+docs/
+docsrc/api
+docsrc/doxygen
