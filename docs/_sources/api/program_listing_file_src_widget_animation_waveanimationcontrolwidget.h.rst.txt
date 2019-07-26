@@ -1,0 +1,42 @@
+
+.. _program_listing_file_src_widget_animation_waveanimationcontrolwidget.h:
+
+Program Listing for File waveanimationcontrolwidget.h
+=====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_widget_animation_waveanimationcontrolwidget.h>` (``src/widget/animation/waveanimationcontrolwidget.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef WAVEANIMATIONCONTROLWIDGET_H
+   #define WAVEANIMATIONCONTROLWIDGET_H
+   
+   #include <QWidget>
+   #include "animation/waveanimation.h"
+   #include "widget/maestrocontrolwidget.h"
+   
+   namespace Ui {
+       class WaveAnimationControlWidget;
+   }
+   
+   namespace PixelMaestroStudio {
+       class WaveAnimationControlWidget : public QWidget {
+           Q_OBJECT
+   
+           public:
+               explicit WaveAnimationControlWidget(WaveAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
+               ~WaveAnimationControlWidget();
+   
+           private slots:
+               void on_skewSpinBox_editingFinished();
+   
+           private:
+               WaveAnimation& animation_;
+               MaestroControlWidget& maestro_control_widget_;
+               Ui::WaveAnimationControlWidget *ui;
+       };
+   }
+   
+   #endif // WAVEANIMATIONCONTROLWIDGET_H

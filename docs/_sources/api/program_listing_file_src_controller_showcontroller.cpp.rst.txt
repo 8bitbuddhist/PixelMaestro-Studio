@@ -1,0 +1,56 @@
+
+.. _program_listing_file_src_controller_showcontroller.cpp:
+
+Program Listing for File showcontroller.cpp
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_controller_showcontroller.cpp>` (``src/controller/showcontroller.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "utility/cueinterpreter.h"
+   #include "showcontroller.h"
+   
+   namespace PixelMaestroStudio {
+   
+       ShowController::ShowController() {
+           event_queue_.clear();
+       }
+   
+       Event* ShowController::add_event(uint32_t time, uint8_t *cue) {
+           if (cue != nullptr) {
+               event_queue_.push_back(Event(time, cue));
+           }
+   
+           return &event_queue_[event_queue_.size() - 1];
+       }
+   
+       void ShowController::clear() {
+           event_queue_.clear();
+       }
+   
+       int ShowController::get_event_index(Event* event) {
+           for (int i = 0; i < event_queue_.size(); i++) {
+               Event test_event = event_queue_.at(i);
+               if (test_event == *event) {
+                   return i;
+               }
+           }
+   
+           return -1;
+       }
+   
+       QVector<Event>* ShowController::get_events() {
+           return &event_queue_;
+       }
+   
+       void ShowController::move(uint16_t from, uint16_t to) {
+           event_queue_.move(from, to);
+       }
+   
+       void ShowController::remove_event(uint16_t index) {
+           event_queue_.erase(event_queue_.begin() + index);
+       }
+   }

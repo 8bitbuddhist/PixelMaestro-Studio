@@ -1,0 +1,22 @@
+.. _exhale_struct_structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper:
+
+Struct PaletteController::PaletteWrapper
+========================================
+
+- Defined in :ref:`file_src_controller_palettecontroller.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classPixelMaestroStudio_1_1PaletteController`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: PixelMaestroStudio::PaletteController::PaletteWrapper
+   :members:
+   :protected-members:
+   :undoc-members:

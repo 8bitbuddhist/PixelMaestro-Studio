@@ -1,0 +1,80 @@
+
+.. _file_src_controller_maestrocontroller.cpp:
+
+File maestrocontroller.cpp
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/maestrocontroller.cpp``)
+-----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_maestrocontroller.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QByteArray``
+
+- ``QSettings``
+
+- ``animation/fireanimation.h``
+
+- ``animation/lightninganimation.h``
+
+- ``animation/plasmaanimation.h``
+
+- ``animation/radialanimation.h``
+
+- ``animation/sparkleanimation.h``
+
+- ``animation/waveanimation.h``
+
+- ``canvas/canvas.h``
+
+- ``core/maestro.h``
+
+- ``cue/animationcuehandler.h``
+
+- ``cue/canvascuehandler.h``
+
+- ``cue/maestrocuehandler.h``
+
+- ``cue/sectioncuehandler.h``
+
+- ``cue/show.h``
+
+- ``cue/showcuehandler.h``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``maestrocontroller.h`` (:ref:`file_src_controller_maestrocontroller.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+- :ref:`namespace_PixelMaestroStudio`
+

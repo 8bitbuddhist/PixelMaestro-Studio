@@ -1,0 +1,46 @@
+
+.. _file_src_utility_cueinterpreter.cpp:
+
+File cueinterpreter.cpp
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_utility>` (``src/utility``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/utility/cueinterpreter.cpp``)
+-----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_utility_cueinterpreter.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cueinterpreter.h`` (:ref:`file_src_utility_cueinterpreter.h`)
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

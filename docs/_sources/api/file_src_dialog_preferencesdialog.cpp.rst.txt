@@ -1,0 +1,50 @@
+
+.. _file_src_dialog_preferencesdialog.cpp:
+
+File preferencesdialog.cpp
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_dialog>` (``src/dialog``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/dialog/preferencesdialog.cpp``)
+-------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_dialog_preferencesdialog.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QSerialPortInfo``
+
+- ``QSettings``
+
+- ``preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``ui_preferencesdialog.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

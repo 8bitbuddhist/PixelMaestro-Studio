@@ -1,0 +1,63 @@
+
+.. _file_src_dialog_editeventdialog.h:
+
+File editeventdialog.h
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_dialog>` (``src/dialog``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/dialog/editeventdialog.h``)
+---------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_dialog_editeventdialog.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QDialog``
+
+- ``cue/event.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_dialog_editeventdialog.cpp`
+
+- :ref:`file_src_widget_showcontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1EditEventDialog`
+

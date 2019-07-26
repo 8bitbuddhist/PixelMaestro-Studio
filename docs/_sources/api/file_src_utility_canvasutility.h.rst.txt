@@ -1,0 +1,71 @@
+
+.. _file_src_utility_canvasutility.h:
+
+File canvasutility.h
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_utility>` (``src/utility``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/utility/canvasutility.h``)
+--------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_utility_canvasutility.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QByteArray``
+
+- ``QString``
+
+- ``canvas/canvas.h``
+
+- ``core/colors.h``
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_utility_canvasutility.cpp`
+
+- :ref:`file_src_widget_canvascontrolwidget.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+
+- :ref:`file_src_widget_sectioncontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1CanvasUtility`
+

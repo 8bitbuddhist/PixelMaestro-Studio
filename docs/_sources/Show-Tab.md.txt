@@ -1,0 +1,21 @@
+# Show Tab
+
+The [Show](https://github.com/8bitbuddhist/PixelMaestro/tree/master/docs/Shows.html) tab lets you queue actions to run at a later point in time.
+
+![Show Events](images/show-controls.png)
+
+The main controls in this tab are the _History_ and _Queue_ lists. Every action performed in PixelMaestro Studio generates an `Event`, which appears in the History. You can give the Event an _Event Time_ and add it to the Queue, where it is scheduled for execution. When the runtime exceeds the Event's start time, the Event runs. Events that have already ran appear gray, while pending events appear white.
+
+## Selecting a Timing Mode
+
+The _Timing Mode_ determines how the Show tracks time. _Absolute Time_ tracks time since the Maestro was opened, and _Relative Time_ tracks time since the last Event ran. When using relative time, you can check _Loop Events_ to repeat the Show after the last Event runs.
+
+## Modifying the Event Queue
+
+**Note:** Modifying the Event Queue will automatically update the Show. This also generates a separate Event.
+
+To add an Event to the Show, select one or more Events from the History. Enter the time you want the Event(s) to run in the _Event Time_ box. As a convenience, the _Absolute Time_ and _Relative Time_ boxes show the time since the Maestro was opened and the time since the last Event ran, respectively. Click the right arrow to add the Event(s) to the Event List.
+
+To remove an Event from the Queue, select the Event(s) in the Queue and click the left arrow. To reorder an Event in the Queue, select the Event and click the up or down arrows.
+
+To completely clear the History or Queue, click the **X** button closest to either list.

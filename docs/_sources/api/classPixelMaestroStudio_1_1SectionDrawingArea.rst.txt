@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SectionDrawingArea:
+
+Class SectionDrawingArea
+========================
+
+- Defined in :ref:`file_src_drawingarea_sectiondrawingarea.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QFrame``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SectionDrawingArea
+   :members:
+   :protected-members:
+   :undoc-members:

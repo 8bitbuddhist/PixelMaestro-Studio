@@ -1,0 +1,44 @@
+
+.. _program_listing_file_src_widget_animation_sparkleanimationcontrolwidget.h:
+
+Program Listing for File sparkleanimationcontrolwidget.h
+========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_widget_animation_sparkleanimationcontrolwidget.h>` (``src/widget/animation/sparkleanimationcontrolwidget.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef SPARKLEANIMATIONCONTROLWIDGET_H
+   #define SPARKLEANIMATIONCONTROLWIDGET_H
+   
+   #include <QWidget>
+   #include "animation/sparkleanimation.h"
+   #include "widget/maestrocontrolwidget.h"
+   
+   using namespace PixelMaestro;
+   
+   namespace Ui {
+       class SparkleAnimationControlWidget;
+   }
+   
+   namespace PixelMaestroStudio {
+       class SparkleAnimationControlWidget : public QWidget {
+               Q_OBJECT
+   
+           public:
+               explicit SparkleAnimationControlWidget(SparkleAnimation& animation, MaestroControlWidget& controller, QWidget *parent = 0);
+               ~SparkleAnimationControlWidget();
+   
+           private slots:
+               void on_thresholdSpinBox_editingFinished();
+   
+           private:
+               SparkleAnimation& animation_;
+               MaestroControlWidget& maestro_control_widget_;
+               Ui::SparkleAnimationControlWidget *ui;
+       };
+   }
+   
+   #endif // SPARKLEANIMATIONCONTROLWIDGET_H

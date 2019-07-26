@@ -1,0 +1,78 @@
+
+.. _file_src_widget_devicecontrolwidget.cpp:
+
+File devicecontrolwidget.cpp
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/devicecontrolwidget.cpp``)
+---------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_devicecontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QList``
+
+- ``QMessageBox``
+
+- ``QSerialPort``
+
+- ``QSerialPortInfo``
+
+- ``QSettings``
+
+- ``QStandardItem``
+
+- ``QStringList``
+
+- ``QTabWidget``
+
+- ``QWidget``
+
+- ``controller/serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+
+- ``controller/serialdevicethreadcontroller.h`` (:ref:`file_src_controller_serialdevicethreadcontroller.h`)
+
+- ``devicecontrolwidget.h`` (:ref:`file_src_widget_devicecontrolwidget.h`)
+
+- ``dialog/adddevicedialog.h`` (:ref:`file_src_dialog_adddevicedialog.h`)
+
+- ``dialog/cueinterpreterdialog.h`` (:ref:`file_src_dialog_cueinterpreterdialog.h`)
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``dialog/sectionmapdialog.h`` (:ref:`file_src_dialog_sectionmapdialog.h`)
+
+- ``thread`` (:ref:`file_src_controller_serialdevicethreadcontroller.cpp`)
+
+- ``ui_devicecontrolwidget.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

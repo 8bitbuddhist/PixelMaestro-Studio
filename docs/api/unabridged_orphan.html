@@ -1,0 +1,1193 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Full API &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Full API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/unabridged_orphan.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="full-api">
+<h1>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="directories">
+<h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src.html">Directory src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dir_src.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_controller.html">Directory controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_controller.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_dialog.html">Directory dialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_dialog.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_drawingarea.html">Directory drawingarea</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_drawingarea.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_model.html">Directory model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_model.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_utility.html">Directory utility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_utility.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_widget.html">Directory widget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_widget.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_widget.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_widget_animation.html">Directory animation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_widget_animation.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_window.html">Directory window</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_window.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_adddevicedialog.cpp.html">File adddevicedialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.cpp.html#definition-src-dialog-adddevicedialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/adddevicedialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_adddevicedialog.cpp.html">Program Listing for File adddevicedialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html">File adddevicedialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html#definition-src-dialog-adddevicedialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/adddevicedialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_adddevicedialog.h.html">Program Listing for File adddevicedialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_adddevicedialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html">File animationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html#definition-src-widget-animationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animationcontrolwidget.cpp.html">Program Listing for File animationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html">File animationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html#definition-src-widget-animationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animationcontrolwidget.h.html">Program Listing for File animationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_canvascontrolwidget.cpp.html">File canvascontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.cpp.html#definition-src-widget-canvascontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/canvascontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_canvascontrolwidget.cpp.html">Program Listing for File canvascontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html">File canvascontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html#definition-src-widget-canvascontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/canvascontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_canvascontrolwidget.h.html">Program Listing for File canvascontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_canvascontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility_canvasutility.cpp.html">File canvasutility.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.cpp.html#definition-src-utility-canvasutility-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility/canvasutility.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility_canvasutility.cpp.html">Program Listing for File canvasutility.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility_canvasutility.h.html">File canvasutility.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.h.html#definition-src-utility-canvasutility-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility/canvasutility.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility_canvasutility.h.html">Program Listing for File canvasutility.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_canvasutility.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility_cueinterpreter.cpp.html">File cueinterpreter.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.cpp.html#definition-src-utility-cueinterpreter-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility/cueinterpreter.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility_cueinterpreter.cpp.html">Program Listing for File cueinterpreter.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html">File cueinterpreter.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html#definition-src-utility-cueinterpreter-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility/cueinterpreter.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility_cueinterpreter.h.html">Program Listing for File cueinterpreter.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility_cueinterpreter.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.cpp.html">File cueinterpreterdialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.cpp.html#definition-src-dialog-cueinterpreterdialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/cueinterpreterdialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_cueinterpreterdialog.cpp.html">Program Listing for File cueinterpreterdialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html">File cueinterpreterdialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html#definition-src-dialog-cueinterpreterdialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/cueinterpreterdialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_cueinterpreterdialog.h.html">Program Listing for File cueinterpreterdialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_cueinterpreterdialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_model_cuemodel.cpp.html">File cuemodel.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.cpp.html#definition-src-model-cuemodel-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/model/cuemodel.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_model_cuemodel.cpp.html">Program Listing for File cuemodel.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_model_cuemodel.h.html">File cuemodel.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.h.html#definition-src-model-cuemodel-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/model/cuemodel.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_model_cuemodel.h.html">Program Listing for File cuemodel.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_cuemodel.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_devicecontrolwidget.cpp.html">File devicecontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.cpp.html#definition-src-widget-devicecontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/devicecontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_devicecontrolwidget.cpp.html">Program Listing for File devicecontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html">File devicecontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html#definition-src-widget-devicecontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/devicecontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_devicecontrolwidget.h.html">Program Listing for File devicecontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_devicecontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_editeventdialog.cpp.html">File editeventdialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.cpp.html#definition-src-dialog-editeventdialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/editeventdialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_editeventdialog.cpp.html">Program Listing for File editeventdialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html">File editeventdialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html#definition-src-dialog-editeventdialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/editeventdialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_editeventdialog.h.html">Program Listing for File editeventdialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_editeventdialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.cpp.html">File fireanimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.cpp.html#definition-src-widget-animation-fireanimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/fireanimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_fireanimationcontrolwidget.cpp.html">Program Listing for File fireanimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html">File fireanimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html#definition-src-widget-animation-fireanimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/fireanimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_fireanimationcontrolwidget.h.html">Program Listing for File fireanimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_fireanimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.cpp.html">File lightninganimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.cpp.html#definition-src-widget-animation-lightninganimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/lightninganimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_lightninganimationcontrolwidget.cpp.html">Program Listing for File lightninganimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html">File lightninganimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html#definition-src-widget-animation-lightninganimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/lightninganimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_lightninganimationcontrolwidget.h.html">Program Listing for File lightninganimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_lightninganimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_maestrocontroller.cpp.html">File maestrocontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.cpp.html#definition-src-controller-maestrocontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/maestrocontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_maestrocontroller.cpp.html">Program Listing for File maestrocontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html">File maestrocontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html#definition-src-controller-maestrocontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/maestrocontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_maestrocontroller.h.html">Program Listing for File maestrocontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_maestrocontroller.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.cpp.html">File maestrocontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.cpp.html#definition-src-widget-maestrocontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/maestrocontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_maestrocontrolwidget.cpp.html">Program Listing for File maestrocontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html">File maestrocontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html#definition-src-widget-maestrocontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/maestrocontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_maestrocontrolwidget.h.html">Program Listing for File maestrocontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_maestrocontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.cpp.html">File maestrodrawingarea.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.cpp.html#definition-src-drawingarea-maestrodrawingarea-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/drawingarea/maestrodrawingarea.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_drawingarea_maestrodrawingarea.cpp.html">Program Listing for File maestrodrawingarea.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html">File maestrodrawingarea.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html#definition-src-drawingarea-maestrodrawingarea-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/drawingarea/maestrodrawingarea.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_drawingarea_maestrodrawingarea.h.html">Program Listing for File maestrodrawingarea.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.cpp.html">File maestrodrawingareadialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.cpp.html#definition-src-dialog-maestrodrawingareadialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/maestrodrawingareadialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_maestrodrawingareadialog.cpp.html">Program Listing for File maestrodrawingareadialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html">File maestrodrawingareadialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html#definition-src-dialog-maestrodrawingareadialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/maestrodrawingareadialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_maestrodrawingareadialog.h.html">Program Listing for File maestrodrawingareadialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_maestrodrawingareadialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_main.cpp.html">File main.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_main.cpp.html#definition-src-main-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/main.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_main.cpp.html">Program Listing for File main.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_main.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_main.cpp.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_window_mainwindow.cpp.html">File mainwindow.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.cpp.html#definition-src-window-mainwindow-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/window/mainwindow.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_window_mainwindow.cpp.html">Program Listing for File mainwindow.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_window_mainwindow.h.html">File mainwindow.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.h.html#definition-src-window-mainwindow-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/window/mainwindow.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_window_mainwindow.h.html">Program Listing for File mainwindow.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_window_mainwindow.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_palettecontroller.cpp.html">File palettecontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.cpp.html#definition-src-controller-palettecontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/palettecontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_palettecontroller.cpp.html">Program Listing for File palettecontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_palettecontroller.h.html">File palettecontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.h.html#definition-src-controller-palettecontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/palettecontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_palettecontroller.h.html">Program Listing for File palettecontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_palettecontroller.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_palettecontrolwidget.cpp.html">File palettecontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.cpp.html#definition-src-widget-palettecontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/palettecontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_palettecontrolwidget.cpp.html">Program Listing for File palettecontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html">File palettecontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html#definition-src-widget-palettecontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/palettecontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_palettecontrolwidget.h.html">Program Listing for File palettecontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_palettecontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_paletteeditdialog.cpp.html">File paletteeditdialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.cpp.html#definition-src-dialog-paletteeditdialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/paletteeditdialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_paletteeditdialog.cpp.html">Program Listing for File paletteeditdialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html">File paletteeditdialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html#definition-src-dialog-paletteeditdialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/paletteeditdialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_paletteeditdialog.h.html">Program Listing for File paletteeditdialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_paletteeditdialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.cpp.html">File plasmaanimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.cpp.html#definition-src-widget-animation-plasmaanimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/plasmaanimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_plasmaanimationcontrolwidget.cpp.html">Program Listing for File plasmaanimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html">File plasmaanimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html#definition-src-widget-animation-plasmaanimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/plasmaanimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_plasmaanimationcontrolwidget.h.html">Program Listing for File plasmaanimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_plasmaanimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_preferencesdialog.cpp.html">File preferencesdialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.cpp.html#definition-src-dialog-preferencesdialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/preferencesdialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_preferencesdialog.cpp.html">Program Listing for File preferencesdialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html">File preferencesdialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html#definition-src-dialog-preferencesdialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/preferencesdialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_preferencesdialog.h.html">Program Listing for File preferencesdialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_preferencesdialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.cpp.html">File radialanimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.cpp.html#definition-src-widget-animation-radialanimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/radialanimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_radialanimationcontrolwidget.cpp.html">Program Listing for File radialanimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html">File radialanimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html#definition-src-widget-animation-radialanimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/radialanimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_radialanimationcontrolwidget.h.html">Program Listing for File radialanimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_radialanimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.cpp.html">File sectioncontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.cpp.html#definition-src-widget-sectioncontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/sectioncontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_sectioncontrolwidget.cpp.html">Program Listing for File sectioncontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html">File sectioncontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html#definition-src-widget-sectioncontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/sectioncontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_sectioncontrolwidget.h.html">Program Listing for File sectioncontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_sectioncontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.cpp.html">File sectiondrawingarea.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.cpp.html#definition-src-drawingarea-sectiondrawingarea-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/drawingarea/sectiondrawingarea.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_drawingarea_sectiondrawingarea.cpp.html">Program Listing for File sectiondrawingarea.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html">File sectiondrawingarea.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html#definition-src-drawingarea-sectiondrawingarea-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/drawingarea/sectiondrawingarea.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_drawingarea_sectiondrawingarea.h.html">Program Listing for File sectiondrawingarea.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_drawingarea_sectiondrawingarea.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_sectionmapdialog.cpp.html">File sectionmapdialog.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.cpp.html#definition-src-dialog-sectionmapdialog-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/sectionmapdialog.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_sectionmapdialog.cpp.html">Program Listing for File sectionmapdialog.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html">File sectionmapdialog.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html#definition-src-dialog-sectionmapdialog-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/dialog/sectionmapdialog.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_dialog_sectionmapdialog.h.html">Program Listing for File sectionmapdialog.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_dialog_sectionmapdialog.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_model_sectionmapmodel.cpp.html">File sectionmapmodel.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.cpp.html#definition-src-model-sectionmapmodel-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/model/sectionmapmodel.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_model_sectionmapmodel.cpp.html">Program Listing for File sectionmapmodel.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html">File sectionmapmodel.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html#definition-src-model-sectionmapmodel-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/model/sectionmapmodel.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_model_sectionmapmodel.h.html">Program Listing for File sectionmapmodel.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_model_sectionmapmodel.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_serialdevicecontroller.cpp.html">File serialdevicecontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.cpp.html#definition-src-controller-serialdevicecontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/serialdevicecontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_serialdevicecontroller.cpp.html">Program Listing for File serialdevicecontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html">File serialdevicecontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html#definition-src-controller-serialdevicecontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/serialdevicecontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_serialdevicecontroller.h.html">Program Listing for File serialdevicecontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicecontroller.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.cpp.html">File serialdevicethreadcontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.cpp.html#definition-src-controller-serialdevicethreadcontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/serialdevicethreadcontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_serialdevicethreadcontroller.cpp.html">Program Listing for File serialdevicethreadcontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html">File serialdevicethreadcontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html#definition-src-controller-serialdevicethreadcontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/serialdevicethreadcontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_serialdevicethreadcontroller.h.html">Program Listing for File serialdevicethreadcontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_serialdevicethreadcontroller.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_showcontroller.cpp.html">File showcontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.cpp.html#definition-src-controller-showcontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/showcontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_showcontroller.cpp.html">Program Listing for File showcontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_controller_showcontroller.h.html">File showcontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.h.html#definition-src-controller-showcontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/controller/showcontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_controller_showcontroller.h.html">Program Listing for File showcontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_controller_showcontroller.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_showcontrolwidget.cpp.html">File showcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.cpp.html#definition-src-widget-showcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/showcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_showcontrolwidget.cpp.html">Program Listing for File showcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html">File showcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html#definition-src-widget-showcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/showcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_showcontrolwidget.h.html">Program Listing for File showcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_showcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.cpp.html">File sparkleanimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.cpp.html#definition-src-widget-animation-sparkleanimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/sparkleanimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_sparkleanimationcontrolwidget.cpp.html">Program Listing for File sparkleanimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html">File sparkleanimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html#definition-src-widget-animation-sparkleanimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/sparkleanimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_sparkleanimationcontrolwidget.h.html">Program Listing for File sparkleanimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_sparkleanimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.cpp.html">File waveanimationcontrolwidget.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.cpp.html#definition-src-widget-animation-waveanimationcontrolwidget-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/waveanimationcontrolwidget.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_waveanimationcontrolwidget.cpp.html">Program Listing for File waveanimationcontrolwidget.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html">File waveanimationcontrolwidget.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html#definition-src-widget-animation-waveanimationcontrolwidget-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/widget/animation/waveanimationcontrolwidget.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_widget_animation_waveanimationcontrolwidget.h.html">Program Listing for File waveanimationcontrolwidget.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_widget_animation_waveanimationcontrolwidget.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

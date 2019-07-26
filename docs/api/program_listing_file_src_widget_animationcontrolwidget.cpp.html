@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File animationcontrolwidget.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Program Listing for File animationcontrolwidget.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/program_listing_file_src_widget_animationcontrolwidget.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-animationcontrolwidget-cpp">
+<span id="program-listing-file-src-widget-animationcontrolwidget-cpp"></span><h1>Program Listing for File animationcontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-animationcontrolwidget-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html#file-src-widget-animationcontrolwidget-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/widget/animationcontrolwidget.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;ui_animationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/animation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;controller/palettecontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/fireanimationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/lightninganimationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/plasmaanimationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/radialanimationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/sparkleanimationcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;widget/animation/waveanimationcontrolwidget.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+    <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">AnimationControlWidget</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
+            <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
+            <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">AnimationControlWidget</span><span class="p">),</span>
+            <span class="n">maestro_control_widget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroControlWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">parent</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">add_palette_to_selection</span><span class="p">(</span><span class="k">const</span> <span class="n">Palette</span> <span class="o">&amp;</span><span class="n">palette</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Check if Palette exists, and if not, add it</span>
+        <span class="kt">int</span> <span class="n">palette_index</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">palette</span><span class="p">.</span><span class="n">get_colors</span><span class="p">(),</span> <span class="n">palette</span><span class="p">.</span><span class="n">get_num_colors</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">palette_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">palette_index</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">QString</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Section &quot;</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">())</span> <span class="o">+</span>
+                           <span class="s">&quot; Layer &quot;</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">())</span> <span class="o">+</span>
+                           <span class="s">&quot; Animation&quot;</span><span class="p">;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">check_palette_name</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">add_palette</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">palette</span><span class="p">.</span><span class="n">get_colors</span><span class="p">(),</span> <span class="n">palette</span><span class="p">.</span><span class="n">get_num_colors</span><span class="p">(),</span> <span class="n">PaletteController</span><span class="o">::</span><span class="n">PaletteType</span><span class="o">::</span><span class="n">Random</span><span class="p">,</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Disable advanced settings by default</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedSettingsGroupBox</span><span class="o">-&gt;</span><span class="n">setVisible</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_typeComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// If the animation is set to &quot;None&quot;, remove it</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">remove_animation</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                    <span class="nb">true</span>
+                <span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// If the Section has an active Animation, update it</span>
+            <span class="n">Animation</span><span class="o">*</span> <span class="n">animation</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">animation</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// First, check to see if the Animation types match. If so, do nothing</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_type</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="n">AnimationType</span><span class="p">)(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Otherwise, replace the Animation, preserving options</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_animation</span><span class="p">(</span>
+                        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                        <span class="p">(</span><span class="n">AnimationType</span><span class="p">)(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                        <span class="nb">true</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>  <span class="c1">// No prior Aniamtion: set the new Animation and apply settings</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_animation</span><span class="p">(</span>
+                        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                        <span class="p">(</span><span class="n">AnimationType</span><span class="p">)(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                        <span class="nb">false</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+
+                <span class="n">on_paletteComboBox_activated</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">());</span>
+                <span class="n">on_fadeCheckBox_toggled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
+                <span class="n">on_reverseCheckBox_toggled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
+                <span class="n">on_orientationComboBox_currentIndexChanged</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">());</span>
+                <span class="n">on_cycleIntervalSpinBox_editingFinished</span><span class="p">();</span>
+                <span class="n">on_delayIntervalSpinBox_editingFinished</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Set center</span>
+            <span class="n">animation</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">();</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+            <span class="n">on_centerXSpinBox_editingFinished</span><span class="p">();</span>
+
+            <span class="n">set_advanced_controls</span><span class="p">(</span><span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="n">set_controls_enabled</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_centerXSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_center</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_centerYSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">on_centerXSpinBox_editingFinished</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_currentCycleSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_cycle_index</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+
+        <span class="c1">// Refresh box in case the cycle was adjusted</span>
+        <span class="kt">uint8_t</span> <span class="n">cycle</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_cycle_index</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cycle</span> <span class="o">!=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">cycle</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_cycleIntervalSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_animation_timer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_cycleIntervalSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_animation_timer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_delayIntervalSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_animation_timer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_delayIntervalSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_animation_timer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_fadeCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_fade</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">checked</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_orientationComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_orientation</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="p">(</span><span class="n">Animation</span><span class="o">::</span><span class="n">Orientation</span><span class="p">)</span><span class="n">index</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_paletteComboBox_activated</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PaletteController</span><span class="o">::</span><span class="n">PaletteWrapper</span><span class="o">&amp;</span> <span class="n">palette_wrapper</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palette</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_palette</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">palette_wrapper</span><span class="p">.</span><span class="n">palette</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_paletteEditButton_clicked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">edit_palettes</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">currentText</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_playbackStartStopToolButton_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">checked</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Pause the Animation</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">);</span>
+
+            <span class="kt">uint8_t</span> <span class="n">current_cycle</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_cycle_index</span><span class="p">();</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">current_cycle</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_reverseCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_reverse</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">checked</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Animation</span><span class="o">*</span> <span class="n">animation</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">();</span>
+
+        <span class="c1">// If there is no Animation, select &#39;None&#39; and exit.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">animation</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_orientation</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_reverse</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_fade</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+            <span class="c1">// Select the current Palette</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">add_palette_to_selection</span><span class="p">(</span><span class="o">*</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">());</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Set the Animation type</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_type</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Enable controls</span>
+        <span class="n">set_controls_enabled</span><span class="p">(</span><span class="n">animation</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">);</span>
+        <span class="n">set_advanced_controls</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">refresh_palettes</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">QString</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">currentText</span><span class="p">();</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palettes</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palette</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">name</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">palette</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">set_advanced_controls</span><span class="p">(</span><span class="n">Animation</span> <span class="o">*</span><span class="n">animation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// First, remove any existing extra control widgets</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">advanced_controls_widget_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;advancedSettingsLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">advanced_controls_widget_</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+            <span class="n">advanced_controls_widget_</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="n">QLayout</span><span class="o">*</span> <span class="n">layout</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;advancedSettingsLayout&quot;</span><span class="p">);</span>
+        <span class="n">AnimationType</span> <span class="n">type</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">animation</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">type</span> <span class="o">=</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_type</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">type</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">AnimationType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">typeComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">switch</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Fire</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">FireAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">FireAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Lightning</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">LightningAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">LightningAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Plasma</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">PlasmaAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">PlasmaAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Radial</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">RadialAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">RadialAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Sparkle</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">SparkleAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SparkleAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Wave</span><span class="p">:</span>
+                <span class="n">advanced_controls_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">WaveAnimationControlWidget</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">WaveAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">()));</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">default</span><span class="o">:</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedSettingsGroupBox</span><span class="o">-&gt;</span><span class="n">setVisible</span><span class="p">(</span><span class="n">advanced_controls_widget_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">advanced_controls_widget_</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">layout</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">advanced_controls_widget_</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// TODO: Add an option for showing timer sliders as cycles per minute? Do the same for Canvas timers</span>
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">set_animation_timer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_timer</span><span class="p">(</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">set_center_controls_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerLayout</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">set_controls_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">colorLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedSettingsGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timersGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">controlGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">AnimationControlWidget</span><span class="o">::~</span><span class="n">AnimationControlWidget</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

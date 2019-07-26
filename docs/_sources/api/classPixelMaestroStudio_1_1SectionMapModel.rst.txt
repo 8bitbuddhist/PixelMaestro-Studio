@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SectionMapModel:
+
+Class SectionMapModel
+=====================
+
+- Defined in :ref:`file_src_model_sectionmapmodel.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QStandardItemModel``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SectionMapModel
+   :members:
+   :protected-members:
+   :undoc-members:

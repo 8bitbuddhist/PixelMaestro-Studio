@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SerialDeviceController:
+
+Class SerialDeviceController
+============================
+
+- Defined in :ref:`file_src_controller_serialdevicecontroller.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SerialDeviceController
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,75 @@
+
+.. _file_src_window_mainwindow.h:
+
+File mainwindow.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_window>` (``src/window``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/window/mainwindow.h``)
+----------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_window_mainwindow.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../controller/maestrocontroller.h``
+
+- ``../widget/maestrocontrolwidget.h``
+
+- ``QByteArray``
+
+- ``QMainWindow``
+
+- ``QSplitter``
+
+- ``QStandardPaths``
+
+- ``QString``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_main.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+
+- :ref:`file_src_window_mainwindow.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1MainWindow`
+

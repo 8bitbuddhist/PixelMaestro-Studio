@@ -1,0 +1,35 @@
+# Main Window
+
+The main window contains all of the controls necessary for interacting with PixelMaestro. Here you can edit the Maestro, create Animations and Canvases, create Shows, and connect devices.
+
+## Layout
+
+The main window is split into two sections: the _Maestro Viewer_, and the _Maestro Editor_.
+
+### Maestro Viewer
+
+The top half of the main window renders the output of the Maestro. Each Section is displayed in order from left to right. The Section that currently has focus (the _Active Section_) is displayed with a white border. If a Layer is the Active Section, then the Section is displayed with a light gray border. Inactive sections have no border.
+
+**Note**: The Maestro Viewer may not be visible if _Main Window_ is not selected as an output in the [Preferences](Preferences) screen.
+
+### Maestro Editor
+
+The Maestro Editor is the bottom half of the window. It provides controls for editing the Maestro. It's divided into five tabs:
+
+- [Section Tab](Section-Tab)
+- [Animation Tab](Animation-Tab)
+- [Canvas Tab](Canvas-Tab)
+- [Show Tab](Show-Tab)
+- [Device Tab](Device-Tab)
+
+#### Control Buttons
+
+At the top of the Maestro Editor are four buttons:
+
+The _Lock Button_ prevents any actions you perform from modifying the Maestro. However, it does not prevent actions from generating [events](#show-tab). While the Maestro is locked, a padlock icon appears next to each tab and group of controls that is locked. Certain Maestro-level actions, such as enabling or disabling a [Show](#show-tab), will remain unlocked.
+
+The _Play/Pause Button_ lets you start or stop playback of the Maestro at any time. This also stops any Show timers, Animations, and communications with USB devices.
+
+The _Sync Button_ resets any and all timers. This synchronizes Animations, Shows, and other timer-based components.
+
+The *Refresh Button* updates all controls with the current Maestro configuration. This is used to synchronize the UI with the Maestro when the Maestro is changed by another process (e.g. a Show). If another process changes the Maestro and the UI is left out of sync, this button appears highlighted.

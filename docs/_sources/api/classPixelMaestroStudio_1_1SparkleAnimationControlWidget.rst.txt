@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SparkleAnimationControlWidget:
+
+Class SparkleAnimationControlWidget
+===================================
+
+- Defined in :ref:`file_src_widget_animation_sparkleanimationcontrolwidget.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QWidget``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SparkleAnimationControlWidget
+   :members:
+   :protected-members:
+   :undoc-members:

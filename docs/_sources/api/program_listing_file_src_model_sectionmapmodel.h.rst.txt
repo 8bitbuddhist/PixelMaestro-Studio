@@ -1,0 +1,30 @@
+
+.. _program_listing_file_src_model_sectionmapmodel.h:
+
+Program Listing for File sectionmapmodel.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_model_sectionmapmodel.h>` (``src/model/sectionmapmodel.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef SECTIONMAPMODEL_H
+   #define SECTIONMAPMODEL_H
+   
+   #include "core/maestro.h"
+   #include <QStandardItemModel>
+   
+   using namespace PixelMaestro;
+   
+   namespace PixelMaestroStudio {
+       class SectionMapModel : public QStandardItemModel {
+           public:
+               SectionMapModel();
+               ~SectionMapModel() = default;
+               void add_section();
+       };
+   }
+   
+   #endif // SECTIONMAPMODEL_H

@@ -1,0 +1,60 @@
+
+.. _program_listing_file_src_utility_cueinterpreter.h:
+
+Program Listing for File cueinterpreter.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_utility_cueinterpreter.h>` (``src/utility/cueinterpreter.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * CueInterpreter - Parses Cues and generates a string description of the Cue.
+    */
+   
+   #ifndef CUEINTERPRETER_H
+   #define CUEINTERPRETER_H
+   
+   #include <QString>
+   #include <QStringList>
+   #include "cue/animationcuehandler.h"
+   #include "cue/canvascuehandler.h"
+   #include "cue/maestrocuehandler.h"
+   #include "cue/sectioncuehandler.h"
+   #include "cue/showcuehandler.h"
+   
+   namespace PixelMaestroStudio {
+       class CueInterpreter {
+           public:
+               // Map enums to QStrings
+               static const QStringList Handlers;
+               static const QStringList AnimationActions;
+               static const QStringList CanvasActions;
+               static const QStringList MaestroActions;
+               static const QStringList SectionActions;
+               static const QStringList ShowActions;
+               static const QStringList ShowTimings;
+               static const QStringList AnimationTypes;
+               static const QStringList AnimationOrientations;
+               static const QStringList ColorMixModes;
+   
+               static const QString delimiter;
+   
+               static QString convert_cue_to_byte_array_string(uint8_t* cue, uint16_t size);
+               static QString interpret_cue(uint8_t* cue);
+   
+           private:
+               static void append_bool(bool value, QString& result);
+               static void append_animation_timer(uint16_t interval, uint16_t delay, QString& result);
+               static void append_timer(uint16_t interval, QString& result);
+               static void interpret_animation_cue(uint8_t* cue, QString& result);
+               static void interpret_canvas_cue(uint8_t* cue, QString& result);
+               static void interpret_maestro_cue(uint8_t* cue, QString& result);
+               static void interpret_section_cue(uint8_t* cue, QString& result);
+               static void interpret_show_cue(uint8_t* cue, QString& result);
+       };
+   }
+   
+   #endif // CUEINTERPRETER_H

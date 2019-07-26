@@ -1,0 +1,63 @@
+
+.. _file_src_dialog_cueinterpreterdialog.h:
+
+File cueinterpreterdialog.h
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_dialog>` (``src/dialog``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/dialog/cueinterpreterdialog.h``)
+--------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_dialog_cueinterpreterdialog.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QDialog``
+
+- ``model/cuemodel.h`` (:ref:`file_src_model_cuemodel.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_dialog_cueinterpreterdialog.cpp`
+
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1CueInterpreterDialog`
+

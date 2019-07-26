@@ -1,0 +1,64 @@
+
+.. _file_src_widget_animationcontrolwidget.cpp:
+
+File animationcontrolwidget.cpp
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/animationcontrolwidget.cpp``)
+------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_animationcontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QWidget``
+
+- ``animation/animation.h``
+
+- ``animationcontrolwidget.h`` (:ref:`file_src_widget_animationcontrolwidget.h`)
+
+- ``controller/palettecontroller.h`` (:ref:`file_src_controller_palettecontroller.h`)
+
+- ``ui_animationcontrolwidget.h``
+
+- ``widget/animation/fireanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_fireanimationcontrolwidget.h`)
+
+- ``widget/animation/lightninganimationcontrolwidget.h`` (:ref:`file_src_widget_animation_lightninganimationcontrolwidget.h`)
+
+- ``widget/animation/plasmaanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_plasmaanimationcontrolwidget.h`)
+
+- ``widget/animation/radialanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_radialanimationcontrolwidget.h`)
+
+- ``widget/animation/sparkleanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_sparkleanimationcontrolwidget.h`)
+
+- ``widget/animation/waveanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_waveanimationcontrolwidget.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1AddDeviceDialog:
+
+Class AddDeviceDialog
+=====================
+
+- Defined in :ref:`file_src_dialog_adddevicedialog.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QDialog``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::AddDeviceDialog
+   :members:
+   :protected-members:
+   :undoc-members:

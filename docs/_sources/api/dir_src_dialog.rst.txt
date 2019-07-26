@@ -1,0 +1,33 @@
+.. _dir_src_dialog:
+
+
+Directory dialog
+================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/dialog``
+
+
+Files
+-----
+
+- :ref:`file_src_dialog_adddevicedialog.cpp`
+- :ref:`file_src_dialog_adddevicedialog.h`
+- :ref:`file_src_dialog_cueinterpreterdialog.cpp`
+- :ref:`file_src_dialog_cueinterpreterdialog.h`
+- :ref:`file_src_dialog_editeventdialog.cpp`
+- :ref:`file_src_dialog_editeventdialog.h`
+- :ref:`file_src_dialog_maestrodrawingareadialog.cpp`
+- :ref:`file_src_dialog_maestrodrawingareadialog.h`
+- :ref:`file_src_dialog_paletteeditdialog.cpp`
+- :ref:`file_src_dialog_paletteeditdialog.h`
+- :ref:`file_src_dialog_preferencesdialog.cpp`
+- :ref:`file_src_dialog_preferencesdialog.h`
+- :ref:`file_src_dialog_sectionmapdialog.cpp`
+- :ref:`file_src_dialog_sectionmapdialog.h`
+
+

@@ -1,0 +1,46 @@
+
+.. _file_src_controller_serialdevicethreadcontroller.cpp:
+
+File serialdevicethreadcontroller.cpp
+=====================================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/serialdevicethreadcontroller.cpp``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_serialdevicethreadcontroller.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QByteArray``
+
+- ``serialdevicethreadcontroller.h`` (:ref:`file_src_controller_serialdevicethreadcontroller.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

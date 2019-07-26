@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1EditEventDialog:
+
+Class EditEventDialog
+=====================
+
+- Defined in :ref:`file_src_dialog_editeventdialog.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QDialog``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::EditEventDialog
+   :members:
+   :protected-members:
+   :undoc-members:

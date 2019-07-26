@@ -1,0 +1,71 @@
+
+.. _file_src_dialog_maestrodrawingareadialog.h:
+
+File maestrodrawingareadialog.h
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_dialog>` (``src/dialog``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/dialog/maestrodrawingareadialog.h``)
+------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_dialog_maestrodrawingareadialog.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QDialog``
+
+- ``QLabel``
+
+- ``controller/maestrocontroller.h`` (:ref:`file_src_controller_maestrocontroller.h`)
+
+- ``drawingarea/maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
+
+- ``memory``
+
+- ``utility/cueinterpreter.h`` (:ref:`file_src_utility_cueinterpreter.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_dialog_maestrodrawingareadialog.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1MaestroDrawingAreaDialog`
+

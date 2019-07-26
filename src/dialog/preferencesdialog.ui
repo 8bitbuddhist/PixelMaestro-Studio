@@ -521,7 +521,7 @@
    <item row="1" column="0">
     <widget class="QGroupBox" name="animationEditorGroupBox">
      <property name="title">
-      <string>Animation Editor Options</string>
+      <string>Maestro Options</string>
      </property>
      <property name="flat">
       <bool>true</bool>

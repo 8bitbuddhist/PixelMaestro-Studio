@@ -1,0 +1,65 @@
+
+.. _file_src_widget_animation_lightninganimationcontrolwidget.h:
+
+File lightninganimationcontrolwidget.h
+======================================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget_animation>` (``src/widget/animation``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/animation/lightninganimationcontrolwidget.h``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_animation_lightninganimationcontrolwidget.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QWidget``
+
+- ``animation/lightninganimation.h``
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_widget_animation_lightninganimationcontrolwidget.cpp`
+
+- :ref:`file_src_widget_animationcontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1LightningAnimationControlWidget`
+

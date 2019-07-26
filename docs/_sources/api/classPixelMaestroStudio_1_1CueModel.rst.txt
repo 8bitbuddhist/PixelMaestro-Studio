@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1CueModel:
+
+Class CueModel
+==============
+
+- Defined in :ref:`file_src_model_cuemodel.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QStandardItemModel``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::CueModel
+   :members:
+   :protected-members:
+   :undoc-members:

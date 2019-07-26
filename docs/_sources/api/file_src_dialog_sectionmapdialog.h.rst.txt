@@ -1,0 +1,69 @@
+
+.. _file_src_dialog_sectionmapdialog.h:
+
+File sectionmapdialog.h
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_dialog>` (``src/dialog``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/dialog/sectionmapdialog.h``)
+----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_dialog_sectionmapdialog.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QAbstractButton``
+
+- ``QDialog``
+
+- ``controller/serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+
+- ``core/maestro.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_dialog_adddevicedialog.cpp`
+
+- :ref:`file_src_dialog_sectionmapdialog.cpp`
+
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1SectionMapDialog`
+

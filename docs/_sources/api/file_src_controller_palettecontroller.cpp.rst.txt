@@ -1,0 +1,54 @@
+
+.. _file_src_controller_palettecontroller.cpp:
+
+File palettecontroller.cpp
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/palettecontroller.cpp``)
+-----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_palettecontroller.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QSettings``
+
+- ``QStringList``
+
+- ``colorpresets.h``
+
+- ``core/colors.h``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``palettecontroller.h`` (:ref:`file_src_controller_palettecontroller.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

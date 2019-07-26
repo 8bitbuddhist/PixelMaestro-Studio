@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Full API &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Full API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/unabridged_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="full-api">
+<h1>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_PixelMaestroStudio.html">Namespace PixelMaestroStudio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_PixelMaestroStudio.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_Ui.html">Namespace Ui</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes-and-structs">
+<h2>Classes and Structs<a class="headerlink" href="#classes-and-structs" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper.html">Struct PaletteController::PaletteWrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper.html#nested-relationships">Nested Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper.html#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1AddDeviceDialog.html">Class AddDeviceDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1AddDeviceDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1AddDeviceDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1AddDeviceDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1AnimationControlWidget.html">Class AnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1AnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1AnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1AnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasControlWidget.html">Class CanvasControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasUtility.html">Class CanvasUtility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CanvasUtility.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreter.html">Class CueInterpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreter.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreterDialog.html">Class CueInterpreterDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreterDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreterDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CueInterpreterDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1CueModel.html">Class CueModel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CueModel.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1CueModel.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1CueModel.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1DeviceControlWidget.html">Class DeviceControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1DeviceControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1DeviceControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1DeviceControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1EditEventDialog.html">Class EditEventDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1EditEventDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1EditEventDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1EditEventDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1FireAnimationControlWidget.html">Class FireAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1FireAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1FireAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1FireAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1LightningAnimationControlWidget.html">Class LightningAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1LightningAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1LightningAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1LightningAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroController.html">Class MaestroController</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroController.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroController.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroController.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroControlWidget.html">Class MaestroControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingArea.html">Class MaestroDrawingArea</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingArea.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingArea.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingArea.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingAreaDialog.html">Class MaestroDrawingAreaDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingAreaDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingAreaDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MaestroDrawingAreaDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1MainWindow.html">Class MainWindow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MainWindow.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1MainWindow.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1MainWindow.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteController.html">Class PaletteController</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteController.html#nested-relationships">Nested Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteController.html#nested-types">Nested Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteController.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteControlWidget.html">Class PaletteControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteEditDialog.html">Class PaletteEditDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteEditDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteEditDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PaletteEditDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1PlasmaAnimationControlWidget.html">Class PlasmaAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PlasmaAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1PlasmaAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PlasmaAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1PreferencesDialog.html">Class PreferencesDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PreferencesDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1PreferencesDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1PreferencesDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1RadialAnimationControlWidget.html">Class RadialAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1RadialAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1RadialAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1RadialAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionControlWidget.html">Class SectionControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionDrawingArea.html">Class SectionDrawingArea</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionDrawingArea.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionDrawingArea.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionDrawingArea.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapDialog.html">Class SectionMapDialog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapDialog.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapDialog.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapDialog.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapModel.html">Class SectionMapModel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapModel.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapModel.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapModel.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceController.html">Class SerialDeviceController</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceController.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceThreadController.html">Class SerialDeviceThreadController</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceThreadController.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceThreadController.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SerialDeviceThreadController.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowController.html">Class ShowController</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowController.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowControlWidget.html">Class ShowControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1ShowControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1SparkleAnimationControlWidget.html">Class SparkleAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SparkleAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1SparkleAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1SparkleAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPixelMaestroStudio_1_1WaveAnimationControlWidget.html">Class WaveAnimationControlWidget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1WaveAnimationControlWidget.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classPixelMaestroStudio_1_1WaveAnimationControlWidget.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classPixelMaestroStudio_1_1WaveAnimationControlWidget.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function_main_8cpp_1a0ddf1224851353fc92bfbff6f499fa97.html">Function main</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function_main_8cpp_1a0ddf1224851353fc92bfbff6f499fa97.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

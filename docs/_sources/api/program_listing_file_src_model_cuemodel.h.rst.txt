@@ -1,0 +1,34 @@
+
+.. _program_listing_file_src_model_cuemodel.h:
+
+Program Listing for File cuemodel.h
+===================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_model_cuemodel.h>` (``src/model/cuemodel.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * CueModel.h - Class for representing a Cue in different data types.
+    */
+   
+   #ifndef CUEMODEL_H
+   #define CUEMODEL_H
+   
+   #include <QByteArray>
+   #include <QStandardItemModel>
+   #include <QString>
+   
+   namespace PixelMaestroStudio {
+       class CueModel : public QStandardItemModel {
+           public:
+               CueModel(uint8_t* cue, uint32_t size);
+   
+           private:
+               int add_cue(uint8_t* cue, uint32_t size);
+       };
+   }
+   
+   #endif // CUEMODEL_H

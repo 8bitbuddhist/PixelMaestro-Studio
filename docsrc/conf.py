@@ -44,7 +44,7 @@ exclude_patterns = []
 
 # Create extlink to PixelMaestro docs
 extlinks = {
-    'pmdocs': ('https://github.com/8bitbuddhist/PixelMaestro/tree/master/docs/%s', 'pmdocs'),
+    'pmdocs': ('https://8bitbuddhist.github.io/PixelMaestro/%s', 'pmdocs'),
     'pmarduino': ('https://github.com/8bitbuddhist/PixelMaestro/blob/master/examples/arduino/%s', 'pmarduino')
 }
 

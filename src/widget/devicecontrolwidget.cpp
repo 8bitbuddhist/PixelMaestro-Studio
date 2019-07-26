@@ -21,6 +21,7 @@
 #include "controller/serialdevicecontroller.h"
 #include "controller/serialdevicethreadcontroller.h"
 
+// TODO: Add socket to allow PixelMaestro Studio to receive Cues from other programs. See https://doc.qt.io/qt-5/qtcpserver.html
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) :
 			QWidget(parent),

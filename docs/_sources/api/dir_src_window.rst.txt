@@ -1,0 +1,21 @@
+.. _dir_src_window:
+
+
+Directory window
+================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/window``
+
+
+Files
+-----
+
+- :ref:`file_src_window_mainwindow.cpp`
+- :ref:`file_src_window_mainwindow.h`
+
+

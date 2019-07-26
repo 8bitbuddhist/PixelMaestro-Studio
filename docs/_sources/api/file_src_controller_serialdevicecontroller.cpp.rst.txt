@@ -1,0 +1,52 @@
+
+.. _file_src_controller_serialdevicecontroller.cpp:
+
+File serialdevicecontroller.cpp
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/serialdevicecontroller.cpp``)
+----------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_serialdevicecontroller.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QSerialPort``
+
+- ``QSettings``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

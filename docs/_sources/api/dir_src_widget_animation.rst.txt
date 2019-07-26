@@ -1,0 +1,31 @@
+.. _dir_src_widget_animation:
+
+
+Directory animation
+===================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/widget/animation``
+
+
+Files
+-----
+
+- :ref:`file_src_widget_animation_fireanimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_fireanimationcontrolwidget.h`
+- :ref:`file_src_widget_animation_lightninganimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_lightninganimationcontrolwidget.h`
+- :ref:`file_src_widget_animation_plasmaanimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_plasmaanimationcontrolwidget.h`
+- :ref:`file_src_widget_animation_radialanimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_radialanimationcontrolwidget.h`
+- :ref:`file_src_widget_animation_sparkleanimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_sparkleanimationcontrolwidget.h`
+- :ref:`file_src_widget_animation_waveanimationcontrolwidget.cpp`
+- :ref:`file_src_widget_animation_waveanimationcontrolwidget.h`
+
+

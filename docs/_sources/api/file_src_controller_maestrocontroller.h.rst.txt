@@ -1,0 +1,89 @@
+
+.. _file_src_controller_maestrocontroller.h:
+
+File maestrocontroller.h
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/maestrocontroller.h``)
+---------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_maestrocontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QDataStream``
+
+- ``QElapsedTimer``
+
+- ``QObject``
+
+- ``QSharedPointer``
+
+- ``QString``
+
+- ``QTimer``
+
+- ``QVector``
+
+- ``core/maestro.h``
+
+- ``core/section.h``
+
+- ``drawingarea/maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_maestrocontroller.cpp`
+
+- :ref:`file_src_controller_showcontroller.h`
+
+- :ref:`file_src_dialog_maestrodrawingareadialog.h`
+
+- :ref:`file_src_drawingarea_maestrodrawingarea.h`
+
+- :ref:`file_src_window_mainwindow.h`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1MaestroController`
+

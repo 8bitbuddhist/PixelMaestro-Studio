@@ -1,0 +1,27 @@
+.. _dir_src:
+
+
+Directory src
+=============
+
+
+*Directory path:* ``src``
+
+Subdirectories
+--------------
+
+- :ref:`dir_src_controller`
+- :ref:`dir_src_dialog`
+- :ref:`dir_src_drawingarea`
+- :ref:`dir_src_model`
+- :ref:`dir_src_utility`
+- :ref:`dir_src_widget`
+- :ref:`dir_src_window`
+
+
+Files
+-----
+
+- :ref:`file_src_main.cpp`
+
+

@@ -1,0 +1,54 @@
+
+.. _file_src_widget_palettecontrolwidget.cpp:
+
+File palettecontrolwidget.cpp
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/palettecontrolwidget.cpp``)
+----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_palettecontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QAbstractButton``
+
+- ``QColorDialog``
+
+- ``QMessageBox``
+
+- ``dialog/paletteeditdialog.h`` (:ref:`file_src_dialog_paletteeditdialog.h`)
+
+- ``palettecontrolwidget.h`` (:ref:`file_src_widget_palettecontrolwidget.h`)
+
+- ``ui_palettecontrolwidget.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

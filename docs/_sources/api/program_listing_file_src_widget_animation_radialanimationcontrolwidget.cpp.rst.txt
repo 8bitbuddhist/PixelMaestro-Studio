@@ -1,0 +1,38 @@
+
+.. _program_listing_file_src_widget_animation_radialanimationcontrolwidget.cpp:
+
+Program Listing for File radialanimationcontrolwidget.cpp
+=========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_widget_animation_radialanimationcontrolwidget.cpp>` (``src/widget/animation/radialanimationcontrolwidget.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "radialanimationcontrolwidget.h"
+   #include "ui_radialanimationcontrolwidget.h"
+   
+   namespace PixelMaestroStudio {
+       RadialAnimationControlWidget::RadialAnimationControlWidget(RadialAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent) :
+               QWidget(parent),
+               ui(new Ui::RadialAnimationControlWidget),
+               animation_(animation),
+               maestro_control_widget_(maestro_control_widget) {
+           ui->setupUi(this);
+       }
+   
+       void RadialAnimationControlWidget::on_resolutionSpinBox_valueChanged(int arg1) {
+           maestro_control_widget_.run_cue(
+               maestro_control_widget_.animation_handler->set_radial_options(
+                   maestro_control_widget_.section_control_widget_->get_section_index(),
+                   maestro_control_widget_.section_control_widget_->get_layer_index(),
+                   arg1
+               )
+           );
+       }
+   
+       RadialAnimationControlWidget::~RadialAnimationControlWidget() {
+           delete ui;
+       }
+   }

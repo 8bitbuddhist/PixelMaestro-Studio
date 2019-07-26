@@ -1,0 +1,62 @@
+
+.. _file_src_window_mainwindow.cpp:
+
+File mainwindow.cpp
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_window>` (``src/window``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/window/mainwindow.cpp``)
+------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_window_mainwindow.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QDate``
+
+- ``QDesktopServices``
+
+- ``QFileDialog``
+
+- ``QMessageBox``
+
+- ``QSettings``
+
+- ``QStandardPaths``
+
+- ``QUrl``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``mainwindow.h`` (:ref:`file_src_window_mainwindow.h`)
+
+- ``ui_mainwindow.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

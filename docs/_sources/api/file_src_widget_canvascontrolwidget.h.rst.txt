@@ -1,0 +1,69 @@
+
+.. _file_src_widget_canvascontrolwidget.h:
+
+File canvascontrolwidget.h
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/canvascontrolwidget.h``)
+-------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_canvascontrolwidget.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QButtonGroup``
+
+- ``QWidget``
+
+- ``controller/palettecontroller.h`` (:ref:`file_src_controller_palettecontroller.h`)
+
+- ``core/point.h``
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+- :ref:`file_src_widget_canvascontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1CanvasControlWidget`
+

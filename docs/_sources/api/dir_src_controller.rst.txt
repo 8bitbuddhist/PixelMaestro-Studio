@@ -1,0 +1,29 @@
+.. _dir_src_controller:
+
+
+Directory controller
+====================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/controller``
+
+
+Files
+-----
+
+- :ref:`file_src_controller_maestrocontroller.cpp`
+- :ref:`file_src_controller_maestrocontroller.h`
+- :ref:`file_src_controller_palettecontroller.cpp`
+- :ref:`file_src_controller_palettecontroller.h`
+- :ref:`file_src_controller_serialdevicecontroller.cpp`
+- :ref:`file_src_controller_serialdevicecontroller.h`
+- :ref:`file_src_controller_serialdevicethreadcontroller.cpp`
+- :ref:`file_src_controller_serialdevicethreadcontroller.h`
+- :ref:`file_src_controller_showcontroller.cpp`
+- :ref:`file_src_controller_showcontroller.h`
+
+

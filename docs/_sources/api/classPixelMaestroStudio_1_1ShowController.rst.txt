@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1ShowController:
+
+Class ShowController
+====================
+
+- Defined in :ref:`file_src_controller_showcontroller.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::ShowController
+   :members:
+   :protected-members:
+   :undoc-members:

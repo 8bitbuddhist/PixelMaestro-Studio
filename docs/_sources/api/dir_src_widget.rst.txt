@@ -1,0 +1,38 @@
+.. _dir_src_widget:
+
+
+Directory widget
+================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/widget``
+
+Subdirectories
+--------------
+
+- :ref:`dir_src_widget_animation`
+
+
+Files
+-----
+
+- :ref:`file_src_widget_animationcontrolwidget.cpp`
+- :ref:`file_src_widget_animationcontrolwidget.h`
+- :ref:`file_src_widget_canvascontrolwidget.cpp`
+- :ref:`file_src_widget_canvascontrolwidget.h`
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+- :ref:`file_src_widget_devicecontrolwidget.h`
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+- :ref:`file_src_widget_palettecontrolwidget.cpp`
+- :ref:`file_src_widget_palettecontrolwidget.h`
+- :ref:`file_src_widget_sectioncontrolwidget.cpp`
+- :ref:`file_src_widget_sectioncontrolwidget.h`
+- :ref:`file_src_widget_showcontrolwidget.cpp`
+- :ref:`file_src_widget_showcontrolwidget.h`
+
+

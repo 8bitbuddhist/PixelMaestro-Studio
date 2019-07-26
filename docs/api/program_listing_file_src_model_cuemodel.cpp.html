@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File cuemodel.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Program Listing for File cuemodel.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/program_listing_file_src_model_cuemodel.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-cuemodel-cpp">
+<span id="program-listing-file-src-model-cuemodel-cpp"></span><h1>Program Listing for File cuemodel.cpp<a class="headerlink" href="#program-listing-for-file-cuemodel-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_model_cuemodel.cpp.html#file-src-model-cuemodel-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/model/cuemodel.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * CueModel.h - Class for representing a Cue in different data types.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cuemodel.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;utility/cueinterpreter.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;core/maestro.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QList&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QLocale&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QStandardItem&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">PixelMaestro</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+    <span class="n">CueModel</span><span class="o">::</span><span class="n">CueModel</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="n">cue</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">:</span> <span class="n">QStandardItemModel</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">QStringList</span> <span class="n">header_labels</span><span class="p">;</span>
+        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Text&quot;</span><span class="p">);</span>
+        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Size&quot;</span><span class="p">);</span>
+        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Code (C++)&quot;</span><span class="p">);</span>
+        <span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">header_labels</span><span class="p">);</span>
+
+        <span class="c1">// Interpret Cue by creating a dummy Maestro to run it, then pass valid Cues to a CueInterpreter.</span>
+        <span class="n">Maestro</span> <span class="n">virtual_maestro</span> <span class="o">=</span> <span class="n">Maestro</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">CueController</span><span class="o">&amp;</span> <span class="n">cue_controller</span> <span class="o">=</span> <span class="n">virtual_maestro</span><span class="p">.</span><span class="n">set_cue_controller</span><span class="p">(</span><span class="n">UINT16_MAX</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">cue_controller</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">cue</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+                <span class="n">add_cue</span><span class="p">(</span><span class="n">cue_controller</span><span class="p">.</span><span class="n">get_buffer</span><span class="p">(),</span> <span class="n">cue_controller</span><span class="p">.</span><span class="n">get_cue_size</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">CueModel</span><span class="o">::</span><span class="n">add_cue</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">cue</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">QList</span><span class="o">&lt;</span><span class="n">QStandardItem</span><span class="o">*&gt;</span> <span class="n">items</span><span class="p">;</span>
+
+        <span class="c1">// Add interpreted text</span>
+        <span class="n">QStandardItem</span><span class="o">*</span> <span class="n">interpreted_text_item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QStandardItem</span><span class="p">(</span><span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span>
+        <span class="n">interpreted_text_item</span><span class="o">-&gt;</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">AlignLeft</span><span class="p">);</span>
+        <span class="n">items</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">interpreted_text_item</span><span class="p">);</span>
+
+        <span class="c1">// Add size</span>
+        <span class="n">QLocale</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">QLocale</span><span class="o">::</span><span class="n">system</span><span class="p">();</span>
+        <span class="n">QStandardItem</span><span class="o">*</span> <span class="n">size_item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QStandardItem</span><span class="p">(</span><span class="n">locale</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">size</span><span class="p">));</span>
+        <span class="n">size_item</span><span class="o">-&gt;</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">AlignRight</span><span class="p">);</span>
+        <span class="n">items</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">size_item</span><span class="p">);</span>
+
+        <span class="c1">// Add C++ Code</span>
+        <span class="kt">int</span> <span class="n">current_row</span> <span class="o">=</span> <span class="n">rowCount</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">());</span>
+        <span class="n">QString</span> <span class="n">cue_num</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;cue&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">current_row</span><span class="p">);</span>
+        <span class="n">QString</span> <span class="n">byte_string_prefix</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;uint8_t &quot;</span> <span class="o">+</span> <span class="n">cue_num</span> <span class="o">+</span> <span class="s">&quot;[&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;] = &quot;</span><span class="p">);</span>
+        <span class="n">QStandardItem</span><span class="o">*</span> <span class="n">byte_array_item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QStandardItem</span><span class="p">(</span><span class="n">byte_string_prefix</span> <span class="o">+</span> <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">convert_cue_to_byte_array_string</span><span class="p">(</span><span class="n">cue</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;;&quot;</span><span class="p">);</span>
+        <span class="n">byte_array_item</span><span class="o">-&gt;</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">AlignLeft</span><span class="p">);</span>
+        <span class="n">items</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte_array_item</span><span class="p">);</span>
+
+        <span class="n">insertRow</span><span class="p">(</span><span class="n">current_row</span><span class="p">,</span> <span class="n">items</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">current_row</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

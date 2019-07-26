@@ -1,0 +1,58 @@
+
+Device Tab
+==========
+
+The Device Tab lets you connect to and configure devices over USB. You can mirror actions performed in PixelMaestro Studio on multiple devices in real-time, or upload your entire Maestro configuration (known as a :pmdocs:`Cuefile <Cues.html>` ).
+
+
+.. image:: images/device-tab.png
+   :target: images/device-tab.png
+   :alt: Device tab
+
+
+Adding a Device
+---------------
+
+Before you can connect to a device, you first need to add it. Click the *Add* button to open the new device dialog. Select the port that the device is connected on from the drop-down menu (or enter it manually). Enable *Auto-connect* to automatically connect to the device when PixelMaestro Studio starts. Live Updates are explained in more detail in the next section. Click *Ok* to save your device and add it to the Device List.
+
+Enabling Live Updates
+^^^^^^^^^^^^^^^^^^^^^
+
+With Live Updates enabled, any actions you perform are automatically sent to the device in real-time. This essentially mirrors your Maestro to your device.
+
+For this to work, your device will need to have an active Serial connection that passes input to a CueController. For an example, see the :pmarduino:`USB Arduino sketch <USB_Live>` included in the PixelMaestro library.
+
+Check the *Live Updates* box to enable live updates. This also enables the Map Sections button, which is explained in the next section.
+
+Mapping Sections
+^^^^^^^^^^^^^^^^
+
+Section maps allow you to map Sections in PixelMaestro Studio to separate Sections on your remote device. This lets you send Cues to devices that don't have the same Section layout. For example, you may want to control 3 different Sections for 3 different devices. Each Section will have a different Section ID in PixelMaestro Studio, but on each device, each Section will have an ID of 0. You can use a map to automatically set the Section ID to 0 when sending a Cue to a device.
+
+To create a map, click the *Map Sections...* button. This opens a dialog box showing a table with two columns:
+
+
+* The ``Local Section`` column is the index of each Section in PixelMaestro Studio.
+* The ``Remote Section`` column is the index of the Section on the remote device. This applies in real-time as the Cue is being uploaded.
+
+In the following image, Cues that run on Sections 3 and 4 (indices 2 and 3) in PixelMaestro Studio will run on Sections 1 and 2 (indices 0 and 1) on the remote device. Setting the remote Section to -1 blocks Cues from the local Section from being uploaded to the remote device.
+
+
+.. image:: images/section-map-dialog.png
+   :target: images/section-map-dialog.png
+   :alt: Section Map Dialog
+
+
+By default, Sections are mapped directly to each other. You can change the ``Remote Section`` column to any numeric value. If the device doesn't contain a Section with that ID, then the Cue simply won't run. Click *OK* to save your changes, or click *Reset* to revert back to the default mapping.
+
+Connecting to a Device
+----------------------
+
+Once a device has been added, it appears in the device list. Disconnected devices appear gray, while connected devices appear white. Select a device and click *Connect* to open a serial connection to it. In addition to turning the device name white, connecting to a device will also display an icon next to the tab name. Devices with live updates enabled will automatically receive Cues as they're generated. Click *Disconnect* to close the connection to a device. Devices are also disconnected automatically when PixelMaestro Studio closes.
+
+Uploading Cuefiles
+------------------
+
+Live updates only send individual events to your devices. If you want to send your entire configuration (the Cuefile) at once, select a device in the Device List. The *Size* text box shows the current size of the Cuefile in bytes. An Ardunio Uno can store a maximum of 2,048 bytes in EEPROM, and if your Cuefile is larger than this, part of it will be truncated. Click *Upload* to send the Cuefile to your device. The progress bar shows how much of the Cue has been uploaded. You can see the contents of the Cuefile by clicking the *Preview* button.
+
+The Cuefile contains every instruction needed to reproduce your configuration. As such, you can store the Cuefile on your device and restore it when the device boots. On an Arduino, you can do this by writing the Cuefile to EEPROM as shown in :pmarduino:`this example sketch <USB_EEPROM>`. If your device has a storage device like an SD card, you can simply copy any ``.PMC`` file created in PixelMaestro Studio to the card and read it on the device.

@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SerialDeviceThreadController:
+
+Class SerialDeviceThreadController
+==================================
+
+- Defined in :ref:`file_src_controller_serialdevicethreadcontroller.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QThread``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SerialDeviceThreadController
+   :members:
+   :protected-members:
+   :undoc-members:

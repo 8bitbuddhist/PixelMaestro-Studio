@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1CanvasUtility:
+
+Class CanvasUtility
+===================
+
+- Defined in :ref:`file_src_utility_canvasutility.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::CanvasUtility
+   :members:
+   :protected-members:
+   :undoc-members:

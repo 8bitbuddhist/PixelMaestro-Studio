@@ -1,0 +1,43 @@
+
+.. _program_listing_file_src_dialog_cueinterpreterdialog.h:
+
+Program Listing for File cueinterpreterdialog.h
+===============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_dialog_cueinterpreterdialog.h>` (``src/dialog/cueinterpreterdialog.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef CUEINTERPRETERDIALOG_H
+   #define CUEINTERPRETERDIALOG_H
+   
+   #include <QDialog>
+   #include "model/cuemodel.h"
+   
+   namespace Ui {
+       class CueInterpreterDialog;
+   }
+   
+   namespace PixelMaestroStudio {
+       class CueInterpreterDialog : public QDialog {
+           Q_OBJECT
+   
+           public:
+               explicit CueInterpreterDialog(QWidget *parent = 0, uint8_t* cuefile = nullptr, uint32_t size = 0);
+               ~CueInterpreterDialog();
+   
+           private slots:
+               void on_copyButton_clicked();
+               void on_closeButton_clicked();
+   
+               void on_showCueCodeCheckBox_toggled(bool checked);
+   
+           private:
+               Ui::CueInterpreterDialog *ui;
+               CueModel model_;
+       };
+   }
+   
+   #endif // CUEINTERPRETERDIALOG_H

@@ -1,0 +1,23 @@
+.. _dir_src_model:
+
+
+Directory model
+===============
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/model``
+
+
+Files
+-----
+
+- :ref:`file_src_model_cuemodel.cpp`
+- :ref:`file_src_model_cuemodel.h`
+- :ref:`file_src_model_sectionmapmodel.cpp`
+- :ref:`file_src_model_sectionmapmodel.h`
+
+

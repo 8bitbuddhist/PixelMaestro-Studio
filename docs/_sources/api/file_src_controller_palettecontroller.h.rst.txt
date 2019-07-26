@@ -1,0 +1,75 @@
+
+.. _file_src_controller_palettecontroller.h:
+
+File palettecontroller.h
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/palettecontroller.h``)
+---------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_palettecontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QString``
+
+- ``QVector``
+
+- ``core/colors.h``
+
+- ``core/palette.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_palettecontroller.cpp`
+
+- :ref:`file_src_dialog_paletteeditdialog.h`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+- :ref:`file_src_widget_animationcontrolwidget.cpp`
+
+- :ref:`file_src_widget_canvascontrolwidget.h`
+
+- :ref:`file_src_widget_palettecontrolwidget.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper`
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1PaletteController`
+

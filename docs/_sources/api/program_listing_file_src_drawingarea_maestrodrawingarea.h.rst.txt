@@ -1,0 +1,70 @@
+
+.. _program_listing_file_src_drawingarea_maestrodrawingarea.h:
+
+Program Listing for File maestrodrawingarea.h
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_drawingarea_maestrodrawingarea.h>` (``src/drawingarea/maestrodrawingarea.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * MaestroDrawingArea - Renders output from a MaestroController to a DrawingArea. Forms the basis for other DrawingAreas.
+    */
+   
+   #ifndef MAESTRODRAWINGAREA_H
+   #define MAESTRODRAWINGAREA_H
+   
+   #include "controller/maestrocontroller.h"
+   #include "core/colors.h"
+   #include "core/maestro.h"
+   #include "core/pixel.h"
+   #include "core/section.h"
+   #include "maestrodrawingarea.h"
+   #include "sectiondrawingarea.h"
+   #include "widget/maestrocontrolwidget.h"
+   #include <QElapsedTimer>
+   #include <QHBoxLayout>
+   #include <QTimer>
+   #include <QWidget>
+   #include <vector>
+   
+   using namespace PixelMaestro;
+   
+   namespace PixelMaestroStudio {
+       class MaestroController;
+       class MaestroControlWidget;
+       class SectionDrawingArea;
+   
+       class MaestroDrawingArea : public QWidget {
+           Q_OBJECT
+   
+           public:
+               MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller);
+               ~MaestroDrawingArea() = default;
+               SectionDrawingArea* add_section_drawing_area(Section& section, const uint8_t section_id);
+               MaestroControlWidget* get_maestro_control_widget() const;
+               void frame_active_section(Section& section);
+               void remove_section_drawing_areas();
+               void set_maestro_control_widget(MaestroControlWidget* widget);
+   
+           public slots:
+               void update();
+   
+           protected:
+               MaestroControlWidget* maestro_control_widget_ = nullptr;
+   
+               MaestroController& maestro_controller_;
+   
+               QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
+   
+           private:
+               QHBoxLayout* section_layout_ = nullptr;
+   
+               Section* active_section_ = nullptr;
+       };
+   }
+   
+   #endif // MAESTRODRAWINGAREA_H

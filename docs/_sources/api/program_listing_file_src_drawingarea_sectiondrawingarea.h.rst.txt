@@ -1,0 +1,69 @@
+
+.. _program_listing_file_src_drawingarea_sectiondrawingarea.h:
+
+Program Listing for File sectiondrawingarea.h
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_drawingarea_sectiondrawingarea.h>` (``src/drawingarea/sectiondrawingarea.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef SECTIONDRAWINGAREA_H
+   #define SECTIONDRAWINGAREA_H
+   
+   #include <QFrame>
+   #include <QMouseEvent>
+   #include <QPaintEvent>
+   #include <QPoint>
+   #include <QResizeEvent>
+   #include <QWidget>
+   #include "core/section.h"
+   #include "drawingarea/maestrodrawingarea.h"
+   
+   namespace PixelMaestroStudio {
+       class MaestroDrawingArea;
+       class SectionDrawingArea : public QFrame {
+           Q_OBJECT
+   
+           public:
+               enum class FrameType : uint8_t {
+                   Inactive,
+                   Section,
+                   Layer
+               };
+   
+               SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id);
+               ~SectionDrawingArea() = default;
+               void draw_frame(FrameType type);
+               Section& get_section() const;
+   
+           protected:
+               Section& section_;
+   
+               void mouseMoveEvent(QMouseEvent* event) override;
+               void mousePressEvent(QMouseEvent* event) override;
+               void paintEvent(QPaintEvent *event) override;
+               void resizeEvent(QResizeEvent *event) override;
+   
+           private:
+               QPoint cursor_pos_;
+   
+               uint32_t last_pixel_count_ = 0;
+   
+               MaestroDrawingArea& maestro_drawing_area_;
+   
+               int pixel_shape_ = 1;
+   
+               uint16_t radius_ = 20;
+   
+               Point section_cursor_;
+   
+               uint8_t section_id_;
+   
+               Point map_cursor_to_pixel(const QPoint cursor);
+       };
+   }
+   
+   #endif // SECTIONDRAWINGAREA_H

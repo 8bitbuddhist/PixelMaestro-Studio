@@ -1,0 +1,48 @@
+
+.. _program_listing_file_src_widget_animation_lightninganimationcontrolwidget.h:
+
+Program Listing for File lightninganimationcontrolwidget.h
+==========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_widget_animation_lightninganimationcontrolwidget.h>` (``src/widget/animation/lightninganimationcontrolwidget.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef LIGHTNINGANIMATIONCONTROLWIDGET_H
+   #define LIGHTNINGANIMATIONCONTROLWIDGET_H
+   
+   #include <QWidget>
+   #include "animation/lightninganimation.h"
+   #include "widget/maestrocontrolwidget.h"
+   
+   using namespace PixelMaestro;
+   
+   namespace Ui {
+       class LightningAnimationControlWidget;
+   }
+   
+   namespace PixelMaestroStudio {
+       class LightningAnimationControlWidget : public QWidget {
+           Q_OBJECT
+   
+           public:
+               explicit LightningAnimationControlWidget(LightningAnimation& animation, MaestroControlWidget& maestro_control_widget, QWidget *parent = 0);
+               ~LightningAnimationControlWidget();
+   
+           private slots:
+               void on_forkChanceSpinBox_valueChanged(int arg1);
+   
+               void on_driftSpinBox_valueChanged(int arg1);
+   
+               void on_boltCountSpinBox_valueChanged(int arg1);
+   
+           private:
+               LightningAnimation& animation_;
+               MaestroControlWidget& maestro_control_widget_;
+               Ui::LightningAnimationControlWidget *ui;
+       };
+   }
+   
+   #endif // LIGHTNINGANIMATIONCONTROLWIDGET_H

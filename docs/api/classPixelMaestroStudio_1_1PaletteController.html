@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class PaletteController &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class PaletteControlWidget" href="classPixelMaestroStudio_1_1PaletteControlWidget.html" />
+    <link rel="prev" title="Class MainWindow" href="classPixelMaestroStudio_1_1MainWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="root.html">PixelMaestro Studio API</a> &raquo;</li>
+        
+      <li>Class PaletteController</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/classPixelMaestroStudio_1_1PaletteController.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-palettecontroller">
+<span id="exhale-class-classpixelmaestrostudio-1-1palettecontroller"></span><h1>Class PaletteController<a class="headerlink" href="#class-palettecontroller" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_controller_palettecontroller.h.html#file-src-controller-palettecontroller-h"><span class="std std-ref">File palettecontroller.h</span></a></p></li>
+</ul>
+<div class="section" id="nested-relationships">
+<h2>Nested Relationships<a class="headerlink" href="#nested-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nested-types">
+<h3>Nested Types<a class="headerlink" href="#nested-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper.html#exhale-struct-structpixelmaestrostudio-1-1palettecontroller-1-1palettewrapper"><span class="std std-ref">Struct PaletteController::PaletteWrapper</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteControllerE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteControllerE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteControllerE"></span><span id="PixelMaestroStudio::PaletteController"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController"></span><em class="property">class </em><code class="sig-name descname">PaletteController</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController11PaletteTypeE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController11PaletteTypeE"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a682b925e64a3ee5198a9206ef58f3d04"></span><em class="property">enum </em><code class="sig-name descname">PaletteType</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController5BlankE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController5BlankE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController5BlankE"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a682b925e64a3ee5198a9206ef58f3d04ae4ef81cce7e4e10033ebb10962dfdd5e"></span><code class="sig-name descname">Blank</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController5BlankE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController7ScalingE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController7ScalingE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController7ScalingE"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a682b925e64a3ee5198a9206ef58f3d04abc967dc2d57e6eff184a821bf7577a80"></span><code class="sig-name descname">Scaling</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController7ScalingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController6RandomE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController6RandomE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController6RandomE"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a682b925e64a3ee5198a9206ef58f3d04a64663f4646781c9c0110838b905daa23"></span><code class="sig-name descname">Random</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController6RandomE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController5CometE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController5CometE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController5CometE"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a682b925e64a3ee5198a9206ef58f3d04ab9a8503552f9f7e1e1bc4a0ba9902594"></span><code class="sig-name descname">Comet</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController5CometE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController17PaletteControllerEv">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController17PaletteControllerEv"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController17PaletteControllerEv"></span><span id="PixelMaestroStudio::PaletteController::PaletteController"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a746e784fa70cd61e0e894ffcf0ab9e77"></span><code class="sig-name descname">PaletteController</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController17PaletteControllerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteControllerD0Ev">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteControllerD0Ev"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteControllerD0Ev"></span><span id="PixelMaestroStudio::PaletteController::~PaletteController"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1ac5e94802ae948d337c9e342f140db4b0"></span><code class="sig-name descname">~PaletteController</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController11add_paletteE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController11add_paletteE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController11add_paletteE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t"></span><span id="PixelMaestroStudio::PaletteController::add_palette__QString.Colors::RGBA.uint8_t.PaletteType.Colors::RGBCR.Colors::RGBCR.b.uint8_t.uint8_t"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a436d2358c3b2d5f3f219faa2e81bcfd5"></span><a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerE" title="PixelMaestroStudio::PaletteController">PaletteController</a>::<a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE" title="PixelMaestroStudio::PaletteController::PaletteWrapper">PaletteWrapper</a> &amp;<code class="sig-name descname">add_palette</code><span class="sig-paren">(</span>QString <em>name</em>, Colors::RGB <em>colors</em>[], uint8_t <em>num_colors</em>, <a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE" title="PixelMaestroStudio::PaletteController::PaletteType">PaletteType</a> <em>type</em>, <em class="property">const</em> Colors::RGB &amp;<em>base_color</em>, <em class="property">const</em> Colors::RGB &amp;<em>target_color</em>, bool <em>mirror</em> = false, uint8_t <em>start</em> = 0, uint8_t <em>length</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController11add_paletteE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a palette to the list. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New palette. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Palette name. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colors</span></code>: Colors in the palette. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: Number of colors in the palette. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: The type of Palette. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mirror</span></code>: Whether to mirror the palette. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController18check_palette_nameE7QString">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController18check_palette_nameE7QString"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController18check_palette_nameE7QString"></span><span id="PixelMaestroStudio::PaletteController::check_palette_name__QString"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a3b4b9b8ce501c83d55aa3fec2c721281"></span>QString <code class="sig-name descname">check_palette_name</code><span class="sig-paren">(</span>QString <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController18check_palette_nameE7QString" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Checks the given string against the existing list of Palettes. If a Palette is already using the name, a number is appended to the end of the name. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Same name if the name is unused, or a new name if it’s in use. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name to test. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController17deserialize_colorERK7QString">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController17deserialize_colorERK7QString"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController17deserialize_colorERK7QString"></span><span id="PixelMaestroStudio::PaletteController::deserialize_color__QStringCR"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a546b3a86f51695dd5f967e2c342214a6"></span>Colors::RGB <code class="sig-name descname">deserialize_color</code><span class="sig-paren">(</span><em class="property">const</em> QString &amp;<em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController17deserialize_colorERK7QString" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts a serialized color into an RGB object. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Deserialized color. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code>: Serialized color. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController4findEPN6Colors3RGBEi">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController4findEPN6Colors3RGBEi"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController4findEPN6Colors3RGBEi"></span><span id="PixelMaestroStudio::PaletteController::find__Colors::RGBP.i"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a1a79b7b0ff6bc311df8856b048418c3f"></span>int <code class="sig-name descname">find</code><span class="sig-paren">(</span>Colors::RGB *<em>colors</em>, int <em>num_colors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController4findEPN6Colors3RGBEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Searches for a Palette with the given colors. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Index of the Palette, or -1 if not found. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">colors</span></code>: Color array to match. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: Number of colors in the array. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController11get_paletteE7uint8_t">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController11get_paletteE7uint8_t"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController11get_paletteE7uint8_t"></span><span id="PixelMaestroStudio::PaletteController::get_palette__uint8_t"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a5c4e206794bfc582aaa55ad856988c64"></span><a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerE" title="PixelMaestroStudio::PaletteController">PaletteController</a>::<a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE" title="PixelMaestroStudio::PaletteController::PaletteWrapper">PaletteWrapper</a> &amp;<code class="sig-name descname">get_palette</code><span class="sig-paren">(</span>uint8_t <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController11get_paletteE7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the palette at the specified index. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Palette. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: Palette index. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController11get_paletteERK7QString">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController11get_paletteERK7QString"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController11get_paletteERK7QString"></span><span id="PixelMaestroStudio::PaletteController::get_palette__QStringCR"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1ad0b51e68664d62af3483f674cf719a20"></span><a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerE" title="PixelMaestroStudio::PaletteController">PaletteController</a>::<a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE" title="PixelMaestroStudio::PaletteController::PaletteWrapper">PaletteWrapper</a> *<code class="sig-name descname">get_palette</code><span class="sig-paren">(</span><em class="property">const</em> QString &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController11get_paletteERK7QString" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Gets the palette with the specified name. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Palette. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Palette name. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController12get_palettesEv">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController12get_palettesEv"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController12get_palettesEv"></span><span id="PixelMaestroStudio::PaletteController::get_palettes"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1aae11bad8c0f8222d2916bacf1274e9f5"></span>std::vector&lt;<a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteControllerE" title="PixelMaestroStudio::PaletteController">PaletteController</a>::<a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE" title="PixelMaestroStudio::PaletteController::PaletteWrapper">PaletteWrapper</a>&gt; *<code class="sig-name descname">get_palettes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController12get_palettesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Gets the full list of palettes. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Palette list. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController19initialize_palettesEv">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController19initialize_palettesEv"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController19initialize_palettesEv"></span><span id="PixelMaestroStudio::PaletteController::initialize_palettes"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a7f00ff9e4df9232b5665e1209debf86e"></span>void <code class="sig-name descname">initialize_palettes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController19initialize_palettesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets the palette list to defaults. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController13load_palettesEv">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController13load_palettesEv"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController13load_palettesEv"></span><span id="PixelMaestroStudio::PaletteController::load_palettes"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a1e362e70a39b61647bab1dade9cf188c"></span>void <code class="sig-name descname">load_palettes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController13load_palettesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Loads custom palettes from settings </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14remove_paletteE7uint8_t">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14remove_paletteE7uint8_t"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14remove_paletteE7uint8_t"></span><span id="PixelMaestroStudio::PaletteController::remove_palette__uint8_t"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a5aef12ebf43fa42cfbbfd0b89b9ef33d"></span>void <code class="sig-name descname">remove_palette</code><span class="sig-paren">(</span>uint8_t <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14remove_paletteE7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Removes the palette at the specified index. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: Palette index. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController13save_palettesEv">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController13save_palettesEv"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController13save_palettesEv"></span><span id="PixelMaestroStudio::PaletteController::save_palettes"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1a0f5eeb8f8b5f4327e9d019f735981205"></span>void <code class="sig-name descname">save_palettes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController13save_palettesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Saves Palettes to settings. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController15serialize_colorERN6Colors3RGBE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController15serialize_colorERN6Colors3RGBE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController15serialize_colorERN6Colors3RGBE"></span><span id="PixelMaestroStudio::PaletteController::serialize_color__Colors::RGBR"></span><span class="target" id="classPixelMaestroStudio_1_1PaletteController_1aec7e4b26b112369e79b5642db251b077"></span>QString <code class="sig-name descname">serialize_color</code><span class="sig-paren">(</span>Colors::RGB &amp;<em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController15serialize_colorERN6Colors3RGBE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts a color into a string for serialization. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Serialized string. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: Color to serialize. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapperE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapperE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper"></span><em class="property">struct </em><code class="sig-name descname">PaletteWrapper</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapperE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Wrapper class for PixelMaestro Palettes. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrappereqEPN6Colors3RGBE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrappereqEPN6Colors3RGBE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrappereqEPN6Colors3RGBE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::eq-operator__Colors::RGBP"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a27676ace2dd1a468414d53c4ac01a084"></span>bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span>Colors::RGB *<em>section_colors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrappereqEPN6Colors3RGBE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper14PaletteWrapperE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper14PaletteWrapperE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper14PaletteWrapperE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::PaletteWrapper__QString.Colors::RGBA.uint8_t.PaletteType.Colors::RGBCR.Colors::RGBCR.b.uint8_t.uint8_t"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a86d9059ee10ced5bd3dffc1c46edcbe4"></span><code class="sig-name descname">PaletteWrapper</code><span class="sig-paren">(</span>QString <em>new_name</em>, Colors::RGB <em>new_colors</em>[], uint8_t <em>num_colors</em>, <a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE" title="PixelMaestroStudio::PaletteController::PaletteType">PaletteType</a> <em>type</em>, <em class="property">const</em> Colors::RGB &amp;<em>base_color</em>, <em class="property">const</em> Colors::RGB &amp;<em>target_color</em>, bool <em>mirror</em>, uint8_t <em>start</em>, uint8_t <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper14PaletteWrapperE7QStringA_N6Colors3RGBE7uint8_t11PaletteTypeRKN6Colors3RGBERKN6Colors3RGBEb7uint8_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. Provides storage for colors (which is why we pass colors directly instead of a Palette object.) <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">new_name</span></code>: Palette name. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">new_colors</span></code>: Palette colors. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: Number of colors in the Palette. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: The type of Palette. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base_color</span></code>: The Palette’s initial color. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_color</span></code>: The Palette’s target color. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mirror</span></code>: For scaling Palettes, whether to mirror the colors. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start</span></code>: For comets, where the body of the comet starts. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code>: For comets, where the tail of the comet ends. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper10base_colorE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper10base_colorE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper10base_colorE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::base_color__Colors::RGB"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a5da19eee2f03e21dcfa30593431742f5"></span>Colors::RGB <code class="sig-name descname">base_color</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper10base_colorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper12target_colorE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper12target_colorE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper12target_colorE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::target_color__Colors::RGB"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a388b01483aaa47b921ab3e7be8c0e72b"></span>Colors::RGB <code class="sig-name descname">target_color</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper12target_colorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper6mirrorE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper6mirrorE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper6mirrorE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::mirror__b"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a7ed4572ac77730aba9364e2533489db9"></span>bool <code class="sig-name descname">mirror</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper6mirrorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper4nameE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper4nameE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper4nameE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::name__QString"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a4858696b964f22bc25127004a2838b98"></span>QString <code class="sig-name descname">name</code> = &quot;&quot;<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper4nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper5startE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper5startE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper5startE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::start__uint8_t"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a04caf24058a5217f2e330a7007c829bc"></span>uint8_t <code class="sig-name descname">start</code> = 0<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper5startE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper6lengthE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper6lengthE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper6lengthE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::length__uint8_t"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a347c7d368eb57ce5a995f956fb429c62"></span>uint8_t <code class="sig-name descname">length</code> = 0<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper6lengthE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper4typeE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper4typeE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper4typeE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::type__PaletteType"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a643b3974e6de27a68835168bc8af8eb9"></span><a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE" title="PixelMaestroStudio::PaletteController::PaletteType">PaletteType</a> <code class="sig-name descname">type</code> = <a class="reference internal" href="#_CPPv4N18PixelMaestroStudio17PaletteController11PaletteTypeE" title="PixelMaestroStudio::PaletteController::PaletteType">PaletteType</a>::Blank<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper7paletteE">
+<span id="_CPPv3N18PixelMaestroStudio17PaletteController14PaletteWrapper7paletteE"></span><span id="_CPPv2N18PixelMaestroStudio17PaletteController14PaletteWrapper7paletteE"></span><span id="PixelMaestroStudio::PaletteController::PaletteWrapper::palette__Palette"></span><span class="target" id="structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper_1a11315af09170d9830ae0c7f0bb4acb73"></span>Palette <code class="sig-name descname">palette</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio17PaletteController14PaletteWrapper7paletteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classPixelMaestroStudio_1_1PaletteControlWidget.html" class="btn btn-neutral float-right" title="Class PaletteControlWidget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="classPixelMaestroStudio_1_1MainWindow.html" class="btn btn-neutral float-left" title="Class MainWindow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

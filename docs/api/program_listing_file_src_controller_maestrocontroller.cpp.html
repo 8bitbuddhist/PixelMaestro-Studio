@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File maestrocontroller.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Program Listing for File maestrocontroller.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/program_listing_file_src_controller_maestrocontroller.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-maestrocontroller-cpp">
+<span id="program-listing-file-src-controller-maestrocontroller-cpp"></span><h1>Program Listing for File maestrocontroller.cpp<a class="headerlink" href="#program-listing-for-file-maestrocontroller-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_controller_maestrocontroller.cpp.html#file-src-controller-maestrocontroller-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/controller/maestrocontroller.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;animation/fireanimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/lightninganimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/plasmaanimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/radialanimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/sparkleanimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;animation/waveanimation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;canvas/canvas.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;core/maestro.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/animationcuehandler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/canvascuehandler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/maestrocuehandler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/sectioncuehandler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/show.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cue/showcuehandler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;maestrocontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QByteArray&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">PixelMaestro</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+    <span class="n">MaestroController</span><span class="o">::</span><span class="n">MaestroController</span><span class="p">(</span><span class="n">MaestroControlWidget</span><span class="o">&amp;</span> <span class="n">maestro_control_widget</span><span class="p">)</span> <span class="o">:</span> <span class="n">timer_</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="n">maestro_control_widget_</span><span class="p">(</span><span class="n">maestro_control_widget</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">initialize_maestro</span><span class="p">();</span>
+
+        <span class="c1">// Initialize timers</span>
+        <span class="n">timer_</span><span class="p">.</span><span class="n">setTimerType</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">PreciseTimer</span><span class="p">);</span>
+        <span class="n">connect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">timer_</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="n">timeout</span><span class="p">()),</span> <span class="k">this</span><span class="p">,</span> <span class="n">SLOT</span><span class="p">(</span><span class="n">update</span><span class="p">()));</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">add_drawing_area</span><span class="p">(</span><span class="n">MaestroDrawingArea</span><span class="o">&amp;</span> <span class="n">drawing_area</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">drawing_areas_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="o">&amp;</span><span class="n">drawing_area</span><span class="p">);</span>
+
+        <span class="c1">// Initialize the DrawingArea&#39;s SectionDrawingAreas</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">num_sections_</span><span class="p">;</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">drawing_area</span><span class="p">.</span><span class="n">add_section_drawing_area</span><span class="p">(</span><span class="n">sections_</span><span class="p">[</span><span class="n">section</span><span class="p">],</span> <span class="n">section</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Refresh the DrawingArea on each timeout</span>
+        <span class="n">connect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">timer_</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="n">timeout</span><span class="p">()),</span> <span class="o">&amp;</span><span class="n">drawing_area</span><span class="p">,</span> <span class="n">SLOT</span><span class="p">(</span><span class="n">update</span><span class="p">()));</span>
+    <span class="p">}</span>
+
+    <span class="n">Maestro</span><span class="o">&amp;</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">get_maestro</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">*</span><span class="n">maestro_</span><span class="p">.</span><span class="n">data</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">get_running</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">timer_</span><span class="p">.</span><span class="n">isActive</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint64_t</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">get_total_elapsed_time</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">uint64_t</span> <span class="n">elapsed</span> <span class="o">=</span> <span class="n">last_pause_</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">get_running</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">elapsed</span> <span class="o">+=</span> <span class="n">elapsed_timer_</span><span class="p">.</span><span class="n">elapsed</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">elapsed</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">initialize_maestro</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">maestro_</span><span class="p">.</span><span class="n">isNull</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">maestro_</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Initalize the Maestro with the specified number of Sections</span>
+        <span class="n">maestro_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">Maestro</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">Maestro</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
+        <span class="n">set_sections</span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">num_sections</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="n">toInt</span><span class="p">());</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * Set the Maestro&#39;s refresh timer.</span>
+<span class="cm">         * If the user hasn&#39;t set a custom timer, default to 50ms (20fps).</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">refresh</span> <span class="o">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">(</span><span class="mi">50</span><span class="p">)).</span><span class="n">toInt</span><span class="p">();</span>
+        <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">set_timer</span><span class="p">(</span><span class="n">refresh</span><span class="p">);</span>
+
+        <span class="c1">// Enable the Maestro&#39;s CueController and CueHandlers</span>
+        <span class="n">CueController</span><span class="o">&amp;</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">set_cue_controller</span><span class="p">(</span><span class="n">UINT16_MAX</span><span class="p">);</span>
+        <span class="n">controller</span><span class="p">.</span><span class="n">enable_animation_cue_handler</span><span class="p">();</span>
+        <span class="n">controller</span><span class="p">.</span><span class="n">enable_canvas_cue_handler</span><span class="p">();</span>
+        <span class="n">controller</span><span class="p">.</span><span class="n">enable_maestro_cue_handler</span><span class="p">();</span>
+        <span class="n">controller</span><span class="p">.</span><span class="n">enable_section_cue_handler</span><span class="p">();</span>
+        <span class="n">controller</span><span class="p">.</span><span class="n">enable_show_cue_handler</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">remove_drawing_area</span><span class="p">(</span><span class="n">MaestroDrawingArea</span><span class="o">&amp;</span> <span class="n">drawing_area</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">disconnect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">timer_</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="n">timeout</span><span class="p">()),</span> <span class="o">&amp;</span><span class="n">drawing_area</span><span class="p">,</span> <span class="n">SLOT</span><span class="p">(</span><span class="n">update</span><span class="p">()));</span>
+        <span class="n">drawing_areas_</span><span class="p">.</span><span class="n">removeOne</span><span class="p">(</span><span class="o">&amp;</span><span class="n">drawing_area</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">save_maestro_to_datastream</span><span class="p">(</span><span class="n">QDataStream</span><span class="o">&amp;</span> <span class="n">datastream</span><span class="p">,</span> <span class="n">QVector</span><span class="o">&lt;</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">&gt;*</span> <span class="n">save_handlers</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">MaestroCueHandler</span><span class="o">*</span> <span class="n">maestro_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">MaestroCueHandler</span><span class="p">));</span>
+
+        <span class="c1">// Maestro-specific Cues</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">save_handlers</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">save_handlers</span><span class="o">-&gt;</span><span class="n">contains</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">MaestroCueHandler</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
+            <span class="kt">uint16_t</span> <span class="n">interval</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="mi">50</span><span class="p">).</span><span class="n">toUInt</span><span class="p">());</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">().</span><span class="n">get_interval</span><span class="p">()</span> <span class="o">!=</span> <span class="n">interval</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">set_timer</span><span class="p">(</span><span class="n">interval</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Show-specific Cues</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">save_handlers</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">save_handlers</span><span class="o">-&gt;</span><span class="n">contains</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">Show</span><span class="o">*</span> <span class="n">show</span> <span class="o">=</span> <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_show</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">show</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">set_show</span><span class="p">());</span>
+                <span class="n">ShowCueHandler</span><span class="o">*</span> <span class="n">show_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">ShowCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">));</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">(),</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_num_events</span><span class="p">(),</span> <span class="nb">false</span><span class="p">));</span>
+                <span class="p">}</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_looping</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_looping</span><span class="p">()));</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_timing_mode</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Call Sections</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">save_handlers</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">save_handlers</span><span class="o">-&gt;</span><span class="n">contains</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">SectionCueHandler</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">num_sections_</span><span class="p">;</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">save_section_to_datastream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">save_handlers</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">save_section_to_datastream</span><span class="p">(</span><span class="n">QDataStream</span><span class="o">&amp;</span> <span class="n">datastream</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">section_id</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">QVector</span><span class="o">&lt;</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">&gt;*</span> <span class="n">save_handlers</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">Section</span><span class="o">*</span> <span class="n">section</span> <span class="o">=</span> <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_section</span><span class="p">(</span><span class="n">section_id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">section</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">layer_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">layer_id</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">section</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">SectionCueHandler</span><span class="o">*</span> <span class="n">section_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SectionCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">SectionCueHandler</span><span class="p">));</span>
+
+        <span class="c1">// Global Section settings</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">get_brightness</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_brightness</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_brightness</span><span class="p">()));</span>
+        <span class="p">}</span>
+        <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_dimensions</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">));</span>
+
+        <span class="c1">// Animation &amp; Colors</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">save_handlers</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">save_handlers</span><span class="o">-&gt;</span><span class="n">contains</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">AnimationCueHandler</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">Animation</span><span class="o">*</span> <span class="n">animation</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_animation</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">animation</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_animation</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_type</span><span class="p">()));</span>
+
+                <span class="n">AnimationCueHandler</span><span class="o">*</span> <span class="n">animation_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">AnimationCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">AnimationCueHandler</span><span class="p">));</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_palette</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="o">*</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">()));</span>
+                <span class="p">}</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_center</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">y</span><span class="p">));</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_orientation</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_orientation</span><span class="p">()));</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_reverse</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_reverse</span><span class="p">()));</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_fade</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_fade</span><span class="p">()));</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_timer</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">(),</span> <span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">()));</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Save Animation-specific settings</span>
+                <span class="k">switch</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_type</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Fire</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">FireAnimation</span><span class="o">*</span> <span class="n">fa</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">FireAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_fire_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">fa</span><span class="o">-&gt;</span><span class="n">get_multiplier</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Lightning</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">LightningAnimation</span><span class="o">*</span> <span class="n">la</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">LightningAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_lightning_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">la</span><span class="o">-&gt;</span><span class="n">get_bolt_count</span><span class="p">(),</span> <span class="n">la</span><span class="o">-&gt;</span><span class="n">get_drift</span><span class="p">(),</span> <span class="n">la</span><span class="o">-&gt;</span><span class="n">get_fork_chance</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Plasma</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">PlasmaAnimation</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">PlasmaAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_plasma_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">pa</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">(),</span> <span class="n">pa</span><span class="o">-&gt;</span><span class="n">get_resolution</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Radial</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">RadialAnimation</span><span class="o">*</span> <span class="n">ra</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">RadialAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_radial_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">ra</span><span class="o">-&gt;</span><span class="n">get_resolution</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Sparkle</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">SparkleAnimation</span><span class="o">*</span> <span class="n">sa</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SparkleAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_sparkle_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">sa</span><span class="o">-&gt;</span><span class="n">get_threshold</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="n">AnimationType</span><span class="o">::</span><span class="nl">Wave</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="n">WaveAnimation</span><span class="o">*</span> <span class="n">wa</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">WaveAnimation</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">animation</span><span class="p">);</span>
+                            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_wave_options</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">wa</span><span class="o">-&gt;</span><span class="n">get_skew</span><span class="p">()));</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">default</span><span class="o">:</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Scrolling, offset, and mirroring</span>
+        <span class="n">Point</span><span class="o">&amp;</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_offset</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">offset</span><span class="p">.</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">offset</span><span class="p">.</span><span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_offset</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">y</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">Section</span><span class="o">::</span><span class="n">Scroll</span><span class="o">*</span> <span class="n">scroll</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_scroll</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_scroll</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">scroll</span><span class="o">-&gt;</span><span class="n">interval_x</span><span class="p">,</span> <span class="n">scroll</span><span class="o">-&gt;</span><span class="n">interval_y</span><span class="p">,</span> <span class="n">scroll</span><span class="o">-&gt;</span><span class="n">reverse_x</span><span class="p">,</span> <span class="n">scroll</span><span class="o">-&gt;</span><span class="n">reverse_y</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">Section</span><span class="o">::</span><span class="n">Mirror</span><span class="o">*</span> <span class="n">mirror</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_mirror</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mirror</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_mirror</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">mirror</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span> <span class="n">mirror</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Save Canvas settings</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">save_handlers</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">save_handlers</span><span class="o">-&gt;</span><span class="n">contains</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">CanvasCueHandler</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">Canvas</span><span class="o">*</span> <span class="n">canvas</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_canvas</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_canvas</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">()));</span>
+
+                <span class="n">CanvasCueHandler</span><span class="o">*</span> <span class="n">canvas_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">CanvasCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">CanvasCueHandler</span><span class="p">));</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_frame_timer</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">()));</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_palette</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="o">*</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">()));</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Draw and save each frame</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_num_frames</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">()));</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">frame</span> <span class="o">&lt;</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">();</span> <span class="n">frame</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">,</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)));</span>
+                <span class="p">}</span>
+                <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_current_frame_index</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_current_frame_index</span><span class="p">()));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Layers</span>
+        <span class="n">Section</span><span class="o">::</span><span class="n">Layer</span><span class="o">*</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">layer</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span><span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">,</span> <span class="n">layer</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">,</span> <span class="n">layer</span><span class="o">-&gt;</span><span class="n">alpha</span><span class="p">));</span>
+            <span class="n">save_section_to_datastream</span><span class="p">(</span><span class="n">datastream</span><span class="p">,</span> <span class="n">section_id</span><span class="p">,</span> <span class="n">layer_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">save_handlers</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">Section</span><span class="o">*</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">set_sections</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">num_sections</span><span class="p">,</span> <span class="n">Point</span> <span class="n">dimensions</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">delete</span> <span class="p">[]</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">sections_</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">sections_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Section</span><span class="p">[</span><span class="n">num_sections</span><span class="p">];</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">num_sections_</span> <span class="o">=</span> <span class="n">num_sections</span><span class="p">;</span>
+
+        <span class="c1">// Sets the size of each Section</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">num_sections</span><span class="p">;</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">sections_</span><span class="p">[</span><span class="n">section</span><span class="p">].</span><span class="n">set_dimensions</span><span class="p">(</span><span class="n">dimensions</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">set_sections</span><span class="p">(</span><span class="n">sections_</span><span class="p">,</span> <span class="n">num_sections_</span><span class="p">);</span>
+
+        <span class="c1">// Reset each drawing area&#39;s Sections</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">MaestroDrawingArea</span><span class="o">*</span> <span class="nl">drawing_area</span> <span class="p">:</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">drawing_areas_</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">drawing_area</span><span class="o">-&gt;</span><span class="n">remove_section_drawing_areas</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">num_sections</span><span class="p">;</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">drawing_area</span><span class="o">-&gt;</span><span class="n">add_section_drawing_area</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">sections_</span><span class="p">[</span><span class="n">section</span><span class="p">],</span> <span class="n">section</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Reset the MaestroControlWidget&#39;s active section</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">sections_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">elapsed_timer_</span><span class="p">.</span><span class="n">restart</span><span class="p">();</span>
+        <span class="n">timer_</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">().</span><span class="n">get_interval</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">stop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">last_pause_</span> <span class="o">+=</span> <span class="n">elapsed_timer_</span><span class="p">.</span><span class="n">elapsed</span><span class="p">();</span>
+        <span class="n">timer_</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">get_total_elapsed_time</span><span class="p">(),</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MaestroController</span><span class="o">::</span><span class="n">write_cue_to_stream</span><span class="p">(</span><span class="n">QDataStream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">cue</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cue</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">stream</span><span class="p">.</span><span class="n">writeRawData</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">cue</span><span class="p">,</span> <span class="n">maestro_</span><span class="o">-&gt;</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">MaestroController</span><span class="o">::~</span><span class="n">MaestroController</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// If automatic session saving is enabled, save Maestro configuration</span>
+        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">save_session</span><span class="p">).</span><span class="n">toBool</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">QByteArray</span> <span class="n">maestro_config</span><span class="p">;</span>
+            <span class="n">QDataStream</span> <span class="nf">maestro_datastream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">maestro_config</span><span class="p">,</span> <span class="n">QIODevice</span><span class="o">::</span><span class="n">Truncate</span><span class="p">);</span>
+            <span class="n">save_maestro_to_datastream</span><span class="p">(</span><span class="n">maestro_datastream</span><span class="p">);</span>
+            <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">last_session</span><span class="p">,</span> <span class="n">maestro_config</span><span class="p">);</span>
+        <span class="p">}</span>
+
+
+        <span class="k">delete</span> <span class="p">[]</span> <span class="n">sections_</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

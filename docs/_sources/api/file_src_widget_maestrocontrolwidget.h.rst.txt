@@ -1,0 +1,143 @@
+
+.. _file_src_widget_maestrocontrolwidget.h:
+
+File maestrocontrolwidget.h
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/maestrocontrolwidget.h``)
+--------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_maestrocontrolwidget.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QButtonGroup``
+
+- ``QColor``
+
+- ``QLocale``
+
+- ``QSerialPort``
+
+- ``QSharedPointer``
+
+- ``QTimer``
+
+- ``QVector``
+
+- ``QWidget``
+
+- ``controller/maestrocontroller.h`` (:ref:`file_src_controller_maestrocontroller.h`)
+
+- ``controller/palettecontroller.h`` (:ref:`file_src_controller_palettecontroller.h`)
+
+- ``controller/showcontroller.h`` (:ref:`file_src_controller_showcontroller.h`)
+
+- ``core/colors.h``
+
+- ``core/maestro.h``
+
+- ``cue/animationcuehandler.h``
+
+- ``cue/canvascuehandler.h``
+
+- ``cue/maestrocuehandler.h``
+
+- ``cue/sectioncuehandler.h``
+
+- ``cue/showcuehandler.h``
+
+- ``dialog/maestrodrawingareadialog.h`` (:ref:`file_src_dialog_maestrodrawingareadialog.h`)
+
+- ``memory``
+
+- ``utility/cueinterpreter.h`` (:ref:`file_src_utility_cueinterpreter.h`)
+
+- ``widget/animationcontrolwidget.h`` (:ref:`file_src_widget_animationcontrolwidget.h`)
+
+- ``widget/canvascontrolwidget.h`` (:ref:`file_src_widget_canvascontrolwidget.h`)
+
+- ``widget/devicecontrolwidget.h`` (:ref:`file_src_widget_devicecontrolwidget.h`)
+
+- ``widget/sectioncontrolwidget.h`` (:ref:`file_src_widget_sectioncontrolwidget.h`)
+
+- ``widget/showcontrolwidget.h`` (:ref:`file_src_widget_showcontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_maestrocontroller.h`
+
+- :ref:`file_src_controller_serialdevicecontroller.cpp`
+
+- :ref:`file_src_dialog_sectionmapdialog.cpp`
+
+- :ref:`file_src_drawingarea_maestrodrawingarea.h`
+
+- :ref:`file_src_window_mainwindow.h`
+
+- :ref:`file_src_utility_canvasutility.h`
+
+- :ref:`file_src_widget_animation_fireanimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animation_lightninganimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animation_plasmaanimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animation_radialanimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animation_sparkleanimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animation_waveanimationcontrolwidget.h`
+
+- :ref:`file_src_widget_animationcontrolwidget.h`
+
+- :ref:`file_src_widget_canvascontrolwidget.h`
+
+- :ref:`file_src_widget_devicecontrolwidget.h`
+
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+
+- :ref:`file_src_widget_sectioncontrolwidget.h`
+
+- :ref:`file_src_widget_showcontrolwidget.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1MaestroControlWidget`
+

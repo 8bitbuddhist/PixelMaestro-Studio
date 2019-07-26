@@ -1,0 +1,48 @@
+
+.. _file_src_widget_sectioncontrolwidget.cpp:
+
+File sectioncontrolwidget.cpp
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/sectioncontrolwidget.cpp``)
+----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_sectioncontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``sectioncontrolwidget.h`` (:ref:`file_src_widget_sectioncontrolwidget.h`)
+
+- ``ui_sectioncontrolwidget.h``
+
+- ``utility/canvasutility.h`` (:ref:`file_src_utility_canvasutility.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

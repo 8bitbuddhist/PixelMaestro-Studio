@@ -1,0 +1,65 @@
+
+.. _file_src_widget_animationcontrolwidget.h:
+
+File animationcontrolwidget.h
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/animationcontrolwidget.h``)
+----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_animationcontrolwidget.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QSharedPointer``
+
+- ``QWidget``
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+- :ref:`file_src_widget_animationcontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+- :ref:`namespace_Ui`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1AnimationControlWidget`
+

@@ -1,0 +1,200 @@
+
+Full API
+--------
+
+Namespaces
+**********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   namespace_PixelMaestro.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   namespace_PixelMaestroStudio.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   namespace_Ui.rst
+
+Classes and Structs
+*******************
+
+
+.. toctree::
+   :maxdepth: 5
+
+   structPixelMaestroStudio_1_1PaletteController_1_1PaletteWrapper.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1AddDeviceDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1AnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1CanvasControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1CanvasUtility.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1CueInterpreter.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1CueInterpreterDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1CueModel.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1DeviceControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1EditEventDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1FireAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1LightningAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1MaestroController.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1MaestroControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1MaestroDrawingArea.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1MaestroDrawingAreaDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1MainWindow.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1PaletteController.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1PaletteControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1PaletteEditDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1PlasmaAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1PreferencesDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1RadialAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SectionControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SectionDrawingArea.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SectionMapDialog.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SectionMapModel.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SerialDeviceController.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SerialDeviceThreadController.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1ShowController.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1ShowControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1SparkleAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1WaveAnimationControlWidget.rst
+
+Functions
+*********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   function_main_8cpp_1a0ddf1224851353fc92bfbff6f499fa97.rst

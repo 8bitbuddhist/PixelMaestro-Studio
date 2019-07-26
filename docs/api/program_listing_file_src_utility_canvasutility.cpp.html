@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File canvasutility.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Program Listing for File canvasutility.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/program_listing_file_src_utility_canvasutility.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-canvasutility-cpp">
+<span id="program-listing-file-src-utility-canvasutility-cpp"></span><h1>Program Listing for File canvasutility.cpp<a class="headerlink" href="#program-listing-for-file-canvasutility-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_utility_canvasutility.cpp.html#file-src-utility-canvasutility-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/utility/canvasutility.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * CanvasUtility - Tools for managing Canvases.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;QColor&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QImage&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QImageReader&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;canvasutility.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;canvas/canvas.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;core/point.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+    <span class="c1">// TODO: Move to separate thread</span>
+    <span class="kt">void</span> <span class="n">CanvasUtility</span><span class="o">::</span><span class="n">load_image</span><span class="p">(</span><span class="k">const</span> <span class="n">QString</span><span class="o">&amp;</span> <span class="n">filename</span><span class="p">,</span> <span class="n">Canvas</span><span class="o">&amp;</span> <span class="n">canvas</span><span class="p">,</span> <span class="n">MaestroControlWidget</span><span class="o">*</span> <span class="n">maestro_control</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">QImageReader</span> <span class="n">image</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">.</span><span class="n">right</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">toLocal8Bit</span><span class="p">());</span>
+        <span class="n">QSize</span> <span class="nf">canvas_size</span><span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">get_section</span><span class="p">().</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">canvas</span><span class="p">.</span><span class="n">get_section</span><span class="p">().</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+        <span class="n">image</span><span class="p">.</span><span class="n">setScaledSize</span><span class="p">(</span><span class="n">canvas_size</span><span class="p">);</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * Get the number of frames.</span>
+<span class="cm">         * imageCount() = 0 if the image isn&#39;t animated, so we set it to 1 here to run the loop at least once.</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">framecount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">imageCount</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">framecount</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">imageCount</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_num_frames</span><span class="p">(</span>
+                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                    <span class="n">framecount</span><span class="p">));</span>
+
+        <span class="c1">// Read each frame</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">frame_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">frame_index</span> <span class="o">&lt;</span> <span class="n">framecount</span><span class="p">;</span> <span class="n">frame_index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">QImage</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+
+            <span class="c1">// NOTE: Scales the image while retaining proportions</span>
+            <span class="c1">// frame = frame.scaled(canvas_size, Qt::AspectRatioMode::KeepAspectRatio);</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">convertToFormat</span><span class="p">(</span><span class="n">QImage</span><span class="o">::</span><span class="n">Format_Indexed8</span><span class="p">);</span>
+
+            <span class="cm">/*</span>
+<span class="cm">             * Extract the frame&#39;s color table.</span>
+<span class="cm">             * We do this for every frame to ensure each Pixel is assigned a color index, even though we only use the first frame&#39;s color table as the Palette.</span>
+<span class="cm">             * We also make sure the color table is at most 255 colors to avoid transparency issues.</span>
+<span class="cm">             */</span>
+            <span class="n">QVector</span><span class="o">&lt;</span><span class="n">QRgb</span><span class="o">&gt;</span> <span class="n">color_table</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">colorTable</span><span class="p">();</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">256</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">color_table</span><span class="p">.</span><span class="n">removeLast</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">currentImageNumber</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="c1">// Set the frame rate. Note that this doesn&#39;t account for images with different timings per frame.</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">framecount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
+                                <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_frame_timer</span><span class="p">(</span>
+                                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                                    <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">nextImageDelay</span><span class="p">())));</span>
+                <span class="p">}</span>
+
+                <span class="cm">/*</span>
+<span class="cm">                 * Copy the color table into a temporary RGB array so we can translate it into a Cue.</span>
+<span class="cm">                 * Note that this only takes the color table from the first frame, so if other frames use different color palettes, they won&#39;t come out as expected.</span>
+<span class="cm">                 */</span>
+                <span class="n">QVector</span><span class="o">&lt;</span><span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&gt;</span> <span class="n">color_table_rgb</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">color</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">color</span> <span class="o">&lt;</span> <span class="n">color_table</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">color</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">color_table_rgb</span><span class="p">[</span><span class="n">color</span><span class="p">].</span><span class="n">r</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">qRed</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">color</span><span class="p">)));</span>
+                    <span class="n">color_table_rgb</span><span class="p">[</span><span class="n">color</span><span class="p">].</span><span class="n">g</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">qGreen</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">color</span><span class="p">)));</span>
+                    <span class="n">color_table_rgb</span><span class="p">[</span><span class="n">color</span><span class="p">].</span><span class="n">b</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">qBlue</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">color</span><span class="p">)));</span>
+                <span class="p">}</span>
+
+                <span class="n">Palette</span> <span class="n">palette</span><span class="p">(</span><span class="o">&amp;</span><span class="n">color_table_rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+                <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
+                            <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_palette</span><span class="p">(</span>
+                                <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                                <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                                <span class="n">palette</span><span class="p">));</span>
+            <span class="p">}</span>
+
+            <span class="cm">/*</span>
+<span class="cm">             * Get the index of each pixel&#39;s color in the frame&#39;s palette.</span>
+<span class="cm">             * Then, copy each index into a temporary frame.</span>
+<span class="cm">             * Finally, draw the frame to the Canvas.</span>
+<span class="cm">             */</span>
+            <span class="kt">uint8_t</span> <span class="n">color_table_indices</span><span class="p">[</span><span class="n">canvas_size</span><span class="p">.</span><span class="n">width</span><span class="p">()</span> <span class="o">*</span> <span class="n">canvas_size</span><span class="p">.</span><span class="n">height</span><span class="p">()];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">canvas_size</span><span class="p">.</span><span class="n">height</span><span class="p">();</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">canvas_size</span><span class="p">.</span><span class="n">width</span><span class="p">();</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">get_section</span><span class="p">().</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">in_bounds</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="n">QColor</span> <span class="n">pix_color</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">pixelColor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+                        <span class="n">color_table_indices</span><span class="p">[</span><span class="n">canvas</span><span class="p">.</span><span class="n">get_section</span><span class="p">().</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">get_inline_index</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">color_table</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="n">pix_color</span><span class="p">.</span><span class="n">rgb</span><span class="p">()));</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
+                <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span>
+                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">maestro_control</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
+                    <span class="n">frame_index</span><span class="p">,</span>
+                    <span class="n">canvas_size</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span>
+                    <span class="n">canvas_size</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span>
+                    <span class="o">&amp;</span><span class="n">color_table_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">);</span>
+
+            <span class="c1">// If this is an animated image, move to the next frame.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">frame_index</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">framecount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">image</span><span class="p">.</span><span class="n">jumpToNextImage</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

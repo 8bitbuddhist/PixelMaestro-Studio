@@ -1,0 +1,64 @@
+
+.. _file_src_widget_showcontrolwidget.cpp:
+
+File showcontrolwidget.cpp
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/showcontrolwidget.cpp``)
+-------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_showcontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QKeyEvent``
+
+- ``QListIterator``
+
+- ``QListWidget``
+
+- ``QModelIndex``
+
+- ``QRegExp``
+
+- ``QSettings``
+
+- ``controller/showcontroller.h`` (:ref:`file_src_controller_showcontroller.h`)
+
+- ``dialog/editeventdialog.h`` (:ref:`file_src_dialog_editeventdialog.h`)
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``showcontrolwidget.h`` (:ref:`file_src_widget_showcontrolwidget.h`)
+
+- ``ui_showcontrolwidget.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

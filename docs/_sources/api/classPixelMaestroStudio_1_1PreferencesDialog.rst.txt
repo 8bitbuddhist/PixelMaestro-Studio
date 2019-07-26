@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1PreferencesDialog:
+
+Class PreferencesDialog
+=======================
+
+- Defined in :ref:`file_src_dialog_preferencesdialog.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QDialog``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::PreferencesDialog
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1PlasmaAnimationControlWidget:
+
+Class PlasmaAnimationControlWidget
+==================================
+
+- Defined in :ref:`file_src_widget_animation_plasmaanimationcontrolwidget.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QWidget``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::PlasmaAnimationControlWidget
+   :members:
+   :protected-members:
+   :undoc-members:

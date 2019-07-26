@@ -1,0 +1,73 @@
+
+.. _file_src_drawingarea_sectiondrawingarea.h:
+
+File sectiondrawingarea.h
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_drawingarea>` (``src/drawingarea``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/drawingarea/sectiondrawingarea.h``)
+-----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_drawingarea_sectiondrawingarea.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QFrame``
+
+- ``QMouseEvent``
+
+- ``QPaintEvent``
+
+- ``QPoint``
+
+- ``QResizeEvent``
+
+- ``QWidget``
+
+- ``core/section.h``
+
+- ``drawingarea/maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_drawingarea_maestrodrawingarea.h`
+
+- :ref:`file_src_drawingarea_sectiondrawingarea.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1SectionDrawingArea`
+

@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SectionMapDialog:
+
+Class SectionMapDialog
+======================
+
+- Defined in :ref:`file_src_dialog_sectionmapdialog.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QDialog``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SectionMapDialog
+   :members:
+   :protected-members:
+   :undoc-members:

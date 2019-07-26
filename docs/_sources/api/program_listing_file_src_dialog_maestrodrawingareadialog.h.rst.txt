@@ -1,0 +1,54 @@
+
+.. _program_listing_file_src_dialog_maestrodrawingareadialog.h:
+
+Program Listing for File maestrodrawingareadialog.h
+===================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_dialog_maestrodrawingareadialog.h>` (``src/dialog/maestrodrawingareadialog.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * MaestroDrawingAreaDialog - DrawingArea container for Maestro output.
+    */
+   
+   #ifndef MAESTRODRAWINGAREADIALOG_H
+   #define MAESTRODRAWINGAREADIALOG_H
+   
+   #include <QDialog>
+   #include <QLabel>
+   #include <memory>
+   #include "controller/maestrocontroller.h"
+   #include "utility/cueinterpreter.h"
+   #include "drawingarea/maestrodrawingarea.h"
+   
+   using namespace PixelMaestro;
+   
+   namespace Ui {
+       class MaestroDrawingAreaDialog;
+   }
+   
+   namespace PixelMaestroStudio {
+       class MaestroController;
+       class MaestroDrawingArea;
+       class MaestroDrawingAreaDialog : public QDialog {
+               Q_OBJECT
+   
+           public:
+               explicit MaestroDrawingAreaDialog(QWidget *parent, MaestroController& maestro_controller);
+               MaestroDrawingArea& get_maestro_drawing_area();
+               ~MaestroDrawingAreaDialog();
+   
+           protected:
+               bool eventFilter(QObject *watched, QEvent *event);
+   
+           private:
+               Ui::MaestroDrawingAreaDialog *ui;
+               MaestroController& maestro_controller_;
+               QSharedPointer<MaestroDrawingArea> drawing_area_;
+       };
+   }
+   
+   #endif // MAESTRODRAWINGAREADIALOG_H

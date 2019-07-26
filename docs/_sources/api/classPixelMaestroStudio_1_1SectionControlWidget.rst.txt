@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1SectionControlWidget:
+
+Class SectionControlWidget
+==========================
+
+- Defined in :ref:`file_src_widget_sectioncontrolwidget.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QWidget``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::SectionControlWidget
+   :members:
+   :protected-members:
+   :undoc-members:

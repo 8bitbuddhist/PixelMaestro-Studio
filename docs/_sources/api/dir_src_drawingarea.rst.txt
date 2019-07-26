@@ -1,0 +1,23 @@
+.. _dir_src_drawingarea:
+
+
+Directory drawingarea
+=====================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/drawingarea``
+
+
+Files
+-----
+
+- :ref:`file_src_drawingarea_maestrodrawingarea.cpp`
+- :ref:`file_src_drawingarea_maestrodrawingarea.h`
+- :ref:`file_src_drawingarea_sectiondrawingarea.cpp`
+- :ref:`file_src_drawingarea_sectiondrawingarea.h`
+
+

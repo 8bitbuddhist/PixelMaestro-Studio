@@ -1,0 +1,61 @@
+
+.. _file_src_model_sectionmapmodel.h:
+
+File sectionmapmodel.h
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_model>` (``src/model``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/model/sectionmapmodel.h``)
+--------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_model_sectionmapmodel.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QStandardItemModel``
+
+- ``core/maestro.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_serialdevicecontroller.h`
+
+- :ref:`file_src_model_sectionmapmodel.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1SectionMapModel`
+

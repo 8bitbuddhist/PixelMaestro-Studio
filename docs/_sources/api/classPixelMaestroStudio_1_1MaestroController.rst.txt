@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1MaestroController:
+
+Class MaestroController
+=======================
+
+- Defined in :ref:`file_src_controller_maestrocontroller.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QObject``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::MaestroController
+   :members:
+   :protected-members:
+   :undoc-members:

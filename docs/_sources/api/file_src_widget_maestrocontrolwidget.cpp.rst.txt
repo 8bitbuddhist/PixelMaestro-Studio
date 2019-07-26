@@ -1,0 +1,74 @@
+
+.. _file_src_widget_maestrocontrolwidget.cpp:
+
+File maestrocontrolwidget.cpp
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/maestrocontrolwidget.cpp``)
+----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_maestrocontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QFileDialog``
+
+- ``QKeyEvent``
+
+- ``QMessageBox``
+
+- ``QModelIndex``
+
+- ``QSettings``
+
+- ``QString``
+
+- ``controller/maestrocontroller.h`` (:ref:`file_src_controller_maestrocontroller.h`)
+
+- ``core/section.h``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``drawingarea/maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
+
+- ``maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+- ``ui_maestrocontrolwidget.h``
+
+- ``utility.h`` (:ref:`file_src_utility_canvasutility.h`)
+
+- ``utility/canvasutility.h`` (:ref:`file_src_utility_canvasutility.h`)
+
+- ``widget/palettecontrolwidget.h`` (:ref:`file_src_widget_palettecontrolwidget.h`)
+
+- ``window/mainwindow.h`` (:ref:`file_src_window_mainwindow.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

@@ -1,0 +1,63 @@
+
+.. _program_listing_file_src_dialog_maestrodrawingareadialog.cpp:
+
+Program Listing for File maestrodrawingareadialog.cpp
+=====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_dialog_maestrodrawingareadialog.cpp>` (``src/dialog/maestrodrawingareadialog.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "maestrodrawingareadialog.h"
+   #include "ui_maestrodrawingareadialog.h"
+   #include <QEvent>
+   #include <QKeyEvent>
+   
+   using namespace PixelMaestro;
+   
+   namespace PixelMaestroStudio {
+       MaestroDrawingAreaDialog::MaestroDrawingAreaDialog(QWidget *parent, MaestroController& maestro_controller) :
+           QDialog(parent),
+           ui(new Ui::MaestroDrawingAreaDialog),
+           maestro_controller_(maestro_controller) {
+           // Capture button key presses
+           qApp->installEventFilter(this);
+   
+           ui->setupUi(this);
+   
+           QLayout* layout = this->findChild<QLayout*>("maestroLayout");
+           drawing_area_ = QSharedPointer<MaestroDrawingArea>(new MaestroDrawingArea(layout->widget(), maestro_controller_));
+           drawing_area_->set_maestro_control_widget(dynamic_cast<MaestroControlWidget*>(parent));
+           layout->addWidget(drawing_area_.data());
+   
+           this->setWindowFlags(Qt::Window);
+       }
+   
+       bool MaestroDrawingAreaDialog::eventFilter(QObject *watched, QEvent *event) {
+           if (event->type() == QEvent::KeyPress) {
+               QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
+               if (key_event->key() == Qt::Key_F11) {
+                   if (this->isFullScreen()) {
+                       this->showNormal();
+                   }
+                   else {
+                       this->showFullScreen();
+                   }
+                   return true;
+               }
+           }
+   
+           return QObject::eventFilter(watched, event);
+       }
+   
+       MaestroDrawingArea& MaestroDrawingAreaDialog::get_maestro_drawing_area() {
+           return *this->drawing_area_.get();
+       }
+   
+       MaestroDrawingAreaDialog::~MaestroDrawingAreaDialog() {
+           qApp->removeEventFilter(this);
+           delete ui;
+       }
+   }

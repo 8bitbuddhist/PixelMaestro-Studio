@@ -1,0 +1,77 @@
+
+.. _program_listing_file_src_controller_maestrocontroller.h:
+
+Program Listing for File maestrocontroller.h
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_controller_maestrocontroller.h>` (``src/controller/maestrocontroller.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * MaestroController - Wrapper class for managing a Maestro using a DrawingArea.
+    */
+   
+   #ifndef MAESTROCONTROLLER_H
+   #define MAESTROCONTROLLER_H
+   
+   #include "core/maestro.h"
+   #include "core/section.h"
+   #include "drawingarea/maestrodrawingarea.h"
+   #include "widget/maestrocontrolwidget.h"
+   #include <QDataStream>
+   #include <QElapsedTimer>
+   #include <QObject>
+   #include <QSharedPointer>
+   #include <QString>
+   #include <QTimer>
+   #include <QVector>
+   
+   using namespace PixelMaestro;
+   
+   namespace PixelMaestroStudio {
+       class MaestroDrawingArea;
+   
+       class MaestroController : public QObject {
+           Q_OBJECT
+           public:
+               MaestroController(MaestroControlWidget& maestro_control_widget);
+               ~MaestroController();
+               void add_drawing_area(MaestroDrawingArea& drawing_area);
+               Maestro& get_maestro();
+               bool get_running();
+               uint64_t get_total_elapsed_time();
+               void initialize_maestro();
+               void remove_drawing_area(MaestroDrawingArea& drawing_area);
+               void save_maestro_to_datastream(QDataStream& datastream, QVector<CueController::Handler>* save_handlers = nullptr);
+               void save_section_to_datastream(QDataStream& datastream, uint8_t section_id, uint8_t layer_id, QVector<CueController::Handler>* save_handlers = nullptr);
+               void write_cue_to_stream(QDataStream& stream, uint8_t* cue);
+               Section* set_sections(uint8_t num_sections, Point dimensions = Point(10, 10));
+               void start();
+               void stop();
+   
+           private:
+               QVector<MaestroDrawingArea*> drawing_areas_;
+   
+               uint64_t last_pause_ = 0;
+   
+               QElapsedTimer elapsed_timer_;
+   
+               QTimer timer_;
+   
+               QSharedPointer<Maestro> maestro_;
+   
+               MaestroControlWidget& maestro_control_widget_;
+   
+               uint8_t num_sections_ = 0;
+   
+               Section* sections_ = nullptr;
+   
+           private slots:
+               void update();
+       };
+   }
+   
+   #endif // MAESTROCONTROLLER_H

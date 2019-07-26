@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File sectioncontrolwidget.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Program Listing for File sectioncontrolwidget.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/program_listing_file_src_widget_sectioncontrolwidget.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-sectioncontrolwidget-cpp">
+<span id="program-listing-file-src-widget-sectioncontrolwidget-cpp"></span><h1>Program Listing for File sectioncontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-sectioncontrolwidget-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_widget_sectioncontrolwidget.cpp.html#file-src-widget-sectioncontrolwidget-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/widget/sectioncontrolwidget.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;sectioncontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;ui_sectioncontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;utility/canvasutility.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+    <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">SectionControlWidget</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
+            <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
+            <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">SectionControlWidget</span><span class="p">),</span>
+            <span class="n">maestro_control_widget_</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroControlWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">parent</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="n">Section</span><span class="o">&amp;</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_active_section</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">*</span><span class="n">active_section_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint8_t</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_layer_index</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">get_layer_index</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint8_t</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_layer_index</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/*</span>
+<span class="cm">         * Find the depth of the current Section by traversing parent_section_.</span>
+<span class="cm">         * Once parent_section == nullptr, we know we&#39;ve hit the base Section.</span>
+<span class="cm">         */</span>
+        <span class="kt">uint8_t</span> <span class="n">level</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">test_section</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">section</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">test_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">test_section</span> <span class="o">=</span> <span class="n">test_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">();</span>
+            <span class="n">level</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">level</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint8_t</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_num_layers</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">uint8_t</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Section</span><span class="o">::</span><span class="n">Layer</span><span class="o">*</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">section</span><span class="p">.</span><span class="n">get_layer</span><span class="p">();</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">layer</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span><span class="o">-&gt;</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">();</span>
+            <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint8_t</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_section_index</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">get_section_index</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint8_t</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_section_index</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">target_section</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">section</span><span class="p">;</span>
+
+        <span class="c1">// If this is an Layer, iterate until we find the parent ID</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">target_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">target_section</span> <span class="o">=</span> <span class="n">target_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Iterate until we find the Section that active_section_ points to</span>
+        <span class="kt">uint8_t</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">test_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">test_section</span> <span class="o">!=</span> <span class="n">target_section</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">index</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">test_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">index</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+
+        <span class="c1">// Set Section/Layer</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_num_sections</span><span class="p">();</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Section &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">section</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Unblock signals (*grumble grumble*)</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+        <span class="n">populate_layer_combobox</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_activeLayerComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/*</span>
+<span class="cm">         * If we selected an Layer, iterate through the Section&#39;s nested Layers until we find it.</span>
+<span class="cm">         * If we selected &#39;None&#39;, use the base Section as the active Section.</span>
+<span class="cm">         */</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">layer_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">layer_section</span> <span class="o">=</span> <span class="n">layer_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Show Layer controls</span>
+        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Set active Section to Layer Section</span>
+        <span class="n">set_active_section</span><span class="p">(</span><span class="n">layer_section</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_activeSectionComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">index</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_alphaSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()),</span>
+                <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">,</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_brightnessSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_brightness</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_brightnessSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">uint8_t</span> <span class="n">brightness</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">brightness</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_brightness</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">brightness</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_gridSizeXSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_section_size</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_gridSizeYSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_section_size</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_layerSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">base_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">last_section</span> <span class="o">=</span> <span class="n">base_section</span><span class="p">;</span>
+
+        <span class="c1">// Get the number of Layers (and the index of the last Layer) in the Section</span>
+        <span class="kt">int</span> <span class="n">num_layers</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">last_section</span> <span class="o">=</span> <span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
+            <span class="n">num_layers</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kt">int</span> <span class="n">last_layer_index</span> <span class="o">=</span> <span class="n">num_layers</span><span class="p">;</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * Get the difference between the current Layer count and the new Layer count.</span>
+<span class="cm">         * If diff is positive, add more Layers. Otherwise, remove Layers.</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span> <span class="o">-</span> <span class="n">num_layers</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span>
+                        <span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="n">last_layer_index</span><span class="p">,</span>
+                        <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
+                        <span class="mi">0</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+                <span class="n">last_layer_index</span><span class="o">++</span><span class="p">;</span>
+                <span class="n">diff</span><span class="o">--</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// If the diff is negative, remove Layers</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">last_section</span> <span class="o">=</span> <span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">();</span>
+                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">remove_layer</span><span class="p">(</span>
+                        <span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="n">last_layer_index</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+                <span class="n">last_layer_index</span><span class="o">--</span><span class="p">;</span>
+                <span class="n">diff</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// If the active Layer no longer exists, jump to the last available Layer</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">last_layer_index</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">set_active_section</span><span class="p">(</span><span class="n">last_section</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Refresh layer combobox</span>
+        <span class="n">populate_layer_combobox</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_mirrorXCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_mirror</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">checked</span><span class="p">,</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_mirrorYCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_mirror</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">(),</span>
+                <span class="n">checked</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_mixModeComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Only continue if the active Section is a Layer.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">get_layer_index</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">index</span> <span class="o">!=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span>
+                    <span class="n">get_section_index</span><span class="p">(),</span>
+                    <span class="n">get_layer_index</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()),</span>
+                    <span class="p">(</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">index</span><span class="p">,</span>
+                    <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Enable spin box for alpha only</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">Alpha</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">Alpha</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_offsetXSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_offset</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_offsetYSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_offset</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_scrollXSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_scroll</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_scrollYSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">set_scroll</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// If the current Section doesn&#39;t match the Section drop-down, update the drop-down</span>
+        <span class="kt">int</span> <span class="n">section_index</span> <span class="o">=</span> <span class="n">get_section_index</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">layer_index</span> <span class="o">=</span> <span class="n">get_layer_index</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">!=</span> <span class="n">section_index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">section_index</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Update the Layer combo box based on our selection</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">layer_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Set Layer count</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">get_num_layers</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="p">));</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+            <span class="n">populate_layer_combobox</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Handle Layer combobox</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">!=</span> <span class="n">layer_index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">layer_index</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Set dimensions</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Set offset</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_offset</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_offset</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Set scroll</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="kt">int32_t</span> <span class="n">interval_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int32_t</span> <span class="n">interval_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_scroll</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Section</span><span class="o">::</span><span class="n">Scroll</span><span class="o">*</span> <span class="n">scroll</span> <span class="o">=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_scroll</span><span class="p">();</span>
+            <span class="kt">uint16_t</span> <span class="n">refresh</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_timer</span><span class="p">().</span><span class="n">get_interval</span><span class="p">();</span>
+            <span class="c1">// x axis</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">timer_x</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">refresh</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">timer_x</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">();</span>
+                <span class="n">interval_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span> <span class="o">*</span> <span class="n">refresh</span><span class="p">)</span> <span class="o">/</span> <span class="n">x</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">step_x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">interval_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span> <span class="o">*</span> <span class="n">refresh</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">step_x</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">reverse_x</span><span class="p">)</span> <span class="n">interval_x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+            <span class="c1">// y axis</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">timer_y</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">refresh</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">timer_y</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">();</span>
+                <span class="n">interval_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span> <span class="o">*</span> <span class="n">refresh</span><span class="p">)</span> <span class="o">/</span> <span class="n">y</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">step_y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">interval_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span> <span class="o">*</span> <span class="n">refresh</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">step_y</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">scroll</span><span class="o">-&gt;</span><span class="n">reverse_y</span><span class="p">)</span> <span class="n">interval_y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">interval_x</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">interval_y</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Set mirror</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_mirror</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_mirror</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_mirror</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Update brightness</span>
+        <span class="kt">uint8_t</span> <span class="n">brightness</span> <span class="o">=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_brightness</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">brightness</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">brightness</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">brightnessSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// If this is a Layer, get the MixMode and alpha</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">Section</span><span class="o">::</span><span class="n">Layer</span><span class="o">*</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">();</span>
+
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">layer</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">layer</span><span class="o">-&gt;</span><span class="n">alpha</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">Alpha</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="p">)</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">Alpha</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">populate_layer_combobox</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Base Section&quot;</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">layer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">layer</span> <span class="o">&lt;</span> <span class="n">get_num_layers</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">()));</span> <span class="n">layer</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Layer &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_active_section</span><span class="p">(</span><span class="n">Section</span><span class="o">*</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">active_section_</span> <span class="o">=</span> <span class="n">section</span><span class="p">;</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">refresh_section_settings</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mixModeComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_offset</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_offset</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_scroll</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">new_x</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollXSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">new_y</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">scrollYSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_scroll</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">Utility</span><span class="o">::</span><span class="n">abs_int</span><span class="p">(</span><span class="n">new_x</span><span class="p">),</span>
+                <span class="n">Utility</span><span class="o">::</span><span class="n">abs_int</span><span class="p">(</span><span class="n">new_y</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">new_x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">new_y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+
+        <span class="c1">// Disable offset controls if scrolling is enabled</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">new_x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">new_y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_offset</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_offset</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">offsetYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_section_size</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Only resize if the dimensions are different</span>
+        <span class="n">Point</span> <span class="n">new_dimensions</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeXSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">gridSizeYSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_dimensions</span> <span class="o">!=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">())</span> <span class="p">{</span>
+            <span class="cm">/*</span>
+<span class="cm">             * Check for a Canvas.</span>
+<span class="cm">             * The old Canvas gets deleted on resize.</span>
+<span class="cm">             * If one is set, copy its contents to a temporary buffer, then copy it back once the new Canvas is created.</span>
+<span class="cm">             */</span>
+            <span class="n">Canvas</span><span class="o">*</span> <span class="n">canvas</span> <span class="o">=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_canvas</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Point</span> <span class="n">frame_bounds</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">,</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
+
+                <span class="kt">uint8_t</span><span class="o">**</span> <span class="n">frames</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">uint8_t</span><span class="o">*</span><span class="p">[</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">()];</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">frame</span> <span class="o">&lt;</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">();</span> <span class="n">frame</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">frames</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">uint8_t</span><span class="p">[</span><span class="n">frame_bounds</span><span class="p">.</span><span class="n">size</span><span class="p">()];</span>
+                <span class="p">}</span>
+                <span class="n">CanvasUtility</span><span class="o">::</span><span class="n">copy_from_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">canvas</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">frame_bounds</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">frame_bounds</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+
+                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_dimensions</span><span class="p">(</span>
+                        <span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">new_dimensions</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                        <span class="n">new_dimensions</span><span class="p">.</span><span class="n">y</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+
+                <span class="n">CanvasUtility</span><span class="o">::</span><span class="n">copy_to_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">canvas</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">frame_bounds</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">frame_bounds</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">maestro_control_widget_</span><span class="p">);</span>
+
+                <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">frame</span> <span class="o">&lt;</span> <span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_num_frames</span><span class="p">();</span> <span class="n">frame</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">delete</span><span class="p">[]</span> <span class="n">frames</span><span class="p">[</span><span class="n">frame</span><span class="p">];</span>
+                <span class="p">}</span>
+                <span class="k">delete</span><span class="p">[]</span> <span class="n">frames</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>  <span class="c1">// No Canvas set</span>
+                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_dimensions</span><span class="p">(</span>
+                        <span class="n">get_section_index</span><span class="p">(),</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">new_dimensions</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                        <span class="n">new_dimensions</span><span class="p">.</span><span class="n">y</span>
+                    <span class="p">)</span>
+                <span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">SectionControlWidget</span><span class="o">::~</span><span class="n">SectionControlWidget</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

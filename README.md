@@ -15,9 +15,9 @@ PixelMaestro Studio is a desktop application for controlling LED displays using 
 
 ## Usage
 
-Download the latest version of PixelMaestro Studio from the [Releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases) page. The [documentation](https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/docs) explains how to use PixelMaestro Studio and its various features.
+Download the latest version of PixelMaestro Studio from the [Releases](https://github.com/8bitbuddhist/PixelMaestro-Studio/releases) page. The [documentation](https://8bitbuddhist.github.io/PixelMaestro-Studio/) explains how to use PixelMaestro Studio and its various features.
 
-To learn more about the PixelMaestro library itself, [visit the repository](https://github.com/8bitbuddhist/PixelMaestro/) or check out the [documentation](https://github.com/8bitbuddhist/PixelMaestro/tree/master/docs).
+To learn more about the PixelMaestro library itself, [visit the repository](https://github.com/8bitbuddhist/PixelMaestro/) or check out the [documentation](https://8bitbuddhist.github.io/PixelMaestro-Studio/).
 
 ## Running PixelMaestro Studio
 
@@ -57,6 +57,30 @@ $ ./PixelMaestro_Studio
 	```bash
 	qmake PixelMaestro-Studio.pro && make qmake_all
 	```
+
+### Building Static Qt
+
+When creating a static build of Qt 5.12.x, `make` might fails with a "bootstrap-private" error. [See this StackOverflow answer for details](https://forum.qt.io/topic/98501/static-compile-error-qt5-12-0-bootstrap-private/8)
+
+To fix this, install the following libs:
+
+```bash
+sudo apt install libxkbcommon-dev
+sudo apt install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev
+```
+
+Then, clone the Qt Git sources and create a shadow build:
+
+```bash
+$ git clone https://code.qt.io/qt/qt5.git   // This should also work with Qt sources downloaded from the installer
+$ cd qt5
+$ mkdir build               // shadow build location
+$ mkdir install             // where the static Qt libs will be installed
+$ cd build
+$ ../configure -static -release -prefix ../install -opensource --confirm-license -skip webengine -nomake tests -nomake examples -nomake tools -system-xcb -recheck-all
+$ make -j3                  // -j param specifies the number of cores
+$ make install              // Compiled static Qt libs will be placed in the install dir
+```
 
 ## Credits
 

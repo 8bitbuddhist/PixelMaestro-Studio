@@ -1,0 +1,73 @@
+
+.. _file_src_controller_showcontroller.h:
+
+File showcontroller.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/showcontroller.h``)
+------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_showcontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QString``
+
+- ``QVector``
+
+- ``controller/maestrocontroller.h`` (:ref:`file_src_controller_maestrocontroller.h`)
+
+- ``core/maestro.h``
+
+- ``cue/event.h``
+
+- ``cue/show.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_showcontroller.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
+
+- :ref:`file_src_widget_showcontrolwidget.h`
+
+- :ref:`file_src_widget_showcontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1ShowController`
+

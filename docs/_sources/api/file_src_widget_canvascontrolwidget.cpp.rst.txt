@@ -1,0 +1,58 @@
+
+.. _file_src_widget_canvascontrolwidget.cpp:
+
+File canvascontrolwidget.cpp
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget>` (``src/widget``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/canvascontrolwidget.cpp``)
+---------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_canvascontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QFileDialog``
+
+- ``QKeyEvent``
+
+- ``QMessageBox``
+
+- ``QPushButton``
+
+- ``canvascontrolwidget.h`` (:ref:`file_src_widget_canvascontrolwidget.h`)
+
+- ``ui_canvascontrolwidget.h``
+
+- ``utility/canvasutility.h`` (:ref:`file_src_utility_canvasutility.h`)
+
+- ``widget/palettecontrolwidget.h`` (:ref:`file_src_widget_palettecontrolwidget.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

@@ -1,0 +1,190 @@
+
+.. _program_listing_file_src_controller_palettecontroller.cpp:
+
+Program Listing for File palettecontroller.cpp
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_controller_palettecontroller.cpp>` (``src/controller/palettecontroller.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include <QSettings>
+   #include <QStringList>
+   #include "colorpresets.h"
+   #include "core/colors.h"
+   #include "dialog/preferencesdialog.h"
+   #include "palettecontroller.h"
+   
+   namespace PixelMaestroStudio {
+       PaletteController::PaletteController() {
+           load_palettes();
+       }
+   
+       PaletteController::PaletteWrapper& PaletteController::add_palette(QString name, Colors::RGB colors[], uint8_t num_colors, PaletteType type, const Colors::RGB& base_color, const Colors::RGB& target_color, bool mirror, uint8_t start, uint8_t length) {
+           palettes_.emplace_back(PaletteWrapper(name, colors, num_colors, type, base_color, target_color, mirror, start, length));
+           return palettes_[palettes_.size() - 1];
+       }
+   
+       QString PaletteController::check_palette_name(QString name) {
+           int iteration = 0;
+           while (get_palette(name) != nullptr) {
+               int trail = iteration + 2;
+               if (iteration == 0) {
+                   name = name.append(" #" + QString::number(trail));
+               }
+               else {
+                   name = name.replace(name.length() - 1, 1, QString::number(trail));
+               }
+               iteration++;
+           }
+   
+           return name;
+       }
+   
+       Colors::RGB PaletteController::deserialize_color(const QString& string) {
+           QStringList values = string.split(PreferencesDialog::sub_delimiter);
+   
+           if (values.size() < 3) return ColorPresets::Black;
+           return Colors::RGB(values.at(0).toInt(), values.at(1).toInt(), values.at(2).toInt());
+       }
+   
+       int PaletteController::find(Colors::RGB* colors, int num_colors) {
+           for (uint16_t i = 0; i < palettes_.size(); i++) {
+               if (num_colors == palettes_[i].palette.get_num_colors()) {
+                   int matches = 0;
+                   Colors::RGB* palette_colors = palettes_[i].palette.get_colors();
+                   for (uint8_t color = 0; color < num_colors; color++) {
+                       if (palette_colors[color] == colors[color]) {
+                           ++matches;
+                       }
+                   }
+   
+                   // FIXME: Sometimes the Palettes don't exactly match up even if they're identical
+                   if (matches == num_colors || matches == num_colors - 1) {
+                       return i;
+                   }
+               }
+           }
+   
+           return -1;
+       }
+   
+       PaletteController::PaletteWrapper& PaletteController::get_palette(uint8_t index) {
+           return palettes_[index];
+       }
+   
+       PaletteController::PaletteWrapper* PaletteController::get_palette(const QString& name) {
+           for (uint8_t i = 0; i < palettes_.size(); i++) {
+               if (palettes_[i].name == name) {
+                   return &palettes_[i];
+               }
+           }
+           return nullptr;
+       }
+   
+       std::vector<PaletteController::PaletteWrapper>* PaletteController::get_palettes() {
+           return &palettes_;
+       }
+   
+       void PaletteController::initialize_palettes() {
+           uint8_t num_colors = 14;
+           Colors::RGB colors[num_colors];
+   
+           palettes_.clear();
+   
+           Colors::generate_scaling_color_array(&colors[0], ColorPresets::Red, ColorPresets::Yellow, num_colors, true);
+           palettes_.emplace_back(PaletteWrapper("Fire", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Red, ColorPresets::Yellow, true, 0, 0));
+   
+           Colors::generate_scaling_color_array(&colors[0], ColorPresets::Blue, ColorPresets::Green, num_colors, true);
+           palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true, 0, 0));
+   
+           palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false, 0, 0));
+       }
+   
+       void PaletteController::load_palettes() {
+           QSettings settings;
+   
+           /*
+            * Check if settings contains stored Palettes.
+            * If not, initialize a new set of Palettes.
+            */
+           if (!settings.childGroups().contains(PreferencesDialog::palettes) || settings.value(PreferencesDialog::save_session) == false) {
+               initialize_palettes();
+               return;
+           }
+   
+           int num_palettes = settings.beginReadArray(PreferencesDialog::palettes);
+           for (int palette_index = 0; palette_index < num_palettes; palette_index++) {
+               settings.setArrayIndex(palette_index);
+   
+               Colors::RGB base_color = deserialize_color(settings.value(PreferencesDialog::palette_base_color).toString());
+               bool mirror = settings.value(PreferencesDialog::palette_mirror, false).toBool();
+               QString name = settings.value(PreferencesDialog::palette_name, QString("Custom Palette") + QString::number(palette_index + 1)).toString();
+               int num_colors = settings.value(PreferencesDialog::palette_num_colors, 0).toInt();
+               Colors::RGB target_color = deserialize_color(settings.value(PreferencesDialog::palette_target_color).toString());
+               PaletteType type = (PaletteType)settings.value(PreferencesDialog::palette_type, 0).toInt();
+               uint8_t start = settings.value(PreferencesDialog::palette_start, 0).toUInt();
+               uint8_t length = settings.value(PreferencesDialog::palette_length, 0).toUInt();
+   
+               // Build color array
+               QString color_string = settings.value(PreferencesDialog::palette_colors).toString();
+               QVector<Colors::RGB> color_array;
+               QStringList color_string_list = color_string.split(PreferencesDialog::delimiter);
+               for (const QString& color_string : color_string_list) {
+                   color_array.push_back(deserialize_color(color_string));
+               }
+   
+               palettes_.emplace_back(PaletteWrapper(name, color_array.data(), num_colors, type, base_color, target_color, mirror, start, length));
+           }
+           settings.endArray();
+       }
+   
+       void PaletteController::remove_palette(uint8_t index) {
+           palettes_.erase(palettes_.begin() + index);
+       }
+   
+       void PaletteController::save_palettes() {
+           QSettings settings;
+           settings.remove(PreferencesDialog::palettes);
+           settings.beginWriteArray(PreferencesDialog::palettes);
+           for (uint16_t i = 0; i < palettes_.size(); i++) {
+               settings.setArrayIndex(i);
+   
+               PaletteWrapper* palette_wrapper = &palettes_.at(i);
+   
+               // Set color array
+               QStringList color_list;
+               Colors::RGB* colors = palette_wrapper->palette.get_colors();
+               for (int color_index = 0; color_index < palette_wrapper->palette.get_num_colors(); color_index++) {
+                   color_list.append(serialize_color(colors[color_index]));
+               };
+               settings.setValue(PreferencesDialog::palette_colors, color_list.join(PreferencesDialog::delimiter));
+   
+               settings.setValue(PreferencesDialog::palette_base_color, serialize_color(palette_wrapper->base_color));
+               settings.setValue(PreferencesDialog::palette_mirror, palette_wrapper->mirror);
+               settings.setValue(PreferencesDialog::palette_name, palette_wrapper->name);
+               settings.setValue(PreferencesDialog::palette_num_colors, palette_wrapper->palette.get_num_colors());
+               settings.setValue(PreferencesDialog::palette_target_color, serialize_color(palette_wrapper->target_color));
+               settings.setValue(PreferencesDialog::palette_type, (uint8_t)palette_wrapper->type);
+               settings.setValue(PreferencesDialog::palette_start, palette_wrapper->start);
+               settings.setValue(PreferencesDialog::palette_length, palette_wrapper->length);
+           }
+           settings.endArray();
+       }
+   
+       QString PaletteController::serialize_color(Colors::RGB& color) {
+           return QString::number(color.r) + PreferencesDialog::sub_delimiter +
+                   QString::number(color.g) + PreferencesDialog::sub_delimiter +
+                   QString::number(color.b);
+       }
+   
+       PaletteController::~PaletteController() {
+           // If the user chose to save their session, save Palettes to settings
+           QSettings settings;
+           if (settings.value(PreferencesDialog::save_session) == true) {
+               save_palettes();
+           }
+       }
+   }

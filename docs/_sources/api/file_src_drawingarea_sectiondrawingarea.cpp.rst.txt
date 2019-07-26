@@ -1,0 +1,50 @@
+
+.. _file_src_drawingarea_sectiondrawingarea.cpp:
+
+File sectiondrawingarea.cpp
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_drawingarea>` (``src/drawingarea``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/drawingarea/sectiondrawingarea.cpp``)
+-------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_drawingarea_sectiondrawingarea.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QPainter``
+
+- ``QSettings``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``sectiondrawingarea.h`` (:ref:`file_src_drawingarea_sectiondrawingarea.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

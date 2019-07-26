@@ -1,0 +1,54 @@
+
+.. _file_src_drawingarea_maestrodrawingarea.cpp:
+
+File maestrodrawingarea.cpp
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_drawingarea>` (``src/drawingarea``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/drawingarea/maestrodrawingarea.cpp``)
+-------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_drawingarea_maestrodrawingarea.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QElapsedTimer``
+
+- ``QHBoxLayout``
+
+- ``QTimer``
+
+- ``core/maestro.h``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

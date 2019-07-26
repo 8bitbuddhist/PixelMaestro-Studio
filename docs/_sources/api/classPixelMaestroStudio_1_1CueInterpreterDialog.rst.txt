@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestroStudio_1_1CueInterpreterDialog:
+
+Class CueInterpreterDialog
+==========================
+
+- Defined in :ref:`file_src_dialog_cueinterpreterdialog.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public QDialog``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::CueInterpreterDialog
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,46 @@
+
+.. _file_src_widget_animation_plasmaanimationcontrolwidget.cpp:
+
+File plasmaanimationcontrolwidget.cpp
+=====================================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget_animation>` (``src/widget/animation``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/animation/plasmaanimationcontrolwidget.cpp``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_animation_plasmaanimationcontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``plasmaanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_plasmaanimationcontrolwidget.h`)
+
+- ``ui_plasmaanimationcontrolwidget.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

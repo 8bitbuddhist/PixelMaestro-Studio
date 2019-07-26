@@ -1,0 +1,46 @@
+
+.. _file_src_widget_animation_radialanimationcontrolwidget.cpp:
+
+File radialanimationcontrolwidget.cpp
+=====================================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_widget_animation>` (``src/widget/animation``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/widget/animation/radialanimationcontrolwidget.cpp``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_widget_animation_radialanimationcontrolwidget.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``radialanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_radialanimationcontrolwidget.h`)
+
+- ``ui_radialanimationcontrolwidget.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

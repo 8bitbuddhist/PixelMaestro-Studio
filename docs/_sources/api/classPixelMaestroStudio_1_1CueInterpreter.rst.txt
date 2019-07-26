@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1CueInterpreter:
+
+Class CueInterpreter
+====================
+
+- Defined in :ref:`file_src_utility_cueinterpreter.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::CueInterpreter
+   :members:
+   :protected-members:
+   :undoc-members:
