@@ -165,18 +165,21 @@
             
   <div class="section" id="show-tab">
 <h1>Show Tab<a class="headerlink" href="#show-tab" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Shows.html">Show</a> tab lets you queue actions to run at a later point in time.</p>
+<p>The <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Shows.html">Show</a> tab lets you queue actions to run at a later point in the program’s runtime.</p>
 <a class="reference external image-reference" href="images/show-controls.png"><img alt="Show Events" src="_images/show-controls.png" /></a>
-<p>The main controls in this tab are the <em>History</em> and <em>Queue</em> lists. Every action performed in PixelMaestro Studio generates an <code class="docutils literal notranslate"><span class="pre">Event</span></code>, which appears in the History. You can give the Event an <em>Event Time</em> and add it to the Queue, where it is scheduled for execution. When the runtime exceeds the Event’s start time, the Event runs. Events that have already ran appear gray, while pending events appear white.</p>
+<p>Every action performed in PixelMaestro Studio generates an <code class="docutils literal notranslate"><span class="pre">Event</span></code>, which appears in the <em>History</em>. You can give the Event an <em>Event Time</em> and schedule it in the <em>Queue</em>. When the runtime exceeds the Event’s start time, the Event runs. Events that have already ran appear gray, while pending events appear white.</p>
 <div class="section" id="selecting-a-timing-mode">
 <h2>Selecting a Timing Mode<a class="headerlink" href="#selecting-a-timing-mode" title="Permalink to this headline">¶</a></h2>
-<p>The <em>Timing Mode</em> determines how the Show tracks time. <em>Absolute Time</em> tracks time since the Maestro was opened, and <em>Relative Time</em> tracks time since the last Event ran. When using relative time, you can check <em>Loop Events</em> to repeat the Show after the last Event runs.</p>
+<p>The <em>Timing Mode</em> determines how the Show tracks time. <em>Absolute Time</em> tracks the time elapsed since the Maestro was opened, and <em>Relative Time</em> tracks the time elapsed since the last Event ran. When relative time is enabled, checking <em>Loop Events</em> causes the Show to repeat after the last Event.</p>
 </div>
 <div class="section" id="modifying-the-event-queue">
 <h2>Modifying the Event Queue<a class="headerlink" href="#modifying-the-event-queue" title="Permalink to this headline">¶</a></h2>
-<p><strong>Note:</strong> Modifying the Event Queue will automatically update the Show. This also generates a separate Event.</p>
-<p>To add an Event to the Show, select one or more Events from the History. Enter the time you want the Event(s) to run in the <em>Event Time</em> box. As a convenience, the <em>Absolute Time</em> and <em>Relative Time</em> boxes show the time since the Maestro was opened and the time since the last Event ran, respectively. Click the right arrow to add the Event(s) to the Event List.</p>
-<p>To remove an Event from the Queue, select the Event(s) in the Queue and click the left arrow. To reorder an Event in the Queue, select the Event and click the up or down arrows.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Modifying the Event Queue will automatically update the Show. This also generates a new Event.</p>
+</div>
+<p>To add an Event to the Show, select one or more Events from the History. Enter the time you want the Event(s) to run in the <em>Event Time</em> box. As a convenience, the <em>Absolute Time</em> and <em>Relative Time</em> boxes show their respective elapsed times. Click the right arrow to add the Event(s) to the Event List.</p>
+<p>To remove an Event from the Queue, select the Event(s) in the Queue and click the left arrow. To reorder the Queue, select the Event(s) that you want to move and click the up or down arrows.</p>
 <p>To completely clear the History or Queue, click the <strong>X</strong> button closest to either list.</p>
 </div>
 </div>

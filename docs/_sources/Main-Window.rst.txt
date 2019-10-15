@@ -2,24 +2,24 @@
 Main Window
 ===========
 
-The main window contains all of the controls necessary for interacting with PixelMaestro. Here you can edit the Maestro, create Animations and Canvases, create Shows, and connect devices.
+The main window provides all of the interactive functionality of PixelMaestro Studio. Here you can interact with a Maestro, create Animations and Canvases, create Shows, and manage attached devices.
 
 Layout
 ------
 
-The main window is split into two sections: the *Maestro Viewer*\ , and the *Maestro Editor*.
+The main window is split into two sections: the *Maestro Viewer* and the *Maestro Editor*.
 
 Maestro Viewer
 ^^^^^^^^^^^^^^
 
-The top half of the main window renders the output of the Maestro. Each Section is displayed in order from left to right. The Section that currently has focus (the *Active Section*) is displayed with a white border. If a Layer is the Active Section, then the Section is displayed with a light gray border. Inactive sections have no border.
+The top half of the main window contains the Maestro Viewer, which renders the output from the active Maestro. Each of the Maestro's Sections is displayed in order from left to right. The Section that currently has focus (called the *Active Section*) is shown with a white frame. If a Layer is the Active Section, then the Section is shown with a light gray frame. Inactive sections have no frame.
 
 .. Note:: The Maestro Viewer may not be visible if *Main Window* is not selected as an output in the :doc:`Preferences <Preferences>` screen.
 
 Maestro Editor
 ^^^^^^^^^^^^^^
 
-The Maestro Editor is the bottom half of the window. It provides controls for editing the Maestro. It's divided into five tabs:
+The bottom half of the main window contains the Maestro Editor, which provides controls for interacting with the Maestro and performing other actions. It's split into five tabs:
 
 
 * :doc:`Section Tab <Section-Tab>`
@@ -33,10 +33,10 @@ Control Buttons
 
 At the top of the Maestro Editor are four buttons:
 
-The *Lock Button* prevents any actions you perform from modifying the Maestro. However, it does not prevent actions from generating :doc:`events <Show-Tab>`. While the Maestro is locked, a padlock icon appears next to each tab and group of controls that is locked. Certain Maestro-level actions, such as enabling or disabling a :doc:`Show <Show-Tab>`, will remain unlocked.
+The *Lock Button* prevents any actions you perform from modifying the Maestro. While the Maestro is locked, a padlock icon appears next to each tab and group of controls that is locked. Certain Maestro-level actions, such as enabling or disabling a :doc:`Show <Show-Tab>`, will remain unlocked. Note that performing a locked action will still generate an :doc:`event <Show-Tab>`.
 
-The *Play/Pause Button* lets you start or stop playback of the Maestro at any time. This also stops any Show timers, Animations, and communications with USB devices.
+The *Play/Pause Button* controls the playback of the Maestro. It will start/stop any Show timers, Animations, Canvas animations, and communication with USB devices.
 
-The *Sync Button* resets any and all timers. This synchronizes Animations, Shows, and other timer-based components.
+The *Sync Button* synchronizes any and all timer-based components including Animations, Canvas animations, and Shows.
 
-The *Refresh Button* updates all controls with the current Maestro configuration. This is used to synchronize the UI with the Maestro when the Maestro is changed by another process (e.g. a Show). If another process changes the Maestro and the UI is left out of sync, this button appears highlighted.
+The *Refresh Button* refreshes the Maestro Editor based on the current Maestro configuration. This is used to synchronize the UI with the Maestro when the Maestro is changed by a non-user initiated action (e.g. a Show). If an action causes the UI to go out of sync, this button appears highlighted.

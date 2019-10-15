@@ -2,7 +2,7 @@
 Preferences
 ===========
 
-The Preferences dialog lets you change several options in PixelMaestro Studio.
+The Preferences dialog lets you change various options in PixelMaestro Studio.
 
 
 .. image:: images/preferences.png
@@ -12,56 +12,56 @@ The Preferences dialog lets you change several options in PixelMaestro Studio.
 
 To open the Preferences dialog, click *Edit* > *Preferences*.
 
-**Note:** Some settings will require you to relaunch PixelMaestro Studio (or just load a new Maestro) before applying.
+.. Note:: Some settings will require you to relaunch PixelMaestro Studio before applying.
 
 Maestro Options
 ---------------
 
-The *Maestro Options* let you configure the behavior of the Maestro and PixelMaestro Studio.
+The *Maestro Options* control certain Maestro settings, as well as the behavior of PixelMaestro Studio.
 
 Sections
 ^^^^^^^^
 
-*Sections* sets the number of Sections assigned to the Maestro. Sections are displayed in the top half of the main window in order from left to right.
+*Sections* sets the number of Sections assigned to the Maestro. Sections are displayed in the Maestro Viewer from left to right based on their index number.
 
 Pause on Start
 ^^^^^^^^^^^^^^
 
-When checked, *Pause on start* automatically opens the Maestro in a paused state. This is useful if you want to create a Show from scratch, but don't want the timer running in the background. You can resume playback at any time by clicking the play/pause button in the center of the window.
+When checked, *Pause on start* opens the Maestro in a paused state. This is useful if you want to create a Show from scratch and don't want the timer running in the background when you create or open a Maestro. You can resume playback at any time by clicking the play/pause button in the Maestro Editor.
 
 Save Session on Close
 ^^^^^^^^^^^^^^^^^^^^^
 
-*Save session on close* saves your Maestro configuration when you exit PixelMaestro Studio. This configuration is automatically loaded the next time you open the program.
+*Save session on close* automatically saves your current Maestro configuration when you exit PixelMaestro Studio. The Maestro is automatically loaded the next time you open PixelMaestro Studio.
 
 Rendering Options
 -----------------
 
-*Rendering Options* control how the Maestro is displayed on the screen.
+*Rendering Options* control how the Maestro is displayed in the Maestro Viewer.
 
 Pixel Shape
 ^^^^^^^^^^^
 
-*Pixel shape* changes the shape of each individual pixel.
+*Pixel shape* sets the shape of each individual pixel.
 
-**Tip:** For best performance, set the pixel shape to *Square*.
+.. Tip:: For best performance, set the pixel shape to *Square*.
 
 Refresh Interval
 ^^^^^^^^^^^^^^^^
 
-The *Refresh Interval* is the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.
+The *Refresh Interval* sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.
 
 Show Options
 ------------
 
-*Show Options* control how Shows behave. These options apply mostly to the Show tab.
+*Show Options* control how Shows behave.
 
 Max Event History Size
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The maximum number of events to store in the Event History. This is useful when creating and editing Shows.
+*Max Event History Size* is the maximum number of events to store in the Event History. A larger history size lets you store more events to use in Shows, but at the cost of increased RAM usage.
 
 Events Trigger Live Device Updates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When enabled, Events that run in the Show tab also trigger :doc:`live updates <Device-Tab>` for any connected devices that have live updates enabled. This lets you run Show Events on a device without having to run a Show on the device itself, essentially using PixelMaestro Studio as a remote scheduler.
+When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a :doc:`live update <Device-Tab>` for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.

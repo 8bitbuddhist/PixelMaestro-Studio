@@ -241,7 +241,7 @@
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_aboutAction_triggered</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">QMessageBox</span><span class="o">::</span><span class="n">about</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="n">QCoreApplication</span><span class="o">::</span><span class="n">applicationName</span><span class="p">()),</span>
-                       <span class="n">QString</span><span class="p">(</span><span class="s">&quot;PixelMaestro Studio version &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="n">BUILD_VERSION</span><span class="p">)</span> <span class="o">+</span>
+                       <span class="n">QString</span><span class="p">(</span><span class="s">&quot;PixelMaestro Studio &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="n">BUILD_VERSION</span><span class="p">)</span> <span class="o">+</span>
                        <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">PixelMaestro is a library for creating and rendering 2D animations and patterns.&quot;</span><span class="p">)</span> <span class="o">+</span>
                        <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">© 2017 − &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">QDate</span><span class="o">::</span><span class="n">currentDate</span><span class="p">().</span><span class="n">year</span><span class="p">())</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;, the PixelMaestro contributors&quot;</span><span class="p">));</span>
     <span class="p">}</span>
@@ -260,7 +260,7 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_helpAction_triggered</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">QDesktopServices</span><span class="o">::</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki&quot;</span><span class="p">,</span> <span class="n">QUrl</span><span class="o">::</span><span class="n">TolerantMode</span><span class="p">));</span>
+        <span class="n">QDesktopServices</span><span class="o">::</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;https://8bitbuddhist.github.io/PixelMaestro-Studio/&quot;</span><span class="p">,</span> <span class="n">QUrl</span><span class="o">::</span><span class="n">TolerantMode</span><span class="p">));</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_action_Main_Window_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">arg1</span><span class="p">)</span> <span class="p">{</span>

@@ -4,7 +4,7 @@ SUBDIRS		= src tests
 
 # When compiling for Windows, don't compile tests
 win32 {
-	SUBDIRS -= tests
+SUBDIRS -= tests
 }
 
 app.depends		= src

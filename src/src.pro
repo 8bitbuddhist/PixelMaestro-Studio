@@ -8,10 +8,17 @@ QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
+DEFINES += BUILD_VERSION=\\\"v0.50.2\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
+android {
+QMAKE_LINK += -nostdlib++
+QMAKE_LFLAGS += -nostdlib++
+}
+!android {
 QMAKE_CXXFLAGS = -std=c++11 -Wall -Wno-unused-parameter -Wno-reorder -Wno-switch
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE += -O3
-DEFINES += BUILD_VERSION=\\\"v0.50.2\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
+}
+
 
 SOURCES += main.cpp\
 drawingarea/maestrodrawingarea.cpp \

@@ -86,7 +86,7 @@ namespace PixelMaestroStudio {
 
 	void MainWindow::on_aboutAction_triggered() {
 		QMessageBox::about(this, QString(QCoreApplication::applicationName()),
-					   QString("PixelMaestro Studio version ") + QString(BUILD_VERSION) +
+					   QString("PixelMaestro Studio ") + QString(BUILD_VERSION) +
 					   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
 					   QString("\n\n© 2017 − ") + QString::number(QDate::currentDate().year()) + QString(", the PixelMaestro contributors"));
 	}
@@ -111,7 +111,7 @@ namespace PixelMaestroStudio {
 	 * Opens the documentation site in a browser.
 	 */
 	void MainWindow::on_helpAction_triggered() {
-		QDesktopServices::openUrl(QUrl("https://github.com/8bitbuddhist/PixelMaestro-Studio/wiki", QUrl::TolerantMode));
+		QDesktopServices::openUrl(QUrl("https://8bitbuddhist.github.io/PixelMaestro-Studio/", QUrl::TolerantMode));
 	}
 
 	void MainWindow::on_action_Main_Window_toggled(bool arg1) {

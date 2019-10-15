@@ -173,29 +173,35 @@
             
   <div class="section" id="canvas-tab">
 <h1>Canvas Tab<a class="headerlink" href="#canvas-tab" title="Permalink to this headline">¶</a></h1>
-<p>The Canvas tab lets you create and customize <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Canvases.html">Canvases</a>. Canvases let you draw shapes, load images, and even create custom animations.</p>
+<p>The Canvas tab lets you create and customize <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Canvases.html">Canvases</a>. Canvases let you draw shapes and load images to display on the Section.</p>
 <p>To add a Canvas to the active Section, click <em>Enable Canvas</em>.</p>
 <a class="reference external image-reference" href="images/canvas-controls.png"><img alt="Canvas Tab" src="_images/canvas-controls.png" /></a>
 <p>Like Animations, Canvases use color palettes. The same palettes can be used for both components. However, Canvases are limited to the first 255 colors in a palette, since the last color is reserved for transparency.</p>
-<p><strong>Tip:</strong> To reapply a Palette after customizing it, simply reselect it from the drop-down.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To reapply a Palette after customizing it, simply reselect it from the drop-down.</p>
+</div>
 <div class="section" id="loading-images">
 <h2>Loading Images<a class="headerlink" href="#loading-images" title="Permalink to this headline">¶</a></h2>
-<p>You can load an image file into the Canvas by clicking the <em>Load Image…</em> button. You can select a PNG, JPEG, or GIF image file. If the image is animated, you can control its playback using the <em>Animation Tools</em> controls.</p>
+<p>You can load an image file into the Canvas by clicking the <em>Load Image…</em> button. You can select a PNG, JPEG, or GIF image file. If the image is animated, PixelMaestro Studio will load each frame into a new Canvas frame and immediately begin playback. You can control the animation using the <em>Animation Tools</em> controls.</p>
 </div>
 <div class="section" id="drawing">
 <h2>Drawing<a class="headerlink" href="#drawing" title="Permalink to this headline">¶</a></h2>
-<p>Drawing on a Canvas works similar to a normal image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the <code class="docutils literal notranslate"><span class="pre">Draw</span></code> button.  When free drawing, you can even draw directly on the Canvas using the mouse.</p>
+<p>Drawing on a Canvas works similar to a typical bitmap image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the <code class="docutils literal notranslate"><span class="pre">Draw</span></code> button.  When using the <span class="xref std std-doc">free drawing tool</span>, you can use your mouse to draw directly on the Canvas.</p>
 </div>
 <div class="section" id="drawing-tools">
 <h2>Drawing Tools<a class="headerlink" href="#drawing-tools" title="Permalink to this headline">¶</a></h2>
-<p>The <em>Drawing Tools</em> box provides controls for drawing on the the Canvas. Select a drawing tool using the icons on the left-hand side of the box. Depending on the tool you select, one or more text boxes will become enabled. These boxes require you to specify the coordinates, size, or other options needed to create the shape.</p>
-<p><strong>Tip:</strong> You can use the brush tool to free draw directly on the Canvas using your mouse.</p>
+<p>The <em>Drawing Tools</em> box provides controls for drawing shapes, text, and other objects on the Canvas. Select a drawing tool using the icons on the left-hand side of the box. Depending on the tool you select, one or more text boxes will become enabled. These boxes allow you to set the coordinates, size, and any other options needed to create the shape.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use the brush tool to free draw directly on the Canvas using your mouse.</p>
+</div>
 <p>When drawing shapes, only the outline of the shape is drawn by default. Checking <em>Fill</em> draws the shape filled in.</p>
-<p>You will need to select a color before drawing a shape. Select a Palette using the <em>Color Palette</em> drop-down. Then, click on the color you want to use to set it as the drawing color. To clear a pixel, click the <strong>X</strong> button at the far left of the color list. This sets the active color to transparent. You can “draw” using this transparent color in order to erase parts of the Canvas.</p>
-<p><strong>Tip:</strong> Canvases have access to the same Palettes as Animations, but they can only use a maximum of 255 colors. Technically they support 256 colors, but the last color is reserved for transparency.</p>
+<p>You will need to select a color before drawing a shape. Select a palette using the <em>Color Palette</em> drop-down, then click on the color that you want to draw the shape in. Finally, click <em>Draw</em> to draw the shape.</p>
+<p>To erase a pixel’s color, click the <strong>X</strong> button at the far left of the color palette. This sets the drawing color to transparent. Click <em>Draw</em> to “draw” the selected Pixel as transparent.</p>
 <div class="section" id="specifying-coordinates">
 <h3>Specifying Coordinates<a class="headerlink" href="#specifying-coordinates" title="Permalink to this headline">¶</a></h3>
-<p>When drawing a shape, you will need to specify where you want to draw the shape. Canvases use a standard <a class="reference external" href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a> with the origin (0,0) starting in the top-left corner and increasing as you move away from the corner. For example, the point (2, 5) is 2 pixels to the right of the origin and 5 pixels down.</p>
+<p>When drawing a shape, you will need to set the location where you want to draw the shape. Canvases use a <a class="reference external" href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a> with the origin (0,0) starting in the top-left corner and increasing as you move away from the corner. For example, the point (2, 5) is 2 pixels to the right of the origin and 5 pixels down.</p>
 <p>The coordinate boxes are found on the right-hand side of the Drawing Tools box:</p>
 <ul class="simple">
 <li><p>The <em>Cursor</em> is the shape’s starting point. For rectangles and text this is the top-left corner, but for circles this is the center.</p></li>
@@ -222,12 +228,18 @@
 <div class="section" id="managing-animations">
 <h2>Managing Animations<a class="headerlink" href="#managing-animations" title="Permalink to this headline">¶</a></h2>
 <p>The <em>Animation Tools</em> box contains controls for managing and editing animations. Any Canvas with more than one drawing surface (called a <em>frame</em>) is an animated Canvas.  <em>Frame Count</em> displays the total number of frames, while <em>Current Frame</em> displays the index of the current frame (while the animation is stopped). You can start or stop playback and step through frames using the playback buttons. <em>Frame Interval</em> sets the amount of time (in milliseconds) between each frame.</p>
-<p><strong>Tip:</strong> Use the arrow keys to step through individual frames while the animation is paused.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use the arrow keys to step through individual frames while the animation is paused.</p>
+</div>
 </div>
 <div class="section" id="clearing-the-canvas">
 <h2>Clearing the Canvas<a class="headerlink" href="#clearing-the-canvas" title="Permalink to this headline">¶</a></h2>
 <p>To erase the Canvas, click the <em>Clear…</em> button.</p>
-<p><strong>WARNING:</strong> This will erase <em>every</em> frame in the Canvas!</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This will erase <em>every</em> frame in the Canvas!</p>
+</div>
 </div>
 </div>
 

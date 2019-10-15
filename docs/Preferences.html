@@ -179,49 +179,55 @@
             
   <div class="section" id="preferences">
 <h1>Preferences<a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h1>
-<p>The Preferences dialog lets you change several options in PixelMaestro Studio.</p>
+<p>The Preferences dialog lets you change various options in PixelMaestro Studio.</p>
 <a class="reference external image-reference" href="images/preferences.png"><img alt="Preferences" src="_images/preferences.png" /></a>
 <p>To open the Preferences dialog, click <em>Edit</em> &gt; <em>Preferences</em>.</p>
-<p><strong>Note:</strong> Some settings will require you to relaunch PixelMaestro Studio (or just load a new Maestro) before applying.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some settings will require you to relaunch PixelMaestro Studio before applying.</p>
+</div>
 <div class="section" id="maestro-options">
 <h2>Maestro Options<a class="headerlink" href="#maestro-options" title="Permalink to this headline">¶</a></h2>
-<p>The <em>Maestro Options</em> let you configure the behavior of the Maestro and PixelMaestro Studio.</p>
+<p>The <em>Maestro Options</em> control certain Maestro settings, as well as the behavior of PixelMaestro Studio.</p>
 <div class="section" id="sections">
 <h3>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h3>
-<p><em>Sections</em> sets the number of Sections assigned to the Maestro. Sections are displayed in the top half of the main window in order from left to right.</p>
+<p><em>Sections</em> sets the number of Sections assigned to the Maestro. Sections are displayed in the Maestro Viewer from left to right based on their index number.</p>
 </div>
 <div class="section" id="pause-on-start">
 <h3>Pause on Start<a class="headerlink" href="#pause-on-start" title="Permalink to this headline">¶</a></h3>
-<p>When checked, <em>Pause on start</em> automatically opens the Maestro in a paused state. This is useful if you want to create a Show from scratch, but don’t want the timer running in the background. You can resume playback at any time by clicking the play/pause button in the center of the window.</p>
+<p>When checked, <em>Pause on start</em> opens the Maestro in a paused state. This is useful if you want to create a Show from scratch and don’t want the timer running in the background when you create or open a Maestro. You can resume playback at any time by clicking the play/pause button in the Maestro Editor.</p>
 </div>
 <div class="section" id="save-session-on-close">
 <h3>Save Session on Close<a class="headerlink" href="#save-session-on-close" title="Permalink to this headline">¶</a></h3>
-<p><em>Save session on close</em> saves your Maestro configuration when you exit PixelMaestro Studio. This configuration is automatically loaded the next time you open the program.</p>
+<p><em>Save session on close</em> automatically saves your current Maestro configuration when you exit PixelMaestro Studio. The Maestro is automatically loaded the next time you open PixelMaestro Studio.</p>
 </div>
 </div>
 <div class="section" id="rendering-options">
 <h2>Rendering Options<a class="headerlink" href="#rendering-options" title="Permalink to this headline">¶</a></h2>
-<p><em>Rendering Options</em> control how the Maestro is displayed on the screen.</p>
+<p><em>Rendering Options</em> control how the Maestro is displayed in the Maestro Viewer.</p>
 <div class="section" id="pixel-shape">
 <h3>Pixel Shape<a class="headerlink" href="#pixel-shape" title="Permalink to this headline">¶</a></h3>
-<p><em>Pixel shape</em> changes the shape of each individual pixel.</p>
-<p><strong>Tip:</strong> For best performance, set the pixel shape to <em>Square</em>.</p>
+<p><em>Pixel shape</em> sets the shape of each individual pixel.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For best performance, set the pixel shape to <em>Square</em>.</p>
+</div>
 </div>
 <div class="section" id="refresh-interval">
 <h3>Refresh Interval<a class="headerlink" href="#refresh-interval" title="Permalink to this headline">¶</a></h3>
-<p>The <em>Refresh Interval</em> is the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.</p>
+<p>The <em>Refresh Interval</em> sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.</p>
 </div>
 </div>
 <div class="section" id="show-options">
 <h2>Show Options<a class="headerlink" href="#show-options" title="Permalink to this headline">¶</a></h2>
-<p><em>Show Options</em> control how Shows behave. These options apply mostly to the Show tab.</p>
+<p><em>Show Options</em> control how Shows behave.</p>
 <div class="section" id="max-event-history-size">
 <h3>Max Event History Size<a class="headerlink" href="#max-event-history-size" title="Permalink to this headline">¶</a></h3>
-<p>The maximum number of events to store in the Event History. This is useful when creating and editing Shows.</p>
+<p><em>Max Event History Size</em> is the maximum number of events to store in the Event History. A larger history size lets you store more events to use in Shows, but at the cost of increased RAM usage.</p>
 </div>
 <div class="section" id="events-trigger-live-device-updates">
 <h3>Events Trigger Live Device Updates<a class="headerlink" href="#events-trigger-live-device-updates" title="Permalink to this headline">¶</a></h3>
-<p>When enabled, Events that run in the Show tab also trigger <a class="reference internal" href="Device-Tab.html"><span class="doc">live updates</span></a> for any connected devices that have live updates enabled. This lets you run Show Events on a device without having to run a Show on the device itself, essentially using PixelMaestro Studio as a remote scheduler.</p>
+<p>When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a <a class="reference internal" href="Device-Tab.html"><span class="doc">live update</span></a> for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.</p>
 </div>
 </div>
 </div>

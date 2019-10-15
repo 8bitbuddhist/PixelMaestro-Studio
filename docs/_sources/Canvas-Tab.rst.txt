@@ -2,7 +2,7 @@
 Canvas Tab
 ==========
 
-The Canvas tab lets you create and customize :pmdocs:`Canvases <Canvases.html>`. Canvases let you draw shapes, load images, and even create custom animations.
+The Canvas tab lets you create and customize :pmdocs:`Canvases <Canvases.html>`. Canvases let you draw shapes and load images to display on the Section.
 
 To add a Canvas to the active Section, click *Enable Canvas*.
 
@@ -14,35 +14,35 @@ To add a Canvas to the active Section, click *Enable Canvas*.
 
 Like Animations, Canvases use color palettes. The same palettes can be used for both components. However, Canvases are limited to the first 255 colors in a palette, since the last color is reserved for transparency.
 
-**Tip:** To reapply a Palette after customizing it, simply reselect it from the drop-down.
+.. Tip:: To reapply a Palette after customizing it, simply reselect it from the drop-down.
 
 Loading Images
 --------------
 
-You can load an image file into the Canvas by clicking the *Load Image...* button. You can select a PNG, JPEG, or GIF image file. If the image is animated, you can control its playback using the *Animation Tools* controls.
+You can load an image file into the Canvas by clicking the *Load Image...* button. You can select a PNG, JPEG, or GIF image file. If the image is animated, PixelMaestro Studio will load each frame into a new Canvas frame and immediately begin playback. You can control the animation using the *Animation Tools* controls.
 
 Drawing
 -------
 
-Drawing on a Canvas works similar to a normal image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the ``Draw`` button.  When free drawing, you can even draw directly on the Canvas using the mouse.
+Drawing on a Canvas works similar to a typical bitmap image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the ``Draw`` button.  When using the :doc:`free drawing tool <Canvas-Tab.html#free-drawing>`, you can use your mouse to draw directly on the Canvas.
 
 Drawing Tools
 -------------
 
-The *Drawing Tools* box provides controls for drawing on the the Canvas. Select a drawing tool using the icons on the left-hand side of the box. Depending on the tool you select, one or more text boxes will become enabled. These boxes require you to specify the coordinates, size, or other options needed to create the shape.
+The *Drawing Tools* box provides controls for drawing shapes, text, and other objects on the Canvas. Select a drawing tool using the icons on the left-hand side of the box. Depending on the tool you select, one or more text boxes will become enabled. These boxes allow you to set the coordinates, size, and any other options needed to create the shape.
 
-**Tip:** You can use the brush tool to free draw directly on the Canvas using your mouse.
+.. Tip:: You can use the brush tool to free draw directly on the Canvas using your mouse.
 
 When drawing shapes, only the outline of the shape is drawn by default. Checking *Fill* draws the shape filled in.
 
-You will need to select a color before drawing a shape. Select a Palette using the *Color Palette* drop-down. Then, click on the color you want to use to set it as the drawing color. To clear a pixel, click the **X** button at the far left of the color list. This sets the active color to transparent. You can "draw" using this transparent color in order to erase parts of the Canvas.
+You will need to select a color before drawing a shape. Select a palette using the *Color Palette* drop-down, then click on the color that you want to draw the shape in. Finally, click *Draw* to draw the shape.
 
-**Tip:** Canvases have access to the same Palettes as Animations, but they can only use a maximum of 255 colors. Technically they support 256 colors, but the last color is reserved for transparency.
+To erase a pixel's color, click the **X** button at the far left of the color palette. This sets the drawing color to transparent. Click *Draw* to "draw" the selected Pixel as transparent.
 
 Specifying Coordinates
 ^^^^^^^^^^^^^^^^^^^^^^
 
-When drawing a shape, you will need to specify where you want to draw the shape. Canvases use a standard `Cartesian coordinate system <https://en.wikipedia.org/wiki/Cartesian_coordinate_system>`_ with the origin (0,0) starting in the top-left corner and increasing as you move away from the corner. For example, the point (2, 5) is 2 pixels to the right of the origin and 5 pixels down.
+When drawing a shape, you will need to set the location where you want to draw the shape. Canvases use a `Cartesian coordinate system <https://en.wikipedia.org/wiki/Cartesian_coordinate_system>`_ with the origin (0,0) starting in the top-left corner and increasing as you move away from the corner. For example, the point (2, 5) is 2 pixels to the right of the origin and 5 pixels down.
 
 The coordinate boxes are found on the right-hand side of the Drawing Tools box:
 
@@ -73,11 +73,11 @@ Managing Animations
 
 The *Animation Tools* box contains controls for managing and editing animations. Any Canvas with more than one drawing surface (called a *frame*\ ) is an animated Canvas.  *Frame Count* displays the total number of frames, while *Current Frame* displays the index of the current frame (while the animation is stopped). You can start or stop playback and step through frames using the playback buttons. *Frame Interval* sets the amount of time (in milliseconds) between each frame.
 
-**Tip:** Use the arrow keys to step through individual frames while the animation is paused.
+.. Tip:: Use the arrow keys to step through individual frames while the animation is paused.
 
 Clearing the Canvas
 -------------------
 
 To erase the Canvas, click the *Clear...* button.
 
-**WARNING:** This will erase *every* frame in the Canvas!
+.. Warning:: This will erase *every* frame in the Canvas!

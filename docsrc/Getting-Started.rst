@@ -5,33 +5,33 @@ Getting Started
 Opening the Program
 -------------------
 
-When you first open PixelMaestro Studio, the main window opens and displays a blank Maestro. You can use the controls at the bottom of the screen to edit the Maestro, enable Animations or Canvases, or connect to USB devices.
+When you first open PixelMaestro Studio, the main window opens and displays a blank Maestro. You can use the controls on the bottom half of the window to interact with the Maestro, enable/disable different PixelMaestro features, manage USB devices, and more.
 
 Saving
 ------
 
-Maestros can be saved to files on your computer. These are known as *Cuefiles*. To save to a new Cuefile, click *File* > *Save As* and enter a filename. To save over a previously opened Cuefile, click *File* > *Save*.
+To save a Maestro, click *File* > *Save As* and enter the name of the file you want to save to. This is known as a *Cuefile*, and it ends in the extension ".pmc". To save over a previously opened Cuefile, click *File* > *Save*.
 
 Loading
 -------
 
-To open a Cuefile over your existing configuration, click *File* > *Open* and select a file with a ``.pmc`` extnesion. You can find several example Cuefiles `here <https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/examples>`_.
+To load a previously saved Maestro, click *File* > *Open* and select a file with a ``.pmc`` extension. This will overwrite your current Maestro with the Maestro saved in the Cuefile. You can find several example Cuefiles `here <https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/examples>`_.
 
-You can also load a Cuefile into your existing configuration using *File* > *Open and Merge.* This won't replace your current configuration, but will instead merge the Cuefile into your session.
+You can also merge the configuration stored in a Cuefile into your current Maestro using *File* > *Open and Merge.* This will keep your current Maestro, but will apply or overwrite any configurations stored in the Cuefile.
 
-Finally, *File* > *Open to Event History* loads the Cuefile to the Event History in the :doc:`Show tab <Show-Tab>`. This is useful for creating Shows from existing files.
+Finally, *File* > *Open to Event History* loads a Cuefile to the Event History in the :doc:`Show tab <Show-Tab>`.
 
 Changing Preferences
 --------------------
 
-To change the apperance and behavior of PixelMaestro Studio, click :doc:`Edit > Preferences <Preferences>`.
+To change the appearance and behavior of PixelMaestro Studio, click :doc:`Edit > Preferences <Preferences>`. Open the :doc:`Preferences documentation <Preferences>` for more information.
 
 Changing Output Displays
 ------------------------
 
-By default, PixelMaestro Studio renders your Maestro to the top half of the window. You can change this by opening the *Window* menu and either enabling or disabling an output device. *Main Window* toggles output to the window, while *Detached Window* toggles a second window.
+By default, PixelMaestro Studio renders your Maestro in the top half of the application. You can change this by opening the *Window* menu and toggling each output device. *Main Window* displays the Maestro in the current window, while *Detached Window* opens a second window.
 
 Accessing Documentation
 -----------------------
 
-If you need help, click *File* > *Help* to access the online wiki and other documentation resources.
+If you need help, click *File* > *Help* to access this documentation site.

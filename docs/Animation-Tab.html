@@ -92,8 +92,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Animation Tab</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#choosing-an-animation">Choosing an Animation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#controlling-playback">Controlling Playback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-timers">Setting Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#controlling-playback">Controlling Playback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#customizing-color-palettes">Customizing Color Palettes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#creating-a-new-palette">Creating a New Palette</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#selecting-and-editing-a-palette">Selecting and Editing a Palette</a></li>
@@ -172,16 +172,20 @@
             
   <div class="section" id="animation-tab">
 <h1>Animation Tab<a class="headerlink" href="#animation-tab" title="Permalink to this headline">¶</a></h1>
-<p>The Animation tab is where you set <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Animations.html">Animation-specific</a> settings such as the type of animation, the color palette, and the animation timing. Selecting certain Animations will cause additional controls to appear, allowing you to tweak parameters specific to that Animation.</p>
+<p>The Animation tab is where you can create and modify <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Animations.html">Animations</a>. Here you can enable Animations, change the type of Animation, create a color palette, and configure the Animation. Selecting certain Animations will cause additional controls to appear, letting you change parameters specific to that Animation.</p>
 <a class="reference external image-reference" href="images/animation-tab.png"><img alt="Animation Controls" src="_images/animation-tab.png" /></a>
 <div class="section" id="choosing-an-animation">
 <h2>Choosing an Animation<a class="headerlink" href="#choosing-an-animation" title="Permalink to this headline">¶</a></h2>
-<p>Select an Animation using the <em>Animation Type</em> drop-down. You can also customize basic options such as:</p>
+<p>Select an Animation using the <em>Animation Type</em> drop-down. For all Animation types, you can modify basic options such as:</p>
 <ul class="simple">
 <li><p><em>Orientation</em>: Which direction the Animation moves in.</p></li>
-<li><p><em>Reverse</em>: Whether to run the Animation forwards or in reverse</p></li>
-<li><p><em>Fade</em>: Whether to gradually transition between colors or jump from one color to the next</p></li>
+<li><p><em>Reverse</em>: Whether to run the Animation forwards or in reverse.</p></li>
+<li><p><em>Fade</em>: Whether to gradually transition between colors or jump from one color to the next.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all Animations support the same options.</p>
+</div>
 <p>The <em>Color Palette</em> drop-down lets you select the color palette used to draw the Animation. Continue reading to learn more about customizing Palettes.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -189,14 +193,14 @@
 </div>
 <p>The <em>Center</em> controls let you change the location where the Animation is centered on the grid. This only applies to specific Animations, such as <code class="docutils literal notranslate"><span class="pre">Radial</span></code> and <code class="docutils literal notranslate"><span class="pre">Mandelbrot</span></code>.</p>
 </div>
-<div class="section" id="controlling-playback">
-<h2>Controlling Playback<a class="headerlink" href="#controlling-playback" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">Animation</span> <span class="pre">Tools</span></code> group box lets you play and pause the Animation, while also displaying the current cycle. You can jump to a specific cycle by pausing the Animation and entering the cycle index in the <code class="docutils literal notranslate"><span class="pre">Current</span> <span class="pre">Cycle</span></code> box.</p>
-</div>
 <div class="section" id="setting-timers">
 <h2>Setting Timers<a class="headerlink" href="#setting-timers" title="Permalink to this headline">¶</a></h2>
-<p><em>Cycle Interval</em> sets the amount of time (in milliseconds) between Animation cycles. A cycle is the amount of time required for each pixel to change from one color to the next. For example, a Blink Animation has two cycles: one to go from off to on, and one to go from on to off. A Blink Animation with a cycle interval of 1000 means the animation takes 2 seconds to complete: 1 second to turn on, and 1 more second to turn off.</p>
-<p><em>Delay Interval</em> sets the amount of time (in milliseconds) to wait before starting a new cycle. For example, if our Blink Animation has a delay interval of 2000, then the animation will appear to pause for 2 full seconds at the end of each cycle. This is only available while fading is enabled.</p>
+<p><em>Cycle Interval</em> sets the amount of time (in milliseconds) between Animation cycles. A cycle is the amount of time required for each pixel to change from one color to the next. For example, a Blink Animation has two cycles: one to turn each pixel off, and one to set each pixel back to its initial color. A Blink Animation with a cycle interval of 1000 means the animation takes 2 seconds to complete: 1 second to turn off, and 1 more second to turn back on.</p>
+<p><em>Delay Interval</em> sets the amount of time (in milliseconds) to wait before starting a new cycle. For example, if a Blink Animation has a delay interval of 2000, then the animation will pause for 2 full seconds at the end of each cycle before starting the next cycle. This is only available while fading is enabled.</p>
+</div>
+<div class="section" id="controlling-playback">
+<h2>Controlling Playback<a class="headerlink" href="#controlling-playback" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Animation</span> <span class="pre">Tools</span></code> group box lets you start and stop Animation playback. If the Animation is paused, you can skip to a specific cycle by entering the cycle number in the <code class="docutils literal notranslate"><span class="pre">Current</span> <span class="pre">Cycle</span></code> text box.</p>
 </div>
 <div class="section" id="customizing-color-palettes">
 <h2>Customizing Color Palettes<a class="headerlink" href="#customizing-color-palettes" title="Permalink to this headline">¶</a></h2>
@@ -204,14 +208,14 @@
 <a class="reference external image-reference" href="images/palette-editor.png"><img alt="Palette Editor" src="_images/palette-editor.png" /></a>
 <div class="section" id="creating-a-new-palette">
 <h3>Creating a New Palette<a class="headerlink" href="#creating-a-new-palette" title="Permalink to this headline">¶</a></h3>
-<p>To create a new palette, click <em>New Palette</em>. Enter a name for the new palette, the number of colors, and the type of palette:</p>
+<p>To create a new palette, click <em>New Palette</em>. Enter a name for the new palette, the number of colors in the palette, and the type of palette:</p>
 <ul class="simple">
 <li><p><strong>Blank</strong> creates a palette where all colors are black.</p></li>
 <li><p><strong>Random</strong> creates a palette where each color is randomly generated.</p></li>
 <li><p><strong>Scaling</strong> creates a palette that gradually scales from the <em>first color</em> to the <em>last color</em>. Select <em>Mirror</em> to scale from the first color to the last color, then back to the first color. This is useful for seamlessly blending Animations from one cycle to the next.</p></li>
 </ul>
 <a class="reference external image-reference" href="images/new-palette.png"><img alt="New Palette" src="_images/new-palette.png" /></a>
-<p>Click <em>OK</em> to save your new palette.</p>
+<p>Click <em>OK</em> to generate and save your new palette.</p>
 </div>
 <div class="section" id="selecting-and-editing-a-palette">
 <h3>Selecting and Editing a Palette<a class="headerlink" href="#selecting-and-editing-a-palette" title="Permalink to this headline">¶</a></h3>

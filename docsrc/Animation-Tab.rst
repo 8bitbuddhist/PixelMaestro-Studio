@@ -2,7 +2,7 @@
 Animation Tab
 =============
 
-The Animation tab is where you set :pmdocs:`Animation-specific <Animations.html>` settings such as the type of animation, the color palette, and the animation timing. Selecting certain Animations will cause additional controls to appear, allowing you to tweak parameters specific to that Animation.
+The Animation tab is where you can create and modify :pmdocs:`Animations <Animations.html>`. Here you can enable Animations, change the type of Animation, create a color palette, and configure the Animation. Selecting certain Animations will cause additional controls to appear, letting you change parameters specific to that Animation.
 
 
 .. image:: images/animation-tab.png
@@ -13,12 +13,14 @@ The Animation tab is where you set :pmdocs:`Animation-specific <Animations.html>
 Choosing an Animation
 ---------------------
 
-Select an Animation using the *Animation Type* drop-down. You can also customize basic options such as:
+Select an Animation using the *Animation Type* drop-down. For all Animation types, you can modify basic options such as:
 
 
 * *Orientation*\ : Which direction the Animation moves in.
-* *Reverse*\ : Whether to run the Animation forwards or in reverse
-* *Fade*\ : Whether to gradually transition between colors or jump from one color to the next
+* *Reverse*\ : Whether to run the Animation forwards or in reverse.
+* *Fade*\ : Whether to gradually transition between colors or jump from one color to the next.
+
+.. Note:: Not all Animations support the same options.
 
 The *Color Palette* drop-down lets you select the color palette used to draw the Animation. Continue reading to learn more about customizing Palettes.
 
@@ -26,17 +28,17 @@ The *Color Palette* drop-down lets you select the color palette used to draw the
 
 The *Center* controls let you change the location where the Animation is centered on the grid. This only applies to specific Animations, such as ``Radial`` and ``Mandelbrot``.
 
-Controlling Playback
---------------------
-
-The ``Animation Tools`` group box lets you play and pause the Animation, while also displaying the current cycle. You can jump to a specific cycle by pausing the Animation and entering the cycle index in the ``Current Cycle`` box.
-
 Setting Timers
 --------------
 
-*Cycle Interval* sets the amount of time (in milliseconds) between Animation cycles. A cycle is the amount of time required for each pixel to change from one color to the next. For example, a Blink Animation has two cycles: one to go from off to on, and one to go from on to off. A Blink Animation with a cycle interval of 1000 means the animation takes 2 seconds to complete: 1 second to turn on, and 1 more second to turn off.
+*Cycle Interval* sets the amount of time (in milliseconds) between Animation cycles. A cycle is the amount of time required for each pixel to change from one color to the next. For example, a Blink Animation has two cycles: one to turn each pixel off, and one to set each pixel back to its initial color. A Blink Animation with a cycle interval of 1000 means the animation takes 2 seconds to complete: 1 second to turn off, and 1 more second to turn back on.
 
-*Delay Interval* sets the amount of time (in milliseconds) to wait before starting a new cycle. For example, if our Blink Animation has a delay interval of 2000, then the animation will appear to pause for 2 full seconds at the end of each cycle. This is only available while fading is enabled.
+*Delay Interval* sets the amount of time (in milliseconds) to wait before starting a new cycle. For example, if a Blink Animation has a delay interval of 2000, then the animation will pause for 2 full seconds at the end of each cycle before starting the next cycle. This is only available while fading is enabled.
+
+Controlling Playback
+--------------------
+
+The ``Animation Tools`` group box lets you start and stop Animation playback. If the Animation is paused, you can skip to a specific cycle by entering the cycle number in the ``Current Cycle`` text box.
 
 Customizing Color Palettes
 --------------------------
@@ -52,7 +54,7 @@ The Palette Editor lets you create your own custom :pmdocs:`color palettes <Pale
 Creating a New Palette
 ^^^^^^^^^^^^^^^^^^^^^^
 
-To create a new palette, click *New Palette*. Enter a name for the new palette, the number of colors, and the type of palette:
+To create a new palette, click *New Palette*. Enter a name for the new palette, the number of colors in the palette, and the type of palette:
 
 
 * **Blank** creates a palette where all colors are black.
@@ -65,7 +67,7 @@ To create a new palette, click *New Palette*. Enter a name for the new palette, 
    :alt: New Palette
 
 
-Click *OK* to save your new palette.
+Click *OK* to generate and save your new palette.
 
 Selecting and Editing a Palette
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

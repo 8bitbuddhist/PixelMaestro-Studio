@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Main-Window.html">Main Window</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Section Tab</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setting-the-active-section">Setting the Active Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selecting-the-active-section">Selecting the Active Section</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#section-settings">Section Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#layer-settings">Layer Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#general-settings">General Settings</a></li>
@@ -168,35 +168,43 @@
             
   <div class="section" id="section-tab">
 <h1>Section Tab<a class="headerlink" href="#section-tab" title="Permalink to this headline">¶</a></h1>
-<p>The Section tab is where you set <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Sections.html">Section-specific</a> settings such as the grid size, the number of Layers, and the scrolling speed.</p>
+<p>The Section tab provides controls for editing <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Sections.html">Sections</a>. Here, you can change settings such as the size, offset, scrolling behavior, and number of Layers for each Section in your Maestro.</p>
 <a class="reference external image-reference" href="images/section-controls.png"><img alt="Section Controls" src="_images/section-controls.png" /></a>
-<div class="section" id="setting-the-active-section">
-<h2>Setting the Active Section<a class="headerlink" href="#setting-the-active-section" title="Permalink to this headline">¶</a></h2>
-<p>To edit a Section or Layer, you must first set it as the <em>Active Section</em>. Most actions performed in PixelMaestro Studio only affect the Active Section. If the Maestro is being displayed on screen, the Active Section will be shown with a white frame.</p>
-<p>You can also set a Layer as the Active Section. In order to make a Layer active, you must first select its base Section in the <em>Active Section</em> drop-down menu. Then, select the Layer in the <em>Active Layer</em> drop-down. Active Layers are shown with a light gray frame.</p>
+<div class="section" id="selecting-the-active-section">
+<h2>Selecting the Active Section<a class="headerlink" href="#selecting-the-active-section" title="Permalink to this headline">¶</a></h2>
+<p>PixelMaestro Studio can only modify one Section at a time. In order to edit a Section or Layer, you must first set it as the <em>Active Section</em>. All Section-related actions performed in PixelMaestro Studio modify the Active Section. Use the Active Section drop-down to select the Active Section. Note that if you are rendering the Maestro on-screen, the Active Section will be shown with a white frame.</p>
+<p>You can also set a Layer as the Active Section. In order to make a Layer active, you must first select its base Section in the <em>Active Section</em> drop-down menu. The <em>Active Layer</em> drop-down lists every Layer belonging to that Section. Once you select your desired Layer, it will be shown in the Maestro Viewer with a light gray frame.</p>
 <p>For example, if <code class="docutils literal notranslate"><span class="pre">Section</span> <span class="pre">1</span></code> is selected in the <em>Active Section</em> drop-down and <em>Base Section</em> is selected in the <em>Active Layer</em> drop-down, then any actions performed will affect the Section. If you select <em>Layer 1</em> in the <em>Active Layer</em> drop-down, then the Section’s first Layer will become the Active Section.</p>
 </div>
 <div class="section" id="section-settings">
 <h2>Section Settings<a class="headerlink" href="#section-settings" title="Permalink to this headline">¶</a></h2>
-<p>Section settings change the behavior of the base Section.</p>
-<p>The <em>Layers</em> text box changes the number of Layers belonging to the Section. You can switch between modifying the base Section and one of its Layers using the <em>Active Layer</em> drop-down.</p>
+<p>Section settings affect the behavior of the Section.</p>
+<p>The <em>Layers</em> text box changes the number of Layers belonging to the Section. Increasing the number adds new blank Layers to the Section, while decreasing the number removes Layers.</p>
 </div>
 <div class="section" id="layer-settings">
 <h2>Layer Settings<a class="headerlink" href="#layer-settings" title="Permalink to this headline">¶</a></h2>
-<p>The <em>Active Layer</em> sets a Layer as the Active Section. Select <em>Base Section</em> to change the Active Section back to the Section itself.</p>
-<p><em>Mix Mode</em> specifies the method used to render the Layer onto the Section. The <em>Alpha</em> spin box controls the amount of blending between the Layer and the base Section, and is only available when the Alpha mix mode is selected.</p>
+<p>Layer settings affect the behavior of the selected Layer.</p>
+<p>The <em>Active Layer</em> sets a Layer as the Active Section. Select <em>Base Section</em> to change the Active Section back to the Section.</p>
+<p><em>Mix Mode</em> determines how the Layer is rendered on top of the Section. The <em>Alpha</em> spin box controls the amount of blending between the Layer and the base Section, and is only available when the Alpha mix mode is selected. To learn more, read the PixelMaestro <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Colors.html#mixing-colors">color mixing documentation</a>.</p>
 </div>
 <div class="section" id="general-settings">
 <h2>General Settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
-<p><em>Grid Size</em> changes the horizontal and vertical dimensions of the Section. Dimensions are measured in individual pixels. The new dimensions automatically apply to all other components belonging to the Active Section including Layers, Canvases, and Animations.</p>
-<p><strong>Warning:</strong> PixelMaestro is CPU dependent, and high resolutions can lead to excessive CPU usage. If you’re having performance problems, try reducing the grid size.</p>
-<p><em>Scroll</em> scrolls the contents of the Section across the grid. The boxes correspond to the X and Y axes respectively and indicate how much time it takes to complete a single scroll (in milliseconds) across each axis. For example, a value of <code class="docutils literal notranslate"><span class="pre">1000</span></code> in the first box means it takes 1000 milliseconds to scroll the Section once along the x axis. Making either number negative reverses the direction of the scroll.</p>
-<p><em>Offset</em> shifts the Section the specified number of pixels along the X or Y axis. This is disabled while <em>Scroll</em> is set.</p>
+<p>General settings affect the Active Section as well as its Layers.</p>
+<p><em>Grid Size</em> changes the horizontal and vertical dimensions of the base Section. Dimensions are measured in individual pixels. The new dimensions automatically apply to all components belonging to the Section including Layers, Canvases, and Animations.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>High resolutions can cause high CPU usage. If you’re experiencing performance problems, try reducing the grid size.</p>
+</div>
+<p><em>Scroll</em> scrolls the contents of the Section across the grid. The values indicate how much time (in milliseconds) it takes to complete a single scroll across either the horizontal or vertical axis. For example, a value of <code class="docutils literal notranslate"><span class="pre">1000</span></code> in the first text box means it will take 1000 milliseconds to scroll the Section once along the x axis. Setting either number negative reverses the direction of the scroll.</p>
+<p><em>Offset</em> shifts the Section the specified number of pixels along the x or y axis. This is disabled while <em>Scroll</em> is set.</p>
 </div>
 <div class="section" id="brightness">
 <h2>Brightness<a class="headerlink" href="#brightness" title="Permalink to this headline">¶</a></h2>
 <p>Brightness changes how bright or dim the Section appears. Brightness is a numeric value between 0 and 255, where 0 is completely dark and 255 is fully lit.</p>
-<p><strong>Tip</strong>: You can control each Layer’s brightness independently of its parent Section, but a Layer can only be as bright as its parent.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can control each Layer’s brightness independently of its parent Section, but a Layer can only be as bright as its parent.</p>
+</div>
 </div>
 </div>
 
