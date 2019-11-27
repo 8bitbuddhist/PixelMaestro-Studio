@@ -415,20 +415,6 @@
           <string>Animation Tools</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="4" column="0">
-           <widget class="QLabel" name="frameRateLabel">
-            <property name="text">
-             <string>Frame Interval</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="currentFrameLabel">
-            <property name="text">
-             <string>Current Frame</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="toggleCanvasModeLabel">
             <property name="sizePolicy">
@@ -439,29 +425,6 @@
             </property>
             <property name="text">
              <string>Playback</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="frameCountLabel">
-            <property name="text">
-             <string>Frame Count</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="frameCountSpinBox">
-            <property name="toolTip">
-             <string>Number of frames</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>65536</number>
             </property>
            </widget>
           </item>
@@ -484,19 +447,26 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QSpinBox" name="frameIntervalSpinBox">
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="frameCountSpinBox">
             <property name="toolTip">
-             <string>Amount of time between frames</string>
+             <string>Number of frames</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
-            <property name="maximum">
-             <number>6000</number>
+            <property name="minimum">
+             <number>1</number>
             </property>
-            <property name="value">
-             <number>100</number>
+            <property name="maximum">
+             <number>65536</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="currentFrameLabel">
+            <property name="text">
+             <string>Current Frame</string>
             </property>
            </widget>
           </item>
@@ -556,7 +526,37 @@
             </item>
            </layout>
           </item>
-          <item row="4" column="2">
+          <item row="4" column="0">
+           <widget class="QLabel" name="frameRateLabel">
+            <property name="text">
+             <string>Frame Interval</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="frameCountLabel">
+            <property name="text">
+             <string>Frame Count</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTimeEdit" name="frameTimeEdit">
+            <property name="toolTip">
+             <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="currentSection">
+             <enum>QDateTimeEdit::MinuteSection</enum>
+            </property>
+            <property name="displayFormat">
+             <string>mm:ss.zzz</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
            <widget class="QSlider" name="frameIntervalSlider">
             <property name="toolTip">
              <string>Amount of time between frames</string>
@@ -657,8 +657,6 @@
   <tabstop>playbackNextToolButton</tabstop>
   <tabstop>frameCountSpinBox</tabstop>
   <tabstop>currentFrameSpinBox</tabstop>
-  <tabstop>frameIntervalSpinBox</tabstop>
-  <tabstop>frameIntervalSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>

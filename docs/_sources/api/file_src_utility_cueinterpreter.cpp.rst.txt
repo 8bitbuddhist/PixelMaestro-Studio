@@ -29,6 +29,8 @@ Includes
 --------
 
 
+- ``QTime``
+
 - ``cueinterpreter.h`` (:ref:`file_src_utility_cueinterpreter.h`)
 
 - ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)

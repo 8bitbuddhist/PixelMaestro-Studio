@@ -27,8 +27,6 @@ namespace PixelMaestroStudio {
 			void on_fadeCheckBox_toggled(bool checked);
 			void on_reverseCheckBox_toggled(bool checked);
 			void on_orientationComboBox_currentIndexChanged(int index);
-			void on_cycleIntervalSpinBox_editingFinished();
-			void on_delayIntervalSpinBox_editingFinished();
 
 			void on_paletteEditButton_clicked();
 
@@ -45,6 +43,10 @@ namespace PixelMaestroStudio {
 			void on_centerXSpinBox_editingFinished();
 
 			void on_centerYSpinBox_editingFinished();
+
+			void on_cycleTimeEdit_editingFinished();
+
+			void on_delayTimeEdit_editingFinished();
 
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;

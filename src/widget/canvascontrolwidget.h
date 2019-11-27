@@ -61,8 +61,6 @@ namespace PixelMaestroStudio {
 
 			void on_currentFrameSpinBox_editingFinished();
 
-			void on_frameIntervalSpinBox_editingFinished();
-
 			void on_frameIntervalSlider_valueChanged(int value);
 
 			void on_clearButton_clicked();
@@ -72,6 +70,8 @@ namespace PixelMaestroStudio {
 			void on_replaceToolButton_toggled(bool checked);
 
 			void on_paletteComboBox_activated(int index);
+
+			void on_frameTimeEdit_editingFinished();
 
 		private:
 			/// Color index storage for Canvases.

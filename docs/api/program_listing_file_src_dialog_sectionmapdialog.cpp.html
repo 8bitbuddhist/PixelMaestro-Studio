@@ -171,6 +171,9 @@
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">SectionMapDialog</span><span class="o">::</span><span class="n">SectionMapDialog</span><span class="p">(</span><span class="n">SerialDeviceController</span><span class="o">&amp;</span> <span class="n">device</span><span class="p">,</span> <span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span> <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">SectionMapDialog</span><span class="p">),</span> <span class="n">device_</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;qrc:/../../../docsrc/images/logo.png&quot;</span><span class="p">));</span>
+
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="c1">// If the model hasn&#39;t been initialized, initialize it</span>

@@ -62,6 +62,8 @@ Program Listing for File showcontrolwidget.h
                void on_eventQueueWidget_itemDoubleClicked(QListWidgetItem *item);
    
            private:
+               static QString time_format;
+   
                QVector<QVector<uint8_t>> event_history_;
    
                uint32_t last_event_time_ = 0;

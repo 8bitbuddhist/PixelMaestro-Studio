@@ -10,6 +10,8 @@ namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint32_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
 		ui->setupUi(this);
 
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		ui->interpretedCueTableView->setModel(&model_);
 		ui->interpretedCueTableView->resizeColumnToContents(0);
 		ui->interpretedCueTableView->setTextElideMode(Qt::ElideRight);

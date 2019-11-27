@@ -29,6 +29,8 @@ Includes
 --------
 
 
+- ``QTime``
+
 - ``QWidget``
 
 - ``animation/animation.h``

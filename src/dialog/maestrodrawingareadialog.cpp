@@ -10,6 +10,9 @@ namespace PixelMaestroStudio {
 		QDialog(parent),
 		ui(new Ui::MaestroDrawingAreaDialog),
 		maestro_controller_(maestro_controller) {
+
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		// Capture button key presses
 		qApp->installEventFilter(this);
 

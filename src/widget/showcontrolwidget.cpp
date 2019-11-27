@@ -4,6 +4,7 @@
 #include <QModelIndex>
 #include <QRegExp>
 #include <QSettings>
+#include <QTime>
 #include "dialog/preferencesdialog.h"
 #include "dialog/editeventdialog.h"
 #include "showcontrolwidget.h"
@@ -11,6 +12,9 @@
 #include "controller/showcontroller.h"
 
 namespace PixelMaestroStudio {
+
+	QString ShowControlWidget::time_format = QStringLiteral("hh:mm:ss.zzz");
+
 	ShowControlWidget::ShowControlWidget(QWidget *parent) :
 			QWidget(parent),
 			ui(new Ui::ShowControlWidget),
@@ -43,7 +47,7 @@ namespace PixelMaestroStudio {
 
 		// Remove all but the last XX events
 		QSettings settings;
-		if (event_history_.size() >= settings.value(PreferencesDialog::event_history_max).toInt()) {
+		if (event_history_.size() >= settings.value(PreferencesDialog::event_history_max, 200).toInt()) {
 			ui->eventHistoryWidget->takeItem(0);
 			event_history_.remove(0);
 		}
@@ -113,15 +117,16 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::on_addEventButton_clicked() {
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
-			Event* event = show_controller_->add_event(
-				ui->eventTimeSpinBox->value(),
-				(uint8_t*)&event_history_.at(index.row()).at(0)
+			QTime time = ui->eventTimeEdit->time();
+			show_controller_->add_event(
+				(uint32_t)time.msecsSinceStartOfDay(),
+				(uint8_t*)event_history_.at(index.row()).data()
 			);
 
 			ui->eventQueueWidget->addItem(
-				locale_.toString(event->get_time()) +
+				time.toString(time_format) +
 				QString(": ") +
-				CueInterpreter::interpret_cue(event->get_cue())
+				ui->eventHistoryWidget->item(index.row())->text()
 			);
 		}
 
@@ -226,7 +231,6 @@ namespace PixelMaestroStudio {
 
 	/// Moves the selected Event(s) down one spot.
 	void ShowControlWidget::on_moveEventDownButton_clicked() {
-		// FIXME: Breaks when triggered multiple times sequentially with multi-select enabled
 		QModelIndexList list = ui->eventQueueWidget->selectionModel()->selectedIndexes();
 		for (int i = list.size() - 1; i >= 0; i--) {
 			int current_index = list.at(i).row();
@@ -295,8 +299,9 @@ namespace PixelMaestroStudio {
 		);
 
 		// Enable loop checkbox if we're in relative mode
-		ui->loopCheckBox->setEnabled((Show::TimingMode)index == Show::TimingMode::Relative);
-		ui->relativeTimeLineEdit->setEnabled((Show::TimingMode)index == Show::TimingMode::Relative);
+		bool relative_mode = (Show::TimingMode)index == Show::TimingMode::Relative;
+		ui->loopCheckBox->setEnabled(relative_mode);
+		ui->relativeTimeLineEdit->setEnabled(relative_mode);
 	}
 
 	/**
@@ -316,10 +321,12 @@ namespace PixelMaestroStudio {
 					// Check for Events before adding them to prevent duplicates
 					if (show_controller_->get_event_index(event) < 0) {
 						show_controller_->add_event(event->get_time(), event->get_cue());
+
+						QTime event_time = QTime::fromMSecsSinceStartOfDay(event->get_time());
 						ui->eventQueueWidget->addItem(
-							locale_.toString(event->get_time()) +
-									QString(": ") +
-									CueInterpreter::interpret_cue(event->get_cue())
+							event_time.toString(time_format) +
+							QString(": ") +
+							CueInterpreter::interpret_cue(event->get_cue())
 						);
 					}
 				}
@@ -365,18 +372,18 @@ namespace PixelMaestroStudio {
 	 * Updates fields in the widget when the timer fires.
 	 */
 	void ShowControlWidget::timer_refresh() {
+
 		// Update 'Absolute Time' text box
-		uint last_time = (uint)maestro_control_widget_.get_maestro_controller()->get_total_elapsed_time();
-		ui->absoluteTimeLineEdit->setText(locale_.toString(last_time));
+		uint absolute_time = (uint)maestro_control_widget_.get_maestro_controller()->get_total_elapsed_time();
+		ui->absoluteTimeLineEdit->setText(QTime::fromMSecsSinceStartOfDay(absolute_time).toString(time_format));
 
 		Show* show = maestro_control_widget_.get_maestro_controller()->get_maestro().get_show();
 		if (show == nullptr) return;
 
 		// If relative mode is enabled, calculate the time since the last Event
-		bool relative_time_enabled = show->get_timing() == Show::TimingMode::Relative;
-		if (relative_time_enabled) {
-			uint relative_time = maestro_control_widget_.get_maestro_controller()->get_total_elapsed_time() - show->get_last_time();
-			ui->relativeTimeLineEdit->setText(locale_.toString(relative_time));
+		if (show->get_timing() == Show::TimingMode::Relative) {
+			uint relative_time = absolute_time - show->get_last_time();
+			ui->relativeTimeLineEdit->setText(QTime::fromMSecsSinceStartOfDay(relative_time).toString(time_format));
 		}
 
 		// Get the last event that ran, and if it differs from the Show's current index, update the Event Queue
@@ -399,7 +406,10 @@ namespace PixelMaestroStudio {
 				Event* event = show->get_event_at_index(show->get_current_index());
 				if (event != nullptr) {
 					CueController* cue_controller = &maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
-					maestro_control_widget_.device_control_widget_->run_cue(event->get_cue(), cue_controller->get_cue_size(event->get_cue()));
+					maestro_control_widget_.device_control_widget_->run_cue(
+						event->get_cue(),
+						cue_controller->get_cue_size(event->get_cue())
+					);
 				}
 			}
 

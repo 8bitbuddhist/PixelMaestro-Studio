@@ -1,3 +1,4 @@
+#include <QTime>
 #include "cueinterpreter.h"
 #include "dialog/preferencesdialog.h"
 
@@ -106,11 +107,11 @@ namespace PixelMaestroStudio {
 
 	void CueInterpreter::append_animation_timer(uint16_t interval, uint16_t delay, QString& result) {
 		append_timer(interval, result);
-		result.append(delimiter + "Delay: " + QString::number(delay));
+		result.append(delimiter + "Delay: " + QTime::fromMSecsSinceStartOfDay(delay).toString("mm:ss.zzz"));
 	}
 
 	void CueInterpreter::append_timer(uint16_t interval, QString& result) {
-		result.append(delimiter + "Interval: " + QString::number(interval));
+		result.append(delimiter + "Interval: " + QTime::fromMSecsSinceStartOfDay(interval).toString("mm:ss.zzz"));
 	}
 
 	QString CueInterpreter::convert_cue_to_byte_array_string(uint8_t* cue, uint16_t size) {

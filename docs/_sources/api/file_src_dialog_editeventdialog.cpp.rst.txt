@@ -29,6 +29,10 @@ Includes
 --------
 
 
+- ``QIcon``
+
+- ``QTime``
+
 - ``editeventdialog.h`` (:ref:`file_src_dialog_editeventdialog.h`)
 
 - ``ui_editeventdialog.h``

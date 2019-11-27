@@ -50,6 +50,8 @@ namespace PixelMaestroStudio {
 			void on_eventQueueWidget_itemDoubleClicked(QListWidgetItem *item);
 
 		private:
+			static QString time_format;
+
 			/// History of actions performed in the editor. Each entry contains a copy of the Event's Cue.
 			QVector<QVector<uint8_t>> event_history_;
 

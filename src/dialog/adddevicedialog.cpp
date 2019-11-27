@@ -16,6 +16,8 @@ namespace PixelMaestroStudio {
 		ui(new Ui::AddDeviceDialog) {
 		ui->setupUi(this);
 
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		this->devices_ = devices;
 		this->device_ = device;
 

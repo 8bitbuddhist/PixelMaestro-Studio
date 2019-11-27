@@ -166,6 +166,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;QKeyEvent&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QMessageBox&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QPushButton&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;canvascontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ui_canvascontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;utility/canvasutility.h&quot;</span><span class="cp"></span>
@@ -520,16 +521,16 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">CanvasControlWidget</span><span class="o">::</span><span class="n">on_frameIntervalSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">value</span><span class="p">));</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_frame_interval</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">CanvasControlWidget</span><span class="o">::</span><span class="n">on_frameIntervalSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">CanvasControlWidget</span><span class="o">::</span><span class="n">on_frameTimeEdit_editingFinished</span><span class="p">(){</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">());</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_frame_interval</span><span class="p">();</span>
@@ -566,9 +567,9 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentFrameSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">()));</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="p">}</span>
 
             <span class="n">add_palette_to_selection</span><span class="p">(</span><span class="o">*</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_palette</span><span class="p">());</span>
@@ -626,7 +627,7 @@
                 <span class="p">)</span>
             <span class="p">);</span>
 
-            <span class="n">on_frameIntervalSpinBox_editingFinished</span><span class="p">();</span>
+            <span class="n">on_frameTimeEdit_editingFinished</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
@@ -694,7 +695,7 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameCountSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentFrameSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 
         <span class="n">Canvas</span><span class="o">*</span> <span class="n">canvas</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_canvas</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
@@ -703,7 +704,7 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentFrameSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_current_frame_index</span><span class="p">());</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
                 <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">canvas</span><span class="o">-&gt;</span><span class="n">get_frame_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">()));</span>
             <span class="p">}</span>
             <span class="n">set_controls_enabled</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 
@@ -718,14 +719,14 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameCountSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentFrameSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
             <span class="n">set_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameCountSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentFrameSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -803,7 +804,7 @@
             <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">canvas_handler</span><span class="o">-&gt;</span><span class="n">set_frame_timer</span><span class="p">(</span>
                 <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
                 <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">frameTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span>
             <span class="p">)</span>
         <span class="p">);</span>
     <span class="p">}</span>

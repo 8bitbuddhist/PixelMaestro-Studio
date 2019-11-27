@@ -1,5 +1,6 @@
 #include <QSerialPortInfo>
 #include <QSettings>
+#include <QTime>
 #include "preferencesdialog.h"
 #include "ui_preferencesdialog.h"
 
@@ -59,6 +60,9 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::events_trigger_device_updates = QStringLiteral("Interface/EventsTriggerDeviceUpdates");
 
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
+
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		ui->setupUi(this);
 
 		// Interface settings
@@ -67,7 +71,7 @@ namespace PixelMaestroStudio {
 
 		// Maestro settings
 		ui->numSectionsSpinBox->setValue(settings_.value(num_sections, 1).toInt());				// Default to 1 Section
-		ui->refreshSpinBox->setValue(settings_.value(refresh_rate, 50).toInt());				// Default to 50 ms
+		ui->refreshTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(settings_.value(refresh_rate, 50).toInt()));				// Default to 50 ms
 		ui->pauseOnStartCheckBox->setChecked(settings_.value(pause_on_start, false).toBool());	// Default to run on start
 
 		// Show settings
@@ -77,7 +81,7 @@ namespace PixelMaestroStudio {
 
 	void PreferencesDialog::on_buttonBox_accepted() {
 		// Save Maestro settings
-		settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
+		settings_.setValue(refresh_rate, ui->refreshTimeEdit->time().msecsSinceStartOfDay());
 		settings_.setValue(num_sections, ui->numSectionsSpinBox->value());
 		settings_.setValue(pause_on_start, ui->pauseOnStartCheckBox->isChecked());
 

@@ -7,7 +7,7 @@ Welcome to the PixelMaestro Studio documentation!
 What is PixelMaestro Studio?
 ----------------------------
 
-PixelMaestro Studio is a desktop application for managing RGB LEDs, built on the `PixelMaestro library <https://github.com/8bitbuddhist/PixelMaestro/>`_. With PixelMaestro Studio, you can design animations, create dynamic light shows, control lights over USB, and more.
+PixelMaestro Studio is an application for controlling RGB LEDs, built on the `PixelMaestro library <https://github.com/8bitbuddhist/PixelMaestro/>`_. With PixelMaestro Studio, you can design animations, create dynamic light shows, control lights over USB, and more.
 
 To get started with PixelMaestro Studio, check out the :doc:`Getting Started <Getting-Started>` guide. If you want to learn more about the PixelMaestro library, visit the `PixelMaestro GitHub page <https://github.com/8bitbuddhist/PixelMaestro/>`_ or the :pmdocs:`PixelMaestro documentation <index.html>`.
 
@@ -16,11 +16,11 @@ FAQ
 
 **What devices are supported by PixelMaestro Studio?**
 
-PixelMaestro Studio works on any device that supports serial communication and runs the PixelMaestro library. This includes Arduino, Raspberry Pi, Teensy, etc.
+PixelMaestro Studio can control any device that can run the PixelMaestro library and supports serial communication. This includes Arduino, Raspberry Pi, Teensy, etc.
 
 **How do I connect my device to PixelMaestro Studio?**
 
-Plug in your device over USB, then follow the instructions in the :doc:`Device Tab <Device-Tab>` documentation.
+Plug in your device over USB, then follow the instructions in the :doc:`Device Tab <Device-Tab>` page.
 
 **When I click Connect on the Device Tab, nothing happens or I get an error message**
 

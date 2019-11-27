@@ -20,5 +20,6 @@
         <file>icon_connected.png</file>
         <file>icon_replace.png</file>
         <file>icon_clock.png</file>
+        <file>../../../docsrc/images/logo.png</file>
     </qresource>
 </RCC>

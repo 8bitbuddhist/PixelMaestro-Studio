@@ -179,7 +179,8 @@
     <span class="n">PixelMaestroStudio</span><span class="o">::</span><span class="n">MainWindow</span> <span class="n">w</span><span class="p">;</span>
 
     <span class="c1">// Set global color palette (https://gist.github.com/QuantumCD/6245215)</span>
-    <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">setStyle</span><span class="p">(</span><span class="n">QStyleFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;fusion&quot;</span><span class="p">));</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">QStyleFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Fusion&quot;</span><span class="p">));</span>
+
     <span class="n">QPalette</span> <span class="n">palette</span><span class="p">;</span>
     <span class="n">palette</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">::</span><span class="n">Window</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">53</span><span class="p">,</span><span class="mi">53</span><span class="p">,</span><span class="mi">53</span><span class="p">));</span>
     <span class="n">palette</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">::</span><span class="n">WindowText</span><span class="p">,</span> <span class="n">Qt</span><span class="o">::</span><span class="n">white</span><span class="p">);</span>
@@ -193,7 +194,10 @@
     <span class="n">palette</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">::</span><span class="n">BrightText</span><span class="p">,</span> <span class="n">Qt</span><span class="o">::</span><span class="n">red</span><span class="p">);</span>
     <span class="n">palette</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">::</span><span class="n">Highlight</span><span class="p">,</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">142</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">197</span><span class="p">).</span><span class="n">lighter</span><span class="p">());</span>
     <span class="n">palette</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QPalette</span><span class="o">::</span><span class="n">HighlightedText</span><span class="p">,</span> <span class="n">Qt</span><span class="o">::</span><span class="n">black</span><span class="p">);</span>
-    <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">);</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">);</span>
+
+    <span class="c1">// Change color of QToolButtons when checked</span>
+    <span class="c1">//app.setStyleSheet(QString(&quot;.QToolButton:checked { background-color: rgb(142, 45, 197); }&quot;));</span>
 
     <span class="c1">// Set application font</span>
     <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">QFontDatabase</span><span class="o">::</span><span class="n">addApplicationFont</span><span class="p">(</span><span class="s">&quot;:/FiraSans-Regular.ttf&quot;</span><span class="p">);</span>
@@ -212,7 +216,7 @@
         <span class="k">return</span> <span class="n">app</span><span class="p">.</span><span class="n">exec</span><span class="p">();</span>
     <span class="p">}</span>
     <span class="k">catch</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exception</span><span class="o">&amp;</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">QMessageBox</span><span class="o">::</span><span class="n">critical</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;Unhandled Exception&quot;</span><span class="p">),</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;A critical error has occurred, causing the application to close unexpectedly: &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">fromLatin1</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">()));</span>
+        <span class="n">QMessageBox</span><span class="o">::</span><span class="n">critical</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;Unhandled Exception&quot;</span><span class="p">),</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;A critical error has occurred. The application will now close. Error: &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">fromLatin1</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">()));</span>
         <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>

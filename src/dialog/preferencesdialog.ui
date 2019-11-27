@@ -465,7 +465,7 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QComboBox" name="pixelShapeComboBox">
         <property name="toolTip">
          <string>The shape of each individual Pixel</string>
@@ -485,7 +485,7 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Pixel shape</string>
@@ -495,23 +495,20 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Refresh Interval (ms)</string>
+         <string>Refresh Interval</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="refreshSpinBox">
-        <property name="toolTip">
-         <string>The interval between Maestro refreshes</string>
+       <widget class="QTimeEdit" name="refreshTimeEdit">
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
-        <property name="minimum">
-         <number>10</number>
+        <property name="currentSection">
+         <enum>QDateTimeEdit::MSecSection</enum>
         </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-        <property name="value">
-         <number>50</number>
+        <property name="displayFormat">
+         <string>mm:ss.zzz</string>
         </property>
        </widget>
       </item>

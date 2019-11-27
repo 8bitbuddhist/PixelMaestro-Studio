@@ -37,6 +37,8 @@ Includes
 
 - ``QPushButton``
 
+- ``QTime``
+
 - ``canvascontrolwidget.h`` (:ref:`file_src_widget_canvascontrolwidget.h`)
 
 - ``ui_canvascontrolwidget.h``

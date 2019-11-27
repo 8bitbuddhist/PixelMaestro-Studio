@@ -2,6 +2,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QTime>
 #include "canvascontrolwidget.h"
 #include "ui_canvascontrolwidget.h"
 #include "utility/canvasutility.h"
@@ -411,9 +412,9 @@ namespace PixelMaestroStudio {
 	 * @param value New interval.
 	 */
 	void CanvasControlWidget::on_frameIntervalSlider_valueChanged(int value) {
-		ui->frameIntervalSpinBox->blockSignals(true);
-		ui->frameIntervalSpinBox->setValue(value);
-		ui->frameIntervalSpinBox->blockSignals(false);
+		ui->frameTimeEdit->blockSignals(true);
+		ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
+		ui->frameTimeEdit->blockSignals(false);
 
 		set_frame_interval();
 	}
@@ -421,9 +422,9 @@ namespace PixelMaestroStudio {
 	/**
 	 * Sets the interval (in ms) between Canvas frames.
 	 */
-	void CanvasControlWidget::on_frameIntervalSpinBox_editingFinished() {
+	void CanvasControlWidget::on_frameTimeEdit_editingFinished(){
 		ui->frameIntervalSlider->blockSignals(true);
-		ui->frameIntervalSlider->setValue(ui->frameIntervalSpinBox->value());
+		ui->frameIntervalSlider->setValue(ui->frameTimeEdit->time().msecsSinceStartOfDay());
 		ui->frameIntervalSlider->blockSignals(false);
 
 		set_frame_interval();
@@ -468,9 +469,9 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->setEnabled(false);
 
 			if (canvas->get_frame_timer() != nullptr) {
-				ui->frameIntervalSpinBox->blockSignals(true);
-				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
-				ui->frameIntervalSpinBox->blockSignals(false);
+				ui->frameTimeEdit->blockSignals(true);
+				ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(canvas->get_frame_timer()->get_interval()));
+				ui->frameTimeEdit->blockSignals(false);
 			}
 
 			add_palette_to_selection(*canvas->get_palette());
@@ -538,7 +539,7 @@ namespace PixelMaestroStudio {
 				)
 			);
 
-			on_frameIntervalSpinBox_editingFinished();
+			on_frameTimeEdit_editingFinished();
 		}
 	}
 
@@ -628,7 +629,7 @@ namespace PixelMaestroStudio {
 		ui->frameCountSpinBox->blockSignals(true);
 		ui->currentFrameSpinBox->blockSignals(true);
 		ui->frameIntervalSlider->blockSignals(true);
-		ui->frameIntervalSpinBox->blockSignals(true);
+		ui->frameTimeEdit->blockSignals(true);
 
 		Canvas* canvas = maestro_control_widget_.section_control_widget_->get_active_section().get_canvas();
 		if (canvas != nullptr) {
@@ -637,7 +638,7 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
 			if (canvas->get_frame_timer() != nullptr) {
 				ui->frameIntervalSlider->setValue(canvas->get_frame_timer()->get_interval());
-				ui->frameIntervalSpinBox->setValue(canvas->get_frame_timer()->get_interval());
+				ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(canvas->get_frame_timer()->get_interval()));
 			}
 			set_controls_enabled(true);
 
@@ -652,14 +653,14 @@ namespace PixelMaestroStudio {
 			ui->frameCountSpinBox->setValue(1);
 			ui->currentFrameSpinBox->setValue(0);
 			ui->frameIntervalSlider->setValue(100);
-			ui->frameIntervalSpinBox->setValue(100);
+			ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(100));
 			set_controls_enabled(false);
 		}
 
 		ui->frameCountSpinBox->blockSignals(false);
 		ui->currentFrameSpinBox->blockSignals(false);
 		ui->frameIntervalSlider->blockSignals(false);
-		ui->frameIntervalSpinBox->blockSignals(false);
+		ui->frameTimeEdit->blockSignals(false);
 		ui->enableCheckBox->blockSignals(false);
 	}
 
@@ -757,7 +758,7 @@ namespace PixelMaestroStudio {
 			maestro_control_widget_.canvas_handler->set_frame_timer(
 				maestro_control_widget_.section_control_widget_->get_section_index(),
 				maestro_control_widget_.section_control_widget_->get_layer_index(),
-				ui->frameIntervalSpinBox->value()
+				ui->frameTimeEdit->time().msecsSinceStartOfDay()
 			)
 		);
 	}

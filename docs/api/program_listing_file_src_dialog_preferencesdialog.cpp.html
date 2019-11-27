@@ -164,6 +164,7 @@
 <p>↰ <a class="reference internal" href="file_src_dialog_preferencesdialog.cpp.html#file-src-dialog-preferencesdialog-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/dialog/preferencesdialog.cpp</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QSerialPortInfo&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;preferencesdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ui_preferencesdialog.h&quot;</span><span class="cp"></span>
 
@@ -223,6 +224,9 @@
     <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">events_trigger_device_updates</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;Interface/EventsTriggerDeviceUpdates&quot;</span><span class="p">);</span>
 
     <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">PreferencesDialog</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span> <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">PreferencesDialog</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;qrc:/../../../docsrc/images/logo.png&quot;</span><span class="p">));</span>
+
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="c1">// Interface settings</span>
@@ -231,7 +235,7 @@
 
         <span class="c1">// Maestro settings</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">numSectionsSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">num_sections</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="n">toInt</span><span class="p">());</span>             <span class="c1">// Default to 1 Section</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="mi">50</span><span class="p">).</span><span class="n">toInt</span><span class="p">());</span>                <span class="c1">// Default to 50 ms</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="mi">50</span><span class="p">).</span><span class="n">toInt</span><span class="p">()));</span>               <span class="c1">// Default to 50 ms</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">pauseOnStartCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">pause_on_start</span><span class="p">,</span> <span class="nb">false</span><span class="p">).</span><span class="n">toBool</span><span class="p">());</span>  <span class="c1">// Default to run on start</span>
 
         <span class="c1">// Show settings</span>
@@ -241,7 +245,7 @@
 
     <span class="kt">void</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">on_buttonBox_accepted</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// Save Maestro settings</span>
-        <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">refresh_rate</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">());</span>
         <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">num_sections</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">numSectionsSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
         <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">pause_on_start</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">pauseOnStartCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
 

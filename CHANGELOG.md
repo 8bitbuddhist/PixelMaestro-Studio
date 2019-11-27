@@ -3,6 +3,14 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.51] - In Progress
+
+### Added
+- Added window icons.
+
+### Changed
+- Changed time widgets to display time spans instead of milliseconds.
+
 ## [v0.50.2] - 2019-07-26
 
 ### Added

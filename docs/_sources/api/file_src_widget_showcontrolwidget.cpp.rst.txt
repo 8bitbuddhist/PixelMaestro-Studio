@@ -41,6 +41,8 @@ Includes
 
 - ``QSettings``
 
+- ``QTime``
+
 - ``controller/showcontroller.h`` (:ref:`file_src_controller_showcontroller.h`)
 
 - ``dialog/editeventdialog.h`` (:ref:`file_src_dialog_editeventdialog.h`)

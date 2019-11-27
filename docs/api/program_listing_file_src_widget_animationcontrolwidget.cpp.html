@@ -162,7 +162,8 @@
   <div class="section" id="program-listing-for-file-animationcontrolwidget-cpp">
 <span id="program-listing-file-src-widget-animationcontrolwidget-cpp"></span><h1>Program Listing for File animationcontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-animationcontrolwidget-cpp" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_widget_animationcontrolwidget.cpp.html#file-src-widget-animationcontrolwidget-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/widget/animationcontrolwidget.cpp</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;animationcontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ui_animationcontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;animation/animation.h&quot;</span><span class="cp"></span>
@@ -252,8 +253,10 @@
                 <span class="n">on_fadeCheckBox_toggled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
                 <span class="n">on_reverseCheckBox_toggled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
                 <span class="n">on_orientationComboBox_currentIndexChanged</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">());</span>
-                <span class="n">on_cycleIntervalSpinBox_editingFinished</span><span class="p">();</span>
-                <span class="n">on_delayIntervalSpinBox_editingFinished</span><span class="p">();</span>
+
+                <span class="n">animation</span> <span class="o">=</span> <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">().</span><span class="n">get_animation</span><span class="p">();</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">());</span>
             <span class="p">}</span>
 
             <span class="c1">// Set center</span>
@@ -300,32 +303,32 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_cycleIntervalSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">value</span><span class="p">));</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_animation_timer</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_cycleIntervalSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">PixelMaestroStudio</span><span class="o">::</span><span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_cycleTimeEdit_editingFinished</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">());</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_animation_timer</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_delayIntervalSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">value</span><span class="p">));</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_animation_timer</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_delayIntervalSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_delayTimeEdit_editingFinished</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">());</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_animation_timer</span><span class="p">();</span>
@@ -334,7 +337,7 @@
     <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">on_fadeCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
 
         <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
             <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_fade</span><span class="p">(</span>
@@ -418,27 +421,27 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_orientation</span><span class="p">());</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_reverse</span><span class="p">());</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_fade</span><span class="p">());</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_interval</span><span class="p">()));</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">());</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">setTime</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_delay</span><span class="p">()));</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">x</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">animation</span><span class="o">-&gt;</span><span class="n">get_center</span><span class="p">().</span><span class="n">y</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">orientationComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">reverseCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fadeCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSlider</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
@@ -518,14 +521,13 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="c1">// TODO: Add an option for showing timer sliders as cycles per minute? Do the same for Canvas timers</span>
     <span class="kt">void</span> <span class="n">AnimationControlWidget</span><span class="o">::</span><span class="n">set_animation_timer</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
             <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">animation_handler</span><span class="o">-&gt;</span><span class="n">set_timer</span><span class="p">(</span>
                 <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(),</span>
                 <span class="n">maestro_control_widget</span><span class="p">.</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(),</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayIntervalSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">cycleTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">(),</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">delayTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span>
             <span class="p">)</span>
         <span class="p">);</span>
     <span class="p">}</span>
@@ -548,6 +550,7 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerXSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">centerYSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">currentCycleSpinBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playbackStartStopToolButton</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
     <span class="p">}</span>
 
     <span class="n">AnimationControlWidget</span><span class="o">::~</span><span class="n">AnimationControlWidget</span><span class="p">()</span> <span class="p">{</span>

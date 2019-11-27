@@ -179,12 +179,15 @@
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">CueModel</span><span class="o">::</span><span class="n">CueModel</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="n">cue</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">:</span> <span class="n">QStandardItemModel</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">QStringList</span> <span class="n">header_labels</span><span class="p">;</span>
-        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Text&quot;</span><span class="p">);</span>
+        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Description&quot;</span><span class="p">);</span>
         <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Size&quot;</span><span class="p">);</span>
-        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Code (C++)&quot;</span><span class="p">);</span>
+        <span class="n">header_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Code&quot;</span><span class="p">);</span>
         <span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">header_labels</span><span class="p">);</span>
 
-        <span class="c1">// Interpret Cue by creating a dummy Maestro to run it, then pass valid Cues to a CueInterpreter.</span>
+        <span class="cm">/*</span>
+<span class="cm">         *  Validate Cue by running it through a dummy Maestro.</span>
+<span class="cm">         *  If it&#39;s valid, run it through a CueInterpreter and add it to the list.</span>
+<span class="cm">         */</span>
         <span class="n">Maestro</span> <span class="n">virtual_maestro</span> <span class="o">=</span> <span class="n">Maestro</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
         <span class="n">CueController</span><span class="o">&amp;</span> <span class="n">cue_controller</span> <span class="o">=</span> <span class="n">virtual_maestro</span><span class="p">.</span><span class="n">set_cue_controller</span><span class="p">(</span><span class="n">UINT16_MAX</span><span class="p">);</span>
 

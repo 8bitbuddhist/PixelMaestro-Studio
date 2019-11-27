@@ -1,3 +1,4 @@
+#include <QTime>
 #include <QWidget>
 #include "animationcontrolwidget.h"
 #include "ui_animationcontrolwidget.h"
@@ -96,8 +97,10 @@ namespace PixelMaestroStudio {
 				on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
 				on_reverseCheckBox_toggled(ui->reverseCheckBox->isChecked());
 				on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
-				on_cycleIntervalSpinBox_editingFinished();
-				on_delayIntervalSpinBox_editingFinished();
+
+				animation = maestro_control_widget.section_control_widget_->get_active_section().get_animation();
+				ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
+				ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
 			}
 
 			// Set center
@@ -148,19 +151,16 @@ namespace PixelMaestroStudio {
 	 * @param value Cycle duration (in ms).
 	 */
 	void AnimationControlWidget::on_cycleIntervalSlider_valueChanged(int value) {
-		ui->cycleIntervalSpinBox->blockSignals(true);
-		ui->cycleIntervalSpinBox->setValue(value);
-		ui->cycleIntervalSpinBox->blockSignals(false);
+		ui->cycleTimeEdit->blockSignals(true);
+		ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
+		ui->cycleTimeEdit->blockSignals(false);
 
 		set_animation_timer();
 	}
 
-	/**
-	 * Sets the duration of each Animation cycle.
-	 */
-	void AnimationControlWidget::on_cycleIntervalSpinBox_editingFinished() {
+	void PixelMaestroStudio::AnimationControlWidget::on_cycleTimeEdit_editingFinished() {
 		ui->cycleIntervalSlider->blockSignals(true);
-		ui->cycleIntervalSlider->setValue(ui->cycleIntervalSpinBox->value());
+		ui->cycleIntervalSlider->setValue(ui->cycleTimeEdit->time().msecsSinceStartOfDay());
 		ui->cycleIntervalSlider->blockSignals(false);
 
 		set_animation_timer();
@@ -171,19 +171,16 @@ namespace PixelMaestroStudio {
 	 * @param value Delay between cycles (in ms).
 	 */
 	void AnimationControlWidget::on_delayIntervalSlider_valueChanged(int value) {
-		ui->delayIntervalSpinBox->blockSignals(true);
-		ui->delayIntervalSpinBox->setValue(value);
-		ui->delayIntervalSpinBox->blockSignals(false);
+		ui->delayTimeEdit->blockSignals(true);
+		ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
+		ui->delayTimeEdit->blockSignals(false);
 
 		set_animation_timer();
 	}
 
-	/**
-	 * Sets the time between the start of each Animation cycle.
-	 */
-	void AnimationControlWidget::on_delayIntervalSpinBox_editingFinished() {
+	void AnimationControlWidget::on_delayTimeEdit_editingFinished() {
 		ui->delayIntervalSlider->blockSignals(true);
-		ui->delayIntervalSlider->setValue(ui->delayIntervalSpinBox->value());
+		ui->delayIntervalSlider->setValue(ui->delayTimeEdit->time().msecsSinceStartOfDay());
 		ui->delayIntervalSlider->blockSignals(false);
 
 		set_animation_timer();
@@ -196,7 +193,7 @@ namespace PixelMaestroStudio {
 	void AnimationControlWidget::on_fadeCheckBox_toggled(bool checked) {
 		ui->delayIntervalLabel->setEnabled(checked);
 		ui->delayIntervalSlider->setEnabled(checked);
-		ui->delayIntervalSpinBox->setEnabled(checked);
+		ui->delayTimeEdit->setEnabled(checked);
 
 		maestro_control_widget.run_cue(
 			maestro_control_widget.animation_handler->set_fade(
@@ -295,27 +292,27 @@ namespace PixelMaestroStudio {
 			ui->reverseCheckBox->blockSignals(true);
 			ui->fadeCheckBox->blockSignals(true);
 			ui->cycleIntervalSlider->blockSignals(true);
-			ui->cycleIntervalSpinBox->blockSignals(true);
+			ui->cycleTimeEdit->blockSignals(true);
 			ui->delayIntervalSlider->blockSignals(true);
-			ui->delayIntervalSpinBox->blockSignals(true);
+			ui->delayTimeEdit->blockSignals(true);
 			ui->centerXSpinBox->blockSignals(true);
 			ui->centerYSpinBox->blockSignals(true);
 			ui->orientationComboBox->setCurrentIndex((uint8_t)animation->get_orientation());
 			ui->reverseCheckBox->setChecked(animation->get_reverse());
 			ui->fadeCheckBox->setChecked(animation->get_fade());
 			ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
-			ui->cycleIntervalSpinBox->setValue(animation->get_timer()->get_interval());
+			ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_interval()));
 			ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
-			ui->delayIntervalSpinBox->setValue(animation->get_timer()->get_delay());
+			ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_delay()));
 			ui->centerXSpinBox->setValue(animation->get_center().x);
 			ui->centerYSpinBox->setValue(animation->get_center().y);
 			ui->orientationComboBox->blockSignals(false);
 			ui->reverseCheckBox->blockSignals(false);
 			ui->fadeCheckBox->blockSignals(false);
 			ui->cycleIntervalSlider->blockSignals(false);
-			ui->cycleIntervalSpinBox->blockSignals(false);
+			ui->cycleTimeEdit->blockSignals(false);
 			ui->delayIntervalSlider->blockSignals(false);
-			ui->delayIntervalSpinBox->blockSignals(false);
+			ui->delayTimeEdit->blockSignals(false);
 			ui->centerXSpinBox->blockSignals(false);
 			ui->centerYSpinBox->blockSignals(false);
 
@@ -402,14 +399,13 @@ namespace PixelMaestroStudio {
 	/**
 	 * Updates the Animation's Timer.
 	 */
-	// TODO: Add an option for showing timer sliders as cycles per minute? Do the same for Canvas timers
 	void AnimationControlWidget::set_animation_timer() {
 		maestro_control_widget.run_cue(
 			maestro_control_widget.animation_handler->set_timer(
 				maestro_control_widget.section_control_widget_->get_section_index(),
 				maestro_control_widget.section_control_widget_->get_layer_index(),
-				ui->cycleIntervalSpinBox->value(),
-				ui->delayIntervalSpinBox->value()
+				ui->cycleTimeEdit->time().msecsSinceStartOfDay(),
+				ui->delayTimeEdit->time().msecsSinceStartOfDay()
 			)
 		);
 	}
@@ -432,6 +428,7 @@ namespace PixelMaestroStudio {
 		ui->centerLabel->setEnabled(enabled);
 		ui->centerXSpinBox->setEnabled(enabled);
 		ui->centerYSpinBox->setEnabled(enabled);
+		ui->currentCycleSpinBox->setEnabled(ui->playbackStartStopToolButton->isChecked());
 	}
 
 	AnimationControlWidget::~AnimationControlWidget() {

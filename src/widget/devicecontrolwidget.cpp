@@ -344,7 +344,7 @@ namespace PixelMaestroStudio {
 		}
 
 		/*
-		 * FIXME: Device pointer becomes invalid when using Thread::run(), likely due to invalid memory access.
+		 * NOTE: Device pointer becomes invalid when using Thread::start(), likely due to invalid memory access.
 		 *		Need to make the DeviceThreadController and output thread-safe before sending it to a separate thread.
 		 *
 		 *		Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details

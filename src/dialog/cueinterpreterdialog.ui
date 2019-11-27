@@ -25,7 +25,7 @@
         <string>Displays C++ code for each Cue</string>
        </property>
        <property name="text">
-        <string>Show C++ Code Column</string>
+        <string>Show C++ Code</string>
        </property>
       </widget>
      </item>

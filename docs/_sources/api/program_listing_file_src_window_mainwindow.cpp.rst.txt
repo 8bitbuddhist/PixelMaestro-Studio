@@ -26,6 +26,8 @@ Program Listing for File mainwindow.cpp
        MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
            ui->setupUi(this);
    
+           setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+   
            // Initialize UI elements
            initialize_widgets();
    
@@ -33,7 +35,7 @@ Program Listing for File mainwindow.cpp
            QSettings settings;
            QByteArray bytes = settings.value(PreferencesDialog::last_session).toByteArray();
            on_newAction_triggered();
-           if (settings.value(PreferencesDialog::save_session).toBool() && !bytes.isEmpty()) {
+           if (settings.value(PreferencesDialog::save_session, true).toBool() && !bytes.isEmpty()) {
                maestro_control_widget_->load_cuefile(bytes);
                maestro_control_widget_->set_maestro_modified(true);
    

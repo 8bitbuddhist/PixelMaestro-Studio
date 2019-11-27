@@ -46,6 +46,7 @@ $ ./PixelMaestro_Studio
 ### Build Instructions (Linux)
 1. [Download and install Qt](https://www.qt.io/download) along with the QtSerialPort module.
 2. Clone the GitHub repository to your computer:
+	
 	- `git clone https://github.com/8bitbuddhist/PixelMaestro-Studio.git`
 3. Navigate to the newly created repository folder and use `git submodule` to download the PixelMaestro core library:
 	```bash
@@ -60,7 +61,7 @@ $ ./PixelMaestro_Studio
 
 ### Building Static Qt
 
-When creating a static build of Qt 5.12.x, `make` might fails with a "bootstrap-private" error. [See this StackOverflow answer for details](https://forum.qt.io/topic/98501/static-compile-error-qt5-12-0-bootstrap-private/8)
+When creating a static build of Qt 5.12.x, `make` might fail with a "bootstrap-private" error. [See this StackOverflow answer for details](https://forum.qt.io/topic/98501/static-compile-error-qt5-12-0-bootstrap-private/8)
 
 To fix this, install the following libs:
 
@@ -80,6 +81,16 @@ $ cd build
 $ ../configure -static -release -prefix ../install -opensource --confirm-license -skip webengine -nomake tests -nomake examples -nomake tools -system-xcb -recheck-all
 $ make -j3                  // -j param specifies the number of cores
 $ make install              // Compiled static Qt libs will be placed in the install dir
+```
+
+### Building MXE
+
+[MXE](https://mxe.cc) is used to build the PixelMaestro Windows executable in Linux.
+
+```bash
+$ git clone https://github.com/mxe/mxe.git
+$ cd mxe
+$ make qtbase qtserialport
 ```
 
 ## Credits

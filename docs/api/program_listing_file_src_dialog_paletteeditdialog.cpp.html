@@ -175,6 +175,9 @@
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">PaletteEditDialog</span><span class="o">::</span><span class="n">PaletteEditDialog</span><span class="p">(</span><span class="n">PaletteControlWidget</span><span class="o">*</span> <span class="n">parent</span><span class="p">,</span> <span class="n">PaletteController</span><span class="o">::</span><span class="n">PaletteWrapper</span><span class="o">*</span> <span class="n">target_palette_wrapper</span><span class="p">)</span> <span class="o">:</span> <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">PaletteEditDialog</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;qrc:/../../../docsrc/images/logo.png&quot;</span><span class="p">));</span>
+
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="c1">// If a valid Palette was passed in, pre-populate fields</span>

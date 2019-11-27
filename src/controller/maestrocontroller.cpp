@@ -138,16 +138,19 @@ namespace PixelMaestroStudio {
 			Show* show = maestro_->get_show();
 			if (show != nullptr) {
 				write_cue_to_stream(datastream, maestro_handler->set_show());
+
 				ShowCueHandler* show_handler = dynamic_cast<ShowCueHandler*>(maestro_->get_cue_controller().get_handler(CueController::Handler::ShowCueHandler));
+				write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
+				write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
+
+				// Save events for last until I can nail down the byte alignment issues with event Cues
 				if (show->get_events() != nullptr) {
 					write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events(), false));
 				}
-				write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
-				write_cue_to_stream(datastream, show_handler->set_timing_mode(show->get_timing()));
 			}
 		}
 
-		// Call Sections
+		// Save Sections
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::SectionCueHandler)) {
 			for (uint8_t section = 0; section < num_sections_; section++) {
 				save_section_to_datastream(datastream, section, 0, save_handlers);
@@ -343,7 +346,8 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroController::write_cue_to_stream(QDataStream& stream, uint8_t* cue) {
 		if (cue != nullptr) {
-			stream.writeRawData((const char*)cue, maestro_->get_cue_controller().get_cue_size(cue));
+			uint32_t size = maestro_->get_cue_controller().get_cue_size(cue);
+			stream.writeRawData((const char*)cue, (int)size);
 		}
 	}
 

@@ -214,6 +214,8 @@
             <span class="kt">void</span> <span class="nf">on_eventQueueWidget_itemDoubleClicked</span><span class="p">(</span><span class="n">QListWidgetItem</span> <span class="o">*</span><span class="n">item</span><span class="p">);</span>
 
         <span class="k">private</span><span class="o">:</span>
+            <span class="k">static</span> <span class="n">QString</span> <span class="n">time_format</span><span class="p">;</span>
+
             <span class="n">QVector</span><span class="o">&lt;</span><span class="n">QVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;&gt;</span> <span class="n">event_history_</span><span class="p">;</span>
 
             <span class="kt">uint32_t</span> <span class="n">last_event_time_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>

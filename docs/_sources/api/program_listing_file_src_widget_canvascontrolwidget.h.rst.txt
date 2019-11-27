@@ -73,8 +73,6 @@ Program Listing for File canvascontrolwidget.h
    
                void on_currentFrameSpinBox_editingFinished();
    
-               void on_frameIntervalSpinBox_editingFinished();
-   
                void on_frameIntervalSlider_valueChanged(int value);
    
                void on_clearButton_clicked();
@@ -84,6 +82,8 @@ Program Listing for File canvascontrolwidget.h
                void on_replaceToolButton_toggled(bool checked);
    
                void on_paletteComboBox_activated(int index);
+   
+               void on_frameTimeEdit_editingFinished();
    
            private:
                uint8_t selected_color_index_ = 255;

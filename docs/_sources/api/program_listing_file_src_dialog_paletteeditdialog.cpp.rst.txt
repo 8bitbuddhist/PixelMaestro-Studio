@@ -23,6 +23,9 @@ Program Listing for File paletteeditdialog.cpp
    
    namespace PixelMaestroStudio {
        PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette_wrapper) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
+   
+           setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+   
            ui->setupUi(this);
    
            // If a valid Palette was passed in, pre-populate fields

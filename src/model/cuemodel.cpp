@@ -15,12 +15,15 @@ using namespace PixelMaestro;
 namespace PixelMaestroStudio {
 	CueModel::CueModel(uint8_t* cue, uint32_t size) : QStandardItemModel() {
 		QStringList header_labels;
-		header_labels.append("Text");
+		header_labels.append("Description");
 		header_labels.append("Size");
-		header_labels.append("Code (C++)");
+		header_labels.append("Code");
 		setHorizontalHeaderLabels(header_labels);
 
-		// Interpret Cue by creating a dummy Maestro to run it, then pass valid Cues to a CueInterpreter.
+		/*
+		 *  Validate Cue by running it through a dummy Maestro.
+		 *  If it's valid, run it through a CueInterpreter and add it to the list.
+		 */
 		Maestro virtual_maestro = Maestro(nullptr, 0);
 		CueController& cue_controller = virtual_maestro.set_cue_controller(UINT16_MAX);
 

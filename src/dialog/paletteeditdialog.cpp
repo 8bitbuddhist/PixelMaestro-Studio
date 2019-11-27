@@ -17,6 +17,9 @@ namespace PixelMaestroStudio {
 	 * @param target_palette Palette to edit (if applicable).
 	 */
 	PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette_wrapper) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
+
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		ui->setupUi(this);
 
 		// If a valid Palette was passed in, pre-populate fields

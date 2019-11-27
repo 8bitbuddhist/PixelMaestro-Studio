@@ -7,6 +7,9 @@
 
 namespace PixelMaestroStudio {
 	SectionMapDialog::SectionMapDialog(SerialDeviceController& device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog), device_(device) {
+
+		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
+
 		ui->setupUi(this);
 
 		// If the model hasn't been initialized, initialize it

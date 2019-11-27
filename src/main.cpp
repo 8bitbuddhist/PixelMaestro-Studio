@@ -15,7 +15,8 @@ int main(int argc, char* argv[]) {
 	PixelMaestroStudio::MainWindow w;
 
 	// Set global color palette (https://gist.github.com/QuantumCD/6245215)
-	qApp->setStyle(QStyleFactory::create("fusion"));
+	app.setStyle(QStyleFactory::create("Fusion"));
+
 	QPalette palette;
 	palette.setColor(QPalette::Window, QColor(53,53,53));
 	palette.setColor(QPalette::WindowText, Qt::white);
@@ -29,7 +30,10 @@ int main(int argc, char* argv[]) {
 	palette.setColor(QPalette::BrightText, Qt::red);
 	palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
 	palette.setColor(QPalette::HighlightedText, Qt::black);
-	qApp->setPalette(palette);
+	app.setPalette(palette);
+
+	// Change color of QToolButtons when checked
+	//app.setStyleSheet(QString(".QToolButton:checked { background-color: rgb(142, 45, 197); }"));
 
 	// Set application font
 	int id = QFontDatabase::addApplicationFont(":/FiraSans-Regular.ttf");
@@ -48,7 +52,7 @@ int main(int argc, char* argv[]) {
 		return app.exec();
 	}
 	catch (std::exception& ex) {
-		QMessageBox::critical(&w, QString("Unhandled Exception"), QString("A critical error has occurred, causing the application to close unexpectedly: ") + QString::fromLatin1(ex.what()));
+		QMessageBox::critical(&w, QString("Unhandled Exception"), QString("A critical error has occurred. The application will now close. Error: ") + QString::fromLatin1(ex.what()));
 		return 1;
 	}
 }

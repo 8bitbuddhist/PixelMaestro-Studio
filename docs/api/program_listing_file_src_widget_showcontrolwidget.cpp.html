@@ -168,6 +168,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QRegExp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/editeventdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;showcontrolwidget.h&quot;</span><span class="cp"></span>
@@ -175,6 +176,9 @@
 <span class="cp">#include</span> <span class="cpf">&quot;controller/showcontroller.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+
+    <span class="n">QString</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">time_format</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;hh:mm:ss.zzz&quot;</span><span class="p">);</span>
+
     <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
             <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
             <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">),</span>
@@ -203,7 +207,7 @@
 
         <span class="c1">// Remove all but the last XX events</span>
         <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">event_history_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">event_history_max</span><span class="p">).</span><span class="n">toInt</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">event_history_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">event_history_max</span><span class="p">,</span> <span class="mi">200</span><span class="p">).</span><span class="n">toInt</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
             <span class="n">event_history_</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
         <span class="p">}</span>
@@ -260,15 +264,16 @@
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_addEventButton_clicked</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">QModelIndex</span> <span class="nl">index</span> <span class="p">:</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">Event</span><span class="o">*</span> <span class="n">event</span> <span class="o">=</span> <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventTimeSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">(),</span>
-                <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_history_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">()).</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">QTime</span> <span class="n">time</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">();</span>
+            <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span>
+                <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">time</span><span class="p">.</span><span class="n">msecsSinceStartOfDay</span><span class="p">(),</span>
+                <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">event_history_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">()).</span><span class="n">data</span><span class="p">()</span>
             <span class="p">);</span>
 
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span>
-                <span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">())</span> <span class="o">+</span>
+                <span class="n">time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span> <span class="o">+</span>
                 <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
-                <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
+                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">text</span><span class="p">()</span>
             <span class="p">);</span>
         <span class="p">}</span>
 
@@ -362,7 +367,6 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_moveEventDownButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// FIXME: Breaks when triggered multiple times sequentially with multi-select enabled</span>
         <span class="n">QModelIndexList</span> <span class="n">list</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
             <span class="kt">int</span> <span class="n">current_index</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">row</span><span class="p">();</span>
@@ -423,8 +427,9 @@
         <span class="p">);</span>
 
         <span class="c1">// Enable loop checkbox if we&#39;re in relative mode</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">((</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">);</span>
+        <span class="kt">bool</span> <span class="n">relative_mode</span> <span class="o">=</span> <span class="p">(</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">;</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
@@ -441,10 +446,12 @@
                     <span class="c1">// Check for Events before adding them to prevent duplicates</span>
                     <span class="k">if</span> <span class="p">(</span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_event_index</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                         <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">(),</span> <span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">());</span>
+
+                        <span class="n">QTime</span> <span class="n">event_time</span> <span class="o">=</span> <span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">());</span>
                         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span>
-                            <span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">())</span> <span class="o">+</span>
-                                    <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
-                                    <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
+                            <span class="n">event_time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span> <span class="o">+</span>
+                            <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
+                            <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
                         <span class="p">);</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
@@ -483,18 +490,18 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">timer_refresh</span><span class="p">()</span> <span class="p">{</span>
+
         <span class="c1">// Update &#39;Absolute Time&#39; text box</span>
-        <span class="n">uint</span> <span class="n">last_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint</span><span class="p">)</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">();</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">absoluteTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">last_time</span><span class="p">));</span>
+        <span class="n">uint</span> <span class="n">absolute_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint</span><span class="p">)</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">absoluteTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">absolute_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span>
 
         <span class="n">Show</span><span class="o">*</span> <span class="n">show</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_show</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">show</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
         <span class="c1">// If relative mode is enabled, calculate the time since the last Event</span>
-        <span class="kt">bool</span> <span class="n">relative_time_enabled</span> <span class="o">=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">relative_time_enabled</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">uint</span> <span class="n">relative_time</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">();</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">relative_time</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">uint</span> <span class="n">relative_time</span> <span class="o">=</span> <span class="n">absolute_time</span> <span class="o">-</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">();</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">relative_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span>
         <span class="p">}</span>
 
         <span class="c1">// Get the last event that ran, and if it differs from the Show&#39;s current index, update the Event Queue</span>
@@ -517,7 +524,10 @@
                 <span class="n">Event</span><span class="o">*</span> <span class="n">event</span> <span class="o">=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_event_at_index</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">());</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
                     <span class="n">CueController</span><span class="o">*</span> <span class="n">cue_controller</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span>
-                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">(),</span> <span class="n">cue_controller</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">()));</span>
+                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
+                        <span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">(),</span>
+                        <span class="n">cue_controller</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
+                    <span class="p">);</span>
                 <span class="p">}</span>
             <span class="p">}</span>
 
