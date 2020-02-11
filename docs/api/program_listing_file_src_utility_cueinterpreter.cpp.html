@@ -229,7 +229,8 @@
                                                       <span class="s">&quot;Set offset&quot;</span><span class="p">,</span>
                                                       <span class="s">&quot;Set scroll&quot;</span><span class="p">,</span>
                                                       <span class="s">&quot;Set brightness&quot;</span><span class="p">,</span>
-                                                      <span class="s">&quot;Set mirror&quot;</span><span class="p">});</span>
+                                                      <span class="s">&quot;Set mirror&quot;</span><span class="p">,</span>
+                                                      <span class="s">&quot;Set wrap&quot;</span><span class="p">});</span>
 
     <span class="k">const</span> <span class="n">QStringList</span> <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">ShowActions</span><span class="p">({</span><span class="s">&quot;Set events&quot;</span><span class="p">,</span>
                                                    <span class="s">&quot;Set looping&quot;</span><span class="p">,</span>
@@ -511,6 +512,9 @@
             <span class="k">case</span> <span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">Action</span><span class="o">::</span><span class="nl">SetScroll</span><span class="p">:</span>
                 <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;: (&quot;</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">IntByteConvert</span><span class="o">::</span><span class="n">byte_to_uint16</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span><span class="p">])));</span>
                 <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">IntByteConvert</span><span class="o">::</span><span class="n">byte_to_uint16</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">Action</span><span class="o">::</span><span class="nl">SetWrap</span><span class="p">:</span>
+                <span class="n">append_bool</span><span class="p">(</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span><span class="p">],</span> <span class="n">result</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>

@@ -20,6 +20,20 @@
       <string>Section Settings</string>
      </property>
      <layout class="QGridLayout" name="sectionSettingsLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="activeSectionLabel">
+        <property name="text">
+         <string>Active Section</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="layerLabel">
+        <property name="text">
+         <string>Layers</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="layerSpinBox">
         <property name="toolTip">
@@ -33,13 +47,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="activeSectionLabel">
-        <property name="text">
-         <string>Active Section</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QComboBox" name="activeSectionComboBox">
         <property name="toolTip">
@@ -47,10 +54,17 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="layerLabel">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Layers</string>
+         <string>Wrap</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="wrapCheckBox">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>

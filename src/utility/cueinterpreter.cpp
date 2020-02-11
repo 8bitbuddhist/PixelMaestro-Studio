@@ -65,7 +65,8 @@ namespace PixelMaestroStudio {
 													  "Set offset",
 													  "Set scroll",
 													  "Set brightness",
-													  "Set mirror"});
+													  "Set mirror",
+													  "Set wrap"});
 
 	const QStringList CueInterpreter::ShowActions({"Set events",
 												   "Set looping",
@@ -347,6 +348,9 @@ namespace PixelMaestroStudio {
 			case SectionCueHandler::Action::SetScroll:
 				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
 				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
+				break;
+			case SectionCueHandler::Action::SetWrap:
+				append_bool(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte], result);
 				break;
 		}
 	}

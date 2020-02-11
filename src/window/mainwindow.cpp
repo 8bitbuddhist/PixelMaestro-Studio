@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool MainWindow::confirm_unsaved_changes() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current changes may be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		return (confirm == QMessageBox::Yes);
 	}
 

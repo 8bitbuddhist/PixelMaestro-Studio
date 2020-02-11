@@ -7,6 +7,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 - Added window icons.
+- Added wrap toggle to Section tab.
 
 ### Changed
 - Changed time widgets to display time spans instead of milliseconds.

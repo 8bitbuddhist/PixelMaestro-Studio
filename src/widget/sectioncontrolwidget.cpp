@@ -329,6 +329,16 @@ namespace PixelMaestroStudio {
 		set_scroll();
 	}
 
+	void SectionControlWidget::on_wrapCheckBox_stateChanged(int arg1) {
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_wrap(
+				get_section_index(),
+				get_layer_index(),
+				arg1
+			)
+		);
+	}
+
 	/**
 	 * Updates UI controls based on the current active Section.
 	 */
@@ -425,6 +435,11 @@ namespace PixelMaestroStudio {
 		}
 		ui->mirrorXCheckBox->blockSignals(false);
 		ui->mirrorYCheckBox->blockSignals(false);
+
+		// Set wrap
+		ui->wrapCheckBox->blockSignals(true);
+		ui->wrapCheckBox->setChecked(active_section_->get_wrap());
+		ui->wrapCheckBox->blockSignals(false);
 
 		// Update brightness
 		uint8_t brightness = active_section_->get_brightness();

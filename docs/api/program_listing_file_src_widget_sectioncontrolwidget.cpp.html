@@ -438,6 +438,16 @@
         <span class="n">set_scroll</span><span class="p">();</span>
     <span class="p">}</span>
 
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_wrapCheckBox_stateChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">arg1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_wrap</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">get_layer_index</span><span class="p">(),</span>
+                <span class="n">arg1</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// If the current Section doesn&#39;t match the Section drop-down, update the drop-down</span>
         <span class="kt">int</span> <span class="n">section_index</span> <span class="o">=</span> <span class="n">get_section_index</span><span class="p">();</span>
@@ -531,6 +541,11 @@
         <span class="p">}</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorXCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mirrorYCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Set wrap</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">wrapCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">wrapCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_wrap</span><span class="p">());</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">wrapCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="c1">// Update brightness</span>
         <span class="kt">uint8_t</span> <span class="n">brightness</span> <span class="o">=</span> <span class="n">active_section_</span><span class="o">-&gt;</span><span class="n">get_brightness</span><span class="p">();</span>

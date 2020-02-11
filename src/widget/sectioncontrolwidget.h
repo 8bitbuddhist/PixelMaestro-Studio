@@ -46,6 +46,8 @@ namespace PixelMaestroStudio {
 
 			void on_mirrorYCheckBox_toggled(bool checked);
 
+			void on_wrapCheckBox_stateChanged(int arg1);
+
 		private:
 			/// The Section currently being controlled.
 			Section* active_section_ = nullptr;

@@ -8,7 +8,7 @@ QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
-DEFINES += BUILD_VERSION=\\\"v0.50.2\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
+DEFINES += BUILD_VERSION=\\\"v0.51.0\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
 android {
 QMAKE_LINK += -nostdlib++
 QMAKE_LFLAGS += -nostdlib++

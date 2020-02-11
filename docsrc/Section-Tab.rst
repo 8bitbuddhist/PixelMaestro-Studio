@@ -26,6 +26,8 @@ Section settings affect the behavior of the Section.
 
 The *Layers* text box changes the number of Layers belonging to the Section. Increasing the number adds new blank Layers to the Section, while decreasing the number removes Layers.
 
+If *wrap* is checked, when the Section is scrolling or offset, Pixels that are moved off of the Section will reappear on the opposite side of the Section.
+
 Layer Settings
 --------------
 

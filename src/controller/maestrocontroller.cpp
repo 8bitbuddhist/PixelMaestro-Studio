@@ -247,7 +247,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Scrolling, offset, and mirroring
+		// Scrolling, offset, mirroring, wrap
 		Point& offset = section->get_offset();
 		if (offset.x != 0 || offset.y != 0) {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset.x, offset.y));
@@ -259,6 +259,10 @@ namespace PixelMaestroStudio {
 		Section::Mirror* mirror = section->get_mirror();
 		if (mirror != nullptr) {
 			write_cue_to_stream(datastream, section_handler->set_mirror(section_id, layer_id, mirror->x, mirror->y));
+		}
+		bool wrap = section->get_wrap();
+		if (wrap == false) {
+			write_cue_to_stream(datastream, section_handler->set_wrap(section_id, layer_id, wrap));
 		}
 
 		// Save Canvas settings

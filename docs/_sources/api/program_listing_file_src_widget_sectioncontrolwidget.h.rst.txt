@@ -58,6 +58,8 @@ Program Listing for File sectioncontrolwidget.h
    
                void on_mirrorYCheckBox_toggled(bool checked);
    
+               void on_wrapCheckBox_stateChanged(int arg1);
+   
            private:
                Section* active_section_ = nullptr;
    

@@ -286,6 +286,16 @@ Program Listing for File sectioncontrolwidget.cpp
            set_scroll();
        }
    
+       void SectionControlWidget::on_wrapCheckBox_stateChanged(int arg1) {
+           maestro_control_widget_.run_cue(
+               maestro_control_widget_.section_handler->set_wrap(
+                   get_section_index(),
+                   get_layer_index(),
+                   arg1
+               )
+           );
+       }
+   
        void SectionControlWidget::refresh() {
            // If the current Section doesn't match the Section drop-down, update the drop-down
            int section_index = get_section_index();
@@ -379,6 +389,11 @@ Program Listing for File sectioncontrolwidget.cpp
            }
            ui->mirrorXCheckBox->blockSignals(false);
            ui->mirrorYCheckBox->blockSignals(false);
+   
+           // Set wrap
+           ui->wrapCheckBox->blockSignals(true);
+           ui->wrapCheckBox->setChecked(active_section_->get_wrap());
+           ui->wrapCheckBox->blockSignals(false);
    
            // Update brightness
            uint8_t brightness = active_section_->get_brightness();
