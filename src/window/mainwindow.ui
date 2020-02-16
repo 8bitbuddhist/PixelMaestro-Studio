@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>700</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -467,7 +467,13 @@
   <property name="windowTitle">
    <string>PixelMaestro</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
+  <widget class="QWidget" name="mainWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="palette">
     <palette>
      <active>
@@ -916,15 +922,7 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="mainLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMaximumSize</enum>
-      </property>
-     </layout>
-    </item>
-   </layout>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

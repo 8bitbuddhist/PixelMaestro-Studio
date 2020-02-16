@@ -10,7 +10,6 @@
 #include "core/maestro.h"
 #include "core/pixel.h"
 #include "core/section.h"
-#include "maestrodrawingarea.h"
 #include "sectiondrawingarea.h"
 #include "widget/maestrocontrolwidget.h"
 #include <QElapsedTimer>
@@ -26,7 +25,7 @@ namespace PixelMaestroStudio {
 	class MaestroControlWidget;
 	class SectionDrawingArea;
 
-	class MaestroDrawingArea : public QWidget {
+	class MaestroDrawingArea : public QFrame {
 		Q_OBJECT
 
 		public:
@@ -36,6 +35,7 @@ namespace PixelMaestroStudio {
 			MaestroControlWidget* get_maestro_control_widget() const;
 			void frame_active_section(Section& section);
 			void remove_section_drawing_areas();
+			void set_locked(bool locked);
 			void set_maestro_control_widget(MaestroControlWidget* widget);
 
 		public slots:

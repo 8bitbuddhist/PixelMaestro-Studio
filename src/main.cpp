@@ -2,9 +2,10 @@
 #include <QApplication>
 #include <QFontDatabase>
 #include <QFormLayout>
+#include <QLayout>
 #include <QMessageBox>
 #include <QStyleFactory>
-#include <QVBoxLayout>
+#include <QWidget>
 
 int main(int argc, char* argv[]) {
 	// Set application parameters for QSettings
@@ -38,10 +39,6 @@ int main(int argc, char* argv[]) {
 	// Set application font
 	int id = QFontDatabase::addApplicationFont(":/FiraSans-Regular.ttf");
 	app.setFont(QFont(QFontDatabase::applicationFontFamilies(id).at(0), 10));
-
-	// Verify main layout is present
-	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");
-	Q_ASSERT(main_layout);
 
 	// Enable high DPI support
 	app.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);

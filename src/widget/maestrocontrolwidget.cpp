@@ -37,7 +37,7 @@ namespace PixelMaestroStudio {
 		ui->deviceTab->findChild<QLayout*>("deviceLayout")->addWidget(device_control_widget_.data());
 
 		section_control_widget_ = QSharedPointer<SectionControlWidget>(new SectionControlWidget(this));
-		ui->sectionTab->findChild<QLayout*>("sectionLayout")->addWidget(section_control_widget_.data());
+		ui->topLayout->insertWidget(0, section_control_widget_.data());
 
 		show_control_widget_ = QSharedPointer<ShowControlWidget>(new ShowControlWidget(this));
 		ui->showTab->findChild<QLayout*>("showLayout")->addWidget(show_control_widget_.data());
@@ -109,24 +109,19 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_lockButton_toggled(bool checked) {
 		show_control_widget_->set_maestro_locked(checked);
 
-		/*
-		 * Toggle the lock icon displayed in each Tab.
-		 * Display it for all Tabs except for the Show and Device Tabs.
-		 * Also display it for the Advanced Settings Group Box.
-		 */
-		QList<QWidget*> tabs = ui->tabWidget->findChildren<QWidget*>(QRegExp("^((?!show)(?!device).)*Tab$"));
-
 		if (checked) {
-			for(QWidget* tab : tabs) {
-				ui->tabWidget->setTabIcon(ui->tabWidget->indexOf(tab), QIcon(":/icon_lock.png"));
-			}
+			QColor highlight_color = qApp->palette().highlight().color();
+			ui->lockButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
 		}
-		else { // Refresh Maestro settings when unlocked
-			for(QWidget* tab : tabs) {
-				ui->tabWidget->setTabIcon(ui->tabWidget->indexOf(tab), QIcon());
-			}
+		else {
 			refresh_maestro_settings();
 			refresh_section_settings();
+
+			ui->lockButton->setStyleSheet(QString());
+		}
+
+		if (maestro_drawing_area_) {
+			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_locked(checked);
 		}
 	}
 
@@ -170,8 +165,6 @@ namespace PixelMaestroStudio {
 			run_cue(
 				maestro_handler->sync(maestro_controller_->get_total_elapsed_time())
 			);
-			//maestro_controller_->get_maestro().sync(maestro_controller_->get_total_elapsed_time());
-			//maestro_controller_->get_maestro().update(0);
 		}
 	}
 
@@ -240,9 +233,9 @@ namespace PixelMaestroStudio {
 		);
 
 		// Check whether the Maestro is currently running. If not, trigger pause button
-		if (!maestro_controller.get_running()) {
-			ui->playPauseButton->setChecked(true);
-		}
+		ui->playPauseButton->blockSignals(true);
+		ui->playPauseButton->setChecked(!maestro_controller.get_running());
+		ui->playPauseButton->blockSignals(false);
 
 		// Initialize UI components and controllers
 		section_control_widget_->set_active_section(maestro_controller_->get_maestro().get_section(0));
@@ -263,7 +256,7 @@ namespace PixelMaestroStudio {
 		this->modified_ = modified;
 
 		// Update MainWindow title
-		this->parentWidget()->parentWidget()->parentWidget()->setWindowModified(modified);
+		this->parentWidget()->parentWidget()->setWindowModified(modified);
 	}
 
 	/**
@@ -280,7 +273,38 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	void MaestroControlWidget::toggle_maestro_drawing_area(bool enabled) {
+		if (enabled) {
+			// Checked: create new DrawingArea
+			maestro_drawing_area_ = new MaestroDrawingArea(ui->renderLayout->widget(), *maestro_controller_);
+			ui->renderLayout->insertWidget(0, maestro_drawing_area_);
+			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
+			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(this);
+
+			// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
+			QSettings settings;
+			QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
+			if (splitter_state.size() > 0) {
+				ui->splitter->restoreState(splitter_state);
+			}
+			else {
+				ui->splitter->setSizes(QList<int>({INT_MAX, INT_MAX}));
+			}
+		}
+		else {
+			// Unchecked
+			ui->renderLayout->removeWidget(maestro_drawing_area_);
+			maestro_controller_->remove_drawing_area(dynamic_cast<MaestroDrawingArea&>(*maestro_drawing_area_));
+			delete maestro_drawing_area_;
+		}
+	}
+
 	MaestroControlWidget::~MaestroControlWidget() {
+		// Save splitter position
+		QSettings settings;
+		settings.setValue(PreferencesDialog::splitter_position, ui->splitter->saveState());
+
+		delete maestro_drawing_area_;
 		qApp->removeEventFilter(this);
 		delete ui;
 	}

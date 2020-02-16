@@ -162,6 +162,9 @@ namespace PixelMaestroStudio {
 		ui->disconnectPushButton->setEnabled(connected);
 		ui->uploadButton->setEnabled(connected);
 		ui->uploadProgressBar->setValue(0);
+
+		ui->editDeviceButton->setEnabled(currentRow >= 0);
+		ui->removeDeviceButton->setEnabled(currentRow >= 0);
 	}
 
 	void DeviceControlWidget::refresh_device_list() {
@@ -180,8 +183,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Display icon in tab
-		MaestroControlWidget* parent_widget = static_cast<MaestroControlWidget*>(parentWidget()->parentWidget()->parentWidget()->parentWidget());
-		QTabWidget* tab_widget = parent_widget->findChild<QTabWidget*>("tabWidget");
+		QTabWidget* tab_widget = maestro_control_widget_.findChild<QTabWidget*>("tabWidget");
 		QWidget* tab = tab_widget->findChild<QWidget*>("deviceTab");
 		if (connected_devices) {
 			tab_widget->setTabIcon(tab_widget->indexOf(tab), QIcon(":/icon_connected.png"));
@@ -200,6 +202,9 @@ namespace PixelMaestroStudio {
 			ui->connectPushButton->setEnabled(false);
 			ui->disconnectPushButton->setEnabled(false);
 		}
+
+		ui->editDeviceButton->setEnabled(selected >= 0);
+		ui->removeDeviceButton->setEnabled(selected >= 0);
 	}
 
 	/**

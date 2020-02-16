@@ -82,6 +82,7 @@ namespace PixelMaestroStudio {
 			void set_maestro_controller(MaestroController& maestro_controller);
 			void set_maestro_modified(bool modified);
 			void set_refresh_needed(bool refresh_needed);
+			void toggle_maestro_drawing_area(bool enabled);
 
 		private slots:
 			void on_playPauseButton_toggled(bool checked);
@@ -103,6 +104,9 @@ namespace PixelMaestroStudio {
 
 			/// MaestroController that this widget is controlling.
 			MaestroController* maestro_controller_ = nullptr;
+
+			/// Main rendering area.
+			QWidget* maestro_drawing_area_ = nullptr;
 
 			/// Tracks whether the Maestro is currently modified.
 			bool modified_ = false;

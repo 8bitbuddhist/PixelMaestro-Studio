@@ -77,7 +77,6 @@ namespace PixelMaestroStudio {
 	void ShowControlWidget::initialize() {
 		// Disable controls by default
 		set_show_controls_enabled(false);
-		ui->advancedLockedLabel->setVisible(false);
 
 		// Setup timer
 		show_timer_.setTimerType(Qt::CoarseTimer);
@@ -365,7 +364,6 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::set_maestro_locked(bool locked) {
 		this->maestro_locked_ = locked;
-		ui->advancedLockedLabel->setVisible(locked);
 	}
 
 	/**

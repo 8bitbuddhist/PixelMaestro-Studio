@@ -36,7 +36,6 @@ namespace PixelMaestroStudio {
 			void on_alphaSpinBox_editingFinished();
 			void on_offsetXSpinBox_editingFinished();
 			void on_offsetYSpinBox_editingFinished();
-			void on_layerSpinBox_editingFinished();
 
 			void on_brightnessSlider_valueChanged(int value);
 
@@ -47,6 +46,12 @@ namespace PixelMaestroStudio {
 			void on_mirrorYCheckBox_toggled(bool checked);
 
 			void on_wrapCheckBox_stateChanged(int arg1);
+
+			void on_layerListWidget_currentRowChanged(int currentRow);
+
+			void on_addLayerButton_clicked();
+
+			void on_removeLayerButton_clicked();
 
 		private:
 			/// The Section currently being controlled.

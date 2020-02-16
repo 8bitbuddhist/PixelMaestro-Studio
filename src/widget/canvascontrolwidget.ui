@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>710</width>
-    <height>414</height>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,382 +27,14 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>690</width>
-        <height>394</height>
+        <width>733</width>
+        <height>493</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinimumSize</enum>
        </property>
-       <item row="8" column="2">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="controlLayout">
-         <item>
-          <widget class="QCheckBox" name="enableCheckBox">
-           <property name="toolTip">
-            <string>Create a drawing surface on the Section</string>
-           </property>
-           <property name="text">
-            <string>Enable Canvas</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="loadImageButton">
-           <property name="toolTip">
-            <string>Load an image into the Canvas</string>
-           </property>
-           <property name="text">
-            <string>Load Image...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="8" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
-        <widget class="QGroupBox" name="drawingToolsGroupBox">
-         <property name="title">
-          <string>Drawing Tools</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_9">
-          <item row="4" column="4">
-           <widget class="QSpinBox" name="target2XSpinBox">
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="3">
-           <widget class="QLabel" name="textLabel">
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QSpinBox" name="originYSpinBox">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QComboBox" name="fontComboBox">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <item>
-             <property name="text">
-              <string>5x8</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QToolButton" name="lineToolButton">
-            <property name="toolTip">
-             <string>Line tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_line.png</normaloff>:/icon_line.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QToolButton" name="triangleToolButton">
-            <property name="toolTip">
-             <string>Triangle tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_triangle.png</normaloff>:/icon_triangle.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QToolButton" name="rectToolButton">
-            <property name="toolTip">
-             <string>Rectangle tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_rectangle.png</normaloff>:/icon_rectangle.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QLabel" name="paletteLabel">
-            <property name="text">
-             <string>Color Palette</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QLabel" name="originLabel">
-            <property name="text">
-             <string>Cursor</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="targetLabel">
-            <property name="text">
-             <string>Target</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="5">
-           <widget class="QPushButton" name="editPaletteButton">
-            <property name="text">
-             <string>Edit Palettes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QToolButton" name="replaceToolButton">
-            <property name="toolTip">
-             <string>Replace tool</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_replace.png</normaloff>:/icon_replace.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="4" colspan="2">
-           <widget class="QLineEdit" name="textLineEdit">
-            <property name="toolTip">
-             <string>Text to draw</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="4">
-           <widget class="QComboBox" name="paletteComboBox">
-            <property name="toolTip">
-             <string>Palette for drawing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QSpinBox" name="originXSpinBox">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="5">
-           <widget class="QSpinBox" name="targetYSpinBox">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QToolButton" name="textToolButton">
-            <property name="toolTip">
-             <string>Text tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_text.png</normaloff>:/icon_text.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QLabel" name="target2Label">
-            <property name="text">
-             <string>Point 3</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QSpinBox" name="targetXSpinBox">
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="fontLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Font</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="fillCheckBox">
-            <property name="toolTip">
-             <string>Fills in shapes, otherwise draws only the shape's outline</string>
-            </property>
-            <property name="text">
-             <string>Fill</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QToolButton" name="brushToolButton">
-            <property name="toolTip">
-             <string>Brush tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_paint.png</normaloff>:/icon_paint.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="5">
-           <widget class="QSpinBox" name="target2YSpinBox">
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="maximum">
-             <number>65535</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QToolButton" name="circleToolButton">
-            <property name="toolTip">
-             <string>Circle tool</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_circle.png</normaloff>:/icon_circle.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <property name="autoRaise">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QLabel" name="selectedColorLabel">
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="text">
-             <string>Color</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QPushButton" name="clearButton">
-            <property name="toolTip">
-             <string>Clear the Canvas</string>
-            </property>
-            <property name="text">
-             <string>Clear...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="4" colspan="2">
-           <widget class="QPushButton" name="drawButton">
-            <property name="text">
-             <string>Draw</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/images/images.qrc">
-              <normaloff>:/icon_draw.png</normaloff>:/icon_draw.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="8" column="1" alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="animationToolsGroupBox">
          <property name="minimumSize">
@@ -575,52 +207,519 @@
          </layout>
         </widget>
        </item>
-       <item row="9" column="0" colspan="3">
-        <widget class="QScrollArea" name="colorPickerScrollArea">
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="controlLayout">
+         <item>
+          <widget class="QCheckBox" name="enableCheckBox">
+           <property name="toolTip">
+            <string>Create a drawing surface on the Section</string>
+           </property>
+           <property name="text">
+            <string>Enable Canvas</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="8" column="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
          </property>
-         <widget class="QWidget" name="colorPickerScrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>670</width>
-            <height>79</height>
-           </rect>
-          </property>
-          <layout class="QFormLayout" name="formLayout">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="colorPickerCancelButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+        </spacer>
+       </item>
+       <item row="8" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+        <widget class="QGroupBox" name="drawingToolsGroupBox">
+         <property name="title">
+          <string>Drawing Tools</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="1">
+           <widget class="QGroupBox" name="shapesOptionsGroupBox">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <property name="topMargin">
+              <number>0</number>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
+             <property name="bottomMargin">
+              <number>0</number>
              </property>
-             <property name="text">
-              <string/>
+             <item row="3" column="0">
+              <widget class="QLabel" name="target2Label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Point 3</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QSpinBox" name="target2XSpinBox">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="originXSpinBox">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QSpinBox" name="targetYSpinBox">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="targetLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Point 2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QSpinBox" name="targetXSpinBox">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QSpinBox" name="originYSpinBox">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="originLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Point 1</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QSpinBox" name="target2YSpinBox">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="fillCheckBox">
+               <property name="toolTip">
+                <string>Fills in shapes, otherwise draws only the shape's outline</string>
+               </property>
+               <property name="text">
+                <string>Fill</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QPushButton" name="drawButton">
+            <property name="text">
+             <string>Draw</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/images/images.qrc">
+              <normaloff>:/icon_draw.png</normaloff>:/icon_draw.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QGroupBox" name="toolsOptionsGroupBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <property name="topMargin">
+              <number>0</number>
              </property>
-             <property name="icon">
-              <iconset resource="../resources/images/images.qrc">
-               <normaloff>:/icon_cancel.png</normaloff>:/icon_cancel.png</iconset>
+             <property name="bottomMargin">
+              <number>0</number>
              </property>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="textLineEdit">
+               <property name="toolTip">
+                <string>Text to draw</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="textLabel">
+               <property name="text">
+                <string>Text</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="fontComboBox">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <item>
+                <property name="text">
+                 <string>5x8</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="fontLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Font</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="4">
+           <layout class="QHBoxLayout" name="paletteSelectLayout">
+            <item>
+             <widget class="QLabel" name="paletteLabel">
+              <property name="text">
+               <string>Palette</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="paletteComboBox">
+              <property name="toolTip">
+               <string>Palette for drawing</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="editPaletteButton">
+              <property name="text">
+               <string>Edit Palettes...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="selectedColorLabel">
+              <property name="frameShape">
+               <enum>QFrame::Box</enum>
+              </property>
+              <property name="text">
+               <string>Selected Color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="toolsGroupBox">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="triangleToolButton">
+               <property name="toolTip">
+                <string>Triangle tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_triangle.png</normaloff>:/icon_triangle.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QToolButton" name="rectToolButton">
+               <property name="toolTip">
+                <string>Rectangle tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_rectangle.png</normaloff>:/icon_rectangle.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QToolButton" name="replaceToolButton">
+               <property name="toolTip">
+                <string>Replace tool</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_replace.png</normaloff>:/icon_replace.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QToolButton" name="brushToolButton">
+               <property name="toolTip">
+                <string>Brush tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_paint.png</normaloff>:/icon_paint.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="4">
+              <widget class="QPushButton" name="loadImageButton">
+               <property name="toolTip">
+                <string>Load an image into the Canvas</string>
+               </property>
+               <property name="text">
+                <string>Open Image...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QToolButton" name="lineToolButton">
+               <property name="toolTip">
+                <string>Line tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_line.png</normaloff>:/icon_line.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QToolButton" name="textToolButton">
+               <property name="toolTip">
+                <string>Text tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_text.png</normaloff>:/icon_text.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QToolButton" name="circleToolButton">
+               <property name="toolTip">
+                <string>Circle tool</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/images/images.qrc">
+                 <normaloff>:/icon_circle.png</normaloff>:/icon_circle.png</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <property name="autoRaise">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="5">
+           <widget class="QScrollArea" name="colorPickerScrollArea">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="colorPickerScrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>460</width>
+               <height>68</height>
+              </rect>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QToolButton" name="colorPickerCancelButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../resources/images/images.qrc">
+                  <normaloff>:/icon_cancel.png</normaloff>:/icon_cancel.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
-           </item>
-           <item row="0" column="1">
-            <layout class="QHBoxLayout" name="colorPickerLayout"/>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="clearButton">
+            <property name="toolTip">
+             <string>Clear the Canvas</string>
+            </property>
+            <property name="text">
+             <string>Clear...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/images/images.qrc">
+              <normaloff>:/icon_cancel.png</normaloff>:/icon_cancel.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -632,26 +731,6 @@
  <tabstops>
   <tabstop>canvasScrollArea</tabstop>
   <tabstop>enableCheckBox</tabstop>
-  <tabstop>loadImageButton</tabstop>
-  <tabstop>circleToolButton</tabstop>
-  <tabstop>lineToolButton</tabstop>
-  <tabstop>triangleToolButton</tabstop>
-  <tabstop>rectToolButton</tabstop>
-  <tabstop>textToolButton</tabstop>
-  <tabstop>brushToolButton</tabstop>
-  <tabstop>fontComboBox</tabstop>
-  <tabstop>fillCheckBox</tabstop>
-  <tabstop>originXSpinBox</tabstop>
-  <tabstop>originYSpinBox</tabstop>
-  <tabstop>targetXSpinBox</tabstop>
-  <tabstop>targetYSpinBox</tabstop>
-  <tabstop>target2XSpinBox</tabstop>
-  <tabstop>target2YSpinBox</tabstop>
-  <tabstop>textLineEdit</tabstop>
-  <tabstop>paletteComboBox</tabstop>
-  <tabstop>editPaletteButton</tabstop>
-  <tabstop>colorPickerScrollArea</tabstop>
-  <tabstop>colorPickerCancelButton</tabstop>
   <tabstop>playbackPreviousToolButton</tabstop>
   <tabstop>playbackStartStopToolButton</tabstop>
   <tabstop>playbackNextToolButton</tabstop>

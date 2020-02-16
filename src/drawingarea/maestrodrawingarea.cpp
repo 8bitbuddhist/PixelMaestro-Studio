@@ -1,3 +1,4 @@
+#include <QApplication>
 #include "core/maestro.h"
 #include "maestrodrawingarea.h"
 #include "dialog/preferencesdialog.h"
@@ -13,8 +14,12 @@ namespace PixelMaestroStudio {
 	 * @param parent The parent QWidget.
 	 * @param maestro_controller The MaestroController rendered by this DrawingArea.
 	 */
-	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QWidget(parent), maestro_controller_(maestro_controller) {
+	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QFrame(parent), maestro_controller_(maestro_controller) {
 		section_layout_ = new QHBoxLayout(this);
+
+		// Hide frame by default
+		this->setFrameStyle(QFrame::Box | QFrame::Plain);
+		this->setStyleSheet("color: #333333;");
 	}
 
 	/**
@@ -75,6 +80,16 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroDrawingArea::remove_section_drawing_areas() {
 		section_drawing_areas_.clear();
+	}
+
+	void MaestroDrawingArea::set_locked(bool locked) {
+		if (locked) {
+			QColor highlight_color = qApp->palette().highlight().color();
+			this->setStyleSheet(QString("color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
+		}
+		else {
+			this->setStyleSheet("color: #333333;");
+		}
 	}
 
 	/**

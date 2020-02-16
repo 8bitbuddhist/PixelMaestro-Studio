@@ -80,6 +80,9 @@ namespace PixelMaestroStudio {
 			/// Conversion from canvas_color_ into PixelMaestro color.
 			Colors::RGB canvas_rgb_color_;
 
+			/// Group for Palette color buttons
+			QButtonGroup canvas_palette_color_group_;
+
 			/// Group for Canvas shape radio buttons
 			QButtonGroup canvas_shape_type_group_;
 

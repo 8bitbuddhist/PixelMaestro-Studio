@@ -84,8 +84,10 @@ namespace PixelMaestroStudio {
 
 		// Set Canvas defaults
 		ui->currentFrameSpinBox->setEnabled(false);
+		on_circleToolButton_toggled(true);
 
 		// Add an event handler to the Canvas color picker cancel button
+		this->canvas_palette_color_group_.addButton(ui->colorPickerCancelButton);
 		connect(ui->colorPickerCancelButton, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
 	}
 
@@ -134,7 +136,7 @@ namespace PixelMaestroStudio {
 	 * This gets passed to the CanvasCueHandler on each draw.
 	 */
 	void CanvasControlWidget::on_canvas_color_clicked() {
-		QPushButton* sender = dynamic_cast<QPushButton*>(QObject::sender());
+		QToolButton* sender = dynamic_cast<QToolButton*>(QObject::sender());
 
 		if (sender != ui->colorPickerCancelButton) {
 			selected_color_index_ = sender->objectName().toInt();
@@ -596,20 +598,22 @@ namespace PixelMaestroStudio {
 		 * Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
 		 * Start by deleting existing color buttons.
 		 */
-		QList<QPushButton*> buttons = ui->colorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
-		for (QPushButton* button : buttons) {
+		QList<QToolButton*> buttons = ui->colorPickerScrollArea->findChildren<QToolButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
+		for (QToolButton* button : buttons) {
 			// Remove all but the Cancel button
 			if (button != ui->colorPickerCancelButton) {
+				canvas_palette_color_group_.removeButton(button);
 				disconnect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
 				delete button;
 			}
 		}
 
+
 		// Create new buttons and connect the color picker to the pushbutton event
-		QLayout* layout = ui->colorPickerScrollArea->findChild<QLayout*>("colorPickerLayout");
+		QLayout* layout = ui->colorPickerScrollAreaWidgetContents->layout();
 		for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
 			Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
-			QPushButton* button = new QPushButton();
+			QToolButton* button = new QToolButton();
 			button->setVisible(true);
 			button->setObjectName(QString::number(color_index));
 			button->setToolTip(QString::number(color_index + 1));
@@ -617,6 +621,7 @@ namespace PixelMaestroStudio {
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
 			layout->addWidget(button);
+			canvas_palette_color_group_.addButton(button);
 			connect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
 		}
 	}
@@ -708,7 +713,6 @@ namespace PixelMaestroStudio {
 		ui->animationToolsGroupBox->setEnabled(enabled);
 		ui->loadImageButton->setEnabled(enabled);
 		ui->paletteComboBox->setEnabled(enabled);
-		ui->paletteLabel->setEnabled(enabled);
 		ui->editPaletteButton->setEnabled(enabled);
 		ui->colorPickerScrollArea->setEnabled(enabled);
 	}

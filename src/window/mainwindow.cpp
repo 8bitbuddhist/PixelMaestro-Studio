@@ -56,14 +56,17 @@ namespace PixelMaestroStudio {
 	 */
 	void MainWindow::initialize_widgets() {
 		// Add Splitter control
-		QLayout* main_layout = this->findChild<QLayout*>("mainLayout");
+		/*
+		QLayout* main_layout = this->centralWidget()->layout();
 		this->splitter_ = new QSplitter(main_layout->widget());
 		this->splitter_->setOrientation(Qt::Orientation::Vertical);
 		main_layout->addWidget(this->splitter_);
+		*/
 
 		// Initialize Maestro elements
-		maestro_control_widget_ = new MaestroControlWidget(splitter_);
+		maestro_control_widget_ = new MaestroControlWidget(ui->mainWidget);
 		maestro_controller_ = new MaestroController(*maestro_control_widget_);
+		maestro_control_widget_->set_maestro_controller(*maestro_controller_);
 
 		// Build DrawingAreas if enabled in Preferences
 		QSettings settings;
@@ -75,7 +78,9 @@ namespace PixelMaestroStudio {
 		}
 
 		// Add control widget to main window
-		splitter_->addWidget(maestro_control_widget_);
+		//splitter_->addWidget(maestro_control_widget_);
+		ui->mainWidget->layout()->addWidget(maestro_control_widget_);
+		//ui->mainWidget->layout()->addWidget(maestro_control_widget_);
 
 		/*
 		 * If "pause on start" option is checked, don't start the Maestro.
@@ -117,29 +122,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void MainWindow::on_action_Main_Window_toggled(bool arg1) {
-		if (arg1) {
-			// Checked: create new DrawingArea
-			maestro_drawing_area_ = new MaestroDrawingArea(splitter_, *maestro_controller_);
-			splitter_->insertWidget(0, maestro_drawing_area_);
-			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
-			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
-
-			// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
-			QSettings settings;
-			QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
-			if (splitter_state.size() > 0) {
-				this->splitter_->restoreState(splitter_state);
-			}
-			else {
-				this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
-			}
-		}
-		else {
-			// Unchecked
-			MaestroDrawingArea* drawing_area = splitter_->findChild<MaestroDrawingArea*>();
-			maestro_controller_->remove_drawing_area(*drawing_area);
-			delete drawing_area;
-		}
+		maestro_control_widget_->toggle_maestro_drawing_area(arg1);
 	}
 
 	/**
@@ -340,7 +323,7 @@ namespace PixelMaestroStudio {
 		settings.setValue(PreferencesDialog::window_state, saveState());
 
 		// Save splitter position
-		settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
+		//settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
 
 		delete maestro_control_widget_;
 		delete maestro_controller_;

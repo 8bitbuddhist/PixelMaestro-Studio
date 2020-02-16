@@ -46,9 +46,6 @@ namespace PixelMaestroStudio {
 			QString loaded_cuefile_path_;
 			MaestroController* maestro_controller_ = nullptr;
 
-			/// Main rendering area.
-			QWidget* maestro_drawing_area_ = nullptr;
-
 			/// Detached rendering area.
 			QSharedPointer<MaestroDrawingAreaDialog> drawing_area_dialog_;
 
