@@ -131,6 +131,9 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::on_playPauseButton_toggled(bool checked) {
 		if (checked) { // Stop the Maestro
+			QColor highlight_color = qApp->palette().highlight().color();
+			ui->playPauseButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
+
 			maestro_controller_->stop();
 			run_cue(
 				maestro_handler->stop()
@@ -139,6 +142,8 @@ namespace PixelMaestroStudio {
 			ui->playPauseButton->setToolTip("Start playback");
 		}
 		else {
+			ui->playPauseButton->setStyleSheet(QString());
+
 			maestro_controller_->start();
 			run_cue(
 				maestro_handler->start()
@@ -175,6 +180,10 @@ namespace PixelMaestroStudio {
 		animation_control_widget_->refresh();
 		canvas_control_widget_->refresh();
 		section_control_widget_->refresh();
+
+		if (maestro_drawing_area_) {
+			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->frame_active_section(section_control_widget_->get_active_section());
+		}
 	}
 
 	/**

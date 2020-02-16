@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Port</string>
+      <string>Port/IP</string>
      </property>
     </widget>
    </item>
@@ -79,7 +79,7 @@
    <item row="0" column="1">
     <widget class="QComboBox" name="portComboBox">
      <property name="toolTip">
-      <string>The post that the device is available on</string>
+      <string>The port or IP address where the device is located</string>
      </property>
      <property name="editable">
       <bool>true</bool>

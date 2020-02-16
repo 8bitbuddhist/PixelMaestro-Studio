@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QVector>
-#include "controller/serialdevicecontroller.h"
+#include "controller/devicecontroller.h"
 
 namespace Ui {
 	class AddDeviceDialog;
@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit AddDeviceDialog(QVector<SerialDeviceController>* devices, SerialDeviceController* device, QWidget *parent = 0);
+			explicit AddDeviceDialog(QVector<DeviceController>* devices, DeviceController* device, QWidget *parent = 0);
 			~AddDeviceDialog();
 
 		private slots:
@@ -25,8 +25,8 @@ namespace PixelMaestroStudio {
 			void on_liveUpdatesCheckBox_stateChanged(int arg1);
 
 		private:
-			QVector<SerialDeviceController>* devices_;
-			SerialDeviceController* device_;
+			QVector<DeviceController>* devices_;
+			DeviceController* device_;
 			Ui::AddDeviceDialog *ui;
 
 			bool is_device_already_added(QString port_name);

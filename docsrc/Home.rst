@@ -16,15 +16,17 @@ FAQ
 
 **What devices are supported by PixelMaestro Studio?**
 
-PixelMaestro Studio can control any device that can run the PixelMaestro library and supports serial communication. This includes Arduino, Raspberry Pi, Teensy, etc.
+PixelMaestro Studio can control any device running the PixelMaestro library over a serial or TCP/IP connection. This includes Arduino, Raspberry Pi, Teensy, etc.
 
 **How do I connect my device to PixelMaestro Studio?**
 
-Plug in your device over USB, then follow the instructions in the :doc:`Device Tab <Device-Tab>` page.
+Follow the instructions in the :doc:`Device Tab <Device-Tab>` page.
 
 **When I click Connect on the Device Tab, nothing happens or I get an error message**
 
-Make sure you have read and write access to the serial port that the device is connected on. Also, check that the port isn't currently being used by another process.
+If you're connecting over serial, make sure you have read and write access to the serial port that the device is connected on. Also, check that the port isn't currently being used by another process.
+
+If you're using TCP/IP, make sure the IP address is correct, that the port is open on the device, and that your firewall isn't blocking traffic.
 
 **My device is connected, but when I upload a Cuefile or enable Live Updates, nothing happens**
 
@@ -44,8 +46,8 @@ Lastly, you might be hitting the memory limits of your device. Try disabling or 
 
 All rendering is done on the CPU, so the amount of processing power required increases as your resolution increases. You can try:
 
-* Reducing the size of your LED grid
-* Not rendering the Maestro on your screen by unchecking the outputs shown in the *Window* menu
+* Reducing the size of your Sections
+* Not rendering the Maestro by unchecking the output options shown in the *Window* menu
 * :pmdocs:`Tweaking Pixel performance options <Pixels.html#performance-options>`
 
 **You should add X animation or Y feature**

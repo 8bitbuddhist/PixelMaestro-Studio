@@ -51,22 +51,13 @@ namespace PixelMaestroStudio {
 	 * @param section Active Section.
 	 */
 	void MaestroDrawingArea::frame_active_section(Section& section) {
-		active_section_ = &section;
-
 		if (maestro_control_widget_ == nullptr) return;
 
 		int section_id = maestro_control_widget_->section_control_widget_->get_section_index(section);
 
 		for (uint8_t i = 0; i < section_drawing_areas_.size(); i++) {
 			if (i == section_id) {
-				int layer_id = maestro_control_widget_->section_control_widget_->get_layer_index(section);
-
-				if (layer_id > 0) {
-					section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Layer);
-				}
-				else {
-					section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Section);
-				}
+				section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Active);
 			}
 			else {
 				section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Inactive);
@@ -104,11 +95,6 @@ namespace PixelMaestroStudio {
 	 * Redraws the DrawingArea.
 	 */
 	void MaestroDrawingArea::update() {
-		// Checks to see if the active Section is currently highlighted.
-		if (maestro_control_widget_ != nullptr && &maestro_control_widget_->section_control_widget_->get_active_section() != active_section_) {
-			frame_active_section(maestro_control_widget_->section_control_widget_->get_active_section());
-		}
-
 		// Update all DrawingAreas
 		for (uint16_t i = 0; i < section_drawing_areas_.size(); i++) {
 			section_drawing_areas_[i]->update();

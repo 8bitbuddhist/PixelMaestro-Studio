@@ -1,5 +1,7 @@
 #include <QFileDialog>
+#include <QHBoxLayout>
 #include <QKeyEvent>
+#include <QLayout>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QTime>
@@ -523,6 +525,10 @@ namespace PixelMaestroStudio {
 		ui->playbackPreviousToolButton->setEnabled(checked);
 
 		if (checked) {
+			QColor highlight_color = qApp->palette().highlight().color();
+			ui->playbackStartStopToolButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
+
+
 			maestro_control_widget_.run_cue(
 				maestro_control_widget_.canvas_handler->stop_frame_timer(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
@@ -534,6 +540,8 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->blockSignals(false);
 		}
 		else {
+			ui->playbackStartStopToolButton->setStyleSheet(QString());
+
 			maestro_control_widget_.run_cue(
 				maestro_control_widget_.canvas_handler->start_frame_timer(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
@@ -608,19 +616,20 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-
 		// Create new buttons and connect the color picker to the pushbutton event
 		QLayout* layout = ui->colorPickerScrollAreaWidgetContents->layout();
+		int insert_index = 1;
 		for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
 			Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
 			QToolButton* button = new QToolButton();
 			button->setVisible(true);
 			button->setObjectName(QString::number(color_index));
 			button->setToolTip(QString::number(color_index + 1));
-			button->setMaximumWidth(40);
+			button->setMaximumWidth(ui->colorPickerCancelButton->width());
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
-			layout->addWidget(button);
+			dynamic_cast<QHBoxLayout*>(layout)->insertWidget(insert_index, button);
+			++insert_index;
 			canvas_palette_color_group_.addButton(button);
 			connect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
 		}
@@ -709,9 +718,12 @@ namespace PixelMaestroStudio {
 	 * @param enabled If true, enable Canvas controls.
 	 */
 	void CanvasControlWidget::set_controls_enabled(bool enabled) {
-		ui->drawingToolsGroupBox->setEnabled(enabled);
+		ui->toolsGroupBox->setEnabled(enabled);
+		ui->shapesOptionsGroupBox->setEnabled(enabled);
 		ui->animationToolsGroupBox->setEnabled(enabled);
-		ui->loadImageButton->setEnabled(enabled);
+
+		ui->drawButton->setEnabled(enabled);
+		ui->clearButton->setEnabled(enabled);
 		ui->paletteComboBox->setEnabled(enabled);
 		ui->editPaletteButton->setEnabled(enabled);
 		ui->colorPickerScrollArea->setEnabled(enabled);
@@ -850,12 +862,10 @@ namespace PixelMaestroStudio {
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
-
-		ui->fontLabel->setEnabled(enabled);
-		ui->fontComboBox->setEnabled(enabled);
-
 		ui->textLabel->setEnabled(enabled);
 		ui->textLineEdit->setEnabled(enabled);
+		ui->fontLabel->setEnabled(enabled);
+		ui->fontComboBox->setEnabled(enabled);
 	}
 
 	/**

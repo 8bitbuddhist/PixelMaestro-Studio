@@ -29,9 +29,7 @@ namespace PixelMaestroStudio {
 			)
 		);
 
-		// Refresh layer combobox
-		populate_layer_combobox();
-
+		ui->layerListWidget->addItem(QString("Layer ") + QString::number(layer_index + 1));
 		ui->layerListWidget->setCurrentRow(layer_index + 1);
 	}
 
@@ -122,6 +120,14 @@ namespace PixelMaestroStudio {
 		ui->alphaSpinBox->clear();
 		ui->alphaSpinBox->blockSignals(false);
 
+		// Build Section list
+		ui->sectionListWidget->blockSignals(true);
+		ui->sectionListWidget->clear();
+		for (uint16_t section = 0; section < maestro_control_widget_.get_maestro_controller()->get_maestro().get_num_sections(); section++) {
+			ui->sectionListWidget->addItem(QString("Section ") + QString::number(section + 1));
+		}
+		ui->sectionListWidget->blockSignals(false);
+
 		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0));
 		populate_layer_combobox();
 	}
@@ -131,6 +137,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the desired Layer.
 	 */
 	void SectionControlWidget::on_activeLayerComboBox_currentIndexChanged(int index) {
+		// TODO: Remove
 		/*
 		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
 		 * If we selected 'None', use the base Section as the active Section.
@@ -145,16 +152,6 @@ namespace PixelMaestroStudio {
 
 		// Set active Section to Layer Section
 		set_active_section(layer_section);
-	}
-
-	/**
-	 * Changes the current Section.
-	 * @param index Index of the target Section.
-	 */
-	void SectionControlWidget::on_activeSectionComboBox_currentIndexChanged(int index) {
-		set_layer_controls_enabled(false);
-
-		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index));
 	}
 
 	/**
@@ -299,12 +296,16 @@ namespace PixelMaestroStudio {
 
 	void SectionControlWidget::on_removeLayerButton_clicked() {
 		// Don't allow user to delete the base Section
-		if (ui->layerListWidget->currentRow() == 0) return;
+		if (ui->layerListWidget->count() == 1) return;
 
 		uint8_t target_layer = ui->layerListWidget->count() - 1;
 
+		ui->layerListWidget->takeItem(target_layer);
+
 		// Change the active Layer to the previous available one
-		ui->layerListWidget->setCurrentRow(target_layer - 1);
+		if (ui->layerListWidget->currentRow() == target_layer) {
+			ui->layerListWidget->setCurrentRow(target_layer - 1);
+		}
 
 		maestro_control_widget_.run_cue(
 			maestro_control_widget_.section_handler->remove_layer(
@@ -312,9 +313,12 @@ namespace PixelMaestroStudio {
 				target_layer - 1
 			)
 		);
+	}
 
-		// Refresh layer combobox
-		populate_layer_combobox();
+	void SectionControlWidget::on_sectionListWidget_currentRowChanged(int currentRow) {
+		set_layer_controls_enabled(false);
+
+		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(currentRow));
 	}
 
 	void SectionControlWidget::on_wrapCheckBox_stateChanged(int arg1) {
@@ -331,15 +335,7 @@ namespace PixelMaestroStudio {
 	 * Updates UI controls based on the current active Section.
 	 */
 	void SectionControlWidget::refresh() {
-		// Update the Section and Layer lists
-		ui->sectionListWidget->blockSignals(true);
-		ui->sectionListWidget->clear();
-		for (uint8_t section = 0; section < maestro_control_widget_.get_maestro_controller()->get_maestro().get_num_sections(); section++) {
-			ui->sectionListWidget->addItem(QString("Section ") + QString::number(section + 1));
-		}
-		ui->sectionListWidget->blockSignals(false);
-
-		// Only repopulate Layers if the refresh was triggered by a Section, not a Layer
+		// Update the Layer list, but only if the refresh was triggered by a Section, not a Layer
 		if (!get_layer_index()) {
 			populate_layer_combobox();
 		}
@@ -469,6 +465,10 @@ namespace PixelMaestroStudio {
 	 */
 	void SectionControlWidget::set_active_section(Section* section) {
 		active_section_ = section;
+
+		ui->sectionListWidget->blockSignals(true);
+		ui->sectionListWidget->setCurrentRow(get_section_index(*active_section_));
+		ui->sectionListWidget->blockSignals(false);
 
 		maestro_control_widget_.refresh_section_settings();
 	}

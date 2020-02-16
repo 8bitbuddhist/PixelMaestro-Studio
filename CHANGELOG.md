@@ -3,7 +3,19 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.51] - In Progress
+## [v0.60] - In Progress
+
+### Added
+- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI.
+
+### Changed
+- Broke out Section and Layer controls to the top of the screen.
+- Converted Section and Layer combo boxes into list boxes.
+- Reorganized the Canvas and Show tabs.
+- Added highlights to play/pause buttons when clicked.
+
+
+## [v0.51] - 2019-11-26
 
 ### Added
 - Added window icons.

@@ -11,7 +11,7 @@
 #include "dialog/sectionmapdialog.h"
 
 namespace PixelMaestroStudio {
-	AddDeviceDialog::AddDeviceDialog(QVector<SerialDeviceController>* devices, SerialDeviceController* device, QWidget *parent) :
+	AddDeviceDialog::AddDeviceDialog(QVector<DeviceController>* devices, DeviceController* device, QWidget *parent) :
 		QDialog(parent),
 		ui(new Ui::AddDeviceDialog) {
 		ui->setupUi(this);
@@ -24,10 +24,10 @@ namespace PixelMaestroStudio {
 		ui->mapSectionsButton->setEnabled(false);
 
 		if (QSysInfo::productType() == "windows") {
-			ui->portComboBox->lineEdit()->setPlaceholderText("COM1");
+			ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.5:80");
 		}
 		else {
-			ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0");
+			ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.5:80");
 		}
 
 		if (device != nullptr) {
@@ -58,8 +58,8 @@ namespace PixelMaestroStudio {
 				return;
 			}
 
-			devices_->push_back(SerialDeviceController());
-			this->device_ = const_cast<SerialDeviceController*>(&devices_->at(devices_->size() - 1));
+			devices_->push_back(DeviceController());
+			this->device_ = const_cast<DeviceController*>(&devices_->at(devices_->size() - 1));
 		}
 
 		// Save settings to the device
@@ -74,7 +74,7 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < devices_->size(); i++) {
 			settings.setArrayIndex(i);
 
-			SerialDeviceController* current_device = const_cast<SerialDeviceController*>(&devices_->at(i));
+			DeviceController* current_device = const_cast<DeviceController*>(&devices_->at(i));
 			settings.setValue(PreferencesDialog::device_port, current_device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, current_device->get_real_time_refresh_enabled());
 			settings.setValue(PreferencesDialog::device_autoconnect, current_device->get_autoconnect());

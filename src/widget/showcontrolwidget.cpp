@@ -420,7 +420,9 @@ namespace PixelMaestroStudio {
 	 * @param enabled If true, controls are enabled and usable.
 	 */
 	void ShowControlWidget::set_show_controls_enabled(bool enabled) {
-		ui->advancedSettingsGroupBox->setEnabled(enabled);
+		ui->timingModeLabel->setEnabled(enabled);
+		ui->timingModeComboBox->setEnabled(enabled);
+		ui->loopCheckBox->setEnabled(enabled);
 		ui->eventsGroupBox->setEnabled(enabled);
 	}
 

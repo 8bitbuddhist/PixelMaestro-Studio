@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets serialport
+QT       += core gui widgets serialport network
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
@@ -21,6 +21,8 @@ QMAKE_CXXFLAGS_RELEASE += -O3
 
 
 SOURCES += main.cpp\
+controller/devicecontroller.cpp \
+controller/devicethreadcontroller.cpp \
 drawingarea/maestrodrawingarea.cpp \
 controller/maestrocontroller.cpp \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
@@ -42,6 +44,7 @@ window/mainwindow.cpp \
 ../lib/PixelMaestro/src/animation/mandelbrotanimation.cpp \
 ../lib/PixelMaestro/src/animation/plasmaanimation.cpp \
 ../lib/PixelMaestro/src/animation/lightninganimation.cpp \
+../lib/PixelMaestro/src/animation/vuanimation.cpp \
 ../lib/PixelMaestro/src/canvas/canvas.cpp \
 ../lib/PixelMaestro/src/cue/event.cpp \
 ../lib/PixelMaestro/src/cue/show.cpp \
@@ -80,14 +83,14 @@ widget/showcontrolwidget.cpp \
 widget/sectioncontrolwidget.cpp \
 widget/canvascontrolwidget.cpp \
 dialog/sectionmapdialog.cpp \
-controller/serialdevicecontroller.cpp \
-controller/serialdevicethreadcontroller.cpp \
 model/sectionmapmodel.cpp \
 dialog/editeventdialog.cpp \
 model/cuemodel.cpp \
 dialog/adddevicedialog.cpp
 
 HEADERS += \
+controller/devicecontroller.h \
+controller/devicethreadcontroller.h \
 drawingarea/maestrodrawingarea.h \
 controller/maestrocontroller.h \
 ../lib/PixelMaestro/src/canvas/fonts/font.h \
@@ -101,6 +104,7 @@ window/mainwindow.h \
 ../lib/PixelMaestro/src/animation/waveanimation.h \
 ../lib/PixelMaestro/src/animation/animation.h \
 ../lib/PixelMaestro/src/animation/animationtype.h \
+../lib/PixelMaestro/src/animation/vuanimation.h \
 ../lib/PixelMaestro/src/core/colors.h \
 ../lib/PixelMaestro/src/core/maestro.h \
 ../lib/PixelMaestro/src/core/pixel.h \
@@ -149,8 +153,6 @@ widget/showcontrolwidget.h \
 widget/sectioncontrolwidget.h \
 widget/canvascontrolwidget.h \
 dialog/sectionmapdialog.h \
-controller/serialdevicecontroller.h \
-controller/serialdevicethreadcontroller.h \
 model/sectionmapmodel.h \
 dialog/editeventdialog.h \
 model/cuemodel.h \

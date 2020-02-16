@@ -26,7 +26,6 @@ namespace PixelMaestroStudio {
 			void set_active_section(Section* section);
 
 		private slots:
-			void on_activeSectionComboBox_currentIndexChanged(int index);
 			void on_gridSizeXSpinBox_editingFinished();
 			void on_gridSizeYSpinBox_editingFinished();
 			void on_scrollXSpinBox_editingFinished();
@@ -52,6 +51,8 @@ namespace PixelMaestroStudio {
 			void on_addLayerButton_clicked();
 
 			void on_removeLayerButton_clicked();
+
+			void on_sectionListWidget_currentRowChanged(int currentRow);
 
 		private:
 			/// The Section currently being controlled.

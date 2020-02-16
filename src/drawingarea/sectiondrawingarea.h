@@ -18,8 +18,7 @@ namespace PixelMaestroStudio {
 		public:
 			enum class FrameType : uint8_t {
 				Inactive,
-				Section,
-				Layer
+				Active
 			};
 
 			SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id);

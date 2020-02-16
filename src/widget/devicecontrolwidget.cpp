@@ -18,10 +18,9 @@
 #include "dialog/sectionmapdialog.h"
 #include "devicecontrolwidget.h"
 #include "ui_devicecontrolwidget.h"
-#include "controller/serialdevicecontroller.h"
-#include "controller/serialdevicethreadcontroller.h"
+#include "controller/devicecontroller.h"
+#include "controller/devicethreadcontroller.h"
 
-// TODO: Add socket to allow PixelMaestro Studio to receive Cues from other programs. See https://doc.qt.io/qt-5/qtcpserver.html
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) :
 			QWidget(parent),
@@ -36,10 +35,10 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(device);
 
 			QString device_name = settings.value(PreferencesDialog::device_port).toString();
-			serial_devices_.push_back(SerialDeviceController(device_name));
+			serial_devices_.push_back(DeviceController(device_name));
 
 			// If the device is set to auto-connect, try connecting
-			SerialDeviceController& serial_device = serial_devices_.last();
+			DeviceController& serial_device = serial_devices_.last();
 			if (serial_device.get_autoconnect()) {
 				serial_device.connect();
 			}
@@ -66,7 +65,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void DeviceControlWidget::on_editDeviceButton_clicked() {
-		SerialDeviceController* device = nullptr;
+		DeviceController* device = nullptr;
 		int selected_device = ui->serialOutputListWidget->currentRow();
 		if (selected_device >= 0) {
 			device = &serial_devices_[selected_device];
@@ -85,13 +84,13 @@ namespace PixelMaestroStudio {
 		int selected = ui->serialOutputListWidget->currentRow();
 		if (selected < 0) return;
 
-		SerialDeviceController device = serial_devices_.at(selected);
-		if (!device.get_device()->isOpen()) {
+		DeviceController device = serial_devices_.at(selected);
+		if (!device.get_open()) {
 			if (device.connect()) {
 				refresh_device_list();
 			}
 			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_error()));
 			}
 		}
 		else {
@@ -117,13 +116,13 @@ namespace PixelMaestroStudio {
 		int selected_index = ui->serialOutputListWidget->currentRow();
 		if (selected_index < 0) return;
 
-		SerialDeviceController device = serial_devices_.at(selected_index);
+		DeviceController device = serial_devices_.at(selected_index);
 
 		if (device.disconnect()) {
 			refresh_device_list();
 		}
 		else {
-			QMessageBox::warning(this, "Unable to Disconnect", QString("Unable to disconnect device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
+			QMessageBox::warning(this, "Unable to Disconnect", QString("Unable to disconnect device on port " + device.get_port_name() + ": " + device.get_error()));
 		}
 	}
 
@@ -154,9 +153,9 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::on_serialOutputListWidget_currentRowChanged(int currentRow) {
 		if (currentRow < 0) return;
 
-		SerialDeviceController device = serial_devices_.at(currentRow);
+		DeviceController device = serial_devices_.at(currentRow);
 
-		bool connected = device.get_device()->isOpen();
+		bool connected = device.get_open();
 
 		ui->connectPushButton->setEnabled(!connected);
 		ui->disconnectPushButton->setEnabled(connected);
@@ -170,9 +169,9 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::refresh_device_list() {
 		ui->serialOutputListWidget->clear();
 		bool connected_devices = false;
-		for (SerialDeviceController device : serial_devices_) {
+		for (DeviceController device : serial_devices_) {
 			QListWidgetItem* item = new QListWidgetItem(device.get_port_name());
-			if (device.get_device()->isOpen()) {
+			if (device.get_open()) {
 				item->setTextColor(Qt::white);
 				connected_devices = true;
 			}
@@ -194,7 +193,7 @@ namespace PixelMaestroStudio {
 
 		int selected = ui->serialOutputListWidget->currentRow();
 		if (selected >= 0) {
-			ui->uploadButton->setEnabled(serial_devices_[selected].get_device()->isOpen());
+			ui->uploadButton->setEnabled(serial_devices_[selected].get_open());
 			ui->serialOutputListWidget->setCurrentRow(selected);
 		}
 		else {
@@ -216,7 +215,7 @@ namespace PixelMaestroStudio {
 	void DeviceControlWidget::run_cue(uint8_t *cue, int size) {
 		CueController* controller = &this->maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
 
-		for (SerialDeviceController device : serial_devices_) {
+		for (DeviceController device : serial_devices_) {
 			// TODO: Move to separate thread
 
 			// Copy the Cue for each device
@@ -257,7 +256,7 @@ namespace PixelMaestroStudio {
 				}
 			}
 
-			if (device.get_device()->isOpen() && device.get_real_time_refresh_enabled()) {
+			if (device.get_open() && device.get_real_time_refresh_enabled()) {
 				write_to_device(device,
 								out.data(),
 								out.size(),
@@ -279,7 +278,7 @@ namespace PixelMaestroStudio {
 		for (int i = 0; i < ui->serialOutputListWidget->count(); i++) {
 			settings.setArrayIndex(i);
 
-			SerialDeviceController* device = &serial_devices_[i];
+			DeviceController* device = &serial_devices_[i];
 			settings.setValue(PreferencesDialog::device_port, device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, device->get_real_time_refresh_enabled());
 
@@ -337,15 +336,15 @@ namespace PixelMaestroStudio {
 	 * @param out Data to send.
 	 * @param size Size of data to send.
 	 */
-	void DeviceControlWidget::write_to_device(SerialDeviceController& device, const char *out, const int size, bool progress) {
-		SerialDeviceThreadController* thread = new SerialDeviceThreadController(device,
+	void DeviceControlWidget::write_to_device(DeviceController& device, const char *out, const int size, bool progress) {
+		DeviceThreadController* thread = new DeviceThreadController(device,
 														  out,
 														  size);
 
-		connect(thread, &SerialDeviceThreadController::finished, thread, &SerialDeviceThreadController::deleteLater);
+		connect(thread, &DeviceThreadController::finished, thread, &DeviceThreadController::deleteLater);
 
 		if (progress) {
-			connect(thread, &SerialDeviceThreadController::progress_changed, this, &DeviceControlWidget::set_progress_bar);
+			connect(thread, &DeviceThreadController::progress_changed, this, &DeviceControlWidget::set_progress_bar);
 		}
 
 		/*
@@ -361,7 +360,7 @@ namespace PixelMaestroStudio {
 	}
 
 	DeviceControlWidget::~DeviceControlWidget() {
-		for (SerialDeviceController& device : serial_devices_) {
+		for (DeviceController& device : serial_devices_) {
 			device.disconnect();
 		}
 		delete ui;

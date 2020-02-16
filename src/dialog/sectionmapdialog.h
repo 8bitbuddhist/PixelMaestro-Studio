@@ -3,7 +3,7 @@
 
 #include <QAbstractButton>
 #include <QDialog>
-#include "controller/serialdevicecontroller.h"
+#include "controller/devicecontroller.h"
 #include "core/maestro.h"
 
 namespace Ui {
@@ -15,14 +15,14 @@ namespace PixelMaestroStudio {
 			Q_OBJECT
 
 		public:
-			explicit SectionMapDialog(SerialDeviceController& device, QWidget *parent = nullptr);
+			explicit SectionMapDialog(DeviceController& device, QWidget *parent = nullptr);
 			~SectionMapDialog();
 
 		private slots:
 			void on_buttonBox_clicked(QAbstractButton *button);
 
 		private:
-			SerialDeviceController& device_;
+			DeviceController& device_;
 			Ui::SectionMapDialog *ui;
 
 			void initialize();

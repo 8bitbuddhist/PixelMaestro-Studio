@@ -3,14 +3,14 @@
 
 #include <QByteArray>
 #include <QThread>
-#include "serialdevicecontroller.h"
+#include "devicecontroller.h"
 
 namespace PixelMaestroStudio {
-	class SerialDeviceThreadController : public QThread {
+	class DeviceThreadController : public QThread {
 		Q_OBJECT
 
 		public:
-			SerialDeviceThreadController(SerialDeviceController& serial_device, const char* out, int size);
+			DeviceThreadController(DeviceController& device, const char* out, int size);
 			void run() override;
 
 		signals:
@@ -23,7 +23,7 @@ namespace PixelMaestroStudio {
 			/// Time in milliseconds between chunks. Disabled by default.
 			const uint8_t SLEEP_INTERVAL = 0;
 
-			SerialDeviceController& serial_device_;
+			DeviceController& device_;
 			QByteArray output_;
 	};
 }

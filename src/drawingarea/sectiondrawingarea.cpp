@@ -36,12 +36,9 @@ namespace PixelMaestroStudio {
 		 */
 		switch (type) {
 			case FrameType::Inactive:
-				this->setStyleSheet("color: #333333;");
+				this->setStyleSheet("color: #808080;");
 				break;
-			case FrameType::Layer:
-				this->setStyleSheet("color: #808080");
-				break;
-			case FrameType::Section:
+			case FrameType::Active:
 				this->setStyleSheet("color: #FFFFFF;");
 				break;
 		}

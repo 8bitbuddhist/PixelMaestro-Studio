@@ -10,7 +10,7 @@
 #include <QSharedPointer>
 #include <QVector>
 #include <QWidget>
-#include "controller/serialdevicecontroller.h"
+#include "controller/devicecontroller.h"
 #include "dialog/adddevicedialog.h"
 #include "widget/maestrocontrolwidget.h"
 
@@ -56,11 +56,11 @@ namespace PixelMaestroStudio {
 			QByteArray maestro_cue_;
 
 			/// List of activated USB devices.
-			QVector<SerialDeviceController> serial_devices_;
+			QVector<DeviceController> serial_devices_;
 
 			void populate_serial_devices();
 			void refresh_device_list();
-			void write_to_device(SerialDeviceController& device, const char* out, const int size, bool progress = false);
+			void write_to_device(DeviceController& device, const char* out, const int size, bool progress = false);
 	};
 }
 
