@@ -11,8 +11,9 @@
 #include "dialog/preferencesdialog.h"
 #include "widget/palettecontrolwidget.h"
 #include "ui_maestrocontrolwidget.h"
-#include "utility/canvasutility.h"
 #include "utility.h"
+#include "utility/canvasutility.h"
+#include "utility/uiutility.h"
 #include "window/mainwindow.h"
 
 namespace PixelMaestroStudio {
@@ -109,15 +110,10 @@ namespace PixelMaestroStudio {
 	void MaestroControlWidget::on_lockButton_toggled(bool checked) {
 		show_control_widget_->set_maestro_locked(checked);
 
-		if (checked) {
-			QColor highlight_color = qApp->palette().highlight().color();
-			ui->lockButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
-		}
-		else {
+		UIUtility::highlight_widget(ui->lockButton, checked);
+		if (!checked) {
 			refresh_maestro_settings();
 			refresh_section_settings();
-
-			ui->lockButton->setStyleSheet(QString());
 		}
 
 		if (maestro_drawing_area_) {
@@ -130,10 +126,8 @@ namespace PixelMaestroStudio {
 	 * @param checked If true, the Maestro is paused.
 	 */
 	void MaestroControlWidget::on_playPauseButton_toggled(bool checked) {
+		UIUtility::highlight_widget(ui->playPauseButton, checked);
 		if (checked) { // Stop the Maestro
-			QColor highlight_color = qApp->palette().highlight().color();
-			ui->playPauseButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
-
 			maestro_controller_->stop();
 			run_cue(
 				maestro_handler->stop()
@@ -142,8 +136,6 @@ namespace PixelMaestroStudio {
 			ui->playPauseButton->setToolTip("Start playback");
 		}
 		else {
-			ui->playPauseButton->setStyleSheet(QString());
-
 			maestro_controller_->start();
 			run_cue(
 				maestro_handler->start()
@@ -273,13 +265,7 @@ namespace PixelMaestroStudio {
 	 * @param refresh_needed If true, highlight the refresh button
 	 */
 	void MaestroControlWidget::set_refresh_needed(bool refresh_needed) {
-		if (refresh_needed) {
-			QColor highlight_color = qApp->palette().highlight().color();
-			ui->refreshButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
-		}
-		else {
-			ui->refreshButton->setStyleSheet(QString());
-		}
+		UIUtility::highlight_widget(ui->refreshButton, refresh_needed);
 	}
 
 	void MaestroControlWidget::toggle_maestro_drawing_area(bool enabled) {

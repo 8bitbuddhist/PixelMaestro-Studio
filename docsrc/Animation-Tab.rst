@@ -22,7 +22,7 @@ Select an Animation using the *Animation Type* drop-down. For all Animation type
 
 .. Note:: Not all Animations support the same options.
 
-The *Color Palette* drop-down lets you select the color palette used to draw the Animation. Continue reading to learn more about customizing Palettes.
+The *Palette* drop-down lets you select the color palette used to draw the Animation. Continue reading to learn more about customizing Palettes.
 
 .. Tip:: To reapply a Palette after customizing it, simply reselect it from the drop-down.
 

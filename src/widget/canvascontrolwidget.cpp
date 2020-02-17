@@ -8,6 +8,7 @@
 #include "canvascontrolwidget.h"
 #include "ui_canvascontrolwidget.h"
 #include "utility/canvasutility.h"
+#include "utility/uiutility.h"
 #include "widget/palettecontrolwidget.h"
 
 namespace PixelMaestroStudio {
@@ -524,11 +525,8 @@ namespace PixelMaestroStudio {
 		ui->playbackNextToolButton->setEnabled(checked);
 		ui->playbackPreviousToolButton->setEnabled(checked);
 
+		UIUtility::highlight_widget(ui->playbackStartStopToolButton, checked);
 		if (checked) {
-			QColor highlight_color = qApp->palette().highlight().color();
-			ui->playbackStartStopToolButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
-
-
 			maestro_control_widget_.run_cue(
 				maestro_control_widget_.canvas_handler->stop_frame_timer(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
@@ -540,8 +538,6 @@ namespace PixelMaestroStudio {
 			ui->currentFrameSpinBox->blockSignals(false);
 		}
 		else {
-			ui->playbackStartStopToolButton->setStyleSheet(QString());
-
 			maestro_control_widget_.run_cue(
 				maestro_control_widget_.canvas_handler->start_frame_timer(
 					maestro_control_widget_.section_control_widget_->get_section_index(),
@@ -707,6 +703,7 @@ namespace PixelMaestroStudio {
 		set_text_controls_enabled(false);
 		set_triangle_controls_enabled(false);
 
+		UIUtility::highlight_widget(ui->brushToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -762,6 +759,7 @@ namespace PixelMaestroStudio {
 			ui->targetLabel->setText("Target");
 		}
 
+		UIUtility::highlight_widget(ui->circleToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -793,6 +791,7 @@ namespace PixelMaestroStudio {
 			ui->fillCheckBox->setEnabled(false);
 		}
 
+		UIUtility::highlight_widget(ui->lineToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -819,6 +818,7 @@ namespace PixelMaestroStudio {
 			ui->targetLabel->setText("Target");
 		}
 
+		UIUtility::highlight_widget(ui->rectToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -840,6 +840,7 @@ namespace PixelMaestroStudio {
 			ui->fillCheckBox->setEnabled(false);
 		}
 
+		UIUtility::highlight_widget(ui->replaceToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -859,6 +860,7 @@ namespace PixelMaestroStudio {
 			ui->fillCheckBox->setEnabled(false);
 		}
 
+		UIUtility::highlight_widget(ui->textToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);
@@ -891,6 +893,7 @@ namespace PixelMaestroStudio {
 			ui->target2Label->setText("Target 2");
 		}
 
+		UIUtility::highlight_widget(ui->triangleToolButton, enabled);
 		ui->originLabel->setEnabled(enabled);
 		ui->originXSpinBox->setEnabled(enabled);
 		ui->originYSpinBox->setEnabled(enabled);

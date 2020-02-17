@@ -90,7 +90,7 @@ namespace PixelMaestroStudio {
 				refresh_device_list();
 			}
 			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_error()));
+				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
 			}
 		}
 		else {
@@ -122,7 +122,7 @@ namespace PixelMaestroStudio {
 			refresh_device_list();
 		}
 		else {
-			QMessageBox::warning(this, "Unable to Disconnect", QString("Unable to disconnect device on port " + device.get_port_name() + ": " + device.get_error()));
+			QMessageBox::warning(this, "Unable to Disconnect", QString("Unable to disconnect device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
 		}
 	}
 

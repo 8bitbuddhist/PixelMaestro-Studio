@@ -29,7 +29,6 @@ namespace PixelMaestroStudio {
 			void on_gridSizeXSpinBox_editingFinished();
 			void on_gridSizeYSpinBox_editingFinished();
 			void on_scrollXSpinBox_editingFinished();
-			void on_activeLayerComboBox_currentIndexChanged(int index);
 			void on_mixModeComboBox_currentIndexChanged(int index);
 			void on_scrollYSpinBox_editingFinished();
 			void on_alphaSpinBox_editingFinished();

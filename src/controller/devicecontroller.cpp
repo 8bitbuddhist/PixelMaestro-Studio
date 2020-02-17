@@ -23,7 +23,7 @@ namespace PixelMaestroStudio {
 		 * If so, initialize a TCP socket.
 		 * Otherwise, assume a serial device.
 		 */
-		QRegularExpression exp("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$");
+		QRegularExpression exp("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}");
 		bool is_network_device = exp.match(port_name).hasMatch();
 		if (is_network_device) {
 			this->device_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
@@ -89,7 +89,10 @@ namespace PixelMaestroStudio {
 
 			QString address = address_re.match(port_name_).captured(0);
 			QString port = port_re.match(port_name_).captured(0);
+
+			// If no port number is found, use the default
 			uint16_t port_num = static_cast<uint16_t>(port.toUInt());
+			if (port_num == 0) port_num = PORT_NUM;
 
 			QTcpSocket* tcp_device = dynamic_cast<QTcpSocket*>(device_.data());
 			tcp_device->connectToHost(address, port_num);
@@ -122,20 +125,31 @@ namespace PixelMaestroStudio {
 		return false;
 	}
 
+	/**
+	 * Returns whether autoconnect is enabled.
+	 * @return True if enabled.
+	 */
 	bool DeviceController::get_autoconnect() const {
 		return autoconnect_;
 	}
 
-	QString DeviceController::get_error() const {
-		return device_->errorString();
+	/**
+	 * Returns the actual device object.
+	 * @return Device.
+	 */
+	QIODevice* DeviceController::get_device() const {
+		return device_.data();
 	}
 
+	/**
+	 * Returns whether the device is connected and writeable.
+	 * @return True if the device is connected.
+	 */
 	bool DeviceController::get_open() const {
 		switch (device_type_) {
 			case DeviceType::Serial:
 				return dynamic_cast<QSerialPort*>(device_.data())->isOpen();
 			case DeviceType::TCP:
-				QAbstractSocket::SocketState state = dynamic_cast<QTcpSocket*>(device_.data())->state();
 				return dynamic_cast<QTcpSocket*>(device_.data())->state() == QAbstractSocket::ConnectedState;
 		}
 
@@ -158,6 +172,9 @@ namespace PixelMaestroStudio {
 		return real_time_updates_;
 	}
 
+	/**
+	 * Writes any buffered data to the device.
+	 */
 	void DeviceController::flush() {
 		switch (device_type_) {
 			case DeviceType::Serial:
@@ -169,10 +186,18 @@ namespace PixelMaestroStudio {
 		}
 	}
 
+	/**
+	 * Sets whether to automatically connect to the device on startup.
+	 * @param autoconnect If true, autoconnect to the device.
+	 */
 	void DeviceController::set_autoconnect(bool autoconnect) {
 		this->autoconnect_ = autoconnect;
 	}
 
+	/**
+	 * Sets the device's address.
+	 * @param port_name The URI of the device (can be a port name or IP address).
+	 */
 	void DeviceController::set_port_name(const QString &port_name) {
 		this->port_name_ = port_name;
 	}
@@ -184,9 +209,5 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceController::set_real_time_update(bool enabled) {
 		this->real_time_updates_ = enabled;
-	}
-
-	void DeviceController::write(const QByteArray &array) {
-		device_->write(array);
 	}
 }

@@ -4,7 +4,7 @@ Canvas Tab
 
 The Canvas tab lets you create and customize :pmdocs:`Canvases <Canvases.html>`. Canvases let you draw shapes and load images to display on the Section.
 
-To add a Canvas to the active Section, click *Enable Canvas*.
+To use a Canvas on the active Section, click *Enable Canvas*.
 
 
 .. image:: images/canvas-controls.png
@@ -12,32 +12,32 @@ To add a Canvas to the active Section, click *Enable Canvas*.
    :alt: Canvas Tab
 
 
-Like Animations, Canvases use color palettes. The same palettes can be used for both components. However, Canvases are limited to the first 255 colors in a palette, since the last color is reserved for transparency.
+Like Animations, Canvases use color palettes. You can use the same palettes with both components. However, Canvases are limited to the first 255 colors in a palette, since the last color is reserved for transparency.
 
-.. Tip:: To reapply a Palette after customizing it, simply reselect it from the drop-down.
+.. Tip:: After modifying a palette, reselect it from the palette drop-down to apply the changes to the Canvas.
 
 Loading Images
 --------------
 
-You can load an image file into the Canvas by clicking the *Load Image...* button. You can select a PNG, JPEG, or GIF image file. If the image is animated, PixelMaestro Studio will load each frame into a new Canvas frame and immediately begin playback. You can control the animation using the *Animation Tools* controls.
+You can load an image file into the Canvas by clicking the *Open Image...* button. You can select a PNG, JPEG, or GIF image file. If the image is animated, PixelMaestro Studio will load each frame into a new Canvas frame and begin playback immediately. You can play, pause, or step through the animation using the animation playback controls.
 
 Drawing
 -------
 
-Drawing on a Canvas works similar to a typical bitmap image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the ``Draw`` button.  When using the :doc:`free drawing tool <Canvas-Tab.html#free-drawing>`, you can use your mouse to draw directly on the Canvas.
+Drawing on a Canvas works similar to a standard bitmap image editor. You select the drawing tool you wish to use, select the location where you want to draw, select your colors and any additional parameters, then click the ``Draw`` button.  When using the :doc:`free drawing tool <Canvas-Tab.html#free-drawing>`, you can use your mouse to draw directly on the Canvas by left-clicking on the Section.
 
 Drawing Tools
 -------------
 
-The *Drawing Tools* box provides controls for drawing shapes, text, and other objects on the Canvas. Select a drawing tool using the icons on the left-hand side of the box. Depending on the tool you select, one or more text boxes will become enabled. These boxes allow you to set the coordinates, size, and any other options needed to create the shape.
+The *Drawing Tools* box provides controls for drawing shapes, text, and other objects on the Canvas. Select a drawing tool using the icons provided. Depending on the tool you select, one or more text boxes will become enabled. These boxes allow you to set the coordinates, size, and any other options needed to draw the object.
 
 .. Tip:: You can use the brush tool to free draw directly on the Canvas using your mouse.
 
 When drawing shapes, only the outline of the shape is drawn by default. Checking *Fill* draws the shape filled in.
 
-You will need to select a color before drawing a shape. Select a palette using the *Color Palette* drop-down, then click on the color that you want to draw the shape in. Finally, click *Draw* to draw the shape.
+Before drawing an object, you'll need to select a color. First, select a palette using the *Palette* drop-down, then click on the color that you want to draw the object with. Finally, click *Draw* to draw the object.
 
-To erase a pixel's color, click the **X** button at the far left of the color palette. This sets the drawing color to transparent. Click *Draw* to "draw" the selected Pixel as transparent.
+To erase a color color drawn on the Canvas, click the **X** button at the far left of the color palette. This sets the drawing color to transparent. Click *Draw* to "erase" the pixel.
 
 Specifying Coordinates
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -66,7 +66,7 @@ You can also click on the Section with the replace tool selected to replace all 
 Replacing Colors
 ^^^^^^^^^^^^^^^^
 
-You can replace a particular color with another color by using the *Replace* tool. The Replace tool replaces all instances of one color across the entire frame with another color. Select the pixel containing the color you want to replace, select the new color in the Palette, then click *Draw*. You can also select the color by left-clicking directly on the Section.
+You can replace a single color with another color by using the *Replace* tool. The Replace tool replaces all instances of one color across the entire frame with another color. Select the pixel containing the color you want to replace, select the new color in the Palette, then click *Draw*. You can also select the color by left-clicking directly on the Section.
 
 Managing Animations
 -------------------

@@ -18,6 +18,9 @@ namespace PixelMaestroStudio {
 				TCP
 			};
 
+			/// Default port number (for IP devices)
+			static const uint16_t PORT_NUM = 8077;
+
 			/// Default connect/disconnect timeout to 10 seconds
 			static const uint16_t TIMEOUT = 10000;
 
@@ -26,6 +29,7 @@ namespace PixelMaestroStudio {
 			bool connect();
 			bool disconnect();
 			int get_capacity() const;
+			QIODevice* get_device() const;
 			QString get_error() const;
 			bool get_open() const;
 			QString get_port_name() const;

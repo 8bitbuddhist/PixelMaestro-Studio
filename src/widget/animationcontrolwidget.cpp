@@ -4,6 +4,7 @@
 #include "ui_animationcontrolwidget.h"
 #include "animation/animation.h"
 #include "controller/palettecontroller.h"
+#include "utility/uiutility.h"
 #include "widget/animation/fireanimationcontrolwidget.h"
 #include "widget/animation/lightninganimationcontrolwidget.h"
 #include "widget/animation/plasmaanimationcontrolwidget.h"
@@ -238,10 +239,8 @@ namespace PixelMaestroStudio {
 	}
 
 	void AnimationControlWidget::on_playbackStartStopToolButton_toggled(bool checked) {
+		UIUtility::highlight_widget(ui->playbackStartStopToolButton, checked);
 		if (checked) {	// Pause the Animation
-			QColor highlight_color = qApp->palette().highlight().color();
-			ui->playbackStartStopToolButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
-
 			maestro_control_widget.run_cue(
 				maestro_control_widget.animation_handler->stop(
 					maestro_control_widget.section_control_widget_->get_section_index(),
@@ -253,8 +252,6 @@ namespace PixelMaestroStudio {
 			ui->currentCycleSpinBox->setValue(current_cycle);
 		}
 		else {
-			ui->playbackStartStopToolButton->setStyleSheet(QString());
-
 			maestro_control_widget.run_cue(
 				maestro_control_widget.animation_handler->start(
 					maestro_control_widget.section_control_widget_->get_section_index(),

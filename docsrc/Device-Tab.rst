@@ -2,36 +2,42 @@
 Device Tab
 ==========
 
-The Device Tab lets you connect devices to PixelMaestro Studio via USB. This allows you to send commands to devices that interact directly with LED hardware, such as an Arduino. You can connect multiple devices and control them in real-time, or send your entire Maestro configuration to a device.
-
+The Device Tab lets you connect PixelMaestro Studio to devices over a serial, USB, or network connection. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.
 
 .. image:: images/device-tab.png
    :target: images/device-tab.png
    :alt: Device tab
 
-Your device must be running software capable of receiving and interpreting serial commands from PixelMaestro Studio. The PixelMaestro library includes :pmarduino:`several Arduino sketches <>` that demonstrate this.
+Your device must be running a sketch capable of receiving and interpreting serial commands from PixelMaestro Studio. You can find samples in the :pmarduino:`PixelMaestro Arduino folder <>`.
 
 Adding a Device
 ---------------
 
-Before you can connect to a device, you first need to add it. Click the *Add* button to open the new device dialog. Select the port that the device is connected to from the drop-down menu (or enter it manually). Check *Auto-connect* to automatically connect to the device when PixelMaestro Studio starts. Live Updates are explained in more detail in the next section. Click *Ok* to save your device and add it to the Device List.
+To add a new device, click the *Add* button. This opens the new device dialog. If connecting to a serial device, you can use the drop-down to view a list of serial devices connected to your PC. You can also enter the location manually. If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].
+
+.. Note:: PixelMaestro Studio uses port 8077 by default.
+
+If you want to automatically connect to the device when PixelMaestro Studio loads, check *Auto-connect*. The Live Updates option is explained in more detail in the next section.
+
+Click *Ok* to save your device and add it to the Device List.
 
 Enabling Live Updates
 ^^^^^^^^^^^^^^^^^^^^^
 
-With Live Updates enabled, any actions you perform in PixelMaestro Studio are automatically mirrored to a connected device in real-time. For an example, see the :pmarduino:`USB Arduino sketch <USB_Live>` included in the PixelMaestro library.
+With Live Updates enabled, any actions you perform in PixelMaestro Studio are automatically sent to a connected device in real-time. Check the *Live Updates* box to enable live updates. This also enables the Map Sections button, which is explained in the next section.
 
-Check the *Live Updates* box to enable live updates. This also enables the Map Sections button, which is explained in the next section.
+For an example of a sketch that allows a device to receive live updates, see the :pmarduino:`USB Arduino sketch <USB_Live>` included in the PixelMaestro library.
 
 Mapping Sections
 ^^^^^^^^^^^^^^^^
 
-The number of Sections you manage in PixelMaestro Studio will likely be different than the number of Sections managed on your device. Because Sections are identified by their index, this means that most commands generated in PixelMaestro Studio won't work as expected on your device.
+Section mapping allows you to run commands meant for one Section on another Section.
 
-Section maps fix this by letting you map one Section index to another. For example, you might want to run commands for Section 2 on a device that only has one Section (Section 0). You can use a Section map to map Section 2 to Section 0. The next time you perform an action, PixelMaestro Studio automatically translates the command's Section index before sending it to the device.
+For projects with multiple devices, the number of Sections you manage in PixelMaestro Studio may be different than the number of Sections managed by any one device. Because Sections are identified by their index, this means that by default commands sent by PixelMaestro Studio won't run properly on your devices.
+
+Section mapping fixes this by letting you change the index in real-time. For example, you might want to run commands for Section 2 on a device that only has one Section, which has an index of 0. You can use a Section map to map Section 2 to Section 0. The next time you perform an action, PixelMaestro Studio automatically translates the command's Section index from 2 to 0 before sending it to the device.
 
 To create a map, click the *Map Sections...* button. This opens a dialog box showing a table with two columns:
-
 
 * The ``Local Section`` column is the index of each Section in PixelMaestro Studio.
 * The ``Remote Section`` column is the index of the target Section on the remote device.
@@ -44,14 +50,14 @@ In the following image, commands that run on Sections 3 and 4 (indices 2 and 3) 
    :alt: Section Map Dialog
 
 
-By default, Sections are mapped directly to each other. You can change the ``Remote Section`` column to any numeric value. If the device doesn't contain a Section with that ID, then the Cue simply won't run. Click *OK* to save your changes, or click *Reset* to revert back to the default mapping.
+By default, Sections are mapped directly to each other. You can change the ``Remote Section`` column to any numeric value. If the device doesn't contain a Section with that ID, then the command simply won't run. Click *OK* to save your changes, or click *Reset* to revert back to the default mapping.
 
 Connecting to a Device
 ----------------------
 
-Once a device has been added, it appears in the device list. Disconnected devices appear gray, while connected devices appear white. Select a device and click *Connect* to open a serial connection to it. Connecting to a device will also display a connection icon next to the tab name. If the device has live updates enabled, will automatically receive commands as you perform actions in PixelMaestro Studio.
+Once a device has been added, it appears in the device list. Disconnected devices appear gray, while connected devices appear white. Select a device and click *Connect* to open a persistent connection to it. Connecting to a device also displays a connection icon next to the tab name. If the device has live updates enabled, it will automatically receive commands as you perform actions in PixelMaestro Studio.
 
-When you are done, click *Disconnect* to close the connection to a device. Devices are also disconnected automatically when PixelMaestro Studio closes.
+When you are done, click *Disconnect* to close the connection. Devices are also disconnected automatically when closing PixelMaestro Studio.
 
 Uploading Cuefiles
 ------------------
@@ -62,4 +68,4 @@ First, select a device in the Device List. The *Size* text box shows the current
 
 Click *Upload* to send the Cuefile to your device. The progress bar shows how much of the Cue has been uploaded. You can see the contents of the Cuefile by clicking the *Preview* button.
 
-The Cuefile contains every instruction needed to reproduce your configuration. As such, you can store the Cuefile on your device and restore it when the device boots. On an Arduino, you can do this by writing the Cuefile to EEPROM as shown in :pmarduino:`this example sketch <USB_EEPROM>`. If your device has a storage device like an SD card, you can copy any ``.PMC`` file created in PixelMaestro Studio to the card and read it on the device.
+The Cuefile contains every instruction needed to reproduce your configuration from scratch. As such, you can store the Cuefile on a device and read it when the device boots to restore your Maestro to a previous state. On an Arduino, you can do this by writing the Cuefile to EEPROM as demonstrated in :pmarduino:`this example sketch <USB_EEPROM>`. If your device has a storage device like an SD card, you can copy any ``.PMC`` file created in PixelMaestro Studio to the card and pass its contents to the ``CueController``.

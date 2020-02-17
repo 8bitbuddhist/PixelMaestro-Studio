@@ -133,28 +133,6 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Changes the active Layer.
-	 * @param index Index of the desired Layer.
-	 */
-	void SectionControlWidget::on_activeLayerComboBox_currentIndexChanged(int index) {
-		// TODO: Remove
-		/*
-		 * If we selected an Layer, iterate through the Section's nested Layers until we find it.
-		 * If we selected 'None', use the base Section as the active Section.
-		 */
-		Section* layer_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
-		for (int i = 0; i < index; i++) {
-			layer_section = layer_section->get_layer()->section;
-		}
-
-		// Show Layer controls
-		set_layer_controls_enabled(index > 0);
-
-		// Set active Section to Layer Section
-		set_active_section(layer_section);
-	}
-
-	/**
 	 * Sets the Layer's transparency level.
 	 */
 	void SectionControlWidget::on_alphaSpinBox_editingFinished() {

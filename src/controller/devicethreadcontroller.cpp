@@ -31,7 +31,7 @@ namespace PixelMaestroStudio {
 			if (current_index + chunk_index > output_.size()) {
 				chunk_index = output_.size() - current_index;
 			}
-			device_.write(out_addr);
+			device_.get_device()->write(out_addr);
 			device_.flush();
 			current_index += chunk_index;
 			emit progress_changed((current_index / (float)output_.size()) * 100);

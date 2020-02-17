@@ -26,6 +26,7 @@ controller/devicethreadcontroller.cpp \
 drawingarea/maestrodrawingarea.cpp \
 controller/maestrocontroller.cpp \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
+        utility/uiutility.cpp \
 window/mainwindow.cpp \
 ../lib/PixelMaestro/src/animation/blinkanimation.cpp \
 ../lib/PixelMaestro/src/animation/cycleanimation.cpp \
@@ -95,6 +96,7 @@ drawingarea/maestrodrawingarea.h \
 controller/maestrocontroller.h \
 ../lib/PixelMaestro/src/canvas/fonts/font.h \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.h \
+        utility/uiutility.h \
 window/mainwindow.h \
 ../lib/PixelMaestro/src/animation/blinkanimation.h \
 ../lib/PixelMaestro/src/animation/cycleanimation.h \

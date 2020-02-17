@@ -27,8 +27,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>690</width>
-        <height>507</height>
+        <width>713</width>
+        <height>493</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -340,12 +340,6 @@
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="target2Label">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
               <property name="text">
                <string>Point 3</string>
               </property>
@@ -353,12 +347,6 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="originLabel">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
               <property name="text">
                <string>Point 1</string>
               </property>
@@ -366,12 +354,6 @@
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="targetLabel">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
               <property name="text">
                <string>Point 2</string>
               </property>
@@ -642,7 +624,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>670</width>
+            <width>693</width>
             <height>68</height>
            </rect>
           </property>
