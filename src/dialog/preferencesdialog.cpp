@@ -54,6 +54,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::palette_type = QStringLiteral("Type");
 	QString PreferencesDialog::palette_start = QStringLiteral("Start");
 	QString PreferencesDialog::palette_length = QStringLiteral("Length");
+	QString PreferencesDialog::palette_thumbnail = QStringLiteral("Thumbnail");
 
 	// "Show" section
 	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");

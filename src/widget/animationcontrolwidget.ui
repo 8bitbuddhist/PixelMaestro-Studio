@@ -32,19 +32,15 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="1">
+   <item row="0" column="1" alignment="Qt::AlignTop">
     <widget class="QGroupBox" name="controlGroupBox">
      <property name="title">
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QLabel" name="currentCycleLabel">
-        <property name="text">
-         <string>Current Cycle</string>
-        </property>
-       </widget>
-      </item>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
       <item row="2" column="1">
        <widget class="QSpinBox" name="currentCycleSpinBox">
         <property name="toolTip">
@@ -61,13 +57,6 @@
         </property>
         <property name="value">
          <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Playback</string>
         </property>
        </widget>
       </item>
@@ -93,255 +82,22 @@
         </item>
        </layout>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignTop">
-    <widget class="QGroupBox" name="baseSettingsGroupBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="title">
-      <string/>
-     </property>
-     <layout class="QGridLayout" name="baseSettingsLayout">
-      <item row="1" column="1">
-       <widget class="QComboBox" name="orientationComboBox">
-        <property name="toolTip">
-         <string>Direction that the animation displays in</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>Horizontal</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Vertical</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Horizontal (Flipped)</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Vertical (Flipped)</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="paletteComboBox">
-        <property name="minimumSize">
-         <size>
-          <width>102</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Color scheme used in the animation</string>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QCheckBox" name="fadeCheckBox">
-        <property name="toolTip">
-         <string>Smoothes the animation</string>
-        </property>
-        <property name="text">
-         <string>Fade</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="colorLabel">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
+       <widget class="QLabel" name="currentCycleLabel">
         <property name="text">
-         <string>Color Palette</string>
+         <string>Current Cycle</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="paletteEditButton">
-        <property name="text">
-         <string>Edit Palettes...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="orientationLabel">
-        <property name="text">
-         <string>Orientation</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="typeComboBox">
-        <property name="minimumSize">
-         <size>
-          <width>102</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Type of animation to display</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>None</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Blink</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Cycle</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Fire</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Lightning</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Mandelbrot</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Plasma</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Radial</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Random</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Solid</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Sparkle</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Wave</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="typeLabel">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Animation Type</string>
+         <string>Playback</string>
         </property>
        </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QCheckBox" name="reverseCheckBox">
-        <property name="toolTip">
-         <string>Play the animation in reverse</string>
-        </property>
-        <property name="text">
-         <string>Reverse</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="centerLabel">
-        <property name="text">
-         <string>Center</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <layout class="QHBoxLayout" name="centerLayout">
-        <item>
-         <widget class="QSpinBox" name="centerXSpinBox">
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="centerYSpinBox">
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="2" alignment="Qt::AlignLeft|Qt::AlignTop">
-    <widget class="QGroupBox" name="advancedSettingsGroupBox">
-     <property name="title">
-      <string>Advanced Settings</string>
-     </property>
-     <layout class="QGridLayout" name="advancedSettingsLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
-      </property>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="1" column="0" colspan="4">
     <widget class="QGroupBox" name="timersGroupBox">
@@ -349,6 +105,9 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="timersLayout">
+      <property name="topMargin">
+       <number>6</number>
+      </property>
       <item row="2" column="0">
        <widget class="QLabel" name="delayIntervalLabel">
         <property name="text">
@@ -448,6 +207,259 @@
         </property>
         <property name="displayFormat">
          <string>mm:ss.zzz</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="2" alignment="Qt::AlignLeft|Qt::AlignTop">
+    <widget class="QGroupBox" name="advancedSettingsGroupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="advancedSettingsLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="baseSettingsGroupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="baseSettingsLayout">
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="fadeCheckBox">
+        <property name="toolTip">
+         <string>Smoothes the animation</string>
+        </property>
+        <property name="text">
+         <string>Fade</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="paletteComboBox">
+        <property name="minimumSize">
+         <size>
+          <width>102</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Color scheme used in the animation</string>
+        </property>
+        <property name="currentText">
+         <string/>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="centerLayout">
+        <item>
+         <widget class="QSpinBox" name="centerXSpinBox">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="centerYSpinBox">
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="reverseCheckBox">
+        <property name="toolTip">
+         <string>Play the animation in reverse</string>
+        </property>
+        <property name="text">
+         <string>Reverse</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="colorLabel">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Palette</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="paletteEditButton">
+        <property name="text">
+         <string>Edit Palettes...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="typeLabel">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="orientationComboBox">
+        <property name="toolTip">
+         <string>Direction that the animation displays in</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Horizontal</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vertical</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Horizontal (Flipped)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vertical (Flipped)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="typeComboBox">
+        <property name="minimumSize">
+         <size>
+          <width>102</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Type of animation to display</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Blink</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Cycle</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Fire</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Lightning</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mandelbrot</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Plasma</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Radial</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Random</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Solid</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Sparkle</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Wave</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="centerLabel">
+        <property name="text">
+         <string>Center</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="orientationLabel">
+        <property name="text">
+         <string>Orientation</string>
         </property>
        </widget>
       </item>

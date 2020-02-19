@@ -182,7 +182,11 @@ namespace PixelMaestroStudio {
 		if (section->get_brightness() != 255) {
 			write_cue_to_stream(datastream, section_handler->set_brightness(section_id, layer_id, section->get_brightness()));
 		}
-		write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions().x, section->get_dimensions().y));
+
+		// Only set dimensions for Sections, not Layers
+		if (layer_id == 0) {
+			write_cue_to_stream(datastream, section_handler->set_dimensions(section_id, layer_id, section->get_dimensions().x, section->get_dimensions().y));
+		}
 
 		// Animation & Colors
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::AnimationCueHandler)) {
@@ -282,7 +286,6 @@ namespace PixelMaestroStudio {
 				}
 
 				// Draw and save each frame
-				write_cue_to_stream(datastream, canvas_handler->set_num_frames(section_id, layer_id, canvas->get_num_frames()));
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, frame, section->get_dimensions().x, section->get_dimensions().y, canvas->get_frame(frame)));
 				}

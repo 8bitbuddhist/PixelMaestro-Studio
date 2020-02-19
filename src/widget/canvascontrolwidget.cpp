@@ -684,7 +684,8 @@ namespace PixelMaestroStudio {
 		ui->paletteComboBox->clear();
 
 		for (uint16_t i = 0; i < maestro_control_widget_.palette_controller_.get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(maestro_control_widget_.palette_controller_.get_palette(i).name);
+			PaletteController::PaletteWrapper palette = maestro_control_widget_.palette_controller_.get_palette(i);
+			ui->paletteComboBox->addItem(QIcon(*UIUtility::generate_palette_thumbnail(palette)), palette.name);
 		}
 
 		ui->paletteComboBox->setCurrentText(palette);

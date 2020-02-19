@@ -25,6 +25,7 @@ namespace PixelMaestroStudio {
 	 * @param palette Palette to check.
 	 */
 	void AnimationControlWidget::add_palette_to_selection(const Palette &palette) {
+
 		// Check if Palette exists, and if not, add it
 		int palette_index = maestro_control_widget.palette_controller_.find(palette.get_colors(), palette.get_num_colors());
 		if (palette_index >= 0) {
@@ -341,7 +342,8 @@ namespace PixelMaestroStudio {
 		ui->paletteComboBox->clear();
 
 		for (uint16_t i = 0; i < maestro_control_widget.palette_controller_.get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(maestro_control_widget.palette_controller_.get_palette(i).name);
+			PaletteController::PaletteWrapper palette = maestro_control_widget.palette_controller_.get_palette(i);
+			ui->paletteComboBox->addItem(QIcon(*UIUtility::generate_palette_thumbnail(palette)), palette.name);
 		}
 
 		ui->paletteComboBox->setCurrentText(palette);
