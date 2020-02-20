@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class DeviceController &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class DeviceControlWidget" href="classPixelMaestroStudio_1_1DeviceControlWidget.html" />
+    <link rel="prev" title="Class CueModel" href="classPixelMaestroStudio_1_1CueModel.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Device-Tab.html">Device Tab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro Studio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="root.html">PixelMaestro Studio API</a> &raquo;</li>
+        
+      <li>Class DeviceController</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/classPixelMaestroStudio_1_1DeviceController.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-devicecontroller">
+<span id="exhale-class-classpixelmaestrostudio-1-1devicecontroller"></span><h1>Class DeviceController<a class="headerlink" href="#class-devicecontroller" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_controller_devicecontroller.h.html#file-src-controller-devicecontroller-h"><span class="std std-ref">File devicecontroller.h</span></a></p></li>
+</ul>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceControllerE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceControllerE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceControllerE"></span><span id="PixelMaestroStudio::DeviceController"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController"></span><em class="property">class </em><code class="sig-name descname">DeviceController</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceControllerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController10DeviceTypeE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController10DeviceTypeE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController10DeviceTypeE"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a0fee5def36bbe284894d888a0d27531d"></span><em class="property">enum </em><code class="sig-name descname">DeviceType</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController10DeviceTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController6SerialE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController6SerialE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController6SerialE"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a0fee5def36bbe284894d888a0d27531daaadaecd9ab801b7716f39b898658dfe9"></span><code class="sig-name descname">Serial</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController6SerialE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController3TCPE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController3TCPE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController3TCPE"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a0fee5def36bbe284894d888a0d27531da22409df448a3e76394c26161f7183d4b"></span><code class="sig-name descname">TCP</code><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController3TCPE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController16DeviceControllerEv">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController16DeviceControllerEv"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController16DeviceControllerEv"></span><span id="PixelMaestroStudio::DeviceController::DeviceController"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a1bbca566e91a6963439d4d09abc2ac78"></span><code class="sig-name descname">DeviceController</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController16DeviceControllerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController16DeviceControllerERK7QString">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController16DeviceControllerERK7QString"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController16DeviceControllerERK7QString"></span><span id="PixelMaestroStudio::DeviceController::DeviceController__QStringCR"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a778b1672f2c2cb4a7d1b61a35c23e504"></span><code class="sig-name descname">DeviceController</code><span class="sig-paren">(</span><em class="property">const</em> QString &amp;<em>port_name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController16DeviceControllerERK7QString" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">port_name</span></code>: The full path name to the device. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController7connectEv">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController7connectEv"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController7connectEv"></span><span id="PixelMaestroStudio::DeviceController::connect"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1aedcb3fd81cf4ee1b8776b60765168fcf"></span>bool <code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController7connectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Connects to the device. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if a connection was established. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController10disconnectEv">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController10disconnectEv"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController10disconnectEv"></span><span id="PixelMaestroStudio::DeviceController::disconnect"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a24fa1a89623cac0e948adba074fbbba6"></span>bool <code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController10disconnectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Disconnects the device. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if the disconnection was successful. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController12get_capacityEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController12get_capacityEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController12get_capacityEv"></span><span id="PixelMaestroStudio::DeviceController::get_capacityC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a74324b5ef4bfaf2888f62af61f615d55"></span>int <code class="sig-name descname">get_capacity</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController12get_capacityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController10get_deviceEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController10get_deviceEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController10get_deviceEv"></span><span id="PixelMaestroStudio::DeviceController::get_deviceC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a959ac44f891c8b9ac72c6b0be0496110"></span>QIODevice *<code class="sig-name descname">get_device</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController10get_deviceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the actual device object. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Device. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController9get_errorEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController9get_errorEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController9get_errorEv"></span><span id="PixelMaestroStudio::DeviceController::get_errorC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1acf0b5c021705acb9c63836b611047acc"></span>QString <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController9get_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController8get_openEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController8get_openEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController8get_openEv"></span><span id="PixelMaestroStudio::DeviceController::get_openC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1aa93ffb38e558a37a060725176c8ae8c8"></span>bool <code class="sig-name descname">get_open</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController8get_openEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether the device is connected and writeable. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if the device is connected. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController13get_port_nameEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController13get_port_nameEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController13get_port_nameEv"></span><span id="PixelMaestroStudio::DeviceController::get_port_nameC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1aa186b1de4958df1250936675c850910b"></span>QString <code class="sig-name descname">get_port_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController13get_port_nameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the device’s port. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Device port. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController15get_autoconnectEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController15get_autoconnectEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController15get_autoconnectEv"></span><span id="PixelMaestroStudio::DeviceController::get_autoconnectC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a9913277706bad0a2f8783b342cc2f5c3"></span>bool <code class="sig-name descname">get_autoconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController15get_autoconnectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether autoconnect is enabled. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if enabled. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18PixelMaestroStudio16DeviceController29get_real_time_refresh_enabledEv">
+<span id="_CPPv3NK18PixelMaestroStudio16DeviceController29get_real_time_refresh_enabledEv"></span><span id="_CPPv2NK18PixelMaestroStudio16DeviceController29get_real_time_refresh_enabledEv"></span><span id="PixelMaestroStudio::DeviceController::get_real_time_refresh_enabledC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a2cc115d06df6aa7dc7891e564c27feea"></span>bool <code class="sig-name descname">get_real_time_refresh_enabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18PixelMaestroStudio16DeviceController29get_real_time_refresh_enabledEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether real-time refreshing is enabled for this device. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if enabled. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController5flushEv">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController5flushEv"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController5flushEv"></span><span id="PixelMaestroStudio::DeviceController::flush"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a3ddae8f15fa6f63b013bfcd6bdb5c48c"></span>void <code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController5flushEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Writes any buffered data to the device. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController15set_autoconnectEKb">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController15set_autoconnectEKb"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController15set_autoconnectEKb"></span><span id="PixelMaestroStudio::DeviceController::set_autoconnect__bC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a8fa725655e4b7dd543f4de15550f02b9"></span>void <code class="sig-name descname">set_autoconnect</code><span class="sig-paren">(</span><em class="property">const</em> bool <em>autoconnect</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController15set_autoconnectEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets whether to automatically connect to the device on startup. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">autoconnect</span></code>: If true, autoconnect to the device. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController12set_capacityEKi">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController12set_capacityEKi"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController12set_capacityEKi"></span><span id="PixelMaestroStudio::DeviceController::set_capacity__iC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a2a901951fed0aedc01402640e5482719"></span>void <code class="sig-name descname">set_capacity</code><span class="sig-paren">(</span><em class="property">const</em> int <em>capacity</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController12set_capacityEKi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController13set_port_nameERK7QString">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController13set_port_nameERK7QString"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController13set_port_nameERK7QString"></span><span id="PixelMaestroStudio::DeviceController::set_port_name__QStringCR"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a3c6eb1a28099f937d330aa288c5c8b0f"></span>void <code class="sig-name descname">set_port_name</code><span class="sig-paren">(</span><em class="property">const</em> QString &amp;<em>port_name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController13set_port_nameERK7QString" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the device’s address. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">port_name</span></code>: The URI of the device (can be a port name or IP address). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController20set_real_time_updateEKb">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController20set_real_time_updateEKb"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController20set_real_time_updateEKb"></span><span id="PixelMaestroStudio::DeviceController::set_real_time_update__bC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a6571bbffbafc5950bf3ba6c282b222fe"></span>void <code class="sig-name descname">set_real_time_update</code><span class="sig-paren">(</span><em class="property">const</em> bool <em>enabled</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController20set_real_time_updateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets whether real-time refreshing is enabled for this device. Real-time refresh sends Cues to this device as they’re performed. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">enabled</span></code>: Whether real-time refresh is enabled. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController5writeERK10QByteArray">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController5writeERK10QByteArray"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController5writeERK10QByteArray"></span><span id="PixelMaestroStudio::DeviceController::write__QByteArrayCR"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1aa0b69d8e6e439a2f06cb411531b97416"></span>void <code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="property">const</em> QByteArray &amp;<em>array</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController5writeERK10QByteArray" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController17section_map_modelE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController17section_map_modelE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController17section_map_modelE"></span><span id="PixelMaestroStudio::DeviceController::section_map_model__SectionMapModelP"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1a915acdff76d5a02fc8966b64d99f6b2e"></span><a class="reference internal" href="classPixelMaestroStudio_1_1SectionMapModel.html#_CPPv4N18PixelMaestroStudio15SectionMapModelE" title="PixelMaestroStudio::SectionMapModel">SectionMapModel</a> *<code class="sig-name descname">section_map_model</code> = nullptr<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController17section_map_modelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Custom mapping of local Sections to remote Sections. Made public because of weird pointer issues. Fix later. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="member">
+<dt id="_CPPv4N18PixelMaestroStudio16DeviceController7TIMEOUTE">
+<span id="_CPPv3N18PixelMaestroStudio16DeviceController7TIMEOUTE"></span><span id="_CPPv2N18PixelMaestroStudio16DeviceController7TIMEOUTE"></span><span id="PixelMaestroStudio::DeviceController::TIMEOUT__uint16_tC"></span><span class="target" id="classPixelMaestroStudio_1_1DeviceController_1ab458aebff2179576962594008f2c1eb7"></span><em class="property">const</em> uint16_t <code class="sig-name descname">TIMEOUT</code> = 10000<a class="headerlink" href="#_CPPv4N18PixelMaestroStudio16DeviceController7TIMEOUTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Default connect/disconnect timeout to 10 seconds. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classPixelMaestroStudio_1_1DeviceControlWidget.html" class="btn btn-neutral float-right" title="Class DeviceControlWidget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="classPixelMaestroStudio_1_1CueModel.html" class="btn btn-neutral float-left" title="Class CueModel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

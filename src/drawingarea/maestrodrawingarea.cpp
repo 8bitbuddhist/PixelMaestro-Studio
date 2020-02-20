@@ -3,7 +3,7 @@
 #include "maestrodrawingarea.h"
 #include "dialog/preferencesdialog.h"
 #include <QElapsedTimer>
-#include <QHBoxLayout>
+#include <QGridLayout>
 #include <QTimer>
 
 using namespace PixelMaestro;
@@ -15,7 +15,7 @@ namespace PixelMaestroStudio {
 	 * @param maestro_controller The MaestroController rendered by this DrawingArea.
 	 */
 	MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QFrame(parent), maestro_controller_(maestro_controller) {
-		section_layout_ = new QHBoxLayout(this);
+		section_layout_ = new QGridLayout(this);
 
 		// Hide frame by default
 		this->setFrameStyle(QFrame::Box | QFrame::Plain);
@@ -34,7 +34,12 @@ namespace PixelMaestroStudio {
 			)
 		);
 		QWidget* drawing_area = section_drawing_areas_.last().data();
-		section_layout_->addWidget(drawing_area);
+
+		QSettings settings;
+		int grid_width = settings.value(PreferencesDialog::num_sections_per_row, 1).toInt();
+		int row_num = section_id / grid_width;
+		int column_num = section_id % grid_width;
+		section_layout_->addWidget(drawing_area, row_num, column_num);
 		return dynamic_cast<SectionDrawingArea*>(drawing_area);
 	}
 

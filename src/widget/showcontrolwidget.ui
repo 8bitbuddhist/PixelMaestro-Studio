@@ -470,7 +470,7 @@
              <string>If true, the Show repeats after the last event</string>
             </property>
             <property name="text">
-             <string>Loop Events</string>
+             <string>Loop</string>
             </property>
            </widget>
           </item>
@@ -485,13 +485,19 @@
  </widget>
  <tabstops>
   <tabstop>scrollArea</tabstop>
+  <tabstop>enableCheckBox</tabstop>
+  <tabstop>timingModeComboBox</tabstop>
+  <tabstop>loopCheckBox</tabstop>
   <tabstop>eventHistoryWidget</tabstop>
   <tabstop>absoluteTimeLineEdit</tabstop>
   <tabstop>relativeTimeLineEdit</tabstop>
+  <tabstop>eventTimeEdit</tabstop>
   <tabstop>moveEventUpButton</tabstop>
   <tabstop>removeEventButton</tabstop>
   <tabstop>addEventButton</tabstop>
   <tabstop>moveEventDownButton</tabstop>
+  <tabstop>clearHistoryButton</tabstop>
+  <tabstop>clearQueueButton</tabstop>
   <tabstop>eventQueueWidget</tabstop>
  </tabstops>
  <resources>

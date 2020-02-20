@@ -33,7 +33,7 @@ Includes
 
 - ``QVector``
 
-- ``controller/serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+- ``controller/devicecontroller.h`` (:ref:`file_src_controller_devicecontroller.h`)
 
 
 

@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -175,7 +174,7 @@
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/sectionmapdialog.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
-    <span class="n">AddDeviceDialog</span><span class="o">::</span><span class="n">AddDeviceDialog</span><span class="p">(</span><span class="n">QVector</span><span class="o">&lt;</span><span class="n">SerialDeviceController</span><span class="o">&gt;*</span> <span class="n">devices</span><span class="p">,</span> <span class="n">SerialDeviceController</span><span class="o">*</span> <span class="n">device</span><span class="p">,</span> <span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
+    <span class="n">AddDeviceDialog</span><span class="o">::</span><span class="n">AddDeviceDialog</span><span class="p">(</span><span class="n">QVector</span><span class="o">&lt;</span><span class="n">DeviceController</span><span class="o">&gt;*</span> <span class="n">devices</span><span class="p">,</span> <span class="n">DeviceController</span><span class="o">*</span> <span class="n">device</span><span class="p">,</span> <span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
         <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
         <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">AddDeviceDialog</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
@@ -188,10 +187,10 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mapSectionsButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">QSysInfo</span><span class="o">::</span><span class="n">productType</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;windows&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portComboBox</span><span class="o">-&gt;</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s">&quot;COM1&quot;</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portComboBox</span><span class="o">-&gt;</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s">&quot;COM1 / 192.168.1.5:80&quot;</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="k">else</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portComboBox</span><span class="o">-&gt;</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s">&quot;/dev/ttyACM0&quot;</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portComboBox</span><span class="o">-&gt;</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s">&quot;/dev/ttyACM0 / 192.168.1.5:80&quot;</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">device</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
@@ -222,8 +221,8 @@
                 <span class="k">return</span><span class="p">;</span>
             <span class="p">}</span>
 
-            <span class="n">devices_</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">SerialDeviceController</span><span class="p">());</span>
-            <span class="k">this</span><span class="o">-&gt;</span><span class="n">device_</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">SerialDeviceController</span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="n">devices_</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">DeviceController</span><span class="p">());</span>
+            <span class="k">this</span><span class="o">-&gt;</span><span class="n">device_</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">DeviceController</span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
 
         <span class="c1">// Save settings to the device</span>
@@ -238,7 +237,7 @@
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">devices_</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setArrayIndex</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 
-            <span class="n">SerialDeviceController</span><span class="o">*</span> <span class="n">current_device</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">SerialDeviceController</span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+            <span class="n">DeviceController</span><span class="o">*</span> <span class="n">current_device</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">DeviceController</span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">devices_</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_port</span><span class="p">,</span> <span class="n">current_device</span><span class="o">-&gt;</span><span class="n">get_port_name</span><span class="p">());</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_real_time_refresh</span><span class="p">,</span> <span class="n">current_device</span><span class="o">-&gt;</span><span class="n">get_real_time_refresh_enabled</span><span class="p">());</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_autoconnect</span><span class="p">,</span> <span class="n">current_device</span><span class="o">-&gt;</span><span class="n">get_autoconnect</span><span class="p">());</span>

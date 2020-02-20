@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1UIUtility:
+
+Class UIUtility
+===============
+
+- Defined in :ref:`file_src_utility_uiutility.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::UIUtility
+   :members:
+   :protected-members:
+   :undoc-members:

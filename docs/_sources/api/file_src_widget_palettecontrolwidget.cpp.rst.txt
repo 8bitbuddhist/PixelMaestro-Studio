@@ -41,6 +41,8 @@ Includes
 
 - ``ui_palettecontrolwidget.h``
 
+- ``utility/uiutility.h`` (:ref:`file_src_utility_uiutility.h`)
+
 
 
 

@@ -15,7 +15,7 @@ Program Listing for File adddevicedialog.h
    
    #include <QDialog>
    #include <QVector>
-   #include "controller/serialdevicecontroller.h"
+   #include "controller/devicecontroller.h"
    
    namespace Ui {
        class AddDeviceDialog;
@@ -26,7 +26,7 @@ Program Listing for File adddevicedialog.h
                Q_OBJECT
    
            public:
-               explicit AddDeviceDialog(QVector<SerialDeviceController>* devices, SerialDeviceController* device, QWidget *parent = 0);
+               explicit AddDeviceDialog(QVector<DeviceController>* devices, DeviceController* device, QWidget *parent = 0);
                ~AddDeviceDialog();
    
            private slots:
@@ -37,8 +37,8 @@ Program Listing for File adddevicedialog.h
                void on_liveUpdatesCheckBox_stateChanged(int arg1);
    
            private:
-               QVector<SerialDeviceController>* devices_;
-               SerialDeviceController* device_;
+               QVector<DeviceController>* devices_;
+               DeviceController* device_;
                Ui::AddDeviceDialog *ui;
    
                bool is_device_already_added(QString port_name);

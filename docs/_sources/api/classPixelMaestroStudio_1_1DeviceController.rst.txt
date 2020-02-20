@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestroStudio_1_1DeviceController:
+
+Class DeviceController
+======================
+
+- Defined in :ref:`file_src_controller_devicecontroller.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestroStudio::DeviceController
+   :members:
+   :protected-members:
+   :undoc-members:

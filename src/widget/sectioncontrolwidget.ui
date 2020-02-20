@@ -233,7 +233,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <attribute name="title">
@@ -344,6 +344,26 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>sectionListWidget</tabstop>
+  <tabstop>addLayerButton</tabstop>
+  <tabstop>removeLayerButton</tabstop>
+  <tabstop>layerListWidget</tabstop>
+  <tabstop>mixModeComboBox</tabstop>
+  <tabstop>alphaSpinBox</tabstop>
+  <tabstop>gridSizeXSpinBox</tabstop>
+  <tabstop>gridSizeYSpinBox</tabstop>
+  <tabstop>scrollXSpinBox</tabstop>
+  <tabstop>scrollYSpinBox</tabstop>
+  <tabstop>offsetXSpinBox</tabstop>
+  <tabstop>offsetYSpinBox</tabstop>
+  <tabstop>mirrorXCheckBox</tabstop>
+  <tabstop>mirrorYCheckBox</tabstop>
+  <tabstop>wrapCheckBox</tabstop>
+  <tabstop>brightnessSpinBox</tabstop>
+  <tabstop>brightnessSlider</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

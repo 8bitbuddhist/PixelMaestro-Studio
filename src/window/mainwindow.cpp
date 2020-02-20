@@ -47,7 +47,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool MainWindow::confirm_unsaved_changes() {
 		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Unsaved Changes", "Your current changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		confirm = QMessageBox::question(this, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		return (confirm == QMessageBox::Yes);
 	}
 
@@ -55,13 +55,6 @@ namespace PixelMaestroStudio {
 	 * Reinitializes all widgets.
 	 */
 	void MainWindow::initialize_widgets() {
-		// Add Splitter control
-		/*
-		QLayout* main_layout = this->centralWidget()->layout();
-		this->splitter_ = new QSplitter(main_layout->widget());
-		this->splitter_->setOrientation(Qt::Orientation::Vertical);
-		main_layout->addWidget(this->splitter_);
-		*/
 
 		// Initialize Maestro elements
 		maestro_control_widget_ = new MaestroControlWidget(ui->mainWidget);
@@ -78,9 +71,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Add control widget to main window
-		//splitter_->addWidget(maestro_control_widget_);
 		ui->mainWidget->layout()->addWidget(maestro_control_widget_);
-		//ui->mainWidget->layout()->addWidget(maestro_control_widget_);
 
 		/*
 		 * If "pause on start" option is checked, don't start the Maestro.
@@ -94,7 +85,8 @@ namespace PixelMaestroStudio {
 	void MainWindow::on_aboutAction_triggered() {
 		QMessageBox::about(this, QString(QCoreApplication::applicationName()),
 					   QString("PixelMaestro Studio ") + QString(BUILD_VERSION) +
-					   QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
+					   QString("\n\nPixelMaestro Studio is an application for designing LED animations.") +
+					   QString("\n\nPowered by the PixelMaestro library. Learn more at https://pixelmastro.studio.") +
 					   QString("\n\n© 2017 − ") + QString::number(QDate::currentDate().year()) + QString(", the PixelMaestro contributors"));
 	}
 
@@ -322,12 +314,8 @@ namespace PixelMaestroStudio {
 		settings.setValue(PreferencesDialog::window_geometry, saveGeometry());
 		settings.setValue(PreferencesDialog::window_state, saveState());
 
-		// Save splitter position
-		//settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
-
 		delete maestro_control_widget_;
 		delete maestro_controller_;
-		delete splitter_;
 		delete ui;
 	}
 }

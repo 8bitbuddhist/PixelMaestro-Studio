@@ -5,7 +5,6 @@
 #include "../widget/maestrocontrolwidget.h"
 #include <QByteArray>
 #include <QMainWindow>
-#include <QSplitter>
 #include <QStandardPaths>
 #include <QString>
 
@@ -52,7 +51,6 @@ namespace PixelMaestroStudio {
 			/// The widget responsible for modifying the Maestro.
 			MaestroControlWidget* maestro_control_widget_ = nullptr;
 
-			QSplitter* splitter_ = nullptr;
 			Ui::MainWindow* ui;
 
 			void initialize_widgets();

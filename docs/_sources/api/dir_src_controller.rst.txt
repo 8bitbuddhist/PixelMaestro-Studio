@@ -15,14 +15,14 @@ Directory controller
 Files
 -----
 
+- :ref:`file_src_controller_devicecontroller.cpp`
+- :ref:`file_src_controller_devicecontroller.h`
+- :ref:`file_src_controller_devicethreadcontroller.cpp`
+- :ref:`file_src_controller_devicethreadcontroller.h`
 - :ref:`file_src_controller_maestrocontroller.cpp`
 - :ref:`file_src_controller_maestrocontroller.h`
 - :ref:`file_src_controller_palettecontroller.cpp`
 - :ref:`file_src_controller_palettecontroller.h`
-- :ref:`file_src_controller_serialdevicecontroller.cpp`
-- :ref:`file_src_controller_serialdevicecontroller.h`
-- :ref:`file_src_controller_serialdevicethreadcontroller.cpp`
-- :ref:`file_src_controller_serialdevicethreadcontroller.h`
 - :ref:`file_src_controller_showcontroller.cpp`
 - :ref:`file_src_controller_showcontroller.h`
 

@@ -4,6 +4,7 @@
 #include "dialog/paletteeditdialog.h"
 #include "palettecontrolwidget.h"
 #include "ui_palettecontrolwidget.h"
+#include "utility/uiutility.h"
 
 namespace PixelMaestroStudio {
 	PaletteControlWidget::PaletteControlWidget(PaletteController& controller, const QString& initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControlWidget), palette_controller_(controller) {
@@ -21,7 +22,8 @@ namespace PixelMaestroStudio {
 		ui->paletteComboBox->blockSignals(true);
 		ui->paletteComboBox->clear();
 		for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
-			ui->paletteComboBox->addItem(palette_controller_.get_palette(i).name);
+			PaletteController::PaletteWrapper& palette = palette_controller_.get_palette(i);
+			ui->paletteComboBox->addItem(QIcon(*UIUtility::generate_palette_thumbnail(palette)), palette.name);
 		}
 		ui->paletteComboBox->blockSignals(false);
 

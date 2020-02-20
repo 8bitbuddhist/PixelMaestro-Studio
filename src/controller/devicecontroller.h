@@ -18,9 +18,6 @@ namespace PixelMaestroStudio {
 				TCP
 			};
 
-			/// Default port number (for IP devices)
-			static const uint16_t PORT_NUM = 8077;
-
 			/// Default connect/disconnect timeout to 10 seconds
 			static const uint16_t TIMEOUT = 10000;
 

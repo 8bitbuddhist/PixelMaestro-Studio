@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -174,7 +173,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;QSharedPointer&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QVector&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;controller/serialdevicecontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;controller/devicecontroller.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/adddevicedialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;widget/maestrocontrolwidget.h&quot;</span><span class="cp"></span>
 
@@ -218,11 +217,11 @@
 
             <span class="n">QByteArray</span> <span class="n">maestro_cue_</span><span class="p">;</span>
 
-            <span class="n">QVector</span><span class="o">&lt;</span><span class="n">SerialDeviceController</span><span class="o">&gt;</span> <span class="n">serial_devices_</span><span class="p">;</span>
+            <span class="n">QVector</span><span class="o">&lt;</span><span class="n">DeviceController</span><span class="o">&gt;</span> <span class="n">serial_devices_</span><span class="p">;</span>
 
             <span class="kt">void</span> <span class="nf">populate_serial_devices</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">refresh_device_list</span><span class="p">();</span>
-            <span class="kt">void</span> <span class="nf">write_to_device</span><span class="p">(</span><span class="n">SerialDeviceController</span><span class="o">&amp;</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">progress</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+            <span class="kt">void</span> <span class="nf">write_to_device</span><span class="p">(</span><span class="n">DeviceController</span><span class="o">&amp;</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">progress</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">}</span>
 

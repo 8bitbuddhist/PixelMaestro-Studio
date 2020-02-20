@@ -32,6 +32,7 @@ namespace PixelMaestroStudio {
 			static QString device_port;
 			static QString devices;
 			static QString device_autoconnect;
+			static QString device_port_num;
 			static QString device_real_time_refresh;
 
 			static QString event_history_max;
@@ -41,7 +42,7 @@ namespace PixelMaestroStudio {
 			static QString last_session;
 			static QString main_window_option;
 			static QString num_sections;
-			static QString output_enabled;
+			static QString num_sections_per_row;
 			static QString pause_on_start;
 			static QString show_cue_code;
 

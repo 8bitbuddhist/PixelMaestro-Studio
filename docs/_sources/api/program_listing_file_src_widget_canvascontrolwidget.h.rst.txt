@@ -90,6 +90,8 @@ Program Listing for File canvascontrolwidget.h
    
                Colors::RGB canvas_rgb_color_;
    
+               QButtonGroup canvas_palette_color_group_;
+   
                QButtonGroup canvas_shape_type_group_;
    
                MaestroControlWidget& maestro_control_widget_;

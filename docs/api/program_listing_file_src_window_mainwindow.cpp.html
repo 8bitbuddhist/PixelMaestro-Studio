@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -207,20 +206,16 @@
 
     <span class="kt">bool</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">confirm_unsaved_changes</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">QMessageBox</span><span class="o">::</span><span class="n">StandardButton</span> <span class="n">confirm</span><span class="p">;</span>
-        <span class="n">confirm</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">question</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s">&quot;Unsaved Changes&quot;</span><span class="p">,</span> <span class="s">&quot;Your current changes will be lost. Are you sure you want to continue?&quot;</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="o">|</span><span class="n">QMessageBox</span><span class="o">::</span><span class="n">No</span><span class="p">);</span>
+        <span class="n">confirm</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">question</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s">&quot;Unsaved Changes&quot;</span><span class="p">,</span> <span class="s">&quot;Your changes will be lost. Are you sure you want to continue?&quot;</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="o">|</span><span class="n">QMessageBox</span><span class="o">::</span><span class="n">No</span><span class="p">);</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">confirm</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">initialize_widgets</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Add Splitter control</span>
-        <span class="n">QLayout</span><span class="o">*</span> <span class="n">main_layout</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;mainLayout&quot;</span><span class="p">);</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QSplitter</span><span class="p">(</span><span class="n">main_layout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">());</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">Orientation</span><span class="o">::</span><span class="n">Vertical</span><span class="p">);</span>
-        <span class="n">main_layout</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span><span class="p">);</span>
 
         <span class="c1">// Initialize Maestro elements</span>
-        <span class="n">maestro_control_widget_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaestroControlWidget</span><span class="p">(</span><span class="n">splitter_</span><span class="p">);</span>
+        <span class="n">maestro_control_widget_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaestroControlWidget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mainWidget</span><span class="p">);</span>
         <span class="n">maestro_controller_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaestroController</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_control_widget_</span><span class="p">);</span>
+        <span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">set_maestro_controller</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_controller_</span><span class="p">);</span>
 
         <span class="c1">// Build DrawingAreas if enabled in Preferences</span>
         <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
@@ -232,7 +227,7 @@
         <span class="p">}</span>
 
         <span class="c1">// Add control widget to main window</span>
-        <span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">mainWidget</span><span class="o">-&gt;</span><span class="n">layout</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">);</span>
 
         <span class="cm">/*</span>
 <span class="cm">         * If &quot;pause on start&quot; option is checked, don&#39;t start the Maestro.</span>
@@ -246,7 +241,8 @@
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_aboutAction_triggered</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">QMessageBox</span><span class="o">::</span><span class="n">about</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="n">QCoreApplication</span><span class="o">::</span><span class="n">applicationName</span><span class="p">()),</span>
                        <span class="n">QString</span><span class="p">(</span><span class="s">&quot;PixelMaestro Studio &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="n">BUILD_VERSION</span><span class="p">)</span> <span class="o">+</span>
-                       <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">PixelMaestro is a library for creating and rendering 2D animations and patterns.&quot;</span><span class="p">)</span> <span class="o">+</span>
+                       <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">PixelMaestro Studio is an application for designing LED animations.&quot;</span><span class="p">)</span> <span class="o">+</span>
+                       <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">Powered by the PixelMaestro library. Learn more at https://pixelmastro.studio.&quot;</span><span class="p">)</span> <span class="o">+</span>
                        <span class="n">QString</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">© 2017 − &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">QDate</span><span class="o">::</span><span class="n">currentDate</span><span class="p">().</span><span class="n">year</span><span class="p">())</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;, the PixelMaestro contributors&quot;</span><span class="p">));</span>
     <span class="p">}</span>
 
@@ -268,29 +264,7 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_action_Main_Window_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">arg1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">arg1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Checked: create new DrawingArea</span>
-            <span class="n">maestro_drawing_area_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaestroDrawingArea</span><span class="p">(</span><span class="n">splitter_</span><span class="p">,</span> <span class="o">*</span><span class="n">maestro_controller_</span><span class="p">);</span>
-            <span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maestro_drawing_area_</span><span class="p">);</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">add_drawing_area</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">));</span>
-            <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">set_maestro_control_widget</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">);</span>
-
-            <span class="c1">// Restore splitter position. If the position isn&#39;t saved in the user&#39;s settings, default to a 50/50 split</span>
-            <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-            <span class="n">QByteArray</span> <span class="n">splitter_state</span> <span class="o">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">).</span><span class="n">toByteArray</span><span class="p">();</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">splitter_state</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">restoreState</span><span class="p">(</span><span class="n">splitter_state</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="p">{</span>
-                <span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">setSizes</span><span class="p">(</span><span class="n">QList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">({</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">}));</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// Unchecked</span>
-            <span class="n">MaestroDrawingArea</span><span class="o">*</span> <span class="n">drawing_area</span> <span class="o">=</span> <span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">();</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">remove_drawing_area</span><span class="p">(</span><span class="o">*</span><span class="n">drawing_area</span><span class="p">);</span>
-            <span class="k">delete</span> <span class="n">drawing_area</span><span class="p">;</span>
-        <span class="p">}</span>
+        <span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">toggle_maestro_drawing_area</span><span class="p">(</span><span class="n">arg1</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">on_mergeAction_triggered</span><span class="p">()</span> <span class="p">{</span>
@@ -454,12 +428,8 @@
         <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">window_geometry</span><span class="p">,</span> <span class="n">saveGeometry</span><span class="p">());</span>
         <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">window_state</span><span class="p">,</span> <span class="n">saveState</span><span class="p">());</span>
 
-        <span class="c1">// Save splitter position</span>
-        <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">splitter_</span><span class="o">-&gt;</span><span class="n">saveState</span><span class="p">());</span>
-
         <span class="k">delete</span> <span class="n">maestro_control_widget_</span><span class="p">;</span>
         <span class="k">delete</span> <span class="n">maestro_controller_</span><span class="p">;</span>
-        <span class="k">delete</span> <span class="n">splitter_</span><span class="p">;</span>
         <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>

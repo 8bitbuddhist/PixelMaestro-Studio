@@ -97,19 +97,20 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rendering-options">Rendering Options</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#pixel-shape">Pixel Shape</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#refresh-interval">Refresh Interval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pixel-shape">Pixel Shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grid-width">Grid Width</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#show-options">Show Options</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#max-event-history-size">Max Event History Size</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#events-trigger-live-device-updates">Events Trigger Live Device Updates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#port-number">Port Number</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Show-Tab.html">Show Tab</a></li>
@@ -207,6 +208,10 @@
 <div class="section" id="rendering-options">
 <h2>Rendering Options<a class="headerlink" href="#rendering-options" title="Permalink to this headline">¶</a></h2>
 <p><em>Rendering Options</em> control how the Maestro is displayed in the Maestro Viewer.</p>
+<div class="section" id="refresh-interval">
+<h3>Refresh Interval<a class="headerlink" href="#refresh-interval" title="Permalink to this headline">¶</a></h3>
+<p>The <em>Refresh Interval</em> sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.</p>
+</div>
 <div class="section" id="pixel-shape">
 <h3>Pixel Shape<a class="headerlink" href="#pixel-shape" title="Permalink to this headline">¶</a></h3>
 <p><em>Pixel shape</em> sets the shape of each individual pixel.</p>
@@ -215,9 +220,9 @@
 <p>For best performance, set the pixel shape to <em>Square</em>.</p>
 </div>
 </div>
-<div class="section" id="refresh-interval">
-<h3>Refresh Interval<a class="headerlink" href="#refresh-interval" title="Permalink to this headline">¶</a></h3>
-<p>The <em>Refresh Interval</em> sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.</p>
+<div class="section" id="grid-width">
+<h3>Grid Width<a class="headerlink" href="#grid-width" title="Permalink to this headline">¶</a></h3>
+<p>The Maestro renderer displays all of the Maestro’s Sections in a grid. <em>Grid width</em> sets the maximum number of Sections to display in each row.</p>
 </div>
 </div>
 <div class="section" id="show-options">
@@ -230,6 +235,10 @@
 <div class="section" id="events-trigger-live-device-updates">
 <h3>Events Trigger Live Device Updates<a class="headerlink" href="#events-trigger-live-device-updates" title="Permalink to this headline">¶</a></h3>
 <p>When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a <a class="reference internal" href="Device-Tab.html"><span class="doc">live update</span></a> for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.</p>
+</div>
+<div class="section" id="port-number">
+<h3>Port Number<a class="headerlink" href="#port-number" title="Permalink to this headline">¶</a></h3>
+<p><em>Port Number</em> sets the default port used to communicate with devices over TCP/IP. This defaults to 8077.</p>
 </div>
 </div>
 </div>

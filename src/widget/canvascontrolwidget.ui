@@ -754,11 +754,36 @@
  <tabstops>
   <tabstop>canvasScrollArea</tabstop>
   <tabstop>enableCheckBox</tabstop>
+  <tabstop>circleToolButton</tabstop>
+  <tabstop>lineToolButton</tabstop>
+  <tabstop>triangleToolButton</tabstop>
+  <tabstop>rectToolButton</tabstop>
+  <tabstop>textToolButton</tabstop>
+  <tabstop>brushToolButton</tabstop>
+  <tabstop>replaceToolButton</tabstop>
+  <tabstop>loadImageButton</tabstop>
+  <tabstop>originXSpinBox</tabstop>
+  <tabstop>originYSpinBox</tabstop>
+  <tabstop>targetXSpinBox</tabstop>
+  <tabstop>targetYSpinBox</tabstop>
+  <tabstop>target2XSpinBox</tabstop>
+  <tabstop>target2YSpinBox</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>textLineEdit</tabstop>
+  <tabstop>fillCheckBox</tabstop>
   <tabstop>playbackPreviousToolButton</tabstop>
   <tabstop>playbackStartStopToolButton</tabstop>
   <tabstop>playbackNextToolButton</tabstop>
   <tabstop>frameCountSpinBox</tabstop>
   <tabstop>currentFrameSpinBox</tabstop>
+  <tabstop>frameTimeEdit</tabstop>
+  <tabstop>frameIntervalSlider</tabstop>
+  <tabstop>paletteComboBox</tabstop>
+  <tabstop>editPaletteButton</tabstop>
+  <tabstop>colorPickerScrollArea</tabstop>
+  <tabstop>colorPickerCancelButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>drawButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>

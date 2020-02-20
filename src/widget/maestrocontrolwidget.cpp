@@ -46,6 +46,16 @@ namespace PixelMaestroStudio {
 		// Initialize Palette-containing subwidgets
 		animation_control_widget_->refresh_palettes();
 		canvas_control_widget_->refresh_palettes();
+
+		// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
+		QSettings settings;
+		QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
+		if (splitter_state.size() > 0) {
+			ui->splitter->restoreState(splitter_state);
+		}
+		else {
+			ui->splitter->setSizes(QList<int>({INT_MAX, INT_MAX}));
+		}
 	}
 
 	void MaestroControlWidget::edit_palettes(QString palette) {
@@ -146,7 +156,8 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Refreshes the UI.
+	 * Reloads the UI with values retrieved from the Maestro.
+	 * Useful for when a non user-initiated action modifies the Maestro (e.g. a Show).
 	 */
 	void MaestroControlWidget::on_refreshButton_clicked() {
 		refresh_maestro_settings();
@@ -202,7 +213,7 @@ namespace PixelMaestroStudio {
 			}
 
 			if ((run_targets & RunTarget::Remote) == RunTarget::Remote) {
-				// Send to serial device controller
+				// Send to device controller
 				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
 		}
@@ -268,6 +279,10 @@ namespace PixelMaestroStudio {
 		UIUtility::highlight_widget(ui->refreshButton, refresh_needed);
 	}
 
+	/**
+	 * Enable or disable the MainWindow Maestro output.
+	 * @param enabled If true, show Maestro.
+	 */
 	void MaestroControlWidget::toggle_maestro_drawing_area(bool enabled) {
 		if (enabled) {
 			// Checked: create new DrawingArea
@@ -275,16 +290,6 @@ namespace PixelMaestroStudio {
 			ui->renderLayout->insertWidget(0, maestro_drawing_area_);
 			maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
 			dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(this);
-
-			// Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
-			QSettings settings;
-			QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
-			if (splitter_state.size() > 0) {
-				ui->splitter->restoreState(splitter_state);
-			}
-			else {
-				ui->splitter->setSizes(QList<int>({INT_MAX, INT_MAX}));
-			}
 		}
 		else {
 			// Unchecked
@@ -299,7 +304,10 @@ namespace PixelMaestroStudio {
 		QSettings settings;
 		settings.setValue(PreferencesDialog::splitter_position, ui->splitter->saveState());
 
-		delete maestro_drawing_area_;
+		if (maestro_drawing_area_) {
+			delete maestro_drawing_area_;
+		}
+
 		qApp->removeEventFilter(this);
 		delete ui;
 	}

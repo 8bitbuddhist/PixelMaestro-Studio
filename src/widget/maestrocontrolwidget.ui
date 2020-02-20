@@ -40,7 +40,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="topLayout">
        <item>
         <layout class="QVBoxLayout" name="renderLayout">
@@ -276,6 +276,10 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>playPauseButton</tabstop>
+  <tabstop>lockButton</tabstop>
+  <tabstop>syncButton</tabstop>
+  <tabstop>refreshButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/images/images.qrc"/>

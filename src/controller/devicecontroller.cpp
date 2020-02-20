@@ -92,12 +92,15 @@ namespace PixelMaestroStudio {
 
 			// If no port number is found, use the default
 			uint16_t port_num = static_cast<uint16_t>(port.toUInt());
-			if (port_num == 0) port_num = PORT_NUM;
+			if (port_num == 0) {
+				QSettings settings;
+				port_num = static_cast<uint16_t>(settings.value(PreferencesDialog::device_port_num, 8077).toUInt());
+			}
 
 			QTcpSocket* tcp_device = dynamic_cast<QTcpSocket*>(device_.data());
 			tcp_device->connectToHost(address, port_num);
 
-			// Wait 30 seconds for a connection
+			// Wait for a connection
 			// TODO: Make non-blocking
 			return tcp_device->waitForConnected(TIMEOUT);
 		}
@@ -146,11 +149,13 @@ namespace PixelMaestroStudio {
 	 * @return True if the device is connected.
 	 */
 	bool DeviceController::get_open() const {
-		switch (device_type_) {
-			case DeviceType::Serial:
-				return dynamic_cast<QSerialPort*>(device_.data())->isOpen();
-			case DeviceType::TCP:
-				return dynamic_cast<QTcpSocket*>(device_.data())->state() == QAbstractSocket::ConnectedState;
+		if (device_) {
+			switch (device_type_) {
+				case DeviceType::Serial:
+					return dynamic_cast<QSerialPort*>(device_.data())->isOpen();
+				case DeviceType::TCP:
+					return dynamic_cast<QTcpSocket*>(device_.data())->state() == QAbstractSocket::ConnectedState;
+			}
 		}
 
 		return false;

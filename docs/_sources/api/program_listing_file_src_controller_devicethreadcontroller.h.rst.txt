@@ -1,0 +1,41 @@
+
+.. _program_listing_file_src_controller_devicethreadcontroller.h:
+
+Program Listing for File devicethreadcontroller.h
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_controller_devicethreadcontroller.h>` (``src/controller/devicethreadcontroller.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef SERIALDEVICETHREAD_H
+   #define SERIALDEVICETHREAD_H
+   
+   #include <QByteArray>
+   #include <QThread>
+   #include "devicecontroller.h"
+   
+   namespace PixelMaestroStudio {
+       class DeviceThreadController : public QThread {
+           Q_OBJECT
+   
+           public:
+               DeviceThreadController(DeviceController& device, const char* out, int size);
+               void run() override;
+   
+           signals:
+               void progress_changed(int progress);
+   
+           private:
+               const uint8_t CHUNK_SIZE = 64;
+   
+               const uint8_t SLEEP_INTERVAL = 0;
+   
+               DeviceController& device_;
+               QByteArray output_;
+       };
+   }
+   
+   #endif // SERIALDEVICETHREAD_H

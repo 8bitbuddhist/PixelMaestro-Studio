@@ -12,7 +12,7 @@ Inheritance Relationships
 Base Type
 *********
 
-- ``public QWidget``
+- ``public QFrame``
 
 
 Class Documentation

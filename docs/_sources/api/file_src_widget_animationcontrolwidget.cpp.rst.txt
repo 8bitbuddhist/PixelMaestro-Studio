@@ -41,6 +41,8 @@ Includes
 
 - ``ui_animationcontrolwidget.h``
 
+- ``utility/uiutility.h`` (:ref:`file_src_utility_uiutility.h`)
+
 - ``widget/animation/fireanimationcontrolwidget.h`` (:ref:`file_src_widget_animation_fireanimationcontrolwidget.h`)
 
 - ``widget/animation/lightninganimationcontrolwidget.h`` (:ref:`file_src_widget_animation_lightninganimationcontrolwidget.h`)

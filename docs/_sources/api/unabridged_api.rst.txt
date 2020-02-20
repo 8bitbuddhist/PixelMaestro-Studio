@@ -68,7 +68,17 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   classPixelMaestroStudio_1_1DeviceController.rst
+
+.. toctree::
+   :maxdepth: 5
+
    classPixelMaestroStudio_1_1DeviceControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1DeviceThreadController.rst
 
 .. toctree::
    :maxdepth: 5
@@ -163,16 +173,6 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
-   classPixelMaestroStudio_1_1SerialDeviceController.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   classPixelMaestroStudio_1_1SerialDeviceThreadController.rst
-
-.. toctree::
-   :maxdepth: 5
-
    classPixelMaestroStudio_1_1ShowController.rst
 
 .. toctree::
@@ -184,6 +184,11 @@ Classes and Structs
    :maxdepth: 5
 
    classPixelMaestroStudio_1_1SparkleAnimationControlWidget.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classPixelMaestroStudio_1_1UIUtility.rst
 
 .. toctree::
    :maxdepth: 5

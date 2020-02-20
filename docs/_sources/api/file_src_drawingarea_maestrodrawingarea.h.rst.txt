@@ -31,7 +31,7 @@ Includes
 
 - ``QElapsedTimer``
 
-- ``QHBoxLayout``
+- ``QGridLayout``
 
 - ``QTimer``
 
@@ -46,8 +46,6 @@ Includes
 - ``core/pixel.h``
 
 - ``core/section.h``
-
-- ``maestrodrawingarea.h`` (:ref:`file_src_drawingarea_maestrodrawingarea.h`)
 
 - ``sectiondrawingarea.h`` (:ref:`file_src_drawingarea_sectiondrawingarea.h`)
 
@@ -66,8 +64,6 @@ Included By
 - :ref:`file_src_dialog_maestrodrawingareadialog.h`
 
 - :ref:`file_src_drawingarea_maestrodrawingarea.cpp`
-
-- :ref:`file_src_drawingarea_maestrodrawingarea.h`
 
 - :ref:`file_src_drawingarea_sectiondrawingarea.h`
 

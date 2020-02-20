@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -245,6 +244,7 @@
             <span class="kt">void</span> <span class="nf">set_maestro_controller</span><span class="p">(</span><span class="n">MaestroController</span><span class="o">&amp;</span> <span class="n">maestro_controller</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">set_maestro_modified</span><span class="p">(</span><span class="kt">bool</span> <span class="n">modified</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">set_refresh_needed</span><span class="p">(</span><span class="kt">bool</span> <span class="n">refresh_needed</span><span class="p">);</span>
+            <span class="kt">void</span> <span class="nf">toggle_maestro_drawing_area</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">);</span>
 
         <span class="k">private</span> <span class="nl">slots</span><span class="p">:</span>
             <span class="kt">void</span> <span class="n">on_playPauseButton_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">);</span>
@@ -264,6 +264,8 @@
             <span class="n">Ui</span><span class="o">::</span><span class="n">MaestroControlWidget</span> <span class="o">*</span><span class="n">ui</span><span class="p">;</span>
 
             <span class="n">MaestroController</span><span class="o">*</span> <span class="n">maestro_controller_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+            <span class="n">QWidget</span><span class="o">*</span> <span class="n">maestro_drawing_area_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
             <span class="kt">bool</span> <span class="n">modified_</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="p">};</span>

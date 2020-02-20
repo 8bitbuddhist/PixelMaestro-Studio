@@ -95,7 +95,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Show-Tab.html">Show Tab</a></li>
@@ -176,11 +175,12 @@
 <div class="section" id="faq">
 <h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <p><strong>What devices are supported by PixelMaestro Studio?</strong></p>
-<p>PixelMaestro Studio can control any device that can run the PixelMaestro library and supports serial communication. This includes Arduino, Raspberry Pi, Teensy, etc.</p>
+<p>PixelMaestro Studio can control any device running the PixelMaestro library over a serial or TCP/IP connection. This includes Arduino, Raspberry Pi, Teensy, etc.</p>
 <p><strong>How do I connect my device to PixelMaestro Studio?</strong></p>
-<p>Plug in your device over USB, then follow the instructions in the <a class="reference internal" href="Device-Tab.html"><span class="doc">Device Tab</span></a> page.</p>
+<p>Follow the instructions in the <a class="reference internal" href="Device-Tab.html"><span class="doc">Device Tab</span></a> page.</p>
 <p><strong>When I click Connect on the Device Tab, nothing happens or I get an error message</strong></p>
-<p>Make sure you have read and write access to the serial port that the device is connected on. Also, check that the port isn’t currently being used by another process.</p>
+<p>If you’re connecting over serial, make sure you have read and write access to the serial port that the device is connected on. Also, check that the port isn’t currently being used by another process.</p>
+<p>If you’re using TCP/IP, make sure the IP address is correct, that the port is open on the device, and that your firewall isn’t blocking traffic.</p>
 <p><strong>My device is connected, but when I upload a Cuefile or enable Live Updates, nothing happens</strong></p>
 <p>In your device’s sketch, make sure you <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Cues.html#initializing-the-cuecontroller">enabled the CueController</a> and appropriate <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Cues.html#enabling-cuehandlers">CueHandlers</a>. If you are sending larger Cues (especially Canvas Cues), you might want to increase the size of the CueController’s buffer when initializing it.</p>
 <p>Also, make sure that you pass the output from <code class="docutils literal notranslate"><span class="pre">serial::read()</span></code> to <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Cues.html#running-cues">CueController::read()</a> <em>before</em> running <code class="docutils literal notranslate"><span class="pre">Maestro::update()</span></code>. For an example, check the <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro/blob/master/examples/arduino/">Arduino sketches</a> included with PixelMaestro.</p>
@@ -192,8 +192,8 @@
 <p><strong>The app runs really slow at high resolutions</strong></p>
 <p>All rendering is done on the CPU, so the amount of processing power required increases as your resolution increases. You can try:</p>
 <ul class="simple">
-<li><p>Reducing the size of your LED grid</p></li>
-<li><p>Not rendering the Maestro on your screen by unchecking the outputs shown in the <em>Window</em> menu</p></li>
+<li><p>Reducing the size of your Sections</p></li>
+<li><p>Not rendering the Maestro by unchecking the output options shown in the <em>Window</em> menu</p></li>
 <li><p><a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Pixels.html#performance-options">Tweaking Pixel performance options</a></p></li>
 </ul>
 <p><strong>You should add X animation or Y feature</strong></p>

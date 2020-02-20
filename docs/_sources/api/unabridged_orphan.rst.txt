@@ -130,12 +130,32 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file_src_controller_devicecontroller.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_controller_devicecontroller.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file_src_widget_devicecontrolwidget.cpp.rst
 
 .. toctree::
    :maxdepth: 5
 
    file_src_widget_devicecontrolwidget.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_controller_devicethreadcontroller.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_controller_devicethreadcontroller.h.rst
 
 .. toctree::
    :maxdepth: 5
@@ -325,26 +345,6 @@ Files
 .. toctree::
    :maxdepth: 5
 
-   file_src_controller_serialdevicecontroller.cpp.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   file_src_controller_serialdevicecontroller.h.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   file_src_controller_serialdevicethreadcontroller.cpp.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   file_src_controller_serialdevicethreadcontroller.h.rst
-
-.. toctree::
-   :maxdepth: 5
-
    file_src_controller_showcontroller.cpp.rst
 
 .. toctree::
@@ -371,6 +371,16 @@ Files
    :maxdepth: 5
 
    file_src_widget_animation_sparkleanimationcontrolwidget.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_utility_uiutility.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_utility_uiutility.h.rst
 
 .. toctree::
    :maxdepth: 5

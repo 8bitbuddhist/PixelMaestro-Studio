@@ -47,9 +47,9 @@ Includes
 
 - ``QWidget``
 
-- ``controller/serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+- ``controller/devicecontroller.h`` (:ref:`file_src_controller_devicecontroller.h`)
 
-- ``controller/serialdevicethreadcontroller.h`` (:ref:`file_src_controller_serialdevicethreadcontroller.h`)
+- ``controller/devicethreadcontroller.h`` (:ref:`file_src_controller_devicethreadcontroller.h`)
 
 - ``devicecontrolwidget.h`` (:ref:`file_src_widget_devicecontrolwidget.h`)
 
@@ -61,7 +61,7 @@ Includes
 
 - ``dialog/sectionmapdialog.h`` (:ref:`file_src_dialog_sectionmapdialog.h`)
 
-- ``thread`` (:ref:`file_src_controller_serialdevicethreadcontroller.cpp`)
+- ``thread`` (:ref:`file_src_controller_devicethreadcontroller.cpp`)
 
 - ``ui_devicecontrolwidget.h``
 

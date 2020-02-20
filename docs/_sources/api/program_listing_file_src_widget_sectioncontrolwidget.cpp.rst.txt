@@ -22,6 +22,28 @@ Program Listing for File sectioncontrolwidget.cpp
            ui->setupUi(this);
        }
    
+       void SectionControlWidget::on_addLayerButton_clicked() {
+           // Get the number of Layers (and the index of the last Layer) in the Section
+           Section* base_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
+           int num_layers = 0;
+           while (base_section->get_layer() != nullptr) {
+               base_section = base_section->get_layer()->section;
+               num_layers++;
+           }
+           uint8_t layer_index = ui->layerListWidget->count() - 1;
+   
+           maestro_control_widget_.run_cue(
+               maestro_control_widget_.section_handler->set_layer(
+                   get_section_index(),
+                   layer_index,
+                   Colors::MixMode::None,
+                   0
+               )
+           );
+   
+           ui->layerListWidget->addItem(QString("Layer ") + QString::number(layer_index + 1));
+           ui->layerListWidget->setCurrentRow(layer_index + 1);
+       }
    
        Section& SectionControlWidget::get_active_section() {
            return *active_section_;
@@ -79,50 +101,20 @@ Program Listing for File sectioncontrolwidget.cpp
        }
    
        void SectionControlWidget::initialize() {
-           ui->activeSectionComboBox->blockSignals(true);
-           ui->activeLayerComboBox->blockSignals(true);
            ui->alphaSpinBox->blockSignals(true);
-   
-           ui->activeSectionComboBox->clear();
-           ui->activeLayerComboBox->clear();
            ui->alphaSpinBox->clear();
-   
-           // Set Section/Layer
-           for (uint8_t section = 0; section < maestro_control_widget_.get_maestro_controller()->get_maestro().get_num_sections(); section++) {
-               ui->activeSectionComboBox->addItem(QString("Section ") + QString::number(section));
-           }
-           ui->activeSectionComboBox->setCurrentIndex(0);
-   
-           // Unblock signals (*grumble grumble*)
-           ui->activeSectionComboBox->blockSignals(false);
-           ui->activeLayerComboBox->blockSignals(false);
            ui->alphaSpinBox->blockSignals(false);
+   
+           // Build Section list
+           ui->sectionListWidget->blockSignals(true);
+           ui->sectionListWidget->clear();
+           for (uint16_t section = 0; section < maestro_control_widget_.get_maestro_controller()->get_maestro().get_num_sections(); section++) {
+               ui->sectionListWidget->addItem(QString("Section ") + QString::number(section + 1));
+           }
+           ui->sectionListWidget->blockSignals(false);
    
            set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0));
            populate_layer_combobox();
-       }
-   
-       void SectionControlWidget::on_activeLayerComboBox_currentIndexChanged(int index) {
-           /*
-            * If we selected an Layer, iterate through the Section's nested Layers until we find it.
-            * If we selected 'None', use the base Section as the active Section.
-            */
-           Section* layer_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
-           for (int i = 0; i < index; i++) {
-               layer_section = layer_section->get_layer()->section;
-           }
-   
-           // Show Layer controls
-           set_layer_controls_enabled(index > 0);
-   
-           // Set active Section to Layer Section
-           set_active_section(layer_section);
-       }
-   
-       void SectionControlWidget::on_activeSectionComboBox_currentIndexChanged(int index) {
-           set_layer_controls_enabled(false);
-   
-           set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(index));
        }
    
        void SectionControlWidget::on_alphaSpinBox_editingFinished() {
@@ -173,59 +165,21 @@ Program Listing for File sectioncontrolwidget.cpp
            set_section_size();
        }
    
-       void SectionControlWidget::on_layerSpinBox_editingFinished() {
-           Section* base_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
-           Section* last_section = base_section;
-   
-           // Get the number of Layers (and the index of the last Layer) in the Section
-           int num_layers = 0;
-           while (last_section->get_layer() != nullptr) {
-               last_section = last_section->get_layer()->section;
-               num_layers++;
-           }
-           int last_layer_index = num_layers;
-   
+       void SectionControlWidget::on_layerListWidget_currentRowChanged(int currentRow) {
            /*
-            * Get the difference between the current Layer count and the new Layer count.
-            * If diff is positive, add more Layers. Otherwise, remove Layers.
+            * If we selected an Layer, iterate through the Section's nested Layers until we find it.
+            * If we selected 'None', use the base Section as the active Section.
             */
-           int diff = ui->layerSpinBox->value() - num_layers;
-           if (diff > 0) {
-               while (diff > 0) {
-                   maestro_control_widget_.run_cue(
-                       maestro_control_widget_.section_handler->set_layer(
-                           get_section_index(),
-                           last_layer_index,
-                           Colors::MixMode::None,
-                           0
-                       )
-                   );
-                   last_layer_index++;
-                   diff--;
-               }
-           }
-           // If the diff is negative, remove Layers
-           else if (diff < 0) {
-               while (diff < 0) {
-                   last_section = last_section->get_parent_section();
-                   maestro_control_widget_.run_cue(
-                       maestro_control_widget_.section_handler->remove_layer(
-                           get_section_index(),
-                           last_layer_index - 1
-                       )
-                   );
-                   last_layer_index--;
-                   diff++;
-               }
-   
-               // If the active Layer no longer exists, jump to the last available Layer
-               if (ui->layerSpinBox->value() >= last_layer_index) {
-                   set_active_section(last_section);
-               }
+           Section* layer_section = maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index());
+           for (int i = 0; i < currentRow; i++) {
+               layer_section = layer_section->get_layer()->section;
            }
    
-           // Refresh layer combobox
-           populate_layer_combobox();
+           // Show Layer controls
+           set_layer_controls_enabled(currentRow > 0);
+   
+           // Set active Section to Layer Section
+           set_active_section(layer_section);
        }
    
        void SectionControlWidget::on_mirrorXCheckBox_toggled(bool checked) {
@@ -286,6 +240,33 @@ Program Listing for File sectioncontrolwidget.cpp
            set_scroll();
        }
    
+       void SectionControlWidget::on_removeLayerButton_clicked() {
+           // Don't allow user to delete the base Section
+           if (ui->layerListWidget->count() == 1) return;
+   
+           uint8_t target_layer = ui->layerListWidget->count() - 1;
+   
+           ui->layerListWidget->takeItem(target_layer);
+   
+           // Change the active Layer to the previous available one
+           if (ui->layerListWidget->currentRow() == target_layer) {
+               ui->layerListWidget->setCurrentRow(target_layer - 1);
+           }
+   
+           maestro_control_widget_.run_cue(
+               maestro_control_widget_.section_handler->remove_layer(
+                   get_section_index(),
+                   target_layer - 1
+               )
+           );
+       }
+   
+       void SectionControlWidget::on_sectionListWidget_currentRowChanged(int currentRow) {
+           set_layer_controls_enabled(false);
+   
+           set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(currentRow));
+       }
+   
        void SectionControlWidget::on_wrapCheckBox_stateChanged(int arg1) {
            maestro_control_widget_.run_cue(
                maestro_control_widget_.section_handler->set_wrap(
@@ -297,30 +278,9 @@ Program Listing for File sectioncontrolwidget.cpp
        }
    
        void SectionControlWidget::refresh() {
-           // If the current Section doesn't match the Section drop-down, update the drop-down
-           int section_index = get_section_index();
-           int layer_index = get_layer_index();
-           if (ui->activeSectionComboBox->currentIndex() != section_index) {
-               ui->activeSectionComboBox->blockSignals(true);
-               ui->activeSectionComboBox->setCurrentIndex(section_index);
-               ui->activeSectionComboBox->blockSignals(false);
-           }
-   
-           // Update the Layer combo box based on our selection
-           if (layer_index == 0) {
-               // Set Layer count
-               ui->layerSpinBox->blockSignals(true);
-               ui->layerSpinBox->setValue(get_num_layers(*active_section_));
-               ui->layerSpinBox->blockSignals(false);
-   
+           // Update the Layer list, but only if the refresh was triggered by a Section, not a Layer
+           if (!get_layer_index()) {
                populate_layer_combobox();
-           }
-   
-           // Handle Layer combobox
-           if (ui->activeLayerComboBox->currentIndex() != layer_index) {
-               ui->activeLayerComboBox->blockSignals(true);
-               ui->activeLayerComboBox->setCurrentIndex(layer_index);
-               ui->activeLayerComboBox->blockSignals(false);
            }
    
            // Set dimensions
@@ -424,19 +384,27 @@ Program Listing for File sectioncontrolwidget.cpp
        }
    
        void SectionControlWidget::populate_layer_combobox() {
-           ui->activeLayerComboBox->blockSignals(true);
-           ui->activeLayerComboBox->clear();
-           ui->activeLayerComboBox->addItem("Base Section");
+           ui->layerListWidget->blockSignals(true);
+           ui->layerListWidget->clear();
+           ui->layerListWidget->addItem("Base Section");
    
            for (uint8_t layer = 0; layer < get_num_layers(*maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
-               ui->activeLayerComboBox->addItem(QString("Layer ") + QString::number(layer + 1));
+               ui->layerListWidget->addItem(QString("Layer ") + QString::number(layer + 1));
            }
    
-           ui->activeLayerComboBox->blockSignals(false);
+           ui->layerListWidget->blockSignals(false);
+   
+           // Enable/disable layer buttons
+           ui->addLayerButton->setEnabled(ui->layerListWidget->count() <= 256);
+           ui->removeLayerButton->setEnabled(ui->layerListWidget->count() > 1);
        }
    
        void SectionControlWidget::set_active_section(Section* section) {
            active_section_ = section;
+   
+           ui->sectionListWidget->blockSignals(true);
+           ui->sectionListWidget->setCurrentRow(get_section_index(*active_section_));
+           ui->sectionListWidget->blockSignals(false);
    
            maestro_control_widget_.refresh_section_settings();
        }

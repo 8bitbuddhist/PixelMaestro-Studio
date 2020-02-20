@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -162,18 +161,23 @@
   <div class="section" id="program-listing-for-file-maestrodrawingarea-cpp">
 <span id="program-listing-file-src-drawingarea-maestrodrawingarea-cpp"></span><h1>Program Listing for File maestrodrawingarea.cpp<a class="headerlink" href="#program-listing-for-file-maestrodrawingarea-cpp" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_drawingarea_maestrodrawingarea.cpp.html#file-src-drawingarea-maestrodrawingarea-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/drawingarea/maestrodrawingarea.cpp</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;core/maestro.h&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QApplication&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;core/maestro.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;maestrodrawingarea.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QElapsedTimer&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QHBoxLayout&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QGridLayout&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QTimer&gt;</span><span class="cp"></span>
 
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">PixelMaestro</span><span class="p">;</span>
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
-    <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">MaestroDrawingArea</span><span class="p">(</span><span class="n">QWidget</span><span class="o">*</span> <span class="n">parent</span><span class="p">,</span> <span class="n">MaestroController</span><span class="o">&amp;</span> <span class="n">maestro_controller</span><span class="p">)</span> <span class="o">:</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">maestro_controller_</span><span class="p">(</span><span class="n">maestro_controller</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">section_layout_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">MaestroDrawingArea</span><span class="p">(</span><span class="n">QWidget</span><span class="o">*</span> <span class="n">parent</span><span class="p">,</span> <span class="n">MaestroController</span><span class="o">&amp;</span> <span class="n">maestro_controller</span><span class="p">)</span> <span class="o">:</span> <span class="n">QFrame</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">maestro_controller_</span><span class="p">(</span><span class="n">maestro_controller</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">section_layout_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QGridLayout</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+        <span class="c1">// Hide frame by default</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">QFrame</span><span class="o">::</span><span class="n">Box</span> <span class="o">|</span> <span class="n">QFrame</span><span class="o">::</span><span class="n">Plain</span><span class="p">);</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #333333;&quot;</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="n">SectionDrawingArea</span><span class="o">*</span> <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">add_section_drawing_area</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">,</span> <span class="k">const</span> <span class="kt">uint8_t</span> <span class="n">section_id</span><span class="p">)</span> <span class="p">{</span>
@@ -183,7 +187,12 @@
             <span class="p">)</span>
         <span class="p">);</span>
         <span class="n">QWidget</span><span class="o">*</span> <span class="n">drawing_area</span> <span class="o">=</span> <span class="n">section_drawing_areas_</span><span class="p">.</span><span class="n">last</span><span class="p">().</span><span class="n">data</span><span class="p">();</span>
-        <span class="n">section_layout_</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">drawing_area</span><span class="p">);</span>
+
+        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">grid_width</span> <span class="o">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">num_sections_per_row</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="n">toInt</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">row_num</span> <span class="o">=</span> <span class="n">section_id</span> <span class="o">/</span> <span class="n">grid_width</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">column_num</span> <span class="o">=</span> <span class="n">section_id</span> <span class="o">%</span> <span class="n">grid_width</span><span class="p">;</span>
+        <span class="n">section_layout_</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">drawing_area</span><span class="p">,</span> <span class="n">row_num</span><span class="p">,</span> <span class="n">column_num</span><span class="p">);</span>
         <span class="k">return</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SectionDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">drawing_area</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -192,22 +201,13 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">frame_active_section</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">active_section_</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">section</span><span class="p">;</span>
-
         <span class="k">if</span> <span class="p">(</span><span class="n">maestro_control_widget_</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
         <span class="kt">int</span> <span class="n">section_id</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_section_index</span><span class="p">(</span><span class="n">section</span><span class="p">);</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">section_drawing_areas_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">section_id</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">int</span> <span class="n">layer_id</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_layer_index</span><span class="p">(</span><span class="n">section</span><span class="p">);</span>
-
-                <span class="k">if</span> <span class="p">(</span><span class="n">layer_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">section_drawing_areas_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span><span class="n">SectionDrawingArea</span><span class="o">::</span><span class="n">FrameType</span><span class="o">::</span><span class="n">Layer</span><span class="p">);</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="n">section_drawing_areas_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span><span class="n">SectionDrawingArea</span><span class="o">::</span><span class="n">FrameType</span><span class="o">::</span><span class="n">Section</span><span class="p">);</span>
-                <span class="p">}</span>
+                <span class="n">section_drawing_areas_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span><span class="n">SectionDrawingArea</span><span class="o">::</span><span class="n">FrameType</span><span class="o">::</span><span class="n">Active</span><span class="p">);</span>
             <span class="p">}</span>
             <span class="k">else</span> <span class="p">{</span>
                 <span class="n">section_drawing_areas_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">draw_frame</span><span class="p">(</span><span class="n">SectionDrawingArea</span><span class="o">::</span><span class="n">FrameType</span><span class="o">::</span><span class="n">Inactive</span><span class="p">);</span>
@@ -219,16 +219,21 @@
         <span class="n">section_drawing_areas_</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
     <span class="p">}</span>
 
+    <span class="kt">void</span> <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">set_locked</span><span class="p">(</span><span class="kt">bool</span> <span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">QColor</span> <span class="n">highlight_color</span> <span class="o">=</span> <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">palette</span><span class="p">().</span><span class="n">highlight</span><span class="p">().</span><span class="n">color</span><span class="p">();</span>
+            <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;color: rgb(%1, %2, %3);&quot;</span><span class="p">).</span><span class="n">arg</span><span class="p">(</span><span class="n">highlight_color</span><span class="p">.</span><span class="n">red</span><span class="p">()).</span><span class="n">arg</span><span class="p">(</span><span class="n">highlight_color</span><span class="p">.</span><span class="n">green</span><span class="p">()).</span><span class="n">arg</span><span class="p">(</span><span class="n">highlight_color</span><span class="p">.</span><span class="n">blue</span><span class="p">()));</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #333333;&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">set_maestro_control_widget</span><span class="p">(</span><span class="n">MaestroControlWidget</span> <span class="o">*</span><span class="n">widget</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget_</span> <span class="o">=</span> <span class="n">widget</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MaestroDrawingArea</span><span class="o">::</span><span class="n">update</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Checks to see if the active Section is currently highlighted.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">maestro_control_widget_</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="o">&amp;</span><span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">()</span> <span class="o">!=</span> <span class="n">active_section_</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">frame_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="o">-&gt;</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">());</span>
-        <span class="p">}</span>
-
         <span class="c1">// Update all DrawingAreas</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">section_drawing_areas_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">section_drawing_areas_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">();</span>

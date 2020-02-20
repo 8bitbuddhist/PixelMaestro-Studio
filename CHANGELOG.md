@@ -6,20 +6,23 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.60] - In Progress
 
 ### Added
-- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI.
+- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. You can set a default port number in the Preferences.
+- Added wrap toggle to Section tab.
+- Added icons to palette comboboxes.
 
 ### Changed
-- Broke out Section and Layer controls to the top of the screen.
-- Converted Section and Layer combo boxes into list boxes.
-- Reorganized the Canvas and Show tabs.
-- Added highlights to play/pause buttons when clicked.
-
+- GUI changes:
+	- Broke out Section and Layer controls to the top of the screen.
+	- Converted Section and Layer combo boxes into list boxes.
+	- Sections are now displayed in a grid. You can change the width of the grid in the Preferences.
+	- Reorganized the Canvas and Show tabs.
+	- Added highlights to play/pause buttons when clicked.
+- Fixed crash when closing PixelMaestro Studio when both Maestro views are closed.
 
 ## [v0.51] - 2019-11-26
 
 ### Added
 - Added window icons.
-- Added wrap toggle to Section tab.
 
 ### Changed
 - Changed time widgets to display time spans instead of milliseconds.

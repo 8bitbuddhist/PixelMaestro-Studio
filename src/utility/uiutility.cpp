@@ -12,6 +12,11 @@
 namespace PixelMaestroStudio {
 	UIUtility::UIUtility() { }
 
+	/**
+	 * Generates a small thumbnail preview of a Palette. Used as an icon in ComboBoxes.
+	 * @param palette The Palette to generate a thumbnail for.
+	 * @return Thumbnail pixmap.
+	 */
 	QSharedPointer<QPixmap> UIUtility::generate_palette_thumbnail(PaletteController::PaletteWrapper& palette) {
 		QSharedPointer<QPixmap> thumbnail = QSharedPointer<QPixmap>(new QPixmap(100, 20));
 		QPainter painter(thumbnail.data());
@@ -41,6 +46,11 @@ namespace PixelMaestroStudio {
 		return thumbnail;
 	}
 
+	/**
+	 * Highlights the QWidget using the theme's highlight color.
+	 * @param widget Widget to highlight.
+	 * @param highlight Whether to add or remove the highlight.
+	 */
 	void UIUtility::highlight_widget(QWidget* widget, bool highlight) {
 		if (highlight) {
 			QColor highlight_color = qApp->palette().highlight().color();

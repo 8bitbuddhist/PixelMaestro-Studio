@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -231,7 +230,6 @@
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// Disable controls by default</span>
         <span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedLockedLabel</span><span class="o">-&gt;</span><span class="n">setVisible</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="c1">// Setup timer</span>
         <span class="n">show_timer_</span><span class="p">.</span><span class="n">setTimerType</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">CoarseTimer</span><span class="p">);</span>
@@ -486,7 +484,6 @@
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_maestro_locked</span><span class="p">(</span><span class="kt">bool</span> <span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_locked_</span> <span class="o">=</span> <span class="n">locked</span><span class="p">;</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedLockedLabel</span><span class="o">-&gt;</span><span class="n">setVisible</span><span class="p">(</span><span class="n">locked</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">timer_refresh</span><span class="p">()</span> <span class="p">{</span>
@@ -536,7 +533,9 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">advancedSettingsGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventsGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
     <span class="p">}</span>
 

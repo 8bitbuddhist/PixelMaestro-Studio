@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -168,6 +167,7 @@
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/paletteeditdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;palettecontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ui_palettecontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;utility/uiutility.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">PaletteControlWidget</span><span class="o">::</span><span class="n">PaletteControlWidget</span><span class="p">(</span><span class="n">PaletteController</span><span class="o">&amp;</span> <span class="n">controller</span><span class="p">,</span> <span class="k">const</span> <span class="n">QString</span><span class="o">&amp;</span> <span class="n">initial_palette</span><span class="p">,</span> <span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span> <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">PaletteControlWidget</span><span class="p">),</span> <span class="n">palette_controller_</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span> <span class="p">{</span>
@@ -185,7 +185,8 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palettes</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palette</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">name</span><span class="p">);</span>
+            <span class="n">PaletteController</span><span class="o">::</span><span class="n">PaletteWrapper</span><span class="o">&amp;</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">palette_controller_</span><span class="p">.</span><span class="n">get_palette</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="o">*</span><span class="n">UIUtility</span><span class="o">::</span><span class="n">generate_palette_thumbnail</span><span class="p">(</span><span class="n">palette</span><span class="p">)),</span> <span class="n">palette</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">paletteComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 

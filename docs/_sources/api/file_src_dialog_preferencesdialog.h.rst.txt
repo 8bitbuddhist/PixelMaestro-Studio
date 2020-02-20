@@ -39,11 +39,11 @@ Included By
 -----------
 
 
+- :ref:`file_src_controller_devicecontroller.cpp`
+
 - :ref:`file_src_controller_maestrocontroller.cpp`
 
 - :ref:`file_src_controller_palettecontroller.cpp`
-
-- :ref:`file_src_controller_serialdevicecontroller.cpp`
 
 - :ref:`file_src_dialog_adddevicedialog.cpp`
 

@@ -39,7 +39,7 @@ Includes
 
 - ``QWidget``
 
-- ``controller/serialdevicecontroller.h`` (:ref:`file_src_controller_serialdevicecontroller.h`)
+- ``controller/devicecontroller.h`` (:ref:`file_src_controller_devicecontroller.h`)
 
 - ``dialog/adddevicedialog.h`` (:ref:`file_src_dialog_adddevicedialog.h`)
 

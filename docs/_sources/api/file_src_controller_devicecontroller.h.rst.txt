@@ -1,0 +1,73 @@
+
+.. _file_src_controller_devicecontroller.h:
+
+File devicecontroller.h
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/devicecontroller.h``)
+--------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_devicecontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QIODevice``
+
+- ``QSharedPointer``
+
+- ``QString``
+
+- ``model/sectionmapmodel.h`` (:ref:`file_src_model_sectionmapmodel.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_devicecontroller.cpp`
+
+- :ref:`file_src_controller_devicethreadcontroller.h`
+
+- :ref:`file_src_dialog_adddevicedialog.h`
+
+- :ref:`file_src_dialog_sectionmapdialog.h`
+
+- :ref:`file_src_widget_devicecontrolwidget.h`
+
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceController`
+

@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -174,6 +173,28 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
     <span class="p">}</span>
 
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_addLayerButton_clicked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Get the number of Layers (and the index of the last Layer) in the Section</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">base_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
+        <span class="kt">int</span> <span class="n">num_layers</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">base_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">base_section</span> <span class="o">=</span> <span class="n">base_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
+            <span class="n">num_layers</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kt">uint8_t</span> <span class="n">layer_index</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">layer_index</span><span class="p">,</span>
+                <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
+                <span class="mi">0</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Layer &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">layer_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">layer_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
 
     <span class="n">Section</span><span class="o">&amp;</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">get_active_section</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="o">*</span><span class="n">active_section_</span><span class="p">;</span>
@@ -231,50 +252,20 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-
-        <span class="c1">// Set Section/Layer</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_num_sections</span><span class="p">();</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Section &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">section</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-
-        <span class="c1">// Unblock signals (*grumble grumble*)</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">alphaSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Build Section list</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">section</span> <span class="o">&lt;</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_num_sections</span><span class="p">();</span> <span class="n">section</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Section &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
         <span class="n">populate_layer_combobox</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_activeLayerComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="cm">/*</span>
-<span class="cm">         * If we selected an Layer, iterate through the Section&#39;s nested Layers until we find it.</span>
-<span class="cm">         * If we selected &#39;None&#39;, use the base Section as the active Section.</span>
-<span class="cm">         */</span>
-        <span class="n">Section</span><span class="o">*</span> <span class="n">layer_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">layer_section</span> <span class="o">=</span> <span class="n">layer_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// Show Layer controls</span>
-        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-
-        <span class="c1">// Set active Section to Layer Section</span>
-        <span class="n">set_active_section</span><span class="p">(</span><span class="n">layer_section</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_activeSectionComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-
-        <span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">index</span><span class="p">));</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_alphaSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
@@ -325,59 +316,21 @@
         <span class="n">set_section_size</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_layerSpinBox_editingFinished</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Section</span><span class="o">*</span> <span class="n">base_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
-        <span class="n">Section</span><span class="o">*</span> <span class="n">last_section</span> <span class="o">=</span> <span class="n">base_section</span><span class="p">;</span>
-
-        <span class="c1">// Get the number of Layers (and the index of the last Layer) in the Section</span>
-        <span class="kt">int</span> <span class="n">num_layers</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">last_section</span> <span class="o">=</span> <span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
-            <span class="n">num_layers</span><span class="o">++</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="kt">int</span> <span class="n">last_layer_index</span> <span class="o">=</span> <span class="n">num_layers</span><span class="p">;</span>
-
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_layerListWidget_currentRowChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">currentRow</span><span class="p">)</span> <span class="p">{</span>
         <span class="cm">/*</span>
-<span class="cm">         * Get the difference between the current Layer count and the new Layer count.</span>
-<span class="cm">         * If diff is positive, add more Layers. Otherwise, remove Layers.</span>
+<span class="cm">         * If we selected an Layer, iterate through the Section&#39;s nested Layers until we find it.</span>
+<span class="cm">         * If we selected &#39;None&#39;, use the base Section as the active Section.</span>
 <span class="cm">         */</span>
-        <span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span> <span class="o">-</span> <span class="n">num_layers</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">while</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_layer</span><span class="p">(</span>
-                        <span class="n">get_section_index</span><span class="p">(),</span>
-                        <span class="n">last_layer_index</span><span class="p">,</span>
-                        <span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
-                        <span class="mi">0</span>
-                    <span class="p">)</span>
-                <span class="p">);</span>
-                <span class="n">last_layer_index</span><span class="o">++</span><span class="p">;</span>
-                <span class="n">diff</span><span class="o">--</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="c1">// If the diff is negative, remove Layers</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">while</span> <span class="p">(</span><span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">last_section</span> <span class="o">=</span> <span class="n">last_section</span><span class="o">-&gt;</span><span class="n">get_parent_section</span><span class="p">();</span>
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">remove_layer</span><span class="p">(</span>
-                        <span class="n">get_section_index</span><span class="p">(),</span>
-                        <span class="n">last_layer_index</span> <span class="o">-</span> <span class="mi">1</span>
-                    <span class="p">)</span>
-                <span class="p">);</span>
-                <span class="n">last_layer_index</span><span class="o">--</span><span class="p">;</span>
-                <span class="n">diff</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="c1">// If the active Layer no longer exists, jump to the last available Layer</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">last_layer_index</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">set_active_section</span><span class="p">(</span><span class="n">last_section</span><span class="p">);</span>
-            <span class="p">}</span>
+        <span class="n">Section</span><span class="o">*</span> <span class="n">layer_section</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">());</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">currentRow</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">layer_section</span> <span class="o">=</span> <span class="n">layer_section</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">section</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="c1">// Refresh layer combobox</span>
-        <span class="n">populate_layer_combobox</span><span class="p">();</span>
+        <span class="c1">// Show Layer controls</span>
+        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="n">currentRow</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Set active Section to Layer Section</span>
+        <span class="n">set_active_section</span><span class="p">(</span><span class="n">layer_section</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_mirrorXCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
@@ -438,6 +391,33 @@
         <span class="n">set_scroll</span><span class="p">();</span>
     <span class="p">}</span>
 
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_removeLayerButton_clicked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Don&#39;t allow user to delete the base Section</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+        <span class="kt">uint8_t</span> <span class="n">target_layer</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="n">target_layer</span><span class="p">);</span>
+
+        <span class="c1">// Change the active Layer to the previous available one</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">currentRow</span><span class="p">()</span> <span class="o">==</span> <span class="n">target_layer</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">target_layer</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
+            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">remove_layer</span><span class="p">(</span>
+                <span class="n">get_section_index</span><span class="p">(),</span>
+                <span class="n">target_layer</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_sectionListWidget_currentRowChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">currentRow</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">set_layer_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">currentRow</span><span class="p">));</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">on_wrapCheckBox_stateChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">arg1</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
             <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">section_handler</span><span class="o">-&gt;</span><span class="n">set_wrap</span><span class="p">(</span>
@@ -449,30 +429,9 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// If the current Section doesn&#39;t match the Section drop-down, update the drop-down</span>
-        <span class="kt">int</span> <span class="n">section_index</span> <span class="o">=</span> <span class="n">get_section_index</span><span class="p">();</span>
-        <span class="kt">int</span> <span class="n">layer_index</span> <span class="o">=</span> <span class="n">get_layer_index</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">!=</span> <span class="n">section_index</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">section_index</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeSectionComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="c1">// Update the Layer combo box based on our selection</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">layer_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Set Layer count</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">get_num_layers</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="p">));</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerSpinBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-
+        <span class="c1">// Update the Layer list, but only if the refresh was triggered by a Section, not a Layer</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">get_layer_index</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">populate_layer_combobox</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// Handle Layer combobox</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">!=</span> <span class="n">layer_index</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">layer_index</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="c1">// Set dimensions</span>
@@ -576,19 +535,27 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">populate_layer_combobox</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Base Section&quot;</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Base Section&quot;</span><span class="p">);</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">layer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">layer</span> <span class="o">&lt;</span> <span class="n">get_num_layers</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">()));</span> <span class="n">layer</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Layer &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Layer &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
         <span class="p">}</span>
 
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">activeLayerComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Enable/disable layer buttons</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">addLayerButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">256</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">removeLayerButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">layerListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">SectionControlWidget</span><span class="o">::</span><span class="n">set_active_section</span><span class="p">(</span><span class="n">Section</span><span class="o">*</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">active_section_</span> <span class="o">=</span> <span class="n">section</span><span class="p">;</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">get_section_index</span><span class="p">(</span><span class="o">*</span><span class="n">active_section_</span><span class="p">));</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">sectionListWidget</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 
         <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">refresh_section_settings</span><span class="p">();</span>
     <span class="p">}</span>

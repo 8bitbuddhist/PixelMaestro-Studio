@@ -39,7 +39,7 @@ Included By
 -----------
 
 
-- :ref:`file_src_controller_serialdevicecontroller.h`
+- :ref:`file_src_controller_devicecontroller.h`
 
 - :ref:`file_src_model_sectionmapmodel.cpp`
 

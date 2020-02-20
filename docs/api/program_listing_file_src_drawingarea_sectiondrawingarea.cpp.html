@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -195,12 +194,9 @@
 <span class="cm">         */</span>
         <span class="k">switch</span> <span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">case</span> <span class="n">FrameType</span><span class="o">::</span><span class="nl">Inactive</span><span class="p">:</span>
-                <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #333333;&quot;</span><span class="p">);</span>
+                <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #808080;&quot;</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
-            <span class="k">case</span> <span class="n">FrameType</span><span class="o">::</span><span class="nl">Layer</span><span class="p">:</span>
-                <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #808080&quot;</span><span class="p">);</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="k">case</span> <span class="n">FrameType</span><span class="o">::</span><span class="nl">Section</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">FrameType</span><span class="o">::</span><span class="nl">Active</span><span class="p">:</span>
                 <span class="k">this</span><span class="o">-&gt;</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;color: #FFFFFF;&quot;</span><span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>

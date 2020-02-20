@@ -22,11 +22,10 @@ Program Listing for File maestrodrawingarea.h
    #include "core/maestro.h"
    #include "core/pixel.h"
    #include "core/section.h"
-   #include "maestrodrawingarea.h"
    #include "sectiondrawingarea.h"
    #include "widget/maestrocontrolwidget.h"
    #include <QElapsedTimer>
-   #include <QHBoxLayout>
+   #include <QGridLayout>
    #include <QTimer>
    #include <QWidget>
    #include <vector>
@@ -38,7 +37,7 @@ Program Listing for File maestrodrawingarea.h
        class MaestroControlWidget;
        class SectionDrawingArea;
    
-       class MaestroDrawingArea : public QWidget {
+       class MaestroDrawingArea : public QFrame {
            Q_OBJECT
    
            public:
@@ -48,6 +47,7 @@ Program Listing for File maestrodrawingarea.h
                MaestroControlWidget* get_maestro_control_widget() const;
                void frame_active_section(Section& section);
                void remove_section_drawing_areas();
+               void set_locked(bool locked);
                void set_maestro_control_widget(MaestroControlWidget* widget);
    
            public slots:
@@ -61,7 +61,7 @@ Program Listing for File maestrodrawingarea.h
                QVector<QSharedPointer<SectionDrawingArea>> section_drawing_areas_;
    
            private:
-               QHBoxLayout* section_layout_ = nullptr;
+               QGridLayout* section_layout_ = nullptr;
    
                Section* active_section_ = nullptr;
        };

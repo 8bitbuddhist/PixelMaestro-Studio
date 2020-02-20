@@ -37,8 +37,6 @@ Includes
 
 - ``QMainWindow``
 
-- ``QSplitter``
-
 - ``QStandardPaths``
 
 - ``QString``

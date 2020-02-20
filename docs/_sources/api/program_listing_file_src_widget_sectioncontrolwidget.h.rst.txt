@@ -38,17 +38,14 @@ Program Listing for File sectioncontrolwidget.h
                void set_active_section(Section* section);
    
            private slots:
-               void on_activeSectionComboBox_currentIndexChanged(int index);
                void on_gridSizeXSpinBox_editingFinished();
                void on_gridSizeYSpinBox_editingFinished();
                void on_scrollXSpinBox_editingFinished();
-               void on_activeLayerComboBox_currentIndexChanged(int index);
                void on_mixModeComboBox_currentIndexChanged(int index);
                void on_scrollYSpinBox_editingFinished();
                void on_alphaSpinBox_editingFinished();
                void on_offsetXSpinBox_editingFinished();
                void on_offsetYSpinBox_editingFinished();
-               void on_layerSpinBox_editingFinished();
    
                void on_brightnessSlider_valueChanged(int value);
    
@@ -59,6 +56,14 @@ Program Listing for File sectioncontrolwidget.h
                void on_mirrorYCheckBox_toggled(bool checked);
    
                void on_wrapCheckBox_stateChanged(int arg1);
+   
+               void on_layerListWidget_currentRowChanged(int currentRow);
+   
+               void on_addLayerButton_clicked();
+   
+               void on_removeLayerButton_clicked();
+   
+               void on_sectionListWidget_currentRowChanged(int currentRow);
    
            private:
                Section* active_section_ = nullptr;

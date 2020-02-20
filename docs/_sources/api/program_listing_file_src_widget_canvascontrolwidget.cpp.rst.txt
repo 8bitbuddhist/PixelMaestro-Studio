@@ -11,13 +11,16 @@ Program Listing for File canvascontrolwidget.cpp
 .. code-block:: cpp
 
    #include <QFileDialog>
+   #include <QHBoxLayout>
    #include <QKeyEvent>
+   #include <QLayout>
    #include <QMessageBox>
    #include <QPushButton>
    #include <QTime>
    #include "canvascontrolwidget.h"
    #include "ui_canvascontrolwidget.h"
    #include "utility/canvasutility.h"
+   #include "utility/uiutility.h"
    #include "widget/palettecontrolwidget.h"
    
    namespace PixelMaestroStudio {
@@ -86,8 +89,10 @@ Program Listing for File canvascontrolwidget.cpp
    
            // Set Canvas defaults
            ui->currentFrameSpinBox->setEnabled(false);
+           on_circleToolButton_toggled(true);
    
            // Add an event handler to the Canvas color picker cancel button
+           this->canvas_palette_color_group_.addButton(ui->colorPickerCancelButton);
            connect(ui->colorPickerCancelButton, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
        }
    
@@ -112,7 +117,7 @@ Program Listing for File canvascontrolwidget.cpp
        }
    
        void CanvasControlWidget::on_canvas_color_clicked() {
-           QPushButton* sender = dynamic_cast<QPushButton*>(QObject::sender());
+           QToolButton* sender = dynamic_cast<QToolButton*>(QObject::sender());
    
            if (sender != ui->colorPickerCancelButton) {
                selected_color_index_ = sender->objectName().toInt();
@@ -456,6 +461,7 @@ Program Listing for File canvascontrolwidget.cpp
            ui->playbackNextToolButton->setEnabled(checked);
            ui->playbackPreviousToolButton->setEnabled(checked);
    
+           UIUtility::highlight_widget(ui->playbackStartStopToolButton, checked);
            if (checked) {
                maestro_control_widget_.run_cue(
                    maestro_control_widget_.canvas_handler->stop_frame_timer(
@@ -513,27 +519,31 @@ Program Listing for File canvascontrolwidget.cpp
             * Add color buttons to canvasColorPickerLayout. This functions identically to palette switching in the Palette Editor.
             * Start by deleting existing color buttons.
             */
-           QList<QPushButton*> buttons = ui->colorPickerScrollArea->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
-           for (QPushButton* button : buttons) {
+           QList<QToolButton*> buttons = ui->colorPickerScrollArea->findChildren<QToolButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
+           for (QToolButton* button : buttons) {
                // Remove all but the Cancel button
                if (button != ui->colorPickerCancelButton) {
+                   canvas_palette_color_group_.removeButton(button);
                    disconnect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
                    delete button;
                }
            }
    
            // Create new buttons and connect the color picker to the pushbutton event
-           QLayout* layout = ui->colorPickerScrollArea->findChild<QLayout*>("colorPickerLayout");
+           QLayout* layout = ui->colorPickerScrollAreaWidgetContents->layout();
+           int insert_index = 1;
            for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
                Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
-               QPushButton* button = new QPushButton();
+               QToolButton* button = new QToolButton();
                button->setVisible(true);
                button->setObjectName(QString::number(color_index));
                button->setToolTip(QString::number(color_index + 1));
-               button->setMaximumWidth(40);
+               button->setMaximumWidth(ui->colorPickerCancelButton->width());
                button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
    
-               layout->addWidget(button);
+               dynamic_cast<QHBoxLayout*>(layout)->insertWidget(insert_index, button);
+               ++insert_index;
+               canvas_palette_color_group_.addButton(button);
                connect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
            }
        }
@@ -585,7 +595,8 @@ Program Listing for File canvascontrolwidget.cpp
            ui->paletteComboBox->clear();
    
            for (uint16_t i = 0; i < maestro_control_widget_.palette_controller_.get_palettes()->size(); i++) {
-               ui->paletteComboBox->addItem(maestro_control_widget_.palette_controller_.get_palette(i).name);
+               PaletteController::PaletteWrapper palette = maestro_control_widget_.palette_controller_.get_palette(i);
+               ui->paletteComboBox->addItem(QIcon(*UIUtility::generate_palette_thumbnail(palette)), palette.name);
            }
    
            ui->paletteComboBox->setCurrentText(palette);
@@ -600,6 +611,7 @@ Program Listing for File canvascontrolwidget.cpp
            set_text_controls_enabled(false);
            set_triangle_controls_enabled(false);
    
+           UIUtility::highlight_widget(ui->brushToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
@@ -607,11 +619,13 @@ Program Listing for File canvascontrolwidget.cpp
        }
    
        void CanvasControlWidget::set_controls_enabled(bool enabled) {
-           ui->drawingToolsGroupBox->setEnabled(enabled);
+           ui->toolsGroupBox->setEnabled(enabled);
+           ui->shapesOptionsGroupBox->setEnabled(enabled);
            ui->animationToolsGroupBox->setEnabled(enabled);
-           ui->loadImageButton->setEnabled(enabled);
+   
+           ui->drawButton->setEnabled(enabled);
+           ui->clearButton->setEnabled(enabled);
            ui->paletteComboBox->setEnabled(enabled);
-           ui->paletteLabel->setEnabled(enabled);
            ui->editPaletteButton->setEnabled(enabled);
            ui->colorPickerScrollArea->setEnabled(enabled);
        }
@@ -641,6 +655,7 @@ Program Listing for File canvascontrolwidget.cpp
                ui->targetLabel->setText("Target");
            }
    
+           UIUtility::highlight_widget(ui->circleToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
@@ -667,6 +682,7 @@ Program Listing for File canvascontrolwidget.cpp
                ui->fillCheckBox->setEnabled(false);
            }
    
+           UIUtility::highlight_widget(ui->lineToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
@@ -689,6 +705,7 @@ Program Listing for File canvascontrolwidget.cpp
                ui->targetLabel->setText("Target");
            }
    
+           UIUtility::highlight_widget(ui->rectToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
@@ -710,6 +727,7 @@ Program Listing for File canvascontrolwidget.cpp
                ui->fillCheckBox->setEnabled(false);
            }
    
+           UIUtility::highlight_widget(ui->replaceToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
@@ -725,15 +743,14 @@ Program Listing for File canvascontrolwidget.cpp
                ui->fillCheckBox->setEnabled(false);
            }
    
+           UIUtility::highlight_widget(ui->textToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);
-   
-           ui->fontLabel->setEnabled(enabled);
-           ui->fontComboBox->setEnabled(enabled);
-   
            ui->textLabel->setEnabled(enabled);
            ui->textLineEdit->setEnabled(enabled);
+           ui->fontLabel->setEnabled(enabled);
+           ui->fontComboBox->setEnabled(enabled);
        }
    
        void CanvasControlWidget::set_triangle_controls_enabled(bool enabled) {
@@ -755,6 +772,7 @@ Program Listing for File canvascontrolwidget.cpp
                ui->target2Label->setText("Target 2");
            }
    
+           UIUtility::highlight_widget(ui->triangleToolButton, enabled);
            ui->originLabel->setEnabled(enabled);
            ui->originXSpinBox->setEnabled(enabled);
            ui->originYSpinBox->setEnabled(enabled);

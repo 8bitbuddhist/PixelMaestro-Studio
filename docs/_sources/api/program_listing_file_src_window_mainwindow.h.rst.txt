@@ -17,7 +17,6 @@ Program Listing for File mainwindow.h
    #include "../widget/maestrocontrolwidget.h"
    #include <QByteArray>
    #include <QMainWindow>
-   #include <QSplitter>
    #include <QStandardPaths>
    #include <QString>
    
@@ -56,13 +55,10 @@ Program Listing for File mainwindow.h
                QString loaded_cuefile_path_;
                MaestroController* maestro_controller_ = nullptr;
    
-               QWidget* maestro_drawing_area_ = nullptr;
-   
                QSharedPointer<MaestroDrawingAreaDialog> drawing_area_dialog_;
    
                MaestroControlWidget* maestro_control_widget_ = nullptr;
    
-               QSplitter* splitter_ = nullptr;
                Ui::MainWindow* ui;
    
                void initialize_widgets();

@@ -1,0 +1,56 @@
+
+.. _file_src_controller_devicecontroller.cpp:
+
+File devicecontroller.cpp
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/devicecontroller.cpp``)
+----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_devicecontroller.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QRegularExpression``
+
+- ``QSerialPort``
+
+- ``QSettings``
+
+- ``QTcpSocket``
+
+- ``devicecontroller.h`` (:ref:`file_src_controller_devicecontroller.h`)
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
+- ``widget/maestrocontrolwidget.h`` (:ref:`file_src_widget_maestrocontrolwidget.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+

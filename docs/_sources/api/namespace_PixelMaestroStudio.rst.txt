@@ -33,7 +33,11 @@ Classes
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1CueModel`
 
+- :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceController`
+
 - :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceControlWidget`
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceThreadController`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1EditEventDialog`
 
@@ -71,14 +75,12 @@ Classes
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1SectionMapModel`
 
-- :ref:`exhale_class_classPixelMaestroStudio_1_1SerialDeviceController`
-
-- :ref:`exhale_class_classPixelMaestroStudio_1_1SerialDeviceThreadController`
-
 - :ref:`exhale_class_classPixelMaestroStudio_1_1ShowController`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1ShowControlWidget`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1SparkleAnimationControlWidget`
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1UIUtility`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1WaveAnimationControlWidget`

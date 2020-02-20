@@ -18,7 +18,7 @@ Program Listing for File sectionmapdialog.cpp
    #include "widget/maestrocontrolwidget.h"
    
    namespace PixelMaestroStudio {
-       SectionMapDialog::SectionMapDialog(SerialDeviceController& device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog), device_(device) {
+       SectionMapDialog::SectionMapDialog(DeviceController& device, QWidget *parent) : QDialog(parent), ui(new Ui::SectionMapDialog), device_(device) {
    
            setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
    
@@ -26,7 +26,7 @@ Program Listing for File sectionmapdialog.cpp
    
            // If the model hasn't been initialized, initialize it
            if (device.section_map_model == nullptr) {
-               MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parent->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
+               MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parent->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
                Maestro& maestro = mcw->get_maestro_controller()->get_maestro();
                device.section_map_model = new SectionMapModel();
                for (int i = 0; i < maestro.get_num_sections(); i++) {

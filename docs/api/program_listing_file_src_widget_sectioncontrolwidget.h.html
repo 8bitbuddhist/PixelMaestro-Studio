@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -190,17 +189,14 @@
             <span class="kt">void</span> <span class="nf">set_active_section</span><span class="p">(</span><span class="n">Section</span><span class="o">*</span> <span class="n">section</span><span class="p">);</span>
 
         <span class="k">private</span> <span class="nl">slots</span><span class="p">:</span>
-            <span class="kt">void</span> <span class="n">on_activeSectionComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">);</span>
-            <span class="kt">void</span> <span class="nf">on_gridSizeXSpinBox_editingFinished</span><span class="p">();</span>
+            <span class="kt">void</span> <span class="n">on_gridSizeXSpinBox_editingFinished</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">on_gridSizeYSpinBox_editingFinished</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">on_scrollXSpinBox_editingFinished</span><span class="p">();</span>
-            <span class="kt">void</span> <span class="nf">on_activeLayerComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">on_mixModeComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">on_scrollYSpinBox_editingFinished</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">on_alphaSpinBox_editingFinished</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">on_offsetXSpinBox_editingFinished</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">on_offsetYSpinBox_editingFinished</span><span class="p">();</span>
-            <span class="kt">void</span> <span class="nf">on_layerSpinBox_editingFinished</span><span class="p">();</span>
 
             <span class="kt">void</span> <span class="nf">on_brightnessSlider_valueChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">);</span>
 
@@ -211,6 +207,14 @@
             <span class="kt">void</span> <span class="nf">on_mirrorYCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">);</span>
 
             <span class="kt">void</span> <span class="nf">on_wrapCheckBox_stateChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">arg1</span><span class="p">);</span>
+
+            <span class="kt">void</span> <span class="nf">on_layerListWidget_currentRowChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">currentRow</span><span class="p">);</span>
+
+            <span class="kt">void</span> <span class="nf">on_addLayerButton_clicked</span><span class="p">();</span>
+
+            <span class="kt">void</span> <span class="nf">on_removeLayerButton_clicked</span><span class="p">();</span>
+
+            <span class="kt">void</span> <span class="nf">on_sectionListWidget_currentRowChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">currentRow</span><span class="p">);</span>
 
         <span class="k">private</span><span class="o">:</span>
             <span class="n">Section</span><span class="o">*</span> <span class="n">active_section_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>

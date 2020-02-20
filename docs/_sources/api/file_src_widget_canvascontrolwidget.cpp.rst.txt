@@ -31,7 +31,11 @@ Includes
 
 - ``QFileDialog``
 
+- ``QHBoxLayout``
+
 - ``QKeyEvent``
+
+- ``QLayout``
 
 - ``QMessageBox``
 
@@ -44,6 +48,8 @@ Includes
 - ``ui_canvascontrolwidget.h``
 
 - ``utility/canvasutility.h`` (:ref:`file_src_utility_canvasutility.h`)
+
+- ``utility/uiutility.h`` (:ref:`file_src_utility_uiutility.h`)
 
 - ``widget/palettecontrolwidget.h`` (:ref:`file_src_widget_palettecontrolwidget.h`)
 

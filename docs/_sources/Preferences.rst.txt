@@ -39,6 +39,11 @@ Rendering Options
 
 *Rendering Options* control how the Maestro is displayed in the Maestro Viewer.
 
+Refresh Interval
+^^^^^^^^^^^^^^^^
+
+The *Refresh Interval* sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.
+
 Pixel Shape
 ^^^^^^^^^^^
 
@@ -46,10 +51,10 @@ Pixel Shape
 
 .. Tip:: For best performance, set the pixel shape to *Square*.
 
-Refresh Interval
-^^^^^^^^^^^^^^^^
+Grid Width
+^^^^^^^^^^
 
-The *Refresh Interval* sets the amount of time (in milliseconds) between Maestro refreshes. A lower refresh interval provides smoother animations at the cost of increased CPU usage.
+The Maestro renderer displays all of the Maestro's Sections in a grid. *Grid width* sets the maximum number of Sections to display in each row.
 
 Show Options
 ------------
@@ -65,3 +70,8 @@ Events Trigger Live Device Updates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a :doc:`live update <Device-Tab>` for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.
+
+Port Number
+^^^^^^^^^^^
+
+*Port Number* sets the default port used to communicate with devices over TCP/IP. This defaults to 8077.

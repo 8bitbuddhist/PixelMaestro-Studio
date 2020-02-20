@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -174,11 +173,10 @@
 <span class="cp">#include</span> <span class="cpf">&quot;core/maestro.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;core/pixel.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;core/section.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;maestrodrawingarea.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;sectiondrawingarea.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;widget/maestrocontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QElapsedTimer&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QHBoxLayout&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QGridLayout&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QTimer&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
@@ -190,7 +188,7 @@
     <span class="k">class</span> <span class="nc">MaestroControlWidget</span><span class="p">;</span>
     <span class="k">class</span> <span class="nc">SectionDrawingArea</span><span class="p">;</span>
 
-    <span class="k">class</span> <span class="nc">MaestroDrawingArea</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QWidget</span> <span class="p">{</span>
+    <span class="k">class</span> <span class="nc">MaestroDrawingArea</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QFrame</span> <span class="p">{</span>
         <span class="n">Q_OBJECT</span>
 
         <span class="k">public</span><span class="o">:</span>
@@ -200,6 +198,7 @@
             <span class="n">MaestroControlWidget</span><span class="o">*</span> <span class="nf">get_maestro_control_widget</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
             <span class="kt">void</span> <span class="nf">frame_active_section</span><span class="p">(</span><span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">remove_section_drawing_areas</span><span class="p">();</span>
+            <span class="kt">void</span> <span class="nf">set_locked</span><span class="p">(</span><span class="kt">bool</span> <span class="n">locked</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">set_maestro_control_widget</span><span class="p">(</span><span class="n">MaestroControlWidget</span><span class="o">*</span> <span class="n">widget</span><span class="p">);</span>
 
         <span class="k">public</span> <span class="nl">slots</span><span class="p">:</span>
@@ -213,7 +212,7 @@
             <span class="n">QVector</span><span class="o">&lt;</span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">SectionDrawingArea</span><span class="o">&gt;&gt;</span> <span class="n">section_drawing_areas_</span><span class="p">;</span>
 
         <span class="k">private</span><span class="o">:</span>
-            <span class="n">QHBoxLayout</span><span class="o">*</span> <span class="n">section_layout_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+            <span class="n">QGridLayout</span><span class="o">*</span> <span class="n">section_layout_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
             <span class="n">Section</span><span class="o">*</span> <span class="n">active_section_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
     <span class="p">};</span>

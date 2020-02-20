@@ -55,20 +55,16 @@ Program Listing for File mainwindow.cpp
    
        bool MainWindow::confirm_unsaved_changes() {
            QMessageBox::StandardButton confirm;
-           confirm = QMessageBox::question(this, "Unsaved Changes", "Your current changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+           confirm = QMessageBox::question(this, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
            return (confirm == QMessageBox::Yes);
        }
    
        void MainWindow::initialize_widgets() {
-           // Add Splitter control
-           QLayout* main_layout = this->findChild<QLayout*>("mainLayout");
-           this->splitter_ = new QSplitter(main_layout->widget());
-           this->splitter_->setOrientation(Qt::Orientation::Vertical);
-           main_layout->addWidget(this->splitter_);
    
            // Initialize Maestro elements
-           maestro_control_widget_ = new MaestroControlWidget(splitter_);
+           maestro_control_widget_ = new MaestroControlWidget(ui->mainWidget);
            maestro_controller_ = new MaestroController(*maestro_control_widget_);
+           maestro_control_widget_->set_maestro_controller(*maestro_controller_);
    
            // Build DrawingAreas if enabled in Preferences
            QSettings settings;
@@ -80,7 +76,7 @@ Program Listing for File mainwindow.cpp
            }
    
            // Add control widget to main window
-           splitter_->addWidget(maestro_control_widget_);
+           ui->mainWidget->layout()->addWidget(maestro_control_widget_);
    
            /*
             * If "pause on start" option is checked, don't start the Maestro.
@@ -94,7 +90,8 @@ Program Listing for File mainwindow.cpp
        void MainWindow::on_aboutAction_triggered() {
            QMessageBox::about(this, QString(QCoreApplication::applicationName()),
                           QString("PixelMaestro Studio ") + QString(BUILD_VERSION) +
-                          QString("\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.") +
+                          QString("\n\nPixelMaestro Studio is an application for designing LED animations.") +
+                          QString("\n\nPowered by the PixelMaestro library. Learn more at https://pixelmastro.studio.") +
                           QString("\n\n© 2017 − ") + QString::number(QDate::currentDate().year()) + QString(", the PixelMaestro contributors"));
        }
    
@@ -116,29 +113,7 @@ Program Listing for File mainwindow.cpp
        }
    
        void MainWindow::on_action_Main_Window_toggled(bool arg1) {
-           if (arg1) {
-               // Checked: create new DrawingArea
-               maestro_drawing_area_ = new MaestroDrawingArea(splitter_, *maestro_controller_);
-               splitter_->insertWidget(0, maestro_drawing_area_);
-               maestro_controller_->add_drawing_area(*dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_));
-               dynamic_cast<MaestroDrawingArea*>(maestro_drawing_area_)->set_maestro_control_widget(maestro_control_widget_);
-   
-               // Restore splitter position. If the position isn't saved in the user's settings, default to a 50/50 split
-               QSettings settings;
-               QByteArray splitter_state = settings.value(PreferencesDialog::splitter_position).toByteArray();
-               if (splitter_state.size() > 0) {
-                   this->splitter_->restoreState(splitter_state);
-               }
-               else {
-                   this->splitter_->setSizes(QList<int>({INT_MAX, INT_MAX}));
-               }
-           }
-           else {
-               // Unchecked
-               MaestroDrawingArea* drawing_area = splitter_->findChild<MaestroDrawingArea*>();
-               maestro_controller_->remove_drawing_area(*drawing_area);
-               delete drawing_area;
-           }
+           maestro_control_widget_->toggle_maestro_drawing_area(arg1);
        }
    
        void MainWindow::on_mergeAction_triggered() {
@@ -302,12 +277,8 @@ Program Listing for File mainwindow.cpp
            settings.setValue(PreferencesDialog::window_geometry, saveGeometry());
            settings.setValue(PreferencesDialog::window_state, saveState());
    
-           // Save splitter position
-           settings.setValue(PreferencesDialog::splitter_position, this->splitter_->saveState());
-   
            delete maestro_control_widget_;
            delete maestro_controller_;
-           delete splitter_;
            delete ui;
        }
    }

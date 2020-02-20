@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -182,8 +181,7 @@
         <span class="k">public</span><span class="o">:</span>
             <span class="k">enum</span> <span class="k">class</span> <span class="nc">FrameType</span> <span class="o">:</span> <span class="kt">uint8_t</span> <span class="p">{</span>
                 <span class="n">Inactive</span><span class="p">,</span>
-                <span class="n">Section</span><span class="p">,</span>
-                <span class="n">Layer</span>
+                <span class="n">Active</span>
             <span class="p">};</span>
 
             <span class="n">SectionDrawingArea</span><span class="p">(</span><span class="n">QWidget</span><span class="o">*</span> <span class="n">parent</span><span class="p">,</span> <span class="n">Section</span><span class="o">&amp;</span> <span class="n">section</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">section_id</span><span class="p">);</span>

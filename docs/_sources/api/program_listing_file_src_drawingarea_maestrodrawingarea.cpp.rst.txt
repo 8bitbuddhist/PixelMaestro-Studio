@@ -10,18 +10,23 @@ Program Listing for File maestrodrawingarea.cpp
 
 .. code-block:: cpp
 
+   #include <QApplication>
    #include "core/maestro.h"
    #include "maestrodrawingarea.h"
    #include "dialog/preferencesdialog.h"
    #include <QElapsedTimer>
-   #include <QHBoxLayout>
+   #include <QGridLayout>
    #include <QTimer>
    
    using namespace PixelMaestro;
    
    namespace PixelMaestroStudio {
-       MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QWidget(parent), maestro_controller_(maestro_controller) {
-           section_layout_ = new QHBoxLayout(this);
+       MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController& maestro_controller) : QFrame(parent), maestro_controller_(maestro_controller) {
+           section_layout_ = new QGridLayout(this);
+   
+           // Hide frame by default
+           this->setFrameStyle(QFrame::Box | QFrame::Plain);
+           this->setStyleSheet("color: #333333;");
        }
    
        SectionDrawingArea* MaestroDrawingArea::add_section_drawing_area(Section& section, const uint8_t section_id) {
@@ -31,7 +36,12 @@ Program Listing for File maestrodrawingarea.cpp
                )
            );
            QWidget* drawing_area = section_drawing_areas_.last().data();
-           section_layout_->addWidget(drawing_area);
+   
+           QSettings settings;
+           int grid_width = settings.value(PreferencesDialog::num_sections_per_row, 1).toInt();
+           int row_num = section_id / grid_width;
+           int column_num = section_id % grid_width;
+           section_layout_->addWidget(drawing_area, row_num, column_num);
            return dynamic_cast<SectionDrawingArea*>(drawing_area);
        }
    
@@ -40,22 +50,13 @@ Program Listing for File maestrodrawingarea.cpp
        }
    
        void MaestroDrawingArea::frame_active_section(Section& section) {
-           active_section_ = &section;
-   
            if (maestro_control_widget_ == nullptr) return;
    
            int section_id = maestro_control_widget_->section_control_widget_->get_section_index(section);
    
            for (uint8_t i = 0; i < section_drawing_areas_.size(); i++) {
                if (i == section_id) {
-                   int layer_id = maestro_control_widget_->section_control_widget_->get_layer_index(section);
-   
-                   if (layer_id > 0) {
-                       section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Layer);
-                   }
-                   else {
-                       section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Section);
-                   }
+                   section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Active);
                }
                else {
                    section_drawing_areas_[i]->draw_frame(SectionDrawingArea::FrameType::Inactive);
@@ -67,16 +68,21 @@ Program Listing for File maestrodrawingarea.cpp
            section_drawing_areas_.clear();
        }
    
+       void MaestroDrawingArea::set_locked(bool locked) {
+           if (locked) {
+               QColor highlight_color = qApp->palette().highlight().color();
+               this->setStyleSheet(QString("color: rgb(%1, %2, %3);").arg(highlight_color.red()).arg(highlight_color.green()).arg(highlight_color.blue()));
+           }
+           else {
+               this->setStyleSheet("color: #333333;");
+           }
+       }
+   
        void MaestroDrawingArea::set_maestro_control_widget(MaestroControlWidget *widget) {
            this->maestro_control_widget_ = widget;
        }
    
        void MaestroDrawingArea::update() {
-           // Checks to see if the active Section is currently highlighted.
-           if (maestro_control_widget_ != nullptr && &maestro_control_widget_->section_control_widget_->get_active_section() != active_section_) {
-               frame_active_section(maestro_control_widget_->section_control_widget_->get_active_section());
-           }
-   
            // Update all DrawingAreas
            for (uint16_t i = 0; i < section_drawing_areas_.size(); i++) {
                section_drawing_areas_[i]->update();

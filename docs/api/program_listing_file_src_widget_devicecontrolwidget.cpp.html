@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -182,10 +181,9 @@
 <span class="cp">#include</span> <span class="cpf">&quot;dialog/sectionmapdialog.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;devicecontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ui_devicecontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;controller/serialdevicecontroller.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;controller/serialdevicethreadcontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;controller/devicecontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;controller/devicethreadcontroller.h&quot;</span><span class="cp"></span>
 
-<span class="c1">// TODO: Add socket to allow PixelMaestro Studio to receive Cues from other programs. See https://doc.qt.io/qt-5/qtcpserver.html</span>
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">DeviceControlWidget</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
             <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
@@ -200,10 +198,10 @@
             <span class="n">settings</span><span class="p">.</span><span class="n">setArrayIndex</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
 
             <span class="n">QString</span> <span class="n">device_name</span> <span class="o">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_port</span><span class="p">).</span><span class="n">toString</span><span class="p">();</span>
-            <span class="n">serial_devices_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">SerialDeviceController</span><span class="p">(</span><span class="n">device_name</span><span class="p">));</span>
+            <span class="n">serial_devices_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DeviceController</span><span class="p">(</span><span class="n">device_name</span><span class="p">));</span>
 
             <span class="c1">// If the device is set to auto-connect, try connecting</span>
-            <span class="n">SerialDeviceController</span><span class="o">&amp;</span> <span class="n">serial_device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">last</span><span class="p">();</span>
+            <span class="n">DeviceController</span><span class="o">&amp;</span> <span class="n">serial_device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">last</span><span class="p">();</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">serial_device</span><span class="p">.</span><span class="n">get_autoconnect</span><span class="p">())</span> <span class="p">{</span>
                 <span class="n">serial_device</span><span class="p">.</span><span class="n">connect</span><span class="p">();</span>
             <span class="p">}</span>
@@ -226,7 +224,7 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">on_editDeviceButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">SerialDeviceController</span><span class="o">*</span> <span class="n">device</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">DeviceController</span><span class="o">*</span> <span class="n">device</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
         <span class="kt">int</span> <span class="n">selected_device</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">currentRow</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">selected_device</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">device</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">serial_devices_</span><span class="p">[</span><span class="n">selected_device</span><span class="p">];</span>
@@ -242,8 +240,8 @@
         <span class="kt">int</span> <span class="n">selected</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">currentRow</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">selected</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
-        <span class="n">SerialDeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">device</span><span class="p">.</span><span class="n">get_device</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">isOpen</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">DeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">device</span><span class="p">.</span><span class="n">get_open</span><span class="p">())</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">connect</span><span class="p">())</span> <span class="p">{</span>
                 <span class="n">refresh_device_list</span><span class="p">();</span>
             <span class="p">}</span>
@@ -268,7 +266,7 @@
         <span class="kt">int</span> <span class="n">selected_index</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">currentRow</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">selected_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
-        <span class="n">SerialDeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">selected_index</span><span class="p">);</span>
+        <span class="n">DeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">selected_index</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">disconnect</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">refresh_device_list</span><span class="p">();</span>
@@ -302,22 +300,25 @@
     <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">on_serialOutputListWidget_currentRowChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">currentRow</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">currentRow</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
-        <span class="n">SerialDeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">currentRow</span><span class="p">);</span>
+        <span class="n">DeviceController</span> <span class="n">device</span> <span class="o">=</span> <span class="n">serial_devices_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">currentRow</span><span class="p">);</span>
 
-        <span class="kt">bool</span> <span class="n">connected</span> <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">get_device</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">isOpen</span><span class="p">();</span>
+        <span class="kt">bool</span> <span class="n">connected</span> <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">get_open</span><span class="p">();</span>
 
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">connectPushButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="o">!</span><span class="n">connected</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">disconnectPushButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">connected</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">uploadButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">connected</span><span class="p">);</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">uploadProgressBar</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">editDeviceButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">currentRow</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">removeDeviceButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">currentRow</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">refresh_device_list</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
         <span class="kt">bool</span> <span class="n">connected_devices</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">SerialDeviceController</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">DeviceController</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">QListWidgetItem</span><span class="o">*</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QListWidgetItem</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">get_port_name</span><span class="p">());</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">get_device</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">isOpen</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">get_open</span><span class="p">())</span> <span class="p">{</span>
                 <span class="n">item</span><span class="o">-&gt;</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">white</span><span class="p">);</span>
                 <span class="n">connected_devices</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
             <span class="p">}</span>
@@ -328,8 +329,7 @@
         <span class="p">}</span>
 
         <span class="c1">// Display icon in tab</span>
-        <span class="n">MaestroControlWidget</span><span class="o">*</span> <span class="n">parent_widget</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">MaestroControlWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">());</span>
-        <span class="n">QTabWidget</span><span class="o">*</span> <span class="n">tab_widget</span> <span class="o">=</span> <span class="n">parent_widget</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QTabWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;tabWidget&quot;</span><span class="p">);</span>
+        <span class="n">QTabWidget</span><span class="o">*</span> <span class="n">tab_widget</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QTabWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;tabWidget&quot;</span><span class="p">);</span>
         <span class="n">QWidget</span><span class="o">*</span> <span class="n">tab</span> <span class="o">=</span> <span class="n">tab_widget</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;deviceTab&quot;</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">connected_devices</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">tab_widget</span><span class="o">-&gt;</span><span class="n">setTabIcon</span><span class="p">(</span><span class="n">tab_widget</span><span class="o">-&gt;</span><span class="n">indexOf</span><span class="p">(</span><span class="n">tab</span><span class="p">),</span> <span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/icon_connected.png&quot;</span><span class="p">));</span>
@@ -340,7 +340,7 @@
 
         <span class="kt">int</span> <span class="n">selected</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">currentRow</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">selected</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">uploadButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">serial_devices_</span><span class="p">[</span><span class="n">selected</span><span class="p">].</span><span class="n">get_device</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">isOpen</span><span class="p">());</span>
+            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">uploadButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">serial_devices_</span><span class="p">[</span><span class="n">selected</span><span class="p">].</span><span class="n">get_open</span><span class="p">());</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="k">else</span> <span class="p">{</span>
@@ -348,12 +348,15 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">connectPushButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">disconnectPushButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
         <span class="p">}</span>
+
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">editDeviceButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">selected</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">removeDeviceButton</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">selected</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">run_cue</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">cue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">CueController</span><span class="o">*</span> <span class="n">controller</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="n">SerialDeviceController</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">DeviceController</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// TODO: Move to separate thread</span>
 
             <span class="c1">// Copy the Cue for each device</span>
@@ -394,7 +397,7 @@
                 <span class="p">}</span>
             <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">get_device</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">isOpen</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">device</span><span class="p">.</span><span class="n">get_real_time_refresh_enabled</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">get_open</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">device</span><span class="p">.</span><span class="n">get_real_time_refresh_enabled</span><span class="p">())</span> <span class="p">{</span>
                 <span class="n">write_to_device</span><span class="p">(</span><span class="n">device</span><span class="p">,</span>
                                 <span class="n">out</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span>
                                 <span class="n">out</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span>
@@ -413,7 +416,7 @@
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">serialOutputListWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setArrayIndex</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 
-            <span class="n">SerialDeviceController</span><span class="o">*</span> <span class="n">device</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">serial_devices_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">DeviceController</span><span class="o">*</span> <span class="n">device</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">serial_devices_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_port</span><span class="p">,</span> <span class="n">device</span><span class="o">-&gt;</span><span class="n">get_port_name</span><span class="p">());</span>
             <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_real_time_refresh</span><span class="p">,</span> <span class="n">device</span><span class="o">-&gt;</span><span class="n">get_real_time_refresh_enabled</span><span class="p">());</span>
 
@@ -456,15 +459,15 @@
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">fileSizeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">maestro_cue_</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">write_to_device</span><span class="p">(</span><span class="n">SerialDeviceController</span><span class="o">&amp;</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">SerialDeviceThreadController</span><span class="o">*</span> <span class="kr">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SerialDeviceThreadController</span><span class="p">(</span><span class="n">device</span><span class="p">,</span>
+    <span class="kt">void</span> <span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">write_to_device</span><span class="p">(</span><span class="n">DeviceController</span><span class="o">&amp;</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DeviceThreadController</span><span class="o">*</span> <span class="kr">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DeviceThreadController</span><span class="p">(</span><span class="n">device</span><span class="p">,</span>
                                                           <span class="n">out</span><span class="p">,</span>
                                                           <span class="n">size</span><span class="p">);</span>
 
-        <span class="n">connect</span><span class="p">(</span><span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">SerialDeviceThreadController</span><span class="o">::</span><span class="n">finished</span><span class="p">,</span> <span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">SerialDeviceThreadController</span><span class="o">::</span><span class="n">deleteLater</span><span class="p">);</span>
+        <span class="n">connect</span><span class="p">(</span><span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DeviceThreadController</span><span class="o">::</span><span class="n">finished</span><span class="p">,</span> <span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DeviceThreadController</span><span class="o">::</span><span class="n">deleteLater</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">progress</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">connect</span><span class="p">(</span><span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">SerialDeviceThreadController</span><span class="o">::</span><span class="n">progress_changed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">set_progress_bar</span><span class="p">);</span>
+            <span class="n">connect</span><span class="p">(</span><span class="kr">thread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DeviceThreadController</span><span class="o">::</span><span class="n">progress_changed</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">DeviceControlWidget</span><span class="o">::</span><span class="n">set_progress_bar</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="cm">/*</span>
@@ -480,7 +483,7 @@
     <span class="p">}</span>
 
     <span class="n">DeviceControlWidget</span><span class="o">::~</span><span class="n">DeviceControlWidget</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">SerialDeviceController</span><span class="o">&amp;</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">DeviceController</span><span class="o">&amp;</span> <span class="nl">device</span> <span class="p">:</span> <span class="n">serial_devices_</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">device</span><span class="p">.</span><span class="n">disconnect</span><span class="p">();</span>
         <span class="p">}</span>
         <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>

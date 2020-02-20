@@ -1,0 +1,72 @@
+
+.. _program_listing_file_src_controller_devicecontroller.h:
+
+Program Listing for File devicecontroller.h
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_controller_devicecontroller.h>` (``src/controller/devicecontroller.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * SerialDevice - Utility class for managing devices connected via USB/Bluetooth.
+    */
+   
+   #ifndef SERIALDEVICE_H
+   #define SERIALDEVICE_H
+   
+   #include <QIODevice>
+   #include <QSharedPointer>
+   #include <QString>
+   #include "model/sectionmapmodel.h"
+   
+   namespace PixelMaestroStudio {
+       class DeviceController {
+           public:
+               enum DeviceType {
+                   Serial,
+                   TCP
+               };
+   
+               static const uint16_t TIMEOUT = 10000;
+   
+               DeviceController() = default;
+               explicit DeviceController(const QString& port_name);
+               bool connect();
+               bool disconnect();
+               int get_capacity() const;
+               QIODevice* get_device() const;
+               QString get_error() const;
+               bool get_open() const;
+               QString get_port_name() const;
+               bool get_autoconnect() const;
+               bool get_real_time_refresh_enabled() const;
+               void flush();
+               void set_autoconnect(const bool autoconnect);
+               void set_capacity(const int capacity);
+               void set_port_name(const QString &port_name);
+               void set_real_time_update(const bool enabled);
+               void write(const QByteArray &array);
+   
+               SectionMapModel* section_map_model = nullptr;
+   
+           private:
+               bool autoconnect_ = false;
+   
+               const int baud_rate_ = 9600;
+   
+               int capacity_ = 1024;
+   
+               QSharedPointer<QIODevice> device_;
+   
+               DeviceType device_type_ = DeviceType::Serial;
+   
+               QString port_name_;
+   
+               bool real_time_updates_ = false;
+       };
+   }
+   
+   #endif // SERIALDEVICE_H

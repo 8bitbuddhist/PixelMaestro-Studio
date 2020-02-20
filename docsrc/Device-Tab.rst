@@ -2,7 +2,7 @@
 Device Tab
 ==========
 
-The Device Tab lets you connect PixelMaestro Studio to devices over a serial, USB, or network connection. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.
+The Device Tab lets you connect PixelMaestro Studio to devices over serial, USB, or network. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.
 
 .. image:: images/device-tab.png
    :target: images/device-tab.png
@@ -13,9 +13,11 @@ Your device must be running a sketch capable of receiving and interpreting seria
 Adding a Device
 ---------------
 
-To add a new device, click the *Add* button. This opens the new device dialog. If connecting to a serial device, you can use the drop-down to view a list of serial devices connected to your PC. You can also enter the location manually. If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].
+To add a new device, click the *Add* button. This opens the new device dialog. If connecting to a serial device, you can use the drop-down to view a list of serial devices connected to your PC. You can also enter the location manually.
 
-.. Note:: PixelMaestro Studio uses port 8077 by default.
+If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].
+
+.. Note:: PixelMaestro Studio uses port 8077 by default. You can change this in the Preferences.
 
 If you want to automatically connect to the device when PixelMaestro Studio loads, check *Auto-connect*. The Live Updates option is explained in more detail in the next section.
 
@@ -24,7 +26,7 @@ Click *Ok* to save your device and add it to the Device List.
 Enabling Live Updates
 ^^^^^^^^^^^^^^^^^^^^^
 
-With Live Updates enabled, any actions you perform in PixelMaestro Studio are automatically sent to a connected device in real-time. Check the *Live Updates* box to enable live updates. This also enables the Map Sections button, which is explained in the next section.
+With Live Updates enabled, any actions you perform in PixelMaestro Studio are automatically sent to connected devices in real-time. Check the *Live Updates* box when adding or editing a device to enable live updates. This also enables the Map Sections button, which is explained in the next section.
 
 For an example of a sketch that allows a device to receive live updates, see the :pmarduino:`USB Arduino sketch <USB_Live>` included in the PixelMaestro library.
 
@@ -55,16 +57,16 @@ By default, Sections are mapped directly to each other. You can change the ``Rem
 Connecting to a Device
 ----------------------
 
-Once a device has been added, it appears in the device list. Disconnected devices appear gray, while connected devices appear white. Select a device and click *Connect* to open a persistent connection to it. Connecting to a device also displays a connection icon next to the tab name. If the device has live updates enabled, it will automatically receive commands as you perform actions in PixelMaestro Studio.
+Once a device has been added, it appears in the device list. Disconnected devices appear gray, while connected devices appear white. Select a device and click *Connect* to connect to it. Sucessfully connecting to a device displays a connection icon next to the tab name. If the device has live updates enabled, it will automatically receive commands as you perform actions in PixelMaestro Studio.
 
-When you are done, click *Disconnect* to close the connection. Devices are also disconnected automatically when closing PixelMaestro Studio.
+When you are done, click *Disconnect* to close the connection. Devices also disconnect automatically when closing PixelMaestro Studio.
 
 Uploading Cuefiles
 ------------------
 
 Live updates only send individual events to your devices. If you want to send your entire Maestro configuration (called the Cuefile), use the *Upload* button.
 
-First, select a device in the Device List. The *Size* text box shows the current size of the Cuefile in bytes. You should check this value against your device's RAM capacity, as well as the size of its CueController buffer. If the Cuefile is larger than either of those, then the Cuefile might not transfer properly.
+First, select a device in the Device List. The *Cuefile Size* text box shows the current size of the Cuefile in bytes. You should check this value against your device's RAM capacity, as well as the size of its CueController buffer. If the Cuefile is larger than either of those, then the Cuefile might not upload properly.
 
 Click *Upload* to send the Cuefile to your device. The progress bar shows how much of the Cue has been uploaded. You can see the contents of the Cuefile by clicking the *Preview* button.
 

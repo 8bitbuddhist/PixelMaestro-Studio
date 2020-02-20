@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -169,7 +168,6 @@
 <span class="cp">#include</span> <span class="cpf">&quot;../widget/maestrocontrolwidget.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QByteArray&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QMainWindow&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QSplitter&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QStandardPaths&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QString&gt;</span><span class="cp"></span>
 
@@ -208,13 +206,10 @@
             <span class="n">QString</span> <span class="n">loaded_cuefile_path_</span><span class="p">;</span>
             <span class="n">MaestroController</span><span class="o">*</span> <span class="n">maestro_controller_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
-            <span class="n">QWidget</span><span class="o">*</span> <span class="n">maestro_drawing_area_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
-
             <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">MaestroDrawingAreaDialog</span><span class="o">&gt;</span> <span class="n">drawing_area_dialog_</span><span class="p">;</span>
 
             <span class="n">MaestroControlWidget</span><span class="o">*</span> <span class="n">maestro_control_widget_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
-            <span class="n">QSplitter</span><span class="o">*</span> <span class="n">splitter_</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
             <span class="n">Ui</span><span class="o">::</span><span class="n">MainWindow</span><span class="o">*</span> <span class="n">ui</span><span class="p">;</span>
 
             <span class="kt">void</span> <span class="nf">initialize_widgets</span><span class="p">();</span>

@@ -1,0 +1,63 @@
+
+.. _file_src_controller_devicethreadcontroller.h:
+
+File devicethreadcontroller.h
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/devicethreadcontroller.h``)
+--------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_devicethreadcontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``QByteArray``
+
+- ``QThread``
+
+- ``devicecontroller.h`` (:ref:`file_src_controller_devicecontroller.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_devicethreadcontroller.cpp`
+
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceThreadController`
+

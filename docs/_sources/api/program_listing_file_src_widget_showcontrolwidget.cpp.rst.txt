@@ -79,7 +79,6 @@ Program Listing for File showcontrolwidget.cpp
        void ShowControlWidget::initialize() {
            // Disable controls by default
            set_show_controls_enabled(false);
-           ui->advancedLockedLabel->setVisible(false);
    
            // Setup timer
            show_timer_.setTimerType(Qt::CoarseTimer);
@@ -334,7 +333,6 @@ Program Listing for File showcontrolwidget.cpp
    
        void ShowControlWidget::set_maestro_locked(bool locked) {
            this->maestro_locked_ = locked;
-           ui->advancedLockedLabel->setVisible(locked);
        }
    
        void ShowControlWidget::timer_refresh() {
@@ -384,7 +382,9 @@ Program Listing for File showcontrolwidget.cpp
        }
    
        void ShowControlWidget::set_show_controls_enabled(bool enabled) {
-           ui->advancedSettingsGroupBox->setEnabled(enabled);
+           ui->timingModeLabel->setEnabled(enabled);
+           ui->timingModeComboBox->setEnabled(enabled);
+           ui->loopCheckBox->setEnabled(enabled);
            ui->eventsGroupBox->setEnabled(enabled);
        }
    

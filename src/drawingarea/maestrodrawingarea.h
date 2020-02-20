@@ -13,7 +13,7 @@
 #include "sectiondrawingarea.h"
 #include "widget/maestrocontrolwidget.h"
 #include <QElapsedTimer>
-#include <QHBoxLayout>
+#include <QGridLayout>
 #include <QTimer>
 #include <QWidget>
 #include <vector>
@@ -53,7 +53,7 @@ namespace PixelMaestroStudio {
 
 		private:
 			/// Layout containing SectionDrawingAreas.
-			QHBoxLayout* section_layout_ = nullptr;
+			QGridLayout* section_layout_ = nullptr;
 
 			/// Tracks the active Section in order to provide highlighting.
 			Section* active_section_ = nullptr;

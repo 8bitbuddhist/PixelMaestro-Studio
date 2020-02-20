@@ -29,9 +29,11 @@ Includes
 --------
 
 
+- ``QApplication``
+
 - ``QElapsedTimer``
 
-- ``QHBoxLayout``
+- ``QGridLayout``
 
 - ``QTimer``
 

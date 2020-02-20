@@ -22,7 +22,7 @@ Program Listing for File devicecontrolwidget.h
    #include <QSharedPointer>
    #include <QVector>
    #include <QWidget>
-   #include "controller/serialdevicecontroller.h"
+   #include "controller/devicecontroller.h"
    #include "dialog/adddevicedialog.h"
    #include "widget/maestrocontrolwidget.h"
    
@@ -66,11 +66,11 @@ Program Listing for File devicecontrolwidget.h
    
                QByteArray maestro_cue_;
    
-               QVector<SerialDeviceController> serial_devices_;
+               QVector<DeviceController> serial_devices_;
    
                void populate_serial_devices();
                void refresh_device_list();
-               void write_to_device(SerialDeviceController& device, const char* out, const int size, bool progress = false);
+               void write_to_device(DeviceController& device, const char* out, const int size, bool progress = false);
        };
    }
    

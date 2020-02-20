@@ -35,11 +35,13 @@ Includes
 
 - ``QFormLayout``
 
+- ``QLayout``
+
 - ``QMessageBox``
 
 - ``QStyleFactory``
 
-- ``QVBoxLayout``
+- ``QWidget``
 
 - ``window/mainwindow.h`` (:ref:`file_src_window_mainwindow.h`)
 

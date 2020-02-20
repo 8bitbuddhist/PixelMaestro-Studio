@@ -89,7 +89,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Preferences.html">Preferences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Main-Window.html">Main Window</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Section-Tab.html">Section Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Animation-Tab.html">Animation Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Canvas-Tab.html">Canvas Tab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Show-Tab.html">Show Tab</a></li>
@@ -166,9 +165,10 @@
 <span class="cp">#include</span> <span class="cpf">&lt;QApplication&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QFontDatabase&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QFormLayout&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QLayout&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QMessageBox&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QStyleFactory&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QVBoxLayout&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QWidget&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
     <span class="c1">// Set application parameters for QSettings</span>
@@ -202,10 +202,6 @@
     <span class="c1">// Set application font</span>
     <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">QFontDatabase</span><span class="o">::</span><span class="n">addApplicationFont</span><span class="p">(</span><span class="s">&quot;:/FiraSans-Regular.ttf&quot;</span><span class="p">);</span>
     <span class="n">app</span><span class="p">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="n">QFontDatabase</span><span class="o">::</span><span class="n">applicationFontFamilies</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">10</span><span class="p">));</span>
-
-    <span class="c1">// Verify main layout is present</span>
-    <span class="n">QVBoxLayout</span> <span class="o">*</span><span class="n">main_layout</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QVBoxLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;mainLayout&quot;</span><span class="p">);</span>
-    <span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">main_layout</span><span class="p">);</span>
 
     <span class="c1">// Enable high DPI support</span>
     <span class="n">app</span><span class="p">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">ApplicationAttribute</span><span class="o">::</span><span class="n">AA_EnableHighDpiScaling</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>

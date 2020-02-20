@@ -475,7 +475,13 @@
   <tabstop>fadeCheckBox</tabstop>
   <tabstop>paletteComboBox</tabstop>
   <tabstop>paletteEditButton</tabstop>
+  <tabstop>centerXSpinBox</tabstop>
+  <tabstop>centerYSpinBox</tabstop>
+  <tabstop>playbackStartStopToolButton</tabstop>
+  <tabstop>currentCycleSpinBox</tabstop>
+  <tabstop>cycleTimeEdit</tabstop>
   <tabstop>cycleIntervalSlider</tabstop>
+  <tabstop>delayTimeEdit</tabstop>
   <tabstop>delayIntervalSlider</tabstop>
  </tabstops>
  <resources>
