@@ -45,6 +45,10 @@ Section Editor
 
 The top-left corner of the window contains the Section editor, which lets you interact with and modify each of the Maestro's Sections and their Layers. Here, you can change settings such as the size, offset, scrolling behavior, and number of Layers for each Section.
 
+.. image:: images/section-controls.png
+    :target: images/section-controls.png
+    :alt: Section editor
+
 Selecting the Active Section
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

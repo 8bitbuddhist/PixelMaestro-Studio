@@ -6,9 +6,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.60] - In Progress
 
 ### Added
-- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. You can set a default port number in the Preferences.
+- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. You can set a default port number in the Preferences, or leave it blank to default to 8077.
 - Added wrap toggle to Section tab.
-- Added icons to palette comboboxes.
+- Added icons to palette, animation, and orientation comboboxes.
 
 ### Changed
 - GUI changes:
@@ -18,6 +18,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Reorganized the Canvas and Show tabs.
 	- Added highlights to play/pause buttons when clicked.
 - Fixed crash when closing PixelMaestro Studio when both Maestro views are closed.
+- Added Cue size to code output in the Cue Interpreter dialog.
 
 ## [v0.51] - 2019-11-26
 

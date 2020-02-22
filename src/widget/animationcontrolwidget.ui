@@ -358,20 +358,36 @@
          <property name="text">
           <string>Horizontal</string>
          </property>
+         <property name="icon">
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/icon_arrow_right.png</normaloff>:/icon_arrow_right.png</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Vertical</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/icon_arrow_up.png</normaloff>:/icon_arrow_up.png</iconset>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Horizontal (Flipped)</string>
          </property>
+         <property name="icon">
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/icon_arrow_left.png</normaloff>:/icon_arrow_left.png</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Vertical (Flipped)</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/icon_arrow_down.png</normaloff>:/icon_arrow_down.png</iconset>
          </property>
         </item>
        </widget>
@@ -396,55 +412,99 @@
          <property name="text">
           <string>Blink</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-blink.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-blink.gif</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Cycle</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-cycle.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-cycle.gif</iconset>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Fire</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-fire.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-fire.gif</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Lightning</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-lightning.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-lightning.gif</iconset>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Mandelbrot</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-mandelbrot.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-mandelbrot.gif</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Plasma</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-plasma.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-plasma.gif</iconset>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Radial</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-radial.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-radial.gif</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Random</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-random.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-random.gif</iconset>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Solid</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-solid.png</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-solid.png</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Sparkle</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-sparkle.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-sparkle.gif</iconset>
+         </property>
         </item>
         <item>
          <property name="text">
           <string>Wave</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-wave.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-wave.gif</iconset>
          </property>
         </item>
        </widget>

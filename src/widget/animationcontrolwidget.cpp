@@ -56,6 +56,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new animation.
 	 */
 	void AnimationControlWidget::on_typeComboBox_currentIndexChanged(int index) {
+		// FIXME: Replace current previews with static screenshots
 		// If the animation is set to "None", remove it
 		if (index == 0) {
 			maestro_control_widget.run_cue(
