@@ -8,7 +8,7 @@ QT       += core gui widgets serialport network
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
-DEFINES += BUILD_VERSION=\\\"v0.51.0\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
+DEFINES += BUILD_VERSION=\\\"v0.60.0\\\" PIXEL_ENABLE_ACCURATE_FADING CANVAS_ENABLE_FONTS
 android {
 QMAKE_LINK += -nostdlib++
 QMAKE_LFLAGS += -nostdlib++
@@ -26,7 +26,7 @@ controller/devicethreadcontroller.cpp \
 drawingarea/maestrodrawingarea.cpp \
 controller/maestrocontroller.cpp \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
-        utility/uiutility.cpp \
+utility/uiutility.cpp \
 window/mainwindow.cpp \
 ../lib/PixelMaestro/src/animation/blinkanimation.cpp \
 ../lib/PixelMaestro/src/animation/cycleanimation.cpp \
@@ -96,7 +96,7 @@ drawingarea/maestrodrawingarea.h \
 controller/maestrocontroller.h \
 ../lib/PixelMaestro/src/canvas/fonts/font.h \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.h \
-        utility/uiutility.h \
+utility/uiutility.h \
 window/mainwindow.h \
 ../lib/PixelMaestro/src/animation/blinkanimation.h \
 ../lib/PixelMaestro/src/animation/cycleanimation.h \

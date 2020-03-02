@@ -6,7 +6,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.60] - In Progress
 
 ### Added
-- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. You can set a default port number in the Preferences, or leave it blank to default to 8077.
+- Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. Leaving the port number blank defaults to port 8077.
 - Added wrap toggle to Section tab.
 - Added icons to palette, animation, and orientation comboboxes.
 

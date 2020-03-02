@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>523</height>
+    <height>403</height>
    </rect>
   </property>
   <property name="palette">
@@ -604,23 +604,6 @@
       <string>Show Options</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Max Event History size</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="eventsTriggerDeviceUpdateCheckBox">
-        <property name="toolTip">
-         <string>When an Event runs, it also triggers a live update on connected devices</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_8">
         <property name="text">
@@ -628,6 +611,13 @@
         </property>
         <property name="wordWrap">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Max Event History size</string>
         </property>
        </widget>
       </item>
@@ -647,23 +637,13 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="portNumSpinBox">
-        <property name="minimum">
-         <number>1024</number>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="eventsTriggerDeviceUpdateCheckBox">
+        <property name="toolTip">
+         <string>When an Event runs, it also triggers a live update on connected devices</string>
         </property>
-        <property name="maximum">
-         <number>65535</number>
-        </property>
-        <property name="value">
-         <number>8077</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Port Number</string>
+         <string/>
         </property>
        </widget>
       </item>

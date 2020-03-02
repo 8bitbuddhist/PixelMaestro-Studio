@@ -17,7 +17,7 @@ To add a new device, click the *Add* button. This opens the new device dialog. I
 
 If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].
 
-.. Note:: PixelMaestro Studio uses port 8077 by default. You can change this in the Preferences.
+.. Note:: PixelMaestro Studio defaults to port 8077.
 
 If you want to automatically connect to the device when PixelMaestro Studio loads, check *Auto-connect*. The Live Updates option is explained in more detail in the next section.
 

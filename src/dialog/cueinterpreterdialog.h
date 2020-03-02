@@ -2,6 +2,7 @@
 #define CUEINTERPRETERDIALOG_H
 
 #include <QDialog>
+#include <QString>
 #include "model/cuemodel.h"
 
 namespace Ui {
@@ -25,6 +26,8 @@ namespace PixelMaestroStudio {
 		private:
 			Ui::CueInterpreterDialog *ui;
 			CueModel model_;
+
+			QString geometry_str = QString("CueInterpreter/Geometry");
 	};
 }
 

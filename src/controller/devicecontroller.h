@@ -20,6 +20,7 @@ namespace PixelMaestroStudio {
 
 			/// Default connect/disconnect timeout to 10 seconds
 			static const uint16_t TIMEOUT = 10000;
+			static const uint16_t PORT_NUM = 8077;
 
 			DeviceController() = default;
 			explicit DeviceController(const QString& port_name);

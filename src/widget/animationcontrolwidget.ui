@@ -413,8 +413,8 @@
           <string>Blink</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-blink.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-blink.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/solid.png</normaloff>:/animations/solid.png</iconset>
          </property>
         </item>
         <item>
@@ -422,8 +422,8 @@
           <string>Cycle</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-cycle.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-cycle.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/cycle.png</normaloff>:/animations/cycle.png</iconset>
          </property>
         </item>
         <item>
@@ -431,8 +431,8 @@
           <string>Fire</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-fire.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-fire.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/fire.png</normaloff>:/animations/fire.png</iconset>
          </property>
         </item>
         <item>
@@ -440,8 +440,8 @@
           <string>Lightning</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-lightning.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-lightning.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/lightning.png</normaloff>:/animations/lightning.png</iconset>
          </property>
         </item>
         <item>
@@ -449,8 +449,8 @@
           <string>Mandelbrot</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-mandelbrot.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-mandelbrot.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/mandelbrot.png</normaloff>:/animations/mandelbrot.png</iconset>
          </property>
         </item>
         <item>
@@ -458,8 +458,8 @@
           <string>Plasma</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-plasma.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-plasma.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/plasma.png</normaloff>:/animations/plasma.png</iconset>
          </property>
         </item>
         <item>
@@ -467,8 +467,8 @@
           <string>Radial</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-radial.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-radial.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/radial.png</normaloff>:/animations/radial.png</iconset>
          </property>
         </item>
         <item>
@@ -476,8 +476,8 @@
           <string>Random</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-random.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-random.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/random.png</normaloff>:/animations/random.png</iconset>
          </property>
         </item>
         <item>
@@ -485,8 +485,8 @@
           <string>Solid</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-solid.png</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-solid.png</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/solid.png</normaloff>:/animations/solid.png</iconset>
          </property>
         </item>
         <item>
@@ -494,8 +494,8 @@
           <string>Sparkle</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-sparkle.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-sparkle.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/sparkle.png</normaloff>:/animations/sparkle.png</iconset>
          </property>
         </item>
         <item>
@@ -503,8 +503,8 @@
           <string>Wave</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-wave.gif</normaloff>../../lib/PixelMaestro/docsrc/images/animations/animation-wave.gif</iconset>
+          <iconset resource="../resources/images/images.qrc">
+           <normaloff>:/animations/wave.png</normaloff>:/animations/wave.png</iconset>
          </property>
         </item>
        </widget>

@@ -25,5 +25,15 @@
         <file>icon_arrow_left.png</file>
         <file>icon_arrow_right.png</file>
         <file>icon_arrow_up.png</file>
+        <file>animations/cycle.png</file>
+        <file>animations/fire.png</file>
+        <file>animations/lightning.png</file>
+        <file>animations/mandelbrot.png</file>
+        <file>animations/plasma.png</file>
+        <file>animations/radial.png</file>
+        <file>animations/random.png</file>
+        <file>animations/solid.png</file>
+        <file>animations/sparkle.png</file>
+        <file>animations/wave.png</file>
     </qresource>
 </RCC>

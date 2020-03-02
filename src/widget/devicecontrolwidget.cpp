@@ -90,7 +90,10 @@ namespace PixelMaestroStudio {
 				refresh_device_list();
 			}
 			else {
-				QMessageBox::warning(this, "Unable to Connect", QString("Unable to connect to device on port " + device.get_port_name() + ": " + device.get_device()->errorString()));
+				QString error = "Unable to connect to device at " + device.get_port_name();
+				if (device.get_device()) error += ": " + device.get_device()->errorString();
+
+				QMessageBox::warning(this, "Unable to Connect", error);
 			}
 		}
 		else {

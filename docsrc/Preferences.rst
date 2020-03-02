@@ -70,8 +70,3 @@ Events Trigger Live Device Updates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a :doc:`live update <Device-Tab>` for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.
-
-Port Number
-^^^^^^^^^^^
-
-*Port Number* sets the default port used to communicate with devices over TCP/IP. This defaults to 8077.

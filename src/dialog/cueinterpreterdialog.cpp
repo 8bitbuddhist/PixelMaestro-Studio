@@ -5,6 +5,7 @@
 #include "utility/cueinterpreter.h"
 #include <QClipboard>
 #include <QSettings>
+#include <QString>
 
 namespace PixelMaestroStudio {
 	CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint32_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
@@ -27,10 +28,16 @@ namespace PixelMaestroStudio {
 			ui->interpretedCueTableView->hideColumn(2);
 		}
 
+		// Restore window geometry
+		restoreGeometry(settings.value(geometry_str).toByteArray());
+
 		ui->interpretedCueTableView->show();
 	}
 
 	void CueInterpreterDialog::on_closeButton_clicked() {
+		QSettings settings;
+		settings.setValue(geometry_str, saveGeometry());
+
 		this->close();
 	}
 
