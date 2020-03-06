@@ -31,7 +31,7 @@ Program Listing for File devicecontroller.cpp
             * If so, initialize a TCP socket.
             * Otherwise, assume a serial device.
             */
-           QRegularExpression exp("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}");
+           QRegularExpression exp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
            bool is_network_device = exp.match(port_name).hasMatch();
            if (is_network_device) {
                this->device_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
@@ -75,6 +75,9 @@ Program Listing for File devicecontroller.cpp
        bool DeviceController::connect() {
            if (device_type_ == DeviceType::Serial) {
                QSerialPort* serial_device = dynamic_cast<QSerialPort*>(device_.data());
+   
+               if (!serial_device) return false;
+   
                serial_device->setPortName(port_name_);
                serial_device->setBaudRate(baud_rate_);
    
@@ -98,10 +101,13 @@ Program Listing for File devicecontroller.cpp
                uint16_t port_num = static_cast<uint16_t>(port.toUInt());
                if (port_num == 0) {
                    QSettings settings;
-                   port_num = static_cast<uint16_t>(settings.value(PreferencesDialog::device_port_num, 8077).toUInt());
+                   port_num = PORT_NUM;
                }
    
                QTcpSocket* tcp_device = dynamic_cast<QTcpSocket*>(device_.data());
+   
+               if (!tcp_device) return false;
+   
                tcp_device->connectToHost(address, port_num);
    
                // Wait for a connection

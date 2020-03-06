@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File cuemodel.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Program Listing for File cuemodel.cpp &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -213,8 +213,9 @@
 
         <span class="c1">// Add C++ Code</span>
         <span class="kt">int</span> <span class="n">current_row</span> <span class="o">=</span> <span class="n">rowCount</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">());</span>
-        <span class="n">QString</span> <span class="n">cue_num</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;cue&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">current_row</span><span class="p">);</span>
-        <span class="n">QString</span> <span class="n">byte_string_prefix</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;uint8_t &quot;</span> <span class="o">+</span> <span class="n">cue_num</span> <span class="o">+</span> <span class="s">&quot;[&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;] = &quot;</span><span class="p">);</span>
+        <span class="n">QString</span> <span class="n">size_str</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;uint8_t size_cue_&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">current_row</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot; = &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;; &quot;</span><span class="p">;</span>
+        <span class="n">QString</span> <span class="n">cue_num</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;cue_&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">current_row</span><span class="p">);</span>
+        <span class="n">QString</span> <span class="n">byte_string_prefix</span> <span class="o">=</span> <span class="n">size_str</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;uint8_t &quot;</span> <span class="o">+</span> <span class="n">cue_num</span> <span class="o">+</span> <span class="s">&quot;[&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="o">::</span><span class="n">number</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;] = &quot;</span><span class="p">);</span>
         <span class="n">QStandardItem</span><span class="o">*</span> <span class="n">byte_array_item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QStandardItem</span><span class="p">(</span><span class="n">byte_string_prefix</span> <span class="o">+</span> <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">convert_cue_to_byte_array_string</span><span class="p">(</span><span class="n">cue</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;;&quot;</span><span class="p">);</span>
         <span class="n">byte_array_item</span><span class="o">-&gt;</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">AlignLeft</span><span class="p">);</span>
         <span class="n">items</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte_array_item</span><span class="p">);</span>
@@ -239,7 +240,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

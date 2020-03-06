@@ -9,6 +9,10 @@ What is PixelMaestro Studio?
 
 PixelMaestro Studio is an application for controlling RGB LEDs, built on the `PixelMaestro library <https://github.com/8bitbuddhist/PixelMaestro/>`_. With PixelMaestro Studio, you can design animations, create dynamic light shows, control lights over USB, and more.
 
+.. image:: images/screenshot.png
+   :target: _images/screenshot.png
+   :alt: PixelMaestro Studio screenshot
+
 To get started with PixelMaestro Studio, check out the :doc:`Getting Started <Getting-Started>` guide. If you want to learn more about the PixelMaestro library, visit the `PixelMaestro GitHub page <https://github.com/8bitbuddhist/PixelMaestro/>`_ or the :pmdocs:`PixelMaestro documentation <index.html>`.
 
 FAQ

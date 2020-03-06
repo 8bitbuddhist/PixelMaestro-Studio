@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File cueinterpreterdialog.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Program Listing for File cueinterpreterdialog.cpp &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -168,6 +168,7 @@
 <span class="cp">#include</span> <span class="cpf">&quot;utility/cueinterpreter.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QClipboard&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QString&gt;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
     <span class="n">CueInterpreterDialog</span><span class="o">::</span><span class="n">CueInterpreterDialog</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">,</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">cuefile</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">:</span> <span class="n">QDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">CueInterpreterDialog</span><span class="p">),</span> <span class="n">model_</span><span class="p">(</span><span class="n">cuefile</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
@@ -190,10 +191,16 @@
             <span class="n">ui</span><span class="o">-&gt;</span><span class="n">interpretedCueTableView</span><span class="o">-&gt;</span><span class="n">hideColumn</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
         <span class="p">}</span>
 
+        <span class="c1">// Restore window geometry</span>
+        <span class="n">restoreGeometry</span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">geometry_str</span><span class="p">).</span><span class="n">toByteArray</span><span class="p">());</span>
+
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">interpretedCueTableView</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">CueInterpreterDialog</span><span class="o">::</span><span class="n">on_closeButton_clicked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
+        <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">geometry_str</span><span class="p">,</span> <span class="n">saveGeometry</span><span class="p">());</span>
+
         <span class="k">this</span><span class="o">-&gt;</span><span class="n">close</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -204,9 +211,18 @@
         <span class="c1">// Copy selected cells to clipboard. It&#39;s important that we preserve the order of selected Cues</span>
         <span class="n">QString</span> <span class="nf">text</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
         <span class="n">QModelIndexList</span> <span class="n">list</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">interpretedCueTableView</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">QModelIndex</span> <span class="n">item</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-            <span class="n">text</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">data</span><span class="p">().</span><span class="n">toString</span><span class="p">()).</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">QModelIndex</span> <span class="n">item</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">text</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">data</span><span class="p">().</span><span class="n">toString</span><span class="p">()).</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span> <span class="c1">// No items selected - copy everything</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">model_</span><span class="p">.</span><span class="n">rowCount</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">QStandardItem</span><span class="o">*</span> <span class="n">item</span> <span class="o">=</span> <span class="n">model_</span><span class="p">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+                <span class="n">text</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">-&gt;</span><span class="n">text</span><span class="p">()).</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
         <span class="p">}</span>
         <span class="n">clipboard</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
     <span class="p">}</span>
@@ -241,7 +257,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

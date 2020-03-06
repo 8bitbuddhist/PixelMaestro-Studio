@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File preferencesdialog.cpp &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Program Listing for File preferencesdialog.cpp &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -199,7 +199,6 @@
     <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_autoconnect</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;Autoconnect&quot;</span><span class="p">);</span>
     <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_capacity</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;Capacity&quot;</span><span class="p">);</span>
     <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_port</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;Port&quot;</span><span class="p">);</span>
-    <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_port_num</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;PortNum&quot;</span><span class="p">);</span>
     <span class="n">QString</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">device_real_time_refresh</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;RealTimeRefresh&quot;</span><span class="p">);</span>
 
     <span class="c1">// Device section map</span>
@@ -243,7 +242,6 @@
         <span class="c1">// Show settings</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistorySizeSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">event_history_max</span><span class="p">,</span> <span class="mi">200</span><span class="p">).</span><span class="n">toInt</span><span class="p">());</span> <span class="c1">// Default to 200</span>
         <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventsTriggerDeviceUpdateCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">events_trigger_device_updates</span><span class="p">,</span> <span class="nb">false</span><span class="p">).</span><span class="n">toBool</span><span class="p">());</span>  <span class="c1">// Default to false</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portNumSpinBox</span><span class="o">-&gt;</span><span class="n">setValue</span><span class="p">(</span><span class="n">settings_</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">device_port_num</span><span class="p">,</span> <span class="mi">8077</span><span class="p">).</span><span class="n">toInt</span><span class="p">());</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">on_buttonBox_accepted</span><span class="p">()</span> <span class="p">{</span>
@@ -260,7 +258,6 @@
         <span class="c1">// Save Show settings</span>
         <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">event_history_max</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistorySizeSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
         <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">events_trigger_device_updates</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventsTriggerDeviceUpdateCheckBox</span><span class="o">-&gt;</span><span class="n">isChecked</span><span class="p">());</span>
-        <span class="n">settings_</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">device_port_num</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">portNumSpinBox</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">());</span>
     <span class="p">}</span>
 
     <span class="n">PreferencesDialog</span><span class="o">::~</span><span class="n">PreferencesDialog</span><span class="p">()</span> <span class="p">{</span>
@@ -282,7 +279,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

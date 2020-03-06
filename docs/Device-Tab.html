@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Device Tab &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Device Tab &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -101,7 +101,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#connecting-to-a-device">Connecting to a Device</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#uploading-cuefiles">Uploading Cuefiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uploading-cuefiles">Uploading Cuefiles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#previewing-cuefiles">Previewing Cuefiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#persisting-cuefiles">Persisting Cuefiles</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/root.html">PixelMaestro Studio API</a></li>
@@ -172,15 +176,15 @@
   <div class="section" id="device-tab">
 <h1>Device Tab<a class="headerlink" href="#device-tab" title="Permalink to this headline">¶</a></h1>
 <p>The Device Tab lets you connect PixelMaestro Studio to devices over serial, USB, or network. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.</p>
-<a class="reference external image-reference" href="images/device-tab.png"><img alt="Device tab" src="_images/device-tab.png" /></a>
+<a class="reference external image-reference" href="_images/device-tab.png"><img alt="Device tab" src="_images/device-tab.png" /></a>
 <p>Your device must be running a sketch capable of receiving and interpreting serial commands from PixelMaestro Studio. You can find samples in the <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro/blob/master/examples/arduino/">PixelMaestro Arduino folder</a>.</p>
 <div class="section" id="adding-a-device">
 <h2>Adding a Device<a class="headerlink" href="#adding-a-device" title="Permalink to this headline">¶</a></h2>
-<p>To add a new device, click the <em>Add</em> button. This opens the new device dialog. If connecting to a serial device, you can use the drop-down to view a list of serial devices connected to your PC. You can also enter the location manually.</p>
+<p>To add a new device, click the <em>Add</em> button. This opens the new device dialog. If connecting to a serial device, you can use the drop-down to view a list of serial devices connected to your PC. You can also type in the port that the device is connected to directly.</p>
 <p>If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>PixelMaestro Studio uses port 8077 by default. You can change this in the Preferences.</p>
+<p>PixelMaestro Studio defaults to port 8077.</p>
 </div>
 <p>If you want to automatically connect to the device when PixelMaestro Studio loads, check <em>Auto-connect</em>. The Live Updates option is explained in more detail in the next section.</p>
 <p>Click <em>Ok</em> to save your device and add it to the Device List.</p>
@@ -191,17 +195,17 @@
 </div>
 <div class="section" id="mapping-sections">
 <h3>Mapping Sections<a class="headerlink" href="#mapping-sections" title="Permalink to this headline">¶</a></h3>
-<p>Section mapping allows you to run commands meant for one Section on another Section.</p>
-<p>For projects with multiple devices, the number of Sections you manage in PixelMaestro Studio may be different than the number of Sections managed by any one device. Because Sections are identified by their index, this means that by default commands sent by PixelMaestro Studio won’t run properly on your devices.</p>
-<p>Section mapping fixes this by letting you change the index in real-time. For example, you might want to run commands for Section 2 on a device that only has one Section, which has an index of 0. You can use a Section map to map Section 2 to Section 0. The next time you perform an action, PixelMaestro Studio automatically translates the command’s Section index from 2 to 0 before sending it to the device.</p>
+<p>Section mapping lets you run commands meant for one Section on another Section.</p>
+<p>Section mapping is useful if you’re using PixelMaestro Studio to control multiple devices. You might have a setup where each device maps to a specific Section. Since PixelMaestro Studio identifies Sections by index, this means that commands sent to your device from PixelMaestro Studio will try to run on a different Section than the one you intended.</p>
+<p>Section mapping fixes this by letting you change the Section index in real-time. For example, your device might have a single Section at index 0, but the corresponding Section in PixelMaestro Studio has an index of 2. Creating a Section map rewrites any commands targeting Section 2 to instead target Section 0 before they’re sent to the device.</p>
 <p>To create a map, click the <em>Map Sections…</em> button. This opens a dialog box showing a table with two columns:</p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Local</span> <span class="pre">Section</span></code> column is the index of each Section in PixelMaestro Studio.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Local</span> <span class="pre">Section</span></code> column is the index of the Section in PixelMaestro Studio.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Remote</span> <span class="pre">Section</span></code> column is the index of the target Section on the remote device.</p></li>
 </ul>
-<p>In the following image, commands that run on Sections 3 and 4 (indices 2 and 3) in PixelMaestro Studio will run on Sections 1 and 2 (indices 0 and 1) on the remote device. Setting the remote Section to -1 prevents the command from being uploaded to the remote device.</p>
-<a class="reference external image-reference" href="images/section-map-dialog.png"><img alt="Section Map Dialog" src="_images/section-map-dialog.png" /></a>
-<p>By default, Sections are mapped directly to each other. You can change the <code class="docutils literal notranslate"><span class="pre">Remote</span> <span class="pre">Section</span></code> column to any numeric value. If the device doesn’t contain a Section with that ID, then the command simply won’t run. Click <em>OK</em> to save your changes, or click <em>Reset</em> to revert back to the default mapping.</p>
+<p>In the following image, commands that run on Sections 3 and 4 (indices 2 and 3) in PixelMaestro Studio will run on Sections 1 and 2 (indices 0 and 1) on the remote device. Setting the remote Section to -1 prevents the command from being uploaded to the remote device altogether.</p>
+<a class="reference external image-reference" href="_images/section-map-dialog.png"><img alt="Section Map Dialog" src="_images/section-map-dialog.png" /></a>
+<p>By default, Sections have a one-to-one mapping. If the device doesn’t contain a Section with that ID, then the command simply won’t run. Click <em>OK</em> to save your changes, or click <em>Reset</em> to revert back to the default mapping.</p>
 </div>
 </div>
 <div class="section" id="connecting-to-a-device">
@@ -212,9 +216,16 @@
 <div class="section" id="uploading-cuefiles">
 <h2>Uploading Cuefiles<a class="headerlink" href="#uploading-cuefiles" title="Permalink to this headline">¶</a></h2>
 <p>Live updates only send individual events to your devices. If you want to send your entire Maestro configuration (called the Cuefile), use the <em>Upload</em> button.</p>
-<p>First, select a device in the Device List. The <em>Cuefile Size</em> text box shows the current size of the Cuefile in bytes. You should check this value against your device’s RAM capacity, as well as the size of its CueController buffer. If the Cuefile is larger than either of those, then the Cuefile might not upload properly.</p>
-<p>Click <em>Upload</em> to send the Cuefile to your device. The progress bar shows how much of the Cue has been uploaded. You can see the contents of the Cuefile by clicking the <em>Preview</em> button.</p>
-<p>The Cuefile contains every instruction needed to reproduce your configuration from scratch. As such, you can store the Cuefile on a device and read it when the device boots to restore your Maestro to a previous state. On an Arduino, you can do this by writing the Cuefile to EEPROM as demonstrated in <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro/blob/master/examples/arduino/USB_EEPROM">this example sketch</a>. If your device has a storage device like an SD card, you can copy any <code class="docutils literal notranslate"><span class="pre">.PMC</span></code> file created in PixelMaestro Studio to the card and pass its contents to the <code class="docutils literal notranslate"><span class="pre">CueController</span></code>.</p>
+<p>First, select a device in the Device List. The <em>Cuefile Size</em> text box shows the current size of the Cuefile in bytes. If your device has limited memory, you can use this to ensure that the Cuefile doesn’t exceed your device’s memory capacity or CueController buffer size.</p>
+<p>Click <em>Upload</em> to send the Cuefile to your device. The progress bar shows how much of the Cue has been uploaded.</p>
+<div class="section" id="previewing-cuefiles">
+<h3>Previewing Cuefiles<a class="headerlink" href="#previewing-cuefiles" title="Permalink to this headline">¶</a></h3>
+<p>You can preview the contents of the Cuefile by clicking the <em>Preview</em> button. This shows each command (or Cue) contained in the Cuefile, as well as their respective sizes. Clicking the <em>Show C++ Code</em> button displays a column with the relevant C++ code as a byte array, which you can use to copy and paste the Cue directly into your source code. You can also use the <em>Copy</em> button with no Cues selected to copy every Cue to your clipboard.</p>
+</div>
+<div class="section" id="persisting-cuefiles">
+<h3>Persisting Cuefiles<a class="headerlink" href="#persisting-cuefiles" title="Permalink to this headline">¶</a></h3>
+<p>A Cuefile contains every instruction needed to configure PixelMaestro from scratch. If you have a device with persistent storage, you can store the Cuefile on the device and read it when the device boots to restore PixelMaestro to its previous state. On an Arduino, you can do this by writing the Cuefile to EEPROM as demonstrated in <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro/blob/master/examples/arduino/USB_EEPROM">this example sketch</a>. Alternatively, if your device uses an SD card or other type of storage, you can copy any <code class="docutils literal notranslate"><span class="pre">.PMC</span></code> file created in PixelMaestro Studio to the card and read its contents into the <code class="docutils literal notranslate"><span class="pre">CueController</span></code> using <code class="docutils literal notranslate"><span class="pre">CueController::read()</span></code>.</p>
+</div>
 </div>
 </div>
 
@@ -238,7 +249,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

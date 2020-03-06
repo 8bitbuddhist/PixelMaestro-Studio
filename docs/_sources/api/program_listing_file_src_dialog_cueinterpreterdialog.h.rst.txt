@@ -14,6 +14,7 @@ Program Listing for File cueinterpreterdialog.h
    #define CUEINTERPRETERDIALOG_H
    
    #include <QDialog>
+   #include <QString>
    #include "model/cuemodel.h"
    
    namespace Ui {
@@ -37,6 +38,8 @@ Program Listing for File cueinterpreterdialog.h
            private:
                Ui::CueInterpreterDialog *ui;
                CueModel model_;
+   
+               QString geometry_str = QString("CueInterpreter/Geometry");
        };
    }
    

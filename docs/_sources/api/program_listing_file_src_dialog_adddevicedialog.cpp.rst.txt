@@ -36,10 +36,10 @@ Program Listing for File adddevicedialog.cpp
            ui->mapSectionsButton->setEnabled(false);
    
            if (QSysInfo::productType() == "windows") {
-               ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.5:80");
+               ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.5:8077");
            }
            else {
-               ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.5:80");
+               ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.5:8077");
            }
    
            if (device != nullptr) {

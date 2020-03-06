@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Main Window &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Main Window &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Animation Tab" href="Animation-Tab.html" />
     <link rel="prev" title="Preferences" href="Preferences.html" /> 
 </head>
 
@@ -90,16 +91,20 @@
 <li class="toctree-l1"><a class="reference internal" href="Getting-Started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Preferences.html">Preferences</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main Window</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#layout">Layout</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#renderer">Renderer</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#control-buttons">Control Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#renderer">Renderer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#control-buttons">Control Buttons</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#editor">Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#editors">Editors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#section-editor">Section Editor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-the-active-section">Selecting the Active Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#managing-layers">Managing Layers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-section-settings">Changing Section Settings</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#section-editor">Section Editor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#other-editors">Other Editors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-editors">Other Editors</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Animation-Tab.html">Animation Tab</a></li>
@@ -174,47 +179,49 @@
   <div class="section" id="main-window">
 <h1>Main Window<a class="headerlink" href="#main-window" title="Permalink to this headline">¶</a></h1>
 <p>The main window provides all of the interactive functionality of PixelMaestro Studio. Here you can create animations, manage attached devices, and interact directly with the LED grid.</p>
-<div class="section" id="layout">
-<h2>Layout<a class="headerlink" href="#layout" title="Permalink to this headline">¶</a></h2>
 <p>The main window is split into two sections: the <em>Renderer</em> and the <em>Editor</em>.</p>
 <div class="section" id="renderer">
-<h3>Renderer<a class="headerlink" href="#renderer" title="Permalink to this headline">¶</a></h3>
-<p>In the top-right corner of the screen is the renderer, which displays the current output from the Maestro. All of the Maestro’s Sections are displayed in a grid (in order from left to right and top to bottom). The Section that currently has focus (called the <em>Active Section</em>) is shown with a white frame.</p>
-<a class="reference external image-reference" href="images/renderer.png"><img alt="Renderer showing nine simultaneous Sections" src="_images/renderer.png" /></a>
+<h2>Renderer<a class="headerlink" href="#renderer" title="Permalink to this headline">¶</a></h2>
+<p>In the top-right corner of the screen is the renderer, which displays the current output from the Maestro. All of the Maestro’s Sections are displayed in a grid (in order from left to right and top to bottom). The Section that currently has focus (called the <em>Active Section</em>) is shown with a white border, and all other Sections have a gray border.</p>
+<a class="reference external image-reference" href="_images/renderer.png"><img alt="Renderer showing nine distinct Sections" src="_images/renderer.png" /></a>
+<p><em>Renderer showing nine distinct Sections with Section 3 selected.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The Maestro Viewer may not be visible if <em>Main Window</em> is not selected as an output in the <a class="reference internal" href="Preferences.html"><span class="doc">Preferences</span></a> screen.</p>
+<p>The Renderer might not be visible if <em>Main Window</em> is not selected as an output in the <a class="reference internal" href="Preferences.html"><span class="doc">Preferences</span></a> screen.</p>
 </div>
 <div class="section" id="control-buttons">
-<h4>Control Buttons<a class="headerlink" href="#control-buttons" title="Permalink to this headline">¶</a></h4>
-<p>Underneath the renderer are four buttons:</p>
-<p>The <em>Lock Button</em> prevents any actions you perform from modifying the Maestro. While the Maestro is locked, the renderer is shown with a bright border to indicate changes won’t affect the Maestro. Certain Maestro-level actions, such as enabling or disabling a <a class="reference internal" href="Show-Tab.html"><span class="doc">Show</span></a>, will remain unlocked.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Performing an action while the Maestro is locked will still generate an <a class="reference internal" href="Show-Tab.html"><span class="doc">event</span></a>.</p>
-</div>
-<p>The <em>Play/Pause Button</em> controls the playback of the Maestro.</p>
-<p>The <em>Sync Button</em> synchronizes any and all timer-based components including Animations, Canvas animations, and Shows, in order to prevent timers from drifting. This also synchronizes remote devices.</p>
+<h3>Control Buttons<a class="headerlink" href="#control-buttons" title="Permalink to this headline">¶</a></h3>
+<p>Beneath the renderer are four buttons for controlling Maestro functionality. They are (in order):</p>
+<p>The <em>Lock Button</em>, which prevents any actions performed from modifying the Maestro. This is useful for generating <a class="reference internal" href="Show-Tab.html"><span class="doc">events</span></a> without changing the Maestro. While the Maestro is locked, a bright border will appear around the renderer. Certain Maestro-level actions, such as enabling or disabling a <a class="reference internal" href="Show-Tab.html"><span class="doc">Show</span></a>, will remain unlocked.</p>
+<p>The <em>Play/Pause Button</em> starts and stops all playback in PixelMaestro Studio. Note that this will also stop the program’s runtime tracker.</p>
+<p>The <em>Sync Button</em> sets all timer-based components to the same time in order to prevent drifting. This includes Animations, Canvas animations, and Shows. This also synchronizes remote devices.</p>
 <p>The <em>Refresh Button</em> refreshes the interface with the Maestro’s current settings. This is used to update the UI after the Maestro is changed by a non-user initiated action (e.g. a Show). If an action causes the UI to go out of sync, this button appears highlighted.</p>
 </div>
 </div>
-<div class="section" id="editor">
-<h3>Editor<a class="headerlink" href="#editor" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="editors">
+<h2>Editors<a class="headerlink" href="#editors" title="Permalink to this headline">¶</a></h2>
 <p>The rest of the main window contains various controls for interacting with the Maestro, starting with the Section editor.</p>
-</div>
-</div>
 <div class="section" id="section-editor">
-<h2>Section Editor<a class="headerlink" href="#section-editor" title="Permalink to this headline">¶</a></h2>
-<p>The top-left corner of the window contains the Section editor, which lets you interact with and modify each of the Maestro’s Sections and their Layers. Here, you can change settings such as the size, offset, scrolling behavior, and number of Layers for each Section.</p>
+<h3>Section Editor<a class="headerlink" href="#section-editor" title="Permalink to this headline">¶</a></h3>
+<p>The top-left corner of the window contains the Section editor, which lets you interact with each of the Maestro’s Sections and their Layers. Here, you can change Section-specific settings such as the size, offset, scrolling behavior, and number of Layers.</p>
+<a class="reference external image-reference" href="_images/section-controls.png"><img alt="Section editor" src="_images/section-controls.png" /></a>
+<div class="section" id="selecting-the-active-section">
+<h4>Selecting the Active Section<a class="headerlink" href="#selecting-the-active-section" title="Permalink to this headline">¶</a></h4>
 <p>PixelMaestro Studio can only modify one Section or Layer at a time. In order to edit a Section or Layer, you must first set it as the <em>Active Section</em>. To do this, open the <em>Section tab</em> select the Section that you want to modify. If you want to modify a Layer, open the <em>Layer tab</em> and do the same.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the renderer is available, the Active Section will be shown with a white frame. You can also change the Active Section by clicking directly on the Section in the renderer.</p>
 </div>
+</div>
+<div class="section" id="managing-layers">
+<h4>Managing Layers<a class="headerlink" href="#managing-layers" title="Permalink to this headline">¶</a></h4>
 <p>Layers let you run additional visuals on top of an existing Section. They are, in essence, a Section on top of a Section.</p>
 <p>To add a Layer, click on the Layer tab and click the + button. This appends a new Layer to the end of the list. To remove the last Layer, click the - button.</p>
 <p>Clicking on a Layer sets it as the Active Section. Because Layers are essentially Sections, they behave the same way as a normal Section would and can be modified using the same controls. To set the base Section as the Active Section, click “Base Section” in the Layer list.</p>
 <p><em>Mix Mode</em> determines how the Layer is rendered on top of the Section. The <em>Alpha</em> spin box controls the amount of blending between the Layer and the base Section, and is only available when the Alpha mix mode is selected. To learn more, read the PixelMaestro <a class="reference external" href="https://8bitbuddhist.github.io/PixelMaestro/Colors.html#mixing-colors">color mixing documentation</a>.</p>
+</div>
+<div class="section" id="changing-section-settings">
+<h4>Changing Section Settings<a class="headerlink" href="#changing-section-settings" title="Permalink to this headline">¶</a></h4>
 <p>Next to the Section list are the Section-related settings, which control the appearance and behavior of the Section or Layer.</p>
 <p><em>Size</em> changes the horizontal and vertical size of the Section in pixels.</p>
 <div class="admonition warning">
@@ -231,8 +238,9 @@
 <p>You can control each Layer’s brightness independently of its parent Section, but a Layer can only be as bright as its parent.</p>
 </div>
 </div>
+</div>
 <div class="section" id="other-editors">
-<h2>Other Editors<a class="headerlink" href="#other-editors" title="Permalink to this headline">¶</a></h2>
+<h3>Other Editors<a class="headerlink" href="#other-editors" title="Permalink to this headline">¶</a></h3>
 <p>The bottom half of the main window contains the editor tab, which provides controls for interacting with the Maestro and performing other actions. It’s split into four tabs:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="Animation-Tab.html"><span class="doc">Animation Tab</span></a></p></li>
@@ -240,6 +248,7 @@
 <li><p><a class="reference internal" href="Show-Tab.html"><span class="doc">Show Tab</span></a></p></li>
 <li><p><a class="reference internal" href="Device-Tab.html"><span class="doc">Device Tab</span></a></p></li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -251,6 +260,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="Animation-Tab.html" class="btn btn-neutral float-right" title="Animation Tab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="Preferences.html" class="btn btn-neutral float-left" title="Preferences" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -261,7 +272,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

@@ -8,7 +8,7 @@ To use a Canvas on the active Section, click *Enable Canvas*.
 
 
 .. image:: images/canvas-controls.png
-   :target: images/canvas-controls.png
+   :target: _images/canvas-controls.png
    :alt: Canvas Tab
 
 

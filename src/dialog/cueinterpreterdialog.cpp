@@ -51,9 +51,18 @@ namespace PixelMaestroStudio {
 		// Copy selected cells to clipboard. It's important that we preserve the order of selected Cues
 		QString text("");
 		QModelIndexList list = ui->interpretedCueTableView->selectionModel()->selectedIndexes();
-		for (int i = 0; i < list.size(); i++) {
-			QModelIndex item = list.at(i);
-			text.append(item.data().toString()).append("\n");
+
+		if (list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				QModelIndex item = list.at(i);
+				text.append(item.data().toString()).append("\n");
+			}
+		}
+		else { // No items selected - copy everything
+			for (int i = 0; i < model_.rowCount(); i++) {
+				QStandardItem* item = model_.item(i, 2);
+				text.append(item->text()).append("\n");
+			}
 		}
 		clipboard->setText(text);
 	}

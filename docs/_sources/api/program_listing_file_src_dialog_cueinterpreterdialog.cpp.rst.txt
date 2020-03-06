@@ -17,6 +17,7 @@ Program Listing for File cueinterpreterdialog.cpp
    #include "utility/cueinterpreter.h"
    #include <QClipboard>
    #include <QSettings>
+   #include <QString>
    
    namespace PixelMaestroStudio {
        CueInterpreterDialog::CueInterpreterDialog(QWidget *parent, uint8_t* cuefile, uint32_t size) : QDialog(parent), ui(new Ui::CueInterpreterDialog), model_(cuefile, size) {
@@ -39,10 +40,16 @@ Program Listing for File cueinterpreterdialog.cpp
                ui->interpretedCueTableView->hideColumn(2);
            }
    
+           // Restore window geometry
+           restoreGeometry(settings.value(geometry_str).toByteArray());
+   
            ui->interpretedCueTableView->show();
        }
    
        void CueInterpreterDialog::on_closeButton_clicked() {
+           QSettings settings;
+           settings.setValue(geometry_str, saveGeometry());
+   
            this->close();
        }
    
@@ -53,9 +60,18 @@ Program Listing for File cueinterpreterdialog.cpp
            // Copy selected cells to clipboard. It's important that we preserve the order of selected Cues
            QString text("");
            QModelIndexList list = ui->interpretedCueTableView->selectionModel()->selectedIndexes();
-           for (int i = 0; i < list.size(); i++) {
-               QModelIndex item = list.at(i);
-               text.append(item.data().toString()).append("\n");
+   
+           if (list.size() > 0) {
+               for (int i = 0; i < list.size(); i++) {
+                   QModelIndex item = list.at(i);
+                   text.append(item.data().toString()).append("\n");
+               }
+           }
+           else { // No items selected - copy everything
+               for (int i = 0; i < model_.rowCount(); i++) {
+                   QStandardItem* item = model_.item(i, 2);
+                   text.append(item->text()).append("\n");
+               }
            }
            clipboard->setText(text);
        }

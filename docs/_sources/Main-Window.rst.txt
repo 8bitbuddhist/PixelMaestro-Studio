@@ -4,46 +4,46 @@ Main Window
 
 The main window provides all of the interactive functionality of PixelMaestro Studio. Here you can create animations, manage attached devices, and interact directly with the LED grid.
 
-Layout
-------
-
 The main window is split into two sections: the *Renderer* and the *Editor*.
 
 Renderer
-^^^^^^^^
+--------
 
-In the top-right corner of the screen is the renderer, which displays the current output from the Maestro. All of the Maestro's Sections are displayed in a grid (in order from left to right and top to bottom). The Section that currently has focus (called the *Active Section*) is shown with a white frame.
+In the top-right corner of the screen is the renderer, which displays the current output from the Maestro. All of the Maestro's Sections are displayed in a grid (in order from left to right and top to bottom). The Section that currently has focus (called the *Active Section*) is shown with a white border, and all other Sections have a gray border.
 
 .. image:: images/renderer.png
-   :target: images/renderer.png
-   :alt: Renderer showing nine simultaneous Sections
+   :target: _images/renderer.png
+   :alt: Renderer showing nine distinct Sections
+*Renderer showing nine distinct Sections with Section 3 selected.*
 
-.. Note:: The Maestro Viewer may not be visible if *Main Window* is not selected as an output in the :doc:`Preferences <Preferences>` screen.
+.. Note:: The Renderer might not be visible if *Main Window* is not selected as an output in the :doc:`Preferences <Preferences>` screen.
 
 Control Buttons
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
-Underneath the renderer are four buttons:
+Beneath the renderer are four buttons for controlling Maestro functionality. They are (in order):
 
-The *Lock Button* prevents any actions you perform from modifying the Maestro. While the Maestro is locked, the renderer is shown with a bright border to indicate changes won't affect the Maestro. Certain Maestro-level actions, such as enabling or disabling a :doc:`Show <Show-Tab>`, will remain unlocked.
+The *Lock Button*, which prevents any actions performed from modifying the Maestro. This is useful for generating :doc:`events <Show-Tab>` without changing the Maestro. While the Maestro is locked, a bright border will appear around the renderer. Certain Maestro-level actions, such as enabling or disabling a :doc:`Show <Show-Tab>`, will remain unlocked.
 
-.. Tip:: Performing an action while the Maestro is locked will still generate an :doc:`event <Show-Tab>`.
+The *Play/Pause Button* starts and stops all playback in PixelMaestro Studio. Note that this will also stop the program's runtime tracker.
 
-The *Play/Pause Button* controls the playback of the Maestro.
-
-The *Sync Button* synchronizes any and all timer-based components including Animations, Canvas animations, and Shows, in order to prevent timers from drifting. This also synchronizes remote devices.
+The *Sync Button* sets all timer-based components to the same time in order to prevent drifting. This includes Animations, Canvas animations, and Shows. This also synchronizes remote devices.
 
 The *Refresh Button* refreshes the interface with the Maestro's current settings. This is used to update the UI after the Maestro is changed by a non-user initiated action (e.g. a Show). If an action causes the UI to go out of sync, this button appears highlighted.
 
-Editor
-^^^^^^
+Editors
+------
 
 The rest of the main window contains various controls for interacting with the Maestro, starting with the Section editor.
 
 Section Editor
---------------
+^^^^^^^^^^^^^^
 
-The top-left corner of the window contains the Section editor, which lets you interact with and modify each of the Maestro's Sections and their Layers. Here, you can change settings such as the size, offset, scrolling behavior, and number of Layers for each Section.
+The top-left corner of the window contains the Section editor, which lets you interact with each of the Maestro's Sections and their Layers. Here, you can change Section-specific settings such as the size, offset, scrolling behavior, and number of Layers.
+
+.. image:: images/section-controls.png
+    :target: _images/section-controls.png
+    :alt: Section editor
 
 Selecting the Active Section
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +85,7 @@ Brightness changes how bright or dim the Section appears. Brightness is a numeri
 .. Tip:: You can control each Layer's brightness independently of its parent Section, but a Layer can only be as bright as its parent.
 
 Other Editors
--------------
+^^^^^^^^^^^^^
 
 The bottom half of the main window contains the editor tab, which provides controls for interacting with the Maestro and performing other actions. It's split into four tabs:
 

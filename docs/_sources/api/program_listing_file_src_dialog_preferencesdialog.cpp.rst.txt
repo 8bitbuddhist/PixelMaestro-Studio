@@ -48,7 +48,6 @@ Program Listing for File preferencesdialog.cpp
        QString PreferencesDialog::device_autoconnect = QStringLiteral("Autoconnect");
        QString PreferencesDialog::device_capacity = QStringLiteral("Capacity");
        QString PreferencesDialog::device_port = QStringLiteral("Port");
-       QString PreferencesDialog::device_port_num = QStringLiteral("PortNum");
        QString PreferencesDialog::device_real_time_refresh = QStringLiteral("RealTimeRefresh");
    
        // Device section map
@@ -92,7 +91,6 @@ Program Listing for File preferencesdialog.cpp
            // Show settings
            ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt()); // Default to 200
            ui->eventsTriggerDeviceUpdateCheckBox->setChecked(settings_.value(events_trigger_device_updates, false).toBool());  // Default to false
-           ui->portNumSpinBox->setValue(settings_.value(device_port_num, 8077).toInt());
        }
    
        void PreferencesDialog::on_buttonBox_accepted() {
@@ -109,7 +107,6 @@ Program Listing for File preferencesdialog.cpp
            // Save Show settings
            settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
            settings_.setValue(events_trigger_device_updates, ui->eventsTriggerDeviceUpdateCheckBox->isChecked());
-           settings_.setValue(device_port_num, ui->portNumSpinBox->value());
        }
    
        PreferencesDialog::~PreferencesDialog() {

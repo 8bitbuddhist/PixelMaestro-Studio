@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File cueinterpreterdialog.h &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Program Listing for File cueinterpreterdialog.h &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -165,6 +165,7 @@
 <span class="cp">#define CUEINTERPRETERDIALOG_H</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;QDialog&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QString&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;model/cuemodel.h&quot;</span><span class="cp"></span>
 
 <span class="k">namespace</span> <span class="n">Ui</span> <span class="p">{</span>
@@ -188,6 +189,8 @@
         <span class="k">private</span><span class="o">:</span>
             <span class="n">Ui</span><span class="o">::</span><span class="n">CueInterpreterDialog</span> <span class="o">*</span><span class="n">ui</span><span class="p">;</span>
             <span class="n">CueModel</span> <span class="n">model_</span><span class="p">;</span>
+
+            <span class="n">QString</span> <span class="n">geometry_str</span> <span class="o">=</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;CueInterpreter/Geometry&quot;</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">}</span>
 
@@ -207,7 +210,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

@@ -6,7 +6,7 @@ The Animation tab is where you can create and modify :pmdocs:`Animations <Animat
 
 
 .. image:: images/animation-tab.png
-   :target: images/animation-tab.png
+   :target: _images/animation-tab.png
    :alt: Animation Controls
 
 
@@ -19,11 +19,9 @@ Select an Animation using the *Type* drop-down. For all Animation types, you can
 * *Reverse*\ : Whether to run the Animation forwards or in reverse.
 * *Fade*\ : Whether to gradually transition between colors or jump from one color to the next.
 
-.. Note:: Not all Animations support the same options.
-
 The *Palette* drop-down lets you select the color palette used to draw the Animation. Continue reading to learn more about customizing Palettes.
 
-.. Tip:: To reapply a Palette after customizing it, simply reselect it from the drop-down.
+.. Tip:: To reapply a Palette after customizing it, reselect it from the drop-down.
 
 The *Center* controls change the location where the Animation is centered on the grid. This only applies to certain Animations, such as ``Radial`` and ``Mandelbrot``.
 
@@ -48,7 +46,7 @@ The Palette Editor lets you create your own custom :pmdocs:`color palettes <Pale
 
 
 .. image:: images/palette-editor.png
-   :target: images/palette-editor.png
+   :target: _images/palette-editor.png
    :alt: Palette Editor
 
 
@@ -65,7 +63,7 @@ To create a new palette, click *New Palette*. Enter a name for the new palette, 
 
 
 .. image:: images/new-palette.png
-   :target: images/new-palette.png
+   :target: _images/new-palette.png
    :alt: New Palette
 
 

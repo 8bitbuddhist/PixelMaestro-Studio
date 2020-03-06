@@ -6,7 +6,7 @@ The Preferences dialog lets you change various options in PixelMaestro Studio.
 
 
 .. image:: images/preferences.png
-   :target: images/preferences.png
+   :target: _images/preferences.png
    :alt: Preferences
 
 

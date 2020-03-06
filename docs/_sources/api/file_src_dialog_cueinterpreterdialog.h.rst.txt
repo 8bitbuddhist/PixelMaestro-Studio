@@ -31,6 +31,8 @@ Includes
 
 - ``QDialog``
 
+- ``QString``
+
 - ``model/cuemodel.h`` (:ref:`file_src_model_cuemodel.h`)
 
 

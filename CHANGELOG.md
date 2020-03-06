@@ -3,7 +3,7 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.60] - In Progress
+## [v0.60] - 2020-03-05
 
 ### Added
 - Added support for connecting network devices. Enter the IP address and port number in the format <IP>:<Port> in place of a serial device URI. Leaving the port number blank defaults to port 8077.

@@ -33,6 +33,8 @@ Includes
 
 - ``QSettings``
 
+- ``QString``
+
 - ``core/maestro.h``
 
 - ``cueinterpreterdialog.h`` (:ref:`file_src_dialog_cueinterpreterdialog.h`)

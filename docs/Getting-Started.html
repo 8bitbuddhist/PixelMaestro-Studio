@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; PixelMaestro Studio 0.50.2 documentation</title>
+  <title>Getting Started &mdash; PixelMaestro Studio 0.60 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -89,9 +89,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Home.html">Home</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#opening-the-program">Opening the Program</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#saving">Saving</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#loading">Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opening-a-cuefile">Opening a Cuefile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#changing-preferences">Changing Preferences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#changing-output-displays">Changing Output Displays</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accessing-documentation">Accessing Documentation</a></li>
@@ -170,20 +169,16 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="opening-the-program">
-<h2>Opening the Program<a class="headerlink" href="#opening-the-program" title="Permalink to this headline">¶</a></h2>
-<p>When you first open PixelMaestro Studio, the main window opens and displays a blank Maestro. You can use the controls provided on the screen to modify the Maestro. The top menu lets you perform global actions such as loading a Maestro, saving, editing preferences, and closing the program.</p>
-<p>To create a new Maestro, click <em>File</em> &gt; <em>New</em>. If your current Maestro has been modified, you’ll be prompted to discard your changes.</p>
-</div>
+<p>Use the <em>File</em> menu to create a new Maestro, open a Cuefile, save your changes, or exit the program. If your current Maestro has been modified, you’ll be prompted to save your changes.</p>
 <div class="section" id="saving">
 <h2>Saving<a class="headerlink" href="#saving" title="Permalink to this headline">¶</a></h2>
-<p>To save your Maestro, click <em>File</em> &gt; <em>Save As</em> and enter the name of the file you want to save to. Maestro configuration files are called <em>Cuefiles</em> and use the extension “.pmc”. To save over a Cuefile that’s currently opened, click <em>File</em> &gt; <em>Save</em>.</p>
+<p>To save your Maestro, click <em>File</em> &gt; <em>Save As</em> and enter the name of the file you want to save to. Maestro configuration files are called <em>Cuefiles</em>, and use the extension <code class="docutils literal notranslate"><span class="pre">.pmc</span></code>. To save over an open Cuefile, click <em>File</em> &gt; <em>Save</em>.</p>
 </div>
-<div class="section" id="loading">
-<h2>Loading<a class="headerlink" href="#loading" title="Permalink to this headline">¶</a></h2>
-<p>To load a Cuefile, click <em>File</em> &gt; <em>Open</em> and select a file with a <code class="docutils literal notranslate"><span class="pre">.pmc</span></code> extension. This will overwrite your current Maestro with the Maestro defined in the Cuefile. You can find several example Cuefiles <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/examples">here</a>.</p>
-<p>You can also merge the configuration stored in a Cuefile into your current Maestro using <em>File</em> &gt; <em>Open and Merge.</em> This will keep your current Maestro, but will apply and/or overwrite any settings defined in the Cuefile.</p>
-<p>Finally, <em>File</em> &gt; <em>Open to Event History</em> loads a Cuefile to the Event History in the <a class="reference internal" href="Show-Tab.html"><span class="doc">Show tab</span></a>.</p>
+<div class="section" id="opening-a-cuefile">
+<h2>Opening a Cuefile<a class="headerlink" href="#opening-a-cuefile" title="Permalink to this headline">¶</a></h2>
+<p>To load a Cuefile, click <em>File</em> &gt; <em>Open</em> and select a file with a <code class="docutils literal notranslate"><span class="pre">.pmc</span></code> extension. This will overwrite your current Maestro settings with the settings defined in the Cuefile. You can find several example Cuefiles <a class="reference external" href="https://github.com/8bitbuddhist/PixelMaestro-Studio/tree/master/examples">here</a>.</p>
+<p>If you don’t want to completely overwrite your current Maestro, you can instead merge in a Cuefile using <em>File</em> &gt; <em>Open and Merge.</em> This will load the Cuefile on top of your Maestro, keeping your existing settings while applying changes from the Cuefile.</p>
+<p>Lastly, <em>File</em> &gt; <em>Open to Event History</em> loads each action stored in a Cuefile and adds it to the Event History in the <a class="reference internal" href="Show-Tab.html"><span class="doc">Show tab</span></a>. This is useful for creating <a class="reference internal" href="Show-Tab.html"><span class="doc">Shows</span></a>.</p>
 </div>
 <div class="section" id="changing-preferences">
 <h2>Changing Preferences<a class="headerlink" href="#changing-preferences" title="Permalink to this headline">¶</a></h2>
@@ -195,7 +190,7 @@
 </div>
 <div class="section" id="accessing-documentation">
 <h2>Accessing Documentation<a class="headerlink" href="#accessing-documentation" title="Permalink to this headline">¶</a></h2>
-<p>If you need help, click <em>File</em> &gt; <em>Help</em> to access this documentation site.</p>
+<p>If you need help, click <em>File</em> &gt; <em>Help</em> to reopen this documentation site.</p>
 </div>
 </div>
 
@@ -219,7 +214,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>
