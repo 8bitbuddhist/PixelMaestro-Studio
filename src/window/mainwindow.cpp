@@ -9,6 +9,37 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/*
+ * TODO: Add shortcut keys
+ * Global (Alt+):
+ *		1-9: select the active Section
+ *		L + 1-9: select the active Layer
+ *		Z+X/Y: size box
+ *		????: scroll box
+ *		O+X/Y: offset box
+ *		M+X/Y: toggle mirror
+ *		W: toggle wrap
+ *		B: brightness box
+ *		L: lock Maestro
+ *		Y: sync
+ *		R: refresh
+ *		A: animation
+ *		C: Canvas
+ *		S: show
+ *		D: device
+ *
+ * Animation:
+ *		T: type
+ *		O: orientation
+ *		P: palette
+ *		C+X/Y: center
+ *		R: reverse
+ *		F: fade
+ *		Shift+P: Edit Palette
+ *		I: cycle interval
+ *		D: delay interval
+ *
+ */
 namespace PixelMaestroStudio {
 
 	MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {

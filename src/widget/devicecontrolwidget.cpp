@@ -340,7 +340,7 @@ namespace PixelMaestroStudio {
 	 * @param size Size of data to send.
 	 */
 	void DeviceControlWidget::write_to_device(DeviceController& device, const char *out, const int size, bool progress) {
-		DeviceThreadController* thread = new DeviceThreadController(device,
+		DeviceThreadController* thread = new DeviceThreadController(std::ref(device),
 														  out,
 														  size);
 
@@ -356,6 +356,7 @@ namespace PixelMaestroStudio {
 		 *
 		 *		Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
 		 *
+		 * Or use std::ref()
 		 */
 
 		//thread->start();

@@ -21,6 +21,7 @@ namespace PixelMaestroStudio {
 			void initialize();
 			void refresh();
 			void refresh_palettes();
+			void enable_cpm_timing(bool use_cpm);
 
 		private slots:
 			void on_typeComboBox_currentIndexChanged(int index);
@@ -48,8 +49,13 @@ namespace PixelMaestroStudio {
 
 			void on_delayTimeEdit_editingFinished();
 
+			void on_cycleSpinBox_editingFinished();
+
+			void on_delaySpinBox_editingFinished();
+
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;
+			bool enable_cpm_ = false;
 			Ui::AnimationControlWidget *ui;
 
 			void add_palette_to_selection(const Palette &palette);

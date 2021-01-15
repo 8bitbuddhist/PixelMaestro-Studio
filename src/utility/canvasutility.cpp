@@ -41,8 +41,6 @@ namespace PixelMaestroStudio {
 		for (uint16_t frame_index = 0; frame_index < framecount; frame_index++) {
 			QImage frame = image.read();
 
-			// NOTE: Scales the image while retaining proportions
-			// frame = frame.scaled(canvas_size, Qt::AspectRatioMode::KeepAspectRatio);
 			frame = frame.convertToFormat(QImage::Format_Indexed8);
 
 			/*

@@ -251,7 +251,7 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Scrolling, offset, mirroring, wrap
+		// Scrolling, offset, mirroring, wrap, and scale
 		Point& offset = section->get_offset();
 		if (offset.x != 0 || offset.y != 0) {
 			write_cue_to_stream(datastream, section_handler->set_offset(section_id, layer_id, offset.x, offset.y));
@@ -268,6 +268,8 @@ namespace PixelMaestroStudio {
 		if (wrap == false) {
 			write_cue_to_stream(datastream, section_handler->set_wrap(section_id, layer_id, wrap));
 		}
+		Section::Scale& scale = section->get_scale();
+		write_cue_to_stream(datastream, section_handler->set_scale(section_id, layer_id, scale.x, scale.y));
 
 		// Save Canvas settings
 		if (save_handlers == nullptr || save_handlers->contains(CueController::Handler::CanvasCueHandler)) {

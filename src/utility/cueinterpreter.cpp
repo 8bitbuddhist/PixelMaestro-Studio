@@ -66,7 +66,8 @@ namespace PixelMaestroStudio {
 													  "Set scroll",
 													  "Set brightness",
 													  "Set mirror",
-													  "Set wrap"});
+													  "Set wrap",
+													  "Set scale"});
 
 	const QStringList CueInterpreter::ShowActions({"Set events",
 												   "Set looping",
@@ -344,6 +345,10 @@ namespace PixelMaestroStudio {
 			case SectionCueHandler::Action::SetOffset:
 				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
 				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
+				break;
+			case SectionCueHandler::Action::SetScale:
+				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
+				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])) + ")");
 				break;
 			case SectionCueHandler::Action::SetScroll:
 				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));

@@ -53,6 +53,10 @@ namespace PixelMaestroStudio {
 
 			void on_sectionListWidget_currentRowChanged(int currentRow);
 
+			void on_scaleXSpinBox_editingFinished();
+
+			void on_scaleYSpinBox_editingFinished();
+
 		private:
 			/// The Section currently being controlled.
 			Section* active_section_ = nullptr;
@@ -62,8 +66,9 @@ namespace PixelMaestroStudio {
 			Ui::SectionControlWidget *ui;
 
 			uint8_t get_num_layers(Section& section);
-			void populate_layer_combobox();
+			void populate_layer_list();
 			void set_offset();
+			void set_scale();
 			void set_scroll();
 			void set_section_size();
 			void set_layer_controls_enabled(bool enabled);

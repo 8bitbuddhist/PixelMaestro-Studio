@@ -132,6 +132,8 @@ namespace PixelMaestroStudio {
 		palettes_.emplace_back(PaletteWrapper("Deep Sea", &colors[0], num_colors, PaletteType::Scaling, ColorPresets::Blue, ColorPresets::Green, true, 0, 0));
 
 		palettes_.emplace_back(PaletteWrapper("Color Wheel", &ColorPresets::Colorwheel[0], 12, PaletteType::Random, Colors::RGB(0, 0, 0), Colors::RGB(0, 0, 0), false, 0, 0));
+
+		// TODO: Have 256 color palette (https://en.wikipedia.org/wiki/8-bit_color)
 	}
 
 	/**

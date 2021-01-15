@@ -129,7 +129,7 @@ namespace PixelMaestroStudio {
 		ui->sectionListWidget->blockSignals(false);
 
 		set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0));
-		populate_layer_combobox();
+		populate_layer_list();
 	}
 
 	/**
@@ -262,6 +262,14 @@ namespace PixelMaestroStudio {
 		set_offset();
 	}
 
+	void SectionControlWidget::on_scaleXSpinBox_editingFinished() {
+		set_scale();
+	}
+
+	void SectionControlWidget::on_scaleYSpinBox_editingFinished() {
+		set_scale();
+	}
+
 	/// Recalculates scroll when horizontal scroll rate changes.
 	void SectionControlWidget::on_scrollXSpinBox_editingFinished() {
 		set_scroll();
@@ -315,7 +323,7 @@ namespace PixelMaestroStudio {
 	void SectionControlWidget::refresh() {
 		// Update the Layer list, but only if the refresh was triggered by a Section, not a Layer
 		if (!get_layer_index()) {
-			populate_layer_combobox();
+			populate_layer_list();
 		}
 
 		// Set dimensions
@@ -390,6 +398,14 @@ namespace PixelMaestroStudio {
 		ui->wrapCheckBox->setChecked(active_section_->get_wrap());
 		ui->wrapCheckBox->blockSignals(false);
 
+		// Set scale
+		ui->scaleXSpinBox->blockSignals(true);
+		ui->scaleYSpinBox->blockSignals(true);
+		ui->scaleXSpinBox->setValue(active_section_->get_scale().x);
+		ui->scaleYSpinBox->setValue(active_section_->get_scale().y);
+		ui->scaleYSpinBox->blockSignals(false);
+		ui->scaleXSpinBox->blockSignals(false);
+
 		// Update brightness
 		uint8_t brightness = active_section_->get_brightness();
 		ui->brightnessSlider->blockSignals(true);
@@ -419,12 +435,12 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Rebuilds the Layer combo box using the current active Section.
+	 * Rebuilds the Layer list using the current active Section.
 	 */
-	void SectionControlWidget::populate_layer_combobox() {
+	void SectionControlWidget::populate_layer_list() {
 		ui->layerListWidget->blockSignals(true);
 		ui->layerListWidget->clear();
-		ui->layerListWidget->addItem("Base Section");
+		ui->layerListWidget->addItem("Base Layer");
 
 		for (uint8_t layer = 0; layer < get_num_layers(*maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
 			ui->layerListWidget->addItem(QString("Layer ") + QString::number(layer + 1));
@@ -473,6 +489,17 @@ namespace PixelMaestroStudio {
 				get_layer_index(),
 				ui->offsetXSpinBox->value(),
 				ui->offsetYSpinBox->value()
+			)
+		);
+	}
+
+	void SectionControlWidget::set_scale() {
+		maestro_control_widget_.run_cue(
+			maestro_control_widget_.section_handler->set_scale(
+				get_section_index(),
+				get_layer_index(),
+				ui->scaleXSpinBox->value(),
+				ui->scaleYSpinBox->value()
 			)
 		);
 	}

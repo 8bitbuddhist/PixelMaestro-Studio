@@ -28,49 +28,41 @@
    </property>
    <item row="0" column="1">
     <layout class="QGridLayout" name="gridSettingsLayout">
-     <item row="1" column="0">
-      <widget class="QLabel" name="scrollLabel">
-       <property name="text">
-        <string>Scroll</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="offsetLabel">
-       <property name="text">
-        <string>Offset</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QSpinBox" name="offsetYSpinBox">
-       <property name="toolTip">
-        <string>Vertical offset</string>
-       </property>
+     <item row="6" column="1">
+      <widget class="QSpinBox" name="brightnessSpinBox">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
        <property name="maximum">
-        <number>65535</number>
+        <number>255</number>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="scrollYSpinBox">
-       <property name="toolTip">
-        <string>Vertical scroll rate</string>
+     <item row="5" column="1">
+      <widget class="QCheckBox" name="wrapCheckBox">
+       <property name="text">
+        <string/>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QCheckBox" name="mirrorYCheckBox">
+       <property name="text">
+        <string>Y axis</string>
        </property>
-       <property name="minimum">
-        <number>-60000</number>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="mirrorLabel">
+       <property name="text">
+        <string>Mirror</string>
        </property>
-       <property name="maximum">
-        <number>60000</number>
-       </property>
-       <property name="singleStep">
-        <number>100</number>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="gridSizeLabel">
+       <property name="text">
+        <string>Size</string>
        </property>
       </widget>
      </item>
@@ -90,75 +82,6 @@
        </property>
        <property name="value">
         <number>10</number>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="gridSizeLabel">
-       <property name="text">
-        <string>Size</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QSpinBox" name="brightnessSpinBox">
-       <property name="maximum">
-        <number>255</number>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Wrap</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="mirrorLabel">
-       <property name="text">
-        <string>Mirror</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="offsetXSpinBox">
-       <property name="toolTip">
-        <string>Horizontal offset</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="maximum">
-        <number>65535</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="mirrorXCheckBox">
-       <property name="text">
-        <string>X axis</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QCheckBox" name="mirrorYCheckBox">
-       <property name="text">
-        <string>Y axis</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QCheckBox" name="wrapCheckBox">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="brightnessLabel">
-       <property name="text">
-        <string>Brightness</string>
        </property>
       </widget>
      </item>
@@ -184,25 +107,30 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="2" colspan="2">
-      <widget class="QSlider" name="brightnessSlider">
+     <item row="2" column="2">
+      <widget class="QSpinBox" name="offsetYSpinBox">
        <property name="toolTip">
-        <string>How bright the Section is (255 indicates full brightness)</string>
+        <string>Vertical offset</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
        <property name="maximum">
-        <number>255</number>
+        <number>65535</number>
        </property>
-       <property name="value">
-        <number>255</number>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="scrollLabel">
+       <property name="text">
+        <string>Scroll</string>
        </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>15</number>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="brightnessLabel">
+       <property name="text">
+        <string>Brightness</string>
        </property>
       </widget>
      </item>
@@ -225,6 +153,102 @@
        </property>
        <property name="value">
         <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QSpinBox" name="scrollYSpinBox">
+       <property name="toolTip">
+        <string>Vertical scroll rate</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <number>-60000</number>
+       </property>
+       <property name="maximum">
+        <number>60000</number>
+       </property>
+       <property name="singleStep">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QCheckBox" name="mirrorXCheckBox">
+       <property name="text">
+        <string>X axis</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="offsetLabel">
+       <property name="text">
+        <string>Offset</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2" colspan="2">
+      <widget class="QSlider" name="brightnessSlider">
+       <property name="toolTip">
+        <string>How bright the Section is (255 indicates full brightness)</string>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>15</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="offsetXSpinBox">
+       <property name="toolTip">
+        <string>Horizontal offset</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="maximum">
+        <number>65535</number>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Wrap</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Scale</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="scaleXSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QSpinBox" name="scaleYSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>

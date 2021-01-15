@@ -175,7 +175,7 @@
                <string>Total runtime</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -219,7 +219,7 @@
                <string>Time since the last event</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -254,7 +254,7 @@
                <string>Uses the format &quot;hours:minutes:seconds.milliseconds&quot;</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="currentSection">
                <enum>QDateTimeEdit::SecondSection</enum>

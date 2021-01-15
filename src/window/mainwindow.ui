@@ -968,6 +968,7 @@
     </property>
     <addaction name="action_Main_Window"/>
     <addaction name="action_Secondary_Window"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -1076,7 +1077,18 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Detached Window</string>
+    <string>&amp;New Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a new window</string>
+   </property>
+  </action>
+  <action name="actionUse_cycles_per_minute_CPM_for_animations">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toggle cycles per minute (CPM) or intervals</string>
    </property>
   </action>
  </widget>

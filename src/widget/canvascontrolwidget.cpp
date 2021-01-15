@@ -613,7 +613,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Create new buttons and connect the color picker to the pushbutton event
-		QLayout* layout = ui->colorPickerScrollAreaWidgetContents->layout();
+		QHBoxLayout* layout = dynamic_cast<QHBoxLayout*>(ui->colorPickerScrollAreaWidgetContents->layout());
 		int insert_index = 1;
 		for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
 			Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
@@ -624,7 +624,7 @@ namespace PixelMaestroStudio {
 			button->setMaximumWidth(ui->colorPickerCancelButton->width());
 			button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
 
-			dynamic_cast<QHBoxLayout*>(layout)->insertWidget(insert_index, button);
+			layout->insertWidget(insert_index, button);
 			++insert_index;
 			canvas_palette_color_group_.addButton(button);
 			connect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));

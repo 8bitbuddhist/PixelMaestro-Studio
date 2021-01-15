@@ -3,6 +3,12 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.61] - In Progress
+
+### Added
+- Added ability to change the scale of a Section.
+- Added BPM option to set Animation timings.
+
 ## [v0.60] - 2020-03-05
 
 ### Added
@@ -17,8 +23,6 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Sections are now displayed in a grid. You can change the width of the grid in the Preferences.
 	- Reorganized the Canvas and Show tabs.
 	- Added highlights to play/pause buttons when clicked.
-- Fixed crash when closing PixelMaestro Studio when both Maestro views are closed.
-- Added Cue size to code output in the Cue Interpreter dialog.
 
 ## [v0.51] - 2019-11-26
 
