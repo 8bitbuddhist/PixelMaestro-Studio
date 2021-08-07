@@ -11,7 +11,7 @@ namespace PixelMaestroStudio {
 												"Section",
 												"Show"});
 
-	const QStringList CueInterpreter::AnimationActions({"Set cycle index",
+	const QStringList CueInterpreter::AnimationActions({"Set frame index",
 														"Set fade",
 														"Set fire options",
 														"Set lightning options",
@@ -165,7 +165,7 @@ namespace PixelMaestroStudio {
 				result.append(": " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
 				result.append(" x " + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])));
 				break;
-			case AnimationCueHandler::Action::SetCycleIndex:
+			case AnimationCueHandler::Action::SetFrameIndex:
 				result.append(": " + QString::number(cue[(uint8_t)AnimationCueHandler::Byte::OptionsByte]));
 				break;
 			case AnimationCueHandler::Action::SetFade:
@@ -347,8 +347,8 @@ namespace PixelMaestroStudio {
 				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 2])) + ")");
 				break;
 			case SectionCueHandler::Action::SetScale:
-				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));
-				result.append("," + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1])) + ")");
+				result.append(": (" + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte]));
+				result.append("," + QString::number(cue[(uint8_t)SectionCueHandler::Byte::OptionsByte + 1]) + ")");
 				break;
 			case SectionCueHandler::Action::SetScroll:
 				result.append(": (" + QString::number(IntByteConvert::byte_to_uint16(&cue[(uint8_t)SectionCueHandler::Byte::OptionsByte])));

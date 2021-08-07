@@ -24,7 +24,6 @@ namespace PixelMaestroStudio {
 			SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id);
 			~SectionDrawingArea() = default;
 			void draw_frame(FrameType type);
-			Section& get_section() const;
 
 		protected:
 			Section& section_;
@@ -47,14 +46,11 @@ namespace PixelMaestroStudio {
 			/// The shape that each Pixel is drawn in. Defaults to square.
 			int pixel_shape_ = 1;
 
-			/// The size of each rendered Pixel.
-			uint16_t radius_ = 20;
+			/// How much to scale the Section before displaying it.
+			float scale_ = 1;
 
 			/// The location where the Section will be rendered.
 			Point section_cursor_;
-
-			/// Index of the Section in the Maestro.
-			uint8_t section_id_;
 
 			Point map_cursor_to_pixel(const QPoint cursor);
 	};

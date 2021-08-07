@@ -40,7 +40,7 @@ $ ./PixelMaestro_Studio
 ## Building PixelMaestro Studio
 
 ### Build Requirements
-- QT 5.12.3 or higher with the QtSerialPort module
+- QT 5.15.2 or higher with the QtSerialPort module
 - [PixelMaestro core library](https://github.com/8bitbuddhist/PixelMaestro) (included as a submodule)
 
 ### Build Instructions (Linux)

@@ -5,8 +5,6 @@
 
 namespace PixelMaestroStudio {
 	SectionDrawingArea::SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id) : QFrame(parent), maestro_drawing_area_(*dynamic_cast<MaestroDrawingArea*>(parent)), section_(section) {
-		this->section_id_ = section_id;
-
 		// Enable mouse tracking
 		this->setMouseTracking(true);
 
@@ -45,25 +43,17 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
-	 * Returns the underlying Section.
-	 * @return Section rendered by this DrawingArea.
-	 */
-	Section& SectionDrawingArea::get_section() const {
-		return this->section_;
-	}
-
-	/**
 	 * Translates the mouse cursor to a PixelMaestro Pixel.
 	 * @param cursor Mouse cursor coordinates.
 	 * @return Pixel coordinate.
 	 */
 	Point SectionDrawingArea::map_cursor_to_pixel(const QPoint cursor) {
-		uint16_t x = cursor.x() - section_cursor_.x;
-		uint16_t y = cursor.y() - section_cursor_.y;
+		uint16_t x = cursor.x() - (section_cursor_.x * scale_);
+		uint16_t y = cursor.y() - (section_cursor_.y * scale_);
 
-		if (radius_ > 0) {
-			x /= radius_;
-			y /= radius_;
+		if (scale_ > 0) {
+			x = (x / scale_) - 1;	// Workaround due to weird alignment issue
+			y /= scale_;
 			if (x >= section_.get_dimensions().x) {
 				x = section_.get_dimensions().x - 1;
 			}
@@ -157,6 +147,7 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::paintEvent(QPaintEvent *event) {
 		QPainter painter(this);
 		painter.setRenderHint(QPainter::Antialiasing);
+		painter.scale(scale_, scale_);
 
 		/*
 		 * Check to see if the Section's changed sizes.
@@ -189,18 +180,23 @@ namespace PixelMaestroStudio {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				rect.setRect(section_cursor_.x + (column * radius_), section_cursor_.y + (row * radius_), radius_, radius_);
+				rect.setRect(section_cursor_.x + column, section_cursor_.y + row, 1, 1);
 				painter.setBrush(brush);
 
 				// Set Pen style.
-				// If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
 				painter.setPen(Qt::PenStyle::NoPen);
+				/*
+				 * If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
+				 *
+				 * FIXME: Moving to QPainter::scale seems to have broken highlighting. Just gonna brush this under the carpet for now.
+				 *
 				if (section_.get_canvas() != nullptr) {
 					Point pixel_pos = map_cursor_to_pixel(cursor_pos_);
 					if (pixel_pos.x == column && pixel_pos.y == row) {
 						painter.setPen(Qt::PenStyle::SolidLine);
 					}
 				}
+				*/
 
 				/*
 				 * Determine which shape to draw.
@@ -229,20 +225,20 @@ namespace PixelMaestroStudio {
 	void SectionDrawingArea::resizeEvent(QResizeEvent *event) {
 		QSize widget_size = this->size();
 
-		// Next, get the max size of each Pixel via the window size.
-		uint16_t max_pixel_width = static_cast<uint16_t>(widget_size.width() / section_.get_dimensions().x);
-		uint16_t max_pixel_height = static_cast<uint16_t>(widget_size.height() / section_.get_dimensions().y);
+		// Get the max size of each Pixel via the window size.
+		float max_pixel_width = widget_size.width() / (float)section_.get_dimensions().x;
+		float max_pixel_height = widget_size.height() / (float)section_.get_dimensions().y;
 
 		// Find the smaller dimension
 		if (max_pixel_width < max_pixel_height) {
-			radius_ = max_pixel_width;
+			scale_ = max_pixel_width;
 		}
 		else {
-			radius_ = max_pixel_height;
+			scale_ = max_pixel_height;
 		}
 
-		// Sets the Section's starting point so that it's aligned horizontally and vertically.
-		section_cursor_.x = (widget_size.width() - (section_.get_dimensions().x * radius_)) / 2;
-		section_cursor_.y = (widget_size.height() - (section_.get_dimensions().y * radius_)) / 2;
+		// Set the Section's starting point so that it's aligned horizontally.
+		section_cursor_.x = ((widget_size.width() / scale_) - section_.get_dimensions().x) / 2;
+		section_cursor_.y = ((widget_size.height() / scale_) - section_.get_dimensions().y) / 2;
 	}
 }

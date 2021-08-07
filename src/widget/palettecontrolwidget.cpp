@@ -84,6 +84,10 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Palette.
 	 */
 	void PaletteControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
+		/*
+		 * TODO: Find ways to optimize palette switching.
+		 *		 Rebuilding QPushButtons takes a long time.
+		 */
 		active_palette_ = &palette_controller_.get_palette(index);
 
 		// Delete existing color buttons

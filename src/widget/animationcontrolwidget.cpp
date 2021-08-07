@@ -135,7 +135,7 @@ namespace PixelMaestroStudio {
 
 	void AnimationControlWidget::on_currentCycleSpinBox_editingFinished() {
 		maestro_control_widget.run_cue(
-			maestro_control_widget.animation_handler->set_cycle_index(
+			maestro_control_widget.animation_handler->set_frame_index(
 				maestro_control_widget.section_control_widget_->get_section_index(),
 				maestro_control_widget.section_control_widget_->get_layer_index(),
 				ui->currentCycleSpinBox->value()
@@ -143,7 +143,7 @@ namespace PixelMaestroStudio {
 		);
 
 		// Refresh box in case the cycle was adjusted
-		uint8_t cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+		uint8_t cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_frame_index();
 		if (cycle != ui->currentCycleSpinBox->value()) {
 			ui->currentCycleSpinBox->setValue(cycle);
 		}
@@ -277,7 +277,7 @@ namespace PixelMaestroStudio {
 				)
 			);
 
-			uint8_t current_cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+			uint8_t current_cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_frame_index();
 			ui->currentCycleSpinBox->setValue(current_cycle);
 		}
 		else {

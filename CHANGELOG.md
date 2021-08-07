@@ -8,6 +8,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 - Added ability to change the scale of a Section.
 - Added BPM option to set Animation timings.
+- Added FPS option to Canvas animation timings.
 
 ## [v0.60] - 2020-03-05
 

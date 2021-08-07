@@ -13,6 +13,7 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 
 		// If the model hasn't been initialized, initialize it
+		// FIXME: Crashes when the device hasn't been initialized yet.
 		if (device.section_map_model == nullptr) {
 			MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parent->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
 			Maestro& maestro = mcw->get_maestro_controller()->get_maestro();

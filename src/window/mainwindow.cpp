@@ -10,22 +10,25 @@
 #include "ui_mainwindow.h"
 
 /*
- * TODO: Add shortcut keys
+ * TODO: Shortcuts (see https://doc.qt.io/qt-5/qshortcut.html)
  * Global (Alt+):
  *		1-9: select the active Section
  *		L + 1-9: select the active Layer
- *		Z+X/Y: size box
- *		????: scroll box
- *		O+X/Y: offset box
+ *		- / =: Previous / next section
+ *		[ / ]: Previous / next layer
+ *		S + X/Y + ←/→: size -+
+ *		C + X/Y + ←/→: scroll -+
+ *		O + X/Y + ←/→: offset -+
  *		M+X/Y: toggle mirror
  *		W: toggle wrap
- *		B: brightness box
+ *		B + ←/→: brightness -+
+ *		P: Global pause
  *		L: lock Maestro
  *		Y: sync
  *		R: refresh
- *		A: animation
- *		C: Canvas
- *		S: show
+ *		A: animation tab
+ *		C: Canvas tab
+ *		S: show tab
  *		D: device
  *
  * Animation:
@@ -36,7 +39,7 @@
  *		R: reverse
  *		F: fade
  *		Shift+P: Edit Palette
- *		I: cycle interval
+ *		I: frame interval
  *		D: delay interval
  *
  */

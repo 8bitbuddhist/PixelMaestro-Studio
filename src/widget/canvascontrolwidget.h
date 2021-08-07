@@ -73,6 +73,8 @@ namespace PixelMaestroStudio {
 
 			void on_frameTimeEdit_editingFinished();
 
+			void on_fpsDoubleSpinBox_editingFinished();
+
 		private:
 			/// Color index storage for Canvases.
 			uint8_t selected_color_index_ = 255;
