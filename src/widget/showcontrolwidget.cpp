@@ -287,6 +287,17 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * Run the currently selected Cue.
+	 */
+	void ShowControlWidget::on_runButton_clicked() {
+		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
+			QTime time = ui->eventTimeEdit->time();
+
+			maestro_control_widget_.run_cue((uint8_t*)event_history_.at(index.row()).data());
+		}
+	}
+
+	/**
 	 * Changes the Show's timing mode.
 	 * @param index New timing mode.
 	 */

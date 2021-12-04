@@ -35,6 +35,7 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::devices = QStringLiteral("Devices");
 	QString PreferencesDialog::device_autoconnect = QStringLiteral("Autoconnect");
 	QString PreferencesDialog::device_capacity = QStringLiteral("Capacity");
+	QString PreferencesDialog::device_connectiontype = QStringLiteral("ConnectionType");
 	QString PreferencesDialog::device_port = QStringLiteral("Port");
 	QString PreferencesDialog::device_real_time_refresh = QStringLiteral("RealTimeRefresh");
 

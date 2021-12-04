@@ -90,6 +90,7 @@ $ make install              // Compiled static Qt libs will be placed in the ins
 ```bash
 $ git clone https://github.com/mxe/mxe.git
 $ cd mxe
+$ git checkout 886f50722a943f4a20580facc2deb96d4779394f
 $ make qtbase qtserialport
 ```
 

@@ -32,6 +32,7 @@ namespace PixelMaestroStudio {
 
 		if (device != nullptr) {
 			ui->autoConnectCheckBox->setChecked(device->get_autoconnect());
+			ui->deviceTypeComboBox->setCurrentIndex(device->get_device_type());
 			ui->liveUpdatesCheckBox->setChecked(device->get_real_time_refresh_enabled());
 			ui->portComboBox->setCurrentText(device->get_port_name());
 		}
@@ -63,6 +64,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Save settings to the device
+		device_->set_device_type((DeviceController::DeviceType)ui->deviceTypeComboBox->currentIndex());
 		device_->set_port_name(ui->portComboBox->currentText());
 		device_->set_real_time_update(ui->liveUpdatesCheckBox->isChecked());
 		device_->set_autoconnect(ui->autoConnectCheckBox->isChecked());
@@ -75,9 +77,11 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(i);
 
 			DeviceController* current_device = const_cast<DeviceController*>(&devices_->at(i));
+			//settings.setValue(PreferencesDialog::device_connectiontype, current_device)
 			settings.setValue(PreferencesDialog::device_port, current_device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, current_device->get_real_time_refresh_enabled());
 			settings.setValue(PreferencesDialog::device_autoconnect, current_device->get_autoconnect());
+			settings.setValue(PreferencesDialog::device_connectiontype, current_device->get_device_type());
 
 			// Save the device's model->
 			SectionMapModel* model = current_device->section_map_model;

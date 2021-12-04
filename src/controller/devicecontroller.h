@@ -28,6 +28,7 @@ namespace PixelMaestroStudio {
 			bool disconnect();
 			int get_capacity() const;
 			QIODevice* get_device() const;
+			DeviceController::DeviceType get_device_type() const;
 			QString get_error() const;
 			bool get_open() const;
 			QString get_port_name() const;
@@ -36,6 +37,7 @@ namespace PixelMaestroStudio {
 			void flush();
 			void set_autoconnect(const bool autoconnect);
 			void set_capacity(const int capacity);
+			void set_device_type(const DeviceController::DeviceType device_type);
 			void set_port_name(const QString &port_name);
 			void set_real_time_update(const bool enabled);
 			void write(const QByteArray &array);

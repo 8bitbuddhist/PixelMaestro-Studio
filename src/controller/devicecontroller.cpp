@@ -151,6 +151,14 @@ namespace PixelMaestroStudio {
 	}
 
 	/**
+	 * @brief Return the connection type.
+	 * @return Connection type.
+	 */
+	DeviceController::DeviceType DeviceController::get_device_type() const {
+		return device_type_;
+	}
+
+	/**
 	 * Returns whether the device is connected and writeable.
 	 * @return True if the device is connected.
 	 */
@@ -203,6 +211,14 @@ namespace PixelMaestroStudio {
 	 */
 	void DeviceController::set_autoconnect(bool autoconnect) {
 		this->autoconnect_ = autoconnect;
+	}
+
+	/**
+	 * @brief Sets the current device type.
+	 * @param device_type Type of device.
+	 */
+	void DeviceController::set_device_type(const DeviceController::DeviceType device_type) {
+		this->device_type_ = device_type;
 	}
 
 	/**

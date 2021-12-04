@@ -49,6 +49,8 @@ namespace PixelMaestroStudio {
 
 			void on_eventQueueWidget_itemDoubleClicked(QListWidgetItem *item);
 
+			void on_runButton_clicked();
+
 		private:
 			static QString time_format;
 

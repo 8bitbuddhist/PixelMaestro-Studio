@@ -375,6 +375,20 @@
                 </property>
                </widget>
               </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="runButton">
+                <property name="toolTip">
+                 <string>Run the selected Event(s)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../resources/images/images.qrc">
+                  <normaloff>:/icon_play.png</normaloff>:/icon_play.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
            </layout>
