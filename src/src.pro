@@ -45,7 +45,6 @@ window/mainwindow.cpp \
 ../lib/PixelMaestro/src/animation/mandelbrotanimation.cpp \
 ../lib/PixelMaestro/src/animation/plasmaanimation.cpp \
 ../lib/PixelMaestro/src/animation/lightninganimation.cpp \
-../lib/PixelMaestro/src/animation/vuanimation.cpp \
 ../lib/PixelMaestro/src/canvas/canvas.cpp \
 ../lib/PixelMaestro/src/cue/event.cpp \
 ../lib/PixelMaestro/src/cue/show.cpp \
@@ -106,7 +105,6 @@ window/mainwindow.h \
 ../lib/PixelMaestro/src/animation/waveanimation.h \
 ../lib/PixelMaestro/src/animation/animation.h \
 ../lib/PixelMaestro/src/animation/animationtype.h \
-../lib/PixelMaestro/src/animation/vuanimation.h \
 ../lib/PixelMaestro/src/core/colors.h \
 ../lib/PixelMaestro/src/core/maestro.h \
 ../lib/PixelMaestro/src/core/pixel.h \

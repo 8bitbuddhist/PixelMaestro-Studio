@@ -32,9 +32,9 @@ Download and run `PixelMaestro_Studio.exe`.
 Download and run `PixelMaestro_Studio`:
 
 ```bash
-$ wget https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/download/{version tag}/PixelMaestro_Studio
-$ chmod +x PixelMaestro_Studio
-$ ./PixelMaestro_Studio
+wget https://github.com/8bitbuddhist/PixelMaestro-Studio/releases/download/{version tag}/PixelMaestro_Studio
+chmod +x PixelMaestro_Studio
+./PixelMaestro_Studio
 ```
 
 ## Building PixelMaestro Studio
@@ -50,9 +50,8 @@ $ ./PixelMaestro_Studio
 	- `git clone https://github.com/8bitbuddhist/PixelMaestro-Studio.git`
 3. Navigate to the newly created repository folder and use `git submodule` to download the PixelMaestro core library:
 	```bash
-	$ cd PixelMaestro-Studio
-	$ git submodule init
-	$ git submodule update
+	cd PixelMaestro-Studio
+	git submodule update --init --recursive
 	```
 4. Use `qmake` to build the project, or if you have Qt Creator installed, open the `PixelMaestro_Studio.pro` file.
 	```bash
@@ -73,24 +72,25 @@ sudo apt install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev 
 Then, clone the Qt Git sources and create a shadow build:
 
 ```bash
-$ git clone https://code.qt.io/qt/qt5.git   // This should also work with Qt sources downloaded from the installer
-$ cd qt5
-$ mkdir build               // shadow build location
-$ mkdir install             // where the static Qt libs will be installed
-$ cd build
-$ ../configure -static -release -prefix ../install -opensource --confirm-license -skip webengine -nomake tests -nomake examples -nomake tools -system-xcb -recheck-all
-$ make -j3                  // -j param specifies the number of cores
-$ make install              // Compiled static Qt libs will be placed in the install dir
+git clone https://code.qt.io/qt/qt5.git   // This should also work with Qt sources downloaded from the installer
+cd qt5
+mkdir build               // shadow build location
+mkdir install             // where the static Qt libs will be installed
+cd build
+../configure -static -release -prefix ../install -opensource --confirm-license -skip webengine -nomake tests -nomake examples -nomake tools -system-xcb -recheck-all
+make -j3                  // -j param specifies the number of cores
+make install              // Compiled static Qt libs will be placed in the install dir
 ```
 
 ### Building MXE
 
-[MXE](https://mxe.cc) is used to build the PixelMaestro Windows executable in Linux.
+[MXE](https://mxe.cc) is used to build the PixelMaestro Windows executable in Linux. `git checkout` changes to a commit that still supports Qt 5..
 
 ```bash
-$ git clone https://github.com/mxe/mxe.git
-$ cd mxe
-$ make qtbase qtserialport
+git clone https://github.com/mxe/mxe.git
+cd mxe
+git checkout 886f50722a943f4a20580facc2deb96d4779394f
+make qtbase qtserialport
 ```
 
 ## Credits
