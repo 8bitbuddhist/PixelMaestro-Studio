@@ -51,8 +51,6 @@ namespace PixelMaestroStudio {
 
 			void on_cycleSpinBox_editingFinished();
 
-			void on_delaySpinBox_editingFinished();
-
 		private:
 			QSharedPointer<QWidget> advanced_controls_widget_;
 			bool enable_cpm_ = false;

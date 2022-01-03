@@ -162,6 +162,11 @@ namespace PixelMaestroStudio {
 		ui->cycleSpinBox->setValue(Timer::millis_to_upm(value));
 		ui->cycleSpinBox->blockSignals(false);
 
+		ui->delayIntervalSlider->blockSignals(true);
+		if (value < ui->delayIntervalSlider->value()) ui->delayIntervalSlider->setValue(value);
+		ui->delayIntervalSlider->setMaximum(value);
+		ui->delayIntervalSlider->blockSignals(false);
+
 		set_animation_timer();
 	}
 
@@ -169,6 +174,7 @@ namespace PixelMaestroStudio {
 		ui->cycleIntervalSlider->setValue(Timer::upm_to_millis(ui->cycleSpinBox->value()));
 	}
 
+	// TODO: Change from updates per minute to updates per second (FPS) to match Canvas
 	void PixelMaestroStudio::AnimationControlWidget::on_cycleTimeEdit_editingFinished() {
 		int millis = ui->cycleTimeEdit->time().msecsSinceStartOfDay();
 		ui->cycleIntervalSlider->blockSignals(true);
@@ -191,15 +197,7 @@ namespace PixelMaestroStudio {
 		ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
 		ui->delayTimeEdit->blockSignals(false);
 
-		ui->delaySpinBox->blockSignals(true);
-		ui->delaySpinBox->setValue(Timer::millis_to_upm(value));
-		ui->delaySpinBox->blockSignals(false);
-
 		set_animation_timer();
-	}
-
-	void AnimationControlWidget::on_delaySpinBox_editingFinished() {
-		ui->delayIntervalSlider->setValue(Timer::upm_to_millis(ui->delaySpinBox->value()));
 	}
 
 	void AnimationControlWidget::on_delayTimeEdit_editingFinished() {
@@ -208,10 +206,6 @@ namespace PixelMaestroStudio {
 		ui->delayIntervalSlider->blockSignals(true);
 		ui->delayIntervalSlider->setValue(millis);
 		ui->delayIntervalSlider->blockSignals(false);
-
-		ui->delaySpinBox->blockSignals(true);
-		ui->delaySpinBox->setValue(Timer::millis_to_upm(millis));
-		ui->delaySpinBox->blockSignals(false);
 
 		set_animation_timer();
 	}
@@ -326,7 +320,6 @@ namespace PixelMaestroStudio {
 			ui->cycleSpinBox->blockSignals(true);
 			ui->cycleTimeEdit->blockSignals(true);
 			ui->delayIntervalSlider->blockSignals(true);
-			ui->delaySpinBox->blockSignals(true);
 			ui->delayTimeEdit->blockSignals(true);
 			ui->centerXSpinBox->blockSignals(true);
 			ui->centerYSpinBox->blockSignals(true);
@@ -337,7 +330,6 @@ namespace PixelMaestroStudio {
 			ui->cycleSpinBox->setValue(Timer::millis_to_upm(animation->get_timer()->get_interval()));
 			ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_interval()));
 			ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
-			ui->delaySpinBox->setValue(Timer::millis_to_upm(animation->get_timer()->get_delay()));
 			ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_delay()));
 			ui->centerXSpinBox->setValue(animation->get_center().x);
 			ui->centerYSpinBox->setValue(animation->get_center().y);
@@ -348,7 +340,6 @@ namespace PixelMaestroStudio {
 			ui->cycleSpinBox->blockSignals(false);
 			ui->cycleTimeEdit->blockSignals(false);
 			ui->delayIntervalSlider->blockSignals(false);
-			ui->delaySpinBox->blockSignals(false);
 			ui->delayTimeEdit->blockSignals(false);
 			ui->centerXSpinBox->blockSignals(false);
 			ui->centerYSpinBox->blockSignals(false);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>693</width>
-    <height>273</height>
+    <height>316</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -110,81 +110,14 @@
       </property>
       <item row="0" column="0">
        <layout class="QGridLayout" name="frameIntervalGridLayout">
-        <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="cycleSpinBox">
-          <property name="maximum">
-           <double>2000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>BPM</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QTimeEdit" name="delayTimeEdit">
-          <property name="toolTip">
-           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
-          </property>
-          <property name="currentSection">
-           <enum>QDateTimeEdit::MinuteSection</enum>
-          </property>
-          <property name="displayFormat">
-           <string>mm:ss.zzz</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QDoubleSpinBox" name="delaySpinBox">
-          <property name="maximum">
-           <double>2000.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="cycleIntervalLabel">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Frame Interval</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>BPM</string>
+           <string>Frames Per Min</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="delayIntervalLabel">
-          <property name="text">
-           <string>Delay Interval</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QTimeEdit" name="cycleTimeEdit">
-          <property name="toolTip">
-           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
-          </property>
-          <property name="currentSection">
-           <enum>QDateTimeEdit::MinuteSection</enum>
-          </property>
-          <property name="displayFormat">
-           <string>mm:ss.zzz</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2" rowspan="2">
+        <item row="0" column="3" rowspan="2">
          <widget class="QSlider" name="cycleIntervalSlider">
           <property name="toolTip">
            <string>Amount of time between animation steps</string>
@@ -218,7 +151,67 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="2" rowspan="2">
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="cycleSpinBox">
+          <property name="maximum">
+           <double>2000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="cycleIntervalLabel">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Frame Interval</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="delayIntervalLabel">
+          <property name="text">
+           <string>Delay Interval</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="4">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QTimeEdit" name="delayTimeEdit">
+          <property name="toolTip">
+           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
+          </property>
+          <property name="currentSection">
+           <enum>QDateTimeEdit::MinuteSection</enum>
+          </property>
+          <property name="displayFormat">
+           <string>mm:ss.zzz</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QTimeEdit" name="cycleTimeEdit">
+          <property name="toolTip">
+           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
+          </property>
+          <property name="currentSection">
+           <enum>QDateTimeEdit::MinuteSection</enum>
+          </property>
+          <property name="displayFormat">
+           <string>mm:ss.zzz</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
          <widget class="QSlider" name="delayIntervalSlider">
           <property name="toolTip">
            <string>The delay before starting the next animation cycle</string>
@@ -237,13 +230,6 @@
           </property>
           <property name="tickInterval">
            <number>200</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
