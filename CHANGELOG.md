@@ -5,10 +5,18 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.61] - In Progress
 
+Corresponds to [PixelMaestro v2.1.2](https://github.com/8bitbuddhist/PixelMaestro/releases/tag/v2.1.2).
+
 ### Added
 - Added ability to change the scale of a Section.
-- Added BPM option to set Animation timings.
-- Added FPS option to Canvas animation timings.
+- Added FPS text box to Animation and animated Canvas timings.
+
+### Changed
+
+- Animation tab: Renamed “cycles” to “frames”.
+- Animation tab: Delay Interval slider will now auto-limit the max value to the frame interval.
+- Animation tab: Fixed issue where the Current Frame text box only displayed `0`.
+- Fixed a bug where disabling X axis scrolling also disabled setting the X axis offset.
 
 ## [v0.60] - 2020-03-05
 

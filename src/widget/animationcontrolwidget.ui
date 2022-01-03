@@ -44,7 +44,7 @@
       <item row="2" column="1">
        <widget class="QSpinBox" name="currentCycleSpinBox">
         <property name="toolTip">
-         <string>Currently displayed cycle</string>
+         <string>The currently displayed frame.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -65,7 +65,7 @@
         <item>
          <widget class="QToolButton" name="playbackStartStopToolButton">
           <property name="toolTip">
-           <string>Play or pause the animation</string>
+           <string>Play or pause the animation.</string>
           </property>
           <property name="text">
            <string>...</string>
@@ -113,7 +113,7 @@
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Frames Per Min</string>
+           <string>Frame Rate</string>
           </property>
          </widget>
         </item>
@@ -153,6 +153,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QDoubleSpinBox" name="cycleSpinBox">
+          <property name="toolTip">
+           <string>How frequently the animation updates.</string>
+          </property>
           <property name="maximum">
            <double>2000.000000000000000</double>
           </property>
@@ -188,7 +191,7 @@
         <item row="3" column="1">
          <widget class="QTimeEdit" name="delayTimeEdit">
           <property name="toolTip">
-           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
+           <string>How long to pause between updates. Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
           </property>
           <property name="currentSection">
            <enum>QDateTimeEdit::MinuteSection</enum>
@@ -201,7 +204,7 @@
         <item row="0" column="1">
          <widget class="QTimeEdit" name="cycleTimeEdit">
           <property name="toolTip">
-           <string>Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
+           <string>The interval between animation updates. Uses the format &quot;minutes:seconds.milliseconds&quot;</string>
           </property>
           <property name="currentSection">
            <enum>QDateTimeEdit::MinuteSection</enum>
@@ -284,7 +287,7 @@
       <item row="1" column="2">
        <widget class="QCheckBox" name="fadeCheckBox">
         <property name="toolTip">
-         <string>Smoothes the animation</string>
+         <string>Smoothes the animation between frames.</string>
         </property>
         <property name="text">
          <string>Fade</string>
@@ -303,7 +306,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Color scheme used in the animation</string>
+         <string>The color scheme used in the animation.</string>
         </property>
         <property name="currentText">
          <string/>
@@ -317,6 +320,9 @@
        <layout class="QHBoxLayout" name="centerLayout">
         <item>
          <widget class="QSpinBox" name="centerXSpinBox">
+          <property name="toolTip">
+           <string>The x coordinate of the animation's center.</string>
+          </property>
           <property name="maximum">
            <number>65535</number>
           </property>
@@ -324,6 +330,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="centerYSpinBox">
+          <property name="toolTip">
+           <string>The y coordinate of the animation's center.</string>
+          </property>
           <property name="maximum">
            <number>65535</number>
           </property>
@@ -334,7 +343,7 @@
       <item row="0" column="2">
        <widget class="QCheckBox" name="reverseCheckBox">
         <property name="toolTip">
-         <string>Play the animation in reverse</string>
+         <string>Play the animation in reverse.</string>
         </property>
         <property name="text">
          <string>Reverse</string>
@@ -377,7 +386,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="orientationComboBox">
         <property name="toolTip">
-         <string>Direction that the animation displays in</string>
+         <string>The direction that the animation displays in.</string>
         </property>
         <item>
          <property name="text">
@@ -426,7 +435,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Type of animation to display</string>
+         <string>The type of animation to display.</string>
         </property>
         <item>
          <property name="text">

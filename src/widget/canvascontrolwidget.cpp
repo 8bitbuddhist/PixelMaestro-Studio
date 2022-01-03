@@ -422,7 +422,7 @@ namespace PixelMaestroStudio {
 		ui->frameTimeEdit->blockSignals(false);
 
 		ui->fpsDoubleSpinBox->blockSignals(true);
-		ui->fpsDoubleSpinBox->setValue(Timer::millis_to_upm(value) / 60);
+		ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(value));
 		ui->fpsDoubleSpinBox->blockSignals(false);
 
 		set_frame_interval();
@@ -438,7 +438,7 @@ namespace PixelMaestroStudio {
 		ui->frameIntervalSlider->blockSignals(false);
 
 		ui->fpsDoubleSpinBox->blockSignals(true);
-		ui->fpsDoubleSpinBox->setValue(Timer::millis_to_upm(time) / 60);
+		ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(time));
 		ui->fpsDoubleSpinBox->blockSignals(false);
 
 		set_frame_interval();
@@ -448,7 +448,7 @@ namespace PixelMaestroStudio {
 	 * @brief CanvasControlWidget::on_tempoDoubleSpinBox_editingFinished Changes the tempo (BPM) of the Canvas animation.
 	 */
 	void CanvasControlWidget::on_fpsDoubleSpinBox_editingFinished() {
-		ui->frameIntervalSlider->setValue(Timer::upm_to_millis(ui->fpsDoubleSpinBox->value()) / 60);
+		ui->frameIntervalSlider->setValue(Timer::ups_to_millis(ui->fpsDoubleSpinBox->value()));
 	}
 
 	/**
@@ -667,7 +667,7 @@ namespace PixelMaestroStudio {
 				uint16_t interval = canvas->get_frame_timer()->get_interval();
 				ui->frameIntervalSlider->setValue(interval);
 				ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(interval));
-				ui->fpsDoubleSpinBox->setValue(Timer::millis_to_upm(interval) / 60);
+				ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(interval));
 			}
 			set_controls_enabled(true);
 

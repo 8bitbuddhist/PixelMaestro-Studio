@@ -529,7 +529,7 @@ namespace PixelMaestroStudio {
 		if (new_x == 0) {
 			ui->offsetXSpinBox->blockSignals(true);
 			ui->offsetXSpinBox->setValue(active_section_->get_offset().x);
-			ui->offsetYSpinBox->blockSignals(false);
+			ui->offsetXSpinBox->blockSignals(false);
 		}
 		if (new_y == 0) {
 			ui->offsetYSpinBox->blockSignals(true);

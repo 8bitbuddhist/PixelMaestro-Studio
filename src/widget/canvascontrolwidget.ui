@@ -81,7 +81,7 @@
             <x>0</x>
             <y>0</y>
             <width>996</width>
-            <height>91</height>
+            <height>90</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -679,7 +679,7 @@
             <item row="6" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>FPS</string>
+               <string>Frame Rate</string>
               </property>
              </widget>
             </item>

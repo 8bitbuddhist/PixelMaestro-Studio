@@ -159,7 +159,7 @@ namespace PixelMaestroStudio {
 		ui->cycleTimeEdit->blockSignals(false);
 
 		ui->cycleSpinBox->blockSignals(true);
-		ui->cycleSpinBox->setValue(Timer::millis_to_upm(value));
+		ui->cycleSpinBox->setValue(Timer::millis_to_ups(value));
 		ui->cycleSpinBox->blockSignals(false);
 
 		ui->delayIntervalSlider->blockSignals(true);
@@ -171,10 +171,10 @@ namespace PixelMaestroStudio {
 	}
 
 	void PixelMaestroStudio::AnimationControlWidget::on_cycleSpinBox_editingFinished() {
-		ui->cycleIntervalSlider->setValue(Timer::upm_to_millis(ui->cycleSpinBox->value()));
+		// FIXME: double check
+		ui->cycleIntervalSlider->setValue(Timer::ups_to_millis(ui->cycleSpinBox->value()));
 	}
 
-	// TODO: Change from updates per minute to updates per second (FPS) to match Canvas
 	void PixelMaestroStudio::AnimationControlWidget::on_cycleTimeEdit_editingFinished() {
 		int millis = ui->cycleTimeEdit->time().msecsSinceStartOfDay();
 		ui->cycleIntervalSlider->blockSignals(true);
@@ -182,7 +182,7 @@ namespace PixelMaestroStudio {
 		ui->cycleIntervalSlider->blockSignals(false);
 
 		ui->cycleSpinBox->blockSignals(true);
-		ui->cycleSpinBox->setValue(Timer::millis_to_upm(millis));
+		ui->cycleSpinBox->setValue(Timer::millis_to_ups(millis));
 		ui->cycleSpinBox->blockSignals(false);
 
 		set_animation_timer();
@@ -327,7 +327,7 @@ namespace PixelMaestroStudio {
 			ui->reverseCheckBox->setChecked(animation->get_reverse());
 			ui->fadeCheckBox->setChecked(animation->get_fade());
 			ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
-			ui->cycleSpinBox->setValue(Timer::millis_to_upm(animation->get_timer()->get_interval()));
+			ui->cycleSpinBox->setValue(Timer::millis_to_ups(animation->get_timer()->get_interval()));
 			ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_interval()));
 			ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
 			ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_delay()));
