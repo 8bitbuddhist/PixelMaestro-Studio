@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../controller/cuesocketcontroller.h"
+#include "../controller/cueservercontroller.h"
 #include "../controller/maestrocontroller.h"
 #include "../widget/maestrocontrolwidget.h"
 #include <QByteArray>

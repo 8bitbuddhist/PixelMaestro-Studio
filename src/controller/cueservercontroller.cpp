@@ -1,4 +1,4 @@
-#include "cuesocketcontroller.h"
+#include "cueservercontroller.h"
 #include "../dialog/preferencesdialog.h"
 #include "../lib/PixelMaestro/src/cue/cuecontroller.h"
 #include <QHostAddress>
@@ -14,7 +14,7 @@ namespace PixelMaestroStudio {
 		connect(tcp_server_.data(), &QTcpServer::newConnection, this, &CueServerController::new_connection);
 
 		QSettings settings;
-		if (!tcp_server_->listen(QHostAddress("127.0.0.1"), settings.value(PreferencesDialog::cue_server_port).toInt())) {
+		if (!tcp_server_->listen(QHostAddress::Any, settings.value(PreferencesDialog::cue_server_port).toInt())) {
 			QMessageBox::critical(parent, tr("Cue Server"),
 								  tr("Unable to start the Cue server. PixelMaestro Studio will not be able to read Cues sent to this device. Error code: %1.")
 								  .arg(tcp_server_->errorString()));
@@ -33,13 +33,16 @@ namespace PixelMaestroStudio {
 	}
 
 	void CueServerController::read_data() {
+		// No point in continuing if nothing can read the cue
+		CueController* controller = &maestro_control_widget_->get_maestro_controller()->get_maestro().get_cue_controller();
+		if (controller == nullptr) return;
+
 		QTcpSocket * senderSocket = dynamic_cast<QTcpSocket*>(sender());
 			if (senderSocket) {
 				bool updated = false;
-				QByteArray data = senderSocket->readAll();
-				for (uint8_t byte : data) {
-					CueController* controller = &maestro_control_widget_->get_maestro_controller()->get_maestro().get_cue_controller();
-					if (controller != nullptr) {
+				while (senderSocket->bytesAvailable()) {
+					QByteArray data = senderSocket->readAll();
+					for (uint8_t byte : data) {
 						updated = controller->read(byte);
 					}
 				}

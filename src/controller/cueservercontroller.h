@@ -1,5 +1,5 @@
-#ifndef CUESOCKETCONTROLLER_H
-#define CUESOCKETCONTROLLER_H
+#ifndef CUESERVERCONTROLLER_H
+#define CUESERVERCONTROLLER_H
 
 #include <QObject>
 #include <QTcpServer>
@@ -22,4 +22,4 @@ namespace PixelMaestroStudio {
 	};
 }
 
-#endif // CUESOCKETCONTROLLER_H
+#endif // CUESERVERCONTROLLER_H

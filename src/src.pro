@@ -21,7 +21,7 @@ QMAKE_CXXFLAGS_RELEASE += -O3
 
 
 SOURCES += main.cpp\
-	controller/cuesocketcontroller.cpp \
+	controller/cueservercontroller.cpp \
 controller/devicecontroller.cpp \
 controller/devicethreadcontroller.cpp \
 drawingarea/maestrodrawingarea.cpp \
@@ -90,7 +90,7 @@ model/cuemodel.cpp \
 dialog/adddevicedialog.cpp
 
 HEADERS += \
-	controller/cuesocketcontroller.h \
+	controller/cueservercontroller.h \
 controller/devicecontroller.h \
 controller/devicethreadcontroller.h \
 drawingarea/maestrodrawingarea.h \
