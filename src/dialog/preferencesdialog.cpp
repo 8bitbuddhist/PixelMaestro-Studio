@@ -60,6 +60,8 @@ namespace PixelMaestroStudio {
 	// "Show" section
 	QString PreferencesDialog::event_history_max = QStringLiteral("Interface/EventHistoryMax");
 	QString PreferencesDialog::events_trigger_device_updates = QStringLiteral("Interface/EventsTriggerDeviceUpdates");
+	QString PreferencesDialog::cue_server_enabled = QStringLiteral("Interface/CueServerEnabled");
+	QString PreferencesDialog::cue_server_port = QStringLiteral("Interface/CueServerPort");
 
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 
@@ -80,6 +82,9 @@ namespace PixelMaestroStudio {
 		// Show settings
 		ui->eventHistorySizeSpinBox->setValue(settings_.value(event_history_max, 200).toInt());	// Default to 200
 		ui->eventsTriggerDeviceUpdateCheckBox->setChecked(settings_.value(events_trigger_device_updates, false).toBool());	// Default to false
+
+		ui->cueServerCheckBox->setChecked(settings_.value(cue_server_enabled, false).toBool());	// Disable Cue server by default
+		ui->cueServerPortSpinBox->setValue(settings_.value(cue_server_port, 8077).toInt());	// Default to port 8077
 	}
 
 	void PreferencesDialog::on_buttonBox_accepted() {
@@ -96,9 +101,17 @@ namespace PixelMaestroStudio {
 		// Save Show settings
 		settings_.setValue(event_history_max, ui->eventHistorySizeSpinBox->value());
 		settings_.setValue(events_trigger_device_updates, ui->eventsTriggerDeviceUpdateCheckBox->isChecked());
+		settings_.setValue(cue_server_enabled, ui->cueServerCheckBox->isChecked());
+		settings_.setValue(cue_server_port, ui->cueServerPortSpinBox->value());
+	}
+
+	void PreferencesDialog::on_cueServerCheckBox_stateChanged(int arg1) {
+		ui->cueServerPortLabel->setEnabled(arg1);
+		ui->cueServerPortSpinBox->setEnabled(arg1);
 	}
 
 	PreferencesDialog::~PreferencesDialog() {
 		delete ui;
 	}
+
 }

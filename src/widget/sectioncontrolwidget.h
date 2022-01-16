@@ -29,8 +29,8 @@ namespace PixelMaestroStudio {
 			void on_gridSizeXSpinBox_editingFinished();
 			void on_gridSizeYSpinBox_editingFinished();
 			void on_scrollXSpinBox_editingFinished();
-			void on_mixModeComboBox_currentIndexChanged(int index);
 			void on_scrollYSpinBox_editingFinished();
+			void on_mixModeComboBox_currentIndexChanged(int index);
 			void on_alphaSpinBox_editingFinished();
 			void on_offsetXSpinBox_editingFinished();
 			void on_offsetYSpinBox_editingFinished();
@@ -53,9 +53,11 @@ namespace PixelMaestroStudio {
 
 			void on_sectionListWidget_currentRowChanged(int currentRow);
 
-			void on_scaleXSpinBox_editingFinished();
+			void scaleYSpinBox_modified();
 
-			void on_scaleYSpinBox_editingFinished();
+			void on_alphaSlider_valueChanged(int value);
+
+			void scaleXSpinBox_modified();
 
 		private:
 			/// The Section currently being controlled.

@@ -24,10 +24,10 @@ namespace PixelMaestroStudio {
 		ui->mapSectionsButton->setEnabled(false);
 
 		if (QSysInfo::productType() == "windows") {
-			ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.5:8077");
+			ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.100:8077");
 		}
 		else {
-			ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.5:8077");
+			ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.100:8077");
 		}
 
 		if (device != nullptr) {
@@ -35,6 +35,10 @@ namespace PixelMaestroStudio {
 			ui->deviceTypeComboBox->setCurrentIndex(device->get_device_type());
 			ui->liveUpdatesCheckBox->setChecked(device->get_real_time_refresh_enabled());
 			ui->portComboBox->setCurrentText(device->get_port_name());
+		}
+		else {
+			// No device detected, i.e. the user clicked "New"
+			ui->liveUpdatesCheckBox->setEnabled(false);
 		}
 
 		populate_serial_devices();

@@ -188,7 +188,7 @@ namespace PixelMaestroStudio {
 				/*
 				 * If Canvas is enabled, draw a light border around the Pixel if the cursor is over it
 				 *
-				 * FIXME: Moving to QPainter::scale seems to have broken highlighting. Just gonna brush this under the carpet for now.
+				 * TODO: Moving to QPainter::scale seems to have broken highlighting. Just gonna brush this under the carpet for now.
 				 *
 				if (section_.get_canvas() != nullptr) {
 					Point pixel_pos = map_cursor_to_pixel(cursor_pos_);

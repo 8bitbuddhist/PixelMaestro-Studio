@@ -1,12 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "../controller/cuesocketcontroller.h"
 #include "../controller/maestrocontroller.h"
 #include "../widget/maestrocontrolwidget.h"
 #include <QByteArray>
 #include <QMainWindow>
 #include <QStandardPaths>
 #include <QString>
+#include <QTcpSocket>
 
 namespace Ui {
 	class MainWindow;
@@ -44,6 +46,9 @@ namespace PixelMaestroStudio {
 			/// Path to the last opened Cuefile.
 			QString loaded_cuefile_path_;
 			MaestroController* maestro_controller_ = nullptr;
+
+			/// Open TCP socket to listen for incoming Cues.
+			QSharedPointer<CueServerController> cue_socket_;
 
 			/// Detached rendering area.
 			QSharedPointer<MaestroDrawingAreaDialog> drawing_area_dialog_;

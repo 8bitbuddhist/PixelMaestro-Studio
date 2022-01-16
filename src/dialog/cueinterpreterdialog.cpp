@@ -8,7 +8,7 @@
 #include <QString>
 
 /**
- *	TODO: Add ability to edit Cues
+ *	NOTE: Maybe add the ability to edit Cues
  *  - Allow users to load and save Cuefiles from the dialog
  *  - Users can delete Cues (e.g. remove a line)
  */

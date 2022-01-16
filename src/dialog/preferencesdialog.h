@@ -35,6 +35,8 @@ namespace PixelMaestroStudio {
 			static QString device_connectiontype;
 			static QString device_real_time_refresh;
 
+			static QString cue_server_enabled;
+			static QString cue_server_port;
 			static QString event_history_max;
 			static QString events_trigger_device_updates;
 
@@ -64,6 +66,8 @@ namespace PixelMaestroStudio {
 
 		private slots:
 			void on_buttonBox_accepted();
+
+			void on_cueServerCheckBox_stateChanged(int arg1);
 
 		private:
 			QSettings settings_;

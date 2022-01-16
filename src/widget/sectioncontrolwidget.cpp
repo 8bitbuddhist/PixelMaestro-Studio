@@ -8,6 +8,10 @@ namespace PixelMaestroStudio {
 			ui(new Ui::SectionControlWidget),
 			maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
 		ui->setupUi(this);
+
+		// Manually connect signals & slots for scale spinboxes. Otherwise, they'll get sent multiple times for some bizarre reason
+		connect(ui->scaleXSpinBox, SIGNAL(editingFinished), this, SLOT(scaleXSpinBox_modified()));
+		connect(ui->scaleXSpinBox, SIGNAL(editingFinished), this, SLOT(scaleYSpinBox_modified()));
 	}
 
 	void SectionControlWidget::on_addLayerButton_clicked() {
@@ -132,18 +136,26 @@ namespace PixelMaestroStudio {
 		populate_layer_list();
 	}
 
-	/**
-	 * Sets the Layer's transparency level.
-	 */
-	void SectionControlWidget::on_alphaSpinBox_editingFinished() {
+	void SectionControlWidget::on_alphaSlider_valueChanged(int value) {
 		maestro_control_widget_.run_cue(
 			maestro_control_widget_.section_handler->set_layer(
 				get_section_index(),
 				get_layer_index(*active_section_->get_parent_section()),
 				active_section_->get_parent_section()->get_layer()->mix_mode,
-				ui->alphaSpinBox->value()
+				value
 			)
 		);
+
+		ui->alphaSpinBox->blockSignals(true);
+		ui->alphaSpinBox->setValue(value);
+		ui->alphaSpinBox->blockSignals(false);
+	}
+
+	/**
+	 * Sets the Layer's transparency level.
+	 */
+	void SectionControlWidget::on_alphaSpinBox_editingFinished() {
+		on_alphaSlider_valueChanged(ui->alphaSpinBox->value());
 	}
 
 	void SectionControlWidget::on_brightnessSlider_valueChanged(int value) {
@@ -249,6 +261,7 @@ namespace PixelMaestroStudio {
 
 		// Enable spin box for alpha only
 		ui->alphaLabel->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
+		ui->alphaSlider->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
 		ui->alphaSpinBox->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
 	}
 
@@ -262,11 +275,11 @@ namespace PixelMaestroStudio {
 		set_offset();
 	}
 
-	void SectionControlWidget::on_scaleXSpinBox_editingFinished() {
+	void SectionControlWidget::scaleXSpinBox_modified() {
 		set_scale();
 	}
 
-	void SectionControlWidget::on_scaleYSpinBox_editingFinished() {
+	void SectionControlWidget::scaleYSpinBox_modified() {
 		set_scale();
 	}
 
@@ -403,8 +416,8 @@ namespace PixelMaestroStudio {
 		ui->scaleYSpinBox->blockSignals(true);
 		ui->scaleXSpinBox->setValue(active_section_->get_scale().x);
 		ui->scaleYSpinBox->setValue(active_section_->get_scale().y);
-		ui->scaleYSpinBox->blockSignals(false);
 		ui->scaleXSpinBox->blockSignals(false);
+		ui->scaleYSpinBox->blockSignals(false);
 
 		// Update brightness
 		uint8_t brightness = active_section_->get_brightness();
@@ -422,12 +435,16 @@ namespace PixelMaestroStudio {
 
 			ui->mixModeComboBox->blockSignals(true);
 			ui->alphaSpinBox->blockSignals(true);
+			ui->alphaSlider->blockSignals(true);
 			ui->mixModeComboBox->setCurrentIndex((uint8_t)layer->mix_mode);
+			ui->alphaSlider->setValue(layer->alpha);
+			ui->alphaSlider->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
 			ui->alphaSpinBox->setValue(layer->alpha);
 			ui->alphaSpinBox->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
 			ui->alphaLabel->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
 			ui->mixModeComboBox->blockSignals(false);
 			ui->alphaSpinBox->blockSignals(false);
+			ui->alphaSlider->blockSignals(false);
 		}
 		else {
 			set_layer_controls_enabled(false);
@@ -475,6 +492,7 @@ namespace PixelMaestroStudio {
 		ui->mixModeLabel->setEnabled(enabled);
 		ui->mixModeComboBox->setEnabled(enabled);
 		ui->alphaLabel->setEnabled(enabled);
+		ui->alphaSlider->setEnabled(enabled);
 		ui->alphaSpinBox->setEnabled(enabled);
 	}
 
@@ -592,4 +610,5 @@ namespace PixelMaestroStudio {
 	SectionControlWidget::~SectionControlWidget() {
 		delete ui;
 	}
+
 }

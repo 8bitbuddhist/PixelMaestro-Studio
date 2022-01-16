@@ -70,6 +70,11 @@ namespace PixelMaestroStudio {
 			this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
 		}
 
+		//If enabled, open TCP socket to listen for incoming Cues
+		if (settings.value(PreferencesDialog::cue_server_enabled).toBool()) {
+			this->cue_socket_ = QSharedPointer<CueServerController>(new CueServerController(this, *maestro_control_widget_));
+		}
+
 		set_active_cuefile("");
 
 		initialization_complete = true;

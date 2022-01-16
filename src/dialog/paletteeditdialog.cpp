@@ -9,7 +9,7 @@
 #include "ui_paletteeditdialog.h"
 #include "widget/palettecontrolwidget.h"
 
-// TODO: Allow editing color ranges as opposed to having to edit an entire Palette all at once
+// NOTE: Consider allowing editing a range of colors instead of having to basically recreate the entire Palette all at once.
 namespace PixelMaestroStudio {
 	/**
 	 * Constructor.

@@ -171,7 +171,6 @@ namespace PixelMaestroStudio {
 	}
 
 	void PixelMaestroStudio::AnimationControlWidget::on_cycleSpinBox_editingFinished() {
-		// FIXME: double check
 		ui->cycleIntervalSlider->setValue(Timer::ups_to_millis(ui->cycleSpinBox->value()));
 	}
 

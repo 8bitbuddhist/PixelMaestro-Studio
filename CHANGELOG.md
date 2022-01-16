@@ -5,11 +5,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.61] - In Progress
 
-Corresponds to [PixelMaestro v2.1.2](https://github.com/8bitbuddhist/PixelMaestro/releases/tag/v2.1.2).
+[PixelMaestro v2.1.2](https://github.com/8bitbuddhist/PixelMaestro/releases/tag/v2.1.2).
 
 ### Added
-- Added ability to change the scale of a Section.
-- Added FPS text box to Animation and animated Canvas timings.
+- New option to scale a Section along the x and/or y axes.
+- Animation and Canvas timers now display the FPS (frames per second) next to the interval.
+- Added the ability to read Cues sent over the network. You can enable the Cue server in Preferences.
 
 ### Changed
 

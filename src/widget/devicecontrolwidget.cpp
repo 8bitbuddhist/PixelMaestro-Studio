@@ -351,12 +351,7 @@ namespace PixelMaestroStudio {
 		}
 
 		/*
-		 * NOTE: Device pointer becomes invalid when using Thread::start(), likely due to invalid memory access.
-		 *		Need to make the DeviceThreadController and output thread-safe before sending it to a separate thread.
-		 *
-		 *		Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
-		 *
-		 * Or use std::ref()
+		 * TODO: Completely rewrite threading logic. See https://doc.qt.io/qt-5/thread-basics.html.
 		 */
 
 		//thread->start();

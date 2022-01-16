@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>343</width>
-    <height>300</height>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
       <string>If true, the second half of the palette will scale back from the last color to the first color</string>
      </property>
      <property name="text">
-      <string>Mirror Palette?</string>
+      <string>Mirror colors</string>
      </property>
     </widget>
    </item>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>448</width>
+    <width>467</width>
     <height>233</height>
    </rect>
   </property>
@@ -243,12 +243,30 @@
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
+       <property name="keyboardTracking">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
       </widget>
      </item>
      <item row="3" column="2">
       <widget class="QSpinBox" name="scaleYSpinBox">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="keyboardTracking">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
        </property>
       </widget>
      </item>
@@ -257,7 +275,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="sectionTab">
       <attribute name="title">
@@ -278,30 +296,51 @@
        <string>Layers</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="4" column="0">
-        <widget class="QLabel" name="alphaLabel">
-         <property name="text">
-          <string>Alpha</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QListWidget" name="layerListWidget">
+         <property name="defaultDropAction">
+          <enum>Qt::IgnoreAction</enum>
          </property>
         </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="mixModeLabel">
+         <property name="text">
+          <string>Mix Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <layout class="QHBoxLayout" name="alphaLayout">
+         <item>
+          <widget class="QSpinBox" name="alphaSpinBox">
+           <property name="toolTip">
+            <string>The Layer's transparency level</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="singleStep">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="alphaSlider">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="4" column="1">
-        <widget class="QSpinBox" name="alphaSpinBox">
-         <property name="toolTip">
-          <string>The Layer's transparency level</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-         <property name="singleStep">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
         <widget class="QComboBox" name="mixModeComboBox">
          <property name="toolTip">
           <string>How the Layer is rendered onto the previous Layer</string>
@@ -328,37 +367,47 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="mixModeLabel">
-         <property name="text">
-          <string>Mix Mode</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0" colspan="2">
-        <widget class="QListWidget" name="layerListWidget">
-         <property name="defaultDropAction">
-          <enum>Qt::IgnoreAction</enum>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="layerControlsHorizontalLayout">
+         <item>
+          <widget class="QPushButton" name="addLayerButton">
+           <property name="toolTip">
+            <string>Add a Layer</string>
+           </property>
+           <property name="text">
+            <string>&amp;Add</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="removeLayerButton">
+           <property name="toolTip">
+            <string>Remove the last Layer</string>
+           </property>
+           <property name="text">
+            <string>&amp;Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="addLayerButton">
-         <property name="toolTip">
-          <string>Add a Layer</string>
-         </property>
+       <item row="6" column="0">
+        <widget class="QLabel" name="alphaLabel">
          <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="removeLayerButton">
-         <property name="toolTip">
-          <string>Remove the last Layer</string>
-         </property>
-         <property name="text">
-          <string>-</string>
+          <string>Alpha</string>
          </property>
         </widget>
        </item>
@@ -371,11 +420,8 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>sectionListWidget</tabstop>
-  <tabstop>addLayerButton</tabstop>
-  <tabstop>removeLayerButton</tabstop>
   <tabstop>layerListWidget</tabstop>
   <tabstop>mixModeComboBox</tabstop>
-  <tabstop>alphaSpinBox</tabstop>
   <tabstop>gridSizeXSpinBox</tabstop>
   <tabstop>gridSizeYSpinBox</tabstop>
   <tabstop>scrollXSpinBox</tabstop>
