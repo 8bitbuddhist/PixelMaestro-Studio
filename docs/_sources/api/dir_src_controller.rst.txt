@@ -15,6 +15,8 @@ Directory controller
 Files
 -----
 
+- :ref:`file_src_controller_cueservercontroller.cpp`
+- :ref:`file_src_controller_cueservercontroller.h`
 - :ref:`file_src_controller_devicecontroller.cpp`
 - :ref:`file_src_controller_devicecontroller.h`
 - :ref:`file_src_controller_devicethreadcontroller.cpp`

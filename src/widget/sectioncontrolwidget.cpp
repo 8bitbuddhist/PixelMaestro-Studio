@@ -10,8 +10,8 @@ namespace PixelMaestroStudio {
 		ui->setupUi(this);
 
 		// Manually connect signals & slots for scale spinboxes. Otherwise, they'll get sent multiple times for some bizarre reason
-		connect(ui->scaleXSpinBox, SIGNAL(editingFinished), this, SLOT(scaleXSpinBox_modified()));
-		connect(ui->scaleXSpinBox, SIGNAL(editingFinished), this, SLOT(scaleYSpinBox_modified()));
+		connect(ui->scaleXSpinBox, &QSpinBox::editingFinished, this, &SectionControlWidget::scaleXSpinBox_modified);
+		connect(ui->scaleXSpinBox, &QSpinBox::editingFinished, this, &SectionControlWidget::scaleYSpinBox_modified);
 	}
 
 	void SectionControlWidget::on_addLayerButton_clicked() {

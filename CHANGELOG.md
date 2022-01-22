@@ -3,19 +3,20 @@ All notable changes to PixelMaestro Studio will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.61] - In Progress
+## [v0.70] - In Progress
 
-[PixelMaestro v2.1.2](https://github.com/8bitbuddhist/PixelMaestro/releases/tag/v2.1.2).
+Based on [PixelMaestro v2.2.0](https://github.com/8bitbuddhist/PixelMaestro/releases/tag/v2.2.0).
 
 ### Added
 - New option to scale a Section along the x and/or y axes.
-- Animation and Canvas timers now display the FPS (frames per second) next to the interval.
-- Added the ability to read Cues sent over the network. You can enable the Cue server in Preferences.
+- Animation and Canvas timers now display the Frame Rate (frames per second) next to the interval.
+- Added the Cue Server, which can read and execute Cues sent over the network. You can enable the Cue Server and set the listening port in the Preferences.
+- Added the option to hide confirmation boxes. If you want to display them again, click "Reset confirmation dialogs" in the Preferences.
 
 ### Changed
 
 - Animation tab: Renamed “cycles” to “frames”.
-- Animation tab: Delay Interval slider will now auto-limit the max value to the frame interval.
+- Animation tab: Delay Interval slider will now auto-limit the max value based on the Frame Interval.
 - Animation tab: Fixed issue where the Current Frame text box only displayed `0`.
 - Fixed a bug where disabling X axis scrolling also disabled setting the X axis offset.
 

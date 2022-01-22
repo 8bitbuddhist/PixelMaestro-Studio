@@ -36,7 +36,6 @@ Program Listing for File sectiondrawingarea.h
                SectionDrawingArea(QWidget* parent, Section& section, uint8_t section_id);
                ~SectionDrawingArea() = default;
                void draw_frame(FrameType type);
-               Section& get_section() const;
    
            protected:
                Section& section_;
@@ -55,11 +54,9 @@ Program Listing for File sectiondrawingarea.h
    
                int pixel_shape_ = 1;
    
-               uint16_t radius_ = 20;
+               float scale_ = 1;
    
                Point section_cursor_;
-   
-               uint8_t section_id_;
    
                Point map_cursor_to_pixel(const QPoint cursor);
        };

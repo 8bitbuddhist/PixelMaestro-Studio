@@ -12,6 +12,20 @@ Namespace PixelMaestroStudio
 
 
 
+Detailed Description
+--------------------
+
+NOTE: Maybe add the ability to edit Cues
+
+- Allow users to load and save Cuefiles from the dialog
+
+- Users can delete Cues (e.g. remove a line) 
+
+
+
+
+
+
 
 Classes
 -------
@@ -32,6 +46,8 @@ Classes
 - :ref:`exhale_class_classPixelMaestroStudio_1_1CueInterpreterDialog`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1CueModel`
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1CueServerController`
 
 - :ref:`exhale_class_classPixelMaestroStudio_1_1DeviceController`
 

@@ -13,6 +13,7 @@ namespace PixelMaestroStudio {
 
 			static QSharedPointer<QPixmap> generate_palette_thumbnail(PaletteController::PaletteWrapper& palette);
 			static void highlight_widget(QWidget* button, bool highlight);
+			static int show_confirm_message_box(QString preferencesdialog_msgbox, QString title, QString text, QWidget* parent = nullptr);
 	};
 }
 

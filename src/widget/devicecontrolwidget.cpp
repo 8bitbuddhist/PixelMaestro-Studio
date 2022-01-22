@@ -20,6 +20,7 @@
 #include "ui_devicecontrolwidget.h"
 #include "controller/devicecontroller.h"
 #include "controller/devicethreadcontroller.h"
+#include "utility/uiutility.h"
 
 namespace PixelMaestroStudio {
 	DeviceControlWidget::DeviceControlWidget(QWidget *parent) :
@@ -133,8 +134,8 @@ namespace PixelMaestroStudio {
 		int selected = ui->serialOutputListWidget->currentRow();
 		if (selected < 0) return;
 
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Remove Device", "Are you sure you want to remove this device from your saved devices?", QMessageBox::Yes | QMessageBox::No);
+		int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_remove_device, "Remove Device", "Are you sure you want to remove this device from your saved devices?", this);
+
 		if (confirm == QMessageBox::Yes) {
 			serial_devices_.removeAt(selected);
 			refresh_device_list();
@@ -219,8 +220,6 @@ namespace PixelMaestroStudio {
 		CueController* controller = &this->maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
 
 		for (DeviceController device : serial_devices_) {
-			// TODO: Move to separate thread
-
 			// Copy the Cue for each device
 			QByteArray out = QByteArray(reinterpret_cast<const char*>(cue), size);
 
@@ -318,8 +317,6 @@ namespace PixelMaestroStudio {
 
 	/**
 	 * Regenerates the Maestro Cuefile and updates the size in the UI.
-	 *
-	 * TODO: Move to separate thread
 	 */
 	void DeviceControlWidget::update_cuefile_size() {
 		// Calculate and display the size of the current Maestro configuration

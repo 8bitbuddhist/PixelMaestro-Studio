@@ -37,6 +37,8 @@ Includes
 
 - ``animationcontrolwidget.h`` (:ref:`file_src_widget_animationcontrolwidget.h`)
 
+- ``cmath``
+
 - ``controller/palettecontroller.h`` (:ref:`file_src_controller_palettecontroller.h`)
 
 - ``ui_animationcontrolwidget.h``

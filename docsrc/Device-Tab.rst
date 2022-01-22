@@ -2,7 +2,7 @@
 Device Tab
 ==========
 
-The Device Tab lets you connect PixelMaestro Studio to devices over serial, USB, or network. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.
+The Device Tab lets you connect PixelMaestro Studio to devices over serial, USB, or TCP. This lets you send commands to devices that interact directly with LED hardware, such as an Arduino.
 
 .. image:: images/device-tab.png
    :target: _images/device-tab.png
@@ -18,6 +18,8 @@ To add a new device, click the *Add* button. This opens the new device dialog. I
 If connecting to a network device, enter the IP address (and optionally, the port number) of the device using the format [IP]:[Port].
 
 .. Note:: PixelMaestro Studio defaults to port 8077.
+
+Use the *Connection Type* drop-down to select the type of device you're connecting to. 
 
 If you want to automatically connect to the device when PixelMaestro Studio loads, check *Auto-connect*. The Live Updates option is explained in more detail in the next section.
 

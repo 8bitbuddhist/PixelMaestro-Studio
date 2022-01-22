@@ -61,6 +61,14 @@ namespace PixelMaestroStudio {
 			static QString section_map_local;
 			static QString section_map_remote;
 
+			static QString msgbox_hide_close_maestro;
+			static QString msgbox_hide_clear_canvas;
+			static QString msgbox_hide_clear_section_mappings;
+			static QString msgbox_hide_delete_palette;
+			static QString msgbox_hide_remove_device;
+			static QString msgbox_hide_sync_timers;
+			static QString msgbox_hide_reset_palettes;
+
 			explicit PreferencesDialog(QWidget *parent = 0);
 			~PreferencesDialog();
 
@@ -68,6 +76,8 @@ namespace PixelMaestroStudio {
 			void on_buttonBox_accepted();
 
 			void on_cueServerCheckBox_stateChanged(int arg1);
+
+			void on_resetConfirmButton_clicked();
 
 		private:
 			QSettings settings_;

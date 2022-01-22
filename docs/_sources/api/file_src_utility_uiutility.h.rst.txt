@@ -41,15 +41,21 @@ Included By
 -----------
 
 
+- :ref:`file_src_dialog_sectionmapdialog.cpp`
+
 - :ref:`file_src_utility_uiutility.cpp`
 
 - :ref:`file_src_widget_animationcontrolwidget.cpp`
 
 - :ref:`file_src_widget_canvascontrolwidget.cpp`
 
+- :ref:`file_src_widget_devicecontrolwidget.cpp`
+
 - :ref:`file_src_widget_maestrocontrolwidget.cpp`
 
 - :ref:`file_src_widget_palettecontrolwidget.cpp`
+
+- :ref:`file_src_window_mainwindow.cpp`
 
 
 

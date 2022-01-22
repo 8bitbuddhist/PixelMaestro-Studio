@@ -39,6 +39,8 @@ Included By
 -----------
 
 
+- :ref:`file_src_controller_cueservercontroller.cpp`
+
 - :ref:`file_src_controller_devicecontroller.cpp`
 
 - :ref:`file_src_controller_maestrocontroller.cpp`
@@ -51,15 +53,23 @@ Included By
 
 - :ref:`file_src_dialog_preferencesdialog.cpp`
 
+- :ref:`file_src_dialog_sectionmapdialog.cpp`
+
 - :ref:`file_src_drawingarea_maestrodrawingarea.cpp`
 
 - :ref:`file_src_drawingarea_sectiondrawingarea.cpp`
 
 - :ref:`file_src_utility_cueinterpreter.cpp`
 
+- :ref:`file_src_utility_uiutility.cpp`
+
+- :ref:`file_src_widget_canvascontrolwidget.cpp`
+
 - :ref:`file_src_widget_devicecontrolwidget.cpp`
 
 - :ref:`file_src_widget_maestrocontrolwidget.cpp`
+
+- :ref:`file_src_widget_palettecontrolwidget.cpp`
 
 - :ref:`file_src_widget_showcontrolwidget.cpp`
 

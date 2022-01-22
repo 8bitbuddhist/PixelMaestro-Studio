@@ -83,7 +83,7 @@ $ make -j3                  // -j param specifies the number of cores
 $ make install              // Compiled static Qt libs will be placed in the install dir
 ```
 
-### Building MXE
+### Building MXE (cross-compiling for Windows)
 
 [MXE](https://mxe.cc) is used to build the PixelMaestro Windows executable in Linux.
 
@@ -93,6 +93,24 @@ $ cd mxe
 $ git checkout 886f50722a943f4a20580facc2deb96d4779394f
 $ make qtbase qtserialport
 ```
+
+### Building for WebAssembly
+
+Qt for WebAssembly is used to generate PixelMaestro for websites. Follow the instructions for installing and setting up [Qt for WebAssembly](https://doc.qt.io/qtcreator/creator-setup-webassembly.html).
+
+
+```bash
+
+```
+
+
+### Building Docs
+
+Docs are built using Doxygen and Sphinx. To build docs:
+
+1. Install doxygen
+2. Run `pip install -r docsrc/requirements.txt`
+3. Run `sphinx-build -b html docsrc/ docs/`
 
 ## Credits
 

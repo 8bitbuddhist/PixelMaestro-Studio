@@ -291,8 +291,6 @@ namespace PixelMaestroStudio {
 	 */
 	void ShowControlWidget::on_runButton_clicked() {
 		for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
-			QTime time = ui->eventTimeEdit->time();
-
 			maestro_control_widget_.run_cue((uint8_t*)event_history_.at(index.row()).data());
 		}
 	}
@@ -395,9 +393,9 @@ namespace PixelMaestroStudio {
 			ui->relativeTimeLineEdit->setText(QTime::fromMSecsSinceStartOfDay(relative_time).toString(time_format));
 		}
 
-		// Get the last event that ran, and if it differs from the Show's current index, update the Event Queue
-		if (last_event_time_ != show->get_last_time()) {
-			last_event_time_ = show->get_last_time();
+		// Check to see if an Event has ran
+		if (last_event_index_ != show->get_current_index()) {
+			last_event_index_ = show->get_current_index();
 
 			// Darken events that have already ran
 			for (int i = 0; i < ui->eventQueueWidget->count(); i++) {
@@ -409,6 +407,7 @@ namespace PixelMaestroStudio {
 				}
 			}
 
+#ifndef NO_SERIALPORT
 			// If live update triggers are enabled, send the last Event's queue to the DeviceControlWidget to be sent to remote devices
 			QSettings settings;
 			if (settings.value(PreferencesDialog::events_trigger_device_updates, false).toBool()) {
@@ -421,7 +420,7 @@ namespace PixelMaestroStudio {
 					);
 				}
 			}
-
+#endif
 			maestro_control_widget_.set_refresh_needed(true);
 		}
 	}

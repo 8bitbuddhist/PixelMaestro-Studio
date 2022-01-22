@@ -34,3 +34,10 @@ To add an Event to the Show, select one or more Events in the History. Enter the
 To remove an Event from the Queue, select the Event(s) in the Queue and click the left arrow. To move Event(s) up or down in the Queue, select the Event(s) that you want to reorder and click the up or down arrows.
 
 To completely clear either the History or Queue of its Events, click the **X** button next to either list.
+
+Running an Event
+----------------
+
+You can immediately run any Event in the Event History by selecting it, then clicking the run/play button in the center of the Show controls.
+
+.. Tip: You can select multiple Events by holding Shift or Alt while clicking on them.

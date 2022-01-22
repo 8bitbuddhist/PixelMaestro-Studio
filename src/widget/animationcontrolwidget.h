@@ -10,6 +10,7 @@ namespace Ui {
 }
 
 namespace PixelMaestroStudio {
+	class MaestroControlWidget;
 	class AnimationControlWidget : public QWidget {
 		Q_OBJECT
 

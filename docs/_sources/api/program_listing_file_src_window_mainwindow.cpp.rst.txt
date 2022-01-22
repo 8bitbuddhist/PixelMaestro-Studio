@@ -20,7 +20,42 @@ Program Listing for File mainwindow.cpp
    #include "dialog/preferencesdialog.h"
    #include "mainwindow.h"
    #include "ui_mainwindow.h"
+   #include "utility/uiutility.h"
    
+   /*
+    * TODO: Shortcuts (see https://doc.qt.io/qt-5/qshortcut.html)
+    * Global (Alt+):
+    *      1-9: select the active Section
+    *      L + 1-9: select the active Layer
+    *      - / =: Previous / next section
+    *      [ / ]: Previous / next layer
+    *      S + X/Y + ←/→: size -+
+    *      C + X/Y + ←/→: scroll -+
+    *      O + X/Y + ←/→: offset -+
+    *      M+X/Y: toggle mirror
+    *      W: toggle wrap
+    *      B + ←/→: brightness -+
+    *      P: Global pause
+    *      L: lock Maestro
+    *      Y: sync
+    *      R: refresh
+    *      A: animation tab
+    *      C: Canvas tab
+    *      S: show tab
+    *      D: device
+    *
+    * Animation:
+    *      T: type
+    *      O: orientation
+    *      P: palette
+    *      C+X/Y: center
+    *      R: reverse
+    *      F: fade
+    *      Shift+P: Edit Palette
+    *      I: frame interval
+    *      D: delay interval
+    *
+    */
    namespace PixelMaestroStudio {
    
        MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -48,14 +83,18 @@ Program Listing for File mainwindow.cpp
                this->restoreState(settings.value(PreferencesDialog::window_state).toByteArray());
            }
    
+           //If enabled, open TCP socket to listen for incoming Cues
+           if (settings.value(PreferencesDialog::cue_server_enabled).toBool()) {
+               this->cue_socket_ = QSharedPointer<CueServerController>(new CueServerController(this, *maestro_control_widget_));
+           }
+   
            set_active_cuefile("");
    
            initialization_complete = true;
        }
    
        bool MainWindow::confirm_unsaved_changes() {
-           QMessageBox::StandardButton confirm;
-           confirm = QMessageBox::question(this, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+           int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_close_maestro, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", this);
            return (confirm == QMessageBox::Yes);
        }
    

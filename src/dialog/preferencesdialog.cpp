@@ -1,4 +1,4 @@
-#include <QSerialPortInfo>
+#include <QMessageBox>
 #include <QSettings>
 #include <QTime>
 #include "preferencesdialog.h"
@@ -63,6 +63,15 @@ namespace PixelMaestroStudio {
 	QString PreferencesDialog::cue_server_enabled = QStringLiteral("Interface/CueServerEnabled");
 	QString PreferencesDialog::cue_server_port = QStringLiteral("Interface/CueServerPort");
 
+	// MessageBox dialogs set to "don't show"
+	QString PreferencesDialog::msgbox_hide_clear_canvas = QStringLiteral("MsgBoxHide/ClearCanvas");
+	QString PreferencesDialog::msgbox_hide_clear_section_mappings = QStringLiteral("MsgBoxHide/ClearSectionMappings");
+	QString PreferencesDialog::msgbox_hide_close_maestro = QStringLiteral("MsgBoxHide/CloseMaestro");
+	QString PreferencesDialog::msgbox_hide_delete_palette = QStringLiteral("MsgBoxHide/DeletePalette");
+	QString PreferencesDialog::msgbox_hide_remove_device = QStringLiteral("MsgBoxHide/RemoveDevice");
+	QString PreferencesDialog::msgbox_hide_reset_palettes = QStringLiteral("MsgBoxHide/ResetPalettes");
+	QString PreferencesDialog::msgbox_hide_sync_timers = QStringLiteral("MsgBoxHide/SyncTimers");
+
 	PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 
 		setWindowIcon(QIcon("qrc:/../../../docsrc/images/logo.png"));
@@ -108,6 +117,21 @@ namespace PixelMaestroStudio {
 	void PreferencesDialog::on_cueServerCheckBox_stateChanged(int arg1) {
 		ui->cueServerPortLabel->setEnabled(arg1);
 		ui->cueServerPortSpinBox->setEnabled(arg1);
+	}
+
+	void PreferencesDialog::on_resetConfirmButton_clicked() {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Reset Confirmation Messages", "Show all confirmation messages again, even if they've been marked as hidden?", QMessageBox::Yes|QMessageBox::No);
+
+		if (confirm == QMessageBox::Yes) {
+			settings_.setValue(this->msgbox_hide_clear_canvas, false);
+			settings_.setValue(this->msgbox_hide_clear_section_mappings, false);
+			settings_.setValue(this->msgbox_hide_close_maestro, false);
+			settings_.setValue(this->msgbox_hide_delete_palette, false);
+			settings_.setValue(this->msgbox_hide_remove_device, false);
+			settings_.setValue(this->msgbox_hide_reset_palettes, false);
+			settings_.setValue(this->msgbox_hide_sync_timers, false);
+		}
 	}
 
 	PreferencesDialog::~PreferencesDialog() {

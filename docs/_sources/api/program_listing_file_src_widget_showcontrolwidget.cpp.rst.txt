@@ -266,6 +266,14 @@ Program Listing for File showcontrolwidget.cpp
            );
        }
    
+       void ShowControlWidget::on_runButton_clicked() {
+           for (QModelIndex index : ui->eventHistoryWidget->selectionModel()->selectedIndexes()) {
+               QTime time = ui->eventTimeEdit->time();
+   
+               maestro_control_widget_.run_cue((uint8_t*)event_history_.at(index.row()).data());
+           }
+       }
+   
        void ShowControlWidget::on_timingModeComboBox_currentIndexChanged(int index) {
            maestro_control_widget_.run_cue(
                maestro_control_widget_.show_handler->set_timing_mode(
@@ -350,9 +358,9 @@ Program Listing for File showcontrolwidget.cpp
                ui->relativeTimeLineEdit->setText(QTime::fromMSecsSinceStartOfDay(relative_time).toString(time_format));
            }
    
-           // Get the last event that ran, and if it differs from the Show's current index, update the Event Queue
-           if (last_event_time_ != show->get_last_time()) {
-               last_event_time_ = show->get_last_time();
+           // Check to see if an Event has ran
+           if (last_event_index_ != show->get_current_index()) {
+               last_event_index_ = show->get_current_index();
    
                // Darken events that have already ran
                for (int i = 0; i < ui->eventQueueWidget->count(); i++) {

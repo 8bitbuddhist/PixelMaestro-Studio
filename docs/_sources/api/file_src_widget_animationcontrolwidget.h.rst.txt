@@ -41,9 +41,9 @@ Included By
 -----------
 
 
-- :ref:`file_src_widget_maestrocontrolwidget.h`
-
 - :ref:`file_src_widget_animationcontrolwidget.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
 
 
 

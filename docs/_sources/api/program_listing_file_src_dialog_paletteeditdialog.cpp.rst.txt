@@ -21,6 +21,7 @@ Program Listing for File paletteeditdialog.cpp
    #include "ui_paletteeditdialog.h"
    #include "widget/palettecontrolwidget.h"
    
+   // NOTE: Consider allowing editing a range of colors instead of having to basically recreate the entire Palette all at once.
    namespace PixelMaestroStudio {
        PaletteEditDialog::PaletteEditDialog(PaletteControlWidget* parent, PaletteController::PaletteWrapper* target_palette_wrapper) : QDialog(parent), ui(new Ui::PaletteEditDialog) {
    

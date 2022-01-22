@@ -12,8 +12,6 @@ The Preferences dialog lets you change various options in PixelMaestro Studio.
 
 To open the Preferences dialog, click *Edit* > *Preferences*.
 
-.. Note:: Some settings will require you to relaunch PixelMaestro Studio before applying.
-
 Maestro Options
 ---------------
 
@@ -24,6 +22,8 @@ Sections
 
 *Sections* sets the number of Sections assigned to the Maestro. Sections are displayed in the Maestro Viewer from left to right based on their index number.
 
+.. Note:: This change will only take effect after opening a new Maestro or restarting PixelMaestro Studio.
+
 Pause on Start
 ^^^^^^^^^^^^^^
 
@@ -33,6 +33,11 @@ Save Session on Close
 ^^^^^^^^^^^^^^^^^^^^^
 
 *Save session on close* automatically saves your current Maestro configuration when you exit PixelMaestro Studio. The Maestro is automatically loaded the next time you open PixelMaestro Studio.
+
+Reset confirmation dialogs
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Click *Reset confirmation dialogs* to unhide confirmation messages that had their "Do not show me this message" checkbox checked.
 
 Rendering Options
 -----------------
@@ -56,6 +61,8 @@ Grid Width
 
 The Maestro renderer displays all of the Maestro's Sections in a grid. *Grid width* sets the maximum number of Sections to display in each row.
 
+.. Note:: You'll need to relaunch PixelMaestro Studio for this change to take effect.
+
 Show Options
 ------------
 
@@ -64,9 +71,24 @@ Show Options
 Max Event History Size
 ^^^^^^^^^^^^^^^^^^^^^^
 
-*Max Event History Size* is the maximum number of events to store in the Event History. A larger history size lets you store more events to use in Shows, but at the cost of increased RAM usage.
+*Max Event History Size* is the maximum number of events to display in the Event History.
 
 Events Trigger Live Device Updates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When enabled, any Show Events that run in the Maestro PixelMaestro Studio will trigger a :doc:`live update <Device-Tab>` for any connected devices that have live updates enabled. This allows you to run a Show in PixelMaestro Studio without having to also run a Show on each of your devices.
+When enabled, any Show Events that run in the Maestro will trigger a :doc:`live update <Device-Tab>` for any connected devices that have live updates enabled. This is useful if you want to run a Show in PixelMaestro Studio and have your devices update without having to also run a Show on each device.
+
+Cue Server Options
+------------------
+
+The *Cue Server* allows PixelMaestro Studio to receive Cues sent over the network.
+
+Read Cues sent over the network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If checked, this starts the Cue Server.
+
+Port
+^^^^
+
+Sets the port number for the Cue Server to listen on. By default, it uses port 8077.

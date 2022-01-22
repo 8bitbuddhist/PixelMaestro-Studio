@@ -53,9 +53,9 @@ Included By
 
 - :ref:`file_src_dialog_sectionmapdialog.cpp`
 
-- :ref:`file_src_widget_maestrocontrolwidget.h`
-
 - :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
 
 
 

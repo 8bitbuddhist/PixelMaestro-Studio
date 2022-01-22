@@ -85,6 +85,8 @@ Program Listing for File canvascontrolwidget.h
    
                void on_frameTimeEdit_editingFinished();
    
+               void on_fpsDoubleSpinBox_editingFinished();
+   
            private:
                uint8_t selected_color_index_ = 255;
    

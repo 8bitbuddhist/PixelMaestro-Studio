@@ -8,6 +8,7 @@
 #include "dialog/preferencesdialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "utility/uiutility.h"
 
 /*
  * TODO: Shortcuts (see https://doc.qt.io/qt-5/qshortcut.html)
@@ -85,8 +86,7 @@ namespace PixelMaestroStudio {
 	 * @return If true, user wants to replace the session.
 	 */
 	bool MainWindow::confirm_unsaved_changes() {
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_close_maestro, "Unsaved Changes", "Your changes will be lost. Are you sure you want to continue?", this);
 		return (confirm == QMessageBox::Yes);
 	}
 

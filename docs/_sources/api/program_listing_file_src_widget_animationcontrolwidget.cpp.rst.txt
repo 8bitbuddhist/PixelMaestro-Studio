@@ -10,6 +10,7 @@ Program Listing for File animationcontrolwidget.cpp
 
 .. code-block:: cpp
 
+   #include <cmath>
    #include <QTime>
    #include <QWidget>
    #include "animationcontrolwidget.h"
@@ -138,7 +139,7 @@ Program Listing for File animationcontrolwidget.cpp
    
        void AnimationControlWidget::on_currentCycleSpinBox_editingFinished() {
            maestro_control_widget.run_cue(
-               maestro_control_widget.animation_handler->set_cycle_index(
+               maestro_control_widget.animation_handler->set_frame_index(
                    maestro_control_widget.section_control_widget_->get_section_index(),
                    maestro_control_widget.section_control_widget_->get_layer_index(),
                    ui->currentCycleSpinBox->value()
@@ -146,7 +147,7 @@ Program Listing for File animationcontrolwidget.cpp
            );
    
            // Refresh box in case the cycle was adjusted
-           uint8_t cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+           uint8_t cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_frame_index();
            if (cycle != ui->currentCycleSpinBox->value()) {
                ui->currentCycleSpinBox->setValue(cycle);
            }
@@ -157,13 +158,31 @@ Program Listing for File animationcontrolwidget.cpp
            ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
            ui->cycleTimeEdit->blockSignals(false);
    
+           ui->cycleSpinBox->blockSignals(true);
+           ui->cycleSpinBox->setValue(Timer::millis_to_ups(value));
+           ui->cycleSpinBox->blockSignals(false);
+   
+           ui->delayIntervalSlider->blockSignals(true);
+           if (value < ui->delayIntervalSlider->value()) ui->delayIntervalSlider->setValue(value);
+           ui->delayIntervalSlider->setMaximum(value);
+           ui->delayIntervalSlider->blockSignals(false);
+   
            set_animation_timer();
        }
    
+       void PixelMaestroStudio::AnimationControlWidget::on_cycleSpinBox_editingFinished() {
+           ui->cycleIntervalSlider->setValue(Timer::ups_to_millis(ui->cycleSpinBox->value()));
+       }
+   
        void PixelMaestroStudio::AnimationControlWidget::on_cycleTimeEdit_editingFinished() {
+           int millis = ui->cycleTimeEdit->time().msecsSinceStartOfDay();
            ui->cycleIntervalSlider->blockSignals(true);
-           ui->cycleIntervalSlider->setValue(ui->cycleTimeEdit->time().msecsSinceStartOfDay());
+           ui->cycleIntervalSlider->setValue(millis);
            ui->cycleIntervalSlider->blockSignals(false);
+   
+           ui->cycleSpinBox->blockSignals(true);
+           ui->cycleSpinBox->setValue(Timer::millis_to_ups(millis));
+           ui->cycleSpinBox->blockSignals(false);
    
            set_animation_timer();
        }
@@ -177,8 +196,10 @@ Program Listing for File animationcontrolwidget.cpp
        }
    
        void AnimationControlWidget::on_delayTimeEdit_editingFinished() {
+           int millis = ui->delayTimeEdit->time().msecsSinceStartOfDay();
+   
            ui->delayIntervalSlider->blockSignals(true);
-           ui->delayIntervalSlider->setValue(ui->delayTimeEdit->time().msecsSinceStartOfDay());
+           ui->delayIntervalSlider->setValue(millis);
            ui->delayIntervalSlider->blockSignals(false);
    
            set_animation_timer();
@@ -233,7 +254,7 @@ Program Listing for File animationcontrolwidget.cpp
                    )
                );
    
-               uint8_t current_cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_cycle_index();
+               uint8_t current_cycle = maestro_control_widget.section_control_widget_->get_active_section().get_animation()->get_frame_index();
                ui->currentCycleSpinBox->setValue(current_cycle);
            }
            else {
@@ -272,6 +293,7 @@ Program Listing for File animationcontrolwidget.cpp
                ui->reverseCheckBox->blockSignals(true);
                ui->fadeCheckBox->blockSignals(true);
                ui->cycleIntervalSlider->blockSignals(true);
+               ui->cycleSpinBox->blockSignals(true);
                ui->cycleTimeEdit->blockSignals(true);
                ui->delayIntervalSlider->blockSignals(true);
                ui->delayTimeEdit->blockSignals(true);
@@ -281,6 +303,7 @@ Program Listing for File animationcontrolwidget.cpp
                ui->reverseCheckBox->setChecked(animation->get_reverse());
                ui->fadeCheckBox->setChecked(animation->get_fade());
                ui->cycleIntervalSlider->setValue(animation->get_timer()->get_interval());
+               ui->cycleSpinBox->setValue(Timer::millis_to_ups(animation->get_timer()->get_interval()));
                ui->cycleTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_interval()));
                ui->delayIntervalSlider->setValue(animation->get_timer()->get_delay());
                ui->delayTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(animation->get_timer()->get_delay()));
@@ -290,6 +313,7 @@ Program Listing for File animationcontrolwidget.cpp
                ui->reverseCheckBox->blockSignals(false);
                ui->fadeCheckBox->blockSignals(false);
                ui->cycleIntervalSlider->blockSignals(false);
+               ui->cycleSpinBox->blockSignals(false);
                ui->cycleTimeEdit->blockSignals(false);
                ui->delayIntervalSlider->blockSignals(false);
                ui->delayTimeEdit->blockSignals(false);
@@ -403,6 +427,10 @@ Program Listing for File animationcontrolwidget.cpp
            ui->centerXSpinBox->setEnabled(enabled);
            ui->centerYSpinBox->setEnabled(enabled);
            ui->currentCycleSpinBox->setEnabled(ui->playbackStartStopToolButton->isChecked());
+       }
+   
+       void AnimationControlWidget::enable_cpm_timing(bool enable_cpm) {
+           this->enable_cpm_ = enable_cpm;
        }
    
        AnimationControlWidget::~AnimationControlWidget() {

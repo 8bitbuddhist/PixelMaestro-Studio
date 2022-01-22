@@ -65,11 +65,11 @@ Included By
 
 - :ref:`file_src_drawingarea_maestrodrawingarea.h`
 
-- :ref:`file_src_window_mainwindow.h`
+- :ref:`file_src_widget_maestrocontrolwidget.cpp`
 
 - :ref:`file_src_widget_maestrocontrolwidget.h`
 
-- :ref:`file_src_widget_maestrocontrolwidget.cpp`
+- :ref:`file_src_window_mainwindow.h`
 
 
 

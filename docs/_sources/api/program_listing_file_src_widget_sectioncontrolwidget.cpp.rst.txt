@@ -20,6 +20,10 @@ Program Listing for File sectioncontrolwidget.cpp
                ui(new Ui::SectionControlWidget),
                maestro_control_widget_(*dynamic_cast<MaestroControlWidget*>(parent)) {
            ui->setupUi(this);
+   
+           // Manually connect signals & slots for scale spinboxes. Otherwise, they'll get sent multiple times for some bizarre reason
+           connect(ui->scaleXSpinBox, &QSpinBox::editingFinished, this, &SectionControlWidget::scaleXSpinBox_modified);
+           connect(ui->scaleXSpinBox, &QSpinBox::editingFinished, this, &SectionControlWidget::scaleYSpinBox_modified);
        }
    
        void SectionControlWidget::on_addLayerButton_clicked() {
@@ -114,18 +118,26 @@ Program Listing for File sectioncontrolwidget.cpp
            ui->sectionListWidget->blockSignals(false);
    
            set_active_section(maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(0));
-           populate_layer_combobox();
+           populate_layer_list();
        }
    
-       void SectionControlWidget::on_alphaSpinBox_editingFinished() {
+       void SectionControlWidget::on_alphaSlider_valueChanged(int value) {
            maestro_control_widget_.run_cue(
                maestro_control_widget_.section_handler->set_layer(
                    get_section_index(),
                    get_layer_index(*active_section_->get_parent_section()),
                    active_section_->get_parent_section()->get_layer()->mix_mode,
-                   ui->alphaSpinBox->value()
+                   value
                )
            );
+   
+           ui->alphaSpinBox->blockSignals(true);
+           ui->alphaSpinBox->setValue(value);
+           ui->alphaSpinBox->blockSignals(false);
+       }
+   
+       void SectionControlWidget::on_alphaSpinBox_editingFinished() {
+           on_alphaSlider_valueChanged(ui->alphaSpinBox->value());
        }
    
        void SectionControlWidget::on_brightnessSlider_valueChanged(int value) {
@@ -221,6 +233,7 @@ Program Listing for File sectioncontrolwidget.cpp
    
            // Enable spin box for alpha only
            ui->alphaLabel->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
+           ui->alphaSlider->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
            ui->alphaSpinBox->setEnabled((Colors::MixMode)index == Colors::MixMode::Alpha);
        }
    
@@ -230,6 +243,14 @@ Program Listing for File sectioncontrolwidget.cpp
    
        void SectionControlWidget::on_offsetYSpinBox_editingFinished() {
            set_offset();
+       }
+   
+       void SectionControlWidget::scaleXSpinBox_modified() {
+           set_scale();
+       }
+   
+       void SectionControlWidget::scaleYSpinBox_modified() {
+           set_scale();
        }
    
        void SectionControlWidget::on_scrollXSpinBox_editingFinished() {
@@ -280,7 +301,7 @@ Program Listing for File sectioncontrolwidget.cpp
        void SectionControlWidget::refresh() {
            // Update the Layer list, but only if the refresh was triggered by a Section, not a Layer
            if (!get_layer_index()) {
-               populate_layer_combobox();
+               populate_layer_list();
            }
    
            // Set dimensions
@@ -355,6 +376,14 @@ Program Listing for File sectioncontrolwidget.cpp
            ui->wrapCheckBox->setChecked(active_section_->get_wrap());
            ui->wrapCheckBox->blockSignals(false);
    
+           // Set scale
+           ui->scaleXSpinBox->blockSignals(true);
+           ui->scaleYSpinBox->blockSignals(true);
+           ui->scaleXSpinBox->setValue(active_section_->get_scale().x);
+           ui->scaleYSpinBox->setValue(active_section_->get_scale().y);
+           ui->scaleXSpinBox->blockSignals(false);
+           ui->scaleYSpinBox->blockSignals(false);
+   
            // Update brightness
            uint8_t brightness = active_section_->get_brightness();
            ui->brightnessSlider->blockSignals(true);
@@ -371,22 +400,26 @@ Program Listing for File sectioncontrolwidget.cpp
    
                ui->mixModeComboBox->blockSignals(true);
                ui->alphaSpinBox->blockSignals(true);
+               ui->alphaSlider->blockSignals(true);
                ui->mixModeComboBox->setCurrentIndex((uint8_t)layer->mix_mode);
+               ui->alphaSlider->setValue(layer->alpha);
+               ui->alphaSlider->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
                ui->alphaSpinBox->setValue(layer->alpha);
                ui->alphaSpinBox->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
                ui->alphaLabel->setEnabled((Colors::MixMode)ui->mixModeComboBox->currentIndex() == Colors::MixMode::Alpha);
                ui->mixModeComboBox->blockSignals(false);
                ui->alphaSpinBox->blockSignals(false);
+               ui->alphaSlider->blockSignals(false);
            }
            else {
                set_layer_controls_enabled(false);
            }
        }
    
-       void SectionControlWidget::populate_layer_combobox() {
+       void SectionControlWidget::populate_layer_list() {
            ui->layerListWidget->blockSignals(true);
            ui->layerListWidget->clear();
-           ui->layerListWidget->addItem("Base Section");
+           ui->layerListWidget->addItem("Base Layer");
    
            for (uint8_t layer = 0; layer < get_num_layers(*maestro_control_widget_.get_maestro_controller()->get_maestro().get_section(get_section_index())); layer++) {
                ui->layerListWidget->addItem(QString("Layer ") + QString::number(layer + 1));
@@ -413,6 +446,7 @@ Program Listing for File sectioncontrolwidget.cpp
            ui->mixModeLabel->setEnabled(enabled);
            ui->mixModeComboBox->setEnabled(enabled);
            ui->alphaLabel->setEnabled(enabled);
+           ui->alphaSlider->setEnabled(enabled);
            ui->alphaSpinBox->setEnabled(enabled);
        }
    
@@ -423,6 +457,17 @@ Program Listing for File sectioncontrolwidget.cpp
                    get_layer_index(),
                    ui->offsetXSpinBox->value(),
                    ui->offsetYSpinBox->value()
+               )
+           );
+       }
+   
+       void SectionControlWidget::set_scale() {
+           maestro_control_widget_.run_cue(
+               maestro_control_widget_.section_handler->set_scale(
+                   get_section_index(),
+                   get_layer_index(),
+                   ui->scaleXSpinBox->value(),
+                   ui->scaleYSpinBox->value()
                )
            );
        }
@@ -449,7 +494,7 @@ Program Listing for File sectioncontrolwidget.cpp
            if (new_x == 0) {
                ui->offsetXSpinBox->blockSignals(true);
                ui->offsetXSpinBox->setValue(active_section_->get_offset().x);
-               ui->offsetYSpinBox->blockSignals(false);
+               ui->offsetXSpinBox->blockSignals(false);
            }
            if (new_y == 0) {
                ui->offsetYSpinBox->blockSignals(true);
@@ -509,4 +554,5 @@ Program Listing for File sectioncontrolwidget.cpp
        SectionControlWidget::~SectionControlWidget() {
            delete ui;
        }
+   
    }

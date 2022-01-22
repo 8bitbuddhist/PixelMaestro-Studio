@@ -37,6 +37,8 @@ Includes
 
 - ``dialog/paletteeditdialog.h`` (:ref:`file_src_dialog_paletteeditdialog.h`)
 
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
 - ``palettecontrolwidget.h`` (:ref:`file_src_widget_palettecontrolwidget.h`)
 
 - ``ui_palettecontrolwidget.h``

@@ -1,0 +1,63 @@
+
+.. _file_src_controller_cueservercontroller.h:
+
+File cueservercontroller.h
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_controller>` (``src/controller``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/controller/cueservercontroller.h``)
+-----------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_controller_cueservercontroller.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../widget/maestrocontrolwidget.h``
+
+- ``QObject``
+
+- ``QTcpServer``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_controller_cueservercontroller.cpp`
+
+- :ref:`file_src_window_mainwindow.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestroStudio`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestroStudio_1_1CueServerController`
+

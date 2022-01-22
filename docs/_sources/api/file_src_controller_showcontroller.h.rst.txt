@@ -51,9 +51,9 @@ Included By
 
 - :ref:`file_src_widget_maestrocontrolwidget.h`
 
-- :ref:`file_src_widget_showcontrolwidget.h`
-
 - :ref:`file_src_widget_showcontrolwidget.cpp`
+
+- :ref:`file_src_widget_showcontrolwidget.h`
 
 
 

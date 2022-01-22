@@ -29,6 +29,8 @@ Includes
 --------
 
 
+- ``../controller/cueservercontroller.h``
+
 - ``../controller/maestrocontroller.h``
 
 - ``../widget/maestrocontrolwidget.h``
@@ -40,6 +42,8 @@ Includes
 - ``QStandardPaths``
 
 - ``QString``
+
+- ``QTcpSocket``
 
 
 

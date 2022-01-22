@@ -33,11 +33,15 @@ Includes
 
 - ``QBrush``
 
+- ``QCheckBox``
+
 - ``QColor``
 
 - ``QComboBox``
 
 - ``QImage``
+
+- ``QMessageBox``
 
 - ``QPainter``
 
@@ -46,6 +50,8 @@ Includes
 - ``QRect``
 
 - ``QSettings``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
 
 - ``uiutility.h`` (:ref:`file_src_utility_uiutility.h`)
 

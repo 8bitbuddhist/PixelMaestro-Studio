@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QTime>
 #include "canvascontrolwidget.h"
+#include "dialog/preferencesdialog.h"
 #include "ui_canvascontrolwidget.h"
 #include "utility/canvasutility.h"
 #include "utility/uiutility.h"
@@ -159,8 +160,7 @@ namespace PixelMaestroStudio {
 	 * Clears the current Canvas frame.
 	 */
 	void CanvasControlWidget::on_clearButton_clicked() {
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_clear_canvas, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?");
 		if (confirm == QMessageBox::Yes) {
 			maestro_control_widget_.run_cue(
 				maestro_control_widget_.canvas_handler->clear(
@@ -337,8 +337,7 @@ namespace PixelMaestroStudio {
 	void CanvasControlWidget::on_enableCheckBox_toggled(bool checked) {
 		// Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
 		if (!checked && maestro_control_widget_.section_control_widget_->get_active_section().get_canvas() != nullptr) {
-			QMessageBox::StandardButton confirm;
-			confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_clear_canvas, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", this);
 			if (confirm == QMessageBox::Yes) {
 				maestro_control_widget_.run_cue(
 					maestro_control_widget_.section_handler->remove_canvas(

@@ -16,7 +16,6 @@ namespace PixelMaestroStudio {
 	 * @param canvas Canvas to load the image into.
 	 * @param maestro_control Optional MaestroControl for generating Cues.
 	 */
-	// TODO: Move to separate thread
 	void CanvasUtility::load_image(const QString& filename, Canvas& canvas, MaestroControlWidget* maestro_control) {
 		QImageReader image(filename, filename.right(3).toLocal8Bit());
 		QSize canvas_size(canvas.get_section().get_dimensions().x, canvas.get_section().get_dimensions().y);

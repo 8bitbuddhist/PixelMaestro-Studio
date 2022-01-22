@@ -1,70 +1,36 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Program Listing for File maestrocontrolwidget.cpp &mdash; PixelMaestro Studio 0.60 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program Listing for File maestrocontrolwidget.cpp &mdash; PixelMaestro Studio 0.70 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/logo.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
         <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,18 +38,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
@@ -96,372 +52,321 @@
 <li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">PixelMaestro Studio</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Program Listing for File maestrocontrolwidget.cpp</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/api/program_listing_file_src_widget_maestrocontrolwidget.cpp.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="program-listing-for-file-maestrocontrolwidget-cpp">
-<span id="program-listing-file-src-widget-maestrocontrolwidget-cpp"></span><h1>Program Listing for File maestrocontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-maestrocontrolwidget-cpp" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="program-listing-for-file-maestrocontrolwidget-cpp">
+<span id="program-listing-file-src-widget-maestrocontrolwidget-cpp"></span><h1>Program Listing for File maestrocontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-maestrocontrolwidget-cpp" title="Permalink to this headline"></a></h1>
 <p>↰ <a class="reference internal" href="file_src_widget_maestrocontrolwidget.cpp.html#file-src-widget-maestrocontrolwidget-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/widget/maestrocontrolwidget.cpp</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QFileDialog&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QMessageBox&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QKeyEvent&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QString&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;controller/maestrocontroller.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;core/section.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;drawingarea/maestrodrawingarea.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;maestrocontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;widget/palettecontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;ui_maestrocontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;utility.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;utility/canvasutility.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;utility/uiutility.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;window/mainwindow.h&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QFileDialog&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QMessageBox&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QKeyEvent&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QString&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;controller/maestrocontroller.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;core/section.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;drawingarea/maestrodrawingarea.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;maestrocontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;widget/palettecontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ui_maestrocontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utility.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utility/canvasutility.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utility/uiutility.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;window/mainwindow.h&quot;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
-    <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">MaestroControlWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="o">*</span> <span class="n">parent</span><span class="p">)</span> <span class="o">:</span> <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">MaestroControlWidget</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">PixelMaestroStudio</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">MaestroControlWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="o">*</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span><span class="w"> </span><span class="n">ui</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Ui</span><span class="o">::</span><span class="n">MaestroControlWidget</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Capture button key presses</span>
-        <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">installEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Capture button key presses</span>
+<span class="w">        </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">installEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Add control tabs</span>
-        <span class="n">animation_control_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">AnimationControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">AnimationControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">animationTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;animationLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">animation_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="w">        </span><span class="c1">// Add control tabs</span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">AnimationControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AnimationControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">animationTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;animationLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">animation_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
 
-        <span class="n">canvas_control_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">CanvasControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">CanvasControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">canvasTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;canvasLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">canvas_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">CanvasControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CanvasControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">canvasTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;canvasLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">canvas_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
 
-        <span class="n">device_control_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">DeviceControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">DeviceControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">deviceTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;deviceLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">device_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="w">        </span><span class="n">device_control_widget_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">DeviceControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">DeviceControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">deviceTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;deviceLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">device_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
 
-        <span class="n">section_control_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">SectionControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">SectionControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">topLayout</span><span class="o">-&gt;</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">section_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="w">        </span><span class="n">section_control_widget_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">SectionControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SectionControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">topLayout</span><span class="o">-&gt;</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">section_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
 
-        <span class="n">show_control_widget_</span> <span class="o">=</span> <span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">ShowControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">ShowControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">showTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;showLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">show_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="w">        </span><span class="n">show_control_widget_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QSharedPointer</span><span class="o">&lt;</span><span class="n">ShowControlWidget</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="p">(</span><span class="k">this</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">showTab</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="o">&lt;</span><span class="n">QLayout</span><span class="o">*&gt;</span><span class="p">(</span><span class="s">&quot;showLayout&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">addWidget</span><span class="p">(</span><span class="n">show_control_widget_</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
 
-        <span class="c1">// Initialize Palette-containing subwidgets</span>
-        <span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
-        <span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Initialize Palette-containing subwidgets</span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
 
-        <span class="c1">// Restore splitter position. If the position isn&#39;t saved in the user&#39;s settings, default to a 50/50 split</span>
-        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-        <span class="n">QByteArray</span> <span class="n">splitter_state</span> <span class="o">=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">).</span><span class="n">toByteArray</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">splitter_state</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">restoreState</span><span class="p">(</span><span class="n">splitter_state</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">setSizes</span><span class="p">(</span><span class="n">QList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">({</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">}));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Restore splitter position. If the position isn&#39;t saved in the user&#39;s settings, default to a 50/50 split</span>
+<span class="w">        </span><span class="n">QSettings</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">QByteArray</span><span class="w"> </span><span class="n">splitter_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">).</span><span class="n">toByteArray</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">splitter_state</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">restoreState</span><span class="p">(</span><span class="n">splitter_state</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">setSizes</span><span class="p">(</span><span class="n">QList</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">({</span><span class="n">INT_MAX</span><span class="p">,</span><span class="w"> </span><span class="n">INT_MAX</span><span class="p">}));</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">edit_palettes</span><span class="p">(</span><span class="n">QString</span> <span class="n">palette</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">PaletteControlWidget</span> <span class="n">palette_control</span><span class="p">(</span><span class="n">palette_controller_</span><span class="p">,</span> <span class="n">palette</span><span class="p">);</span>
-        <span class="n">palette_control</span><span class="p">.</span><span class="n">exec</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">edit_palettes</span><span class="p">(</span><span class="n">QString</span><span class="w"> </span><span class="n">palette</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">PaletteControlWidget</span><span class="w"> </span><span class="nf">palette_control</span><span class="p">(</span><span class="n">palette_controller_</span><span class="p">,</span><span class="w"> </span><span class="n">palette</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">palette_control</span><span class="p">.</span><span class="n">exec</span><span class="p">();</span><span class="w"></span>
 
-        <span class="c1">// Update Palette-containing subwidgets</span>
-        <span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
-        <span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Update Palette-containing subwidgets</span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="n">MaestroController</span><span class="o">*</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">get_maestro_controller</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">maestro_controller_</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="n">MaestroController</span><span class="o">*</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">maestro_controller_</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">bool</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">get_maestro_modified</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">modified_</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">get_maestro_modified</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">modified_</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">load_cuefile</span><span class="p">(</span><span class="k">const</span> <span class="n">QByteArray</span><span class="o">&amp;</span> <span class="n">byte_array</span><span class="p">)</span> <span class="p">{</span>
-        <span class="cm">/*</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">load_cuefile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">QByteArray</span><span class="o">&amp;</span><span class="w"> </span><span class="n">byte_array</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="cm">/*</span>
 <span class="cm">         * To test the Cuefile, we read each byte into a virtual Maestro.</span>
 <span class="cm">         * If it runs, we then pass it to the actual Maestro.</span>
-<span class="cm">         */</span>
-        <span class="n">Maestro</span> <span class="n">virtual_maestro</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-        <span class="n">virtual_maestro</span><span class="p">.</span><span class="n">set_cue_controller</span><span class="p">(</span><span class="n">UINT16_MAX</span><span class="p">);</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">char</span> <span class="nl">byte_char</span> <span class="p">:</span> <span class="n">byte_array</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kt">uint8_t</span> <span class="n">byte</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">byte_char</span><span class="p">);</span>
+<span class="cm">         */</span><span class="w"></span>
+<span class="w">        </span><span class="n">Maestro</span><span class="w"> </span><span class="nf">virtual_maestro</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">virtual_maestro</span><span class="p">.</span><span class="n">set_cue_controller</span><span class="p">(</span><span class="n">UINT16_MAX</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">byte_char</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">byte_array</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">byte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">byte_char</span><span class="p">);</span><span class="w"></span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">virtual_maestro</span><span class="p">.</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">read</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">run_cue</span><span class="p">(</span><span class="n">virtual_maestro</span><span class="p">.</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_buffer</span><span class="p">(),</span> <span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">virtual_maestro</span><span class="p">.</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">read</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">run_cue</span><span class="p">(</span><span class="n">virtual_maestro</span><span class="p">.</span><span class="n">get_cue_controller</span><span class="p">().</span><span class="n">get_buffer</span><span class="p">(),</span><span class="w"> </span><span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="c1">// Refresh settings</span>
-        <span class="n">refresh_maestro_settings</span><span class="p">();</span>
-        <span class="n">refresh_section_settings</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Refresh settings</span>
+<span class="w">        </span><span class="n">refresh_maestro_settings</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">refresh_section_settings</span><span class="p">();</span><span class="w"></span>
 
-        <span class="c1">// Refresh Palettes</span>
-        <span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
-        <span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Refresh Palettes</span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh_palettes</span><span class="p">();</span><span class="w"></span>
 
-        <span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_lockButton_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">set_maestro_locked</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_lockButton_toggled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">set_maestro_locked</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span><span class="w"></span>
 
-        <span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">lockButton</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">refresh_maestro_settings</span><span class="p">();</span>
-            <span class="n">refresh_section_settings</span><span class="p">();</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">lockButton</span><span class="p">,</span><span class="w"> </span><span class="n">checked</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">refresh_maestro_settings</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">refresh_section_settings</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">set_locked</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">set_locked</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_playPauseButton_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="p">,</span> <span class="n">checked</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">checked</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Stop the Maestro</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">();</span>
-            <span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">()</span>
-            <span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_playPauseButton_toggled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="p">,</span><span class="w"> </span><span class="n">checked</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Stop the Maestro</span>
+<span class="w">            </span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">stop</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setToolTip</span><span class="p">(</span><span class="s">&quot;Start playback&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">();</span>
-            <span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">()</span>
-            <span class="p">);</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setToolTip</span><span class="p">(</span><span class="s">&quot;Start playback&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setToolTip</span><span class="p">(</span><span class="s">&quot;Stop playback&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setToolTip</span><span class="p">(</span><span class="s">&quot;Stop playback&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_refreshButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">refresh_maestro_settings</span><span class="p">();</span>
-        <span class="n">refresh_section_settings</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_refreshButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">refresh_maestro_settings</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">refresh_section_settings</span><span class="p">();</span><span class="w"></span>
 
-        <span class="n">set_refresh_needed</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">set_refresh_needed</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_syncButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">QMessageBox</span><span class="o">::</span><span class="n">StandardButton</span> <span class="n">confirm</span><span class="p">;</span>
-        <span class="n">confirm</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">question</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s">&quot;Sync Timers&quot;</span><span class="p">,</span> <span class="s">&quot;This will sync all timers to the Maestro&#39;s current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?&quot;</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">No</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">confirm</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">sync</span><span class="p">(</span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">())</span>
-            <span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">on_syncButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UIUtility</span><span class="o">::</span><span class="n">show_confirm_message_box</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">msgbox_hide_sync_timers</span><span class="p">,</span><span class="w"> </span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;Sync Timers&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;This will sync all timers to the Maestro&#39;s current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">confirm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">sync</span><span class="p">(</span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">())</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">refresh_section_settings</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span>
-        <span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span>
-        <span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">refresh_section_settings</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">frame_active_section</span><span class="p">(</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">());</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">frame_active_section</span><span class="p">(</span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">get_active_section</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">refresh_maestro_settings</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span>
-        <span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">update_cuefile_size</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">refresh_maestro_settings</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">update_cuefile_size</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">run_cue</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">cue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">run_targets</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">add_event_to_history</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">run_cue</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">cue</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">run_targets</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">add_event_to_history</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Only run the Cue if the Maestro isn&#39;t locked, or the Cue is a Show Cue.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">get_maestro_locked</span><span class="p">()</span> <span class="o">||</span> <span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">PayloadByte</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">((</span><span class="n">run_targets</span> <span class="o">&amp;</span> <span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">)</span> <span class="o">==</span> <span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span>
-                <span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Only run the Cue if the Maestro isn&#39;t locked, or the Cue is a Show Cue.</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">get_maestro_locked</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">PayloadByte</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">run_targets</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">RunTarget</span><span class="o">::</span><span class="n">Local</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-            <span class="k">if</span> <span class="p">((</span><span class="n">run_targets</span> <span class="o">&amp;</span> <span class="n">RunTarget</span><span class="o">::</span><span class="n">Remote</span><span class="p">)</span> <span class="o">==</span> <span class="n">RunTarget</span><span class="o">::</span><span class="n">Remote</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">// Send to device controller</span>
-                <span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span><span class="n">cue</span><span class="p">,</span> <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">run_targets</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">RunTarget</span><span class="o">::</span><span class="n">Remote</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">RunTarget</span><span class="o">::</span><span class="n">Remote</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// Send to device controller</span>
+<span class="w">                </span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span><span class="n">cue</span><span class="p">,</span><span class="w"> </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_maestro_controller</span><span class="p">(</span><span class="n">MaestroController</span><span class="o">&amp;</span> <span class="n">maestro_controller</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_controller_</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">maestro_controller</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_maestro_controller</span><span class="p">(</span><span class="n">MaestroController</span><span class="o">&amp;</span><span class="w"> </span><span class="n">maestro_controller</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_controller_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">maestro_controller</span><span class="p">;</span><span class="w"></span>
 
-        <span class="c1">// Get Maestro&#39;s Cue Handlers for convenience</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">cue_controller_</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">maestro_controller</span><span class="p">.</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span>
-        <span class="n">animation_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">AnimationCueHandler</span><span class="o">*&gt;</span><span class="p">(</span>
-            <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">AnimationCueHandler</span><span class="p">)</span>
-        <span class="p">);</span>
-        <span class="n">canvas_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">CanvasCueHandler</span><span class="o">*&gt;</span><span class="p">(</span>
-            <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">CanvasCueHandler</span><span class="p">)</span>
-        <span class="p">);</span>
-        <span class="n">maestro_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroCueHandler</span><span class="o">*&gt;</span><span class="p">(</span>
-            <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">MaestroCueHandler</span><span class="p">)</span>
-        <span class="p">);</span>
-        <span class="n">section_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SectionCueHandler</span><span class="o">*&gt;</span><span class="p">(</span>
-            <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">SectionCueHandler</span><span class="p">)</span>
-        <span class="p">);</span>
-        <span class="n">show_handler</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">ShowCueHandler</span><span class="o">*&gt;</span><span class="p">(</span>
-            <span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">)</span>
-        <span class="p">);</span>
+<span class="w">        </span><span class="c1">// Get Maestro&#39;s Cue Handlers for convenience</span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">cue_controller_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">maestro_controller</span><span class="p">.</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">animation_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">AnimationCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">AnimationCueHandler</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">CanvasCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">CanvasCueHandler</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">maestro_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">MaestroCueHandler</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">section_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">SectionCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">SectionCueHandler</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">ShowCueHandler</span><span class="o">*&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_handler</span><span class="p">(</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">ShowCueHandler</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Check whether the Maestro is currently running. If not, trigger pause button</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="o">!</span><span class="n">maestro_controller</span><span class="p">.</span><span class="n">get_running</span><span class="p">());</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Check whether the Maestro is currently running. If not, trigger pause button</span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="o">!</span><span class="n">maestro_controller</span><span class="p">.</span><span class="n">get_running</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">playPauseButton</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Initialize UI components and controllers</span>
-        <span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-        <span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span>
-        <span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span>
-        <span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span>
-        <span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span>
-        <span class="n">refresh_maestro_settings</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Initialize UI components and controllers</span>
+<span class="w">        </span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">set_active_section</span><span class="p">(</span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_section</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="n">section_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">animation_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">canvas_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_control_widget_</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">refresh_maestro_settings</span><span class="p">();</span><span class="w"></span>
 
-        <span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">set_maestro_modified</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_maestro_modified</span><span class="p">(</span><span class="kt">bool</span> <span class="n">modified</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">modified_</span> <span class="o">=</span> <span class="n">modified</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_maestro_modified</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">modified</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">modified_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modified</span><span class="p">;</span><span class="w"></span>
 
-        <span class="c1">// Update MainWindow title</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setWindowModified</span><span class="p">(</span><span class="n">modified</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Update MainWindow title</span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setWindowModified</span><span class="p">(</span><span class="n">modified</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_refresh_needed</span><span class="p">(</span><span class="kt">bool</span> <span class="n">refresh_needed</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshButton</span><span class="p">,</span> <span class="n">refresh_needed</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">set_refresh_needed</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">refresh_needed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">UIUtility</span><span class="o">::</span><span class="n">highlight_widget</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">refreshButton</span><span class="p">,</span><span class="w"> </span><span class="n">refresh_needed</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">toggle_maestro_drawing_area</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Checked: create new DrawingArea</span>
-            <span class="n">maestro_drawing_area_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MaestroDrawingArea</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">(),</span> <span class="o">*</span><span class="n">maestro_controller_</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maestro_drawing_area_</span><span class="p">);</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">add_drawing_area</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">));</span>
-            <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">set_maestro_control_widget</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// Unchecked</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">);</span>
-            <span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">remove_drawing_area</span><span class="p">(</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_drawing_area_</span><span class="p">));</span>
-            <span class="k">delete</span> <span class="n">maestro_drawing_area_</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">MaestroControlWidget</span><span class="o">::</span><span class="n">toggle_maestro_drawing_area</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">enabled</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Checked: create new DrawingArea</span>
+<span class="w">            </span><span class="n">maestro_drawing_area_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MaestroDrawingArea</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">widget</span><span class="p">(),</span><span class="w"> </span><span class="o">*</span><span class="n">maestro_controller_</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">insertWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">maestro_drawing_area_</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">add_drawing_area</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">set_maestro_control_widget</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Unchecked</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">renderLayout</span><span class="o">-&gt;</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_controller_</span><span class="o">-&gt;</span><span class="n">remove_drawing_area</span><span class="p">(</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroDrawingArea</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">maestro_drawing_area_</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="k">delete</span><span class="w"> </span><span class="n">maestro_drawing_area_</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="n">MaestroControlWidget</span><span class="o">::~</span><span class="n">MaestroControlWidget</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Save splitter position</span>
-        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-        <span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">,</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">saveState</span><span class="p">());</span>
+<span class="w">    </span><span class="n">MaestroControlWidget</span><span class="o">::~</span><span class="n">MaestroControlWidget</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Save splitter position</span>
+<span class="w">        </span><span class="n">QSettings</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">settings</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">splitter_position</span><span class="p">,</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">splitter</span><span class="o">-&gt;</span><span class="n">saveState</span><span class="p">());</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">delete</span> <span class="n">maestro_drawing_area_</span><span class="p">;</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">maestro_drawing_area_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">delete</span><span class="w"> </span><span class="n">maestro_drawing_area_</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">removeEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">removeEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">delete</span><span class="w"> </span><span class="n">ui</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2020, 8bitbuddhist
-
-    </p>
+    <p>&#169; Copyright 2022, 8bitbuddhist.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

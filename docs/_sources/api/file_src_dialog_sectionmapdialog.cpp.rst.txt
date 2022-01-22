@@ -31,11 +31,19 @@ Includes
 
 - ``QAbstractButton``
 
+- ``QCheckBox``
+
 - ``QMessageBox``
+
+- ``QSettings``
+
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
 
 - ``sectionmapdialog.h`` (:ref:`file_src_dialog_sectionmapdialog.h`)
 
 - ``ui_sectionmapdialog.h``
+
+- ``utility/uiutility.h`` (:ref:`file_src_utility_uiutility.h`)
 
 - ``widget/devicecontrolwidget.h`` (:ref:`file_src_widget_devicecontrolwidget.h`)
 

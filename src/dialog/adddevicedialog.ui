@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>298</width>
-    <height>161</height>
+    <width>314</width>
+    <height>166</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,7 +97,7 @@
     <widget class="QComboBox" name="deviceTypeComboBox">
      <item>
       <property name="text">
-       <string>Serial</string>
+       <string>USB / Serial</string>
       </property>
      </item>
      <item>

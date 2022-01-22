@@ -55,15 +55,15 @@ Program Listing for File maestrocontroller.h
            private:
                QVector<MaestroDrawingArea*> drawing_areas_;
    
+               QTimer drawing_area_timer_;
+   
                uint64_t last_pause_ = 0;
-   
-               QElapsedTimer elapsed_timer_;
-   
-               QTimer timer_;
    
                QSharedPointer<Maestro> maestro_;
    
                MaestroControlWidget& maestro_control_widget_;
+   
+               QElapsedTimer maestro_timer_;
    
                uint8_t num_sections_ = 0;
    

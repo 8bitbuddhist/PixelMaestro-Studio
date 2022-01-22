@@ -47,13 +47,13 @@ Included By
 
 - :ref:`file_src_dialog_paletteeditdialog.h`
 
-- :ref:`file_src_widget_maestrocontrolwidget.h`
-
 - :ref:`file_src_utility_uiutility.h`
 
 - :ref:`file_src_widget_animationcontrolwidget.cpp`
 
 - :ref:`file_src_widget_canvascontrolwidget.h`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
 
 - :ref:`file_src_widget_palettecontrolwidget.h`
 

@@ -24,12 +24,12 @@ namespace PixelMaestroStudio {
 	 * Initializes the MaestroController.
 	 * @param maestro_control_widget The widget responsible for controlling this MaestroController.
 	 */
-	MaestroController::MaestroController(MaestroControlWidget& maestro_control_widget) : timer_(this), maestro_control_widget_(maestro_control_widget) {
+	MaestroController::MaestroController(MaestroControlWidget& maestro_control_widget) : drawing_area_timer_(this), maestro_control_widget_(maestro_control_widget) {
 		initialize_maestro();
 
 		// Initialize timers
-		timer_.setTimerType(Qt::PreciseTimer);
-		connect(&timer_, SIGNAL(timeout()), this, SLOT(update()));
+		drawing_area_timer_.setTimerType(Qt::PreciseTimer);
+		connect(&drawing_area_timer_, SIGNAL(timeout()), this, SLOT(update()));
 	}
 
 	/**
@@ -45,7 +45,7 @@ namespace PixelMaestroStudio {
 		}
 
 		// Refresh the DrawingArea on each timeout
-		connect(&timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
+		connect(&drawing_area_timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
 	}
 
 	/**
@@ -61,7 +61,7 @@ namespace PixelMaestroStudio {
 	 * @return True if Maestro is running.
 	 */
 	bool MaestroController::get_running() {
-		return timer_.isActive();
+		return drawing_area_timer_.isActive();
 	}
 
 	/**
@@ -72,7 +72,7 @@ namespace PixelMaestroStudio {
 		uint64_t elapsed = last_pause_;
 
 		if (get_running()) {
-			elapsed += elapsed_timer_.elapsed();
+			elapsed += maestro_timer_.elapsed();
 		}
 
 		return elapsed;
@@ -112,7 +112,7 @@ namespace PixelMaestroStudio {
 	 * @param drawing_area DrawingArea to remove.
 	 */
 	void MaestroController::remove_drawing_area(MaestroDrawingArea& drawing_area) {
-		disconnect(&timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
+		disconnect(&drawing_area_timer_, SIGNAL(timeout()), &drawing_area, SLOT(update()));
 		drawing_areas_.removeOne(&drawing_area);
 	}
 
@@ -287,7 +287,7 @@ namespace PixelMaestroStudio {
 					write_cue_to_stream(datastream, canvas_handler->set_palette(section_id, layer_id, *canvas->get_palette()));
 				}
 
-				// Draw and save each frame
+				// Save each individual frame
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					write_cue_to_stream(datastream, canvas_handler->draw_frame(section_id, layer_id, frame, section->get_dimensions().x, section->get_dimensions().y, canvas->get_frame(frame)));
 				}
@@ -329,19 +329,17 @@ namespace PixelMaestroStudio {
 			}
 		}
 
-		// Reset the MaestroControlWidget's active section
-
 		return this->sections_;
 	}
 
 	void MaestroController::start() {
-		elapsed_timer_.restart();
-		timer_.start(this->maestro_->get_timer().get_interval());
+		maestro_timer_.restart();
+		drawing_area_timer_.start(this->maestro_->get_timer().get_interval());
 	}
 
 	void MaestroController::stop() {
-		last_pause_ += elapsed_timer_.elapsed();
-		timer_.stop();
+		last_pause_ += maestro_timer_.elapsed();
+		drawing_area_timer_.stop();
 	}
 
 	void MaestroController::update() {

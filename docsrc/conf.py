@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'PixelMaestro Studio'
-copyright = '2020, 8bitbuddhist'
+copyright = '2022, 8bitbuddhist'
 author = '8bitbuddhist'
 
 # The full version, including alpha/beta/rc tags
-release = '0.60'
+release = '0.70'
 
 
 # -- General configuration ---------------------------------------------------

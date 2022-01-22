@@ -41,9 +41,9 @@ Included By
 -----------
 
 
-- :ref:`file_src_dialog_paletteeditdialog.h`
-
 - :ref:`file_src_dialog_paletteeditdialog.cpp`
+
+- :ref:`file_src_dialog_paletteeditdialog.h`
 
 - :ref:`file_src_widget_canvascontrolwidget.cpp`
 

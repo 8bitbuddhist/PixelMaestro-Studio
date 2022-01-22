@@ -142,6 +142,10 @@ Program Listing for File devicecontroller.cpp
            return device_.data();
        }
    
+       DeviceController::DeviceType DeviceController::get_device_type() const {
+           return device_type_;
+       }
+   
        bool DeviceController::get_open() const {
            if (device_) {
                switch (device_type_) {
@@ -176,6 +180,10 @@ Program Listing for File devicecontroller.cpp
    
        void DeviceController::set_autoconnect(bool autoconnect) {
            this->autoconnect_ = autoconnect;
+       }
+   
+       void DeviceController::set_device_type(const DeviceController::DeviceType device_type) {
+           this->device_type_ = device_type;
        }
    
        void DeviceController::set_port_name(const QString &port_name) {

@@ -57,11 +57,11 @@ Included By
 
 - :ref:`file_src_dialog_maestrodrawingareadialog.h`
 
-- :ref:`file_src_widget_maestrocontrolwidget.h`
-
 - :ref:`file_src_model_cuemodel.cpp`
 
 - :ref:`file_src_utility_cueinterpreter.cpp`
+
+- :ref:`file_src_widget_maestrocontrolwidget.h`
 
 - :ref:`file_src_widget_showcontrolwidget.h`
 

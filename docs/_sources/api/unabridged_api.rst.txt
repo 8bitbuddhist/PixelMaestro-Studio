@@ -68,6 +68,11 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   classPixelMaestroStudio_1_1CueServerController.rst
+
+.. toctree::
+   :maxdepth: 5
+
    classPixelMaestroStudio_1_1DeviceController.rst
 
 .. toctree::

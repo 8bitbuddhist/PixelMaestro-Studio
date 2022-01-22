@@ -44,20 +44,20 @@ namespace PixelMaestroStudio {
 			/// References each drawing area that the Maestro is rendering to.
 			QVector<MaestroDrawingArea*> drawing_areas_;
 
+			/// DrawingArea refresh timer.
+			QTimer drawing_area_timer_;
+
 			/// Tracks the time that the Maestro was last paused.
 			uint64_t last_pause_ = 0;
-
-			/// Updates the Maestro's runtime.
-			QElapsedTimer elapsed_timer_;
-
-			/// Maestro refresh timer.
-			QTimer timer_;
 
 			/// Maestro controlled by this controller.
 			QSharedPointer<Maestro> maestro_;
 
 			/// Control widget that manages this controller.
 			MaestroControlWidget& maestro_control_widget_;
+
+			/// Application runtime (used to update the Maestro).
+			QElapsedTimer maestro_timer_;
 
 			/// The number of Sections in the Maestro.
 			uint8_t num_sections_ = 0;

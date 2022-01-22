@@ -1,7 +1,11 @@
 #include <QAbstractButton>
+#include <QCheckBox>
 #include <QMessageBox>
+#include <QSettings>
 #include "sectionmapdialog.h"
 #include "ui_sectionmapdialog.h"
+#include "dialog/preferencesdialog.h"
+#include "utility/uiutility.h"
 #include "widget/devicecontrolwidget.h"
 #include "widget/maestrocontrolwidget.h"
 
@@ -39,16 +43,23 @@ namespace PixelMaestroStudio {
 			dynamic_cast<DeviceControlWidget*>(parentWidget()->parentWidget())->save_devices();
 		}
 		else if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ResetRole) {
-			QMessageBox::StandardButton confirm;
-			confirm = QMessageBox::question(this, "Clear Section Mappings", "Are you sure you want to clear your mappings and revert back to the defaults?", QMessageBox::Yes|QMessageBox::No);
+			int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_clear_section_mappings, QString("Clear Section mappings"), QString("Are you sure you want to clear your mappings and revert back to the defaults?"), this);
+
 			if (confirm == QMessageBox::Yes) {
 				// Reinitialize the Section's model and reset the table view
 				delete device_.section_map_model;
-				MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
-				Maestro& maestro = mcw->get_maestro_controller()->get_maestro();
+
 				device_.section_map_model = new SectionMapModel();
-				for (int i = 0; i < maestro.get_num_sections(); i++) {
-					device_.section_map_model->add_section();
+				device_.section_map_model->add_section();
+
+				MaestroControlWidget* mcw = dynamic_cast<MaestroControlWidget*>(parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget()->parentWidget());
+
+				if (mcw) {
+					Maestro& maestro = mcw->get_maestro_controller()->get_maestro();
+					device_.section_map_model = new SectionMapModel();
+					for (int i = 1; i < maestro.get_num_sections(); i++) {
+						device_.section_map_model->add_section();
+					}
 				}
 				initialize();
 			}

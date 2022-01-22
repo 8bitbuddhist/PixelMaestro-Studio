@@ -45,6 +45,8 @@ Includes
 
 - ``canvascontrolwidget.h`` (:ref:`file_src_widget_canvascontrolwidget.h`)
 
+- ``dialog/preferencesdialog.h`` (:ref:`file_src_dialog_preferencesdialog.h`)
+
 - ``ui_canvascontrolwidget.h``
 
 - ``utility/canvasutility.h`` (:ref:`file_src_utility_canvasutility.h`)

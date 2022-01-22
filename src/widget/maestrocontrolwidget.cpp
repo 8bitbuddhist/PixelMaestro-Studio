@@ -34,8 +34,10 @@ namespace PixelMaestroStudio {
 		canvas_control_widget_ = QSharedPointer<CanvasControlWidget>(new CanvasControlWidget(this));
 		ui->canvasTab->findChild<QLayout*>("canvasLayout")->addWidget(canvas_control_widget_.data());
 
+#ifndef NO_SERIALPORT
 		device_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this));
 		ui->deviceTab->findChild<QLayout*>("deviceLayout")->addWidget(device_control_widget_.data());
+#endif
 
 		section_control_widget_ = QSharedPointer<SectionControlWidget>(new SectionControlWidget(this));
 		ui->topLayout->insertWidget(0, section_control_widget_.data());
@@ -167,8 +169,7 @@ namespace PixelMaestroStudio {
 	}
 
 	void MaestroControlWidget::on_syncButton_clicked() {
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Sync Timers", "This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?", QMessageBox::Yes | QMessageBox::No);
+		int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_sync_timers, QString("Sync Timers"), QString("This will sync all timers to the Maestro's current time, which might interrupt Animations, Shows, and Canvases. Are you sure you want to continue?"));
 		if (confirm == QMessageBox::Yes) {
 			run_cue(
 				maestro_handler->sync(maestro_controller_->get_total_elapsed_time())
@@ -194,7 +195,10 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::refresh_maestro_settings() {
 		show_control_widget_->refresh();
+
+#ifndef NO_SERIALPORT
 		device_control_widget_->update_cuefile_size();
+#endif
 	}
 
 	/**
@@ -212,10 +216,12 @@ namespace PixelMaestroStudio {
 				set_maestro_modified(true);
 			}
 
+#ifndef NO_SERIALPORT
 			if ((run_targets & RunTarget::Remote) == RunTarget::Remote) {
 				// Send to device controller
 				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
+#endif
 		}
 	}
 

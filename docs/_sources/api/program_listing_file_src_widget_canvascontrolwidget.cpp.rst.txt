@@ -18,6 +18,7 @@ Program Listing for File canvascontrolwidget.cpp
    #include <QPushButton>
    #include <QTime>
    #include "canvascontrolwidget.h"
+   #include "dialog/preferencesdialog.h"
    #include "ui_canvascontrolwidget.h"
    #include "utility/canvasutility.h"
    #include "utility/uiutility.h"
@@ -134,8 +135,7 @@ Program Listing for File canvascontrolwidget.cpp
        }
    
        void CanvasControlWidget::on_clearButton_clicked() {
-           QMessageBox::StandardButton confirm;
-           confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+           int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_clear_canvas, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?");
            if (confirm == QMessageBox::Yes) {
                maestro_control_widget_.run_cue(
                    maestro_control_widget_.canvas_handler->clear(
@@ -301,8 +301,7 @@ Program Listing for File canvascontrolwidget.cpp
        void CanvasControlWidget::on_enableCheckBox_toggled(bool checked) {
            // Check to see if a Canvas already exists. If it does, warn the user that the current Canvas will be erased.
            if (!checked && maestro_control_widget_.section_control_widget_->get_active_section().get_canvas() != nullptr) {
-               QMessageBox::StandardButton confirm;
-               confirm = QMessageBox::question(this, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+               int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_clear_canvas, "Clear Canvas", "This will clear the Canvas. Are you sure you want to continue?", this);
                if (confirm == QMessageBox::Yes) {
                    maestro_control_widget_.run_cue(
                        maestro_control_widget_.section_handler->remove_canvas(
@@ -378,15 +377,28 @@ Program Listing for File canvascontrolwidget.cpp
            ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(value));
            ui->frameTimeEdit->blockSignals(false);
    
+           ui->fpsDoubleSpinBox->blockSignals(true);
+           ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(value));
+           ui->fpsDoubleSpinBox->blockSignals(false);
+   
            set_frame_interval();
        }
    
        void CanvasControlWidget::on_frameTimeEdit_editingFinished(){
+           int time = ui->frameTimeEdit->time().msecsSinceStartOfDay();
            ui->frameIntervalSlider->blockSignals(true);
-           ui->frameIntervalSlider->setValue(ui->frameTimeEdit->time().msecsSinceStartOfDay());
+           ui->frameIntervalSlider->setValue(time);
            ui->frameIntervalSlider->blockSignals(false);
    
+           ui->fpsDoubleSpinBox->blockSignals(true);
+           ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(time));
+           ui->fpsDoubleSpinBox->blockSignals(false);
+   
            set_frame_interval();
+       }
+   
+       void CanvasControlWidget::on_fpsDoubleSpinBox_editingFinished() {
+           ui->frameIntervalSlider->setValue(Timer::ups_to_millis(ui->fpsDoubleSpinBox->value()));
        }
    
        void CanvasControlWidget::on_lineToolButton_toggled(bool checked) {
@@ -530,7 +542,7 @@ Program Listing for File canvascontrolwidget.cpp
            }
    
            // Create new buttons and connect the color picker to the pushbutton event
-           QLayout* layout = ui->colorPickerScrollAreaWidgetContents->layout();
+           QHBoxLayout* layout = dynamic_cast<QHBoxLayout*>(ui->colorPickerScrollAreaWidgetContents->layout());
            int insert_index = 1;
            for (uint8_t color_index = 0; color_index < palette_wrapper.palette.get_num_colors(); color_index++) {
                Colors::RGB color = palette_wrapper.palette.get_colors()[color_index];
@@ -541,7 +553,7 @@ Program Listing for File canvascontrolwidget.cpp
                button->setMaximumWidth(ui->colorPickerCancelButton->width());
                button->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(color.r).arg(color.g).arg(color.b));
    
-               dynamic_cast<QHBoxLayout*>(layout)->insertWidget(insert_index, button);
+               layout->insertWidget(insert_index, button);
                ++insert_index;
                canvas_palette_color_group_.addButton(button);
                connect(button, SIGNAL(clicked(bool)), this, SLOT(on_canvas_color_clicked()));
@@ -554,6 +566,7 @@ Program Listing for File canvascontrolwidget.cpp
            ui->currentFrameSpinBox->blockSignals(true);
            ui->frameIntervalSlider->blockSignals(true);
            ui->frameTimeEdit->blockSignals(true);
+           ui->fpsDoubleSpinBox->blockSignals(true);
    
            Canvas* canvas = maestro_control_widget_.section_control_widget_->get_active_section().get_canvas();
            if (canvas != nullptr) {
@@ -561,8 +574,10 @@ Program Listing for File canvascontrolwidget.cpp
                ui->frameCountSpinBox->setValue(canvas->get_num_frames());
                ui->currentFrameSpinBox->setValue(canvas->get_current_frame_index());
                if (canvas->get_frame_timer() != nullptr) {
-                   ui->frameIntervalSlider->setValue(canvas->get_frame_timer()->get_interval());
-                   ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(canvas->get_frame_timer()->get_interval()));
+                   uint16_t interval = canvas->get_frame_timer()->get_interval();
+                   ui->frameIntervalSlider->setValue(interval);
+                   ui->frameTimeEdit->setTime(QTime::fromMSecsSinceStartOfDay(interval));
+                   ui->fpsDoubleSpinBox->setValue(Timer::millis_to_ups(interval));
                }
                set_controls_enabled(true);
    
@@ -581,6 +596,7 @@ Program Listing for File canvascontrolwidget.cpp
                set_controls_enabled(false);
            }
    
+           ui->fpsDoubleSpinBox->blockSignals(false);
            ui->frameCountSpinBox->blockSignals(false);
            ui->currentFrameSpinBox->blockSignals(false);
            ui->frameIntervalSlider->blockSignals(false);

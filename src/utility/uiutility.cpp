@@ -1,13 +1,16 @@
 #include <QApplication>
 #include <QBrush>
+#include <QCheckBox>
 #include <QColor>
 #include <QComboBox>
 #include <QImage>
+#include <QMessageBox>
 #include <QPainter>
 #include <QPixmap>
 #include <QRect>
 #include <QSettings>
 #include "uiutility.h"
+#include "dialog/preferencesdialog.h"
 
 namespace PixelMaestroStudio {
 	UIUtility::UIUtility() { }
@@ -58,6 +61,27 @@ namespace PixelMaestroStudio {
 		}
 		else {
 			widget->setStyleSheet(QString());
+		}
+	}
+
+	int UIUtility::show_confirm_message_box(QString preferencesdialog_msgbox, QString title, QString text, QWidget* parent) {
+		QSettings settings;
+		bool hide_msgbox = settings.value(preferencesdialog_msgbox, false).toBool();
+
+		if (!hide_msgbox) {
+			QCheckBox* do_not_show = new QCheckBox("Don't show this message again");
+			QMessageBox msg_box(QMessageBox::Icon::Question, title, text, QMessageBox::Yes | QMessageBox::No, parent);
+			msg_box.setDefaultButton(QMessageBox::Yes);
+			msg_box.setCheckBox(do_not_show);
+
+			QObject::connect(do_not_show, &QCheckBox::stateChanged, [&](){
+				settings.setValue(preferencesdialog_msgbox, do_not_show->isChecked());
+			});
+
+			return msg_box.exec();
+		}
+		else {
+			return QMessageBox::Yes;
 		}
 	}
 }

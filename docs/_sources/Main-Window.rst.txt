@@ -76,6 +76,8 @@ Next to the Section list are the Section-related settings, which control the app
 
 *Offset* shifts the Section the specified number of pixels along the x or y axis. This is disabled while *Scroll* is set.
 
+*Scale* changes the size of each pixel.
+
 *Mirror* mirrors the Section across the center of its x or y axis.
 
 If *wrap* is checked, when the Section is scrolling or offset, Pixels that are moved off of the Section will reappear on the opposite side of the Section.

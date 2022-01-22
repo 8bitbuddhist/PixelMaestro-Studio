@@ -2,6 +2,7 @@
 #include <QColorDialog>
 #include <QMessageBox>
 #include "dialog/paletteeditdialog.h"
+#include "dialog/preferencesdialog.h"
 #include "palettecontrolwidget.h"
 #include "ui_palettecontrolwidget.h"
 #include "utility/uiutility.h"
@@ -40,8 +41,8 @@ namespace PixelMaestroStudio {
 
 	void PaletteControlWidget::on_buttonBox_clicked(QAbstractButton *button) {
 		if (button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
-			QMessageBox::StandardButton confirm;
-			confirm = QMessageBox::question(this, "Reset Palettes", "This will reset all Palettes to their default settings. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+			int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_reset_palettes, "Reset Palettes", "This will reset all Palettes to their default settings. Are you sure you want to continue?", this);
+
 			if (confirm == QMessageBox::Yes) {
 				palette_controller_.initialize_palettes();
 				initialize_palettes("");
@@ -84,10 +85,7 @@ namespace PixelMaestroStudio {
 	 * @param index Index of the new Palette.
 	 */
 	void PaletteControlWidget::on_paletteComboBox_currentIndexChanged(int index) {
-		/*
-		 * TODO: Find ways to optimize palette switching.
-		 *		 Rebuilding QPushButtons takes a long time.
-		 */
+
 		active_palette_ = &palette_controller_.get_palette(index);
 
 		// Delete existing color buttons
@@ -115,8 +113,8 @@ namespace PixelMaestroStudio {
 
 	/// Deletes the current Palette.
 	void PaletteControlWidget::on_removeButton_clicked() {
-		QMessageBox::StandardButton confirm;
-		confirm = QMessageBox::question(this, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_delete_palette, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", this);
+
 		if (confirm == QMessageBox::Yes) {
 			uint16_t current_index = ui->paletteComboBox->currentIndex();
 			palette_controller_.remove_palette(current_index);

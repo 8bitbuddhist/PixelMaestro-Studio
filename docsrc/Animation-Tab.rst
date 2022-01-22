@@ -30,9 +30,9 @@ Timers
 
 Timers control how frequently the Animation is updated.
 
-*Cycle Interval* sets the amount of time (in milliseconds) between Animation cycles. A cycle is the amount of time required for a single pixel to change from one color to the next. For example, a Blink Animation has two cycles: one to turn each pixel off, and one to set each pixel back to its initial color. A Blink Animation with a cycle interval of 1000 means the animation takes 2 seconds to complete: 1 second to turn off, and 1 more second to turn back on.
+*Frame Interval* sets the amount of time (in milliseconds) between Animation frames. When fading is disabled, this controls how frequently the Animation changes. When fading is enabled, this controls how frequently each pixel changes from its current color to its target color. Intermediate frames are created to smooth out the transition. In both cases, the Animation will take the same amount of time to complete, but it will look smoother with fading enabled.
 
-*Delay Interval* sets the amount of time (in milliseconds) to wait before starting a new cycle. For example, if a Blink Animation has a delay interval of 2000, then the animation will pause for 2 full seconds at the end of each cycle before starting the next cycle. This is only available while fading is enabled.
+When fading is enabled, *Delay Interval* sets the amount of time (in milliseconds) to wait before starting a new frame. For example, if a Blink Animation has a delay interval of 2000, then the animation will pause for 2 full seconds at the end of each cycle before starting the next cycle.
 
 Controlling Playback
 --------------------

@@ -4,7 +4,28 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets serialport network
+QT       += core gui widgets network
+
+!wasm {
+QT       += serialport
+SOURCES  += widget/devicecontrolwidget.cpp \
+			controller/devicecontroller.cpp \
+			controller/devicethreadcontroller.cpp \
+			dialog/adddevicedialog.cpp \
+			dialog/sectionmapdialog.cpp \
+			model/sectionmapmodel.cpp
+HEADERS  += widget/devicecontrolwidget.h \
+			controller/devicecontroller.h \
+			controller/devicethreadcontroller.h \
+			dialog/adddevicedialog.h \
+			dialog/sectionmapdialog.h \
+			model/sectionmapmodel.h \
+FORMS    += widget/devicecontrolwidget.ui \
+			dialog/adddevicedialog.ui
+}
+wasm {
+DEFINES  += NO_SERIALPORT
+}
 
 TARGET = PixelMaestro_Studio
 TEMPLATE = app
@@ -22,8 +43,6 @@ QMAKE_CXXFLAGS_RELEASE += -O3
 
 SOURCES += main.cpp\
 	controller/cueservercontroller.cpp \
-controller/devicecontroller.cpp \
-controller/devicethreadcontroller.cpp \
 drawingarea/maestrodrawingarea.cpp \
 controller/maestrocontroller.cpp \
 ../lib/PixelMaestro/src/canvas/fonts/font5x8.cpp \
@@ -75,7 +94,6 @@ widget/animation/waveanimationcontrolwidget.cpp \
 drawingarea/sectiondrawingarea.cpp \
 dialog/maestrodrawingareadialog.cpp \
 ../lib/PixelMaestro/src/core/palette.cpp \
-widget/devicecontrolwidget.cpp \
 dialog/cueinterpreterdialog.cpp \
 dialog/paletteeditdialog.cpp \
 utility/cueinterpreter.cpp \
@@ -83,16 +101,11 @@ widget/animationcontrolwidget.cpp \
 widget/showcontrolwidget.cpp \
 widget/sectioncontrolwidget.cpp \
 widget/canvascontrolwidget.cpp \
-dialog/sectionmapdialog.cpp \
-model/sectionmapmodel.cpp \
 dialog/editeventdialog.cpp \
-model/cuemodel.cpp \
-dialog/adddevicedialog.cpp
+model/cuemodel.cpp
 
 HEADERS += \
 	controller/cueservercontroller.h \
-controller/devicecontroller.h \
-controller/devicethreadcontroller.h \
 drawingarea/maestrodrawingarea.h \
 controller/maestrocontroller.h \
 ../lib/PixelMaestro/src/canvas/fonts/font.h \
@@ -146,7 +159,6 @@ widget/animation/waveanimationcontrolwidget.h \
 drawingarea/sectiondrawingarea.h \
 dialog/maestrodrawingareadialog.h \
 ../lib/PixelMaestro/src/core/palette.h \
-widget/devicecontrolwidget.h \
 dialog/cueinterpreterdialog.h \
 dialog/paletteeditdialog.h \
 utility/cueinterpreter.h \
@@ -154,11 +166,8 @@ widget/animationcontrolwidget.h \
 widget/showcontrolwidget.h \
 widget/sectioncontrolwidget.h \
 widget/canvascontrolwidget.h \
-dialog/sectionmapdialog.h \
-model/sectionmapmodel.h \
 dialog/editeventdialog.h \
-model/cuemodel.h \
-dialog/adddevicedialog.h
+model/cuemodel.h
 
 FORMS	+= window/mainwindow.ui \
 widget/maestrocontrolwidget.ui \
@@ -171,7 +180,6 @@ dialog/preferencesdialog.ui \
 widget/animation/fireanimationcontrolwidget.ui \
 widget/animation/waveanimationcontrolwidget.ui \
 dialog/maestrodrawingareadialog.ui \
-widget/devicecontrolwidget.ui \
 dialog/cueinterpreterdialog.ui \
 dialog/paletteeditdialog.ui \
 widget/animationcontrolwidget.ui \
@@ -179,8 +187,7 @@ widget/showcontrolwidget.ui \
 widget/sectioncontrolwidget.ui \
 widget/canvascontrolwidget.ui \
 dialog/sectionmapdialog.ui \
-dialog/editeventdialog.ui \
-dialog/adddevicedialog.ui
+dialog/editeventdialog.ui
 
 INCLUDEPATH += \
 $$PWD/src \

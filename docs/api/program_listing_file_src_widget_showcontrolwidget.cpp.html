@@ -1,70 +1,36 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Program Listing for File showcontrolwidget.cpp &mdash; PixelMaestro Studio 0.60 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program Listing for File showcontrolwidget.cpp &mdash; PixelMaestro Studio 0.70 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/logo.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
         <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> PixelMaestro Studio
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,18 +38,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Getting-Started.html">Getting Started</a></li>
@@ -96,497 +52,455 @@
 <li class="toctree-l1"><a class="reference internal" href="root.html">PixelMaestro Studio API</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">PixelMaestro Studio</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Program Listing for File showcontrolwidget.cpp</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/api/program_listing_file_src_widget_showcontrolwidget.cpp.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="program-listing-for-file-showcontrolwidget-cpp">
-<span id="program-listing-file-src-widget-showcontrolwidget-cpp"></span><h1>Program Listing for File showcontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-showcontrolwidget-cpp" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="program-listing-for-file-showcontrolwidget-cpp">
+<span id="program-listing-file-src-widget-showcontrolwidget-cpp"></span><h1>Program Listing for File showcontrolwidget.cpp<a class="headerlink" href="#program-listing-for-file-showcontrolwidget-cpp" title="Permalink to this headline"></a></h1>
 <p>↰ <a class="reference internal" href="file_src_widget_showcontrolwidget.cpp.html#file-src-widget-showcontrolwidget-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/widget/showcontrolwidget.cpp</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QKeyEvent&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QListIterator&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QListWidget&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QRegExp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;dialog/editeventdialog.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;showcontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;ui_showcontrolwidget.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;controller/showcontroller.h&quot;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QKeyEvent&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QListIterator&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QListWidget&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QModelIndex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QRegExp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QSettings&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QTime&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;dialog/preferencesdialog.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;dialog/editeventdialog.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;showcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ui_showcontrolwidget.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;controller/showcontroller.h&quot;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">PixelMaestroStudio</span> <span class="p">{</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">PixelMaestroStudio</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-    <span class="n">QString</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">time_format</span> <span class="o">=</span> <span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;hh:mm:ss.zzz&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">QString</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">time_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QStringLiteral</span><span class="p">(</span><span class="s">&quot;hh:mm:ss.zzz&quot;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span><span class="p">)</span> <span class="o">:</span>
-            <span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span>
-            <span class="n">ui</span><span class="p">(</span><span class="k">new</span> <span class="n">Ui</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">),</span>
-            <span class="n">maestro_control_widget_</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroControlWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">parent</span><span class="p">))</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="w"> </span><span class="o">*</span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Ui</span><span class="o">::</span><span class="n">ShowControlWidget</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">(</span><span class="o">*</span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">MaestroControlWidget</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">parent</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">setupUi</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Capture key presses</span>
-        <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">installEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Capture key presses</span>
+<span class="w">        </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">installEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 
-        <span class="n">show_timer_</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+<span class="w">        </span><span class="n">show_timer_</span><span class="p">.</span><span class="n">start</span><span class="p">();</span><span class="w"></span>
 
-        <span class="n">connect</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">model</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">QAbstractItemModel</span><span class="o">::</span><span class="n">rowsMoved</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_rowsMoved</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">connect</span><span class="p">(</span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">model</span><span class="p">(),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">QAbstractItemModel</span><span class="o">::</span><span class="n">rowsMoved</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_rowsMoved</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">add_event_to_history</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">cue</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">add_event_to_history</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">cue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">cue</span><span class="p">));</span><span class="w"></span>
 
-        <span class="c1">// Convert the Cue into an actual byte array, which we&#39;ll store in the Event History for later use.</span>
-        <span class="kt">uint32_t</span> <span class="n">cue_size</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span>
-        <span class="n">QVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">cue_vector</span><span class="p">(</span><span class="n">cue_size</span><span class="p">);</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">byte</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">byte</span> <span class="o">&lt;</span> <span class="n">cue_size</span><span class="p">;</span> <span class="n">byte</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">cue_vector</span><span class="p">[</span><span class="n">byte</span><span class="p">]</span> <span class="o">=</span> <span class="n">cue</span><span class="p">[</span><span class="n">byte</span><span class="p">];</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Convert the Cue into an actual byte array, which we&#39;ll store in the Event History for later use.</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cue_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">cue_controller_</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">cue</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">QVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cue_vector</span><span class="p">(</span><span class="n">cue_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">byte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">byte</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cue_size</span><span class="p">;</span><span class="w"> </span><span class="n">byte</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">cue_vector</span><span class="p">[</span><span class="n">byte</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cue</span><span class="p">[</span><span class="n">byte</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">event_history_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">cue_vector</span><span class="p">);</span>
+<span class="w">        </span><span class="n">event_history_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">cue_vector</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Remove all but the last XX events</span>
-        <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">event_history_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">event_history_max</span><span class="p">,</span> <span class="mi">200</span><span class="p">).</span><span class="n">toInt</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-            <span class="n">event_history_</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Remove all but the last XX events</span>
+<span class="w">        </span><span class="n">QSettings</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event_history_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">event_history_max</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">).</span><span class="n">toInt</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">event_history_</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">bool</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">QObject</span> <span class="o">*</span><span class="n">watched</span><span class="p">,</span> <span class="n">QEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QEvent</span><span class="o">::</span><span class="n">KeyPress</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">QKeyEvent</span><span class="o">*</span> <span class="n">key_event</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">QKeyEvent</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
-            <span class="c1">// Delete queued events only when when Event queue has focus</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">watched</span> <span class="o">==</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">key_event</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">::</span><span class="n">Key_Delete</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">on_removeEventButton_clicked</span><span class="p">();</span>
-                    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">QObject</span><span class="w"> </span><span class="o">*</span><span class="n">watched</span><span class="p">,</span><span class="w"> </span><span class="n">QEvent</span><span class="w"> </span><span class="o">*</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">QEvent</span><span class="o">::</span><span class="n">KeyPress</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">QKeyEvent</span><span class="o">*</span><span class="w"> </span><span class="n">key_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">QKeyEvent</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Delete queued events only when when Event queue has focus</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">watched</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key_event</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Qt</span><span class="o">::</span><span class="n">Key_Delete</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">on_removeEventButton_clicked</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="k">return</span> <span class="n">QObject</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">watched</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">QObject</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">watched</span><span class="p">,</span><span class="w"> </span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Disable controls by default</span>
-        <span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Disable controls by default</span>
+<span class="w">        </span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Setup timer</span>
-        <span class="n">show_timer_</span><span class="p">.</span><span class="n">setTimerType</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">CoarseTimer</span><span class="p">);</span>
-        <span class="n">show_timer_</span><span class="p">.</span><span class="n">setInterval</span><span class="p">(</span><span class="n">TIMER_INTERVAL_</span><span class="p">);</span>
-        <span class="n">connect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">show_timer_</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="n">timeout</span><span class="p">()),</span> <span class="k">this</span><span class="p">,</span> <span class="n">SLOT</span><span class="p">(</span><span class="n">timer_refresh</span><span class="p">()));</span>
+<span class="w">        </span><span class="c1">// Setup timer</span>
+<span class="w">        </span><span class="n">show_timer_</span><span class="p">.</span><span class="n">setTimerType</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">CoarseTimer</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_timer_</span><span class="p">.</span><span class="n">setInterval</span><span class="p">(</span><span class="n">TIMER_INTERVAL_</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">connect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">show_timer_</span><span class="p">,</span><span class="w"> </span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">timeout</span><span class="p">()),</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">SLOT</span><span class="p">(</span><span class="n">timer_refresh</span><span class="p">()));</span><span class="w"></span>
 
-        <span class="c1">// Initialize ShowController</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">show_controller_</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">show_controller_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ShowController</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Initialize ShowController</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show_controller_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">show_controller_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ShowController</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">on_clearHistoryButton_clicked</span><span class="p">();</span>
-        <span class="n">on_clearQueueButton_clicked</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">on_clearHistoryButton_clicked</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">on_clearQueueButton_clicked</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">bool</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">get_maestro_locked</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">maestro_locked_</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">get_maestro_locked</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">maestro_locked_</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">move_event</span><span class="p">(</span><span class="kt">int</span> <span class="n">current_index</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target_index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">QListWidgetItem</span><span class="o">*</span> <span class="n">item</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="n">current_index</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">move_event</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">current_index</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target_index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">QListWidgetItem</span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="n">current_index</span><span class="p">);</span><span class="w"></span>
 
-        <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span> <span class="n">target_index</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">insertItem</span><span class="p">(</span><span class="n">target_index</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">target_index</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span><span class="w"> </span><span class="n">target_index</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">insertItem</span><span class="p">(</span><span class="n">target_index</span><span class="p">,</span><span class="w"> </span><span class="n">item</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="n">target_index</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_addEventButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">QModelIndex</span> <span class="nl">index</span> <span class="p">:</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">QTime</span> <span class="n">time</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">();</span>
-            <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span>
-                <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">time</span><span class="p">.</span><span class="n">msecsSinceStartOfDay</span><span class="p">(),</span>
-                <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">event_history_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">()).</span><span class="n">data</span><span class="p">()</span>
-            <span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_addEventButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">QModelIndex</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">QTime</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">time</span><span class="p">.</span><span class="n">msecsSinceStartOfDay</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">event_history_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">()).</span><span class="n">data</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span>
-                <span class="n">time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span> <span class="o">+</span>
-                <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
-                <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">text</span><span class="p">()</span>
-            <span class="p">);</span>
-        <span class="p">}</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                </span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">text</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(),</span>
-                <span class="nb">true</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="nb">true</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_clearHistoryButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="n">event_history_</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_clearHistoryButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">event_history_</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_clearQueueButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                <span class="k">nullptr</span><span class="p">,</span>
-                <span class="mi">0</span><span class="p">,</span>
-                <span class="nb">false</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_clearQueueButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nb">false</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_enableCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_enableCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="n">checked</span><span class="p">);</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">set_show</span><span class="p">()</span>
-            <span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">remove_show</span><span class="p">()</span>
-            <span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">set_show</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">maestro_handler</span><span class="o">-&gt;</span><span class="n">remove_show</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_itemDoubleClicked</span><span class="p">(</span><span class="n">QListWidgetItem</span> <span class="o">*</span><span class="n">item</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">row</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_itemDoubleClicked</span><span class="p">(</span><span class="n">QListWidgetItem</span><span class="w"> </span><span class="o">*</span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">row</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"></span>
 
-        <span class="c1">// Make sure the row is in the bounds of the Event queue</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">Event</span><span class="o">*</span> <span class="n">event</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">()[</span><span class="n">row</span><span class="p">];</span>
-            <span class="n">EditEventDialog</span> <span class="nf">dialog</span><span class="p">(</span><span class="o">*</span><span class="n">event</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">dialog</span><span class="p">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">::</span><span class="n">Accepted</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">// Update the UI and actual Show Event</span>
-                <span class="n">item</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">())</span> <span class="o">+</span>
-                              <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
-                              <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">()));</span>
+<span class="w">        </span><span class="c1">// Make sure the row is in the bounds of the Event queue</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">Event</span><span class="o">*</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">()[</span><span class="n">row</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="n">EditEventDialog</span><span class="w"> </span><span class="nf">dialog</span><span class="p">(</span><span class="o">*</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dialog</span><span class="p">.</span><span class="n">exec</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">QDialog</span><span class="o">::</span><span class="n">Accepted</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// Update the UI and actual Show Event</span>
+<span class="w">                </span><span class="n">item</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">locale_</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                              </span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                              </span><span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">()));</span><span class="w"></span>
 
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                        <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                        <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span>
-                    <span class="p">)</span>
-                <span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">                </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span><span class="w"></span>
+<span class="w">                    </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_rowsMoved</span><span class="p">(</span><span class="k">const</span> <span class="n">QModelIndex</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="k">const</span> <span class="n">QModelIndex</span> <span class="o">&amp;</span><span class="n">destination</span><span class="p">,</span> <span class="kt">int</span> <span class="n">row</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">parent</span> <span class="o">==</span> <span class="n">destination</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">int</span> <span class="n">dest_row</span> <span class="o">=</span> <span class="n">row</span><span class="p">;</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">dest_row</span> <span class="o">&gt;=</span> <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="n">dest_row</span> <span class="o">=</span> <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">dest_row</span><span class="p">);</span>
-            <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_eventQueueWidget_rowsMoved</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">QModelIndex</span><span class="w"> </span><span class="o">&amp;</span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">QModelIndex</span><span class="w"> </span><span class="o">&amp;</span><span class="n">destination</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">dest_row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">row</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dest_row</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">dest_row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">dest_row</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-                <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                    <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                    <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span>
-                <span class="p">)</span>
-            <span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                    </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                    </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span><span class="w"></span>
+<span class="w">                </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_loopCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">checked</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_looping</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_loopCheckBox_toggled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">checked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_looping</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_moveEventDownButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">QModelIndexList</span> <span class="n">list</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">current_index</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">row</span><span class="p">();</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">current_index</span> <span class="o">!=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">move_event</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_moveEventDownButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">QModelIndexList</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">row</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current_index</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">move_event</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span><span class="w"> </span><span class="n">current_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_moveEventUpButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">QModelIndexList</span> <span class="n">list</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">current_index</span> <span class="o">=</span> <span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">row</span><span class="p">();</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">current_index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">move_event</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_moveEventUpButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">QModelIndexList</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">row</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current_index</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">move_event</span><span class="p">(</span><span class="n">current_index</span><span class="p">,</span><span class="w"> </span><span class="n">current_index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_removeEventButton_clicked</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Sort selected rows by index before removing them</span>
-        <span class="n">QModelIndexList</span> <span class="n">list</span> <span class="o">=</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedRows</span><span class="p">();</span>
-        <span class="n">qSort</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">list</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">qGreater</span><span class="o">&lt;</span><span class="n">QModelIndex</span><span class="o">&gt;</span><span class="p">());</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">QModelIndex</span> <span class="nl">index</span> <span class="p">:</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">remove_event</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">());</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">());</span>
-        <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_removeEventButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Sort selected rows by index before removing them</span>
+<span class="w">        </span><span class="n">QModelIndexList</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedRows</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">qSort</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">list</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">qGreater</span><span class="o">&lt;</span><span class="n">QModelIndex</span><span class="o">&gt;</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">QModelIndex</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">list</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">remove_event</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">takeItem</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-        <span class="c1">// Re-initialize the Event list</span>
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span>
-                <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(),</span>
-                <span class="nb">true</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Re-initialize the Event list</span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                </span><span class="nb">true</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_timingModeComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span>
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_timing_mode</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_runButton_clicked</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">QModelIndex</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventHistoryWidget</span><span class="o">-&gt;</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">selectedIndexes</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">QTime</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventTimeEdit</span><span class="o">-&gt;</span><span class="n">time</span><span class="p">();</span><span class="w"></span>
 
-        <span class="c1">// Enable loop checkbox if we&#39;re in relative mode</span>
-        <span class="kt">bool</span> <span class="n">relative_mode</span> <span class="o">=</span> <span class="p">(</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">;</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">((</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">event_history_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">.</span><span class="n">row</span><span class="p">()).</span><span class="n">data</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Show</span><span class="o">*</span> <span class="n">show</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_show</span><span class="p">();</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">show</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">);</span>
-        <span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="n">show</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">on_timingModeComboBox_currentIndexChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">show_handler</span><span class="o">-&gt;</span><span class="n">set_timing_mode</span><span class="p">(</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span><span class="w"></span>
+<span class="w">            </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">show</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_num_events</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">Event</span><span class="o">*</span> <span class="n">event</span> <span class="o">=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_event_at_index</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="c1">// Check for Events before adding them to prevent duplicates</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_event_index</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">(),</span> <span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">());</span>
+<span class="w">        </span><span class="c1">// Enable loop checkbox if we&#39;re in relative mode</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">relative_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="p">)</span><span class="n">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">relative_mode</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-                        <span class="n">QTime</span> <span class="n">event_time</span> <span class="o">=</span> <span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">());</span>
-                        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span>
-                            <span class="n">event_time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span> <span class="o">+</span>
-                            <span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span> <span class="o">+</span>
-                            <span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
-                        <span class="p">);</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">refresh</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Show</span><span class="o">*</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_show</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">show</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="n">show</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">enableCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">());</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_num_events</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">Event</span><span class="o">*</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_event_at_index</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="c1">// Check for Events before adding them to prevent duplicates</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">get_event_index</span><span class="p">(</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="n">show_controller_</span><span class="o">-&gt;</span><span class="n">add_event</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">(),</span><span class="w"> </span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">());</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_looping</span><span class="p">());</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">                        </span><span class="n">QTime</span><span class="w"> </span><span class="n">event_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_time</span><span class="p">());</span><span class="w"></span>
+<span class="w">                        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">addItem</span><span class="p">(</span><span class="w"></span>
+<span class="w">                            </span><span class="n">event_time</span><span class="p">.</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                            </span><span class="n">QString</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                            </span><span class="n">CueInterpreter</span><span class="o">::</span><span class="n">interpret_cue</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span><span class="w"></span>
+<span class="w">                        </span><span class="p">);</span><span class="w"></span>
+<span class="w">                    </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">((</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_looping</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_maestro_locked</span><span class="p">(</span><span class="kt">bool</span> <span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_locked_</span> <span class="o">=</span> <span class="n">locked</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setChecked</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">timer_refresh</span><span class="p">()</span> <span class="p">{</span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">blockSignals</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-        <span class="c1">// Update &#39;Absolute Time&#39; text box</span>
-        <span class="n">uint</span> <span class="n">absolute_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint</span><span class="p">)</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">();</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">absoluteTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">absolute_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_maestro_locked</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">locked</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">maestro_locked_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">locked</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-        <span class="n">Show</span><span class="o">*</span> <span class="n">show</span> <span class="o">=</span> <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_show</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">show</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">timer_refresh</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-        <span class="c1">// If relative mode is enabled, calculate the time since the last Event</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span> <span class="o">==</span> <span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">uint</span> <span class="n">relative_time</span> <span class="o">=</span> <span class="n">absolute_time</span> <span class="o">-</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">();</span>
-            <span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">relative_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Update &#39;Absolute Time&#39; text box</span>
+<span class="w">        </span><span class="n">uint</span><span class="w"> </span><span class="n">absolute_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">uint</span><span class="p">)</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_total_elapsed_time</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">absoluteTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">absolute_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span><span class="w"></span>
 
-        <span class="c1">// Get the last event that ran, and if it differs from the Show&#39;s current index, update the Event Queue</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">last_event_time_</span> <span class="o">!=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">last_event_time_</span> <span class="o">=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Show</span><span class="o">*</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_show</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
 
-            <span class="c1">// Darken events that have already ran</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">GlobalColor</span><span class="o">::</span><span class="n">darkGray</span><span class="p">);</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">GlobalColor</span><span class="o">::</span><span class="n">white</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+<span class="w">        </span><span class="c1">// If relative mode is enabled, calculate the time since the last Event</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_timing</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Show</span><span class="o">::</span><span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">uint</span><span class="w"> </span><span class="n">relative_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">absolute_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_last_time</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">relativeTimeLineEdit</span><span class="o">-&gt;</span><span class="n">setText</span><span class="p">(</span><span class="n">QTime</span><span class="o">::</span><span class="n">fromMSecsSinceStartOfDay</span><span class="p">(</span><span class="n">relative_time</span><span class="p">).</span><span class="n">toString</span><span class="p">(</span><span class="n">time_format</span><span class="p">));</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 
-            <span class="c1">// If live update triggers are enabled, send the last Event&#39;s queue to the DeviceControlWidget to be sent to remote devices</span>
-            <span class="n">QSettings</span> <span class="n">settings</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">events_trigger_device_updates</span><span class="p">,</span> <span class="nb">false</span><span class="p">).</span><span class="n">toBool</span><span class="p">())</span> <span class="p">{</span>
-                <span class="n">Event</span><span class="o">*</span> <span class="n">event</span> <span class="o">=</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_event_at_index</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">());</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">CueController</span><span class="o">*</span> <span class="n">cue_controller</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span>
-                    <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span>
-                        <span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">(),</span>
-                        <span class="n">cue_controller</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span>
-                    <span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
+<span class="w">        </span><span class="c1">// Check to see if an Event has ran</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">last_event_index_</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">last_event_index_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">();</span><span class="w"></span>
 
-            <span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">set_refresh_needed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="c1">// Darken events that have already ran</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">GlobalColor</span><span class="o">::</span><span class="n">darkGray</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventQueueWidget</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">setTextColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">GlobalColor</span><span class="o">::</span><span class="n">white</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kt">void</span> <span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
-        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventsGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="c1">// If live update triggers are enabled, send the last Event&#39;s queue to the DeviceControlWidget to be sent to remote devices</span>
+<span class="w">            </span><span class="n">QSettings</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">PreferencesDialog</span><span class="o">::</span><span class="n">events_trigger_device_updates</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">).</span><span class="n">toBool</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">Event</span><span class="o">*</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_event_at_index</span><span class="p">(</span><span class="n">show</span><span class="o">-&gt;</span><span class="n">get_current_index</span><span class="p">());</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">CueController</span><span class="o">*</span><span class="w"> </span><span class="n">cue_controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">get_maestro_controller</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_maestro</span><span class="p">().</span><span class="n">get_cue_controller</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">device_control_widget_</span><span class="o">-&gt;</span><span class="n">run_cue</span><span class="p">(</span><span class="w"></span>
+<span class="w">                        </span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cue_controller</span><span class="o">-&gt;</span><span class="n">get_cue_size</span><span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">get_cue</span><span class="p">())</span><span class="w"></span>
+<span class="w">                    </span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
 
-    <span class="n">ShowControlWidget</span><span class="o">::~</span><span class="n">ShowControlWidget</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">qApp</span><span class="o">-&gt;</span><span class="n">removeEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">delete</span> <span class="n">show_controller_</span><span class="p">;</span>
-        <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">            </span><span class="n">maestro_control_widget_</span><span class="p">.</span><span class="n">set_refresh_needed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">ShowControlWidget</span><span class="o">::</span><span class="n">set_show_controls_enabled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">enabled</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeLabel</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">timingModeComboBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">loopCheckBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">eventsGroupBox</span><span class="o">-&gt;</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">ShowControlWidget</span><span class="o">::~</span><span class="n">ShowControlWidget</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">removeEventFilter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">delete</span><span class="w"> </span><span class="n">show_controller_</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">delete</span><span class="w"> </span><span class="n">ui</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2020, 8bitbuddhist
-
-    </p>
+    <p>&#169; Copyright 2022, 8bitbuddhist.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

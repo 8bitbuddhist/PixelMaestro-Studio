@@ -51,9 +51,9 @@ Included By
 
 - :ref:`file_src_dialog_sectionmapdialog.h`
 
-- :ref:`file_src_widget_devicecontrolwidget.h`
-
 - :ref:`file_src_widget_devicecontrolwidget.cpp`
+
+- :ref:`file_src_widget_devicecontrolwidget.h`
 
 
 

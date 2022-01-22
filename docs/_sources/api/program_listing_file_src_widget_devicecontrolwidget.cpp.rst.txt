@@ -32,6 +32,7 @@ Program Listing for File devicecontrolwidget.cpp
    #include "ui_devicecontrolwidget.h"
    #include "controller/devicecontroller.h"
    #include "controller/devicethreadcontroller.h"
+   #include "utility/uiutility.h"
    
    namespace PixelMaestroStudio {
        DeviceControlWidget::DeviceControlWidget(QWidget *parent) :
@@ -132,8 +133,8 @@ Program Listing for File devicecontrolwidget.cpp
            int selected = ui->serialOutputListWidget->currentRow();
            if (selected < 0) return;
    
-           QMessageBox::StandardButton confirm;
-           confirm = QMessageBox::question(this, "Remove Device", "Are you sure you want to remove this device from your saved devices?", QMessageBox::Yes | QMessageBox::No);
+           int confirm = UIUtility::show_confirm_message_box(PreferencesDialog::msgbox_hide_remove_device, "Remove Device", "Are you sure you want to remove this device from your saved devices?", this);
+   
            if (confirm == QMessageBox::Yes) {
                serial_devices_.removeAt(selected);
                refresh_device_list();
@@ -209,8 +210,6 @@ Program Listing for File devicecontrolwidget.cpp
            CueController* controller = &this->maestro_control_widget_.get_maestro_controller()->get_maestro().get_cue_controller();
    
            for (DeviceController device : serial_devices_) {
-               // TODO: Move to separate thread
-   
                // Copy the Cue for each device
                QByteArray out = QByteArray(reinterpret_cast<const char*>(cue), size);
    
@@ -312,7 +311,7 @@ Program Listing for File devicecontrolwidget.cpp
        }
    
        void DeviceControlWidget::write_to_device(DeviceController& device, const char *out, const int size, bool progress) {
-           DeviceThreadController* thread = new DeviceThreadController(device,
+           DeviceThreadController* thread = new DeviceThreadController(std::ref(device),
                                                              out,
                                                              size);
    
@@ -323,11 +322,7 @@ Program Listing for File devicecontrolwidget.cpp
            }
    
            /*
-            * NOTE: Device pointer becomes invalid when using Thread::start(), likely due to invalid memory access.
-            *      Need to make the DeviceThreadController and output thread-safe before sending it to a separate thread.
-            *
-            *      Maybe convert threads to QFuture and use QFutureWatcher to update progress? https://doc.qt.io/qt-5/qfuturewatcher.html#details
-            *
+            * TODO: Completely rewrite threading logic. See https://doc.qt.io/qt-5/thread-basics.html.
             */
    
            //thread->start();
