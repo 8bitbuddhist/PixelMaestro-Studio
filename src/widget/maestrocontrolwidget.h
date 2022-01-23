@@ -29,10 +29,7 @@
 #include "widget/canvascontrolwidget.h"
 #include "widget/sectioncontrolwidget.h"
 #include "widget/showcontrolwidget.h"
-
-#ifndef NO_SERIALPORT
 #include "widget/devicecontrolwidget.h"
-#endif
 
 namespace Ui {
 	class MaestroControlWidget;
@@ -43,9 +40,7 @@ using namespace PixelMaestro;
 namespace PixelMaestroStudio {
 	class AnimationControlWidget;
 	class CanvasControlWidget;
-#ifndef NO_SERIALPORT
 	class DeviceControlWidget;
-#endif
 	class MaestroController;
 	class MaestroDrawingAreaDialog;
 	class SectionControlWidget;
@@ -70,9 +65,7 @@ namespace PixelMaestroStudio {
 			// Control subwidgets
 			QSharedPointer<AnimationControlWidget> animation_control_widget_;
 			QSharedPointer<CanvasControlWidget> canvas_control_widget_;
-#ifndef NO_SERIALPORT
 			QSharedPointer<DeviceControlWidget> device_control_widget_;
-#endif
 			QSharedPointer<SectionControlWidget> section_control_widget_;
 			QSharedPointer<ShowControlWidget> show_control_widget_;
 

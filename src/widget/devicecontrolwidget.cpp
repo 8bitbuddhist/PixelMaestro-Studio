@@ -4,8 +4,6 @@
 
 #include <QList>
 #include <QMessageBox>
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QSettings>
 #include <QStandardItem>
 #include <QStringList>

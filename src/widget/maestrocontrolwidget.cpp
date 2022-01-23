@@ -34,10 +34,8 @@ namespace PixelMaestroStudio {
 		canvas_control_widget_ = QSharedPointer<CanvasControlWidget>(new CanvasControlWidget(this));
 		ui->canvasTab->findChild<QLayout*>("canvasLayout")->addWidget(canvas_control_widget_.data());
 
-#ifndef NO_SERIALPORT
 		device_control_widget_ = QSharedPointer<DeviceControlWidget>(new DeviceControlWidget(this));
 		ui->deviceTab->findChild<QLayout*>("deviceLayout")->addWidget(device_control_widget_.data());
-#endif
 
 		section_control_widget_ = QSharedPointer<SectionControlWidget>(new SectionControlWidget(this));
 		ui->topLayout->insertWidget(0, section_control_widget_.data());
@@ -195,10 +193,7 @@ namespace PixelMaestroStudio {
 	 */
 	void MaestroControlWidget::refresh_maestro_settings() {
 		show_control_widget_->refresh();
-
-#ifndef NO_SERIALPORT
 		device_control_widget_->update_cuefile_size();
-#endif
 	}
 
 	/**
@@ -216,12 +211,10 @@ namespace PixelMaestroStudio {
 				set_maestro_modified(true);
 			}
 
-#ifndef NO_SERIALPORT
 			if ((run_targets & RunTarget::Remote) == RunTarget::Remote) {
 				// Send to device controller
 				device_control_widget_->run_cue(cue, cue_controller_->get_cue_size(cue));
 			}
-#endif
 		}
 	}
 

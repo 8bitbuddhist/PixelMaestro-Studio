@@ -1,5 +1,5 @@
-#ifndef SERIALDEVICETHREAD_H
-#define SERIALDEVICETHREAD_H
+#ifndef DEVICETHREADCONTROLLER_H
+#define DEVICETHREADCONTROLLER_H
 
 #include <QByteArray>
 #include <QThread>
@@ -28,4 +28,4 @@ namespace PixelMaestroStudio {
 	};
 }
 
-#endif // SERIALDEVICETHREAD_H
+#endif // DEVICETHREADCONTROLLER_H

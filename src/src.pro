@@ -8,20 +8,6 @@ QT       += core gui widgets network
 
 !wasm {
 QT       += serialport
-SOURCES  += widget/devicecontrolwidget.cpp \
-			controller/devicecontroller.cpp \
-			controller/devicethreadcontroller.cpp \
-			dialog/adddevicedialog.cpp \
-			dialog/sectionmapdialog.cpp \
-			model/sectionmapmodel.cpp
-HEADERS  += widget/devicecontrolwidget.h \
-			controller/devicecontroller.h \
-			controller/devicethreadcontroller.h \
-			dialog/adddevicedialog.h \
-			dialog/sectionmapdialog.h \
-			model/sectionmapmodel.h \
-FORMS    += widget/devicecontrolwidget.ui \
-			dialog/adddevicedialog.ui
 }
 wasm {
 DEFINES  += NO_SERIALPORT
@@ -75,6 +61,8 @@ window/mainwindow.cpp \
 ../lib/PixelMaestro/src/cue/sectioncuehandler.cpp \
 controller/palettecontroller.cpp \
 controller/showcontroller.cpp \
+controller/devicecontroller.cpp \
+controller/devicethreadcontroller.cpp \
 ../lib/PixelMaestro/src/colorpresets.cpp \
 ../lib/PixelMaestro/src/cue/cuehandler.cpp \
 utility/canvasutility.cpp \
@@ -101,8 +89,12 @@ widget/animationcontrolwidget.cpp \
 widget/showcontrolwidget.cpp \
 widget/sectioncontrolwidget.cpp \
 widget/canvascontrolwidget.cpp \
+widget/devicecontrolwidget.cpp \
 dialog/editeventdialog.cpp \
-model/cuemodel.cpp
+dialog/adddevicedialog.cpp \
+dialog/sectionmapdialog.cpp \
+model/cuemodel.cpp \
+model/sectionmapmodel.cpp
 
 HEADERS += \
 	controller/cueservercontroller.h \
@@ -141,6 +133,8 @@ window/mainwindow.h \
 ../lib/PixelMaestro/src/cue/sectioncuehandler.h \
 controller/palettecontroller.h \
 controller/showcontroller.h \
+controller/devicecontroller.h \
+controller/devicethreadcontroller.h \
 ../lib/PixelMaestro/src/colorpresets.h \
 utility/canvasutility.h \
 ../lib/PixelMaestro/src/cue/showcuehandler.h \
@@ -166,8 +160,12 @@ widget/animationcontrolwidget.h \
 widget/showcontrolwidget.h \
 widget/sectioncontrolwidget.h \
 widget/canvascontrolwidget.h \
+widget/devicecontrolwidget.h \
 dialog/editeventdialog.h \
-model/cuemodel.h
+dialog/adddevicedialog.h \
+dialog/sectionmapdialog.h \
+model/cuemodel.h \
+model/sectionmapmodel.h
 
 FORMS	+= window/mainwindow.ui \
 widget/maestrocontrolwidget.ui \
@@ -186,7 +184,9 @@ widget/animationcontrolwidget.ui \
 widget/showcontrolwidget.ui \
 widget/sectioncontrolwidget.ui \
 widget/canvascontrolwidget.ui \
+widget/devicecontrolwidget.ui \
 dialog/sectionmapdialog.ui \
+dialog/adddevicedialog.ui \
 dialog/editeventdialog.ui
 
 INCLUDEPATH += \

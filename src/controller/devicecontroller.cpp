@@ -2,8 +2,11 @@
  * SerialDevice - Utility class for managing devices connected via USB/Bluetooth.
  */
 
-#include <QRegularExpression>
+#ifndef NO_SERIALPORT
 #include <QSerialPort>
+#endif
+
+#include <QRegularExpression>
 #include <QSettings>
 #include <QTcpSocket>
 #include "dialog/preferencesdialog.h"
@@ -19,9 +22,11 @@ namespace PixelMaestroStudio {
 		this->port_name_ = port_name;
 
 		/*
+		 * FIXME: Use the device_type supplied by the user instead of assuming
 		 * Check whether the port name is an IP address.
 		 * If so, initialize a TCP socket.
 		 * Otherwise, assume a serial device.
+		 * The only exception is if we're using a device that doesn't support serial devices.
 		 */
 		QRegularExpression exp("^(?:[0-9]{1,3}.){3}[0-9]{1,3}");
 		bool is_network_device = exp.match(port_name).hasMatch();
@@ -29,10 +34,12 @@ namespace PixelMaestroStudio {
 			this->device_ = QSharedPointer<QTcpSocket>(new QTcpSocket());
 			this->device_type_ = DeviceType::TCP;
 		}
+#ifndef NO_SERIALPORT
 		else {
 			this->device_ = QSharedPointer<QSerialPort>(new QSerialPort());
 			this->device_type_ = DeviceType::Serial;
 		}
+#endif
 
 		// Look up the device in settings
 		QSettings settings;
@@ -70,6 +77,7 @@ namespace PixelMaestroStudio {
 	 */
 	bool DeviceController::connect() {
 		if (device_type_ == DeviceType::Serial) {
+#ifndef NO_SERIALPORT
 			QSerialPort* serial_device = dynamic_cast<QSerialPort*>(device_.data());
 
 			if (!serial_device) return false;
@@ -84,6 +92,7 @@ namespace PixelMaestroStudio {
 			serial_device->setStopBits(QSerialPort::StopBits::OneStop);
 
 			return (serial_device->open(QIODevice::WriteOnly));
+#endif
 		}
 		else if (device_type_ == DeviceType::TCP) {
 			// Extract the IP address and port number
@@ -120,9 +129,11 @@ namespace PixelMaestroStudio {
 	 */
 	bool DeviceController::disconnect() {
 		if (device_type_ == DeviceType::Serial && device_) {
+#ifndef NO_SERIALPORT
 			bool flushed = dynamic_cast<QSerialPort*>(device_.data())->flush();
 			device_->close();
 			return flushed;
+#endif
 		}
 		else if (device_type_ == DeviceType::TCP && device_) {
 			QTcpSocket* tcp_device = dynamic_cast<QTcpSocket*>(device_.data());
@@ -166,7 +177,11 @@ namespace PixelMaestroStudio {
 		if (device_) {
 			switch (device_type_) {
 				case DeviceType::Serial:
+#ifndef NO_SERIALPORT
 					return dynamic_cast<QSerialPort*>(device_.data())->isOpen();
+#else
+					return false;
+#endif
 				case DeviceType::TCP:
 					return dynamic_cast<QTcpSocket*>(device_.data())->state() == QAbstractSocket::ConnectedState;
 			}
@@ -197,7 +212,9 @@ namespace PixelMaestroStudio {
 	void DeviceController::flush() {
 		switch (device_type_) {
 			case DeviceType::Serial:
+#ifndef NO_SERIALPORT
 				dynamic_cast<QSerialPort*>(device_.data())->flush();
+#endif
 				break;
 			case DeviceType::TCP:
 				dynamic_cast<QTcpSocket*>(device_.data())->flush();

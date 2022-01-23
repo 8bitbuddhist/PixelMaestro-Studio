@@ -2,13 +2,17 @@
 #include <QList>
 #include <QMessageBox>
 #include <QSettings>
-#include <QSerialPort>
+
+#ifndef NO_SERIALPORT
 #include <QSerialPortInfo>
+#endif
+
 #include <QSysInfo>
 #include "adddevicedialog.h"
 #include "ui_adddevicedialog.h"
 #include "dialog/preferencesdialog.h"
 #include "dialog/sectionmapdialog.h"
+#include "controller/devicecontroller.h"
 
 namespace PixelMaestroStudio {
 	AddDeviceDialog::AddDeviceDialog(QVector<DeviceController>* devices, DeviceController* device, QWidget *parent) :
@@ -23,12 +27,18 @@ namespace PixelMaestroStudio {
 
 		ui->mapSectionsButton->setEnabled(false);
 
+		QString placeholder_text;
+
+#ifndef NO_SERIALPORT
 		if (QSysInfo::productType() == "windows") {
-			ui->portComboBox->lineEdit()->setPlaceholderText("COM1 / 192.168.1.100:8077");
+			placeholder_text += "COM1 / ";
 		}
 		else {
-			ui->portComboBox->lineEdit()->setPlaceholderText("/dev/ttyACM0 / 192.168.1.100:8077");
+			placeholder_text += "/dev/ttyACM0 / ";
 		}
+#endif
+		placeholder_text += "192.168.1.100:8077";
+		ui->portComboBox->lineEdit()->setPlaceholderText(placeholder_text);
 
 		if (device != nullptr) {
 			ui->autoConnectCheckBox->setChecked(device->get_autoconnect());
@@ -38,6 +48,7 @@ namespace PixelMaestroStudio {
 		}
 		else {
 			// No device detected, i.e. the user clicked "New"
+			// FIXME: only disable the SectionMapdialog, not this checkbox
 			ui->liveUpdatesCheckBox->setEnabled(false);
 		}
 
@@ -56,6 +67,14 @@ namespace PixelMaestroStudio {
 	}
 
 	void AddDeviceDialog::on_buttonBox_accepted() {
+		// If serial is disabled, check to make sure this isn't a serial device.
+#ifdef NO_SERIALPORT
+		if ((DeviceController::DeviceType)ui->deviceTypeComboBox->currentIndex() == DeviceController::DeviceType::Serial) {
+			QMessageBox::warning(this, "Unsupported", "USB / Serial devices are not supported on this platform.");
+			return;
+		}
+#endif
+
 		// If device == nullptr, we need to first create a new device
 		if (!device_) {
 			if (is_device_already_added(ui->portComboBox->currentText())) {
@@ -74,6 +93,7 @@ namespace PixelMaestroStudio {
 		device_->set_autoconnect(ui->autoConnectCheckBox->isChecked());
 
 		// Finally, save all devices to settings
+		// FIXME: On WebAssembly, QSettings is async. See example at https://github.com/msorvig/qt-webassembly-examples/blob/master/gui_settings/main.cpp
 		QSettings settings;
 		settings.remove(PreferencesDialog::devices);
 		settings.beginWriteArray(PreferencesDialog::devices);
@@ -81,7 +101,6 @@ namespace PixelMaestroStudio {
 			settings.setArrayIndex(i);
 
 			DeviceController* current_device = const_cast<DeviceController*>(&devices_->at(i));
-			//settings.setValue(PreferencesDialog::device_connectiontype, current_device)
 			settings.setValue(PreferencesDialog::device_port, current_device->get_port_name());
 			settings.setValue(PreferencesDialog::device_real_time_refresh, current_device->get_real_time_refresh_enabled());
 			settings.setValue(PreferencesDialog::device_autoconnect, current_device->get_autoconnect());
@@ -123,10 +142,12 @@ namespace PixelMaestroStudio {
 	/// Displays all available serial devices in the serial output combobox.
 	void AddDeviceDialog::populate_serial_devices() {
 		ui->portComboBox->clear();
+#ifndef NO_SERIALPORT
 		QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 		for (const QSerialPortInfo& port : ports) {
 			ui->portComboBox->addItem(port.systemLocation());
 		}
+#endif
 	}
 
 	AddDeviceDialog::~AddDeviceDialog() {

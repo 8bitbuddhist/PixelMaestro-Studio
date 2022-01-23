@@ -14,8 +14,8 @@ namespace PixelMaestroStudio {
 	class DeviceController {
 		public:
 			enum DeviceType {
-				Serial,
-				TCP
+				Serial = 0,
+				TCP = 1
 			};
 
 			/// Default connect/disconnect timeout to 10 seconds
